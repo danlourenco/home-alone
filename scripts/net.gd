@@ -27,6 +27,12 @@ func _on_peer_connected(id: int):
     if not roles.values().has("bandit"):
         assigned_role = "bandit"
     roles[id] = assigned_role
+    for existing_id in roles.keys():
+        if existing_id == id:
+            continue
+        var role = roles.get(existing_id, "spectator")
+        if role != "spectator":
+            rpc_id(id, "receive_spawn", existing_id, role)
     if assigned_role != "spectator":
         rpc("receive_spawn", id, assigned_role)
     rpc_id(id, "sync_full_phase", int(MatchManager.phase), MatchManager.phase_time_left, MatchManager.trap_budget, MatchManager.selected_trap)
