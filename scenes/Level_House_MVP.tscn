@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/traps/TrapSocket.tscn" id=1]
+
+[sub_resource type="BoxMesh" id=1]
+size = Vector3(8, 0.2, 6)
+
+[sub_resource type="BoxMesh" id=2]
+size = Vector3(6, 0.2, 6)
+
+[sub_resource type="BoxMesh" id=3]
+size = Vector3(3, 0.2, 8)
+
+[sub_resource type="BoxMesh" id=4]
+size = Vector3(6, 0.2, 3)
+
+[sub_resource type="StandardMaterial3D" id=5]
+albedo_color = Color(0.55, 0.55, 0.55, 1)
+
+[node name="Level_House_MVP" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 6, 0)
+
+[node name="FoyerHall" type="MeshInstance3D" parent="."]
+mesh = SubResource("1")
+material_override = SubResource("5")
+
+[node name="Kitchen" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+mesh = SubResource("2")
+material_override = SubResource("5")
+
+[node name="StairSpine" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
+mesh = SubResource("3")
+material_override = SubResource("5")
+
+[node name="BasementLanding" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -1, -7)
+mesh = SubResource("4")
+material_override = SubResource("5")
+
+[node name="Spawns" type="Node3D" parent="."]
+
+[node name="KevinSpawn" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 2)
+
+[node name="BanditSpawn" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, 2)
+
+[node name="SpectatorSpawn" type="Marker3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+
+[node name="TrapSockets" type="Node3D" parent="."]
+
+[node name="DoorSocket" parent="TrapSockets" instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.1, 2)
+socket_name = "Front Door"
+
+[node name="StairsSocket" parent="TrapSockets" instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -5)
+socket_name = "Main Stairs"
+
+[node name="BasementSocket" parent="TrapSockets" instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -0.9, -7)
+socket_name = "Basement Stairs"
+
+[node name="HallChokeSocket" parent="TrapSockets" instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.1, -2)
+socket_name = "Hall Choke"
