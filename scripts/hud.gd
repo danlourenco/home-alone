@@ -7,16 +7,21 @@ extends CanvasLayer
 @onready var prompt_label: Label = $MarginContainer/VBoxContainer/Prompt
 
 func set_phase(text: String):
-    phase_label.text = text
+    if phase_label:
+        phase_label.text = text
 
 func set_timer(text: String):
-    timer_label.text = text
+    if timer_label:
+        timer_label.text = text
 
 func set_budget(text: String):
-    budget_label.text = text
+    if budget_label:
+        budget_label.text = text
 
 func set_trap(text: String):
-    trap_label.text = text
+    if trap_label:
+        trap_label.text = text
 
 func set_prompt(text: String):
-    prompt_label.text = text
+    if prompt_label:
+        prompt_label.text = text

@@ -31,8 +31,7 @@ var hud: CanvasLayer
 var time_sync_accum := 0.0
 
 func _ready():
-    if not hud:
-        hud = get_tree().current_scene.get_node_or_null("HUD")
+    _ensure_hud()
     _update_hud()
     if multiplayer.is_server():
         start_match()
@@ -76,6 +75,7 @@ func sync_phase(new_phase: int, time_left: float):
     _update_hud()
 
 func _update_timer_label():
+    _ensure_hud()
     if not hud:
         return
     var minutes = int(phase_time_left) / 60
@@ -88,12 +88,20 @@ func sync_time(time_left: float):
     _update_timer_label()
 
 func _update_hud():
+    _ensure_hud()
     if not hud:
         return
     var phase_name = ["PREP", "BREACH", "END"][int(phase)]
     hud.set_phase("Phase: %s" % phase_name)
     hud.set_budget("Budget: %d" % trap_budget)
     hud.set_trap("Selected Trap: %s" % selected_trap)
+
+func _ensure_hud():
+    if hud and hud.is_inside_tree():
+        return
+    var scene := get_tree().current_scene
+    if scene:
+        hud = scene.get_node_or_null("HUD")
 
 func get_trap_scene(trap_name: String) -> PackedScene:
     return trap_scenes.get(trap_name, null)
