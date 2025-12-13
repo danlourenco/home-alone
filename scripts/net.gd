@@ -6,6 +6,7 @@ var roles := {}
 func _ready():
     multiplayer.peer_connected.connect(_on_peer_connected)
     multiplayer.peer_disconnected.connect(_on_peer_disconnected)
+    _parse_auto_network()
 
 func host(port: int = DEFAULT_PORT):
     var peer := ENetMultiplayerPeer.new()
@@ -19,6 +20,29 @@ func join(address: String = "127.0.0.1", port: int = DEFAULT_PORT):
     var peer := ENetMultiplayerPeer.new()
     peer.create_client(address, port)
     multiplayer.multiplayer_peer = peer
+
+func _parse_auto_network():
+    var args := OS.get_cmdline_user_args()
+    var i := 0
+    while i < args.size():
+        var arg := args[i]
+        if arg == "--host":
+            var port := DEFAULT_PORT
+            if i + 1 < args.size() and args[i + 1].is_valid_int():
+                port = int(args[i + 1])
+                i += 1
+            host(port)
+        elif arg == "--join":
+            var address := "127.0.0.1"
+            var port := DEFAULT_PORT
+            if i + 1 < args.size():
+                address = args[i + 1]
+                i += 1
+            if i + 1 < args.size() and args[i + 1].is_valid_int():
+                port = int(args[i + 1])
+                i += 1
+            join(address, port)
+        i += 1
 
 func _on_peer_connected(id: int):
     if not multiplayer.is_server():
