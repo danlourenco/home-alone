@@ -42,7 +42,7 @@ func _process(delta):
         _tick_phase(delta)
         time_sync_accum += delta
         if time_sync_accum > 0.5:
-            rpc_unreliable("sync_time", phase_time_left)
+            rpc("sync_time", phase_time_left)
             time_sync_accum = 0.0
     _update_timer_label()
 
