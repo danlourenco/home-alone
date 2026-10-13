@@ -167,7 +167,7 @@
    "anchor": false,
    "polygon_xz": [
     [
-     5.823,
+     5.774,
      5.579
     ],
     [
@@ -179,11 +179,11 @@
      7.638
     ],
     [
-     5.823,
+     5.774,
      7.638
     ]
    ],
-   "area_m2": 2.06,
+   "area_m2": 2.16,
    "ceiling_m": 2.4
   },
   {
@@ -209,14 +209,30 @@
     ],
     [
      8.371,
-     11.31
+     11.311
+    ],
+    [
+     5.64,
+     11.311
+    ],
+    [
+     5.64,
+     9.824
+    ],
+    [
+     1.821,
+     9.824
+    ],
+    [
+     1.821,
+     8.534
     ],
     [
      5.634,
-     11.31
+     8.534
     ]
    ],
-   "area_m2": 6.76,
+   "area_m2": 11.68,
    "ceiling_m": 2.4
   },
   {
@@ -225,7 +241,7 @@
    "anchor": false,
    "polygon_xz": [
     [
-     5.823,
+     5.844,
      11.63
     ],
     [
@@ -237,11 +253,11 @@
      13.442
     ],
     [
-     5.823,
+     5.844,
      13.442
     ]
    ],
-   "area_m2": 2.47,
+   "area_m2": 2.43,
    "ceiling_m": 2.29
   },
   {
@@ -309,11 +325,11 @@
     ],
     [
      11.664,
-     11.31
+     11.311
     ],
     [
      8.502,
-     11.31
+     11.311
     ],
     [
      8.502,
@@ -362,11 +378,11 @@
      11.63
     ],
     [
-     5.574,
+     5.58,
      11.63
     ],
     [
-     5.574,
+     5.58,
      15.989
     ],
     [
@@ -374,7 +390,7 @@
      15.989
     ]
    ],
-   "area_m2": 22.57,
+   "area_m2": 22.6,
    "ceiling_m": 2.4
   },
   {
@@ -384,22 +400,30 @@
    "polygon_xz": [
     [
      0.0,
-     8.533
+     8.534
     ],
     [
-     5.574,
-     8.533
+     1.821,
+     8.534
     ],
     [
-     5.574,
-     11.31
+     1.821,
+     9.884
+    ],
+    [
+     5.58,
+     9.884
+    ],
+    [
+     5.58,
+     11.311
     ],
     [
      0.0,
-     11.31
+     11.311
     ]
    ],
-   "area_m2": 15.48,
+   "area_m2": 10.42,
    "ceiling_m": 2.4
   },
   {
@@ -408,7 +432,7 @@
    "anchor": false,
    "polygon_xz": [
     [
-     5.823,
+     5.844,
      13.741
     ],
     [
@@ -420,11 +444,11 @@
      16.396
     ],
     [
-     5.823,
+     5.844,
      16.396
     ]
    ],
-   "area_m2": 3.62,
+   "area_m2": 3.57,
    "ceiling_m": 2.4
   },
   {
@@ -464,18 +488,18 @@
    "wall_coord": 4.697,
    "wall_thickness": 0.356,
    "span": [
-    1.176,
-    1.946
+    1.196,
+    1.966
    ],
    "width": 0.77,
    "height": 2.032,
    "opens": true,
-   "placed_from": "measured, slid +11 cm onto the shared wall",
+   "placed_from": "measured, slid +13 cm onto the shared wall",
    "source": "SfM: door slab edges, parents frames 402/407",
    "wall_coord_spec": 5.401,
    "span_spec": [
-    5.754,
-    6.524
+    5.774,
+    6.544
    ],
    "spec_axis": "z"
   },
@@ -537,10 +561,10 @@
    "kind": "door",
    "wall_axis": "x",
    "wall_coord": 7.106,
-   "wall_thickness": 0.342,
+   "wall_thickness": 0.343,
    "span": [
-    3.502,
-    4.332
+    3.496,
+    4.326
    ],
    "width": 0.83,
    "height": 2.032,
@@ -549,8 +573,8 @@
    "source": "SfM: Kevin door_a (frames 292/325), includes casing",
    "wall_coord_spec": 7.81,
    "span_spec": [
-    8.08,
-    8.91
+    8.074,
+    8.904
    ],
    "spec_axis": "z"
   },
@@ -561,8 +585,8 @@
    ],
    "kind": "door",
    "wall_axis": "y",
-   "wall_coord": 1.05,
-   "wall_thickness": 0.389,
+   "wall_coord": 1.026,
+   "wall_thickness": 0.34,
    "span": [
     6.01,
     6.79
@@ -572,7 +596,7 @@
    "opens": true,
    "placed_from": "measured",
    "source": "girls' room A doorway: gap in the west wall points 0.74-1.52 m along the far-end clip (frames 0-24); replaces the topology guess, which was 28 cm off (clip hall-s4 via registration)",
-   "wall_coord_spec": 5.628,
+   "wall_coord_spec": 5.604,
    "span_spec": [
     6.714,
     7.494
@@ -614,8 +638,8 @@
    "wall_coord": 2.725,
    "wall_thickness": 0.289,
    "span": [
-    8.265,
-    8.875
+    8.284,
+    8.894
    ],
    "width": 0.61,
    "height": 2.032,
@@ -624,8 +648,8 @@
    "source": "Muto's set model (linen closet beside the bathroom) + overhead shelf; prop door, does not open (user decision Oct 13); 24 in linen-closet door",
    "wall_coord_spec": 7.303,
    "span_spec": [
-    8.969,
-    9.579
+    8.988,
+    9.598
    ],
    "spec_axis": "x"
   },
@@ -636,21 +660,21 @@
    ],
    "kind": "door",
    "wall_axis": "x",
-   "wall_coord": 10.766,
-   "wall_thickness": 0.319,
+   "wall_coord": 10.767,
+   "wall_thickness": 0.318,
    "span": [
-    3.014,
-    3.776
+    3.04,
+    3.802
    ],
    "width": 0.762,
    "height": 2.032,
    "opens": true,
-   "placed_from": "measured, slid +8 cm onto the shared wall",
+   "placed_from": "measured, slid +10 cm onto the shared wall",
    "source": "Buzz's doorway in the cross wall beside the arch; jambs incl. casing (hall-s1 frames 148-192) (clip hall-s1 via registration)",
-   "wall_coord_spec": 11.47,
+   "wall_coord_spec": 11.471,
    "span_spec": [
-    7.592,
-    8.354
+    7.618,
+    8.38
    ],
    "spec_axis": "z"
   },
@@ -661,21 +685,21 @@
    ],
    "kind": "door",
    "wall_axis": "y",
-   "wall_coord": 1.12,
-   "wall_thickness": 0.249,
+   "wall_coord": 1.134,
+   "wall_thickness": 0.264,
    "span": [
-    11.492,
-    12.254
+    11.451,
+    12.213
    ],
    "width": 0.762,
    "height": 2.032,
    "opens": true,
    "placed_from": "topology (centred; position unverified)",
    "source": "overhead: open door leaf visible on the room's right wall; confirmed by hall walk f222-261 (double bed, red/white quilt, door beside the attic door and the stair rail)",
-   "wall_coord_spec": 5.698,
+   "wall_coord_spec": 5.712,
    "span_spec": [
-    12.196,
-    12.958
+    12.155,
+    12.917
    ],
    "spec_axis": "x"
   },
@@ -712,20 +736,20 @@
    "kind": "arch",
    "wall_axis": "x",
    "wall_coord": 7.106,
-   "wall_thickness": 0.342,
+   "wall_thickness": 0.343,
    "span": [
-    1.215,
-    2.252
+    1.196,
+    2.244
    ],
-   "width": 1.037,
+   "width": 1.049,
    "height": null,
    "opens": true,
    "placed_from": "full shared wall",
    "source": "hall walk: arched openings (f141-147); header band in overhead",
    "wall_coord_spec": 7.81,
    "span_spec": [
-    5.793,
-    6.83
+    5.774,
+    6.822
    ],
    "spec_axis": "z"
   },
@@ -736,21 +760,21 @@
    ],
    "kind": "arch",
    "wall_axis": "x",
-   "wall_coord": 10.766,
-   "wall_thickness": 0.319,
+   "wall_coord": 10.767,
+   "wall_thickness": 0.318,
    "span": [
-    1.27,
-    2.601
+    1.266,
+    2.609
    ],
-   "width": 1.331,
+   "width": 1.343,
    "height": null,
    "opens": true,
    "placed_from": "full shared wall",
    "source": "header band in overhead",
-   "wall_coord_spec": 11.47,
+   "wall_coord_spec": 11.471,
    "span_spec": [
-    5.848,
-    7.179
+    5.844,
+    7.187
    ],
    "spec_axis": "z"
   },
@@ -761,26 +785,634 @@
    ],
    "kind": "rail",
    "wall_axis": "y",
-   "wall_coord": 1.026,
+   "wall_coord": 1.032,
    "wall_thickness": 0.06,
    "span": [
-    7.832,
-    10.61
+    9.18,
+    10.607
    ],
-   "width": 2.778,
+   "width": 1.427,
    "height": null,
    "opens": true,
    "placed_from": "full shared wall",
    "source": "hall walk f135-147: balustrade along the stairwell",
-   "wall_coord_spec": 5.604,
+   "wall_coord_spec": 5.61,
    "span_spec": [
-    8.536,
-    11.314
+    9.884,
+    11.311
+   ],
+   "spec_axis": "x"
+  },
+  {
+   "between": [
+    "main_stair_opening",
+    "hall_corridor"
+   ],
+   "kind": "rail",
+   "wall_axis": "x",
+   "wall_coord": 9.15,
+   "wall_thickness": 0.06,
+   "span": [
+    -2.757,
+    1.002
+   ],
+   "width": 3.759,
+   "height": null,
+   "opens": true,
+   "placed_from": "full shared wall",
+   "source": "gallery rail along the north side of the well (Part 2 f258 near rail); measurements/rooms/stairs.json (user decision Oct 13)",
+   "wall_coord_spec": 9.854,
+   "span_spec": [
+    1.821,
+    5.58
+   ],
+   "spec_axis": "z"
+  },
+  {
+   "between": [
+    "main_stair_opening",
+    "hall_corridor"
+   ],
+   "kind": "open",
+   "wall_axis": "y",
+   "wall_coord": -2.757,
+   "wall_thickness": -0.0,
+   "span": [
+    7.83,
+    9.12
+   ],
+   "width": 1.29,
+   "height": null,
+   "opens": true,
+   "placed_from": "full shared wall",
+   "source": "stair head: flight 2 arrives on the gallery; measurements/rooms/stairs.json (user decision Oct 13)",
+   "wall_coord_spec": 1.821,
+   "span_spec": [
+    8.534,
+    9.824
    ],
    "spec_axis": "x"
   }
  ],
- "flags": [],
+ "flags": [
+  "door buzz_room/hall_corridor: measured span needs +10 cm to fit its wall",
+  "door buzz_room/hall_corridor: 0.76 m door on only 0.75 m of shared wall"
+ ],
+ "stair": {
+  "source": "measurements/rooms/stairs.json",
+  "floor_to_floor_m": 2.535,
+  "risers": 15,
+  "rise_m": 0.169,
+  "going_m": 0.241,
+  "measured": "flight 1: 13 risers, rise, going (pitch), tread width; landing height",
+  "authored": "user, Oct 13: floor-to-floor 15 risers (2 steps above the landing); full-width landing along the rear wall; flight 2 = 2 risers at the landing's north end, rising toward the front onto a gallery along the north side of the well to the hall; landing depth, gallery and flight widths",
+  "boxes": [
+   {
+    "name": "flight1_step01",
+    "kind": "step",
+    "x": [
+     4.231,
+     4.472
+    ],
+    "y": [
+     -2.535,
+     -2.366
+    ],
+    "z": [
+     10.111,
+     11.311
+    ]
+   },
+   {
+    "name": "flight1_step02",
+    "kind": "step",
+    "x": [
+     3.99,
+     4.231
+    ],
+    "y": [
+     -2.535,
+     -2.197
+    ],
+    "z": [
+     10.111,
+     11.311
+    ]
+   },
+   {
+    "name": "flight1_step03",
+    "kind": "step",
+    "x": [
+     3.749,
+     3.99
+    ],
+    "y": [
+     -2.535,
+     -2.028
+    ],
+    "z": [
+     10.111,
+     11.311
+    ]
+   },
+   {
+    "name": "flight1_step04",
+    "kind": "step",
+    "x": [
+     3.508,
+     3.749
+    ],
+    "y": [
+     -2.535,
+     -1.859
+    ],
+    "z": [
+     10.111,
+     11.311
+    ]
+   },
+   {
+    "name": "flight1_step05",
+    "kind": "step",
+    "x": [
+     3.267,
+     3.508
+    ],
+    "y": [
+     -2.535,
+     -1.69
+    ],
+    "z": [
+     10.111,
+     11.311
+    ]
+   },
+   {
+    "name": "flight1_step06",
+    "kind": "step",
+    "x": [
+     3.026,
+     3.267
+    ],
+    "y": [
+     -2.535,
+     -1.521
+    ],
+    "z": [
+     10.111,
+     11.311
+    ]
+   },
+   {
+    "name": "flight1_step07",
+    "kind": "step",
+    "x": [
+     2.785,
+     3.026
+    ],
+    "y": [
+     -2.535,
+     -1.352
+    ],
+    "z": [
+     10.111,
+     11.311
+    ]
+   },
+   {
+    "name": "flight1_step08",
+    "kind": "step",
+    "x": [
+     2.544,
+     2.785
+    ],
+    "y": [
+     -2.535,
+     -1.183
+    ],
+    "z": [
+     10.111,
+     11.311
+    ]
+   },
+   {
+    "name": "flight1_step09",
+    "kind": "step",
+    "x": [
+     2.303,
+     2.544
+    ],
+    "y": [
+     -2.535,
+     -1.014
+    ],
+    "z": [
+     10.111,
+     11.311
+    ]
+   },
+   {
+    "name": "flight1_step10",
+    "kind": "step",
+    "x": [
+     2.062,
+     2.303
+    ],
+    "y": [
+     -2.535,
+     -0.845
+    ],
+    "z": [
+     10.111,
+     11.311
+    ]
+   },
+   {
+    "name": "flight1_step11",
+    "kind": "step",
+    "x": [
+     1.821,
+     2.062
+    ],
+    "y": [
+     -2.535,
+     -0.676
+    ],
+    "z": [
+     10.111,
+     11.311
+    ]
+   },
+   {
+    "name": "flight1_step12",
+    "kind": "step",
+    "x": [
+     1.58,
+     1.821
+    ],
+    "y": [
+     -2.535,
+     -0.507
+    ],
+    "z": [
+     10.111,
+     11.311
+    ]
+   },
+   {
+    "name": "landing",
+    "kind": "landing",
+    "x": [
+     0.0,
+     1.58
+    ],
+    "y": [
+     -2.535,
+     -0.338
+    ],
+    "z": [
+     8.534,
+     11.311
+    ]
+   },
+   {
+    "name": "flight2_step01",
+    "kind": "step",
+    "x": [
+     1.58,
+     1.821
+    ],
+    "y": [
+     -2.535,
+     -0.169
+    ],
+    "z": [
+     8.534,
+     9.824
+    ]
+   },
+   {
+    "name": "foyer_floor_under_well",
+    "kind": "floor",
+    "x": [
+     0.0,
+     6.58
+    ],
+    "y": [
+     -2.735,
+     -2.535
+    ],
+    "z": [
+     8.534,
+     11.311
+    ]
+   },
+   {
+    "name": "flight1_rail01",
+    "kind": "rail",
+    "x": [
+     4.231,
+     4.472
+    ],
+    "y": [
+     -2.366,
+     -1.466
+    ],
+    "z": [
+     10.051,
+     10.111
+    ]
+   },
+   {
+    "name": "flight1_rail02",
+    "kind": "rail",
+    "x": [
+     3.99,
+     4.231
+    ],
+    "y": [
+     -2.197,
+     -1.297
+    ],
+    "z": [
+     10.051,
+     10.111
+    ]
+   },
+   {
+    "name": "flight1_rail03",
+    "kind": "rail",
+    "x": [
+     3.749,
+     3.99
+    ],
+    "y": [
+     -2.028,
+     -1.128
+    ],
+    "z": [
+     10.051,
+     10.111
+    ]
+   },
+   {
+    "name": "flight1_rail04",
+    "kind": "rail",
+    "x": [
+     3.508,
+     3.749
+    ],
+    "y": [
+     -1.859,
+     -0.959
+    ],
+    "z": [
+     10.051,
+     10.111
+    ]
+   },
+   {
+    "name": "flight1_rail05",
+    "kind": "rail",
+    "x": [
+     3.267,
+     3.508
+    ],
+    "y": [
+     -1.69,
+     -0.79
+    ],
+    "z": [
+     10.051,
+     10.111
+    ]
+   },
+   {
+    "name": "flight1_rail06",
+    "kind": "rail",
+    "x": [
+     3.026,
+     3.267
+    ],
+    "y": [
+     -1.521,
+     -0.621
+    ],
+    "z": [
+     10.051,
+     10.111
+    ]
+   },
+   {
+    "name": "flight1_rail07",
+    "kind": "rail",
+    "x": [
+     2.785,
+     3.026
+    ],
+    "y": [
+     -1.352,
+     -0.452
+    ],
+    "z": [
+     10.051,
+     10.111
+    ]
+   },
+   {
+    "name": "flight1_rail08",
+    "kind": "rail",
+    "x": [
+     2.544,
+     2.785
+    ],
+    "y": [
+     -1.183,
+     -0.283
+    ],
+    "z": [
+     10.051,
+     10.111
+    ]
+   },
+   {
+    "name": "flight1_rail09",
+    "kind": "rail",
+    "x": [
+     2.303,
+     2.544
+    ],
+    "y": [
+     -1.014,
+     -0.114
+    ],
+    "z": [
+     10.051,
+     10.111
+    ]
+   },
+   {
+    "name": "flight1_rail10",
+    "kind": "rail",
+    "x": [
+     2.062,
+     2.303
+    ],
+    "y": [
+     -0.845,
+     0.055
+    ],
+    "z": [
+     10.051,
+     10.111
+    ]
+   },
+   {
+    "name": "flight1_rail11",
+    "kind": "rail",
+    "x": [
+     1.821,
+     2.062
+    ],
+    "y": [
+     -0.676,
+     0.224
+    ],
+    "z": [
+     10.051,
+     10.111
+    ]
+   },
+   {
+    "name": "flight1_rail12",
+    "kind": "rail",
+    "x": [
+     1.58,
+     1.821
+    ],
+    "y": [
+     -0.507,
+     0.393
+    ],
+    "z": [
+     10.051,
+     10.111
+    ]
+   },
+   {
+    "name": "landing_rail",
+    "kind": "rail",
+    "x": [
+     1.58,
+     1.64
+    ],
+    "y": [
+     -0.338,
+     0.562
+    ],
+    "z": [
+     9.824,
+     10.111
+    ]
+   },
+   {
+    "name": "flight2_rail01",
+    "kind": "rail",
+    "x": [
+     1.58,
+     1.821
+    ],
+    "y": [
+     -0.169,
+     0.731
+    ],
+    "z": [
+     9.824,
+     9.884
+    ]
+   },
+   {
+    "name": "well_wall_south",
+    "kind": "wall",
+    "x": [
+     -0.07,
+     5.58
+    ],
+    "y": [
+     -2.535,
+     0.0
+    ],
+    "z": [
+     11.311,
+     11.381
+    ]
+   },
+   {
+    "name": "well_wall_west",
+    "kind": "wall",
+    "x": [
+     -0.07,
+     0.0
+    ],
+    "y": [
+     -2.535,
+     2.4
+    ],
+    "z": [
+     8.464,
+     11.381
+    ]
+   },
+   {
+    "name": "well_wall_north",
+    "kind": "wall",
+    "x": [
+     -0.07,
+     1.821
+    ],
+    "y": [
+     -2.535,
+     0.0
+    ],
+    "z": [
+     8.464,
+     8.534
+    ]
+   }
+  ],
+  "walk_path": [
+   [
+    5.372,
+    -2.535,
+    10.711
+   ],
+   [
+    4.772,
+    -2.535,
+    10.711
+   ],
+   [
+    1.18,
+    -0.338,
+    10.711
+   ],
+   [
+    1.18,
+    -0.338,
+    9.179
+   ],
+   [
+    2.321,
+    0.0,
+    9.179
+   ],
+   [
+    5.98,
+    0.0,
+    9.179
+   ]
+  ]
+ },
  "sources": {
   "plan": "measurements/overhead/upstairs-trace.plan.json",
   "doors": "measurements/overhead/upstairs-doors.json",

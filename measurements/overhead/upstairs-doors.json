@@ -110,10 +110,26 @@
    "a": "main_stair_opening",
    "b": "hall_corridor",
    "kind": "rail",
+   "wall_axis": "y",
+   "near": 1.1,
    "source": "hall walk f135-147: balustrade along the stairwell"
+  },
+  {
+   "a": "main_stair_opening",
+   "b": "hall_corridor",
+   "kind": "rail",
+   "wall_axis": "x",
+   "near": 9.105,
+   "source": "gallery rail along the north side of the well (Part 2 f258 near rail); measurements/rooms/stairs.json (user decision Oct 13)"
+  },
+  {
+   "a": "main_stair_opening",
+   "b": "hall_corridor",
+   "kind": "open",
+   "wall_axis": "y",
+   "near": -2.757,
+   "source": "stair head: flight 2 arrives on the gallery; measurements/rooms/stairs.json (user decision Oct 13)"
   }
  ],
- "unresolved": [
-  "left edge of main_stair_opening (hidden in the overhead): settle with the ground floor and the stair itself"
- ]
+ "unresolved": []
 }

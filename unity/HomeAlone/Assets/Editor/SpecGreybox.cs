@@ -76,11 +76,14 @@ public static class SpecGreybox
                     Rail(g, d);
             }
         }
+        var stairPath = Stair(root, j["stair"]);
         Lighting(root, spaces);
         Player(spaces.First(s => s.name == "hall_corridor"));
 
+        var player = GameObject.Find("Player"); player.SetActive(false);   // the test bodies walk alone
         Physics.SyncTransforms();
-        string report = WalkTest(spaces, doors);
+        string report = WalkTest(spaces, doors) + StairWalk(stairPath);
+        player.SetActive(true);
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, $"walk-test{Tag}.txt"), report);
         if (Variant == "") Captures(spaces, ceilings);
@@ -223,9 +226,64 @@ public static class SpecGreybox
         var vol = new GameObject("GlobalVolume").AddComponent<Volume>(); vol.transform.parent = root.transform; vol.isGlobal = true; vol.sharedProfile = profile;
     }
 
+    // The main stair: solid steps, landing, rails and well walls as spec boxes (spec z -> world -z); returns the walk path.
+    static List<Vector3> Stair(GameObject root, JToken st)
+    {
+        if (st == null) return new List<Vector3>();
+        var g = Child(root, "MainStair");
+        foreach (var b in st["boxes"])
+        {
+            string kind = (string)b["kind"];
+            var m = kind == "rail" ? mRail : kind == "wall" ? mWall : kind == "floor" ? mFloor : mHall;
+            Box(g, (string)b["name"], (float)b["x"][0], (float)b["x"][1], -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], m);
+        }
+        return st["walk_path"].Select(q => new Vector3((float)q[0], (float)q[1], -(float)q[2])).ToList();
+    }
+
+    // Both bodies walk the stair path up and back down with a real CharacterController (gravity, 0.3 m step offset).
+    // A leg passes when the body ends within 0.15 m of the waypoint (horizontally) and 0.1 m of its floor height.
+    static string StairWalk(List<Vector3> path)
+    {
+        if (path.Count < 2) return "";
+        var lines = new List<string>(); int bad = 0;
+        foreach (var (name, r, h) in new[] { ("bandit", 0.275f, 1.85f), ("kevin", 0.20f, 1.20f) })
+        {
+            var go = new GameObject("StairWalker_" + name); var cc = go.AddComponent<CharacterController>();
+            cc.radius = r; cc.height = h; cc.center = new Vector3(0, h / 2, 0); cc.stepOffset = 0.3f; cc.skinWidth = 0.02f;
+            foreach (var (route, pts) in new[] { ("up", path), ("down", Enumerable.Reverse(path).ToList()) })
+            {
+                go.transform.position = pts[0] + Vector3.up * 0.05f; Physics.SyncTransforms();
+                for (int i = 1; i < pts.Count; i++)
+                {
+                    Vector3 target = pts[i]; float vy = 0f;
+                    for (int t = 0; t < 1500; t++)
+                    {
+                        var p = go.transform.position; var flat = new Vector3(target.x - p.x, 0, target.z - p.z);
+                        if (flat.magnitude < 0.05f) break;
+                        vy = cc.isGrounded ? -1f : vy - 9.81f * 0.02f;
+                        cc.Move(Vector3.ClampMagnitude(flat, 0.03f) + Vector3.up * vy * 0.02f);
+                    }
+                    for (int t = 0; t < 25; t++) cc.Move(Vector3.down * 0.05f);   // settle onto the floor
+                    var e = go.transform.position; float dxz = new Vector2(e.x - target.x, e.z - target.z).magnitude, dy = Mathf.Abs(e.y - target.y);
+                    bool ok = dxz < 0.15f && dy < 0.1f; if (!ok) bad++;
+                    string by = "";
+                    if (!ok && Physics.CapsuleCast(e + Vector3.up * (r + 0.05f), e + Vector3.up * (h - r), r * 0.98f,
+                                                   new Vector3(target.x - e.x, 0, target.z - e.z).normalized, out var hit, 1f))
+                        by = $" by {hit.collider.transform.parent?.name}/{hit.collider.name} at ({e.x:F2}, {e.y:F2}, {-e.z:F2}) spec x,y,z";
+                    lines.Add($"{(ok ? "ok     " : "BLOCKED")} {name} {route} leg {i}: ended {dxz:F2} m from waypoint, {dy:F2} m off its floor height{by}");
+                }
+            }
+            Object.DestroyImmediate(go);
+        }
+        lines.Insert(0, $"Stair walk test (both bodies, up and down): {lines.Count} legs, {bad} blocked");
+        return string.Join("\n", lines) + "\n";
+    }
+
     static void Player(Space hall)
     {
-        var (x, z) = (hall.pts.Average(p => p.x), hall.pts.Average(p => p.y));
+        // spawn on the hall's widest floor cell (its vertex average can sit over the stairwell; the gallery is long but narrow)
+        var c = Cells(hall.pts).OrderByDescending(q => Mathf.Min(q.Item2 - q.Item1, q.Item4 - q.Item3)).First();
+        var (x, z) = ((c.Item1 + c.Item2) / 2, (c.Item3 + c.Item4) / 2);
         var p = new GameObject("Player"); p.transform.position = new Vector3(x, 0.05f, z);
         var cc = p.AddComponent<CharacterController>(); cc.radius = 0.275f; cc.height = 1.85f; cc.center = new Vector3(0, 0.925f, 0); cc.stepOffset = 0.3f;
         var camGo = new GameObject("Camera"); camGo.transform.parent = p.transform; camGo.transform.localPosition = new Vector3(0, 1.7f, 0);

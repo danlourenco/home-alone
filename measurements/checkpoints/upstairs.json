@@ -113,11 +113,11 @@
    "features": {
     "polygons": {
      "hall_corridor": {
-      "note": "hall + end bay; bay north wall where the hall's east wall ends (clip first 3.05, density check), bay east wall at clip second 2.21 holds the bath door",
+      "note": "hall + end bay; bay north wall where the hall's east wall ends (clip first 3.05, density check), bay east wall at clip second 2.21 holds the bath door | plus the north-side gallery from the stair head (authored, measurements/rooms/stairs.json)",
       "vertices": [
        [
         7.29,
-        1.21
+        1.056
        ],
        [
         7.29,
@@ -158,6 +158,22 @@
        [
         10.61,
         1.27
+       ],
+       [
+        9.03,
+        1.24
+       ],
+       [
+        9.03,
+        -2.757
+       ],
+       [
+        7.83,
+        -2.757
+       ],
+       [
+        7.83,
+        1.056
        ]
       ]
      }

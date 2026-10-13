@@ -8,5 +8,26 @@ ok      hall_bath <-> hall_corridor (door, 0.68 m)
 ok      buzz_room <-> hall_corridor (door, 0.76 m)
 ok      girls_room_b <-> hall_corridor_south (door, 0.76 m)
 ok      attic_stair <-> hall_corridor_south (door, 0.76 m)
-ok      hall_end <-> hall_corridor (arch, 1.04 m)
-ok      hall_corridor <-> hall_corridor_south (arch, 1.33 m)
+ok      hall_end <-> hall_corridor (arch, 1.25 m)
+ok      hall_corridor <-> hall_corridor_south (arch, 1.55 m)
+Stair walk test (both bodies, up and down): 20 legs, 0 blocked
+ok      bandit up leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 2: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 3: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 4: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 5: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 2: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 3: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 4: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 5: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 2: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 3: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 4: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 5: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 2: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 3: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 4: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 5: ended 0.02 m from waypoint, 0.02 m off its floor height

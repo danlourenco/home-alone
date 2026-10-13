@@ -12,14 +12,14 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | kevin_jeff_room | 6.4 |
 | girls_room_a | 9.2 |
 | hall_end | 2.0 |
-| hall_corridor | 3.0 |
+| hall_corridor | 1.5 |
 | hall_corridor_south | 1.8 |
 | closet_1 | 0.6 |
 | linen_closet | 0.0 |
 | hall_bath | 4.1 |
 | buzz_room | 6.6 |
 | girls_room_b | 8.3 |
-| main_stair_opening | 13.0 |
+| main_stair_opening | 0.0 |
 | attic_stair | 2.8 |
 | girls_a_closet | 0.9 |
 
@@ -33,14 +33,16 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | y = 2.58 | kevin_jeff_room, hall_corridor | 2.58, 2.59 | 2.58 | 0.9 |
 | y = 0.86 | girls_room_a, girls_a_closet | 0.85, 0.90 | 0.86 | 4.8 |
 | x = 4.87 | hall_end, girls_a_closet | 4.94, 4.85 | 4.87 | 6.7 |
-| y = 1.24 | hall_end, hall_corridor, hall_corridor_south, attic_stair | 1.20, 1.24, 1.27, 1.27 | 1.24 | 4.9 |
 | x = 7.28 | hall_corridor, closet_1, hall_bath | 7.29, 7.24, 7.29 | 7.28 | 3.9 |
-| x = 10.61 | hall_corridor, hall_bath, main_stair_opening | 10.61, 10.50, 10.66 | 10.61 | 10.5 |
+| x = 10.61 | hall_corridor, hall_bath, main_stair_opening | 10.61, 10.50, 10.66 | 10.61 | 10.6 |
+| y = 1.27 | hall_corridor, hall_corridor_south, attic_stair | 1.25, 1.27, 1.27 | 1.27 | 1.1 |
+| y = -2.76 | hall_corridor, main_stair_opening | -2.76, -2.76 | -2.76 | 0.0 |
+| x = 7.83 | hall_corridor, main_stair_opening | 7.83, 7.83 | 7.83 | 0.0 |
 | x = 10.93 | hall_corridor_south, buzz_room, girls_room_b | 11.01, 10.93, 10.90 | 10.93 | 8.2 |
 | y = 2.61 | hall_corridor_south, attic_stair | 2.60, 2.61 | 2.61 | 0.5 |
 | y = 2.87 | closet_1, linen_closet | 2.87, 2.87 | 2.87 | 0.0 |
 | x = 8.13 | linen_closet, hall_bath | 8.09, 8.17 | 8.13 | 4.3 |
-| y = 1.00 | girls_room_b, main_stair_opening | 1.01, 0.97 | 1.00 | 2.6 |
+| y = 1.00 | girls_room_b, main_stair_opening | 1.01, 0.97 | 1.00 | 3.2 |
 
 ### Anchor rooms vs their own SfM measurement
 
@@ -55,7 +57,7 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | between | thickness (cm) | length (m) | note |
 |---|---|---|---|
 | attic_stair / buzz_room | 43 | 2.26 |  |
-| attic_stair / girls_room_b | 25 | 2.24 |  |
+| attic_stair / girls_room_b | 26 | 2.24 |  |
 | attic_stair / hall_corridor_south | 30 | 1.32 |  |
 | buzz_room / hall_bath | 32 | 2.74 |  |
 | buzz_room / hall_corridor | 32 | 0.78 |  |
@@ -66,8 +68,8 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | closet_1 / linen_closet | 24 | 0.74 |  |
 | girls_a_closet / girls_room_a | 18 | 2.35 |  |
 | girls_a_closet / parents_bedroom | 36 | 2.16 |  |
-| girls_room_a / hall_end | 39 | 1.53 |  |
-| girls_room_b / hall_corridor_south | 25 | 1.73 |  |
+| girls_room_a / hall_end | 34 | 1.53 |  |
+| girls_room_b / hall_corridor_south | 26 | 1.73 |  |
 | girls_room_b / main_stair_opening | 32 | 5.23 |  |
 | hall_bath / hall_corridor | 13 | 1.29 |  |
 | hall_bath / kevin_jeff_room | 34 | 2.42 |  |
@@ -75,7 +77,7 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | hall_corridor / hall_corridor_south | 32 | 1.33 |  |
 | hall_corridor / hall_end | 34 | 1.04 |  |
 | hall_corridor / linen_closet | 29 | 0.96 |  |
-| hall_corridor / main_stair_opening | 25 | 2.78 |  |
+| hall_corridor / main_stair_opening | 15 | 3.73 |  |
 | hall_end / kevin_jeff_room | 34 | 1.95 |  |
 | hall_end / parents_bedroom | 36 | 0.87 |  |
 | kevin_jeff_room / parents_bedroom | 50 | 1.38 |  |
@@ -88,36 +90,38 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | parents_bath | 3.56 x 2.70 | 3.56 x 2.73 | 8.7 → 8.7 | +0.7% |
 | parents_bedroom | 5.22 x 5.25 | 5.33 x 5.28 | 24.3 → 25.5 | +4.8% |
 | kevin_jeff_room | 3.60 x 4.51 | 3.88 x 4.60 | 16.2 → 17.9 | +10.1% |
-| girls_room_a | 2.22 x 5.09 | 2.22 x 5.22 | 9.6 → 9.9 | +3.0% |
-| hall_end | 2.06 x 1.00 | 2.27 x 1.22 | 2.1 → 2.8 | +34.7% |
-| hall_corridor | 3.33 x 2.55 | 3.52 x 2.74 | 6.1 → 7.3 | +19.5% |
-| hall_corridor_south | 1.81 x 1.36 | 1.98 x 1.56 | 2.5 → 3.1 | +25.3% |
-| closet_1 | 0.61 x 1.46 | 0.76 x 1.60 | 0.9 → 1.2 | +37.4% |
+| girls_room_a | 2.22 x 5.09 | 2.22 x 5.19 | 9.6 → 9.9 | +2.6% |
+| hall_end | 2.06 x 1.05 | 2.27 x 1.25 | 2.2 → 2.8 | +30.9% |
+| hall_corridor | 3.33 x 6.55 | 3.52 x 6.55 | 11.0 → 12.2 | +11.2% |
+| hall_corridor_south | 1.81 x 1.34 | 1.98 x 1.55 | 2.4 → 3.1 | +26.2% |
+| closet_1 | 0.61 x 1.46 | 0.76 x 1.60 | 0.9 → 1.2 | +37.5% |
 | linen_closet | 0.92 x 0.74 | 0.99 x 0.90 | 0.7 → 0.9 | +30.3% |
 | hall_bath | 3.33 x 3.16 | 3.52 x 3.25 | 9.9 → 10.8 | +8.6% |
 | buzz_room | 4.37 x 3.54 | 4.46 x 3.69 | 15.5 → 16.4 | +6.2% |
-| girls_room_b | 4.36 x 5.18 | 4.45 x 5.23 | 22.6 → 23.3 | +3.1% |
-| main_stair_opening | 2.78 x 5.57 | 2.87 x 5.57 | 15.5 → 16.0 | +3.2% |
-| attic_stair | 2.66 x 1.36 | 2.74 x 1.56 | 3.6 → 4.3 | +18.1% |
+| girls_room_b | 4.36 x 5.18 | 4.45 x 5.25 | 22.6 → 23.3 | +3.3% |
+| main_stair_opening | 2.78 x 5.58 | 2.87 x 5.58 | 10.4 → 10.9 | +4.8% |
+| attic_stair | 2.66 x 1.34 | 2.74 x 1.55 | 3.6 → 4.2 | +18.9% |
 | girls_a_closet | 0.30 x 2.39 | 0.42 x 2.44 | 0.7 → 1.0 | +46.4% |
 
 ## 4. Doors and openings
 
 | between | kind | position along wall (m) | width (m) | placed from |
 |---|---|---|---|---|
-| parents_bedroom / hall_end | door | 1.18-1.95 | 0.77 | measured, slid +11 cm onto the shared wall |
+| parents_bedroom / hall_end | door | 1.10-1.87 | 0.77 | measured, slid +3 cm onto the shared wall |
 | parents_bedroom / parents_bath | door | 2.88-3.64 | 0.76 | measured |
 | kevin_jeff_room / hall_end | door | 6.05-6.82 | 0.77 | measured |
-| kevin_jeff_room / closet_1 | door | 3.50-4.33 | 0.83 | measured, slid -1 cm onto the shared wall |
+| kevin_jeff_room / closet_1 | door | 3.51-4.34 | 0.83 | measured |
 | girls_room_a / hall_end | door | 6.01-6.79 | 0.78 | measured |
 | hall_bath / hall_corridor | door | 9.57-10.24 | 0.67 | measured |
-| linen_closet / hall_corridor | fake_door | 8.27-8.88 | 0.61 | topology (centred; position unverified) |
-| buzz_room / hall_corridor | door | 3.01-3.78 | 0.76 | measured, slid +8 cm onto the shared wall |
-| girls_room_b / hall_corridor_south | door | 11.49-12.25 | 0.76 | topology (centred; position unverified) |
+| linen_closet / hall_corridor | fake_door | 8.26-8.87 | 0.61 | topology (centred; position unverified) |
+| buzz_room / hall_corridor | door | 2.94-3.70 | 0.76 | measured |
+| girls_room_b / hall_corridor_south | door | 11.45-12.21 | 0.76 | topology (centred; position unverified) |
 | attic_stair / hall_corridor_south | door | 1.53-2.30 | 0.76 | measured |
-| hall_end / hall_corridor | arch | 1.22-2.25 | 1.04 | full shared wall |
-| hall_corridor / hall_corridor_south | arch | 1.27-2.60 | 1.33 | full shared wall |
-| main_stair_opening / hall_corridor | rail | 7.83-10.61 | 2.78 | full shared wall |
+| hall_end / hall_corridor | arch | 1.10-2.34 | 1.25 | full shared wall |
+| hall_corridor / hall_corridor_south | arch | 1.20-2.75 | 1.55 | full shared wall |
+| main_stair_opening / hall_corridor | rail | 9.18-10.70 | 1.52 | full shared wall |
+| main_stair_opening / hall_corridor | rail | -2.76-1.00 | 3.76 | full shared wall |
+| main_stair_opening / hall_corridor | open | 7.83-9.12 | 1.29 | full shared wall |
 
 ## 5. Body rules (adult, hard)
 
@@ -132,11 +136,10 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | adult fits door buzz_room/hall_corridor | pass | 0.76 m wide x 2.03 m |
 | adult fits door girls_room_b/hall_corridor_south | pass | 0.76 m wide x 2.03 m |
 | adult fits door attic_stair/hall_corridor_south | pass | 0.76 m wide x 2.03 m |
-| adult fits hall hall_end | pass | narrowest 1.22 m |
-| adult fits hall hall_corridor | pass | narrowest 2.74 m |
-| adult fits hall hall_corridor_south | pass | narrowest 1.56 m |
+| adult fits hall hall_end | pass | narrowest 1.25 m |
+| adult fits hall hall_corridor | pass | narrowest 3.52 m |
+| adult fits hall hall_corridor_south | pass | narrowest 1.55 m |
 
 ## Flags (need a decision or more evidence)
 
-- unresolved: left edge of main_stair_opening (hidden in the overhead): settle with the ground floor and the stair itself
 - ceiling 2.4 m in rooms not measured directly (Kevin 2.40 / parents 2.50 / attic leg 2.29 measured)

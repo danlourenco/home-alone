@@ -144,11 +144,11 @@
   {
    "name": "hall_corridor",
    "kind": "hall",
-   "notes": "hall + end bay; bay north wall where the hall's east wall ends (clip first 3.05, density check), bay east wall at clip second 2.21 holds the bath door (clip hall-s1, registration residual <= 5.1 cm)",
+   "notes": "hall + end bay; bay north wall where the hall's east wall ends (clip first 3.05, density check), bay east wall at clip second 2.21 holds the bath door | plus the north-side gallery from the stair head (authored, measurements/rooms/stairs.json) (clip hall-s1, registration residual <= 5.1 cm)",
    "m": [
     [
      7.29,
-     1.21
+     1.056
     ],
     [
      7.29,
@@ -169,6 +169,22 @@
     [
      10.61,
      1.27
+    ],
+    [
+     9.03,
+     1.24
+    ],
+    [
+     9.03,
+     -2.757
+    ],
+    [
+     7.83,
+     -2.757
+    ],
+    [
+     7.83,
+     1.056
     ]
    ]
   },
@@ -318,25 +334,33 @@
   {
    "name": "main_stair_opening",
    "kind": "opening",
-   "px": [
+   "notes": "the well left open above the main stair (measurements/rooms/stairs.json): Marina's overhead hole minus the north-side gallery that flight 2 arrives on (user decision Oct 13). West edge = the squared rear wall.",
+   "m": [
     [
-     600,
-     517
+     7.83,
+     -4.578
     ],
     [
-     940,
-     517
+     7.83,
+     -2.757
     ],
     [
-     940,
-     690
+     9.18,
+     -2.757
     ],
     [
-     600,
-     690
+     9.18,
+     0.97
+    ],
+    [
+     10.665,
+     0.97
+    ],
+    [
+     10.665,
+     -4.578
     ]
-   ],
-   "notes": "black = open to the floor below. Left edge not visible against the background: assumed at the building edge (x~600)"
+   ]
   },
   {
    "name": "attic_stair",

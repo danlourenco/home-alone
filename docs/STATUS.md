@@ -56,7 +56,7 @@ Key files:
 
 ## Open items
 
-1. **The main staircase** (next, below).
+1. **The ground floor** (next). The stair's foot and foyer are only a floor patch so far.
 2. The attic leg looks about 10 cm wider in hall-s1 than in the overhead (leave-one-out); unresolved.
 3. Buzz's room, the girls' rooms and the hall bath have only consistency or overhead evidence. Buzz's own clip calibrated the overhead, and the girls' rooms have no interior video.
 4. Kevin's crawl test and hideable furniture (bed clearances) are not started.
@@ -65,12 +65,12 @@ Key files:
 
 ## Next: the main staircase. What we know and a plan
 
-**Progress (Oct 13, later):** flight 1 is measured. See `measurements/rooms/stairs.json` and the experiment log.
-- 13 risers of 0.169 m, going 0.241 m (pitch 35.0 deg by vanishing points), tread band 1.12 m.
-- Landing at 2.20 m, full width along the rear wall, at the west end of `main_stair_opening`.
-- Flight 2 and the floor-to-floor height are not filmed and not in Marina's main-floor model. They wait on a user decision; the spec and grey-box are not extended yet.
-- The Part 1 1080p video is the `copy.mp4` (the 640p original is deleted).
-
+**Done (Oct 13, later): the main stair is measured, decided and built.** Record: `measurements/rooms/stairs.json`.
+- Measured (flight 1): 13 risers of 0.169 m, going 0.241 m (pitch 35.0 deg by vanishing points), tread band 1.12 m; landing at 2.20 m.
+- Decided by the user: floor-to-floor 15 risers (2.54 m). Flight 2 is 2 risers at the north end of a full-width rear landing, rising toward the front onto a 1.2 m gallery along the north side of the well, which runs to the hall.
+  - Evidence: Marina's main-floor overhead, a main-floor plan drawing the user found (not yet in the repo), the film's landing walk (Kate and Kevin), and the climb clip.
+- Built: `stair` block in the spec (reconciler), boxes plus walk path in `SpecGreybox`. The stair walk test (adult and Kevin, up and down) gives 20/20 legs; removing one step blocks it.
+- Not modelled: the landing window, the newels, and the landing's true ~4 m width. Marina's main floor is wider than the upstairs well; settle that when the ground floor is built.
 
 **Evidence on hand:**
 

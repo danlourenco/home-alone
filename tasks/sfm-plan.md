@@ -306,3 +306,12 @@ Clips from Part 1 at 1080p (the 640x360 original is deleted; use the `copy.mp4`)
 - **Layout from Marina's main-floor overhead (Part 1 f216):** a straight flight along the foyer's left wall, rising toward the rear, onto a full-width landing at the rear wall (picture and table, then the big window), with a balustrade facing the foyer. In the upstairs plan: the landing is at the west end of `main_stair_opening`, spanning its 2.83 m, and flight 1 runs along the south side.
 - **Flight 2 (landing to the upper floor) is in neither video nor Marina's main-floor model**, so it is authored. The landing is at 2.20 m. The upper floor height (floor-to-floor) is not measured: the foyer ceiling meets the wall at the landing-balustrade line, 2.32 m.
 - Caption check (user question): the big "Buzz's Room" chapter title fades in over the hall-bath clip's last frames (179-180). Only the rejected hallbath 26-180 solve included them, and nothing built uses it. The small hall label at f152-156 marks Buzz's doorway; `hall.json`'s note is corrected.
+
+## Main staircase built (Oct 13)
+- User decisions: 15 risers floor-to-floor; flight 2 = 2 risers off the full-width landing's north end, rising east onto a north-side gallery.
+- Evidence for flight 2: a main-floor plan drawing (user-found), the film (walk along the landing past the rear window), and the climb clip (floor ~2 rises past the rail).
+- I first read the film clip as a long flight 2. That was wrong: perspective made Kate look higher as she walked toward the camera, and the wainscot cap stays level.
+- Reconciler: a pair of spaces can now share several walls (door `wall_axis` + `near`). New door kind `open` (stair head: no wall, no rail). Wall extents are recomputed after thinning.
+  - The last fix removes the hidden door "slides". The parents' hall door now reads 15 cm from the far-end clip (was 7 cm only because the slide moved it), so the two hall clips disagree by ~15 cm on that door.
+- Unity: stair boxes, a stair walk test for both bodies (20/20), and an injected missing step (8 legs blocked).
+- check_walls: hall-s1 5 walls / kevin 4 walls, 0 flagged. Parents: a 0.63 m bath stub at -9 cm, identical at the previous commit (pre-existing).

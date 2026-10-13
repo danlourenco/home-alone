@@ -86,6 +86,7 @@ A check counts only once it has been shown to FAIL on a known-bad input, and its
 |---|---|---|
 | `verify_plan.py` checkpoints | The pre-fix trace (`git show 50b9f54:...`) gives 7 FAIL; the current trace gives 0 | Door checks: 30 cm (loose, by design for overhead reading error). Dimensions: 4–6% |
 | `check_walls.py` | `tools/house/test_checks.py` injects 0/5/10/20 cm wall errors in 3 rooms | Reads errors to within 1–3 cm; **flags 10 cm or more**. 5 cm reads correctly but isn't flagged |
+| Unity stair walk test (adult + Kevin, up and down the main stair) | Removing one step (a 0.34 m double rise) blocks 8 of 20 legs and names the step | Blocks any single rise over the 0.30 m step offset; it does not see cm-level rise errors |
 | Unity adult walk test | `-variant inject_door` with 0.45 and 0.50 m doors gives both BLOCKED, every other door ok | Physically blocks doors narrower than the 0.55 m capsule. The reconciler rule flags under 0.65 m |
 | Door checkpoints (centre along the wall) | Kevin's hall door shifted 10 and 20 cm in the inputs: FAIL at 17 and 26 cm against a 7 cm baseline | 10 cm (tol 15). Across-wall tolerance is separate (`tol_across`) because a door measured on one face sits half a wall-thickness off the centre line |
 | Registration (`register_clip.py --loo [--rigid]`) | Leave-one-out over anchor walls | Hall (rigid): median 5, max 10.5 cm. Kevin: median 3.5, max 6 |
@@ -125,4 +126,7 @@ A check is **independent** only if its evidence played no part in building the p
 - **Fitting scale can absorb the error you're testing for.** When both sides are metric, register rigidly (`"rigid": true`); the far-end clip's scale fit would have hidden a 15 cm width difference.
 - **A railing is not a wall.** The rail stands on the stairwell's edge, and the hall reaches it (`RAIL_T` in the reconciler).
 - **Height histograms mis-measure ceilings** because of camera tilt. Measure ceilings on a door wall as wall height relative to door height.
+- **On stairs, VGGT depth lies along the flight.** Both stair clips gave 24-27 deg pitch against 35 deg from vanishing points. Measure pitch with `tools/sfm/stair_pitch.py` (it has a `--selftest`). Take only heights and lateral sizes from 3D.
+- **Door edge pixels can sit on a depth jump** (a door recessed under an arch read 14% short). `stair_measure.door_height` fits the slab's interior instead.
+- **Never run two `test_checks.py` at once**: they share `spec/house_spec.test.json`.
 - **Captions and dissolves** sit at the ends of kept frame ranges. Trim them before solving.

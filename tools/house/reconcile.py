@@ -140,6 +140,67 @@ def facing_pairs(polys, edges):
 
 
 MEASURED = "--measured" in sys.argv
+STAIR = ROOT / "measurements/rooms/stairs.json"
+
+
+def wall_of(p):
+    return (p["coord_a"] + p["coord_b"]) / 2
+
+
+def door_on(p, doors):
+    """The topology door on facing pair p. Two spaces can share several walls (the stairwell and the hall share two
+    rails and the stair head), so a door may name its wall by "wall_axis" (x/y = the plan axis held constant) and
+    "near" (that coordinate); the nearest such door wins. A door without them sits on the pair's longest wall."""
+    key = tuple(sorted((p["a"], p["b"])))
+    cands = [d for d in doors if tuple(sorted((d["a"], d["b"]))) == key]
+    axis = "x" if p["axis"] == 0 else "y"
+    named = [d for d in cands if d.get("wall_axis") == axis]
+    if named:
+        return min(named, key=lambda d: abs(d["near"] - wall_of(p)))
+    return next((d for d in cands if "wall_axis" not in d), None)
+
+
+def stair_spec(final, o):
+    """The main stair in spec coordinates (x east, z south, y up; upper floor at y = 0), from the measured flight
+    (measurements/rooms/stairs.json) and the well/walkway the trace now holds. Steps are solid boxes down to the foyer
+    floor (a grey-box stair); rails are boxes; walk_path is the route the Unity walk test climbs and descends."""
+    S = json.loads(STAIR.read_text()); m, a = S["measured"], S["authored"]
+    r, g, n1, n = m["rise_m"]["value"], m["going_m"]["value"], m["risers_floor_to_landing"]["value"], a["risers_total"]
+    F = n * r
+    sx = lambda P: np.c_[P[:, 1] - o[1], P[:, 0] - o[0]]
+    well, hall = sx(final["main_stair_opening"]), sx(final["hall_corridor"])
+    xw, xe, zn, zs = well[:, 0].min(), well[:, 0].max(), well[:, 1].min(), well[:, 1].max()
+    xh = well[np.isclose(well[:, 1], zn), 0].max()                      # stair head: the gallery's west edge
+    zg = hall[np.isclose(hall[:, 0], xh) & (hall[:, 1] > zn + 0.3), 1].min()   # gallery's south edge
+    W1, DL = a["flight_1_width_m"], a["landing_depth_m"]
+    z1 = zs - W1                                                          # flight 1's north (open) side
+    xl = xw + DL                                                          # landing's east edge = top nosing of flight 1
+    g2 = (xh - xl) / (n - n1 - 1)                                         # flight 2 going (fills landing edge to stair head)
+    B = []
+    box = lambda name, kind, x0, x1, y0, y1, z0, z1_: B.append({"name": name, "kind": kind, "x": [round(float(x0), 3), round(float(x1), 3)],
+                                                             "y": [round(float(y0), 3), round(float(y1), 3)], "z": [round(float(z0), 3), round(float(z1_), 3)]})
+    for k in range(1, n1):                                                # flight 1 treads (the n1-th riser lands on the landing)
+        box(f"flight1_step{k:02d}", "step", xl + (n1 - 1 - k) * g, xl + (n1 - k) * g, -F, -F + k * r, z1, zs)
+    box("landing", "landing", xw, xl, -F, -F + n1 * r, zn, zs)          # full width along the rear wall
+    for k in range(n1 + 1, n):                                            # flight 2: rises east from the landing's north end
+        box(f"flight2_step{k - n1:02d}", "step", xl + (k - n1 - 1) * g2, xl + (k - n1) * g2, -F, -F + k * r, zn, zg)
+    x0 = xl + (n1 - 1) * g                                                # foot of flight 1
+    box("foyer_floor_under_well", "floor", xw, xe + 1.0, -F - 0.2, -F, zn, zs)
+    for k in range(1, n1):                                                # flight 1 open-side balustrade, stepped with the treads
+        box(f"flight1_rail{k:02d}", "rail", xl + (n1 - 1 - k) * g, xl + (n1 - k) * g, -F + k * r, -F + k * r + 0.9, z1 - 0.06, z1)
+    box("landing_rail", "rail", xl, xl + 0.06, -F + n1 * r, -F + n1 * r + 0.9, zg, z1)   # landing edge over the foyer
+    for k in range(n1 + 1, n):
+        box(f"flight2_rail{k - n1:02d}", "rail", xl + (k - n1 - 1) * g2, xl + (k - n1) * g2, -F + k * r, -F + k * r + 0.9, zg, zg + 0.06)
+    box("well_wall_south", "wall", xw - 0.07, xe, -F, 0, zs, zs + 0.07)    # the photo wall, foyer floor to the upper floor
+    box("well_wall_west", "wall", xw - 0.07, xw, -F, 2.4, zn - 0.07, zs + 0.07)   # rear wall (landing window not modelled)
+    box("well_wall_north", "wall", xw - 0.07, xh, -F, 0, zn - 0.07, zn)  # beside the landing and flight 2, below the upper floor
+    zm, zf = (zn + zg) / 2, (z1 + zs) / 2
+    path = [[x0 + 0.9, -F, zf], [x0 + 0.3, -F, zf], [xl - 0.4, -F + n1 * r, zf], [xl - 0.4, -F + n1 * r, zm],
+            [xh + 0.5, 0.0, zm], [xe + 0.4, 0.0, zm]]
+    return {"source": str(STAIR.relative_to(ROOT)), "floor_to_floor_m": round(F, 3), "risers": n, "rise_m": r, "going_m": g,
+            "measured": "flight 1: 13 risers, rise, going (pitch), tread width; landing height",
+            "authored": a["decided"] + "; landing depth, gallery and flight widths",
+            "boxes": B, "walk_path": [[round(float(v), 3) for v in q] for q in path]}
 
 
 def main():
@@ -197,7 +258,10 @@ def main():
             best[key] = p
     for (a, b), p in sorted(best.items()):
         note = ""
-        if p["gap"] < WALL_MIN:
+        d = door_on(p, topo["doors"])
+        if d and d["kind"] == "open":
+            note = "open (no wall: stair head)"
+        elif p["gap"] < WALL_MIN:
             note = "TOO THIN: rooms overlap or touch"; flags.append(f"wall {a}/{b} {p['gap'] * 100:.0f} cm: too thin")
         elif p["gap"] > WALL_MAX:
             note = "thick: chase, closet or measurement error"; flags.append(f"wall {a}/{b} {p['gap'] * 100:.0f} cm: thick")
@@ -206,9 +270,11 @@ def main():
     # 3b. thin interior walls to WALL_T around their centrelines; each side grows outward by half the excess
     before = {n: final[n].copy() for n in final}
     move = {}
-    rails = {tuple(sorted((d["a"], d["b"]))) for d in topo["doors"] if d["kind"] == "rail"}
     for p in pairs:
-        is_rail = tuple(sorted((p["a"], p["b"]))) in rails
+        dk = (door_on(p, topo["doors"]) or {}).get("kind")
+        if dk == "open":   # a stair head: no wall, the two floors meet where the trace puts them
+            continue
+        is_rail = dk == "rail"
         t = RAIL_T if is_rail else WALL_T
         if p["gap"] <= t or (MEASURED and not is_rail):   # rails are a measurement fact, applied in both builds
             continue
@@ -222,6 +288,7 @@ def main():
     for (n, k), m in move.items():
         edges[n][k][1] += m
     final = {n: rebuild(e) for n, e in edges.items()}
+    edges = {n: edges_of(final[n]) for n in final}   # wall extents follow the moved neighbours (door spans read them)
     log += ["", f"## 3b. Interior walls thinned to {WALL_T * 100:.0f} cm (centrelines kept; rooms take the space)", "",
             "| space | before (m) | after (m) | area before → after (m²) | change |", "|---|---|---|---|---|"]
     for n in sp:
@@ -240,11 +307,12 @@ def main():
     log += ["", "## 4. Doors and openings", "", "| between | kind | position along wall (m) | width (m) | placed from |", "|---|---|---|---|---|"]
     for d in topo["doors"]:
         key = tuple(sorted((d["a"], d["b"])))
-        p = best.get(key)
+        on = [q for q in pairs if tuple(sorted((q["a"], q["b"]))) == key and door_on(q, topo["doors"]) is d]
+        p = max(on, key=lambda q: q["hi"] - q["lo"]) if on else None
         if not p:
             flags.append(f"door {d['a']}/{d['b']}: no shared wall found within {FACE_MAX} m"); continue
         wall_c = (p["coord_a"] + p["coord_b"]) / 2
-        if d["kind"] in ("arch", "rail"):
+        if d["kind"] in ("arch", "rail", "open"):
             lo, hi, src = p["lo"], p["hi"], "full shared wall"
         elif "span" in d:
             lo, hi = sorted(d["span"]); src = "measured"
@@ -303,6 +371,7 @@ def main():
                    "span_spec": [round(v - o[1 if d["wall_axis"] == "x" else 0], 3) for v in d["span"]],
                    "spec_axis": "z" if d["wall_axis"] == "x" else "x"} for d in doors],
         "flags": flags,
+        "stair": stair_spec(final, o),
         "sources": {"plan": str(PLAN.relative_to(ROOT)), "doors": str(DOORS.relative_to(ROOT)), "anchors": ANCHORS},
     }
     (ROOT / "spec").mkdir(exist_ok=True)
