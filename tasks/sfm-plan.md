@@ -197,3 +197,9 @@ Open: metric scale (door height / Marina's stated areas / stair rise); parameter
 - FAILED: ceiling height from point-histogram peaks (0.86 m — picked furniture planes). Discarded; measure the ceiling–wall junction directly instead.
 - INCONCLUSIVE: door height/width shape check (2.05–2.32 vs 2.50 standard) — width edges caught casing vs leaf inconsistently.
 Door height is an assumption (source weight 1/5). Next anchors to cross-check scale: Marina's stated floor areas (needs the upstairs floor assembled), other doors in other rooms (consistency), stair rise/going, bed length.
+
+### Scale policy (Oct 12, user decision) + hall door
+Scale each room from its own door at 80 in (78–84 in carried as the error bar). Door-model reuse is NOT a gate — it can't tell 80 from 84 in anyway; doors agreeing across rooms is a free sanity check. The 78/80/84 question is settled only by an independent anchor (Marina's stated areas).
+- Hall (one-pass VGGT `real-vggt-hall`, frames 135–222 every 2nd): attic door 0.3714 / 0.3730 / 0.3738 units (frames 7, 10, 13; overlay `sfm-work/hall-door-measure.jpg`) → 0.373, spread 0.7% → 5.45 m/unit at 80 in.
+Per-room recipe: (1) COLMAP + VGGT, accept agreed windows; (2) room_dims shape; (3) door_scale at 80 in.
+Next: independent check of the 80 in assumption against Marina's stated areas — attic (476 ft², single room, orthographic overhead at Part 2 14:00) is the cleanest; kitchen 477 ft² has a zone-boundary definition problem.
