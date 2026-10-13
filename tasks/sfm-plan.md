@@ -62,10 +62,63 @@ Verdict: SfM is the right direction and the Buzz↔hall link is genuine, but the
 
 ## Revised sequence (supersedes Phases 1–3 above until gates pass)
 
-- **0a. Ask Marina** (user decision) for dimensions / plan export / model file.
+- **0a. Staircase stacking test (NEXT):** SfM on Part 1 "Tour of the Stairs and Landing" (5:33–5:53) and any continuous ground→upper camera path. One connected model across floors answers whether Marina's floors stack. (Contacting Marina dropped: no relationship; she is a YouTube creator whose CG is film-faithful, not a survey of the real house.)
 - **0b. Synthetic truth test:** scripted Unity fly-through of the existing GLB (known metres) with per-shot and mid-shot FOV changes, title cards, captions, a dissolve, YouTube-like encode → unchanged pipeline → score room ratios and wall positions. Produces the real tolerances every later gate uses.
 - **0c. Fix the spike clip:** pinhole intrinsics, per-shot cameras, caption masks, ±1 s padded exclusions, dissolve detection, dedupe; loop-closure/hierarchical mapper. Gate: the 100 s clip merges into one model.
 - **0d. Resolve Buzz 0.77 vs 0.60:** wall-only points, intrinsics spread, cross-tour pass if Buzz appears in Part 1. Gate: discrepancy explained.
 - **Gates from here on are independent:** cross-tour whole-pass holdout (solve Part 1, verify Part 2 via `image_registrator`), structural-line scoring, a +10%-depth negative control that must fail, uncertainty = max(cross-pass, intrinsics, scale-definition, synthetic-truth error).
 - **Decisions needed from user:** (a) Marina governs geometry; film governs which named items? (b) floor stitching is authored, with options presented. Deviation ledger has two sections: Marina-internal inconsistencies, film vs Marina.
 - MASt3R only when a room fails for lack of wall points. Minimal generator only after 0b–0d pass on one floor.
+
+## Correction — floor stacking is UNVERIFIED (Oct 12)
+
+The "upper floor doesn't stack" claim (survey/README.md Discrepancy #1: 19.2 m upper depth vs 16.9 m house, 13.0 vs 14.4 m facade, 1.5 m stair offset) comes from the Sept 11 overhead rectification — the same method that produced Buzz 4.21×6.97 m, which SfM contradicts by ~30%. A ~1.3× depth stretch would explain 19.2 m on its own. `SurveyHouse.cs` mirror/rescale is our workaround built on that measurement, not evidence. Real, separate fact: Muto says the upstairs was a separate set and the service stair never arrived upstairs.
+
+## Reconciliation model (if floors or rooms don't fit)
+
+Three constraint layers, in priority order:
+1. **Envelope (hard):** the film exterior is the real Winnetka house — footprint, facade windows, roofline. Sources: exterior GLB, photos, dimensioned visitor plans (dimensional-baseline/).
+2. **Film-faithful interiors (maximize):** per-room proportions, sightlines, compositions from SfM on Marina's model, checked against named film shots.
+3. **Game usability (hard minimums):** capsule clearance, door width, stair rise/going, ceiling height.
+
+Solve as a small optimization: each room keeps SfM proportions but may stretch within a tolerance; fit inside the envelope, align stair wells, meet usability minimums, minimize weighted deviation from layer 2. Output: per-room deviation ledger (how far, why). Infeasible → name the conflicting constraints for a user decision. Implements the Sept 11 "smallest local adaptation" policy.
+
+## Experiment 0a result — staircase stacking test (Oct 12): INCONCLUSIVE, false link caught
+
+Inputs: Part 1 305–360 s (stairs; kept 31–74, 116–199 — film/dissolve, arrow overlays, title excluded) + Part 2 573–618 s (upper hall). `tools/sfm/link.sh`: SIMPLE_PINHOLE per video, sequential + every-2nd-frame cross pairs, incremental mapper. 8.5 min mapper.
+- Neither video climbs continuously between floors: Part 1 stops at the landing; Part 2 starts upstairs.
+- One model held 125/128 p1 + 179/180 p2 frames, 0.44 px, 1,300 points seen by both — looked like success.
+- `tools/sfm/link_check.py`: upper-hall cameras came out ~1.4 units BELOW the foyer (stairs climb 0.5→3.6). Physically impossible.
+- Cause: strongest link p1 110–140 ↔ p2 160–180 joins the ground-floor stair wall (family photos) to a different upper-hall wall (landscape painting). Same repeating damask wallpaper → texture-pattern matches glued two walls.
+
+Lessons, now gates: (1) any cross-segment link must pass a physical sanity check (camera heights / floor order) before use; (2) link evidence must include non-repeating features (frames, trim, fixtures), not wallpaper alone; (3) sub-pixel reprojection and high registration again said nothing about correctness.
+Next: rerun with wallpaper regions masked or links restricted to unique-feature matches; target the real shared view — p2 frames looking over the railing down the stairwell vs p1 landing frames.
+
+### 0a follow-up — wallpaper-filtered rerun (Oct 12): NO genuine cross-floor link in these clips
+
+- Homography "planar" filter caught nothing (false pairs only 27–48% homography-explained: different pattern repeats, not one plane). Premise wrong; discarded.
+- `tools/sfm/filter_cross_matches.py` (colour+texture damask mask, dilated): ~97% of cross-video matches were wallpaper; 2566 → 14 pairs.
+- Both strongest survivors false on inspection: p1/198 is the "Living Room" title fade (exclusion should start ≤195) matched to the "Hall Bathroom" caption (same serif font); p1/65↔p2/177 is shadowed damask the mask missed.
+- Conclusion: these segments share no genuine view. Ground-floor stair climb shows family photos on the stair wall; upstairs railing views show landscape paintings on damask — likely different sections of the stairwell, never seen by both videos.
+- Ingest lessons: caption/title text produces confident cross-video matches → must be masked; exclusions need ±1 s padding (reviewer #11 confirmed twice).
+
+Implication: floor stacking cannot come from a direct SfM link with this footage. Stacking becomes the reconciliation solver's job (envelope + stair geometry: rise/run and landing from Part 1, stairwell opening and railing from Part 2), with the result flagged as authored, not measured — unless a fuller search of Part 2 finds frames looking down onto the landing that Part 1 also sees.
+
+## Experiment 0b — synthetic truth test (Oct 12): COLMAP SIFT pipeline FAILS outside feature-rich rooms
+
+Harness (re-runnable): `Assets/Editor/SfmSyntheticFlythrough.cs` (Unity batchmode, textured House.unity, SurveyBuilder walk-checked ground-floor route, 984 frames, exact pose + vFOV in gt.json; shots FOV 55 / 42 / 62 / 50→36 zoom) → `tools/sfm/synthetic_run.sh` (compose title card + caption + dissolve, ~6 Mb/s H.264, extract every 6th frame, solve, score) → `tools/sfm/synthetic_score.py` (Sim3 to truth: registration, contaminants, cm error, floor-plane stretch, FOV).
+Note: first attempt used IntactHouseReference; renders flat/dark without HDAdditionalCameraData — use House.unity.
+
+| Variant | Good | Elsewhere |
+|---|---|---|
+| single camera (unchanged pipeline) | shot 1 (kitchen): 1.1 cm, 2.0% | 1–2.4 m, >100% stretch; forced vFOV 45° for 62°/zoom shots |
+| oracle per-shot camera | shot 1: 0.8 cm, 1.6% | 0.4–6 m, 60–580% stretch despite correct FOVs (54.5/55, 42.1/42) |
+| per-frame focal | none | focal unstable 8°–137°; ruled out |
+
+Findings:
+- Intrinsics are NOT the dominant error. With correct per-shot FOV, wallpapered halls and plain walls still reconstruct meters wrong; only the feature-rich kitchen passes. Same failure class as the staircase false link: repeating/low texture silently corrupts geometry at sub-pixel reprojection.
+- Scene-cut detection can't segment shots: caught the title card; missed the dissolve and an in-motion FOV change; 8 false positives on fast pans.
+- Contaminant frames mostly rejected (≤1 registered).
+- Caveats: synthetic house is plainer than Marina's CG (pessimistic on texture). Floor-plane stretch metric is ill-conditioned on near-straight paths (shot 0); replace with error against true 3D geometry.
+
+Next: benchmark learned methods on the same harness and scorer — hloc SuperPoint+LightGlue (MPS) and MASt3R/VGGT (MPS). Pass bar to define from these runs; nothing proceeds to Marina footage until a method passes on wallpapered/plain shots.
