@@ -122,3 +122,22 @@ Findings:
 - Caveats: synthetic house is plainer than Marina's CG (pessimistic on texture). Floor-plane stretch metric is ill-conditioned on near-straight paths (shot 0); replace with error against true 3D geometry.
 
 Next: benchmark learned methods on the same harness and scorer — hloc SuperPoint+LightGlue (MPS) and MASt3R/VGGT (MPS). Pass bar to define from these runs; nothing proceeds to Marina footage until a method passes on wallpapered/plain shots.
+
+## Experiment 0b, continued — method benchmark on synthetic truth (Oct 12)
+
+All variants: oracle per-shot cameras, same 169 frames (4 fps), scorer `tools/sfm/synthetic_score.py` (shared loader `synthetic_score_lib.py`).
+
+| Shot | SIFT (COLMAP) | ALIKED+LightGlue (COLMAP 4.2 built-in ONNX) | VGGT-1B (MPS, per shot) |
+|---|---|---|---|
+| 0 foyer, long straight walk | 127 cm | false merges, 0.7–4 m | 222 cm |
+| 1 kitchen loop | **0.8 cm, 1.6%** | false merges | 27 cm |
+| 2 breakfast/dining, 62° | 79–594 cm | false merges | **6.4 cm, 4.3%** |
+| 3 living→den, long straight walk | false merge | false merges | 190 cm |
+
+- SIFT+LightGlue: ~218 s/frame on CPU (8192 SIFT features), then killed by macOS under memory pressure. Retry only with max_num_features ≈ 2000.
+- VGGT: 5 min for all shots incl. weight download; weights facebook/VGGT-1B are NON-COMMERCIAL (VGGT-1B-Commercial needs an application). Code: `tools/sfm/vggt_solve.py`, env `sfm-work/.venv` (torch 2.14; pycolmap removed — OpenMP clash with torch).
+- PyTorch + pycolmap in one process abort (duplicate libomp). Kept separate; no KMP_DUPLICATE_LIB_OK.
+- Scorer bugs fixed: (a) images.txt pairing dropped blank 2D-point lines, halving/shifting frames — would also corrupt real COLMAP models with zero-observation images; (b) `synthetic_score.py` edited while a run used it.
+
+Read: methods succeed in different places; both fail on long straight forward walks (low parallax, 4 fps ≈ 35 cm between samples) → meters of along-path drift.
+Next: (1) denser sampling (10–12 fps) on shots 0/3 — tests the parallax/overlap hypothesis; (2) test whether COLMAP–VGGT agreement predicts correctness on synthetic, to use as the acceptance gate on Marina footage where there is no truth.
