@@ -96,43 +96,48 @@ def fit(points, centres, ups):
     return Q, CQ, walls, span
 
 
-out = sys.argv[1]
-items = []
-for arg in sys.argv[2:]:
-    label, spec = arg.split("=", 1)
-    spec, _, rng = spec.partition("@")
-    ranges = [tuple(map(int, r.split("-"))) for r in rng.split(",")] if rng else None
-    model, _, prefix = spec.partition(":")
-    c, u, ids = cameras(model)
-    keep = [i for i, n in enumerate(ids.values()) if n.startswith(prefix) and in_ranges(n, ranges)]
-    c, u = c[keep], u[keep]
-    if prefix:  # COLMAP
-        pts = colmap_points(model, prefix, ranges)
-    elif ranges:  # VGGT per-frame maps, in-room frames only
-        d = np.load(Path(model) / "pixels.npz")
-        sel = [i for i, n in enumerate(d["names"]) if in_ranges(str(n), ranges)]
-        wp, cf = d["world"][sel].reshape(-1, 3), d["conf"][sel].reshape(-1)
-        wp = wp[cf > np.median(cf)]
-        pts = wp[np.random.default_rng(0).choice(len(wp), min(200_000, len(wp)), replace=False)]
-    else:
-        pts = np.load(Path(model) / "points.npy")
-    items.append((label, *fit(pts, c, u)))
+def main():
+    out = sys.argv[1]
+    items = []
+    for arg in sys.argv[2:]:
+        label, spec = arg.split("=", 1)
+        spec, _, rng = spec.partition("@")
+        ranges = [tuple(map(int, r.split("-"))) for r in rng.split(",")] if rng else None
+        model, _, prefix = spec.partition(":")
+        c, u, ids = cameras(model)
+        keep = [i for i, n in enumerate(ids.values()) if n.startswith(prefix) and in_ranges(n, ranges)]
+        c, u = c[keep], u[keep]
+        if prefix:  # COLMAP
+            pts = colmap_points(model, prefix, ranges)
+        elif ranges:  # VGGT per-frame maps, in-room frames only
+            d = np.load(Path(model) / "pixels.npz")
+            sel = [i for i, n in enumerate(d["names"]) if in_ranges(str(n), ranges)]
+            wp, cf = d["world"][sel].reshape(-1, 3), d["conf"][sel].reshape(-1)
+            wp = wp[cf > np.median(cf)]
+            pts = wp[np.random.default_rng(0).choice(len(wp), min(200_000, len(wp)), replace=False)]
+        else:
+            pts = np.load(Path(model) / "points.npy")
+        items.append((label, *fit(pts, c, u)))
 
-fig, axes = plt.subplots(1, len(items), figsize=(5 * len(items), 5), squeeze=False)
-print(f"{'source':<14} {'side A':>8} {'side B':>8} {'ratio':>6}  (model units; ratio = short/long)")
-for ax, (label, Q, CQ, walls, span) in zip(axes[0], items):
-    ax.hexbin(Q[:, 0], Q[:, 1], gridsize=150, bins="log", cmap="Greys", mincnt=1)
-    ax.plot(CQ[:, 0], CQ[:, 1], "b.", ms=3)
-    for k, (w0, w1) in enumerate(walls):
-        for w in (w0, w1):
-            if w is not None:
-                (ax.axvline if k == 0 else ax.axhline)(w, color="r")
-    if all(w is not None for pair in walls for w in pair):
-        A, B = walls[0][1] - walls[0][0], walls[1][1] - walls[1][0]
-        print(f"{label:<14} {A:8.3f} {B:8.3f} {min(A, B) / max(A, B):6.3f}")
-        ax.set_title(f"{label}: ratio {min(A, B) / max(A, B):.3f}")
-    else:
-        print(f"{label:<14} wall not found on some side")
-        ax.set_title(f"{label}: incomplete")
-    ax.set_aspect("equal")
-fig.savefig(out, dpi=90, bbox_inches="tight")
+    fig, axes = plt.subplots(1, len(items), figsize=(5 * len(items), 5), squeeze=False)
+    print(f"{'source':<14} {'side A':>8} {'side B':>8} {'ratio':>6}  (model units; ratio = short/long)")
+    for ax, (label, Q, CQ, walls, span) in zip(axes[0], items):
+        ax.hexbin(Q[:, 0], Q[:, 1], gridsize=150, bins="log", cmap="Greys", mincnt=1)
+        ax.plot(CQ[:, 0], CQ[:, 1], "b.", ms=3)
+        for k, (w0, w1) in enumerate(walls):
+            for w in (w0, w1):
+                if w is not None:
+                    (ax.axvline if k == 0 else ax.axhline)(w, color="r")
+        if all(w is not None for pair in walls for w in pair):
+            A, B = walls[0][1] - walls[0][0], walls[1][1] - walls[1][0]
+            print(f"{label:<14} {A:8.3f} {B:8.3f} {min(A, B) / max(A, B):6.3f}")
+            ax.set_title(f"{label}: ratio {min(A, B) / max(A, B):.3f}")
+        else:
+            print(f"{label:<14} wall not found on some side")
+            ax.set_title(f"{label}: incomplete")
+        ax.set_aspect("equal")
+    fig.savefig(out, dpi=90, bbox_inches="tight")
+
+
+if __name__ == "__main__":
+    main()
