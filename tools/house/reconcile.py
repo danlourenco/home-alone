@@ -242,11 +242,13 @@ def main():
         else:
             mid = (p["lo"] + p["hi"]) / 2; lo, hi = mid - DOOR_W / 2, mid + DOOR_W / 2; src = "topology (centred; position unverified)"
         w = hi - lo
+        if d["kind"] in ("door", "fake_door") and w > (p["hi"] - p["lo"]) + 1e-6:
+            flags.append(f"door {d['a']}/{d['b']}: {w:.2f} m door on only {p['hi'] - p['lo']:.2f} m of shared wall")
         doors.append({"between": [d["a"], d["b"]], "kind": d["kind"], "wall_axis": "x" if p["axis"] == 0 else "y",
                       "wall_coord": round(wall_c, 3), "wall_thickness": round(p["gap"], 3), "span": [round(lo, 3), round(hi, 3)],
-                      "width": round(w, 3), "height": DOOR_H if d["kind"] == "door" else None, "placed_from": src, "source": d["source"]})
+                      "width": round(w, 3), "height": DOOR_H if d["kind"] in ("door", "fake_door") else None, "opens": d["kind"] != "fake_door", "placed_from": src, "source": d["source"]})
         log.append(f"| {d['a']} / {d['b']} | {d['kind']} | {lo:.2f}-{hi:.2f} | {w:.2f} | {src} |")
-        if d["kind"] == "door":
+        if d["kind"] == "door":  # fake_door: a prop slab on the wall, no opening, no body rule
             rules.append((f"adult fits door {d['a']}/{d['b']}", w >= ADULT["capsule_diameter"] + 0.1 and DOOR_H >= ADULT["height"] + 0.1,
                           f"{w:.2f} m wide x {DOOR_H:.2f} m"))
 

@@ -84,11 +84,11 @@
      3.721
     ],
     [
-     6.82,
+     6.817,
      3.721
     ],
     [
-     6.82,
+     6.817,
      5.364
     ],
     [
@@ -104,7 +104,7 @@
    "anchor": true,
    "polygon_xz": [
     [
-     7.064,
+     7.061,
      3.861
     ],
     [
@@ -116,11 +116,11 @@
      7.739
     ],
     [
-     7.064,
+     7.061,
      7.739
     ]
    ],
-   "area_m2": 17.84
+   "area_m2": 17.85
   },
   {
    "name": "girls_room_a",
@@ -164,11 +164,11 @@
      5.504
     ],
     [
-     6.924,
+     6.921,
      5.504
     ],
     [
-     6.924,
+     6.921,
      7.739
     ],
     [
@@ -176,7 +176,7 @@
      7.739
     ]
    ],
-   "area_m2": 2.75
+   "area_m2": 2.74
   },
   {
    "name": "hall_corridor",
@@ -188,11 +188,19 @@
      7.879
     ],
     [
-     7.236,
+     7.161,
      7.879
     ],
     [
-     7.236,
+     7.161,
+     10.541
+    ],
+    [
+     8.295,
+     10.541
+    ],
+    [
+     8.295,
      11.4
     ],
     [
@@ -200,7 +208,7 @@
      11.4
     ]
    ],
-   "area_m2": 5.17
+   "area_m2": 5.88
   },
   {
    "name": "hall_corridor_south",
@@ -212,11 +220,11 @@
      11.54
     ],
     [
-     7.321,
+     7.333,
      11.54
     ],
     [
-     7.321,
+     7.333,
      13.521
     ],
     [
@@ -224,7 +232,7 @@
      13.521
     ]
    ],
-   "area_m2": 3.08
+   "area_m2": 3.1
   },
   {
    "name": "closet_1",
@@ -232,7 +240,7 @@
    "anchor": false,
    "polygon_xz": [
     [
-     7.376,
+     7.374,
      7.879
     ],
     [
@@ -244,7 +252,7 @@
      8.64
     ],
     [
-     7.376,
+     7.374,
      8.64
     ]
    ],
@@ -256,23 +264,23 @@
    "anchor": false,
    "polygon_xz": [
     [
-     7.376,
+     7.374,
      8.78
     ],
     [
-     8.272,
+     8.295,
      8.78
     ],
     [
-     8.272,
+     8.295,
      9.824
     ],
     [
-     7.376,
+     7.374,
      9.824
     ]
    ],
-   "area_m2": 0.93
+   "area_m2": 0.96
   },
   {
    "name": "linen_closet",
@@ -280,23 +288,23 @@
    "anchor": false,
    "polygon_xz": [
     [
-     7.165,
+     7.301,
      9.964
     ],
     [
-     8.499,
+     8.295,
      9.964
     ],
     [
-     8.499,
-     11.4
+     8.295,
+     10.401
     ],
     [
-     7.165,
-     11.4
+     7.301,
+     10.401
     ]
    ],
-   "area_m2": 1.92
+   "area_m2": 0.43
   },
   {
    "name": "hall_bath",
@@ -316,11 +324,11 @@
      11.4
     ],
     [
-     8.412,
+     8.435,
      11.4
     ],
     [
-     8.412,
+     8.435,
      8.78
     ],
     [
@@ -328,7 +336,7 @@
      8.78
     ]
    ],
-   "area_m2": 10.82
+   "area_m2": 10.76
   },
   {
    "name": "buzz_room",
@@ -336,7 +344,7 @@
    "anchor": true,
    "polygon_xz": [
     [
-     7.461,
+     7.473,
      11.54
     ],
     [
@@ -348,11 +356,11 @@
      15.998
     ],
     [
-     7.461,
+     7.473,
      15.998
     ]
    ],
-   "area_m2": 16.48
+   "area_m2": 16.43
   },
   {
    "name": "girls_room_b",
@@ -412,11 +420,11 @@
      13.661
     ],
     [
-     7.321,
+     7.333,
      13.661
     ],
     [
-     7.321,
+     7.333,
      16.396
     ],
     [
@@ -424,7 +432,7 @@
      16.396
     ]
    ],
-   "area_m2": 4.25
+   "area_m2": 4.28
   }
  ],
  "doors": [
@@ -443,6 +451,7 @@
    ],
    "width": 0.77,
    "height": 2.032,
+   "opens": true,
    "placed_from": "measured, slid +11 cm onto the shared wall",
    "source": "SfM: door slab edges, parents frames 402/407",
    "wall_coord_spec": 5.434,
@@ -467,6 +476,7 @@
    ],
    "width": 0.76,
    "height": 2.032,
+   "opens": true,
    "placed_from": "measured",
    "source": "SfM: casing edges, parents frame 413",
    "wall_coord_spec": 3.034,
@@ -483,7 +493,7 @@
    ],
    "kind": "door",
    "wall_axis": "y",
-   "wall_coord": 2.416,
+   "wall_coord": 2.413,
    "wall_thickness": 0.14,
    "span": [
     6.05,
@@ -491,9 +501,10 @@
    ],
    "width": 0.77,
    "height": 2.032,
+   "opens": true,
    "placed_from": "measured",
    "source": "SfM: Kevin door_b (frames 279/292), placed with the overhead fit (room flipped vertically)",
-   "wall_coord_spec": 6.994,
+   "wall_coord_spec": 6.991,
    "span_spec": [
     6.754,
     7.524
@@ -515,6 +526,7 @@
    ],
    "width": 0.83,
    "height": 2.032,
+   "opens": true,
    "placed_from": "measured, slid -1 cm onto the shared wall",
    "source": "SfM: Kevin door_a (frames 292/325), includes casing",
    "wall_coord_spec": 7.809,
@@ -539,6 +551,7 @@
    ],
    "width": 0.762,
    "height": 2.032,
+   "opens": true,
    "placed_from": "topology (centred; position unverified)",
    "source": "topology: hall walk captions + adjacency",
    "wall_coord_spec": 5.623,
@@ -550,12 +563,62 @@
   },
   {
    "between": [
+    "hall_bath",
+    "hall_corridor"
+   ],
+   "kind": "door",
+   "wall_axis": "y",
+   "wall_coord": 3.787,
+   "wall_thickness": 0.14,
+   "span": [
+    9.802,
+    10.564
+   ],
+   "width": 0.762,
+   "height": 2.032,
+   "opens": true,
+   "placed_from": "topology (centred; position unverified)",
+   "source": "hall walk f159-177: bath door on the left near Buzz's door; placed on the hall alcove's east wall",
+   "wall_coord_spec": 8.365,
+   "span_spec": [
+    10.506,
+    11.268
+   ],
+   "spec_axis": "x"
+  },
+  {
+   "between": [
+    "linen_closet",
+    "hall_corridor"
+   ],
+   "kind": "fake_door",
+   "wall_axis": "x",
+   "wall_coord": 9.767,
+   "wall_thickness": 0.14,
+   "span": [
+    2.827,
+    3.59
+   ],
+   "width": 0.762,
+   "height": 2.032,
+   "opens": false,
+   "placed_from": "topology (centred; position unverified)",
+   "source": "Muto's set model (linen closet beside the bathroom) + overhead shelf; prop door, does not open (user decision Oct 13)",
+   "wall_coord_spec": 10.471,
+   "span_spec": [
+    7.405,
+    8.168
+   ],
+   "spec_axis": "z"
+  },
+  {
+   "between": [
     "buzz_room",
     "hall_corridor_south"
    ],
    "kind": "door",
    "wall_axis": "y",
-   "wall_coord": 2.813,
+   "wall_coord": 2.825,
    "wall_thickness": 0.14,
    "span": [
     11.491,
@@ -563,9 +626,10 @@
    ],
    "width": 0.762,
    "height": 2.032,
+   "opens": true,
    "placed_from": "topology (centred; position unverified)",
    "source": "topology: hall walk f153 (Buzz's doorway on the left before the attic door)",
-   "wall_coord_spec": 7.391,
+   "wall_coord_spec": 7.403,
    "span_spec": [
     12.195,
     12.957
@@ -587,6 +651,7 @@
    ],
    "width": 0.762,
    "height": 2.032,
+   "opens": true,
    "placed_from": "topology (centred; position unverified)",
    "source": "overhead: open door leaf visible on the room's right wall",
    "wall_coord_spec": 5.698,
@@ -611,6 +676,7 @@
    ],
    "width": 0.762,
    "height": 2.032,
+   "opens": true,
    "placed_from": "topology (centred; position unverified)",
    "source": "hall walk f135-165 + film attic-door shot",
    "wall_coord_spec": 13.591,
@@ -635,6 +701,7 @@
    ],
    "width": 1.037,
    "height": null,
+   "opens": true,
    "placed_from": "full shared wall",
    "source": "hall walk: arched openings (f141-147); header band in overhead",
    "wall_coord_spec": 7.809,
@@ -655,16 +722,17 @@
    "wall_thickness": 0.14,
    "span": [
     1.273,
-    2.599
+    2.601
    ],
-   "width": 1.326,
+   "width": 1.328,
    "height": null,
+   "opens": true,
    "placed_from": "full shared wall",
    "source": "header band in overhead",
    "wall_coord_spec": 11.47,
    "span_spec": [
     5.851,
-    7.177
+    7.179
    ],
    "spec_axis": "z"
   },
@@ -683,6 +751,7 @@
    ],
    "width": 2.782,
    "height": null,
+   "opens": true,
    "placed_from": "full shared wall",
    "source": "hall walk f135-147: balustrade along the stairwell",
    "wall_coord_spec": 5.698,
@@ -694,10 +763,7 @@
   }
  ],
  "flags": [
-  "wall hall_bath/linen_closet 0 cm: too thin",
-  "wall hall_corridor/linen_closet 0 cm: too thin",
-  "door hall_bath/hall_corridor: no shared wall found within 0.8 m",
-  "door linen_closet/hall_corridor: no shared wall found within 0.8 m"
+  "door hall_bath/hall_corridor: 0.76 m door on only 0.64 m of shared wall"
  ],
  "sources": {
   "plan": "measurements/overhead/upstairs-trace.plan.json",

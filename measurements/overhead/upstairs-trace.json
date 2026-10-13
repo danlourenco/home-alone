@@ -154,13 +154,22 @@
     ],
     [
      1040,
+     640
+    ],
+    [
+     1108,
+     640
+    ],
+    [
+     1108,
      687
     ],
     [
      957,
      687
     ]
-   ]
+   ],
+   "notes": "includes the alcove at its south-east end (no wall band between them in the overhead); the hall bath door is on the alcove's east wall"
   },
   {
    "name": "hall_corridor_south",
@@ -227,30 +236,31 @@
      1057,
      590
     ]
-   ]
+   ],
+   "notes": "sealed: access side never found; no door needed (user decision Oct 13)"
   },
   {
    "name": "linen_closet",
    "kind": "closet",
    "px": [
     [
-     1040,
+     1048,
      607
     ],
     [
-     1122,
+     1108,
      607
     ],
     [
-     1122,
-     687
+     1108,
+     628
     ],
     [
-     1040,
-     687
+     1048,
+     628
     ]
    ],
-   "notes": "green shelf; Muto's model puts the linen closet beside the upstairs bathroom"
+   "notes": "shallow built-in along the alcove's north side (green shelf in the overhead). Door is a prop and does not open (user decision Oct 13)"
   },
   {
    "name": "hall_bath",
