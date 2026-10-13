@@ -39,16 +39,18 @@ def room_in_greybox(pos):
 
 
 def old_model_xy(pos):
-    """IntactHouseReference instantiates the GLB rotated 180 deg about y at native scale: Blender (X, Y) = (-x, z)."""
+    """IntactHouseReference instantiates the GLB rotated 180 deg about y at native scale. The glTF import flips x and the
+    180 deg turn flips it back, so Blender (X, Y) = (x, z). Checked Oct 13: a note facing the living-room fireplace lands
+    in the model's living room (the mirrored mapping put it in the foyer)."""
     sys.path.insert(0, str(ROOT / "tools/survey"))
     from glb_section import M_PER_UNIT
-    return np.array([-pos[0], pos[2]]) * M_PER_UNIT
+    return np.array([pos[0], pos[2]]) * M_PER_UNIT
 
 
 def main():
     FB.mkdir(parents=True, exist_ok=True); f = FB / "feel-notes.jsonl"
     notes = [json.loads(l) for l in f.read_text().splitlines() if l.strip()] if f.exists() else []
-    rows = ["| # | scene | where | rating | note | screenshot |", "|---|---|---|---|---|---|"]
+    rows = ["| # | scene | where | shape/size | lighting issue | note | screenshot |", "|---|---|---|---|---|---|---|"]
     old = []
     for i, n in enumerate(notes, 1):
         if n["scene"].startswith("Greybox"):
@@ -57,7 +59,8 @@ def main():
             xy = old_model_xy(n["pos"]); up = n["pos"][1] > 3.5    # old model: ground ~1.3, upper floor ~5.2 (native)
             old.append((i, xy, n["rating"], up))
             where = f"old model {'upper' if up else 'ground'} floor plan ({xy[0]:.1f}, {xy[1]:.1f}) m, see map"
-        rows.append(f"| {i} | {n['scene']} | {where} | {n['rating']} | {n['note']} | [{n['shot']}]({n['shot']}) |")
+        light = "yes" if n.get("lighting_issue") else ("" if "lighting_issue" in n else "(not asked)")
+        rows.append(f"| {i} | {n['scene']} | {where} | {n['rating']} | {light} | {n['note']} | [{n['shot']}]({n['shot']}) |")
     (FB / "feel-notes.md").write_text("# Feel notes (walk-and-annotate, key M in Unity)\n\n" + "\n".join(rows) + "\n")
     print("\n".join(rows))
     if old:
@@ -67,7 +70,7 @@ def main():
         sys.path.insert(0, str(ROOT / "tools/survey"))
         from glb_section import section
         fig, axes = plt.subplots(1, 2, figsize=(24, 10))
-        col = {"feels right": "tab:green", "feels off": "tab:red", "not sure": "tab:orange"}
+        col = {"feels right": "tab:green", "feels off": "tab:red", "shape/size right": "tab:green", "shape/size off": "tab:red", "not sure": "tab:orange"}
         for ax, (title, h, upper) in zip(axes, (("ground floor", 1.75, False), ("upper floor", 5.7, True))):
             S = section(h)
             S = S[(np.abs(S[..., 0]) < 14).all(1) & (S[..., 1] > -4).all(1) & (S[..., 1] < 16).all(1)]
