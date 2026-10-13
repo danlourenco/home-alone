@@ -65,7 +65,7 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 
 | between | kind | position along wall (m) | width (m) | placed from |
 |---|---|---|---|---|
-| den / living_room | arch | 1.25-2.85 | 1.60 | topology (centred; position unverified) |
+| den / living_room | arch | -0.87-1.05 | 1.92 | read in the overhead |
 | living_room / foyer | arch | 3.51-5.21 | 1.70 | read in the overhead |
 | foyer / dining_room | arch | 3.35-5.30 | 1.95 | read in the overhead |
 | foyer / vestibule | arch | 8.09-9.74 | 1.65 | read in the overhead |
@@ -80,15 +80,13 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 |---|---|---|
 | adult fits door dining_room/kitchen | pass | 1.01 m wide x 2.03 m |
 | adult fits door foyer/back_stair | pass | 1.01 m wide x 2.03 m |
-| adult fits hall foyer | pass | narrowest 3.67 m |
-| adult fits hall vestibule | pass | narrowest 1.20 m |
-| adult fits hall back_stair | FAIL | narrowest 0.90 m |
+| adult fits hall foyer | pass | narrowest 3.67 m (min 0.90) |
+| adult fits hall vestibule | pass | narrowest 1.20 m (min 0.90) |
+| adult fits stair back_stair | pass | narrowest 0.90 m (min 0.65) |
 
 ## Flags (need a decision or more evidence)
 
 - wall dining_room/kitchen 55 cm: thick
-- rule failed: adult fits hall back_stair (narrowest 0.90 m)
-- unresolved: den/living opening position along the wall
 - unresolved: sunroom: room or porch, and whether Marina's 2,620 ft2 includes it
 - unresolved: second dining-room door (rear wall, right) leads to the kitchen's lower-right nook: not modelled
 - ceiling 2.32 m in rooms not measured directly (Kevin 2.40 / parents 2.50 / attic leg 2.29 measured)

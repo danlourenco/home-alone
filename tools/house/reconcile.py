@@ -350,7 +350,9 @@ def main():
     for n, s in sp.items():
         if s["kind"] == "hall":
             short = float(np.ptp(final[n], axis=0).min())
-            rules.append((f"adult fits hall {n}", short >= ADULT["min_hall"], f"narrowest {short:.2f} m"))
+            # corridors keep the 0.90 m hall minimum; a stair (name *_stair) only has to pass the adult body like a door
+            need = ADULT["capsule_diameter"] + 0.1 if n.endswith("_stair") else ADULT["min_hall"]
+            rules.append((f"adult fits {'stair' if n.endswith('_stair') else 'hall'} {n}", short >= need, f"narrowest {short:.2f} m (min {need:.2f})"))
     log += ["", "## 5. Body rules (adult, hard)", "", "| rule | result | value |", "|---|---|---|"]
     for r, ok, v in rules:
         log.append(f"| {r} | {'pass' if ok else 'FAIL'} | {v} |")

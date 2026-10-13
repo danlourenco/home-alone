@@ -5,8 +5,17 @@
    "a": "den",
    "b": "living_room",
    "kind": "arch",
-   "width": 1.6,
-   "source": "den clip f34-47: wide cased opening to the living room (position along the wall from topology)"
+   "source": "den clip (gate 5/6): 1.62 m gap in the living-side wall at door height (0.35-0.65 of floor-ceiling), 12-35% of the den's depth from the bookshelf wall; mapped onto the traced shared wall",
+   "px": [
+    [
+     519,
+     513
+    ],
+    [
+     511,
+     614
+    ]
+   ]
   },
   {
    "a": "living_room",
@@ -122,7 +131,6 @@
   }
  ],
  "unresolved": [
-  "den/living opening position along the wall",
   "sunroom: room or porch, and whether Marina's 2,620 ft2 includes it",
   "second dining-room door (rear wall, right) leads to the kitchen's lower-right nook: not modelled"
  ]

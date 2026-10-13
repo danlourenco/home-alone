@@ -20,10 +20,11 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/house"))
 from reconcile import edges_of, rebuild  # noqa: E402
 
-TRACE = ROOT / "measurements/overhead/upstairs-trace.json"
-PLAN = ROOT / "measurements/overhead/upstairs-trace.plan.json"
-SPEC = ROOT / "spec/house_spec.json"
-CHECKS = ROOT / "measurements/checkpoints/upstairs.json"
+FLOOR = sys.argv[sys.argv.index("--floor") + 1] if "--floor" in sys.argv else "upstairs"
+TRACE = ROOT / f"measurements/overhead/{FLOOR}-trace.json"
+PLAN = ROOT / f"measurements/overhead/{FLOOR}-trace.plan.json"
+SPEC = ROOT / ("spec/house_spec.json" if FLOOR == "upstairs" else f"spec/house_spec.{FLOOR}.json")
+CHECKS = ROOT / f"measurements/checkpoints/{FLOOR}.json"
 HARD = ("too thin", "no shared wall", "on only", "rule failed", "needs", "conflict")
 
 
@@ -39,7 +40,7 @@ def main():
     if "--no-rebuild" not in sys.argv:
         for cmd in (["uv", "run", "-q", "--with", "numpy", "--with", "matplotlib", "--with", "pillow", "python",
                      "tools/sfm/overhead_plan.py", str(TRACE.relative_to(ROOT))],
-                    ["uv", "run", "-q", "--with", "numpy", "python", "tools/house/reconcile.py"]):
+                    ["uv", "run", "-q", "--with", "numpy", "python", "tools/house/reconcile.py", "--floor", FLOOR]):
             subprocess.run(cmd, cwd=ROOT, check=True, capture_output=True)
     trace, plan, spec, checks = (json.loads(p.read_text()) for p in (TRACE, PLAN, SPEC, CHECKS))
     H = np.loadtxt(ROOT / trace["calibration"])
@@ -56,7 +57,7 @@ def main():
         rows.append(("FAIL" if hard else "warn", "reconciler", f))
 
     for c in checks["checks"]:
-        if "overhead_px" in c:
+        if "overhead_px" in c and c["type"] != "length_px":
             q = H @ np.r_[c["overhead_px"], 1]; pt = q[:2] / q[2]
         else:
             pt = np.array(c.get("plan", [0, 0]), float)
@@ -82,6 +83,11 @@ def main():
             hit = [n for n, poly in spaces.items() if inside(poly, sp)]
             ok = c["space"] in hit
             detail = f"point lies in {hit[0] if hit else 'no space'} (expected {c['space']})"
+        elif c["type"] == "length_px":   # two overhead pixels at ONE height, through the calibration (skill overhead-floor)
+            q = np.c_[np.array(c["overhead_px"], float), np.ones(2)] @ H.T; P = q[:, :2] / q[:, 2:]
+            got = float(np.linalg.norm(P[1] - P[0])); err = got / c["expect_m"] - 1
+            ok = abs(err) * 100 <= c["tol_pct"]
+            detail = f"{got:.2f} m vs {c['expect_m']:.2f} ({err:+.1%}; tol {c['tol_pct']}%)"
         elif c["type"] == "dimension":
             if c.get("stage") == "spec":   # the built spec (walls thinned); spec (x, z) -> plan order (x=z, y=x)
                 dims = np.ptp(spaces[c["space"]], axis=0)[::-1]
@@ -104,7 +110,7 @@ def main():
     print(f"\n{n_ind} of {len(checks['checks'])} checkpoints are independent of the data the plan was built from; "
           f"the rest catch edits that break agreement (regressions), not original errors")
     print(f"{sum(r[0] == 'ok' for r in rows)} ok, {sum(r[0] == 'warn' for r in rows)} warnings, {fails} FAIL"
-          f"  ->  review sheet: spec/captures/trace-review.png")
+          f"  ->  review sheet: spec/captures/trace-review{'' if FLOOR == 'upstairs' else '-' + FLOOR}.png")
     sys.exit(1 if fails else 0)
 
 
@@ -129,7 +135,7 @@ def review_sheet(trace):
     sheet = Image.new("RGB", (cols * 380, -(-len(tiles) // cols) * 380))
     for i, t in enumerate(tiles):
         sheet.paste(t, ((i % cols) * 380, (i // cols) * 380))
-    out = ROOT / "spec/captures/trace-review.png"; out.parent.mkdir(exist_ok=True); sheet.save(out)
+    out = ROOT / f"spec/captures/trace-review{'' if FLOOR == 'upstairs' else '-' + FLOOR}.png"; out.parent.mkdir(exist_ok=True); sheet.save(out)
 
 
 if __name__ == "__main__":

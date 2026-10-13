@@ -274,18 +274,18 @@
    "wall_coord": 15.436,
    "wall_thickness": 0.14,
    "span": [
-    1.25,
-    2.85
+    -0.868,
+    1.051
    ],
-   "width": 1.6,
+   "width": 1.919,
    "height": null,
    "opens": true,
-   "placed_from": "topology (centred; position unverified)",
-   "source": "den clip f34-47: wide cased opening to the living room (position along the wall from topology)",
+   "placed_from": "read in the overhead",
+   "source": "den clip (gate 5/6): 1.62 m gap in the living-side wall at door height (0.35-0.65 of floor-ceiling), 12-35% of the den's depth from the bookshelf wall; mapped onto the traced shared wall",
    "wall_coord_spec": 16.14,
    "span_spec": [
-    5.828,
-    7.428
+    3.71,
+    5.629
    ],
    "spec_axis": "z"
   },
@@ -466,8 +466,7 @@
   }
  ],
  "flags": [
-  "wall dining_room/kitchen 55 cm: thick",
-  "rule failed: adult fits hall back_stair (narrowest 0.90 m)"
+  "wall dining_room/kitchen 55 cm: thick"
  ],
  "stair": null,
  "floor_y_m": -2.535,

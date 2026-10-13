@@ -136,9 +136,9 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | adult fits door buzz_room/hall_corridor | pass | 0.76 m wide x 2.03 m |
 | adult fits door girls_room_b/hall_corridor_south | pass | 0.76 m wide x 2.03 m |
 | adult fits door attic_stair/hall_corridor_south | pass | 0.76 m wide x 2.03 m |
-| adult fits hall hall_end | pass | narrowest 1.25 m |
-| adult fits hall hall_corridor | pass | narrowest 3.52 m |
-| adult fits hall hall_corridor_south | pass | narrowest 1.55 m |
+| adult fits hall hall_end | pass | narrowest 1.25 m (min 0.90) |
+| adult fits hall hall_corridor | pass | narrowest 3.52 m (min 0.90) |
+| adult fits hall hall_corridor_south | pass | narrowest 1.55 m (min 0.90) |
 
 ## Flags (need a decision or more evidence)
 
