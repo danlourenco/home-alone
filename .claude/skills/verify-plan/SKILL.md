@@ -45,20 +45,38 @@ Every tracing mistake you fix adds the checkpoint that would have caught it, in 
 
 Unproven checkpoints don't count. The Oct 13 proof: the pre-fix trace fails 7 checks, and the fixed trace passes 12.
 
-## After the grey-box builds: matched-camera compare
+## Wall-by-wall 3D check against the video (numeric gate)
 
 ```bash
-uv run --with numpy --with scipy python tools/house/register_clip.py hall-s1        # after changing anchors/features
-for c in "hall-s1 0,11,21,36,48,59" "parents 0,6,12,21,30,46" "kevin 0,12,24,32,41,49"; do
-  set -- ${=c}; uv run --with numpy --with scipy --with pillow python tools/house/match_cameras.py poses $1 $2; done
-Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.Build -quit -logFile -
-Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.RenderMatched -quit -logFile -
-for c in hall-s1 parents kevin; do uv run --with numpy --with scipy --with pillow python tools/house/match_cameras.py compare $c; done
+uv run --with numpy python tools/house/reconcile.py --measured          # the house as measured (walls not thinned)
+for c in hall-s1 parents kevin; do uv run --with numpy python tools/house/check_walls.py $c measured; done
 ```
 
-Per-clip baselines live in `spec/captures/matched/<clip>/scores.json`. Registrations are in `measurements/checkpoints/upstairs.json`: hall-s1 is fitted, the parents' clip IS the plan frame, and Kevin's is placed by the overhead fit (90° turn).
+This is the main check. For every wall of every space, it takes the gated clip's 3D wall points, but only from frames whose camera stands inside that space, and finds where they actually pile up relative to the spec's wall. The result is each wall's offset in centimetres (+ means the real room is bigger). A wall more than 8 cm out with a clear peak is flagged. On Oct 13 all three clips pass, with every long wall within ±7 cm.
 
-The run writes `spec/captures/matched/compare.png`: grey-box edges in magenta over Marina's frames, scored as the median and 90th-percentile px to the nearest real edge, at 960×540. Oct 13 baselines (median px): hall 3.6–8 for views down the hall and into Buzz's room, 16–18 through the bath door (under 1 m away, open leaf not modelled); parents 7.6–10, plus 19 where the armoire hides the notch corner and at the tub close-up; Kevin 6.4–9, plus 31 at f225 (open question). A view that gets worse than its baseline means the plan moved the wrong way. Look at the overlay before believing the number: light glare and missing door casings make edges that aren't geometry.
+How to read it:
+
+- **A + offset** is unambiguous, because nothing stands beyond a wall.
+- **A − offset** can be furniture against the wall (a dresser, a vanity). Look at the frames before moving a wall.
+- **Glass walls give weak peaks** (a low peak share) and are not flagged.
+- **Two opposite walls offset by the same amount** means the room is shifted, not resized. That's how the parents' bath was found 20 cm out.
+- **Registration anchors must be wall-surface density peaks**, not `plan_extract` lines. One of Kevin's lines sat 8 cm off the surface.
+
+## Visual check: matched-camera renders (not a gate)
+
+```bash
+uv run --with numpy --with scipy python tools/house/register_clip.py <clip>          # after changing anchors/features
+for c in "hall-s1 0,11,21,36,48,59" "parents 0,6,12,21,30,46" "kevin 0,12,24,32,41,49"; do
+  set -- ${=c}; uv run --with numpy --with scipy --with pillow --with opencv-python-headless python tools/house/match_cameras.py poses $1 $2; done
+Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.Build -quit -logFile -                       # built house
+Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.Build -quit -logFile - -variant measured     # as measured
+Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.RenderMatched -quit -logFile - [-variant measured]
+for c in hall-s1 parents kevin; do uv run --with numpy --with scipy --with pillow python tools/house/match_cameras.py compare $c [measured]; done
+```
+
+- Each camera is re-solved from its own frame's point map (PnP), because VGGT's camera head and point head disagree slightly.
+- The renders give every surface its own flat colour, so a colour change is exactly a geometric edge.
+- `compare.png` draws the grey-box edges over Marina's frames. **Look at it; don't gate on its number.** In the Oct 13 sensitivity test, moving the camera 20 cm did not reliably worsen the edge score, and some views scored better. Faint real corners lose to nearby clutter.
 
 ## Where checkpoints come from
 
@@ -77,5 +95,7 @@ The run writes `spec/captures/matched/compare.png`: grey-box edges in magenta ov
 - **Walls in Marina's model are 25–45 cm thick.** The spec thins interior walls to 14 cm (user decision). Compare room sizes on the plan stage, not the thinned spec.
 - **Measured door spans often include casing**, typically +4 to 8 cm. Centre a standard door inside them.
 - **Unity is left-handed.** World z = −spec z, otherwise the house builds mirrored. The bird's-eye capture must match Marina's overhead room for room.
+- **Image edge scores can't see 20 cm.** Use `check_walls.py` for numbers and the overlays for eyes.
+- **A railing is not a wall.** The rail stands on the stairwell's edge, and the hall reaches it (`RAIL_T` in the reconciler).
 - **Height histograms mis-measure ceilings** because of camera tilt. Measure ceilings on a door wall as wall height relative to door height.
 - **Captions and dissolves** sit at the ends of kept frame ranges. Trim them before solving.

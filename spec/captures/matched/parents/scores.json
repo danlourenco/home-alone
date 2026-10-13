@@ -1,32 +1,32 @@
 [
  {
   "frame": "f_00338",
-  "median_px": 10.0,
-  "p90_px": 30.8
+  "median_px": 11.7,
+  "p90_px": 34.9
  },
  {
   "frame": "f_00370",
-  "median_px": 8.5,
-  "p90_px": 34.7
+  "median_px": 7.8,
+  "p90_px": 37.8
  },
  {
   "frame": "f_00402",
-  "median_px": 19.1,
-  "p90_px": 42.2
+  "median_px": 20.0,
+  "p90_px": 54.3
  },
  {
   "frame": "f_00450",
-  "median_px": 10.0,
-  "p90_px": 56.1
+  "median_px": 15.0,
+  "p90_px": 40.3
  },
  {
   "frame": "f_00498",
-  "median_px": 18.7,
-  "p90_px": 51.4
+  "median_px": 17.1,
+  "p90_px": 96.0
  },
  {
   "frame": "f_00584",
-  "median_px": 7.6,
-  "p90_px": 42.0
+  "median_px": 16.3,
+  "p90_px": 44.0
  }
 ]

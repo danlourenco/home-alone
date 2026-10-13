@@ -6,32 +6,33 @@
   {
    "name": "parents_bath",
    "kind": "room",
-   "px": [
+   "m": [
     [
-     648,
-     104
+     0.163,
+     -4.337
     ],
     [
-     765,
-     104
+     0.174,
+     -2.213
     ],
     [
-     765,
-     179
+     1.668,
+     -2.125
     ],
     [
-     795,
-     179
+     1.67,
+     -1.59
     ],
     [
-     795,
-     287
+     3.736,
+     -1.482
     ],
     [
-     645,
-     287
+     3.727,
+     -4.098
     ]
-   ]
+   ],
+   "notes": "overhead outline shifted +0.20 m across (plan y) per the parents clip's in-room wall points (check_walls.py, Oct 13): far wall -21 cm and bedroom-side wall +19 cm, i.e. same width, whole room 20 cm toward the bedroom; bath/bedroom wall back to ~15 cm (SfM measured 17 cm)"
   },
   {
    "name": "parents_bedroom",

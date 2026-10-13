@@ -44,31 +44,31 @@
    "anchor": false,
    "polygon_xz": [
     [
-     0.16,
+     0.343,
      0.872
     ],
     [
-     2.209,
+     2.409,
      0.872
     ],
     [
-     2.209,
+     2.409,
      2.373
     ],
     [
-     2.964,
+     3.07,
      2.373
     ],
     [
-     2.964,
+     3.07,
      4.436
     ],
     [
-     0.16,
+     0.343,
      4.436
     ]
    ],
-   "area_m2": 8.86,
+   "area_m2": 8.72,
    "ceiling_m": 2.5
   },
   {
@@ -77,7 +77,7 @@
    "anchor": true,
    "polygon_xz": [
     [
-     3.104,
+     3.21,
      0.0
     ],
     [
@@ -97,11 +97,11 @@
      5.331
     ],
     [
-     3.104,
+     3.21,
      5.331
     ]
    ],
-   "area_m2": 26.02,
+   "area_m2": 25.46,
    "ceiling_m": 2.5
   },
   {
@@ -135,15 +135,15 @@
    "anchor": false,
    "polygon_xz": [
     [
-     0.314,
+     0.343,
      5.414
     ],
     [
-     2.869,
+     2.851,
      5.414
     ],
     [
-     2.869,
+     2.851,
      6.036
     ],
     [
@@ -155,11 +155,11 @@
      7.638
     ],
     [
-     0.314,
+     0.343,
      7.638
     ]
    ],
-   "area_m2": 9.99,
+   "area_m2": 9.92,
    "ceiling_m": 2.4
   },
   {
@@ -193,7 +193,7 @@
    "anchor": false,
    "polygon_xz": [
     [
-     5.768,
+     5.634,
      7.88
     ],
     [
@@ -213,11 +213,11 @@
      11.4
     ],
     [
-     5.768,
+     5.634,
      11.4
     ]
    ],
-   "area_m2": 6.86,
+   "area_m2": 7.33,
    "ceiling_m": 2.4
   },
   {
@@ -388,11 +388,11 @@
      8.533
     ],
     [
-     5.628,
+     5.574,
      8.533
     ],
     [
-     5.628,
+     5.574,
      11.4
     ],
     [
@@ -400,7 +400,7 @@
      11.4
     ]
    ],
-   "area_m2": 16.14,
+   "area_m2": 15.98,
    "ceiling_m": 2.4
   },
   {
@@ -434,7 +434,7 @@
    "anchor": false,
    "polygon_xz": [
     [
-     3.009,
+     2.991,
      5.471
     ],
     [
@@ -446,11 +446,11 @@
      5.896
     ],
     [
-     3.009,
+     2.991,
      5.896
     ]
    ],
-   "area_m2": 1.03,
+   "area_m2": 1.04,
    "ceiling_m": 2.4
   }
  ],
@@ -487,7 +487,7 @@
    ],
    "kind": "door",
    "wall_axis": "y",
-   "wall_coord": -1.544,
+   "wall_coord": -1.438,
    "wall_thickness": 0.14,
    "span": [
     2.88,
@@ -498,7 +498,7 @@
    "opens": true,
    "placed_from": "measured",
    "source": "SfM: casing edges, parents frame 413",
-   "wall_coord_spec": 3.034,
+   "wall_coord_spec": 3.14,
    "span_spec": [
     3.584,
     4.344
@@ -762,8 +762,8 @@
    ],
    "kind": "rail",
    "wall_axis": "y",
-   "wall_coord": 1.12,
-   "wall_thickness": 0.14,
+   "wall_coord": 1.026,
+   "wall_thickness": 0.06,
    "span": [
     7.832,
     10.61
@@ -773,7 +773,7 @@
    "opens": true,
    "placed_from": "full shared wall",
    "source": "hall walk f135-147: balustrade along the stairwell",
-   "wall_coord_spec": 5.698,
+   "wall_coord_spec": 5.604,
    "span_spec": [
     8.536,
     11.314

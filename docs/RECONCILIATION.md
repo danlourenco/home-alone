@@ -57,7 +57,7 @@ Exact capsule sizes and eye heights are tuned by playtesting the grey-box house.
 | Envelope | Data exists, not yet in the pipeline |
 | Reconcile | v0 for upstairs (Oct 13): `tools/house/reconcile.py` → `spec/house_spec.json` + `spec/upstairs-changes.md`. Squares, aligns, measures walls, places doors, checks adult rules. Open: hall bath access, linen closet walls, assumed ceiling |
 | Generator | `Assets/Editor/SpecGreybox.cs` builds `Greybox_Upstairs.unity` from `spec/house_spec.json` only (Oct 13). Floors, walls, door cuts, rails, prop doors; world z = −spec z (Unity is left-handed) |
-| Verify | Adult-capsule test through every opening: 11/11 pass (`spec/captures/walk-test.txt`). Image comparison: first hand-placed side-by-side (`spec/captures/compare-hall-start.png`); camera matching to Marina's frames not built yet |
+| Verify | `verify-plan` skill: checkpoints 12/12; 3D wall check (`check_walls.py`) on 3 gated clips, every long wall within ±7 cm; adult walk test 11/11 (built and as-measured); matched-camera overlays for visual review |
 | Art | Assets exist; waits for geometry |
 
 Open questions answered at the reconcile step: how the floors stack; how much the envelope forces interior rooms to change; whether doors are 80 in (checked against Marina's 1,900 ft² upstairs total).

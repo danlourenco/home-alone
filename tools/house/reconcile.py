@@ -8,9 +8,12 @@ which spaces are SfM-measured anchors. Moves measurements as little as possible 
   4. doors: measured spans where available, else centred on the shared wall (flagged as topology-placed)
   5. rules: adult body passes every door and hall
 Output: spec/house_spec.json (the only thing the Unity generator reads) and spec/<floor>-changes.md.
-usage: uv run --with numpy python tools/house/reconcile.py
+--measured: skip wall thinning and write spec/house_spec.measured.json instead, the house exactly as measured, so the
+render comparison can separate measurement error from the deliberate gameplay change (thinner walls, bigger rooms).
+usage: uv run --with numpy python tools/house/reconcile.py [--measured]
 """
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -31,6 +34,7 @@ ADULT = {"capsule_diameter": 0.55, "height": 1.85, "min_hall": 0.90}
 # Ceiling heights, measured Oct 13 on door walls (wall height / door height x 80 in, door_scale.py):
 # parents 2.42 m and Kevin 2.30-2.33 m to the crown's lower edge (+~0.08 m crown), hall attic leg 2.29 m to the ceiling.
 CEILINGS = {"default": 2.40, "parents_bedroom": 2.50, "parents_bath": 2.50, "hall_corridor_south": 2.29}
+RAIL_T = 0.06         # m: a balustrade between a hall and a stairwell, not a wall (hall-s1 wall check: hall reaches the rail)
 WALL_T = 0.14         # m: interior wall thickness built (5.5 in). User decision Oct 13: thin Marina's thick walls,
                       # keep each wall's centreline, rooms take the freed space. Exterior walls are untouched.
 
@@ -135,6 +139,9 @@ def facing_pairs(polys, edges):
     return out
 
 
+MEASURED = "--measured" in sys.argv
+
+
 def main():
     plan = json.loads(PLAN.read_text())
     topo = json.loads(DOORS.read_text())
@@ -199,13 +206,19 @@ def main():
     # 3b. thin interior walls to WALL_T around their centrelines; each side grows outward by half the excess
     before = {n: final[n].copy() for n in final}
     move = {}
+    rails = {tuple(sorted((d["a"], d["b"]))) for d in topo["doors"] if d["kind"] == "rail"}
     for p in pairs:
-        if p["gap"] <= WALL_T:
+        is_rail = tuple(sorted((p["a"], p["b"]))) in rails
+        t = RAIL_T if is_rail else WALL_T
+        if p["gap"] <= t or (MEASURED and not is_rail):   # rails are a measurement fact, applied in both builds
             continue
-        d = (p["gap"] - WALL_T) / 2
+        d = (p["gap"] - t) / 2
         for n, k, sgn in ((p["a"], p["ia"], p["sa"]), (p["b"], p["ib"], -p["sa"])):
-            if (n, k) not in move or d < abs(move[(n, k)]):  # an edge facing several neighbours takes the smallest move
-                move[(n, k)] = sgn * d
+            dn = d
+            if is_rail:   # the balustrade stands on the stairwell's edge: the walkable side takes the whole gap
+                dn = 0.0 if sp[n]["kind"] == "opening" else p["gap"] - t
+            if (n, k) not in move or dn < abs(move[(n, k)]):  # an edge facing several neighbours takes the smallest move
+                move[(n, k)] = sgn * dn
     for (n, k), m in move.items():
         edges[n][k][1] += m
     final = {n: rebuild(e) for n, e in edges.items()}
@@ -293,8 +306,11 @@ def main():
         "sources": {"plan": str(PLAN.relative_to(ROOT)), "doors": str(DOORS.relative_to(ROOT)), "anchors": ANCHORS},
     }
     (ROOT / "spec").mkdir(exist_ok=True)
-    (ROOT / "spec/house_spec.json").write_text(json.dumps(spec, indent=1) + "\n")
-    (ROOT / "spec/upstairs-changes.md").write_text("\n".join(log) + "\n")
+    tag = ".measured" if MEASURED else ""
+    if MEASURED:
+        spec["walls"] = {"interior_thickness_m": None, "note": "as measured: walls NOT thinned (comparison build only)"}
+    (ROOT / f"spec/house_spec{tag}.json").write_text(json.dumps(spec, indent=1) + "\n")
+    (ROOT / f"spec/upstairs-changes{tag}.md").write_text("\n".join(log) + "\n")
     print("\n".join(log))
 
 

@@ -27,7 +27,7 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 
 | line | walls (space) | before (m) | after (m) | largest move (cm) |
 |---|---|---|---|---|
-| y = -1.75 | parents_bath, girls_room_a | -1.74, -1.79 | -1.75 | 3.7 |
+| y = -4.23 | parents_bath, girls_room_a | -4.22, -4.26 | -4.23 | 2.9 |
 | y = 7.09 | kevin_jeff_room, hall_bath | 7.10, 7.03 | 7.09 | 6.1 |
 | x = 6.93 | kevin_jeff_room, girls_room_a, hall_end | 6.95, 6.89, 6.89 | 6.93 | 4.8 |
 | y = 2.58 | kevin_jeff_room, hall_corridor | 2.58, 2.59 | 2.58 | 0.9 |
@@ -79,27 +79,27 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | hall_end / kevin_jeff_room | 34 | 1.95 |  |
 | hall_end / parents_bedroom | 36 | 0.87 |  |
 | kevin_jeff_room / parents_bedroom | 50 | 1.38 |  |
-| parents_bath / parents_bedroom | 41 | 2.07 |  |
+| parents_bath / parents_bedroom | 20 | 2.07 |  |
 
 ## 3b. Interior walls thinned to 14 cm (centrelines kept; rooms take the space)
 
 | space | before (m) | after (m) | area before → after (m²) | change |
 |---|---|---|---|---|
-| parents_bath | 3.56 x 2.67 | 3.56 x 2.80 | 8.6 → 8.9 | +3.2% |
-| parents_bedroom | 5.22 x 5.25 | 5.33 x 5.39 | 24.3 → 26.0 | +7.1% |
+| parents_bath | 3.56 x 2.70 | 3.56 x 2.73 | 8.7 → 8.7 | +0.7% |
+| parents_bedroom | 5.22 x 5.25 | 5.33 x 5.28 | 24.3 → 25.5 | +4.8% |
 | kevin_jeff_room | 3.60 x 4.51 | 3.88 x 4.60 | 16.2 → 17.9 | +10.1% |
-| girls_room_a | 2.22 x 5.12 | 2.22 x 5.24 | 9.7 → 10.0 | +2.8% |
+| girls_room_a | 2.22 x 5.09 | 2.22 x 5.22 | 9.6 → 9.9 | +3.0% |
 | hall_end | 2.06 x 1.00 | 2.27 x 1.22 | 2.1 → 2.8 | +34.7% |
-| hall_corridor | 3.33 x 2.55 | 3.52 x 2.60 | 6.1 → 6.9 | +11.8% |
+| hall_corridor | 3.33 x 2.55 | 3.52 x 2.74 | 6.1 → 7.3 | +19.5% |
 | hall_corridor_south | 1.81 x 1.36 | 1.98 x 1.56 | 2.5 → 3.1 | +25.3% |
 | closet_1 | 0.61 x 1.46 | 0.76 x 1.60 | 0.9 → 1.2 | +37.4% |
 | linen_closet | 0.92 x 0.74 | 0.99 x 0.90 | 0.7 → 0.9 | +30.3% |
 | hall_bath | 3.33 x 3.16 | 3.52 x 3.25 | 9.9 → 10.8 | +8.6% |
 | buzz_room | 4.37 x 3.54 | 4.46 x 3.69 | 15.5 → 16.4 | +6.2% |
 | girls_room_b | 4.36 x 5.18 | 4.45 x 5.23 | 22.6 → 23.3 | +3.1% |
-| main_stair_opening | 2.78 x 5.57 | 2.87 x 5.63 | 15.5 → 16.1 | +4.2% |
+| main_stair_opening | 2.78 x 5.57 | 2.87 x 5.57 | 15.5 → 16.0 | +3.2% |
 | attic_stair | 2.66 x 1.36 | 2.74 x 1.56 | 3.6 → 4.3 | +18.1% |
-| girls_a_closet | 0.30 x 2.39 | 0.42 x 2.42 | 0.7 → 1.0 | +45.2% |
+| girls_a_closet | 0.30 x 2.39 | 0.42 x 2.44 | 0.7 → 1.0 | +46.4% |
 
 ## 4. Doors and openings
 
@@ -133,7 +133,7 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | adult fits door girls_room_b/hall_corridor_south | pass | 0.76 m wide x 2.03 m |
 | adult fits door attic_stair/hall_corridor_south | pass | 0.76 m wide x 2.03 m |
 | adult fits hall hall_end | pass | narrowest 1.22 m |
-| adult fits hall hall_corridor | pass | narrowest 2.60 m |
+| adult fits hall hall_corridor | pass | narrowest 2.74 m |
 | adult fits hall hall_corridor_south | pass | narrowest 1.56 m |
 
 ## Flags (need a decision or more evidence)

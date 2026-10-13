@@ -21,7 +21,14 @@ public static class SpecGreybox
     const float CasingW = 0.07f, CasingProud = 0.02f;   // door trim: 2 3/4 in wide, 3/4 in proud (Marina's doors have it)
     static Material mFloor, mWall, mCeil, mHall, mProp, mRail;
 
-    static string SpecPath => Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/house_spec.json"));
+    // "-variant measured" (command line) builds/renders spec/house_spec.measured.json: walls as measured, not thinned.
+    static string Variant
+    {
+        get { var a = System.Environment.GetCommandLineArgs(); int i = System.Array.IndexOf(a, "-variant"); return i >= 0 && i + 1 < a.Length ? a[i + 1] : ""; }
+    }
+    static string Tag => Variant == "" ? "" : "." + Variant;
+    static string SceneTag => Variant == "" ? "" : "_" + Variant;
+    static string SpecPath => Path.GetFullPath(Path.Combine(Application.dataPath, $"../../../spec/house_spec{Tag}.json"));
     static string CaptureDir => Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/captures"));
 
     class Door { public string a, b, kind; public bool alongX; public float coord, lo, hi, height; }
@@ -75,9 +82,9 @@ public static class SpecGreybox
         Physics.SyncTransforms();
         string report = WalkTest(spaces, doors);
         Directory.CreateDirectory(CaptureDir);
-        File.WriteAllText(Path.Combine(CaptureDir, "walk-test.txt"), report);
-        Captures(spaces, ceilings);
-        EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), "Assets/Scenes/Greybox_Upstairs.unity");
+        File.WriteAllText(Path.Combine(CaptureDir, $"walk-test{Tag}.txt"), report);
+        if (Variant == "") Captures(spaces, ceilings);
+        EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), $"Assets/Scenes/Greybox_Upstairs{SceneTag}.unity");
         Debug.Log("SpecGreybox: built from " + SpecPath + "\n" + report);
     }
 
@@ -283,12 +290,21 @@ public static class SpecGreybox
     public static void RenderMatched()
     {
         string root = Path.Combine(CaptureDir, "matched");
-        EditorSceneManager.OpenScene("Assets/Scenes/Greybox_Upstairs.unity");
-        // Comparison lighting: room point lights off (their ceiling hotspots read as false edges); one shadowless
-        // directional light from the camera, so each plane gets a flat shade and only geometry makes edges.
+        EditorSceneManager.OpenScene($"Assets/Scenes/Greybox_Upstairs{SceneTag}.unity");
+        // Comparison render = surface-ID image: every box (wall run, header, casing, floor cell, ceiling) gets its own
+        // flat unlit colour and all lights are off, so a colour change is exactly a geometric edge (with occlusion),
+        // from any viewpoint and independent of lighting or exposure.
         foreach (var l in Object.FindObjectsByType<Light>(FindObjectsSortMode.None)) l.gameObject.SetActive(false);
-        var head = new GameObject("Headlight").AddComponent<Light>(); head.type = LightType.Directional; head.intensity = 8000f;
-        head.shadows = LightShadows.None; head.gameObject.AddComponent<HDAdditionalLightData>();
+        var unlit = Shader.Find("HDRP/Unlit");
+        int k = 0;
+        foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.InstanceID))
+        {
+            var m = new Material(unlit);
+            var c = Color.HSVToRGB((k * 0.618034f) % 1f, 0.55f + 0.45f * (k % 2), 0.45f + 0.5f * ((k / 2) % 2)); k++;
+            m.SetColor("_UnlitColor", c); r.sharedMaterial = m;
+        }
+        foreach (var v in Object.FindObjectsByType<Volume>(FindObjectsSortMode.None))
+            if (v.sharedProfile.TryGet<Exposure>(out var ex)) { ex.mode.value = ExposureMode.Fixed; ex.fixedExposure.value = 0f; }
         var go = new GameObject("MatchCam"); var cam = go.AddComponent<Camera>(); go.AddComponent<HDAdditionalCameraData>(); cam.nearClipPlane = 0.05f;
         var rt = new RenderTexture(1920, 1080, 24); cam.targetTexture = rt;
         foreach (var clipDir in Directory.GetDirectories(root).Where(d => File.Exists(Path.Combine(d, "poses.json"))))
@@ -298,9 +314,9 @@ public static class SpecGreybox
             {
                 Vector3 V(JToken t) => new Vector3((float)t[0], (float)t[1], (float)t[2]);
                 go.transform.SetPositionAndRotation(V(p["pos"]), Quaternion.LookRotation(V(p["forward"]), V(p["up"])));
-                head.transform.rotation = Quaternion.LookRotation(V(p["forward"]) + new Vector3(0.25f, -0.35f, 0.15f), Vector3.up);
                 cam.fieldOfView = (float)p["vfov"];
-                Shot(cam, rt, Path.Combine("matched", Path.GetFileName(clipDir), (string)p["name"]));
+                Directory.CreateDirectory(Path.Combine(clipDir, Variant == "" ? "." : Variant));
+                Shot(cam, rt, Path.Combine("matched", Path.GetFileName(clipDir), Variant == "" ? "" : Variant, (string)p["name"]));
             }
         }
         RenderTexture.active = null; Object.DestroyImmediate(go); rt.Release();

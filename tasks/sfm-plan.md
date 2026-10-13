@@ -270,3 +270,13 @@ Also:
     - parents f498: tub/shower close-up, not modelled.
     - hall f178/f192: the bath door is under 1 m away and its open leaf isn't modelled.
   - **Unexplained, follow up:** Kevin f225, window-wall corner about 60 px (~25 cm) left of real. Every other Kevin view agrees, so check that frame's pose (VGGT chunk) before touching the plan.
+- Verification rebuilt around 3D, not images (Oct 13):
+  - **Image edge score dropped as a gate.** Sensitivity test: moving the camera 20 cm did not reliably worsen the chamfer score, and two views scored better. Two other variants (an inlier fraction, and orientation-aware snapping) scored mismatched pairs nearly as well as matched ones. Overlays are kept for eyes only.
+  - **New gate, `tools/house/check_walls.py`.** Per-wall offset of a gated clip's wall-height points, using only points from frames whose camera is inside that space, against the spec walls.
+  - **Findings and fixes:**
+    - The hall reaches the stair rail. The reconciler now treats rails as 6 cm on the stairwell edge, and the hall takes the gap: +19 → +1 cm.
+    - The parents' bath was traced 20 cm too far west. Far wall −21 and bedroom-side wall +19, so same width; now within ±3 cm, and the shared wall is back to ~15 cm (SfM 17).
+    - Kevin's registration anchor for the south wall came from a `plan_extract` line 8 cm off the surface. Re-fitted on surface density peaks: rotation 90.02°, scale 1.0092; all walls within ±3 cm; room depth 3.60 m matches its door-scaled measurement.
+  - **Result:** hall, parents and Kevin clips have every long wall within ±7 cm, and verify-plan passes 12/12.
+  - **Supporting changes:** matched renders use per-frame focal, PnP poses from each frame's point map (camera head vs point map within 2 cm/0.7° except the bath close-up), and surface-ID colouring.
+  - **New option:** `reconcile.py --measured` / `-variant measured` builds the house exactly as measured, so faithfulness and the gameplay wall-thinning are judged separately.

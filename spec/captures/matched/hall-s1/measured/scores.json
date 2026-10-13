@@ -1,0 +1,32 @@
+[
+ {
+  "frame": "f_00135 (low structure)",
+  "median_px": 5.0,
+  "p90_px": 15.2
+ },
+ {
+  "frame": "f_00148",
+  "median_px": 6.4,
+  "p90_px": 25.7
+ },
+ {
+  "frame": "f_00160",
+  "median_px": 8.1,
+  "p90_px": 44.0
+ },
+ {
+  "frame": "f_00178",
+  "median_px": 13.0,
+  "p90_px": 86.0
+ },
+ {
+  "frame": "f_00192",
+  "median_px": 13.4,
+  "p90_px": 32.2
+ },
+ {
+  "frame": "f_00205",
+  "median_px": 13.0,
+  "p90_px": 38.0
+ }
+]

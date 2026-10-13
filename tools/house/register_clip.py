@@ -27,7 +27,7 @@ def apply(params, P):
     return s * P @ np.array([[c, n], [-n, c]]) + [tx, ty]
 
 
-def fit(anchors):
+def fit(anchors, start=(0.0, 1.0, 6.3, 1.6)):
     """Each anchor: clip segment (2 points, clip plan metres) lies on plan line x=c or y=c."""
     def resid(p):
         r = []
@@ -36,7 +36,7 @@ def fit(anchors):
             k = 0 if a["plan_axis"] == "x" else 1
             r += list((q[:, k] - a["plan"]) * a.get("weight", 1.0))
         return r
-    sol = least_squares(resid, [0.0, 1.0, 6.3, 1.6])
+    sol = least_squares(resid, list(start))
     res = np.array(resid(sol.x)).reshape(-1, 2)
     return sol.x, res
 
@@ -44,7 +44,9 @@ def fit(anchors):
 def main(clip):
     C = json.loads(CHECKS.read_text())
     reg = C["registrations"][clip]
-    params, res = fit(reg["anchors"])
+    prev = reg.get("similarity")
+    start = (np.radians(prev["rotation_deg"]), prev["scale"], *prev["translation"]) if prev else (0.0, 1.0, 6.3, 1.6)
+    params, res = fit(reg["anchors"], start)
     print(f"{clip}: rotation {np.degrees(params[0]):+.2f} deg, scale {params[1]:.4f}, translation ({params[2]:.3f}, {params[3]:.3f})")
     for a, r in zip(reg["anchors"], res):
         print(f"  anchor {a['name']:<34} residual {np.abs(r).max() * 100:5.1f} cm")
@@ -54,7 +56,7 @@ def main(clip):
     P = lambda pts: apply(params, np.array(pts, float))
 
     # derived geometry
-    F = reg["features"]
+    F = reg.get("features", {})
     T = json.loads(TRACE.read_text()); D = json.loads(DOORS.read_text())
     S = {s["name"]: s for s in T["spaces"]}
     for name, spec in F.get("polygons", {}).items():

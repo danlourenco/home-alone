@@ -257,15 +257,16 @@
    "floor_note": "foot of the closed hall door (door_scale.py snapped rows)"
   },
   "kevin": {
-   "note": "Kevin's clip placed by the overhead fit: room turned 90 deg (hall door on the left wall near the bottom, closet door on the bottom wall); plan = (-2.914 Ky + 6.892, 2.914 Kx + 3.055) from the room's plan-stage edges (x 3.32-6.95, y 2.56-7.16)",
+   "note": "Kevin's clip (sfm-work/rooms/kevin, 2.914 m/unit from its doors). 2D similarity fitted by register_clip.py on the room's four walls (clip wall-surface density peaks, Oct 13: the plan_extract line for the south wall sat 8 cm off the surface -> squared plan walls of kevin_jeff_room); starts from the overhead placement (room turned 90 deg)",
    "m_per_unit": 2.914,
    "similarity": {
-    "rotation_deg": 90.0,
-    "scale": 1.0,
+    "rotation_deg": 90.016,
+    "scale": 1.00925,
     "translation": [
-     6.892,
-     3.055
-    ]
+     6.8764,
+     2.9784
+    ],
+    "anchor_residual_cm_max": 1.2
    },
    "floor_pixels": [
     [
@@ -279,7 +280,69 @@
      246
     ]
    ],
-   "floor_note": "foot of the closed doors (door_scale.py snapped rows)"
+   "floor_note": "foot of the closed doors (door_scale.py snapped rows)",
+   "anchors": [
+    {
+     "name": "north wall (windows' corner side)",
+     "clip": [
+      [
+       -0.3,
+       3.515
+      ],
+      [
+       3.9,
+       3.515
+      ]
+     ],
+     "plan_axis": "x",
+     "plan": 3.34
+    },
+    {
+     "name": "south wall (closet door)",
+     "clip": [
+      [
+       0.6,
+       -0.085
+      ],
+      [
+       3.4,
+       -0.085
+      ]
+     ],
+     "plan_axis": "x",
+     "plan": 6.95
+    },
+    {
+     "name": "west wall (hall door)",
+     "clip": [
+      [
+       -0.385,
+       0.8
+      ],
+      [
+       -0.385,
+       2.8
+      ]
+     ],
+     "plan_axis": "y",
+     "plan": 2.58
+    },
+    {
+     "name": "east wall (front facade)",
+     "clip": [
+      [
+       4.075,
+       0.8
+      ],
+      [
+       4.075,
+       2.8
+      ]
+     ],
+     "plan_axis": "y",
+     "plan": 7.1
+    }
+   ]
   }
  },
  "checks": [
