@@ -13,7 +13,7 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | vestibule | 1.1 |
 | dining_room | 1.7 |
 | sunroom | 7.3 |
-| kitchen | 23.2 |
+| kitchen | 20.3 |
 | back_stair | 9.7 |
 
 ## 2. Aligned (near-collinear walls share one line)
@@ -22,9 +22,9 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 |---|---|---|---|---|
 | x = 10.64 | foyer, vestibule | 10.65, 10.57 | 10.64 | 6.9 |
 | y = 6.98 | vestibule, dining_room | 7.04, 6.93 | 6.98 | 6.6 |
-| x = 6.90 | dining_room, kitchen, back_stair | 6.92, 6.93, 6.86 | 6.90 | 3.9 |
+| x = 6.90 | dining_room, kitchen, back_stair | 6.92, 6.93, 6.86 | 6.90 | 4.0 |
 | y = -1.88 | kitchen, back_stair | -1.88, -1.88 | -1.88 | 0.0 |
-| y = -6.29 | kitchen, back_stair | -6.29, -6.30 | -6.29 | 0.6 |
+| y = -6.08 | kitchen, back_stair | -6.08, -6.09 | -6.08 | 0.6 |
 
 ### Anchor rooms vs their own SfM measurement
 
@@ -36,7 +36,7 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | between | thickness (cm) | length (m) | note |
 |---|---|---|---|
 | back_stair / foyer | 17 | 2.68 |  |
-| back_stair / kitchen | 15 | 4.42 |  |
+| back_stair / kitchen | 15 | 4.21 |  |
 | den / living_room | 23 | 7.87 |  |
 | dining_room / foyer | 17 | 5.12 |  |
 | dining_room / kitchen | 55 | 3.77 | thick: chase, closet or measurement error |
@@ -58,8 +58,8 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | vestibule | 3.36 x 1.14 | 3.57 x 1.20 | 3.8 → 4.3 | +11.7% |
 | dining_room | 4.55 x 6.50 | 4.62 x 6.71 | 29.6 → 31.0 | +4.7% |
 | sunroom | 3.73 x 7.88 | 3.78 x 7.94 | 29.4 → 30.0 | +2.1% |
-| kitchen | 7.89 x 10.43 | 7.90 x 10.63 | 54.7 → 55.8 | +2.0% |
-| back_stair | 0.87 x 4.42 | 0.90 x 4.42 | 3.9 → 4.0 | +2.6% |
+| kitchen | 7.89 x 9.70 | 7.90 x 9.90 | 51.1 → 52.2 | +2.1% |
+| back_stair | 0.87 x 4.21 | 0.90 x 4.21 | 3.7 → 3.8 | +2.6% |
 
 ## 4. Doors and openings
 

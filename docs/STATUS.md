@@ -1,6 +1,6 @@
 # Current status — start here (October 13, 2026)
 
-The upstairs is measured, reconciled into a spec, built as a walkable Unity grey-box, and verified against video. That includes independent evidence. **Next: the ground floor.** Background reading: [RECONCILIATION.md](RECONCILIATION.md) for the architecture, [tasks/sfm-plan.md](../tasks/sfm-plan.md) for the full experiment log, and the `verify-plan` skill for every check.
+The upstairs is measured, reconciled into a spec, built as a walkable Unity grey-box, and verified against video. That includes independent evidence. **Next: the ground floor.** Every deviation from measurement is in [DEVIATIONS.md](DEVIATIONS.md) (top: the ground floor's 1.141 front-to-back stretch). Background reading: [RECONCILIATION.md](RECONCILIATION.md) for the architecture, [tasks/sfm-plan.md](../tasks/sfm-plan.md) for the full experiment log, and the `verify-plan` skill for every check.
 
 Branch `unity-sfm-reconstruction`, pushed to `origin`. Git LFS covers `*.glb *.blend *.exr *.fbx *.psd *.tif *.tiff *.npz`.
 

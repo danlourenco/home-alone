@@ -99,11 +99,11 @@
     ],
     [
      0.009,
-     7.762
+     7.763
     ],
     [
      10.216,
-     7.762
+     7.763
     ],
     [
      10.216,
@@ -145,7 +145,7 @@
    "polygon_xz": [
     [
      4.849,
-     7.622
+     7.623
     ],
     [
      4.849,
@@ -157,10 +157,10 @@
     ],
     [
      11.555,
-     7.622
+     7.623
     ]
    ],
-   "area_m2": 30.96,
+   "area_m2": 30.97,
    "ceiling_m": 2.32
   },
   {
@@ -194,11 +194,11 @@
    "anchor": false,
    "polygon_xz": [
     [
-     -5.922,
+     -5.192,
      3.923
     ],
     [
-     -5.922,
+     -5.192,
      -0.28
     ],
     [
@@ -210,31 +210,31 @@
      3.649
     ],
     [
-     4.71,
+     4.709,
      3.649
     ],
     [
-     4.71,
-     7.622
+     4.709,
+     7.623
     ],
     [
      2.702,
-     7.622
+     7.623
     ],
     [
      2.702,
      6.587
     ],
     [
-     -1.717,
+     -1.505,
      6.587
     ],
     [
-     -1.717,
+     -1.505,
      3.923
     ]
    ],
-   "area_m2": 55.8,
+   "area_m2": 52.17,
    "ceiling_m": 2.32
   },
   {
@@ -243,11 +243,11 @@
    "anchor": false,
    "polygon_xz": [
     [
-     -1.717,
-     7.622
+     -1.505,
+     7.623
     ],
     [
-     -1.717,
+     -1.505,
      6.726
     ],
     [
@@ -256,10 +256,10 @@
     ],
     [
      2.702,
-     7.622
+     7.623
     ]
    ],
-   "area_m2": 3.96,
+   "area_m2": 3.77,
    "ceiling_m": 2.32
   }
  ],
@@ -321,7 +321,7 @@
    ],
    "kind": "arch",
    "wall_axis": "x",
-   "wall_coord": 6.988,
+   "wall_coord": 6.989,
    "wall_thickness": 0.14,
    "span": [
     3.349,
@@ -332,7 +332,7 @@
    "opens": true,
    "placed_from": "read in the overhead",
    "source": "overhead: French door leaves on the dining room's left wall, y 740-855 px",
-   "wall_coord_spec": 7.692,
+   "wall_coord_spec": 7.693,
    "span_spec": [
     7.927,
     9.881
@@ -400,7 +400,7 @@
    "wall_thickness": 0.14,
    "span": [
     3.19,
-    5.319
+    5.318
    ],
    "width": 2.128,
    "height": null,
@@ -410,7 +410,7 @@
    "wall_coord_spec": 2.934,
    "span_spec": [
     7.768,
-    9.897
+    9.896
    ],
    "spec_axis": "z"
   },
@@ -421,7 +421,7 @@
    ],
    "kind": "door",
    "wall_axis": "x",
-   "wall_coord": 6.988,
+   "wall_coord": 6.989,
    "wall_thickness": 0.14,
    "span": [
     -2.889,
@@ -432,7 +432,7 @@
    "opens": true,
    "placed_from": "read in the overhead",
    "source": "foyer rear-right door under an arch (stairs-a frames 41-57, the scale door)",
-   "wall_coord_spec": 7.692,
+   "wall_coord_spec": 7.693,
    "span_spec": [
     1.689,
     2.7
@@ -450,7 +450,7 @@
    "wall_thickness": -0.0,
    "span": [
     6.022,
-    6.918
+    6.919
    ],
    "width": 0.896,
    "height": null,
@@ -460,7 +460,7 @@
    "wall_coord_spec": 2.702,
    "span_spec": [
     6.726,
-    7.622
+    7.623
    ],
    "spec_axis": "x"
   }

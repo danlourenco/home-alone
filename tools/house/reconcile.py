@@ -321,8 +321,8 @@ def main():
             lo, hi, src = p["lo"], p["hi"], "full shared wall"
         elif "span" in d or "px" in d:
             if "px" in d:   # doorway ends read in the overhead, mapped through the trace's calibration
-                Hc = np.loadtxt(ROOT / json.loads(TRACE.read_text())["calibration"])
-                q = np.c_[np.array(d["px"], float), np.ones(2)] @ Hc.T; P = q[:, :2] / q[:, 2:]
+                sys.path.insert(0, str(ROOT / "tools/sfm")); from calib import mapper
+                P = mapper(json.loads(TRACE.read_text()))[0](d["px"])
                 lo, hi = sorted(P[:, 1 - p["axis"]]); src = "read in the overhead"
             else:
                 lo, hi = sorted(d["span"]); src = "measured"

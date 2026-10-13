@@ -328,5 +328,10 @@
   "front_back_stretch": 1.1406,
   "stretch_note": "user decision Oct 13: ground main facade stacked under the upstairs facade (Marina's two floors differ by ~1.6 m front-to-back)",
   "pinned_by": "foyer rear wall = stairwell rear edge (landing); foyer photo wall = stairwell south edge (flight 1)"
+ },
+ "stretch": {
+  "pivot_y": -4.578,
+  "k": 1.1406,
+  "note": "main block stacked under the upstairs facade; behind the rear wall line (kitchen wing) as measured"
  }
 }

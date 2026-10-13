@@ -43,7 +43,8 @@ def main():
                     ["uv", "run", "-q", "--with", "numpy", "python", "tools/house/reconcile.py", "--floor", FLOOR]):
             subprocess.run(cmd, cwd=ROOT, check=True, capture_output=True)
     trace, plan, spec, checks = (json.loads(p.read_text()) for p in (TRACE, PLAN, SPEC, CHECKS))
-    H = np.loadtxt(ROOT / trace["calibration"])
+    sys.path.insert(0, str(ROOT / "tools/sfm")); from calib import mapper
+    fwd, _ = mapper(trace)
     o = np.array(spec["origin_plan_m"])
     to_spec = lambda p: np.array([p[1] - o[1], p[0] - o[0]])     # plan (x down, y right) -> spec (x, z)
     spaces = {s["name"]: np.array(s["polygon_xz"]) for s in spec["spaces"]}
@@ -58,7 +59,7 @@ def main():
 
     for c in checks["checks"]:
         if "overhead_px" in c and c["type"] != "length_px":
-            q = H @ np.r_[c["overhead_px"], 1]; pt = q[:2] / q[2]
+            pt = fwd([c["overhead_px"]])[0]
         else:
             pt = np.array(c.get("plan", [0, 0]), float)
         ok, detail = False, ""
@@ -84,7 +85,7 @@ def main():
             ok = c["space"] in hit
             detail = f"point lies in {hit[0] if hit else 'no space'} (expected {c['space']})"
         elif c["type"] == "length_px":   # two overhead pixels at ONE height, through the calibration (skill overhead-floor)
-            q = np.c_[np.array(c["overhead_px"], float), np.ones(2)] @ H.T; P = q[:, :2] / q[:, 2:]
+            P = fwd(c["overhead_px"])
             got = float(np.linalg.norm(P[1] - P[0])); err = got / c["expect_m"] - 1
             ok = abs(err) * 100 <= c["tol_pct"]
             detail = f"{got:.2f} m vs {c['expect_m']:.2f} ({err:+.1%}; tol {c['tol_pct']}%)"
@@ -117,12 +118,13 @@ def main():
 def review_sheet(trace):
     """One zoomed tile per traced space: the overhead around it with the trace drawn on top, for the eye pass."""
     im = Image.open(ROOT / trace["image"]).convert("RGB")
-    H = np.loadtxt(ROOT / trace["calibration"]); Hi = np.linalg.inv(H)
+    sys.path.insert(0, str(ROOT / "tools/sfm")); from calib import mapper
+    _, inv = mapper(trace)
     plan = {s["name"]: np.array(s["polygon_m"]) for s in json.loads(PLAN.read_text())["spaces"]}
     tiles = []
     for s in trace["spaces"]:
         pm = plan[s["name"]]
-        q = np.c_[pm, np.ones(len(pm))] @ Hi.T; px = q[:, :2] / q[:, 2:]
+        px = inv(pm)
         (x0, y0), (x1, y1) = px.min(0) - 40, px.max(0) + 40
         crop = im.crop((int(x0), int(y0), int(x1), int(y1)))
         k = 360 / max(crop.size); crop = crop.resize((int(crop.width * k), int(crop.height * k)))

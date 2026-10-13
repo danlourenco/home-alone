@@ -27,7 +27,8 @@ def area(p):
 
 def main():
     tf = Path(sys.argv[1]); t = json.loads(tf.read_text())
-    H = np.loadtxt(t["calibration"])
+    sys.path.insert(0, str(Path(__file__).parent)); from calib import mapper
+    fwd, inv = mapper(t)
     out = {"source": str(tf), "units": "metres; plan axes = parents' SfM plan frame (x: overhead down, y: overhead right)", "spaces": []}
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(20, 10))
     a1.imshow(Image.open(t["image"]))
@@ -36,10 +37,9 @@ def main():
     print(f"{'space':<22} {'kind':<8} {'m2':>6} {'ft2':>6}  bbox m")
     for s in t["spaces"]:
         if "m" in s:  # measured directly (e.g. a gated SfM clip) in plan metres; overrides the overhead reading
-            pl = np.array(s["m"], float); Hi = np.linalg.inv(H)
-            q = np.c_[pl, np.ones(len(pl))] @ Hi.T; px = q[:, :2] / q[:, 2:]
+            pl = np.array(s["m"], float); px = inv(pl)
         else:
-            px = np.array(s["px"], float); pl = to_plan(H, px)
+            px = np.array(s["px"], float); pl = fwd(px)
         A = area(pl); totals[s["kind"]] = totals.get(s["kind"], 0) + A
         bb = np.ptp(pl, axis=0)
         print(f"{s['name']:<22} {s['kind']:<8} {A:6.1f} {A * FT2:6.0f}  {bb[0]:.2f} x {bb[1]:.2f}")
@@ -59,7 +59,7 @@ def main():
     print("totals:", {k: f"{v:.1f} m2 / {v * FT2:.0f} ft2" for k, v in totals.items()})
     print(f"net floor (rooms+halls+closets): {net:.1f} m2 = {net * FT2:.0f} ft2  (walls not included)")
     if "outline_px" in t:
-        g = area(to_plan(H, t["outline_px"]))
+        g = area(fwd(t["outline_px"]))
         out["totals_m2"]["gross_outline"] = round(g, 2)
         print(f"gross outline: {g:.1f} m2 = {g * FT2:.0f} ft2 at 80 in doors; 78 in {g * FT2 * (78 / 80) ** 2:.0f}, 84 in {g * FT2 * (84 / 80) ** 2:.0f}"
               f"  (Marina: 1,900 ft2 upstairs)")
