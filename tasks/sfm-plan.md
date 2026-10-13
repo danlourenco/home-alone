@@ -149,3 +149,21 @@ COLMAP SIFT, per-shot pinhole, 246 frames, 12.7 min. Shot 3 alone: 39 cm median 
 - Trustworthy so far on synthetic: feature-rich rooms (COLMAP kitchen ~1 cm), VGGT on the breakfast/dining run (~6 cm). Long straight walks past repeating surfaces: unreliable with every method tried.
 - Next, cheap: **agreement gate** — on synthetic, does COLMAP–VGGT agreement predict correctness? If yes, it's the acceptance test for Marina footage (no truth there).
 - Likely main path for hard rooms: **analysis-by-synthesis** — render the house_spec blockout in Unity from estimated cameras and optimise room dimensions to align structural lines (corners, door frames, trim) across many Marina frames. Immune to wallpaper repetition; verified on the synthetic harness the same way.
+
+## Experiment 0c — agreement gate (Oct 12): PASSES on synthetic
+`tools/sfm/agreement.py`: shots split into 10-frame windows (~3.5 m); per window and method pair, Sim3 one method onto the other (disagreement) and each onto truth (error), as median residual / window path length.
+
+| Gate | Accepted | Truly within gate | Worst true error accepted | Good windows rejected |
+|---|---|---|---|---|
+| 5%, colmap+vggt+aliked | 19/38 | 17 | 5.8% | 0 |
+| 2%, colmap+vggt+aliked | 13/38 | 11 | 3.3% | 2 |
+| 2%, colmap+vggt only | 3/12 | 3 | 2.0% | 0 |
+Spearman(disagreement, worse true error) 0.93–0.96. Caveats: synthetic only; overlapping samples; COLMAP+VGGT overlap in only 12 windows; ALIKED shares COLMAP's mapper (not independent).
+
+Insight: methods are usually right LOCALLY; the day's failures were GLOBAL (along-path drift, wrong merges).
+
+### Strategy (supersedes chaining one global SfM model)
+1. Local reconstruction per room-scale window with ≥2 independent methods (COLMAP SIFT, VGGT; others as available). Accept only where they agree (gate 2%, tighten after more synthetic evidence); attach the measured error bar.
+2. Global assembly by constraints, not SfM chaining: doorways/shared walls between accepted pieces, house envelope, stair geometry; analysis-by-synthesis (align corners/door frames/trim of the house_spec blockout to Marina frames) for placement and for rooms with no agreement.
+3. Rooms with no agreeing pair are flagged, never silently trusted.
+Next: grow synthetic evidence for the gate (more routes/rooms, independent pairs), then first real run: Buzz room + hall with COLMAP and VGGT, gated.

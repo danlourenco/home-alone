@@ -30,7 +30,7 @@ def image_lines(txt):
     return [h for h in body[::2] if h.strip()]
 
 
-def load_model(ws, model):
+def load_model(ws, model, with_names=False):
     """Estimated centres, true centres (z flipped: Unity is left-handed), shot ids; contaminants skipped."""
     ws = Path(ws)
     gt = {f["i"]: f for f in json.loads((ws / "gt.json").read_text())["frames"]}
@@ -41,7 +41,7 @@ def load_model(ws, model):
         subprocess.run(["colmap", "model_converter", "--input_path", model, "--output_path", txt, "--output_type", "TXT"],
                        check=True, capture_output=True)
     lines = image_lines(txt)
-    est, true, shots = [], [], []
+    est, true, shots, names = [], [], [], []
     for l in lines:
         f = l.split()
         src = timeline[int(Path(f[-1]).name[2:7])]
@@ -52,4 +52,7 @@ def load_model(ws, model):
         p = gt[src]["pos"]
         true.append([p[0], p[1], -p[2]])
         shots.append(gt[src]["shot"])
+        names.append(Path(f[-1]).name)
+    if with_names:
+        return np.array(est), np.array(true), shots, names
     return np.array(est), np.array(true), shots
