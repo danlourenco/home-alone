@@ -90,14 +90,14 @@
     ],
     [
      6.817,
-     5.364
+     5.331
     ],
     [
      3.104,
-     5.364
+     5.331
     ]
    ],
-   "area_m2": 26.15,
+   "area_m2": 26.02,
    "ceiling_m": 2.5
   },
   {
@@ -135,19 +135,19 @@
      5.414
     ],
     [
-     2.83,
+     2.869,
      5.414
     ],
     [
-     2.83,
-     6.055
+     2.869,
+     6.036
     ],
     [
-     5.553,
-     6.055
+     5.558,
+     6.036
     ],
     [
-     5.553,
+     5.558,
      7.638
     ],
     [
@@ -155,7 +155,7 @@
      7.638
     ]
    ],
-   "area_m2": 9.91,
+   "area_m2": 9.99,
    "ceiling_m": 2.4
   },
   {
@@ -164,23 +164,23 @@
    "anchor": false,
    "polygon_xz": [
     [
-     5.693,
-     5.504
+     5.698,
+     5.471
     ],
     [
      6.92,
-     5.504
+     5.471
     ],
     [
      6.92,
      7.74
     ],
     [
-     5.693,
+     5.698,
      7.74
     ]
    ],
-   "area_m2": 2.74,
+   "area_m2": 2.77,
    "ceiling_m": 2.4
   },
   {
@@ -423,6 +423,31 @@
    ],
    "area_m2": 4.28,
    "ceiling_m": 2.4
+  },
+  {
+   "name": "girls_a_closet",
+   "kind": "closet",
+   "anchor": false,
+   "polygon_xz": [
+    [
+     3.009,
+     5.471
+    ],
+    [
+     5.434,
+     5.471
+    ],
+    [
+     5.434,
+     5.896
+    ],
+    [
+     3.009,
+     5.896
+    ]
+   ],
+   "area_m2": 1.03,
+   "ceiling_m": 2.4
   }
  ],
  "doors": [
@@ -433,7 +458,7 @@
    ],
    "kind": "door",
    "wall_axis": "x",
-   "wall_coord": 4.73,
+   "wall_coord": 4.697,
    "wall_thickness": 0.14,
    "span": [
     1.176,
@@ -444,7 +469,7 @@
    "opens": true,
    "placed_from": "measured, slid +11 cm onto the shared wall",
    "source": "SfM: door slab edges, parents frames 402/407",
-   "wall_coord_spec": 5.434,
+   "wall_coord_spec": 5.401,
    "span_spec": [
     5.754,
     6.524
@@ -533,7 +558,7 @@
    ],
    "kind": "door",
    "wall_axis": "y",
-   "wall_coord": 1.045,
+   "wall_coord": 1.05,
    "wall_thickness": 0.14,
    "span": [
     5.742,
@@ -544,7 +569,7 @@
    "opens": true,
    "placed_from": "topology (centred; position unverified)",
    "source": "topology: hall walk captions + adjacency",
-   "wall_coord_spec": 5.623,
+   "wall_coord_spec": 5.628,
    "span_spec": [
     6.446,
     7.208
@@ -643,7 +668,7 @@
    "height": 2.032,
    "opens": true,
    "placed_from": "topology (centred; position unverified)",
-   "source": "overhead: open door leaf visible on the room's right wall",
+   "source": "overhead: open door leaf visible on the room's right wall; confirmed by hall walk f222-261 (double bed, red/white quilt, door beside the attic door and the stair rail)",
    "wall_coord_spec": 5.698,
    "span_spec": [
     12.196,

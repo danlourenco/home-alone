@@ -359,6 +359,29 @@
     ]
    ],
    "notes": "Behind the attic door at the south end of hall_corridor_south. That door matches the film's attic-door shot (sconce, red-candle table, picture; Part 2 attic segment frame 17 vs hall walk 153-165). The well is open at its far end in the overhead, which is cut at wall-top height; its length to the outline is 2.66 m, and the stair may run further under the roof. The poster also puts the attic stair beside Buzz's room. Confirm with render-and-compare from the CG stair frames (attic segment ~304-320)."
+  },
+  {
+   "name": "girls_a_closet",
+   "kind": "closet",
+   "px": [
+    [
+     800,
+     347
+    ],
+    [
+     942,
+     347
+    ],
+    [
+     942,
+     365
+    ],
+    [
+     800,
+     365
+    ]
+   ],
+   "notes": "grey strip between the parents' bedroom and girls_room_a in the overhead; never seen from the hall. Sealed shallow built-in, no door (same treatment as the linen closet, user decision Oct 13)"
   }
  ],
  "outline_px": [

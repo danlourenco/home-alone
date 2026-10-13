@@ -78,7 +78,7 @@
    "a": "girls_room_b",
    "b": "hall_corridor_south",
    "kind": "door",
-   "source": "overhead: open door leaf visible on the room's right wall"
+   "source": "overhead: open door leaf visible on the room's right wall; confirmed by hall walk f222-261 (double bed, red/white quilt, door beside the attic door and the stair rail)"
   },
   {
    "a": "attic_stair",
@@ -106,7 +106,6 @@
   }
  ],
  "unresolved": [
-  "strip above girls_room_a (closet or shelf)",
-  "left edge of main_stair_opening (hidden in the overhead)"
+  "left edge of main_stair_opening (hidden in the overhead): settle with the ground floor and the stair itself"
  ]
 }

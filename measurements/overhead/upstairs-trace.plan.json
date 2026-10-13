@@ -363,14 +363,37 @@
     ]
    ],
    "area_m2": 3.56
+  },
+  {
+   "name": "girls_a_closet",
+   "kind": "closet",
+   "polygon_m": [
+    [
+     4.842,
+     -1.538
+    ],
+    [
+     4.849,
+     0.9
+    ],
+    [
+     5.175,
+     0.908
+    ],
+    [
+     5.169,
+     -1.521
+    ]
+   ],
+   "area_m2": 0.79
   }
  ],
  "totals_m2": {
   "room": 106.22,
   "hall": 11.1,
-  "closet": 1.28,
+  "closet": 2.08,
   "opening": 19.28,
-  "net_floor_excl_openings": 118.61,
+  "net_floor_excl_openings": 119.4,
   "gross_outline": 183.17
  }
 }

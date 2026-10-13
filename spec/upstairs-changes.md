@@ -21,6 +21,7 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | girls_room_b | 8.3 |
 | main_stair_opening | 13.0 |
 | attic_stair | 2.8 |
+| girls_a_closet | 0.9 |
 
 ## 2. Aligned (near-collinear walls share one line)
 
@@ -30,6 +31,8 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | y = 7.09 | kevin_jeff_room, hall_bath | 7.10, 7.03 | 7.09 | 6.1 |
 | x = 6.93 | kevin_jeff_room, girls_room_a, hall_end | 6.95, 6.89, 6.89 | 6.93 | 4.8 |
 | y = 2.58 | kevin_jeff_room, hall_corridor | 2.58, 2.59 | 2.58 | 1.0 |
+| y = 0.86 | girls_room_a, girls_a_closet | 0.85, 0.90 | 0.86 | 4.8 |
+| x = 4.87 | hall_end, girls_a_closet | 4.94, 4.85 | 4.87 | 6.7 |
 | y = 1.24 | hall_end, hall_corridor, hall_corridor_south, attic_stair | 1.20, 1.24, 1.27, 1.27 | 1.24 | 4.9 |
 | x = 7.28 | hall_corridor, closet_1, hall_bath | 7.29, 7.24, 7.29 | 7.28 | 3.9 |
 | x = 10.61 | hall_corridor, hall_bath, main_stair_opening | 10.61, 10.50, 10.66 | 10.61 | 10.5 |
@@ -61,7 +64,9 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | closet_1 / hall_corridor | 29 | 0.59 |  |
 | closet_1 / kevin_jeff_room | 34 | 1.46 |  |
 | closet_1 / linen_closet | 24 | 0.74 |  |
-| girls_room_a / hall_end | 40 | 1.53 |  |
+| girls_a_closet / girls_room_a | 18 | 2.35 |  |
+| girls_a_closet / parents_bedroom | 36 | 2.16 |  |
+| girls_room_a / hall_end | 39 | 1.53 |  |
 | girls_room_b / hall_corridor_south | 25 | 1.73 |  |
 | girls_room_b / main_stair_opening | 32 | 5.23 |  |
 | hall_bath / hall_corridor | 15 | 1.81 |  |
@@ -72,7 +77,7 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | hall_corridor / linen_closet | 14 | 0.74 |  |
 | hall_corridor / main_stair_opening | 25 | 2.78 |  |
 | hall_end / kevin_jeff_room | 34 | 1.95 |  |
-| hall_end / parents_bedroom | 42 | 0.87 |  |
+| hall_end / parents_bedroom | 36 | 0.87 |  |
 | kevin_jeff_room / parents_bedroom | 50 | 1.38 |  |
 | parents_bath / parents_bedroom | 41 | 2.07 |  |
 
@@ -81,10 +86,10 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | space | before (m) | after (m) | area before → after (m²) | change |
 |---|---|---|---|---|
 | parents_bath | 3.56 x 2.67 | 3.56 x 2.80 | 8.6 → 8.9 | +3.2% |
-| parents_bedroom | 5.22 x 5.25 | 5.36 x 5.39 | 24.3 → 26.1 | +7.7% |
+| parents_bedroom | 5.22 x 5.25 | 5.33 x 5.39 | 24.3 → 26.0 | +7.1% |
 | kevin_jeff_room | 3.60 x 4.51 | 3.88 x 4.60 | 16.2 → 17.9 | +10.1% |
-| girls_room_a | 2.22 x 5.11 | 2.22 x 5.24 | 9.7 → 9.9 | +2.1% |
-| hall_end | 1.99 x 1.00 | 2.24 x 1.23 | 2.0 → 2.7 | +37.7% |
+| girls_room_a | 2.22 x 5.12 | 2.22 x 5.24 | 9.7 → 10.0 | +2.8% |
+| hall_end | 2.06 x 1.00 | 2.27 x 1.22 | 2.1 → 2.8 | +34.6% |
 | hall_corridor | 3.33 x 2.53 | 3.52 x 2.59 | 6.7 → 7.4 | +10.1% |
 | hall_corridor_south | 1.81 x 1.36 | 1.98 x 1.56 | 2.5 → 3.1 | +25.3% |
 | closet_1 | 0.61 x 1.46 | 0.76 x 1.60 | 0.9 → 1.2 | +37.4% |
@@ -94,6 +99,7 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | girls_room_b | 4.36 x 5.18 | 4.45 x 5.23 | 22.6 → 23.3 | +3.1% |
 | main_stair_opening | 2.78 x 5.57 | 2.87 x 5.63 | 15.5 → 16.1 | +4.2% |
 | attic_stair | 2.66 x 1.36 | 2.74 x 1.56 | 3.6 → 4.3 | +18.1% |
+| girls_a_closet | 0.30 x 2.39 | 0.42 x 2.42 | 0.7 → 1.0 | +45.2% |
 
 ## 4. Doors and openings
 
@@ -126,12 +132,11 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | adult fits door buzz_room/hall_corridor | pass | 0.76 m wide x 2.03 m |
 | adult fits door girls_room_b/hall_corridor_south | pass | 0.76 m wide x 2.03 m |
 | adult fits door attic_stair/hall_corridor_south | pass | 0.76 m wide x 2.03 m |
-| adult fits hall hall_end | pass | narrowest 1.23 m |
+| adult fits hall hall_end | pass | narrowest 1.22 m |
 | adult fits hall hall_corridor | pass | narrowest 2.59 m |
 | adult fits hall hall_corridor_south | pass | narrowest 1.56 m |
 
 ## Flags (need a decision or more evidence)
 
-- unresolved: strip above girls_room_a (closet or shelf)
-- unresolved: left edge of main_stair_opening (hidden in the overhead)
+- unresolved: left edge of main_stair_opening (hidden in the overhead): settle with the ground floor and the stair itself
 - ceiling 2.4 m in rooms not measured directly (Kevin 2.40 / parents 2.50 / attic leg 2.29 measured)
