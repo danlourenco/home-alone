@@ -1,0 +1,441 @@
+{
+ "image": "sfm-work/rooms/girls/all/images/f_00041.jpg",
+ "calibration": "measurements/overhead/upstairs.H.txt",
+ "note": "wall-top INNER edges in overhead pixels, read from 2x/4x gridded crops (+-3 px, ~5 cm). Doorways are invisible at wall-top level (headers), so connections come from the hall walk captions and SfM doors, not from this image.",
+ "spaces": [
+  {
+   "name": "parents_bath",
+   "kind": "room",
+   "px": [
+    [
+     648,
+     104
+    ],
+    [
+     765,
+     104
+    ],
+    [
+     765,
+     179
+    ],
+    [
+     795,
+     179
+    ],
+    [
+     795,
+     287
+    ],
+    [
+     645,
+     287
+    ]
+   ]
+  },
+  {
+   "name": "parents_bedroom",
+   "kind": "room",
+   "px": [
+    [
+     822,
+     60
+    ],
+    [
+     1113,
+     60
+    ],
+    [
+     1118,
+     238
+    ],
+    [
+     1009,
+     239
+    ],
+    [
+     1009,
+     329
+    ],
+    [
+     817,
+     329
+    ]
+   ]
+  },
+  {
+   "name": "kevin_jeff_room",
+   "kind": "room",
+   "px": [
+    [
+     1039,
+     264
+    ],
+    [
+     1304,
+     265
+    ],
+    [
+     1307,
+     465
+    ],
+    [
+     1041,
+     465
+    ]
+   ],
+   "notes": "orientation: hall door (SfM door_b) on the left wall near the bottom, opening to hall_end; closet door (door_a) on the bottom wall"
+  },
+  {
+   "name": "girls_room_a",
+   "kind": "room",
+   "px": [
+    [
+     637,
+     340
+    ],
+    [
+     785,
+     340
+    ],
+    [
+     785,
+     375
+    ],
+    [
+     937,
+     375
+    ],
+    [
+     937,
+     462
+    ],
+    [
+     637,
+     462
+    ]
+   ],
+   "notes": "Marina's 7'6\" bracket room. Strip x 800-942, y 347-365 above the right part (grey, ~0.35 m) is unresolved: closet or shelf"
+  },
+  {
+   "name": "hall_end",
+   "kind": "hall",
+   "px": [
+    [
+     958,
+     352
+    ],
+    [
+     1020,
+     352
+    ],
+    [
+     1020,
+     462
+    ],
+    [
+     958,
+     462
+    ]
+   ],
+   "notes": "parents' hall door on its top wall (SfM door position matches); header band y 462-482 separates it from the corridor (arch/opening)"
+  },
+  {
+   "name": "hall_corridor",
+   "kind": "hall",
+   "px": [
+    [
+     957,
+     485
+    ],
+    [
+     1040,
+     485
+    ],
+    [
+     1040,
+     687
+    ],
+    [
+     957,
+     687
+    ]
+   ]
+  },
+  {
+   "name": "hall_corridor_south",
+   "kind": "hall",
+   "px": [
+    [
+     955,
+     712
+    ],
+    [
+     1040,
+     712
+    ],
+    [
+     1040,
+     825
+    ],
+    [
+     955,
+     825
+    ]
+   ],
+   "notes": "header band y 687-712 between corridor pieces"
+  },
+  {
+   "name": "closet_1",
+   "kind": "closet",
+   "px": [
+    [
+     1057,
+     482
+    ],
+    [
+     1145,
+     482
+    ],
+    [
+     1145,
+     520
+    ],
+    [
+     1057,
+     520
+    ]
+   ]
+  },
+  {
+   "name": "closet_2",
+   "kind": "closet",
+   "px": [
+    [
+     1057,
+     532
+    ],
+    [
+     1102,
+     532
+    ],
+    [
+     1102,
+     590
+    ],
+    [
+     1057,
+     590
+    ]
+   ]
+  },
+  {
+   "name": "linen_closet",
+   "kind": "closet",
+   "px": [
+    [
+     1040,
+     607
+    ],
+    [
+     1122,
+     607
+    ],
+    [
+     1122,
+     687
+    ],
+    [
+     1040,
+     687
+    ]
+   ],
+   "notes": "green shelf; Muto's model puts the linen closet beside the upstairs bathroom"
+  },
+  {
+   "name": "hall_bath",
+   "kind": "room",
+   "px": [
+    [
+     1162,
+     485
+    ],
+    [
+     1310,
+     485
+    ],
+    [
+     1315,
+     680
+    ],
+    [
+     1122,
+     680
+    ],
+    [
+     1122,
+     537
+    ],
+    [
+     1162,
+     537
+    ]
+   ]
+  },
+  {
+   "name": "buzz_room",
+   "kind": "room",
+   "px": [
+    [
+     1066,
+     707
+    ],
+    [
+     1295,
+     707
+    ],
+    [
+     1300,
+     1002
+    ],
+    [
+     1070,
+     1002
+    ]
+   ]
+  },
+  {
+   "name": "girls_room_b",
+   "kind": "room",
+   "px": [
+    [
+     610,
+     705
+    ],
+    [
+     937,
+     705
+    ],
+    [
+     937,
+     1000
+    ],
+    [
+     595,
+     1000
+    ]
+   ],
+   "notes": "door from the south corridor on its right wall (open leaf visible ~y 772-780)"
+  },
+  {
+   "name": "main_stair_opening",
+   "kind": "opening",
+   "px": [
+    [
+     600,
+     517
+    ],
+    [
+     940,
+     517
+    ],
+    [
+     940,
+     690
+    ],
+    [
+     600,
+     690
+    ]
+   ],
+   "notes": "black = open to the floor below. Left edge not visible against the background: assumed at the building edge (x~600)"
+  }
+ ],
+ "outline_px": [
+  [
+   638,
+   90
+  ],
+  [
+   805,
+   90
+  ],
+  [
+   805,
+   47
+  ],
+  [
+   1132,
+   47
+  ],
+  [
+   1135,
+   252
+  ],
+  [
+   1318,
+   256
+  ],
+  [
+   1330,
+   470
+  ],
+  [
+   1345,
+   480
+  ],
+  [
+   1348,
+   695
+  ],
+  [
+   1330,
+   700
+  ],
+  [
+   1335,
+   1032
+  ],
+  [
+   1048,
+   1035
+  ],
+  [
+   1045,
+   842
+  ],
+  [
+   952,
+   842
+  ],
+  [
+   950,
+   1032
+  ],
+  [
+   572,
+   1030
+  ],
+  [
+   598,
+   690
+  ],
+  [
+   598,
+   517
+  ],
+  [
+   615,
+   470
+  ],
+  [
+   622,
+   335
+  ],
+  [
+   638,
+   335
+  ]
+ ],
+ "outline_note": "outer wall-top edges, rough (+-10 px); the stair-opening stretch of the left edge is not visible and assumed straight"
+}

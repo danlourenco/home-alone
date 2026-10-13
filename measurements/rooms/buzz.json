@@ -1,0 +1,12 @@
+{
+ "suite": "buzz",
+ "source": "Marina CG tour Part 2, frames 1-89 (4 fps from 9:00); VGGT sfm-work/real-vggt-buzzall; see tasks/sfm-plan.md 'Buzz room metric scale'",
+ "units": "metres at 80 in doors (rectangle only; walls not yet reviewed with plan_review)",
+ "m_per_unit": {"78in": 0.975, "80in": 1.0, "84in": 1.05},
+ "scale_note": "door 0.997/0.997/1.011 units (frames 38/41/44), spread 1.4%; COLMAP/VGGT ratio 0.792/0.802",
+ "rooms": [
+  {"name": "buzz_bedroom", "polygon": [[0, 0], [0, 3.49], [4.35, 3.49], [4.35, 0]],
+   "confidence": "rectangle from room_dims (outermost wall peaks); orientation in the overhead: 3.49 m across, 4.35 m down",
+   "open": ["is the room the uncaptioned Michael Jordan room in the hall walk (yes: Bulls posters, green bed, tank)"]}
+ ]
+}

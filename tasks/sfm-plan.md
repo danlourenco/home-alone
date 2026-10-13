@@ -225,3 +225,21 @@ prepare / solve / analyze / scale. Rooms prepared: parents (CG 338–653), kevin
   - Kevin's room read through the bedroom calibration: 4.69 × 3.89 m vs SfM (own doors) 4.57 × 3.60. Width +2.6%, depth +8%.
   - The depth error grows down the image: an oblique view calibrated on one corner extrapolates poorly. A full perspective fit with control points spread over the image is the next step.
 - NEW PRIMARY SOURCE (Oct 13): the same segment (girls/all frames 5-33) shows production designer John Muto's physical model of the upstairs SET, with labels: Master bathroom, Parent's room, Sister's room, Kevin & brother's room, Linen closet, Upstairs bathroom, Buzz's room. It is film-set topology from the set's designer, ranked above Marina for adjacency. Buzz's room is on this floor.
+
+## Upstairs from the calibrated overhead (Oct 13) — passes
+Method: `tools/sfm/overhead_fit.py measurements/overhead/upstairs.json` fits one homography to Marina's angled upstairs overhead (f_00041). It uses wall-top inner corners, all in one plane, of three SfM-measured rooms, each scaled from its own doors at 80 in: parents fixed, Kevin and Buzz with free offsets.
+- Fit 5.2 cm median; leave-one-corner-out 9.1 cm median (max 17.8).
+- Independent checks: Marina's 7'6" label → 2.27 m (−0.6%); parents' bath width 2.61 vs SfM 2.63 (−0.7%).
+- Before Buzz was added as a control, Buzz predicted 5% large in both directions while its shape agreed to 1.8%. With Buzz included, one map fits all three rooms at 80 in, so that 5% was drift from calibrating on the top half only, not a scale conflict between rooms.
+- Cross-source agreement: the parents' hall door, measured by SfM, lands exactly on the hall end in the overhead. Kevin's hall door and closet door fit the hall end and closets once Kevin's room is flipped vertically.
+
+Trace: `measurements/overhead/upstairs-trace.json` → `tools/sfm/overhead_plan.py` → `upstairs-trace.plan.json/.png`. 14 spaces (6 rooms, 3 hall pieces, 3 closets, hall bath, stair opening).
+- Net floor 118 m² (1,275 ft²).
+- Gross outline 1,928 ft² at 80 in vs Marina's stated 1,900 (+1.5%). At 78 in it is 1,832 (−3.6%); at 84 in, 2,125 (+12%, ruled out).
+- This is the decisive independent check of the door assumption: 80 in is supported.
+- Caveat: the outline was read roughly (±10 px). The stair-opening stretch of the left edge is hidden and assumed straight.
+
+Also:
+- The uncaptioned Michael Jordan room in the hall walk is Buzz's room.
+- The hall's arches and door headers hide doorways at wall-top level, so connections come from the captions and SfM doors.
+- Open: the grey strip above girls_room_a (closet or shelf); the left edge of the stair opening; and which girls' room is which.

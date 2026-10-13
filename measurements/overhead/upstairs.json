@@ -1,0 +1,135 @@
+{
+ "image": "sfm-work/rooms/girls/all/images/f_00041.jpg",
+ "image_source": "Marina CG tour Part 2, angled upstairs overhead (segment starting 8:xx; girls/all frame 41)",
+ "note": "pixels are wall-top INNER edges (boundary between the white wall-top band and the room), read at 4x zoom, about +-3 px",
+ "control": [
+  {
+   "measurement": "measurements/rooms/parents.json",
+   "room": "parents_bedroom",
+   "free_offset": false,
+   "polygon_index": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "pixels": [
+    [
+     822,
+     60
+    ],
+    [
+     817,
+     329
+    ],
+    [
+     1009,
+     329
+    ],
+    [
+     1009,
+     239
+    ],
+    [
+     1118,
+     238
+    ],
+    [
+     1113,
+     60
+    ]
+   ]
+  },
+  {
+   "measurement": "measurements/rooms/kevin.json",
+   "room": "kevin_bedroom",
+   "free_offset": true,
+   "swap_axes": true,
+   "polygon_index": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "pixels": [
+    [
+     1039,
+     264
+    ],
+    [
+     1304,
+     265
+    ],
+    [
+     1307,
+     465
+    ],
+    [
+     1041,
+     465
+    ]
+   ]
+  },
+  {
+   "measurement": "measurements/rooms/buzz.json",
+   "room": "buzz_bedroom",
+   "free_offset": true,
+   "polygon_index": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "pixels": [
+    [
+     1066,
+     707
+    ],
+    [
+     1295,
+     707
+    ],
+    [
+     1300,
+     1002
+    ],
+    [
+     1070,
+     1002
+    ]
+   ]
+  }
+ ],
+ "checks": [
+  {
+   "name": "Marina's 7'6\" bracket (girls' room depth)",
+   "pixels": [
+    [
+     630,
+     338
+    ],
+    [
+     630,
+     465
+    ]
+   ],
+   "metres": 2.286
+  },
+  {
+   "name": "parents' bath width (SfM 2.63 m)",
+   "pixels": [
+    [
+     648,
+     200
+    ],
+    [
+     795,
+     200
+    ]
+   ],
+   "metres": 2.63
+  }
+ ]
+}

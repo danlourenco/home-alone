@@ -10,6 +10,8 @@ Goal: one cohesive, faithful McCallister house that feels like the film and play
 | Marina Coates's CG tours, measured with SfM | Room shapes, sizes, adjacency, furniture placement | Absolute scale (comes from doors, ±4%) |
 | The film | The look; a named list of must-match shots | Measurements (lenses and sets distort) |
 | Marina's stated areas (2,620 / 1,900 / 476 ft²) | Scale cross-check | Per-room values |
+| Marina's overhead plan views, calibrated on SfM-measured rooms (`tools/sfm/overhead_fit.py`) | Whole-floor layout: rooms SfM can't reach, halls, closets | Doorways (hidden under headers) |
+| John Muto's set model (production designer; Part 2 overhead segment, frames 5–33) | Which rooms adjoin which on the film set | Dimensions |
 | Game rules | Hard limits for both player bodies (below) | — |
 
 ## Pipeline
@@ -51,7 +53,7 @@ Exact capsule sizes and eye heights are tuned by playtesting the grey-box house.
 
 | Step | Status |
 |---|---|
-| Measure | Method proven on Buzz (3.49 × 4.35 m at 80 in doors) and the upper hall. Remaining: all other rooms, ceiling heights, furniture clearances |
+| Measure | Upstairs done (Oct 13). SfM measured Buzz, Kevin and the parents' suite. Marina's angled overhead, calibrated on those rooms (9 cm held-out), gives the whole floor. Total 1,928 ft² vs Marina's 1,900 supports 80 in doors. Remaining: ground floor, ceiling heights, furniture clearances |
 | Envelope | Data exists, not yet in the pipeline |
 | Reconcile | Not built |
 | Generator | `SurveyBuilder.cs` exists; to be rebuilt around the spec |
