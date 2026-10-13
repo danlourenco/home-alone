@@ -1411,6 +1411,7 @@
    ]
   ]
  },
+ "floor_y_m": 0.0,
  "sources": {
   "plan": "measurements/overhead/upstairs-trace.plan.json",
   "doors": "measurements/overhead/upstairs-doors.json",

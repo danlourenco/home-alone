@@ -6,7 +6,7 @@ lines through each VP become the plan's x and y axes. What is left is one aspect
   - scale:  every anchor in the spec gives its own m/px; they are reported side by side and must agree
 Wall-top inner corners all lie in one plane; anchors on another plane (a floor-level stair) carry a plane bias,
 so the spec marks each anchor's plane and only wall-top anchors set the scale.
-Writes <spec>.H.txt (overhead px -> plan metres) for tools/sfm/overhead_plan.py, and prints every check.
+Writes <spec>.H.txt (overhead px -> plan metres; plan x = down the overhead, y = across, like the upstairs) for tools/sfm/overhead_plan.py, and prints every check.
 usage: uv run --with numpy --with opencv-python-headless python tools/sfm/overhead_rectify.py measurements/overhead/<floor>.json
        ... --selftest   (synthetic overhead with a known plan: must recover it)
 """
@@ -97,7 +97,7 @@ def main(path):
         elif c["kind"] == "dims":
             w, h = rect_dims(P); print(f"  {c['name']:<46} {w:.2f} x {h:.2f} m vs {c['w']:.2f} x {c['h']:.2f} ({w / c['w'] - 1:+.1%}, {h / c['h'] - 1:+.1%})")
     out = Path(path).with_suffix(".H.txt")
-    np.savetxt(out, H)
+    np.savetxt(out, np.array([[0, 1, 0], [1, 0, 0], [0, 0, 1.0]]) @ H)   # plan convention: x down the overhead, y across
     print(f"\nwrote {out}")
 
 

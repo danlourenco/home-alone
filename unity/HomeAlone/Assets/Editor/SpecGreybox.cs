@@ -34,10 +34,11 @@ public static class SpecGreybox
     class Door { public string a, b, kind; public bool alongX; public float coord, lo, hi, height; }
     class Space { public string name, kind; public float ceil; public List<Vector2> pts; }
 
-    [MenuItem("HomeAlone/Build Greybox From Spec")]
-    public static void Build()
+    static string GroundPath => Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/house_spec.ground.json"));
+    static float FloorY;   // vertical offset of the floor being built (ground floor sits at -floor_to_floor); Box adds it
+
+    static (List<Space>, List<Door>) Parse(JObject j)
     {
-        var j = JObject.Parse(File.ReadAllText(SpecPath));
         var spaces = j["spaces"].Select(s => new Space {
             name = (string)s["name"], kind = (string)s["kind"], ceil = (float)s["ceiling_m"],
             pts = s["polygon_xz"].Select(p => new Vector2((float)p[0], -(float)p[1])).ToList() }).ToList();
@@ -52,21 +53,24 @@ public static class SpecGreybox
                 coord = alongX ? -c : c, lo = alongX ? l : -h, hi = alongX ? h : -l,
                 height = d["height"].Type == JTokenType.Null ? 0f : (float)d["height"] };
         }).ToList();
+        return (spaces, doors);
+    }
 
-        EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-        MakeMaterials();
-        var root = new GameObject("Upstairs");
-        var ceilings = Child(root, "Ceilings");
+    // holes: openings of the floor above (its stairwells); this floor's ceiling stays open under them
+    static void BuildFloor(GameObject root, GameObject ceilings, List<Space> spaces, List<Door> doors, List<Space> holes = null)
+    {
+        holes ??= new List<Space>();
         foreach (var s in spaces)
         {
             var g = Child(root, s.name);
             if (s.kind != "opening")
             {
                 foreach (var (x0, x1, z0, z1) in Cells(s.pts))
-                {
                     Box(g, "Floor", x0, x1, z0, z1, -0.2f, 0f, s.kind == "hall" ? mHall : mFloor);
-                    Box(ceilings, s.name + "_Ceiling", x0, x1, z0, z1, s.ceil, s.ceil + 0.15f, mCeil);
-                }
+                var hx = holes.SelectMany(h => h.pts.Select(p => p.x)); var hz = holes.SelectMany(h => h.pts.Select(p => p.y));
+                foreach (var (x0, x1, z0, z1) in Cells(s.pts, hx, hz))
+                    if (!holes.Any(h => Inside(h.pts, new Vector2((x0 + x1) / 2, (z0 + z1) / 2))))
+                        Box(ceilings, s.name + "_Ceiling", x0, x1, z0, z1, s.ceil, s.ceil + 0.15f, mCeil);
                 Walls(g, s, doors);
             }
             else
@@ -76,26 +80,77 @@ public static class SpecGreybox
                     Rail(g, d);
             }
         }
-        var stairPath = Stair(root, j["stair"]);
-        Lighting(root, spaces);
+        Lights(root, spaces);
+    }
+
+    [MenuItem("HomeAlone/Build Greybox From Spec")]
+    public static void Build()
+    {
+        var j = JObject.Parse(File.ReadAllText(SpecPath));
+        var (spaces, doors) = Parse(j);
+        var gj = File.Exists(GroundPath) ? JObject.Parse(File.ReadAllText(GroundPath)) : null;
+
+        EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        MakeMaterials();
+        FloorY = 0f;
+        var root = new GameObject("Upstairs");
+        var ceilings = Child(root, "Ceilings");
+        BuildFloor(root, ceilings, spaces, doors);
+        var stairPath = Stair(root, j["stair"], skipFloorPatch: gj != null);
+        string report = "";
+        List<Space> gspaces = null; List<Door> gdoors = null; GameObject groot = null, gceil = null;
+        if (gj != null)
+        {
+            (gspaces, gdoors) = Parse(gj);
+            FloorY = (float)gj["floor_y_m"];
+            groot = new GameObject("Ground"); gceil = Child(groot, "Ceilings");
+            BuildFloor(groot, gceil, gspaces, gdoors, spaces.Where(s => s.kind == "opening").ToList());
+            FloorY = 0f;
+        }
+        Volume(root);
         Player(spaces.First(s => s.name == "hall_corridor"));
 
         var player = GameObject.Find("Player"); player.SetActive(false);   // the test bodies walk alone
         Physics.SyncTransforms();
-        string report = WalkTest(spaces, doors) + StairWalk(stairPath);
+        report += "UPSTAIRS\n" + WalkTest(spaces, doors);
+        if (gj != null) { FloorY = (float)gj["floor_y_m"]; report += "GROUND\n" + WalkTest(gspaces, gdoors); FloorY = 0f; }
+        report += StairWalk(stairPath);
         player.SetActive(true);
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, $"walk-test{Tag}.txt"), report);
-        if (Variant == "") Captures(spaces, ceilings);
+        if (Variant == "")
+        {
+            Captures(spaces, ceilings);
+            if (gj != null)
+            {   // ground plan view: upper floor and ground ceilings hidden
+                root.SetActive(false); gceil.SetActive(false);
+                PlanShot(gspaces.Concat(spaces).ToList(), "plan-topdown-ground");
+                root.SetActive(true); gceil.SetActive(true);
+            }
+        }
         EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), $"Assets/Scenes/Greybox_Upstairs{SceneTag}.unity");
-        Debug.Log("SpecGreybox: built from " + SpecPath + "\n" + report);
+        Debug.Log("SpecGreybox: built from " + SpecPath + (gj != null ? " + " + GroundPath : "") + "\n" + report);
+    }
+
+    static void PlanShot(List<Space> spaces, string name)
+    {
+        var go = new GameObject("PlanCam"); var cam = go.AddComponent<Camera>(); go.AddComponent<HDAdditionalCameraData>();
+        var rt = new RenderTexture(1600, 1600, 24); cam.targetTexture = rt;
+        var all = spaces.SelectMany(s => s.pts).ToList();
+        float cx = (all.Min(p => p.x) + all.Max(p => p.x)) / 2, cz = (all.Min(p => p.y) + all.Max(p => p.y)) / 2;
+        float span = Mathf.Max(all.Max(p => p.x) - all.Min(p => p.x), all.Max(p => p.y) - all.Min(p => p.y));
+        cam.orthographic = true; cam.orthographicSize = span / 2 + 0.6f; cam.farClipPlane = 60f;
+        go.transform.position = new Vector3(cx, 20f, cz); go.transform.rotation = Quaternion.LookRotation(Vector3.down, Vector3.forward);
+        Shot(cam, rt, name);
+        RenderTexture.active = null; Object.DestroyImmediate(go); rt.Release();
     }
 
     // Rectilinear polygon -> covering rectangles (grid of its own coordinates, keep cells whose centre is inside).
-    static IEnumerable<(float, float, float, float)> Cells(List<Vector2> pts)
+    static IEnumerable<(float, float, float, float)> Cells(List<Vector2> pts, IEnumerable<float> extraX = null, IEnumerable<float> extraZ = null)
     {
-        var xs = pts.Select(p => p.x).Distinct().OrderBy(v => v).ToList();
-        var zs = pts.Select(p => p.y).Distinct().OrderBy(v => v).ToList();
+        float x0 = pts.Min(p => p.x), x1 = pts.Max(p => p.x), z0 = pts.Min(p => p.y), z1 = pts.Max(p => p.y);
+        var xs = pts.Select(p => p.x).Concat((extraX ?? Enumerable.Empty<float>()).Where(v => v > x0 && v < x1)).Distinct().OrderBy(v => v).ToList();
+        var zs = pts.Select(p => p.y).Concat((extraZ ?? Enumerable.Empty<float>()).Where(v => v > z0 && v < z1)).Distinct().OrderBy(v => v).ToList();
         for (int i = 0; i + 1 < xs.Count; i++)
             for (int k = 0; k + 1 < zs.Count; k++)
                 if (Inside(pts, new Vector2((xs[i] + xs[i + 1]) / 2, (zs[k] + zs[k + 1]) / 2)))
@@ -184,7 +239,7 @@ public static class SpecGreybox
     {
         if (x1 - x0 < 1e-3f || z1 - z0 < 1e-3f || y1 - y0 < 1e-3f) return;
         var b = GameObject.CreatePrimitive(PrimitiveType.Cube); b.name = n; b.transform.parent = p.transform;
-        b.transform.position = new Vector3((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2);
+        b.transform.position = new Vector3((x0 + x1) / 2, (y0 + y1) / 2 + FloorY, (z0 + z1) / 2);
         b.transform.localScale = new Vector3(x1 - x0, y1 - y0, z1 - z0);
         b.GetComponent<MeshRenderer>().sharedMaterial = m; b.isStatic = true;
     }
@@ -206,16 +261,20 @@ public static class SpecGreybox
         m.SetColor("_BaseColor", c); m.SetFloat("_Smoothness", 0.2f); return m;
     }
 
-    static void Lighting(GameObject root, List<Space> spaces)
+    static void Lights(GameObject root, List<Space> spaces)
     {
         var lights = Child(root, "Lights");
         foreach (var s in spaces.Where(s => s.kind != "opening"))
         {
             var (x, z) = (s.pts.Average(p => p.x), s.pts.Average(p => p.y));
             var l = new GameObject("Light_" + s.name).AddComponent<Light>(); l.transform.parent = lights.transform;
-            l.transform.position = new Vector3(x, s.ceil - 0.3f, z); l.type = LightType.Point; l.range = 8f;
+            l.transform.position = new Vector3(x, s.ceil - 0.3f + FloorY, z); l.type = LightType.Point; l.range = 8f;
             l.intensity = 900f; l.color = new Color(1f, 0.95f, 0.88f); l.gameObject.AddComponent<HDAdditionalLightData>();
         }
+    }
+
+    static void Volume(GameObject root)
+    {
         Directory.CreateDirectory("Assets/Settings");
         string vp = "Assets/Settings/GreyboxVolume.asset";
         AssetDatabase.DeleteAsset(vp);
@@ -227,13 +286,14 @@ public static class SpecGreybox
     }
 
     // The main stair: solid steps, landing, rails and well walls as spec boxes (spec z -> world -z); returns the walk path.
-    static List<Vector3> Stair(GameObject root, JToken st)
+    static List<Vector3> Stair(GameObject root, JToken st, bool skipFloorPatch)
     {
-        if (st == null) return new List<Vector3>();
+        if (st == null || st.Type == JTokenType.Null) return new List<Vector3>();
         var g = Child(root, "MainStair");
         foreach (var b in st["boxes"])
         {
             string kind = (string)b["kind"];
+            if (kind == "floor" && skipFloorPatch) continue;   // the ground floor's foyer is built for real
             var m = kind == "rail" ? mRail : kind == "wall" ? mWall : kind == "floor" ? mFloor : mHall;
             Box(g, (string)b["name"], (float)b["x"][0], (float)b["x"][1], -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], m);
         }
@@ -300,7 +360,7 @@ public static class SpecGreybox
         foreach (var d in doors.Where(d => d.kind == "door" || d.kind == "arch"))
         {
             float c = (d.lo + d.hi) / 2;
-            Vector3 P(float off) => d.alongX ? new Vector3(c, 0.06f, d.coord + off) : new Vector3(d.coord + off, 0.06f, c);
+            Vector3 P(float off) => d.alongX ? new Vector3(c, 0.06f + FloorY, d.coord + off) : new Vector3(d.coord + off, 0.06f + FloorY, c);
             Vector3 a = P(-0.45f), b = P(0.45f), dir = (b - a).normalized; float len = Vector3.Distance(a, b);
             Vector3 p1 = a + Vector3.up * r, p2 = a + Vector3.up * (h - r);
             n++;

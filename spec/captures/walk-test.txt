@@ -1,3 +1,4 @@
+UPSTAIRS
 Adult capsule walk test: 11 openings, 0 blocked
 ok      parents_bedroom <-> hall_end (door, 0.77 m)
 ok      parents_bedroom <-> parents_bath (door, 0.76 m)
@@ -10,6 +11,15 @@ ok      girls_room_b <-> hall_corridor_south (door, 0.76 m)
 ok      attic_stair <-> hall_corridor_south (door, 0.76 m)
 ok      hall_end <-> hall_corridor (arch, 1.25 m)
 ok      hall_corridor <-> hall_corridor_south (arch, 1.55 m)
+GROUND
+Adult capsule walk test: 7 openings, 0 blocked
+ok      den <-> living_room (arch, 1.60 m)
+ok      living_room <-> foyer (arch, 1.70 m)
+ok      foyer <-> dining_room (arch, 1.95 m)
+ok      foyer <-> vestibule (arch, 1.65 m)
+ok      dining_room <-> kitchen (door, 1.01 m)
+ok      dining_room <-> sunroom (arch, 2.13 m)
+ok      foyer <-> back_stair (door, 1.01 m)
 Stair walk test (both bodies, up and down): 20 legs, 0 blocked
 ok      bandit up leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
 ok      bandit up leg 2: ended 0.02 m from waypoint, 0.02 m off its floor height

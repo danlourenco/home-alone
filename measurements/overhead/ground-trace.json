@@ -1,0 +1,332 @@
+{
+ "image": "sfm-work/ground/overhead_994.jpg",
+ "calibration": "measurements/overhead/ground.reg.H.txt",
+ "xlim_px": [
+  200,
+  1700
+ ],
+ "note": "wall-top INNER edges in overhead pixels, read from 2x gridded crops (+-3-5 px). Calibrated by overhead_rectify.py (skill overhead-floor).",
+ "spaces": [
+  {
+   "name": "den",
+   "kind": "room",
+   "px": [
+    [
+     303,
+     462
+    ],
+    [
+     525,
+     461
+    ],
+    [
+     486,
+     898
+    ],
+    [
+     242,
+     900
+    ]
+   ],
+   "notes": "green walls; bookshelves along the rear wall are furniture (den clip, gate 5/6)"
+  },
+  {
+   "name": "living_room",
+   "kind": "room",
+   "px": [
+    [
+     540,
+     417
+    ],
+    [
+     797,
+     417
+    ],
+    [
+     800,
+     947
+    ],
+    [
+     500,
+     947
+    ]
+   ],
+   "notes": "fireplace bump-out at the rear wall is outside the trace"
+  },
+  {
+   "name": "foyer",
+   "kind": "hall",
+   "px": [
+    [
+     820,
+     330
+    ],
+    [
+     1040,
+     330
+    ],
+    [
+     1043,
+     872
+    ],
+    [
+     818,
+     872
+    ]
+   ],
+   "notes": "main stair along the left (photo) wall; stair boxes come from the upstairs spec's stair block"
+  },
+  {
+   "name": "vestibule",
+   "kind": "hall",
+   "px": [
+    [
+     820,
+     888
+    ],
+    [
+     1040,
+     888
+    ],
+    [
+     1042,
+     962
+    ],
+    [
+     818,
+     964
+    ]
+   ],
+   "notes": "front door on the front wall"
+  },
+  {
+   "name": "dining_room",
+   "kind": "room",
+   "px": [
+    [
+     1052,
+     581
+    ],
+    [
+     1335,
+     581
+    ],
+    [
+     1377,
+     955
+    ],
+    [
+     1065,
+     955
+    ]
+   ],
+   "notes": "red walls"
+  },
+  {
+   "name": "sunroom",
+   "kind": "room",
+   "px": [
+    [
+     1342,
+     467
+    ],
+    [
+     1560,
+     465
+    ],
+    [
+     1642,
+     908
+    ],
+    [
+     1382,
+     903
+    ]
+   ],
+   "notes": "clapboard on its outer wall: porch or sunroom; included in the 2,620 ft2 outline (if Marina's figure excludes it, scale +~5%)"
+  },
+  {
+   "name": "kitchen",
+   "kind": "room",
+   "px": [
+    [
+     1240,
+     60
+    ],
+    [
+     1468,
+     78
+    ],
+    [
+     1517,
+     452
+    ],
+    [
+     1297,
+     455
+    ],
+    [
+     1284,
+     552
+    ],
+    [
+     1047,
+     552
+    ],
+    [
+     1047,
+     460
+    ],
+    [
+     1103,
+     460
+    ],
+    [
+     1103,
+     250
+    ],
+    [
+     1240,
+     250
+    ]
+   ],
+   "notes": "kitchen + breakfast area (Marina's 477 ft2 zone, boundary ambiguous)"
+  },
+  {
+   "name": "back_stair",
+   "kind": "hall",
+   "px": [
+    [
+     1045,
+     250
+    ],
+    [
+     1094,
+     250
+    ],
+    [
+     1094,
+     460
+    ],
+    [
+     1045,
+     460
+    ]
+   ],
+   "notes": "service stair (steps not modelled; Muto: it never arrived upstairs); left edge read at the foyer wall line (2x crop)"
+  }
+ ],
+ "outline_px": [
+  [
+   297,
+   455
+  ],
+  [
+   527,
+   455
+  ],
+  [
+   527,
+   408
+  ],
+  [
+   622,
+   408
+  ],
+  [
+   622,
+   368
+  ],
+  [
+   727,
+   368
+  ],
+  [
+   727,
+   408
+  ],
+  [
+   797,
+   408
+  ],
+  [
+   797,
+   320
+  ],
+  [
+   1027,
+   320
+  ],
+  [
+   1027,
+   240
+  ],
+  [
+   1205,
+   240
+  ],
+  [
+   1205,
+   50
+  ],
+  [
+   1497,
+   50
+  ],
+  [
+   1560,
+   455
+  ],
+  [
+   1645,
+   918
+  ],
+  [
+   1390,
+   918
+  ],
+  [
+   1390,
+   980
+  ],
+  [
+   1335,
+   980
+  ],
+  [
+   1335,
+   1028
+  ],
+  [
+   520,
+   1028
+  ],
+  [
+   520,
+   980
+  ],
+  [
+   482,
+   980
+  ],
+  [
+   485,
+   922
+  ],
+  [
+   232,
+   922
+  ]
+ ],
+ "outline_note": "outer wall-top edges, rough (+-5 px)",
+ "registration": {
+  "turn": "ground (x,y) -> upstairs (-y, x)",
+  "translation_m": [
+   19.347,
+   -2.344
+  ],
+  "front_back_stretch": 1.1406,
+  "stretch_note": "user decision Oct 13: ground main facade stacked under the upstairs facade (Marina's two floors differ by ~1.6 m front-to-back)",
+  "pinned_by": "foyer rear wall = stairwell rear edge (landing); foyer photo wall = stairwell south edge (flight 1)"
+ }
+}

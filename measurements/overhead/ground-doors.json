@@ -1,0 +1,129 @@
+{
+ "note": "Plan frame = upstairs plan (ground-trace.json calibration). 'px' = doorway ends read in the overhead (open leaves / gaps, +-10 cm), mapped by the reconciler through the trace's calibration; doors without px are centred on the shared wall (topology).",
+ "doors": [
+  {
+   "a": "den",
+   "b": "living_room",
+   "kind": "arch",
+   "width": 1.6,
+   "source": "den clip f34-47: wide cased opening to the living room (position along the wall from topology)"
+  },
+  {
+   "a": "living_room",
+   "b": "foyer",
+   "kind": "arch",
+   "source": "overhead: French door leaves at the living/foyer wall, y 750-850 px",
+   "px": [
+    [
+     808,
+     750
+    ],
+    [
+     808,
+     850
+    ]
+   ]
+  },
+  {
+   "a": "foyer",
+   "b": "dining_room",
+   "kind": "arch",
+   "source": "overhead: French door leaves on the dining room's left wall, y 740-855 px",
+   "px": [
+    [
+     1046,
+     740
+    ],
+    [
+     1048,
+     855
+    ]
+   ]
+  },
+  {
+   "a": "foyer",
+   "b": "vestibule",
+   "kind": "arch",
+   "source": "foyer/vestibule opening (stairs-a and 4:30 vestibule frames)",
+   "px": [
+    [
+     875,
+     880
+    ],
+    [
+     985,
+     880
+    ]
+   ]
+  },
+  {
+   "a": "dining_room",
+   "b": "kitchen",
+   "kind": "door",
+   "source": "overhead: open door leaf, dining room's rear wall (left)",
+   "px": [
+    [
+     1062,
+     570
+    ],
+    [
+     1125,
+     570
+    ]
+   ]
+  },
+  {
+   "a": "dining_room",
+   "b": "sunroom",
+   "kind": "arch",
+   "source": "overhead: French door on the dining room's right wall",
+   "px": [
+    [
+     1340,
+     730
+    ],
+    [
+     1352,
+     855
+    ]
+   ]
+  },
+  {
+   "a": "foyer",
+   "b": "back_stair",
+   "kind": "door",
+   "source": "foyer rear-right door under an arch (stairs-a frames 41-57, the scale door)",
+   "px": [
+    [
+     1043,
+     410
+    ],
+    [
+     1043,
+     460
+    ]
+   ]
+  },
+  {
+   "a": "back_stair",
+   "b": "kitchen",
+   "kind": "open",
+   "wall_axis": "y",
+   "near": -1.876,
+   "source": "service stair foot opens to the breakfast area (no wall)"
+  },
+  {
+   "a": "back_stair",
+   "b": "kitchen",
+   "kind": "wall",
+   "wall_axis": "x",
+   "near": 5.959,
+   "source": "side wall between the service stair and the breakfast area"
+  }
+ ],
+ "unresolved": [
+  "den/living opening position along the wall",
+  "sunroom: room or porch, and whether Marina's 2,620 ft2 includes it",
+  "second dining-room door (rear wall, right) leads to the kitchen's lower-right nook: not modelled"
+ ]
+}

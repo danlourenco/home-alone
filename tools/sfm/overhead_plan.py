@@ -50,7 +50,7 @@ def main():
         P = pl[:, ::-1] * [1, -1]  # draw like the overhead: plan y right, plan x down
         a2.fill(*P.T, alpha=.3, color=c); a2.plot(*np.vstack([P, P[:1]]).T, color=c)
         a2.text(*P.mean(0), f"{s['name']}\n{A:.1f} m²", fontsize=7, ha="center")
-    a1.set_xlim(560, 1360); a1.set_ylim(1050, 30); a1.set_title("trace on Marina's overhead")
+    a1.set_xlim(*t.get("xlim_px", [560, 1360])); a1.set_ylim(1050, 30); a1.set_title("trace on Marina's overhead")
     a2.set_aspect("equal"); a2.grid(lw=.3); a2.set_title("metric plan (m), calibrated overhead")
     fig.savefig(tf.with_suffix(".plan.png"), dpi=70, bbox_inches="tight")
     net = sum(v for k, v in totals.items() if k != "opening")
