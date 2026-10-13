@@ -1,0 +1,21 @@
+{
+ "suite": "kevin",
+ "source": "Marina CG tour Part 2, frames 192-352 (4 fps); VGGT sfm-work/rooms/kevin/vggt/sparse/0; plan frame = plan-0.05.json rotation",
+ "units": "VGGT model units in the plan frame; metres = units * m_per_unit",
+ "m_per_unit": {"78in": 2.841, "80in": 2.914, "84in": 3.059},
+ "scale_note": "both closed doors, frames 279/292/325: 0.6945/0.6974/0.6991 units, spread 0.7%; a 4th pick (frame 292, left door) snapped to the boxing gloves and was dropped",
+ "rooms": [
+  {"name": "kevin_bedroom",
+   "polygon": [[-0.17, -0.02], [1.40, -0.02], [1.40, 1.215], [-0.17, 1.215]],
+   "confidence": "plain rectangle, all four walls crisp in the top-down density; COLMAP/VGGT shape ratio 0.814/0.802",
+   "open": ["agreement gate 3/6 windows (the late pans over the plain dotted walls disagree); shape still agrees to 1.5%",
+            "which door is the hall door and which the closet: decide from Marina's overhead when the hall is placed"]}
+ ],
+ "doors": [
+  {"name": "door_a", "wall": "y=-0.02", "span": [[0.155, -0.02], [0.44, -0.02]], "evidence": "frames 292 and 325 agree within 0.01 units; may include casing (0.83 m)"},
+  {"name": "door_b", "wall": "x=-0.17", "span": [[-0.17, 0.025], [-0.17, 0.29]], "evidence": "frames 279 and 292 agree within 0.02 units"}
+ ],
+ "features": [
+  {"name": "window", "wall": "y=1.215", "span": [[1.16, 1.215], [1.33, 1.215]]}
+ ]
+}
