@@ -206,3 +206,10 @@ Next: independent check of the 80 in assumption against Marina's stated areas �
 
 ### Attic area check — not possible as designed (Oct 12)
 Part 2 775–935 s extracted (`sfm-work/attic`): film inserts + overhead plan, CG walk starts at frame ~304 mid-way up the attic stair. No door is ever visible in the attic footage, so door scale can't be applied; scaling from stair risers would test a riser assumption, not the door. Decision: carry 78–84 in (±4%) as the scale error bar; run the decisive independent check against Marina's 1,900 ft² upstairs total once the upstairs rooms are measured and assembled. Kitchen 477 ft² remains a secondary check (zone boundary ambiguous — compute for each plausible boundary).
+
+## Per-room recipe in practice (Oct 12): tools/sfm/room.py
+prepare / solve / analyze / scale. Rooms prepared: parents (CG 338–653), kevin (CG 192–352), hallbath (CG ~26–180). Girls' rooms: NO interior CG footage (only hall views, film, interviews) → authored; Marina's plan labels the partial girls' room 7' 6" deep (angled overhead: design constraint, not a scale anchor). Production-photo collages are interleaved with CG (parents 288–335, kevin 113–129) — exclude.
+- Parents' suite: COLMAP+VGGT agree in 5/6 windows.
+- agreement.py fix: windows now cut over frames both methods reconstructed (VGGT is subsampled). Synthetic re-check at 2%: 11/11 accepted truly within 2%, Spearman 0.95.
+- room_dims.py: @frame-range filter (camera walks pass through several rooms).
+- FINDING: one-box-per-room fitting fails on real rooms — bedroom frames see through the doorway into the bath (wall picked inside the bath), rooms have stepped corners/closets, the bath is L-shaped. Replace with plan extraction: top-down wall-density map per suite → Manhattan-aligned wall segments → polygons; this is also the form the reconciler needs.

@@ -1,8 +1,10 @@
 """Fit a rectangular room's walls from a point cloud and report width/depth (scale-free ratio).
 Walls = outermost strong density peak beyond the camera path (before a wide empty gap) along each Manhattan axis, so
 points seen through windows (trees, neighbours) beyond the walls are ignored.
-usage: PYTHONPATH=tools/sfm uv run --with numpy --with matplotlib python tools/sfm/room_dims.py <out.png> <label>=<model_dir>[:<folder_prefix>] ...
-  COLMAP model dirs use points3D observed by images under <folder_prefix>; VGGT dirs use points.npy.
+usage: PYTHONPATH=tools/sfm uv run --with numpy --with matplotlib python tools/sfm/room_dims.py <out.png> <label>=<model_dir>[:<folder_prefix>][@a-b,c-d] ...
+  COLMAP model dirs use points3D observed by images under <folder_prefix>; VGGT dirs use points.npy, or
+  per-frame maps from pixels.npz when frame ranges are given. @a-b,c-d keeps only frames taken inside the room
+  (a camera walk through a suite visits several rooms).
 """
 import sys
 from pathlib import Path
@@ -26,15 +28,24 @@ def cameras(model):
     return np.array(centres), np.array(ups), ids
 
 
-def colmap_points(model, prefix):
+def frame_no(name):
+    return int(Path(name).stem.split("_")[-1])
+
+
+def in_ranges(name, ranges):
+    return ranges is None or any(a <= frame_no(name) <= b for a, b in ranges)
+
+
+def colmap_points(model, prefix, ranges=None):
     load_centers(model)  # ensures TXT export exists
     _, _, ids = cameras(model)
+    ids = {k: v for k, v in ids.items() if v.startswith(prefix) and in_ranges(v, ranges)}
     pts = []
     for l in (Path(model) / "txt" / "points3D.txt").read_text().splitlines():
         if l.startswith("#") or not l.strip():
             continue
         f = l.split()
-        if any(ids.get(int(i), "").startswith(prefix) for i in f[8::2]):
+        if sum(int(i) in ids for i in f[8::2]) >= 2:  # seen from >= 2 in-room frames
             pts.append(list(map(float, f[1:4])))
     return np.array(pts)
 
@@ -89,12 +100,20 @@ out = sys.argv[1]
 items = []
 for arg in sys.argv[2:]:
     label, spec = arg.split("=", 1)
+    spec, _, rng = spec.partition("@")
+    ranges = [tuple(map(int, r.split("-"))) for r in rng.split(",")] if rng else None
     model, _, prefix = spec.partition(":")
-    c, u, _ = cameras(model)
-    if prefix:  # COLMAP: only cameras/points for this room's frames
-        keep = [i for i, n in enumerate(cameras(model)[2].values()) if n.startswith(prefix)]
-        c, u = c[keep], u[keep]
-        pts = colmap_points(model, prefix)
+    c, u, ids = cameras(model)
+    keep = [i for i, n in enumerate(ids.values()) if n.startswith(prefix) and in_ranges(n, ranges)]
+    c, u = c[keep], u[keep]
+    if prefix:  # COLMAP
+        pts = colmap_points(model, prefix, ranges)
+    elif ranges:  # VGGT per-frame maps, in-room frames only
+        d = np.load(Path(model) / "pixels.npz")
+        sel = [i for i, n in enumerate(d["names"]) if in_ranges(str(n), ranges)]
+        wp, cf = d["world"][sel].reshape(-1, 3), d["conf"][sel].reshape(-1)
+        wp = wp[cf > np.median(cf)]
+        pts = wp[np.random.default_rng(0).choice(len(wp), min(200_000, len(wp)), replace=False)]
     else:
         pts = np.load(Path(model) / "points.npy")
     items.append((label, *fit(pts, c, u)))

@@ -38,17 +38,16 @@ def rel_residual(src, dst):
 
 
 rows = []
-for shot in sorted(set(shot_of.values())):
-    frames = sorted(n for n in truth if shot_of[n] == shot)
-    for w in range(0, len(frames) - WINDOW + 1, WINDOW):
-        win = frames[w:w + WINDOW]
-        for a, b in itertools.combinations(methods, 2):
+for a, b in itertools.combinations(methods, 2):
+    # Windows over frames BOTH methods reconstructed (methods may sample frames differently).
+    both = [n for n in truth if a in est[n] and b in est[n]]
+    for shot in sorted({shot_of[n] for n in both}):
+        frames = sorted(n for n in both if shot_of[n] == shot)
+        for w in range(0, len(frames) - WINDOW + 1, WINDOW):
+            win = frames[w:w + WINDOW]
             # Use each method's dominant model in the window; frames must be in both.
-            pick = {}
-            for m in (a, b):
-                ids = [est[n][m][0] for n in win if m in est[n]]
-                pick[m] = max(set(ids), key=ids.count) if ids else None
-            common = [n for n in win if all(m in est[n] and est[n][m][0] == pick[m] for m in (a, b))]
+            pick = {m: max({est[n][m][0] for n in win}, key=[est[n][m][0] for n in win].count) for m in (a, b)}
+            common = [n for n in win if all(est[n][m][0] == pick[m] for m in (a, b))]
             if len(common) < 6:
                 continue
             A = np.array([est[n][a][1] for n in common]); B = np.array([est[n][b][1] for n in common])
@@ -58,6 +57,8 @@ for shot in sorted(set(shot_of.values())):
             T = np.array([truth[n] for n in common])
             rows.append((shot, w, a, b, rel_residual(B, A), rel_residual(A, T), rel_residual(B, T)))
 
+if not rows:
+    sys.exit("no comparable windows (need >= 6 frames shared by both methods in one model)")
 print(f"{'shot':>4} {'win':>4} {'pair':<18} {'disagree':>8} {'errA':>7} {'errB':>7}")
 for shot, w, a, b, d, ea, eb in rows:
     print(f"{shot:>4} {w:>4} {a + '/' + b:<18} {d:8.1%} {ea:7.1%} {eb:7.1%}{'  <- AGREE' if d < gate else ''}")
