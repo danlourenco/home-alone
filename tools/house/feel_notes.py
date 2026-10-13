@@ -46,7 +46,7 @@ def old_model_xy(pos):
 
 
 def main():
-    f = FB / "feel-notes.jsonl"
+    FB.mkdir(parents=True, exist_ok=True); f = FB / "feel-notes.jsonl"
     notes = [json.loads(l) for l in f.read_text().splitlines() if l.strip()] if f.exists() else []
     rows = ["| # | scene | where | rating | note | screenshot |", "|---|---|---|---|---|---|"]
     old = []
