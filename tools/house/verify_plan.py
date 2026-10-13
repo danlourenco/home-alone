@@ -70,17 +70,23 @@ def main():
                 along, across = (sx, sz) if d["spec_axis"] == "z" else (sz, sx)
                 lo, hi = d["span_spec"]
                 off_wall = abs(across - d["wall_coord_spec"])
-                off_span = max(lo - along, along - hi, 0)
-                ok = off_wall <= c["tol"] and off_span <= c["tol"]
-                detail = f"{off_wall * 100:.0f} cm off the wall line, {off_span * 100:.0f} cm beyond the opening (tol {c['tol'] * 100:.0f})"
+                off_span = abs(along - (lo + hi) / 2)       # checkpoint points are measured door centres
+                # along the wall is the door's position (tight); across is the wall's own location, and a point
+                # measured on one face sits half a wall-thickness off the centre line (tol_across, default = tol)
+                ta = c.get("tol_across", c["tol"])
+                ok = off_wall <= ta and off_span <= c["tol"]
+                detail = (f"door centre {off_span * 100:.0f} cm along the wall from the measured centre (tol {c['tol'] * 100:.0f}); "
+                          f"{off_wall * 100:.0f} cm off the wall centre line (tol {ta * 100:.0f})")
         elif c["type"] == "inside":
             sp = to_spec(pt)
             hit = [n for n, poly in spaces.items() if inside(poly, sp)]
             ok = c["space"] in hit
             detail = f"point lies in {hit[0] if hit else 'no space'} (expected {c['space']})"
         elif c["type"] == "dimension":
-            sq = rebuild(edges_of(planpoly[c["space"]]))
-            dims = np.ptp(sq, axis=0)
+            if c.get("stage") == "spec":   # the built spec (walls thinned); spec (x, z) -> plan order (x=z, y=x)
+                dims = np.ptp(spaces[c["space"]], axis=0)[::-1]
+            else:
+                dims = np.ptp(rebuild(edges_of(planpoly[c["space"]])), axis=0)
             exp = np.atleast_1d(c["expect_m"]).astype(float)
             got = {"x": dims[:1], "y": dims[1:], "both": dims}[c["axis"]]
             err = got / exp - 1

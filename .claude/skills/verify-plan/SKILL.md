@@ -87,13 +87,15 @@ A check counts only once it has been shown to FAIL on a known-bad input, and its
 | `verify_plan.py` checkpoints | The pre-fix trace (`git show 50b9f54:...`) gives 7 FAIL; the current trace gives 0 | Door checks: 30 cm (loose, by design for overhead reading error). Dimensions: 4–6% |
 | `check_walls.py` | `tools/house/test_checks.py` injects 0/5/10/20 cm wall errors in 3 rooms | Reads errors to within 1–3 cm; **flags 10 cm or more**. 5 cm reads correctly but isn't flagged |
 | Unity adult walk test | `-variant inject_door` with 0.45 and 0.50 m doors gives both BLOCKED, every other door ok | Physically blocks doors narrower than the 0.55 m capsule. The reconciler rule flags under 0.65 m |
+| Door checkpoints (centre along the wall) | Kevin's hall door shifted 10 and 20 cm in the inputs: FAIL at 17 and 26 cm against a 7 cm baseline | 10 cm (tol 15). Across-wall tolerance is separate (`tol_across`) because a door measured on one face sits half a wall-thickness off the centre line |
+| Registration (`register_clip.py --loo [--rigid]`) | Leave-one-out over anchor walls | Hall (rigid): median 5, max 10.5 cm. Kevin: median 3.5, max 6 |
 | Matched-camera edge score | A 20 cm camera shift did not reliably worsen it | **None. Visual only** |
 
 Run `uv run --with numpy python tools/house/test_checks.py` after changing `check_walls.py`, the registrations or the tolerances.
 
 ## Independent vs consistency checks
 
-A check is **independent** only if its evidence played no part in building the plan. Today these are Marina's 7′ 6″ label, the parents' bath width and the open door leaf in the overhead. The others are **consistency** checks; they still matter, because they catch edits that break agreement:
+A check is **independent** only if its evidence played no part in building the plan. As of Oct 13 there are 6 of 15: Marina's 7′ 6″ label, the parents' bath width, the overhead's open door leaf, plus three from the far-end hall clip (hall-s4), which never built anything. That clip has a rigid registration on the passage and end walls only. Its checks are Kevin's hall door (7 cm), the parents' hall door (7 cm) and the passage width (1.22 m, where the overhead traced 1.07: walls too thick there, and the thinned build matches). The others are **consistency** checks; they still matter, because they catch edits that break agreement:
 
 - The hall doorways come from the same clip that placed the doors.
 - The room sizes of Kevin and Buzz were inputs to the overhead calibration.
@@ -119,6 +121,8 @@ A check is **independent** only if its evidence played no part in building the p
 - **Measured door spans often include casing**, typically +4 to 8 cm. Centre a standard door inside them.
 - **Unity is left-handed.** World z = −spec z, otherwise the house builds mirrored. The bird's-eye capture must match Marina's overhead room for room.
 - **Image edge scores can't see 20 cm.** Use `check_walls.py` for numbers and the overlays for eyes.
+- **The reconciler slides a measured door up to 15 cm to fit its wall without flagging it**, which can hide a door error. A +20 cm injected shift was slid back onto the measured spot. When a door check passes suspiciously well, look at the slide note in `spec/upstairs-changes.md`.
+- **Fitting scale can absorb the error you're testing for.** When both sides are metric, register rigidly (`"rigid": true`); the far-end clip's scale fit would have hidden a 15 cm width difference.
 - **A railing is not a wall.** The rail stands on the stairwell's edge, and the hall reaches it (`RAIL_T` in the reconciler).
 - **Height histograms mis-measure ceilings** because of camera tilt. Measure ceilings on a door wall as wall height relative to door height.
 - **Captions and dissolves** sit at the ends of kept frame ranges. Trim them before solving.

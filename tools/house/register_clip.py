@@ -5,7 +5,8 @@ overhead both show independently (measurements/checkpoints/<floor>.json -> regis
 clip-measured features (doorways, bay walls) are then mapped through it, so checkpoints built from them are not circular.
 Writes the registration back to the checkpoints file and the derived geometry into the trace ("m" polygons) and
 doors file, each with its source. Re-run after changing anchors or features, then run the verify-plan skill.
-usage: uv run --with numpy --with scipy python tools/house/register_clip.py hall-s1
+usage: uv run --with numpy --with scipy python tools/house/register_clip.py hall-s1 [--loo]
+  --loo: leave-one-out over the anchor walls (held-out, independent); writes nothing
 """
 import json
 import sys
@@ -27,18 +28,41 @@ def apply(params, P):
     return s * P @ np.array([[c, n], [-n, c]]) + [tx, ty]
 
 
-def fit(anchors, start=(0.0, 1.0, 6.3, 1.6)):
-    """Each anchor: clip segment (2 points, clip plan metres) lies on plan line x=c or y=c."""
-    def resid(p):
+def fit(anchors, start=(0.0, 1.0, 6.3, 1.6), rigid=False):
+    """Each anchor: clip segment (2 points, clip plan metres) lies on plan line x=c or y=c.
+    rigid=True fixes scale at 1 (both sides are independently metric), fitting rotation + translation only."""
+    def resid(q):
+        p = [q[0], 1.0, q[1], q[2]] if rigid else q
         r = []
         for a in anchors:
             q = apply(p, np.array(a["clip"]))
             k = 0 if a["plan_axis"] == "x" else 1
             r += list((q[:, k] - a["plan"]) * a.get("weight", 1.0))
         return r
-    sol = least_squares(resid, list(start))
+    x0 = [start[0], start[2], start[3]] if rigid else list(start)
+    sol = least_squares(resid, x0)
     res = np.array(resid(sol.x)).reshape(-1, 2)
-    return sol.x, res
+    params = np.array([sol.x[0], 1.0, sol.x[1], sol.x[2]]) if rigid else sol.x
+    return params, res
+
+
+def loo(clip, rigid=False):
+    """Held-out test: refit without each anchor wall, predict where that wall lands in the plan. The held-out wall
+    played no part in its own prediction, so this is independent evidence (unlike the fit residuals)."""
+    reg = json.loads(CHECKS.read_text())["registrations"][clip]
+    an = reg["anchors"]
+    prev = reg.get("similarity")
+    start = (np.radians(prev["rotation_deg"]), prev["scale"], *prev["translation"]) if prev else (0.0, 1.0, 6.3, 1.6)
+    print(f"{clip}: leave-one-out over {len(an)} anchor walls ({'rigid, scale fixed at 1' if rigid else 'similarity'})")
+    errs = []
+    for i, a in enumerate(an):
+        params, _ = fit(an[:i] + an[i + 1:], start, rigid or reg.get("rigid", False))
+        q = apply(params, np.array(a["clip"]))
+        k = 0 if a["plan_axis"] == "x" else 1
+        e = float(np.abs(q[:, k] - a["plan"]).max() * 100); errs.append(e)
+        print(f"  held out {a['name']:<36} predicted {q[:, k].mean():7.3f} vs plan {a['plan']:7.3f}: {e:5.1f} cm")
+    print(f"  median {np.median(errs):.1f} cm, max {max(errs):.1f} cm")
+    return errs
 
 
 def main(clip):
@@ -46,7 +70,7 @@ def main(clip):
     reg = C["registrations"][clip]
     prev = reg.get("similarity")
     start = (np.radians(prev["rotation_deg"]), prev["scale"], *prev["translation"]) if prev else (0.0, 1.0, 6.3, 1.6)
-    params, res = fit(reg["anchors"], start)
+    params, res = fit(reg["anchors"], start, reg.get("rigid", False))
     print(f"{clip}: rotation {np.degrees(params[0]):+.2f} deg, scale {params[1]:.4f}, translation ({params[2]:.3f}, {params[3]:.3f})")
     for a, r in zip(reg["anchors"], res):
         print(f"  anchor {a['name']:<34} residual {np.abs(r).max() * 100:5.1f} cm")
@@ -98,4 +122,7 @@ if __name__ == "__main__":
     walls = [([[7, 2.6], [9, 2.6]], "y", 2.6), ([[10.6, 0], [10.6, 2]], "x", 10.6), ([[12.7, 1], [12.7, 2.5]], "x", 12.7), ([[8, 1.2], [10, 1.2]], "y", 1.2)]
     an = [{"name": str(i), "clip": inv(w).tolist(), "plan_axis": ax, "plan": v} for i, (w, ax, v) in enumerate(walls)]
     assert np.allclose(fit(an)[0], true, atol=1e-4)
-    main(sys.argv[1])
+    if "--loo" in sys.argv:
+        loo(sys.argv[1], rigid="--rigid" in sys.argv)
+    else:
+        main(sys.argv[1])

@@ -285,3 +285,13 @@ Also:
   - The Unity walk test with 0.45 and 0.50 m doors (`-variant inject_door`) gives both BLOCKED and the other 9 ok.
   - Checkpoints are now labelled independent or consistency. Only 3 of 12 are independent of the data the plan was built from (Marina's 7′6″, the parents' bath width, the overhead's open door leaf). The 3D wall checks on hall-s1/parents/Kevin are consistency checks (registrations fitted on those walls).
   - Independent evidence next: clips not used for the plan (hall-s4, Buzz), or held-out walls.
+- Independent evidence (Oct 13):
+  - **Leave-one-out registration** (`register_clip.py --loo --rigid`): hall-s1 held-out walls median 5 cm, max 10.5 cm (the attic leg's west wall: the clip sees the leg ~10 cm wider than the overhead). Kevin median 3.5 cm, max 6 cm (width 4.46 vs 4.52).
+  - **Far-end clip hall-s4** (frames 320-376, gate 5/5), never used to build anything:
+    - Scale 3.236 m/unit from the parents' doorway head to the floor (1.2% spread).
+    - Rigid registration on the passage walls and the parents'-door wall only.
+    - Held-out results: Kevin's hall door centre within 7 cm of the spec (that door came from Kevin's own clip); the parents' hall door within 7 cm; the passage is 1.22 m wide against the overhead's 1.07 (walls too thick there; the thinned build is 1.23).
+    - The girls' room A door, a topology guess, was 28 cm off and is now measured (6.01-6.79).
+    - My first reading of this clip mistook the start of the passage for the parents'-door wall and produced a phantom 1 m door conflict. Looking at the top-down with the camera path resolved it. Lesson: plot the clip before interpreting gaps.
+  - **Door checkpoints** now compare door centres along the wall (before: any point inside the opening passed, so ~38 cm went unseen). Injected 10/20 cm shifts FAIL. The reconciler's silent slide (≤15 cm) can mask door errors; noted in the skill.
+  - Checkpoints: 15/15 pass, 6 independent.

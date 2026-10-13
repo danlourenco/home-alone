@@ -45,7 +45,11 @@
    "a": "girls_room_a",
    "b": "hall_end",
    "kind": "door",
-   "source": "topology: hall walk captions + adjacency"
+   "source": "girls' room A doorway: gap in the west wall points 0.74-1.52 m along the far-end clip (frames 0-24); replaces the topology guess, which was 28 cm off (clip hall-s4 via registration)",
+   "span": [
+    6.01,
+    6.79
+   ]
   },
   {
    "a": "hall_bath",

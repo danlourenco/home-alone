@@ -343,6 +343,101 @@
      "plan": 7.1
     }
    ]
+  },
+  "hall-s4": {
+   "note": "far end of the hall, frames 320-376 (sfm-work/rooms/hall-s4, gate 5/5), NEVER used to build the plan. Scale from the parents' doorway head to the floor inside (0.628 units, 1.2% spread -> 3.236 m/unit at 80 in). RIGID registration (scale fixed: both sides metric) on the passage walls and the parents'-door wall only, so the doorways are held out",
+   "m_per_unit": 3.236,
+   "rigid": true,
+   "similarity": {
+    "rotation_deg": 180.0,
+    "scale": 1.0,
+    "translation": [
+     7.53,
+     1.95
+    ],
+    "anchor_residual_cm_max": 7.5
+   },
+   "floor_pixels": [
+    [
+     26,
+     330,
+     284
+    ],
+    [
+     22,
+     420,
+     285
+    ]
+   ],
+   "anchors": [
+    {
+     "name": "parents'-door wall (hall face)",
+     "clip": [
+      [
+       2.59,
+       -0.4
+      ],
+      [
+       2.59,
+       0.84
+      ]
+     ],
+     "plan_axis": "x",
+     "plan": 4.94
+    },
+    {
+     "name": "passage west wall (girls' side)",
+     "clip": [
+      [
+       1.6,
+       0.845
+      ],
+      [
+       2.5,
+       0.845
+      ]
+     ],
+     "plan_axis": "y",
+     "plan": 1.18
+    },
+    {
+     "name": "passage east wall (Kevin's side)",
+     "clip": [
+      [
+       1.6,
+       -0.375
+      ],
+      [
+       2.5,
+       -0.375
+      ]
+     ],
+     "plan_axis": "y",
+     "plan": 2.25
+    }
+   ],
+   "features": {
+    "doors": {
+     "girls_a": {
+      "between": [
+       "girls_room_a",
+       "hall_end"
+      ],
+      "clip": [
+       [
+        0.74,
+        0.845
+       ],
+       [
+        1.52,
+        0.845
+       ]
+      ],
+      "along": "x",
+      "note": "girls' room A doorway: gap in the west wall points 0.74-1.52 m along the far-end clip (frames 0-24); replaces the topology guess, which was 28 cm off"
+     }
+    }
+   }
   }
  },
  "checks": [
@@ -543,6 +638,62 @@
    "source": "parents SfM",
    "independent": true,
    "independent_why": "SfM bath width vs a bath outline traced from the overhead (calibration used only bedroom/Kevin/Buzz corners)"
+  },
+  {
+   "name": "Kevin's hall door seen from the hall (far-end clip)",
+   "type": "on_door",
+   "door": [
+    "kevin_jeff_room",
+    "hall_end"
+   ],
+   "clip": "hall-s4",
+   "clip_point": [
+    1.03,
+    -0.375
+   ],
+   "plan": [
+    6.5,
+    2.325
+   ],
+   "tol": 0.15,
+   "independent": true,
+   "independent_why": "door placed from Kevin's own clip; this clip never built anything and its registration excludes doorways",
+   "source": "hall-s4 east-wall gap 0.60-1.46 along the clip (frames 33-41); point is on the hall face of the wall, so across-wall tolerance covers half of the measured (thick) wall",
+   "tol_across": 0.3
+  },
+  {
+   "name": "parents' hall door seen from the hall (far-end clip)",
+   "type": "on_door",
+   "door": [
+    "parents_bedroom",
+    "hall_end"
+   ],
+   "clip": "hall-s4",
+   "clip_point": [
+    2.59,
+    0.32
+   ],
+   "plan": [
+    4.94,
+    1.63
+   ],
+   "tol": 0.15,
+   "independent": true,
+   "independent_why": "door placed from the parents' clip; registration of this clip excludes doorways",
+   "source": "hall-s4 end-wall gap -0.07..0.71 across the clip (frames 22-56); point is on the hall face of the wall, so across-wall tolerance covers half of the measured (thick) wall",
+   "tol_across": 0.3
+  },
+  {
+   "name": "hall_end width (far-end clip, built spec)",
+   "type": "dimension",
+   "space": "hall_end",
+   "axis": "y",
+   "stage": "spec",
+   "expect_m": 1.22,
+   "tol_pct": 5,
+   "independent": true,
+   "independent_why": "passage wall planes of a clip never used for the plan",
+   "source": "hall-s4 passage walls 0.845 / -0.375 (1.22 m). The overhead trace gives 1.07: its walls here are too thick; the thinned build (user decision) matches"
   }
  ]
 }

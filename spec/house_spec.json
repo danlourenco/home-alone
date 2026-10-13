@@ -565,18 +565,18 @@
    "wall_coord": 1.05,
    "wall_thickness": 0.14,
    "span": [
-    5.742,
-    6.504
+    6.01,
+    6.79
    ],
-   "width": 0.762,
+   "width": 0.78,
    "height": 2.032,
    "opens": true,
-   "placed_from": "topology (centred; position unverified)",
-   "source": "topology: hall walk captions + adjacency",
+   "placed_from": "measured",
+   "source": "girls' room A doorway: gap in the west wall points 0.74-1.52 m along the far-end clip (frames 0-24); replaces the topology guess, which was 28 cm off (clip hall-s4 via registration)",
    "wall_coord_spec": 5.628,
    "span_spec": [
-    6.446,
-    7.208
+    6.714,
+    7.494
    ],
    "spec_axis": "x"
   },

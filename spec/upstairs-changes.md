@@ -109,7 +109,7 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | parents_bedroom / parents_bath | door | 2.88-3.64 | 0.76 | measured |
 | kevin_jeff_room / hall_end | door | 6.05-6.82 | 0.77 | measured |
 | kevin_jeff_room / closet_1 | door | 3.50-4.33 | 0.83 | measured, slid -1 cm onto the shared wall |
-| girls_room_a / hall_end | door | 5.74-6.50 | 0.76 | topology (centred; position unverified) |
+| girls_room_a / hall_end | door | 6.01-6.79 | 0.78 | measured |
 | hall_bath / hall_corridor | door | 9.57-10.24 | 0.67 | measured |
 | linen_closet / hall_corridor | fake_door | 8.27-8.88 | 0.61 | topology (centred; position unverified) |
 | buzz_room / hall_corridor | door | 3.01-3.78 | 0.76 | measured, slid +8 cm onto the shared wall |
@@ -127,7 +127,7 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | adult fits door parents_bedroom/parents_bath | pass | 0.76 m wide x 2.03 m |
 | adult fits door kevin_jeff_room/hall_end | pass | 0.77 m wide x 2.03 m |
 | adult fits door kevin_jeff_room/closet_1 | pass | 0.83 m wide x 2.03 m |
-| adult fits door girls_room_a/hall_end | pass | 0.76 m wide x 2.03 m |
+| adult fits door girls_room_a/hall_end | pass | 0.78 m wide x 2.03 m |
 | adult fits door hall_bath/hall_corridor | pass | 0.67 m wide x 2.03 m |
 | adult fits door buzz_room/hall_corridor | pass | 0.76 m wide x 2.03 m |
 | adult fits door girls_room_b/hall_corridor_south | pass | 0.76 m wide x 2.03 m |
