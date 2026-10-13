@@ -33,3 +33,15 @@ Layout corroboration 3/5; absolute dimensions 1/5. Timestamped film observations
 ## Decisions
 
 Retain the three-window Buzz interior, film hallway silhouette and recognizable parents' suite. Do not restore a connected breakfast staircase on the strength of this drawing; the user explicitly allowed it to remain nonconnecting. Use the poster to check adjacency and expose competing solutions. No Unity geometry edited from this evidence. No numerical Buzz dimensions inferred from this oblique, photographed illustration.
+
+## Second-floor close-up archived (October 13)
+
+`second-floor-closeup.jpg`: the user's photo of the poster's second-floor cutaway (original IMG_4250.JPG, 5712 px, downscaled to 3000 px). Compared against the calibrated upstairs plan (`measurements/overhead/upstairs-trace.plan.png`; method in `tasks/sfm-plan.md`, "Upstairs from the calibrated overhead").
+
+- **Agrees:** front row in order — parents' room (corner) → bunk room 22 (Kevin & Jeff) → small hall bath → Buzz 18/19 (corner). Master bath 24 behind the parents' room. Main stair and landing 21 just behind the front row.
+- **Disagrees:** order along the back.
+  - Poster: master bath → stair landing → girls' room → attic stair → girls' room.
+  - Marina's overhead: parents' bath → girls' room → stair opening → girls' room.
+  - John Muto's set model ("Sister's Room" beside the master bathroom) sides with Marina. Keep Marina's order.
+- **Gap it exposes:** the attic stair. It is drawn on the poster but missing from the upstairs plan. Candidates are the grey strip above girls_room_a and closet_1/closet_2. Resolve from Marina's attic footage (Part 2, 775–935 s; the walk starts mid-stair).
+- Weight is unchanged: adjacency 3/5, dimensions 1/5 (isometric illustration drawn inside the real house's exterior).
