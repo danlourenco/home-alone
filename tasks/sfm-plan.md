@@ -295,3 +295,14 @@ Also:
     - My first reading of this clip mistook the start of the passage for the parents'-door wall and produced a phantom 1 m door conflict. Looking at the top-down with the camera path resolved it. Lesson: plot the clip before interpreting gaps.
   - **Door checkpoints** now compare door centres along the wall (before: any point inside the opening passed, so ~38 cm went unseen). Injected 10/20 cm shifts FAIL. The reconciler's silent slide (≤15 cm) can mask door errors; noted in the skill.
   - Checkpoints: 15/15 pass, 6 independent.
+
+## Main staircase, flight 1 measured (Oct 13)
+Clips from Part 1 at 1080p (the 640x360 original is deleted; use the `copy.mp4`): A = foyer pan 29-62 (gate 3/3), B = climb 116-187 (gate 6/6; the 640p solve failed its landing window at 2.6%, and 1080p fixed it). Record: `measurements/rooms/stairs.json`.
+- **13 risers** foyer floor to landing: the image count fits an equal-spacing projective model (rms 3 px; 14 rejected), and clip B's 3D gives 12.95 rises.
+- **Rise 0.169 m** (0.163-0.173) from clip A riser tops, door-scaled at 80 in.
+- **Pitch 35.0 deg** (34.4-35.5) by vanishing points (`tools/sfm/stair_pitch.py`, `--selftest`: synthetic 30/35/40 deg read within 0.1 deg; a one-line image is rejected). **Going 0.241 m.** Tread band 1.12 m.
+- **The 3D point clouds get the pitch wrong** (24-27 deg): looking along the flight, VGGT stretches depth by ~1.35 relative to height, and tread/riser normals are 75-80 deg apart. Use 3D only for vertical and lateral sizes on stairs.
+- **Door edge pixels can lie.** The foyer door is recessed under an arch, so `door_scale.py`'s top-edge pixel took the arch's depth (14% short). The new robust method (`stair_measure.door_height`: slab-interior quadratic fit, extrapolated to the edges) changes the upstairs doors by <1% (Kevin +0.8%, parents +0.6%), so the upstairs scale stands.
+- **Layout from Marina's main-floor overhead (Part 1 f216):** a straight flight along the foyer's left wall, rising toward the rear, onto a full-width landing at the rear wall (picture and table, then the big window), with a balustrade facing the foyer. In the upstairs plan: the landing is at the west end of `main_stair_opening`, spanning its 2.83 m, and flight 1 runs along the south side.
+- **Flight 2 (landing to the upper floor) is in neither video nor Marina's main-floor model**, so it is authored. The landing is at 2.20 m. The upper floor height (floor-to-floor) is not measured: the foyer ceiling meets the wall at the landing-balustrade line, 2.32 m.
+- Caption check (user question): the big "Buzz's Room" chapter title fades in over the hall-bath clip's last frames (179-180). Only the rejected hallbath 26-180 solve included them, and nothing built uses it. The small hall label at f152-156 marks Buzz's doorway; `hall.json`'s note is corrected.

@@ -3,7 +3,7 @@
  "status": "not measurable end-to-end; to be authored by the reconciler as the space between measured rooms",
  "source": "Marina CG tour Part 2, hall walk frames 135-376 (4 fps, 9:00 + frame/4 s); room captions read from frames",
  "door_order_along_walk": [
-  {"frames": "135-160", "what": "start at top of stairs, looking down the short leg to the attic door ('Buzz's Room' caption, f153)"},
+  {"frames": "135-160", "what": "start at top of stairs, looking down the short leg to the attic door ('Attic' label f142-146; small 'Buzz's Room' label f152-156 sits over Buzz's doorway on the left, not the attic door. Not to be confused with the big 'Buzz's Room' chapter title that fades in over the hall-bath segment's last frames 179-180)"},
   {"frames": "159-195", "what": "Hall Bathroom (caption f171), doorway beside the attic door"},
   {"frames": "183-219", "what": "uncaptioned bedroom (Michael Jordan cutout, green-blanket bed) next to the hall bath; matches the room beside the parents' suite in the overhead"},
   {"frames": "225-255", "what": "Girl's Room (caption f231)"},

@@ -65,6 +65,13 @@ Key files:
 
 ## Next: the main staircase. What we know and a plan
 
+**Progress (Oct 13, later):** flight 1 is measured. See `measurements/rooms/stairs.json` and the experiment log.
+- 13 risers of 0.169 m, going 0.241 m (pitch 35.0 deg by vanishing points), tread band 1.12 m.
+- Landing at 2.20 m, full width along the rear wall, at the west end of `main_stair_opening`.
+- Flight 2 and the floor-to-floor height are not filmed and not in Marina's main-floor model. They wait on a user decision; the spec and grey-box are not extended yet.
+- The Part 1 1080p video is the `copy.mp4` (the 640p original is deleted).
+
+
 **Evidence on hand:**
 
 - **Overhead.** `main_stair_opening` is black (open to below) at plan x 7.83–10.66, y −4.71…0.94 (about 2.8 × 5.6 m). Its west (left) edge is hidden against the background and assumed straight at the building edge.
