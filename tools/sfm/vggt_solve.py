@@ -53,5 +53,11 @@ for shot in sorted(p for p in (ws / "images").iterdir() if p.is_dir() and p.name
         (txt / "cameras.txt").write_text("\n".join(cams) + "\n")
         (txt / "images.txt").write_text("".join(ims))
         (txt / "points3D.txt").write_text("")
+        # Dense world points (chunk frame) above median confidence, subsampled, for wall fitting.
+        wp = pred["world_points"][0].cpu().numpy().reshape(-1, 3)
+        conf = pred["world_points_conf"][0].cpu().numpy().reshape(-1)
+        keep = conf > np.median(conf)
+        idx = np.random.default_rng(0).choice(keep.sum(), min(200_000, keep.sum()), replace=False)
+        np.save(txt.parent / "points.npy", wp[keep][idx])
         print(f"model {model_id}: {shot.name} frames {start}-{start + len(part) - 1}")
         model_id += 1

@@ -175,3 +175,11 @@ Part 2 9:00–10:40 at 4 fps; shot_buzz frames 1–89, shot_hall 135–400 (90�
 - Hall frames ~206–265 disagree (3–22%) — the same flat-green-wall stretch where the Oct 12 spike split into pieces. Gate flagged the known weak spot unprompted.
 - Hall frames ~265–400 agree (0.2–0.9%).
 Next: fit Buzz walls from agreed-window points (COLMAP sparse + VGGT depth as cross-check), report Buzz width/depth with spread, and confront the 0.77–0.80 (spike) vs 0.60 (overhead survey) contradiction.
+
+## Buzz room proportions — two independent methods agree (Oct 12)
+`tools/sfm/room_dims.py` (Manhattan axes; each wall = outermost strong density peak beyond the camera path before a wide empty gap; mid-height band 15–85%). Diagnostic: `sfm-work/buzz-dims.png`.
+- COLMAP SIFT (real-colmap model 3, shot_buzz points): short/long = **0.792**
+- VGGT-1B, all Buzz frames in one pass (45 frames, every 2nd): **0.802**
+- Agreement ~1.3%. Consistent with the spike's 0.77–0.80; contradicts the Sept 11 overhead survey (4.21×6.97 m = 0.60) → that survey's depth stretched ~30%, the likely root of the Buzz confusion and possibly of "floors don't stack".
+Lessons: per-chunk VGGT on a camera pan sees only part of a room — run a room in one pass; first-peak wall picking grabs furniture fronts — use outermost peak before a gap.
+Open: metric scale (door height / Marina's stated areas / stair rise); parameter-sensitivity spread; film-set check.
