@@ -78,6 +78,29 @@ for c in hall-s1 parents kevin; do uv run --with numpy --with scipy --with pillo
 - The renders give every surface its own flat colour, so a colour change is exactly a geometric edge.
 - `compare.png` draws the grey-box edges over Marina's frames. **Look at it; don't gate on its number.** In the Oct 13 sensitivity test, moving the camera 20 cm did not reliably worsen the edge score, and some views scored better. Faint real corners lose to nearby clutter.
 
+## Test the tests (required for every gate)
+
+A check counts only once it has been shown to FAIL on a known-bad input, and its detection limit is written down. The image edge score looked fine on real data, but when the camera was moved 20 cm on purpose it couldn't tell, so it is now visual-only. Proven limits (Oct 13):
+
+| Gate | Proof | Detection limit |
+|---|---|---|
+| `verify_plan.py` checkpoints | The pre-fix trace (`git show 50b9f54:...`) gives 7 FAIL; the current trace gives 0 | Door checks: 30 cm (loose, by design for overhead reading error). Dimensions: 4–6% |
+| `check_walls.py` | `tools/house/test_checks.py` injects 0/5/10/20 cm wall errors in 3 rooms | Reads errors to within 1–3 cm; **flags 10 cm or more**. 5 cm reads correctly but isn't flagged |
+| Unity adult walk test | `-variant inject_door` with 0.45 and 0.50 m doors gives both BLOCKED, every other door ok | Physically blocks doors narrower than the 0.55 m capsule. The reconciler rule flags under 0.65 m |
+| Matched-camera edge score | A 20 cm camera shift did not reliably worsen it | **None. Visual only** |
+
+Run `uv run --with numpy python tools/house/test_checks.py` after changing `check_walls.py`, the registrations or the tolerances.
+
+## Independent vs consistency checks
+
+A check is **independent** only if its evidence played no part in building the plan. Today these are Marina's 7′ 6″ label, the parents' bath width and the open door leaf in the overhead. The others are **consistency** checks; they still matter, because they catch edits that break agreement:
+
+- The hall doorways come from the same clip that placed the doors.
+- The room sizes of Kevin and Buzz were inputs to the overhead calibration.
+- The walls checked by `check_walls.py` for hall-s1, parents and Kevin were partly used to fit those clips' registrations.
+
+`verify_plan.py` prints each check's kind. To get independent evidence, use clips the plan was not built from (hall-s4, the Buzz clip). Alternatively, fit a registration on some walls and check the others (held-out). Never count a consistency pass as proof of faithfulness.
+
 ## Where checkpoints come from
 
 - **Gated SfM clips** (`sfm-work/rooms/<name>/`): door jambs, wall lines, open floor.

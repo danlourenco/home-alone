@@ -280,3 +280,8 @@ Also:
   - **Result:** hall, parents and Kevin clips have every long wall within ±7 cm, and verify-plan passes 12/12.
   - **Supporting changes:** matched renders use per-frame focal, PnP poses from each frame's point map (camera head vs point map within 2 cm/0.7° except the bath close-up), and surface-ID colouring.
   - **New option:** `reconcile.py --measured` / `-variant measured` builds the house exactly as measured, so faithfulness and the gameplay wall-thinning are judged separately.
+- Test the tests (Oct 13), prompted by the image score failing its sensitivity test:
+  - `tools/house/test_checks.py` injects 0/5/10/20 cm wall errors into three rooms. `check_walls.py` reads them back exactly (moved 0/4–6/10/20 cm), flags every 10 and 20 cm case, and leaves untouched walls unflagged: PASS. The detection limit is 10 cm; 5 cm reads correctly but sits under the 8 cm threshold.
+  - The Unity walk test with 0.45 and 0.50 m doors (`-variant inject_door`) gives both BLOCKED and the other 9 ok.
+  - Checkpoints are now labelled independent or consistency. Only 3 of 12 are independent of the data the plan was built from (Marina's 7′6″, the parents' bath width, the overhead's open door leaf). The 3D wall checks on hall-s1/parents/Kevin are consistency checks (registrations fitted on those walls).
+  - Independent evidence next: clips not used for the plan (hall-s4, Buzz), or held-out walls.

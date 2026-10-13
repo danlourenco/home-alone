@@ -364,7 +364,8 @@
    "clip_point": [
     3.735,
     2.21
-   ]
+   ],
+   "independent": false
   },
   {
    "name": "end bay is open hall",
@@ -381,7 +382,8 @@
    "clip_point": [
     3.75,
     1.6
-   ]
+   ],
+   "independent": false
   },
   {
    "name": "Buzz doorway centre",
@@ -401,7 +403,8 @@
    "clip_point": [
     4.45,
     1.74
-   ]
+   ],
+   "independent": false
   },
   {
    "name": "arch to attic leg",
@@ -420,7 +423,8 @@
    "clip_point": [
     4.5,
     0.32
-   ]
+   ],
+   "independent": false
   },
   {
    "name": "attic door",
@@ -439,7 +443,8 @@
    "clip_point": [
     6.53,
     0.355
-   ]
+   ],
+   "independent": false
   },
   {
    "name": "parents' hall door",
@@ -453,7 +458,8 @@
     1.46
    ],
    "tol": 0.3,
-   "source": "parents SfM frames 402/407"
+   "source": "parents SfM frames 402/407",
+   "independent": false
   },
   {
    "name": "parents' bath door",
@@ -467,7 +473,8 @@
     -1.35
    ],
    "tol": 0.3,
-   "source": "parents SfM frame 413"
+   "source": "parents SfM frame 413",
+   "independent": false
   },
   {
    "name": "girls' room B door (open leaf in overhead)",
@@ -481,7 +488,9 @@
     776
    ],
    "tol": 0.4,
-   "source": "overhead f_00041 open door leaf; hall walk f222-261"
+   "source": "overhead f_00041 open door leaf; hall walk f222-261",
+   "independent": true,
+   "independent_why": "overhead detail; the door was placed by topology, not from this leaf"
   },
   {
    "name": "Marina's 7'6\" (girls' room A depth)",
@@ -491,7 +500,9 @@
    "stage": "plan",
    "expect_m": 2.286,
    "tol_pct": 6,
-   "source": "label on Marina's overhead. The bracket is drawn ~3 px past each inner wall edge (zoom check Oct 13), so it measures toward wall centres; inner depth reads ~5% less. Bracket ends themselves check at -0.6% in overhead_fit.py"
+   "source": "label on Marina's overhead. The bracket is drawn ~3 px past each inner wall edge (zoom check Oct 13), so it measures toward wall centres; inner depth reads ~5% less. Bracket ends themselves check at -0.6% in overhead_fit.py",
+   "independent": true,
+   "independent_why": "Marina's own label; not used to build or calibrate the plan"
   },
   {
    "name": "Kevin's room vs its own doors",
@@ -504,7 +515,8 @@
     4.57
    ],
    "tol_pct": 4,
-   "source": "kevin SfM, 3 doors, 0.7% spread"
+   "source": "kevin SfM, 3 doors, 0.7% spread",
+   "independent": false
   },
   {
    "name": "Buzz's room vs its own door",
@@ -517,7 +529,8 @@
     3.49
    ],
    "tol_pct": 4,
-   "source": "buzz SfM, frames 38/41/44"
+   "source": "buzz SfM, frames 38/41/44",
+   "independent": false
   },
   {
    "name": "parents' bath width",
@@ -527,7 +540,9 @@
    "stage": "plan",
    "expect_m": 2.63,
    "tol_pct": 5,
-   "source": "parents SfM"
+   "source": "parents SfM",
+   "independent": true,
+   "independent_why": "SfM bath width vs a bath outline traced from the overhead (calibration used only bedroom/Kevin/Buzz corners)"
   }
  ]
 }

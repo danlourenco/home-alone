@@ -87,13 +87,17 @@ def main():
             ok = bool(np.all(np.abs(err) * 100 <= c["tol_pct"]))
             detail = f"{' x '.join(f'{g:.2f}' for g in got)} m vs {' x '.join(f'{e:.2f}' for e in exp)} ({', '.join(f'{e:+.1%}' for e in err)}; tol {c['tol_pct']}%)"
         fails += not ok
-        rows.append(("ok" if ok else "FAIL", c["name"], detail))
+        kind = "independent" if c.get("independent") else "consistency"
+        rows.append(("ok" if ok else "FAIL", f"{c['name']} [{kind}]", detail))
 
     review_sheet(trace)
     w = max(len(r[1]) for r in rows)
     for st, name, detail in rows:
         print(f"{st:<5} {name:<{w}}  {detail}")
-    print(f"\n{sum(r[0] == 'ok' for r in rows)} ok, {sum(r[0] == 'warn' for r in rows)} warnings, {fails} FAIL"
+    n_ind = sum(1 for c in checks["checks"] if c.get("independent"))
+    print(f"\n{n_ind} of {len(checks['checks'])} checkpoints are independent of the data the plan was built from; "
+          f"the rest catch edits that break agreement (regressions), not original errors")
+    print(f"{sum(r[0] == 'ok' for r in rows)} ok, {sum(r[0] == 'warn' for r in rows)} warnings, {fails} FAIL"
           f"  ->  review sheet: spec/captures/trace-review.png")
     sys.exit(1 if fails else 0)
 
