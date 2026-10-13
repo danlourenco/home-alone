@@ -424,18 +424,6 @@
    1035
   ],
   [
-   1045,
-   842
-  ],
-  [
-   952,
-   842
-  ],
-  [
-   950,
-   1032
-  ],
-  [
    572,
    1030
   ],
@@ -460,5 +448,5 @@
    335
   ]
  ],
- "outline_note": "outer wall-top edges, rough (+-10 px); the stair-opening stretch of the left edge is not visible and assumed straight"
+ "outline_note": "outer wall-top edges, rough (+-10 px); the stair-opening stretch of the left edge is not visible and assumed straight; the bottom edge runs straight across the attic stairwell (it is inside the house, not a notch)"
 }
