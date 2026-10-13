@@ -1,0 +1,19 @@
+{
+ "note": "Plan metres, same frame as upstairs-trace.plan.json (= parents' SfM frame x 3.465 m/unit at 80 in). 'span' is measured (SfM door edges) where given; otherwise the door goes mid-way along the shared wall and is flagged as placed from topology.",
+ "doors": [
+  {"a": "parents_bedroom", "b": "hall_end", "kind": "door", "span": [1.07, 1.84], "source": "SfM: door slab edges, parents frames 402/407"},
+  {"a": "parents_bedroom", "b": "parents_bath", "kind": "door", "span": [2.88, 3.64], "source": "SfM: casing edges, parents frame 413"},
+  {"a": "kevin_jeff_room", "b": "hall_end", "kind": "door", "span": [6.05, 6.82], "source": "SfM: Kevin door_b (frames 279/292), placed with the overhead fit (room flipped vertically)"},
+  {"a": "kevin_jeff_room", "b": "closet_1", "kind": "door", "span": [3.51, 4.34], "source": "SfM: Kevin door_a (frames 292/325), includes casing"},
+  {"a": "girls_room_a", "b": "hall_end", "kind": "door", "source": "topology: hall walk captions + adjacency"},
+  {"a": "hall_bath", "b": "hall_corridor", "kind": "door", "source": "topology: 'Hall Bathroom' caption f171"},
+  {"a": "linen_closet", "b": "hall_corridor", "kind": "door", "source": "topology: Muto's set model (linen closet off the hall, beside the bathroom)"},
+  {"a": "buzz_room", "b": "hall_corridor_south", "kind": "door", "source": "topology: hall walk f153 (Buzz's doorway on the left before the attic door)"},
+  {"a": "girls_room_b", "b": "hall_corridor_south", "kind": "door", "source": "overhead: open door leaf visible on the room's right wall"},
+  {"a": "attic_stair", "b": "hall_corridor_south", "kind": "door", "source": "hall walk f135-165 + film attic-door shot"},
+  {"a": "hall_end", "b": "hall_corridor", "kind": "arch", "source": "hall walk: arched openings (f141-147); header band in overhead"},
+  {"a": "hall_corridor", "b": "hall_corridor_south", "kind": "arch", "source": "header band in overhead"},
+  {"a": "main_stair_opening", "b": "hall_corridor", "kind": "rail", "source": "hall walk f135-147: balustrade along the stairwell"}
+ ],
+ "unresolved": ["closet_2: no access side known", "strip above girls_room_a (closet or shelf)", "left edge of main_stair_opening (hidden in the overhead)"]
+}
