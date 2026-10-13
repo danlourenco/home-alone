@@ -349,6 +349,29 @@
     ]
    ],
    "notes": "black = open to the floor below. Left edge not visible against the background: assumed at the building edge (x~600)"
+  },
+  {
+   "name": "attic_stair",
+   "kind": "opening",
+   "px": [
+    [
+     952,
+     845
+    ],
+    [
+     1040,
+     845
+    ],
+    [
+     1040,
+     1030
+    ],
+    [
+     952,
+     1030
+    ]
+   ],
+   "notes": "Behind the attic door at the south end of hall_corridor_south. That door matches the film's attic-door shot (sconce, red-candle table, picture; Part 2 attic segment frame 17 vs hall walk 153-165). The well is open at its far end in the overhead, which is cut at wall-top height; its length to the outline is 2.66 m, and the stair may run further under the roof. The poster also puts the attic stair beside Buzz's room. Confirm with render-and-compare from the CG stair frames (attic segment ~304-320)."
   }
  ],
  "outline_px": [

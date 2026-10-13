@@ -355,13 +355,36 @@
     ]
    ],
    "area_m2": 15.72
+  },
+  {
+   "name": "attic_stair",
+   "kind": "opening",
+   "polygon_m": [
+    [
+     13.038,
+     1.244
+    ],
+    [
+     13.035,
+     2.608
+    ],
+    [
+     15.69,
+     2.617
+    ],
+    [
+     15.695,
+     1.3
+    ]
+   ],
+   "area_m2": 3.56
   }
  ],
  "totals_m2": {
   "room": 106.22,
   "hall": 8.86,
   "closet": 3.35,
-  "opening": 15.72,
+  "opening": 19.28,
   "net_floor_excl_openings": 118.43,
   "gross_outline": 179.08
  }
