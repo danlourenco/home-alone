@@ -422,6 +422,30 @@ public static class SpecGreybox
         return string.Join("\n", lines) + "\n";
     }
 
+    // Furniture sizes for tools/house/furniture_check.py (skill room-feel step 2): every renderer whose name names a
+    // furniture piece, its world-space size in scene units, and the scene's metres per unit (IntactHouseReference is the
+    // downloaded model at native scale: 0.774 m/unit from its 80 in doors; every other scene is metres).
+    // Run: Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.DumpFurniture -quit -logFile - -scene IntactHouseReference
+    public static void DumpFurniture()
+    {
+        var a = System.Environment.GetCommandLineArgs(); int i = System.Array.IndexOf(a, "-scene");
+        string scene = i >= 0 ? a[i + 1] : "IntactHouseReference";
+        EditorSceneManager.OpenScene($"Assets/Scenes/{scene}.unity");
+        float mpu = scene == "IntactHouseReference" ? 2.032f / 2.625f : 1f;
+        var keys = new[] { "mattress", "chest", "dresser", "bedside", "nightstand", "desk", "dining table", "sofa", "couch", "door leaf" };
+        var rows = new List<string>();
+        foreach (var r in Object.FindObjectsByType<Renderer>())
+        {
+            var n = r.name.ToLowerInvariant();
+            if (!keys.Any(k => n.Contains(k)) || n.Contains("drawer") || n.Contains("top")) continue;
+            var path = r.transform.parent ? r.transform.parent.name + "/" + r.name : r.name;
+            var sz = r.bounds.size;
+            rows.Add($"{{\"path\":\"{path}\",\"name\":\"{r.name}\",\"size\":[{sz.x:F3},{sz.y:F3},{sz.z:F3}]}}");
+        }
+        File.WriteAllText(Path.Combine(CaptureDir, $"furniture-{scene}.json"),
+            $"{{\"scene\":\"{scene}\",\"m_per_unit\":{mpu:F4},\"pieces\":[\n" + string.Join(",\n", rows) + "\n]}\n");
+    }
+
     // Lens/eye-height comparison (open item: "the hall feels narrow"): the opening hall view rendered from Marina's own
     // solved camera (hall-s1 frame 135: eye ~1.03 m, vertical FOV ~40 deg), then from the same spot at our adult player's
     // eye (1.65 m, FOV 60) and Kevin's (1.05 m, FOV 60). tools/house/lens_compare.py lays them beside Marina's frame.

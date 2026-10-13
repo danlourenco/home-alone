@@ -1,0 +1,15 @@
+{
+ "note": "Typical US residential furniture sizes in metres (US mattress sizes; others are common retail ranges). Used by tools/house/furniture_check.py. A piece outside its range is reported before any room is judged too big or small (skill room-feel).",
+ "items": {
+  "twin mattress":   {"match": ["mattress"], "w": [0.97, 1.00], "l": [1.88, 2.03], "note": "twin 39x75 in, twin XL 39x80"},
+  "full mattress":   {"match": ["mattress"], "w": [1.35, 1.38], "l": [1.88, 1.93]},
+  "queen mattress":  {"match": ["mattress"], "w": [1.50, 1.55], "l": [2.00, 2.05]},
+  "king mattress":   {"match": ["mattress"], "w": [1.90, 1.95], "l": [2.00, 2.05]},
+  "chest of drawers":{"match": ["chest", "dresser"], "w": [0.75, 1.10], "d": [0.42, 0.56], "h": [0.95, 1.35]},
+  "nightstand":      {"match": ["bedside", "nightstand"], "w": [0.40, 0.70], "d": [0.35, 0.55], "h": [0.50, 0.75]},
+  "desk":            {"match": ["desk"], "w": [0.90, 1.60], "d": [0.50, 0.80], "h": [0.72, 0.78]},
+  "dining table":    {"match": ["dining table"], "h": [0.72, 0.78]},
+  "sofa":            {"match": ["sofa", "couch"], "d": [0.80, 1.00], "h": [0.75, 0.95]},
+  "door":            {"match": ["door leaf"], "w": [0.71, 0.91], "h": [1.98, 2.06]}
+ }
+}
