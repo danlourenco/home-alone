@@ -416,31 +416,6 @@
   },
   {
    "between": [
-    "foyer",
-    "back_stair"
-   ],
-   "kind": "door",
-   "wall_axis": "x",
-   "wall_coord": 6.988,
-   "wall_thickness": 0.14,
-   "span": [
-    -3.097,
-    -2.211
-   ],
-   "width": 0.886,
-   "height": 2.032,
-   "opens": true,
-   "placed_from": "read in the overhead",
-   "source": "foyer rear-right door under an arch (stairs-a frames 41-57, the scale door)",
-   "wall_coord_spec": 7.692,
-   "span_spec": [
-    1.481,
-    2.367
-   ],
-   "spec_axis": "z"
-  },
-  {
-   "between": [
     "back_stair",
     "kitchen"
    ],
@@ -463,6 +438,56 @@
     7.622
    ],
    "spec_axis": "x"
+  },
+  {
+   "between": [
+    "foyer",
+    "kitchen"
+   ],
+   "kind": "arch",
+   "wall_axis": "x",
+   "wall_coord": 6.988,
+   "wall_thickness": 0.14,
+   "span": [
+    -1.897,
+    -0.922
+   ],
+   "width": 0.975,
+   "height": null,
+   "opens": true,
+   "placed_from": "read in the overhead",
+   "source": "Marina's walk 1072-1076 s: from the foyer's rear right, a plain cased opening in the right wall straight into the breakfast room (beams, chandelier, round table); the service stair's balusters are seen beside it",
+   "wall_coord_spec": 7.692,
+   "span_spec": [
+    2.681,
+    3.656
+   ],
+   "spec_axis": "z"
+  },
+  {
+   "between": [
+    "foyer",
+    "back_stair"
+   ],
+   "kind": "fake_door",
+   "wall_axis": "x",
+   "wall_coord": 6.988,
+   "wall_thickness": 0.14,
+   "span": [
+    -3.097,
+    -2.211
+   ],
+   "width": 0.886,
+   "height": 2.032,
+   "opens": false,
+   "placed_from": "read in the overhead",
+   "source": "Marina's walk 1068-1071 s and clip A: the white six-panel door under an arch at the foyer's rear right is CLOSED (built as a prop door, like the upstairs closets)",
+   "wall_coord_spec": 7.692,
+   "span_spec": [
+    1.481,
+    2.367
+   ],
+   "spec_axis": "z"
   }
  ],
  "flags": [],

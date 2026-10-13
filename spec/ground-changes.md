@@ -71,15 +71,15 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | foyer / vestibule | arch | 8.09-9.74 | 1.65 | read in the overhead |
 | dining_room / kitchen | door | 5.72-6.73 | 1.01 | read in the overhead |
 | dining_room / sunroom | arch | 2.23-4.10 | 1.87 | read in the overhead |
-| foyer / back_stair | door | -3.10--2.21 | 0.89 | read in the overhead |
 | back_stair / kitchen | open | 6.02-6.92 | 0.90 | full shared wall |
+| foyer / kitchen | arch | -1.90--0.92 | 0.98 | read in the overhead |
+| foyer / back_stair | fake_door | -3.10--2.21 | 0.89 | read in the overhead |
 
 ## 5. Body rules (adult, hard)
 
 | rule | result | value |
 |---|---|---|
 | adult fits door dining_room/kitchen | pass | 1.01 m wide x 2.03 m |
-| adult fits door foyer/back_stair | pass | 0.89 m wide x 2.03 m |
 | adult fits hall foyer | pass | narrowest 3.67 m (min 0.90) |
 | adult fits hall vestibule | pass | narrowest 1.04 m (min 0.90) |
 | adult fits stair back_stair | pass | narrowest 0.90 m (min 0.65) |
@@ -88,4 +88,5 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 
 - unresolved: sunroom: room or porch, and whether Marina's 2,620 ft2 includes it
 - unresolved: second dining-room door (rear wall, right) leads to the kitchen's lower-right nook: not modelled
+- unresolved: what is behind the arched foyer door (closet or the service stair's foot): built as a closed prop door
 - ceiling 2.32 m in rooms not measured directly (Kevin 2.40 / parents 2.50 / attic leg 2.29 measured)

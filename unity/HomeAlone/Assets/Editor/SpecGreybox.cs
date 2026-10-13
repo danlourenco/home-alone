@@ -407,6 +407,22 @@ public static class SpecGreybox
         RenderTexture.active = null; Object.DestroyImmediate(go); rt.Release();
     }
 
+    // Named one-off views (spec/captures/views/views.json: [{name, pos, look_at, vfov}], Unity world coordinates).
+    // Run: Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.RenderViews -quit -logFile -
+    public static void RenderViews()
+    {
+        EditorSceneManager.OpenScene("Assets/Scenes/Greybox_Upstairs.unity");
+        var go = new GameObject("ViewCam"); var cam = go.AddComponent<Camera>(); go.AddComponent<HDAdditionalCameraData>(); cam.nearClipPlane = 0.05f;
+        var rt = new RenderTexture(1920, 1080, 24); cam.targetTexture = rt;
+        foreach (var v in JArray.Parse(File.ReadAllText(Path.Combine(CaptureDir, "views/views.json"))))
+        {
+            Vector3 V(JToken t) => new Vector3((float)t[0], (float)t[1], (float)t[2]);
+            go.transform.position = V(v["pos"]); go.transform.LookAt(V(v["look_at"])); cam.fieldOfView = (float)v["vfov"];
+            Shot(cam, rt, Path.Combine("views", (string)v["name"]));
+        }
+        RenderTexture.active = null; Object.DestroyImmediate(go); rt.Release();
+    }
+
     static void Player(Space hall)
     {
         // spawn on the hall's widest floor cell (its vertex average can sit over the stairwell; the gallery is long but narrow)

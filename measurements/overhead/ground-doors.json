@@ -98,22 +98,6 @@
    ]
   },
   {
-   "a": "foyer",
-   "b": "back_stair",
-   "kind": "door",
-   "source": "foyer rear-right door under an arch (stairs-a frames 41-57, the scale door)",
-   "px": [
-    [
-     1043,
-     410
-    ],
-    [
-     1043,
-     460
-    ]
-   ]
-  },
-  {
    "a": "back_stair",
    "b": "kitchen",
    "kind": "open",
@@ -128,10 +112,43 @@
    "wall_axis": "x",
    "near": 5.959,
    "source": "side wall between the service stair and the breakfast area"
+  },
+  {
+   "a": "foyer",
+   "b": "kitchen",
+   "kind": "arch",
+   "px": [
+    [
+     1043,
+     478
+    ],
+    [
+     1043,
+     535
+    ]
+   ],
+   "source": "Marina's walk 1072-1076 s: from the foyer's rear right, a plain cased opening in the right wall straight into the breakfast room (beams, chandelier, round table); the service stair's balusters are seen beside it"
+  },
+  {
+   "a": "foyer",
+   "b": "back_stair",
+   "kind": "fake_door",
+   "px": [
+    [
+     1043,
+     410
+    ],
+    [
+     1043,
+     460
+    ]
+   ],
+   "source": "Marina's walk 1068-1071 s and clip A: the white six-panel door under an arch at the foyer's rear right is CLOSED (built as a prop door, like the upstairs closets)"
   }
  ],
  "unresolved": [
   "sunroom: room or porch, and whether Marina's 2,620 ft2 includes it",
-  "second dining-room door (rear wall, right) leads to the kitchen's lower-right nook: not modelled"
+  "second dining-room door (rear wall, right) leads to the kitchen's lower-right nook: not modelled",
+  "what is behind the arched foyer door (closet or the service stair's foot): built as a closed prop door"
  ]
 }
