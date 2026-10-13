@@ -37,6 +37,10 @@ ADULT = {"capsule_diameter": 0.55, "height": 1.85, "min_hall": 0.90}
 # parents 2.42 m and Kevin 2.30-2.33 m to the crown's lower edge (+~0.08 m crown), hall attic leg 2.29 m to the ceiling.
 CEILINGS = {"default": 2.40, "parents_bedroom": 2.50, "parents_bath": 2.50, "hall_corridor_south": 2.29} if FLOOR == "upstairs" else \
     {"default": 2.32}   # ground: the foyer ceiling meets the wall at 2.32 m (clip A, 3 frames, measurements/rooms/stairs.json)
+# Which way each stairwell opening leads (sources): the main stair goes DOWN to the foyer (measured, stairs.json); the
+# attic stair goes UP from this floor (Part 2 attic segment: the CG walk climbs it from the hall-end door). A "down"
+# opening has no floor and cuts the ceiling below; an "up" opening has a floor and no ceiling (attic not built).
+OPENS = {"main_stair_opening": "down", "attic_stair": "up"}
 RAIL_T = 0.06         # m: a balustrade between a hall and a stairwell, not a wall (hall-s1 wall check: hall reaches the rail)
 WALL_T = 0.14         # m: interior wall thickness built (5.5 in). User decision Oct 13: thin Marina's thick walls,
                       # keep each wall's centreline, rooms take the freed space. Exterior walls are untouched.
@@ -184,9 +188,11 @@ def stair_spec(final, o):
                                                              "y": [round(float(y0), 3), round(float(y1), 3)], "z": [round(float(z0), 3), round(float(z1_), 3)]})
     for k in range(1, n1):                                                # flight 1 treads (the n1-th riser lands on the landing)
         box(f"flight1_step{k:02d}", "step", xl + (n1 - 1 - k) * g, xl + (n1 - k) * g, -F, -F + k * r, z1, zs)
-    box("landing", "landing", xw, xl, -F, -F + n1 * r, zn, zs)          # full width along the rear wall
+    SLAB = 0.20   # landing / flight-2 construction depth (authored). Marina's walk 1068-1072 s passes UNDER the landing to
+                  # the arched door and the kitchen opening, so these are raised slabs, not solid blocks (fixed Oct 13)
+    box("landing", "landing", xw, xl, -F + n1 * r - SLAB, -F + n1 * r, zn, zs)          # full width along the rear wall
     for k in range(n1 + 1, n):                                            # flight 2: rises east from the landing's north end
-        box(f"flight2_step{k - n1:02d}", "step", xl + (k - n1 - 1) * g2, xl + (k - n1) * g2, -F, -F + k * r, zn, zg)
+        box(f"flight2_step{k - n1:02d}", "step", xl + (k - n1 - 1) * g2, xl + (k - n1) * g2, -F + k * r - r - SLAB, -F + k * r, zn, zg)
     x0 = xl + (n1 - 1) * g                                                # foot of flight 1
     box("foyer_floor_under_well", "floor", xw, xe + 1.0, -F - 0.2, -F, zn, zs)
     for k in range(1, n1):                                                # flight 1 open-side balustrade, stepped with the treads
@@ -196,7 +202,10 @@ def stair_spec(final, o):
         box(f"flight2_rail{k - n1:02d}", "rail", xl + (k - n1 - 1) * g2, xl + (k - n1) * g2, -F + k * r, -F + k * r + 0.9, zg, zg + 0.06)
     box("well_wall_south", "wall", xw - 0.07, xe, -F, 0, zs, zs + 0.07)    # the photo wall, foyer floor to the upper floor
     box("well_wall_west", "wall", xw - 0.07, xw, -F, 2.4, zn - 0.07, zs + 0.07)   # rear wall (landing window not modelled)
-    box("well_wall_north", "wall", xw - 0.07, xh, -F, 0, zn - 0.07, zn)  # beside the landing and flight 2, below the upper floor
+    # north edge of the well: only the upper floor's edge (fascia). A full-height wall here stood inside the foyer, which is
+    # wider than the well (fixed Oct 13)
+    box("well_fascia_north", "wall", xw, xe, -0.30, 0, zn - 0.07, zn)
+    box("well_ceiling", "ceiling", xw - 0.07, xe, 2.40, 2.55, zn - 0.07, zs + 0.07)   # Marina: chandelier hangs from it
     zm, zf = (zn + zg) / 2, (z1 + zs) / 2
     path = [[x0 + 0.9, -F, zf], [x0 + 0.3, -F, zf], [xl - 0.4, -F + n1 * r, zf], [xl - 0.4, -F + n1 * r, zm],
             [xh + 0.5, 0.0, zm], [xe + 0.4, 0.0, zm]]
@@ -379,7 +388,7 @@ def main():
         "bodies": {"kevin": {"eye_height": 1.1, "crawl_height": 0.4}, "bandit": {"eye_height": 1.7, "crouch_height": 1.1, **ADULT}},
         "walls": {"interior_thickness_m": WALL_T, "exterior": "unchanged from the calibrated overhead",
                   "note": "user decision Oct 13: thin walls, rooms take the freed space (a few % larger than measured)"},
-        "spaces": [{"name": n, "kind": sp[n]["kind"], "anchor": n in ANCHORS, "polygon_xz": to_spec(final[n]),
+        "spaces": [{"name": n, "kind": sp[n]["kind"], "anchor": n in ANCHORS, **({"opens": OPENS[n]} if n in OPENS else {}), "polygon_xz": to_spec(final[n]),
                     "area_m2": round(area(final[n]), 2), "ceiling_m": CEILINGS.get(n, CEILINGS["default"])} for n in sp],
         "doors": [{**d, "wall_coord_spec": round(d["wall_coord"] - o[0 if d["wall_axis"] == "x" else 1], 3),
                    "span_spec": [round(v - o[1 if d["wall_axis"] == "x" else 0], 3) for v in d["span"]],

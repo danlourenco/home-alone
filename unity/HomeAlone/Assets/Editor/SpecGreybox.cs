@@ -32,7 +32,7 @@ public static class SpecGreybox
     static string CaptureDir => Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/captures"));
 
     class Door { public string a, b, kind; public bool alongX; public float coord, lo, hi, height; }
-    class Space { public string name, kind; public float ceil; public List<Vector2> pts; }
+    class Space { public string name, kind, opens; public float ceil; public List<Vector2> pts; }
 
     static string GroundPath => Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/house_spec.ground.json"));
     static float FloorY;   // vertical offset of the floor being built (ground floor sits at -floor_to_floor); Box adds it
@@ -40,7 +40,7 @@ public static class SpecGreybox
     static (List<Space>, List<Door>) Parse(JObject j)
     {
         var spaces = j["spaces"].Select(s => new Space {
-            name = (string)s["name"], kind = (string)s["kind"], ceil = (float)s["ceiling_m"],
+            name = (string)s["name"], kind = (string)s["kind"], ceil = (float)s["ceiling_m"], opens = (string)s["opens"],
             pts = s["polygon_xz"].Select(p => new Vector2((float)p[0], -(float)p[1])).ToList() }).ToList();
         // spec_axis "z": the wall is the line z = coord and the door spans x (and vice versa).
         // The spec's z runs DOWN the overhead image (south); Unity is left-handed, so world z = -spec z keeps the
@@ -66,7 +66,7 @@ public static class SpecGreybox
             if (s.kind != "opening")
             {
                 foreach (var (x0, x1, z0, z1) in Cells(s.pts))
-                    Box(g, "Floor", x0, x1, z0, z1, -0.2f, 0f, s.kind == "hall" ? mHall : mFloor);
+                    Box(g, "Floor", x0, x1, z0, z1, -0.2f, 0f, s.kind == "hall" && FloorY == 0f ? mHall : mFloor);   // ground halls: wood (Marina's foyer)
                 var hx = holes.SelectMany(h => h.pts.Select(p => p.x)); var hz = holes.SelectMany(h => h.pts.Select(p => p.y));
                 foreach (var (x0, x1, z0, z1) in Cells(s.pts, hx, hz))
                     if (!holes.Any(h => Inside(h.pts, new Vector2((x0 + x1) / 2, (z0 + z1) / 2))))
@@ -75,7 +75,11 @@ public static class SpecGreybox
             }
             else
             {
-                // stairwells: enclosed on the sides no room covers; rails where the spec says rail
+                // stairwells build their own walls (doorways, rails and stair heads are cut out), so no side is open to
+                // the outside; an "up" stairwell (attic) also has this floor's floor under it
+                if (s.opens == "up")
+                    foreach (var (x0, x1, z0, z1) in Cells(s.pts)) Box(g, "Floor", x0, x1, z0, z1, -0.2f, 0f, mHall);
+                Walls(g, s, doors);
                 foreach (var d in doors.Where(d => d.kind == "rail" && (d.a == s.name || d.b == s.name)))
                     Rail(g, d);
             }
@@ -104,7 +108,7 @@ public static class SpecGreybox
             (gspaces, gdoors) = Parse(gj);
             FloorY = (float)gj["floor_y_m"];
             groot = new GameObject("Ground"); gceil = Child(groot, "Ceilings");
-            BuildFloor(groot, gceil, gspaces, gdoors, spaces.Where(s => s.kind == "opening").ToList());
+            BuildFloor(groot, gceil, gspaces, gdoors, spaces.Where(s => s.opens == "down").ToList());
             FloorY = 0f;
         }
         Volume(root);
@@ -115,6 +119,7 @@ public static class SpecGreybox
         report += "UPSTAIRS\n" + WalkTest(spaces, doors);
         if (gj != null) { FloorY = (float)gj["floor_y_m"]; report += "GROUND\n" + WalkTest(gspaces, gdoors); FloorY = 0f; }
         report += StairWalk(stairPath);
+        report += LeakAndHeadroom(spaces, gspaces, gj != null ? (float)gj["floor_y_m"] : 0f);
         report += "UPSTAIRS " + RoomWalk(spaces, doors);
         if (gj != null) { FloorY = (float)gj["floor_y_m"]; report += "GROUND " + RoomWalk(gspaces, gdoors); FloorY = 0f; }
         player.SetActive(true);
@@ -296,7 +301,7 @@ public static class SpecGreybox
         {
             string kind = (string)b["kind"];
             if (kind == "floor" && skipFloorPatch) continue;   // the ground floor's foyer is built for real
-            var m = kind == "rail" ? mRail : kind == "wall" ? mWall : kind == "floor" ? mFloor : mHall;
+            var m = kind == "rail" ? mRail : kind == "wall" ? mWall : kind == "floor" ? mFloor : kind == "ceiling" ? mCeil : mHall;
             Box(g, (string)b["name"], (float)b["x"][0], (float)b["x"][1], -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], m);
         }
         return st["walk_path"].Select(q => new Vector3((float)q[0], (float)q[1], -(float)q[2])).ToList();
@@ -381,6 +386,42 @@ public static class SpecGreybox
         return string.Join("\n", lines) + "\n";
     }
 
+    // Leaks: from a 0.5 m grid at eye height in every space (both floors), rays go up and in 16 horizontal directions.
+    // A ray that hits nothing within 40 m escaped the house (a hole to the sky or outside). The grey-box has no windows,
+    // so every escape is a defect. Headroom: on the ground floor, any grid point with < 2.0 m clear above the floor is
+    // reported with the object above it; only the main stair's flight 1 (steps, rails) may stand there.
+    static string LeakAndHeadroom(List<Space> up, List<Space> ground, float gy)
+    {
+        var lines = new List<string>(); int leaks = 0, low = 0, pts = 0;
+        var floors = new List<(List<Space>, float)> { (up, 0f) }; if (ground != null) floors.Add((ground, gy));
+        foreach (var (spaces, y0) in floors)
+            foreach (var s in spaces.Where(s => s.kind == "room" || s.kind == "hall" || s.kind == "opening"))
+            {
+                float x0 = s.pts.Min(p => p.x), x1 = s.pts.Max(p => p.x), z0 = s.pts.Min(p => p.y), z1 = s.pts.Max(p => p.y);
+                for (float x = x0 + 0.25f; x < x1; x += 0.5f)
+                    for (float z = z0 + 0.25f; z < z1; z += 0.5f)
+                    {
+                        if (!Inside(s.pts, new Vector2(x, z))) continue;
+                        pts++;
+                        var eye = new Vector3(x, y0 + 1.6f, z);
+                        var dirs = new List<Vector3> { Vector3.up };
+                        for (int k = 0; k < 16; k++) dirs.Add(Quaternion.Euler(0, k * 22.5f, 0) * Vector3.forward);
+                        foreach (var d in dirs)
+                            if (!(s.opens == "up" && d == Vector3.up) && !Physics.Raycast(eye, d, 40f))   // attic not built: open above, listed in DEVIATIONS
+                            { leaks++; lines.Add($"LEAK    {s.name} at ({x:F1}, {-z:F1}) spec x,z looking {(d == Vector3.up ? "up" : $"toward spec ({d.x:F2}, {-d.z:F2})")}"); break; }
+                        if (y0 != gy || s.kind == "opening" || ground == null) continue;
+                        if (Physics.Raycast(new Vector3(x, y0 + 0.05f, z), Vector3.up, out var hit, 2.0f))
+                        {
+                            var n = hit.collider.name;
+                            if (n.StartsWith("flight1_") || n.StartsWith("Floor")) continue;
+                            low++; if (low <= 12) lines.Add($"LOW     {s.name} at ({x:F1}, {-z:F1}): {hit.distance:F2} m clear under {hit.collider.transform.parent?.name}/{n}");
+                        }
+                    }
+            }
+        lines.Insert(0, $"Leak and headroom check: {pts} points, {leaks} leaks, {low} low-headroom points (ground floor, outside flight 1)");
+        return string.Join("\n", lines) + "\n";
+    }
+
     // Lens/eye-height comparison (open item: "the hall feels narrow"): the opening hall view rendered from Marina's own
     // solved camera (hall-s1 frame 135: eye ~1.03 m, vertical FOV ~40 deg), then from the same spot at our adult player's
     // eye (1.65 m, FOV 60) and Kevin's (1.05 m, FOV 60). tools/house/lens_compare.py lays them beside Marina's frame.
@@ -417,8 +458,12 @@ public static class SpecGreybox
         foreach (var v in JArray.Parse(File.ReadAllText(Path.Combine(CaptureDir, "views/views.json"))))
         {
             Vector3 V(JToken t) => new Vector3((float)t[0], (float)t[1], (float)t[2]);
+            // optional "hide": object paths to switch off for this view (e.g. "Upstairs", "Ground/Ceilings")
+            var hidden = (v["hide"] ?? new JArray()).Select(h => GameObject.Find((string)h)).Where(o => o).ToList();
+            hidden.ForEach(o => o.SetActive(false));
             go.transform.position = V(v["pos"]); go.transform.LookAt(V(v["look_at"])); cam.fieldOfView = (float)v["vfov"];
             Shot(cam, rt, Path.Combine("views", (string)v["name"]));
+            hidden.ForEach(o => o.SetActive(true));
         }
         RenderTexture.active = null; Object.DestroyImmediate(go); rt.Release();
     }
