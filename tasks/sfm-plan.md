@@ -141,3 +141,11 @@ All variants: oracle per-shot cameras, same 169 frames (4 fps), scorer `tools/sf
 
 Read: methods succeed in different places; both fail on long straight forward walks (low parallax, 4 fps ≈ 35 cm between samples) → meters of along-path drift.
 Next: (1) denser sampling (10–12 fps) on shots 0/3 — tests the parallax/overlap hypothesis; (2) test whether COLMAP–VGGT agreement predicts correctness on synthetic, to use as the acceptance gate on Marina footage where there is no truth.
+
+### Dense sampling (12.5 fps) on straight-walk shots 0 and 3 — partial
+COLMAP SIFT, per-shot pinhole, 246 frames, 12.7 min. Shot 3 alone: 39 cm median over a 9 m walk (was false-merged / VGGT 190 cm). Shots 0+3 merged (plausibly legitimate: both pass the foyer) at ~187 cm median. Overlap is part of the cause, not all. Synthetic foyer's flat blue tile grid is a near-perfect repeating pattern — likely harsher than Marina's foyer, unproven.
+
+## Where this leaves the plan (end of Oct 12)
+- Trustworthy so far on synthetic: feature-rich rooms (COLMAP kitchen ~1 cm), VGGT on the breakfast/dining run (~6 cm). Long straight walks past repeating surfaces: unreliable with every method tried.
+- Next, cheap: **agreement gate** — on synthetic, does COLMAP–VGGT agreement predict correctness? If yes, it's the acceptance test for Marina footage (no truth there).
+- Likely main path for hard rooms: **analysis-by-synthesis** — render the house_spec blockout in Unity from estimated cameras and optimise room dimensions to align structural lines (corners, door frames, trim) across many Marina frames. Immune to wallpaper repetition; verified on the synthetic harness the same way.
