@@ -246,3 +246,16 @@ Also:
 - Attic stair located (Oct 13). The hall walk's first view (frames 135-165) looks down the corridor past the stair rail to a door at the end of the south leg. That door matches the film's attic-door shot (Part 2 attic segment f17: green walls, sconce, table with red candles, picture). Behind it, the overhead shows a black well 1.36 × 2.66 m open to below (`attic_stair` in the trace). No end wall is drawn because the overhead cuts at wall-top height. The poster also places the attic stair beside Buzz's room. Confirm by render-and-compare from the CG stair frames (attic ~304-320). This also explains the black notch in the outline, which is not an exterior recess.
 - Area check redone with the attic stairwell inside the outline: see the gross line printed by overhead_plan.py. 78 and 80 in now bracket Marina's 1,900 ft² and both lie within the outline-reading error (a few %). 84 in stays ruled out. Door height is 78-80 in; keep 80 as nominal.
 - Hall end and ceilings (Oct 13). The gated hall clip (hall-s1, 6/6; attic door 0.3714 units, 0.9% spread → 5.47 m/unit) shows the corridor ending at a cross wall: Buzz's doorway, then the arch into a 2.03 m attic leg (overhead: 1.97 m). Just before it, an end bay widens east by 1.18 m over 1.92 m, and the hall bath door (0.70 m) is in the bay's east wall. That replaces the overhead's misread closet boxes in that corner; the linen closet is now the shallow space behind the bay's north wall (prop door). Ceilings were measured as wall height relative to door height on the same wall: parents 2.42 m and Kevin 2.30-2.33 m to the crown's lower edge; attic leg 2.29 m to the ceiling. Nominal 2.40 m (parents 2.50) replaces the assumed 2.74 m. The height-histogram method (2.22-2.46) is biased by camera tilt; don't use it.
+
+## Matched-camera render-and-compare, first run (Oct 13)
+`tools/house/match_cameras.py poses hall-s1 ...` maps the clip's VGGT camera poses into Unity: clip plan frame → registration (translation fitted on the arch and attic door) → spec → Unity, with world z = −spec z. `SpecGreybox.RenderMatched` renders the grey-box from those poses. `match_cameras.py compare` measures the chamfer distance from each grey-box edge pixel to the nearest strong edge in Marina's frame, at 960×540.
+- Looking down the hall (f135/148/160): median 6.0 / 7.3 / 11.4 px. The attic door, arch, hall walls and rail land on Marina's edges, roughly 2–4 cm at those depths.
+- Hall end (f178/192/205): median 22 / 17 / 18 px. Causes:
+  - the camera is about 0.5 m from the doorways, so cm-level errors become tens of px
+  - Marina's door casings aren't modelled in the grey-box
+  - the bath and Buzz doorways look 5–10 cm off
+  - Buzz's room corner matches
+- Marina's camera eye height is 1.0–1.2 m (Kevin height).
+- Lessons:
+  - Grey-box renders need an absolute edge-strength threshold; a percentile cut picks up the ceiling light falloff.
+  - The registration is translation-only (0.1 m residual), so it limits accuracy. Next: fit the registration from several features (rotation + translation + scale) and add door casings, then turn per-view thresholds into verify-plan checkpoints.

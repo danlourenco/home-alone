@@ -1,7 +1,27 @@
 {
  "note": "Independent measurements the plan must agree with. Points are in PLAN metres (same frame as measurements/overhead/upstairs-trace.plan.json). Every fixed tracing mistake adds the checkpoint that would have caught it (see .claude/skills/verify-plan/SKILL.md).",
  "registrations": {
-  "hall-s1": "hall clip frames 135-205 (sfm-work/rooms/hall-s1, gate 6/6, 5.47 m/unit from the attic door). Plan = clip + (6.31, 1.605): translation fitted on the arch and attic-door centres (residual 0.1 m along the hall)"
+  "hall-s1": {
+   "note": "hall clip frames 135-205 (sfm-work/rooms/hall-s1, gate 6/6, 5.47 m/unit from the attic door). Plan = clip + (6.31, 1.605): translation fitted on the arch and attic-door centres (residual 0.1 m along the hall)",
+   "m_per_unit": 5.47,
+   "offset": [
+    6.31,
+    1.605
+   ],
+   "floor_pixels": [
+    [
+     11,
+     275,
+     232
+    ],
+    [
+     21,
+     380,
+     261
+    ]
+   ],
+   "floor_note": "floor at the foot of the attic door (door_scale.py snapped rows), clip frame index, x, y"
+  }
  },
  "checks": [
   {

@@ -263,6 +263,27 @@ public static class SpecGreybox
         RenderTexture.active = null; Object.DestroyImmediate(go); rt.Release();
     }
 
+    // Renders the grey-box from Marina's solved cameras (spec/captures/matched/poses.json, written by
+    // tools/house/match_cameras.py poses ...), for the edge comparison in match_cameras.py compare.
+    // Run: Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.RenderMatched -quit -logFile -
+    public static void RenderMatched()
+    {
+        string dir = Path.Combine(CaptureDir, "matched");
+        var j = JObject.Parse(File.ReadAllText(Path.Combine(dir, "poses.json")));
+        EditorSceneManager.OpenScene("Assets/Scenes/Greybox_Upstairs.unity");
+        var go = new GameObject("MatchCam"); var cam = go.AddComponent<Camera>(); go.AddComponent<HDAdditionalCameraData>(); cam.nearClipPlane = 0.05f;
+        var rt = new RenderTexture(1920, 1080, 24); cam.targetTexture = rt;
+        foreach (var p in j["poses"])
+        {
+            Vector3 V(JToken t) => new Vector3((float)t[0], (float)t[1], (float)t[2]);
+            go.transform.SetPositionAndRotation(V(p["pos"]), Quaternion.LookRotation(V(p["forward"]), V(p["up"])));
+            cam.fieldOfView = (float)p["vfov"];
+            Shot(cam, rt, Path.Combine("matched", (string)p["name"]));
+        }
+        RenderTexture.active = null; Object.DestroyImmediate(go); rt.Release();
+        Debug.Log("SpecGreybox: matched renders written to " + dir);
+    }
+
     static void Shot(Camera cam, RenderTexture rt, string name)
     {
         cam.Render(); RenderTexture.active = rt;

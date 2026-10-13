@@ -45,6 +45,16 @@ Every tracing mistake you fix adds the checkpoint that would have caught it, in 
 
 Unproven checkpoints don't count. The Oct 13 proof: the pre-fix trace fails 7 checks, and the fixed trace passes 12.
 
+## After the grey-box builds: matched-camera compare
+
+```bash
+uv run --with numpy --with scipy --with pillow python tools/house/match_cameras.py poses hall-s1 0,11,21,36,48,59
+Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.RenderMatched -quit -logFile -
+uv run --with numpy --with scipy --with pillow python tools/house/match_cameras.py compare hall-s1
+```
+
+The run writes `spec/captures/matched/compare.png`: grey-box edges in magenta over Marina's frames, scored as the median and 90th-percentile px to the nearest real edge, at 960×540. The Oct 13 baseline is 6–11 px looking down the hall and 17–22 px at the hall end, where the camera is about 0.5 m from the doorways. A view that gets worse than its baseline means the plan moved the wrong way. Look at the overlay before believing the number: light glare and missing door casings make edges that aren't geometry.
+
 ## Where checkpoints come from
 
 - **Gated SfM clips** (`sfm-work/rooms/<name>/`): door jambs, wall lines, open floor.
