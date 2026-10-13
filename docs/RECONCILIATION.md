@@ -56,8 +56,8 @@ Exact capsule sizes and eye heights are tuned by playtesting the grey-box house.
 | Measure | Upstairs done (Oct 13). SfM measured Buzz, Kevin and the parents' suite. Marina's angled overhead, calibrated on those rooms (9 cm held-out), gives the whole floor. Total 1,928 ft² vs Marina's 1,900 supports 80 in doors. Remaining: ground floor, ceiling heights, furniture clearances |
 | Envelope | Data exists, not yet in the pipeline |
 | Reconcile | v0 for upstairs (Oct 13): `tools/house/reconcile.py` → `spec/house_spec.json` + `spec/upstairs-changes.md`. Squares, aligns, measures walls, places doors, checks adult rules. Open: hall bath access, linen closet walls, assumed ceiling |
-| Generator | `SurveyBuilder.cs` exists; to be rebuilt around the spec |
-| Verify | Walk routes exist; image comparison not built |
+| Generator | `Assets/Editor/SpecGreybox.cs` builds `Greybox_Upstairs.unity` from `spec/house_spec.json` only (Oct 13). Floors, walls, door cuts, rails, prop doors; world z = −spec z (Unity is left-handed) |
+| Verify | Adult-capsule test through every opening: 11/11 pass (`spec/captures/walk-test.txt`). Image comparison: first hand-placed side-by-side (`spec/captures/compare-hall-start.png`); camera matching to Marina's frames not built yet |
 | Art | Assets exist; waits for geometry |
 
 Open questions answered at the reconcile step: how the floors stack; how much the envelope forces interior rooms to change; whether doors are 80 in (checked against Marina's 1,900 ft² upstairs total).
