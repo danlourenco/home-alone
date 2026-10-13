@@ -203,3 +203,6 @@ Scale each room from its own door at 80 in (78–84 in carried as the error bar)
 - Hall (one-pass VGGT `real-vggt-hall`, frames 135–222 every 2nd): attic door 0.3714 / 0.3730 / 0.3738 units (frames 7, 10, 13; overlay `sfm-work/hall-door-measure.jpg`) → 0.373, spread 0.7% → 5.45 m/unit at 80 in.
 Per-room recipe: (1) COLMAP + VGGT, accept agreed windows; (2) room_dims shape; (3) door_scale at 80 in.
 Next: independent check of the 80 in assumption against Marina's stated areas — attic (476 ft², single room, orthographic overhead at Part 2 14:00) is the cleanest; kitchen 477 ft² has a zone-boundary definition problem.
+
+### Attic area check — not possible as designed (Oct 12)
+Part 2 775–935 s extracted (`sfm-work/attic`): film inserts + overhead plan, CG walk starts at frame ~304 mid-way up the attic stair. No door is ever visible in the attic footage, so door scale can't be applied; scaling from stair risers would test a riser assumption, not the door. Decision: carry 78–84 in (±4%) as the scale error bar; run the decisive independent check against Marina's 1,900 ft² upstairs total once the upstairs rooms are measured and assembled. Kitchen 477 ft² remains a secondary check (zone boundary ambiguous — compute for each plausible boundary).
