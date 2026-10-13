@@ -57,11 +57,12 @@ Key files:
 ## Open items
 
 1. **The ground floor** (next). The stair's foot and foyer are only a floor patch so far.
-2. The attic leg looks about 10 cm wider in hall-s1 than in the overhead (leave-one-out); unresolved.
-3. Buzz's room, the girls' rooms and the hall bath have only consistency or overhead evidence. Buzz's own clip calibrated the overhead, and the girls' rooms have no interior video.
-4. Kevin's crawl test and hideable furniture (bed clearances) are not started.
-5. The ground floor is not started. It uses the same method, and Marina Part 1 is the main-floor tour.
-6. The attic stair is located (behind the hall-end door, matching the film shot) but has no steps modelled.
+2. **Hall feels narrow in play (user, Oct 13).** Built widths match the measurements: 1.59 m at the stair top vs 1.58 measured, 1.25 m at the far end vs 1.22 measured. Before changing anything, check against a film shot of the hall: matched camera, then overlay. Possible causes: the play FOV/eye height, no trim or furniture, or Marina's model being narrower than the set. Scale work is deferred by the user.
+3. The attic leg looks about 10 cm wider in hall-s1 than in the overhead (leave-one-out); unresolved.
+4. Buzz's room, the girls' rooms and the hall bath have only consistency or overhead evidence. Buzz's own clip calibrated the overhead, and the girls' rooms have no interior video.
+5. Kevin's crawl test and hideable furniture (bed clearances) are not started.
+6. The ground floor is not started. It uses the same method, and Marina Part 1 is the main-floor tour.
+7. The attic stair is located (behind the hall-end door, matching the film shot) but has no steps modelled.
 
 ## Next: the main staircase. What we know and a plan
 
