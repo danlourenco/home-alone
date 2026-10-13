@@ -5,15 +5,15 @@
    "a": "den",
    "b": "living_room",
    "kind": "arch",
-   "source": "den clip (gate 5/6): 1.62 m gap in the living-side wall at door height (0.35-0.65 of floor-ceiling), 12-35% of the den's depth from the bookshelf wall; mapped onto the traced shared wall",
+   "source": "den clip (gate 5/6): 1.62 m gap in the living-side wall at door height, 12-35% of the den's depth from the FRONT (window) wall; frames 34-47 show it beside the front window. (First placed at the rear end by mistake, Oct 13; caught by the den registration.)",
    "px": [
     [
-     519,
-     513
+     500,
+     745
     ],
     [
-     511,
-     614
+     491,
+     846
     ]
    ]
   },

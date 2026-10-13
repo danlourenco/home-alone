@@ -115,6 +115,8 @@ public static class SpecGreybox
         report += "UPSTAIRS\n" + WalkTest(spaces, doors);
         if (gj != null) { FloorY = (float)gj["floor_y_m"]; report += "GROUND\n" + WalkTest(gspaces, gdoors); FloorY = 0f; }
         report += StairWalk(stairPath);
+        report += "UPSTAIRS " + RoomWalk(spaces, doors);
+        if (gj != null) { FloorY = (float)gj["floor_y_m"]; report += "GROUND " + RoomWalk(gspaces, gdoors); FloorY = 0f; }
         player.SetActive(true);
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, $"walk-test{Tag}.txt"), report);
@@ -337,6 +339,72 @@ public static class SpecGreybox
         }
         lines.Insert(0, $"Stair walk test (both bodies, up and down): {lines.Count} legs, {bad} blocked");
         return string.Join("\n", lines) + "\n";
+    }
+
+    // Both bodies walk from 0.5 m inside every doorway of a room to the middle of its widest floor cell and back,
+    // with a real CharacterController: every room's interior is reachable, not just its doorway (closets excluded).
+    static string RoomWalk(List<Space> spaces, List<Door> doors)
+    {
+        var lines = new List<string>(); int bad = 0, n = 0;
+        foreach (var (name, r, h) in new[] { ("bandit", 0.275f, 1.85f), ("kevin", 0.20f, 1.20f) })
+        {
+            var go = new GameObject("RoomWalker_" + name); var cc = go.AddComponent<CharacterController>();
+            cc.radius = r; cc.height = h; cc.center = new Vector3(0, h / 2, 0); cc.stepOffset = 0.3f; cc.skinWidth = 0.02f;
+            foreach (var s in spaces.Where(s => s.kind == "room" || s.kind == "hall"))
+            {
+                var c = Cells(s.pts).OrderByDescending(q => Mathf.Min(q.Item2 - q.Item1, q.Item4 - q.Item3)).First();
+                var mid = new Vector3((c.Item1 + c.Item2) / 2, FloorY, (c.Item3 + c.Item4) / 2);
+                foreach (var d in doors.Where(d => (d.a == s.name || d.b == s.name) && (d.kind == "door" || d.kind == "arch" || d.kind == "open")))
+                {
+                    float m = (d.lo + d.hi) / 2;
+                    Vector3 W(float off) => d.alongX ? new Vector3(m, FloorY, d.coord + off) : new Vector3(d.coord + off, FloorY, m);
+                    var start = Inside(s.pts, new Vector2(W(0.5f).x, W(0.5f).z)) ? W(0.5f) : W(-0.5f);
+                    foreach (var (from, to) in new[] { (start, mid), (mid, start) })
+                    {
+                        n++;
+                        go.transform.position = from + Vector3.up * 0.05f; Physics.SyncTransforms(); float vy = 0;
+                        for (int t = 0; t < 1500; t++)
+                        {
+                            var p = go.transform.position; var flat = new Vector3(to.x - p.x, 0, to.z - p.z);
+                            if (flat.magnitude < 0.05f) break;
+                            vy = cc.isGrounded ? -1f : vy - 9.81f * 0.02f;
+                            cc.Move(Vector3.ClampMagnitude(flat, 0.03f) + Vector3.up * vy * 0.02f);
+                        }
+                        var e = go.transform.position; float dxz = new Vector2(e.x - to.x, e.z - to.z).magnitude;
+                        if (dxz > 0.2f || Mathf.Abs(e.y - to.y) > 0.15f) { bad++; lines.Add($"BLOCKED {name} {s.name} via {d.a}/{d.b}: ended {dxz:F2} m short"); }
+                    }
+                }
+            }
+            Object.DestroyImmediate(go);
+        }
+        lines.Insert(0, $"Room walk test (both bodies, every doorway to room centre and back): {n} legs, {bad} blocked");
+        return string.Join("\n", lines) + "\n";
+    }
+
+    // Lens/eye-height comparison (open item: "the hall feels narrow"): the opening hall view rendered from Marina's own
+    // solved camera (hall-s1 frame 135: eye ~1.03 m, vertical FOV ~40 deg), then from the same spot at our adult player's
+    // eye (1.65 m, FOV 60) and Kevin's (1.05 m, FOV 60). tools/house/lens_compare.py lays them beside Marina's frame.
+    // Run: Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.RenderLens -quit -logFile -
+    public static void RenderLens()
+    {
+        EditorSceneManager.OpenScene("Assets/Scenes/Greybox_Upstairs.unity");
+        var p = JObject.Parse(File.ReadAllText(Path.Combine(CaptureDir, "matched/hall-s1/poses.json")))["poses"][0];
+        Vector3 V(JToken t) => new Vector3((float)t[0], (float)t[1], (float)t[2]);
+        var pos = V(p["pos"]); var fwd = V(p["forward"]); var up = V(p["up"]);
+        var level = new Vector3(fwd.x, 0, fwd.z).normalized;
+        var go = new GameObject("LensCam"); var cam = go.AddComponent<Camera>(); go.AddComponent<HDAdditionalCameraData>(); cam.nearClipPlane = 0.05f;
+        var rt = new RenderTexture(1920, 1080, 24); cam.targetTexture = rt;
+        Directory.CreateDirectory(Path.Combine(CaptureDir, "lens"));
+        foreach (var (name, y, fov, look, upv) in new[] {
+            ("marina-camera", pos.y, (float)p["vfov"], fwd, up),
+            ("player-adult", 1.65f, 60f, level, Vector3.up),
+            ("player-kevin", 1.05f, 60f, level, Vector3.up) })
+        {
+            go.transform.SetPositionAndRotation(new Vector3(pos.x, y, pos.z), Quaternion.LookRotation(look, upv));
+            cam.fieldOfView = fov;
+            Shot(cam, rt, Path.Combine("lens", name));
+        }
+        RenderTexture.active = null; Object.DestroyImmediate(go); rt.Release();
     }
 
     static void Player(Space hall)

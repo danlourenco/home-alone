@@ -16,9 +16,12 @@ import numpy as np
 from scipy.optimize import least_squares
 
 ROOT = Path(__file__).resolve().parents[2]
-CHECKS = ROOT / "measurements/checkpoints/upstairs.json"
-TRACE = ROOT / "measurements/overhead/upstairs-trace.json"
-DOORS = ROOT / "measurements/overhead/upstairs-doors.json"
+_CLIP = next((a for a in sys.argv[1:] if not a.startswith("--")), None)
+FLOOR = next((f for f in ("upstairs", "ground") if _CLIP and (ROOT / f"measurements/checkpoints/{f}.json").exists()
+              and _CLIP in json.loads((ROOT / f"measurements/checkpoints/{f}.json").read_text()).get("registrations", {})), "upstairs")
+CHECKS = ROOT / f"measurements/checkpoints/{FLOOR}.json"
+TRACE = ROOT / f"measurements/overhead/{FLOOR}-trace.json"
+DOORS = ROOT / f"measurements/overhead/{FLOOR}-doors.json"
 
 
 def apply(params, P):

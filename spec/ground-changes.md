@@ -65,7 +65,7 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 
 | between | kind | position along wall (m) | width (m) | placed from |
 |---|---|---|---|---|
-| den / living_room | arch | -1.33-0.36 | 1.68 | read in the overhead |
+| den / living_room | arch | 2.42-3.93 | 1.51 | read in the overhead |
 | living_room / foyer | arch | 2.51-4.00 | 1.49 | read in the overhead |
 | foyer / dining_room | arch | 2.37-4.08 | 1.71 | read in the overhead |
 | foyer / vestibule | arch | 8.09-9.74 | 1.65 | read in the overhead |

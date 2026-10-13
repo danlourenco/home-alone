@@ -274,18 +274,18 @@
    "wall_coord": 15.436,
    "wall_thickness": 0.14,
    "span": [
-    -1.326,
-    0.357
+    2.421,
+    3.929
    ],
-   "width": 1.683,
+   "width": 1.508,
    "height": null,
    "opens": true,
    "placed_from": "read in the overhead",
-   "source": "den clip (gate 5/6): 1.62 m gap in the living-side wall at door height (0.35-0.65 of floor-ceiling), 12-35% of the den's depth from the bookshelf wall; mapped onto the traced shared wall",
+   "source": "den clip (gate 5/6): 1.62 m gap in the living-side wall at door height, 12-35% of the den's depth from the FRONT (window) wall; frames 34-47 show it beside the front window. (First placed at the rear end by mistake, Oct 13; caught by the den registration.)",
    "wall_coord_spec": 16.14,
    "span_spec": [
-    3.252,
-    4.935
+    6.999,
+    8.507
    ],
    "spec_axis": "z"
   },

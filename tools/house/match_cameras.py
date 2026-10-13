@@ -25,8 +25,11 @@ def clip_frame(clip):
     """The clip's plan frame (plan_extract.py output) + its registration onto the floor plan."""
     w = ROOT / "sfm-work/rooms" / clip
     p = json.loads((w / "plan-0.05.json").read_text())
-    reg = json.loads((ROOT / "measurements/checkpoints/upstairs.json").read_text())["registrations"][clip]
-    return w, p, reg
+    for floor in ("upstairs", "ground"):
+        regs = json.loads((ROOT / f"measurements/checkpoints/{floor}.json").read_text()).get("registrations", {})
+        if clip in regs:
+            return w, p, regs[clip] | {"floor": floor}
+    raise KeyError(clip)
 
 
 def poses(clip, idxs):
@@ -38,7 +41,9 @@ def poses(clip, idxs):
     spec = json.loads((ROOT / "spec/house_spec.json").read_text())
     o = np.array(spec["origin_plan_m"])
     d = np.load(w / "vggt/sparse/0/pixels.npz")
-    floor = np.median([d["world"][i, y, x] @ up for i, x, y in reg["floor_pixels"]])
+    floor = (np.median([d["world"][i, y, x] @ up for i, x, y in reg["floor_pixels"]]) if reg["floor_pixels"]
+             else p["floor"])   # no picked floor pixels: plan_extract's floor level
+    y0 = 0.0 if reg["floor"] == "upstairs" else json.loads((ROOT / f"spec/house_spec.{reg['floor']}.json").read_text())["floor_y_m"]
     cams = {int(l.split()[0]): float(l.split()[4]) for l in (w / "vggt/sparse/0/txt/cameras.txt").read_text().splitlines()
             if l.strip() and not l.startswith("#")}
     lines = image_lines(w / "vggt/sparse/0/txt")
@@ -69,7 +74,7 @@ def poses(clip, idxs):
         dC = np.linalg.norm((C - (-R0.T @ t0)) @ np.c_[a, b, up]) * S
         dA = np.degrees(np.arccos(np.clip((np.trace(R @ R0.T) - 1) / 2, -1, 1)))
         fwd, upv = R.T @ [0, 0, 1], -R.T @ [0, 1, 0]
-        pos = to_unity(k * (np.array([C @ a, C @ b]) @ Rp * S) @ M + tr, k * (C @ up - floor) * S)
+        pos = to_unity(k * (np.array([C @ a, C @ b]) @ Rp * S) @ M + tr, k * (C @ up - floor) * S + y0)
         dirs = []
         for D in (fwd, upv):
             v = (np.array([D @ a, D @ b]) @ Rp) @ M

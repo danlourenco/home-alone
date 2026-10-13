@@ -1,13 +1,140 @@
 {
  "note": "Ground-floor checkpoints (verify-plan skill; calibration by the overhead-floor skill). Plan frame = upstairs plan.",
  "checks": [
-  {"name": "stair runner width in the overhead", "type": "length_px", "overhead_px": [[822, 600], [892, 600]], "expect_m": 1.125, "tol_pct": 5,
-   "source": "clip B tread band 1.11-1.16 m (measurements/rooms/stairs.json); one height (tread tops), across the flight, so the front-to-back stretch does not touch it", "independent": true},
-  {"name": "den width vs the downloaded model", "type": "dimension", "space": "den", "axis": "x", "stage": "plan", "expect_m": 3.6, "tol_pct": 4,
-   "source": "HOME_ALONE_FINAL.glb den 3.6 m across at 0.774 m/unit (its doors); a separate model, never used to build", "independent": true},
-  {"name": "den/living doorway from the den clip", "type": "on_door", "door": ["den", "living_room"], "overhead_px": [515, 563], "tol": 0.3,
-   "source": "den clip: 1.62 m wall gap 12-35% of the den depth from the bookshelf wall (same evidence that placed the door)", "independent": false},
-  {"name": "foyer is open hall at the stair foot", "type": "inside", "space": "foyer", "overhead_px": [930, 780], "tol": 0.0,
-   "source": "clip A frames 29-40: the camera stands on open foyer floor in front of the stair", "independent": false}
- ]
+  {
+   "name": "stair runner width in the overhead",
+   "type": "length_px",
+   "overhead_px": [
+    [
+     822,
+     600
+    ],
+    [
+     892,
+     600
+    ]
+   ],
+   "expect_m": 1.125,
+   "tol_pct": 5,
+   "source": "clip B tread band 1.11-1.16 m (measurements/rooms/stairs.json); one height (tread tops), across the flight, so the front-to-back stretch does not touch it",
+   "independent": true
+  },
+  {
+   "name": "den width vs the downloaded model",
+   "type": "dimension",
+   "space": "den",
+   "axis": "x",
+   "stage": "plan",
+   "expect_m": 3.6,
+   "tol_pct": 4,
+   "source": "HOME_ALONE_FINAL.glb den 3.6 m across at 0.774 m/unit (its doors); a separate model, never used to build",
+   "independent": true
+  },
+  {
+   "name": "den/living doorway from the den clip",
+   "type": "on_door",
+   "door": [
+    "den",
+    "living_room"
+   ],
+   "overhead_px": [
+    496,
+    795
+   ],
+   "tol": 0.3,
+   "source": "den clip: 1.62 m wall gap 12-35% of the den depth from the bookshelf wall (same evidence that placed the door)",
+   "independent": false,
+   "caught": "Oct 13: doorway first placed at the rear end of the den (front/rear walls of the den clip swapped)"
+  },
+  {
+   "name": "foyer is open hall at the stair foot",
+   "type": "inside",
+   "space": "foyer",
+   "overhead_px": [
+    930,
+    780
+   ],
+   "tol": 0.0,
+   "source": "clip A frames 29-40: the camera stands on open foyer floor in front of the stair",
+   "independent": false
+  }
+ ],
+ "registrations": {
+  "den": {
+   "note": "den clip (sfm-work/rooms/den, gate 5/6), no door: scale fitted (m_per_unit 1 = clip units). Walls from upper-band density peaks: living side x 0.425, outer x 1.15, rear (bookshelves) y -1.055, front (window) y 0.324.",
+   "m_per_unit": 1.0,
+   "floor_pixels": [],
+   "similarity": {
+    "rotation_deg": -0.0,
+    "scale": 5.03177,
+    "translation": [
+     13.4275,
+     3.0751
+    ],
+    "anchor_residual_cm_max": 1.6
+   },
+   "anchors": [
+    {
+     "name": "den living-side wall",
+     "clip": [
+      [
+       0.425,
+       -1.0
+      ],
+      [
+       0.425,
+       0.3
+      ]
+     ],
+     "plan_axis": "x",
+     "plan": 15.55
+    },
+    {
+     "name": "den outer wall",
+     "clip": [
+      [
+       1.15,
+       -1.0
+      ],
+      [
+       1.15,
+       0.3
+      ]
+     ],
+     "plan_axis": "x",
+     "plan": 19.23
+    },
+    {
+     "name": "den rear wall (bookshelves)",
+     "clip": [
+      [
+       0.45,
+       -1.055
+      ],
+      [
+       1.1,
+       -1.055
+      ]
+     ],
+     "plan_axis": "y",
+     "plan": -2.225
+    },
+    {
+     "name": "den front wall (window)",
+     "clip": [
+      [
+       0.45,
+       0.324
+      ],
+      [
+       1.1,
+       0.324
+      ]
+     ],
+     "plan_axis": "y",
+     "plan": 4.697
+    }
+   ]
+  }
+ }
 }
