@@ -13,6 +13,7 @@ Branch `unity-sfm-reconstruction`, pushed to `origin`. Git LFS covers `*.glb *.b
   - Independent evidence backs this: the far-end hall passage measures 1.22 m, the overhead traced 1.07 m, and the thinned build gives 1.23 m.
 - **Closets don't need to open.** The linen closet has a prop door; the other shallow closets are sealed.
 - **Door height** is 80 in nominal, 78–80 in honest. The area check brackets Marina's 1,900 ft², and 84 in is ruled out.
+- **Marina's model is the authority for both floors and how they stack** (user, Oct 13). The downloaded whole-house model (`HOME_ALONE_FINAL.glb`, IntactHouseReference, 0.774 m/unit from its doors) is a sanity check only. A uniform house or player scale for feel is allowed later as a build-time knob.
 - **Never contact Marina.**
 - Commit and push work. The user likes plain-language summaries.
 
