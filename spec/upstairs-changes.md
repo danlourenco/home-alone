@@ -79,6 +79,26 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | kevin_jeff_room / parents_bedroom | 50 | 1.38 |  |
 | parents_bath / parents_bedroom | 41 | 2.07 |  |
 
+## 3b. Interior walls thinned to 14 cm (centrelines kept; rooms take the space)
+
+| space | before (m) | after (m) | area before → after (m²) | change |
+|---|---|---|---|---|
+| parents_bath | 3.56 x 2.67 | 3.56 x 2.80 | 8.6 → 8.9 | +3.2% |
+| parents_bedroom | 5.22 x 5.25 | 5.36 x 5.39 | 24.3 → 26.2 | +7.7% |
+| kevin_jeff_room | 3.60 x 4.50 | 3.88 x 4.60 | 16.2 → 17.8 | +10.2% |
+| girls_room_a | 2.22 x 5.11 | 2.22 x 5.24 | 9.7 → 9.9 | +2.1% |
+| hall_end | 1.99 x 1.00 | 2.24 x 1.23 | 2.0 → 2.8 | +38.0% |
+| hall_corridor | 3.33 x 1.34 | 3.52 x 1.47 | 4.5 → 5.2 | +15.6% |
+| hall_corridor_south | 1.81 x 1.34 | 1.98 x 1.55 | 2.4 → 3.1 | +26.5% |
+| closet_1 | 0.61 x 1.46 | 0.76 x 1.60 | 0.9 → 1.2 | +37.0% |
+| closet_2 | 0.92 x 0.74 | 1.04 x 0.90 | 0.7 → 0.9 | +37.3% |
+| linen_closet | 1.28 x 1.33 | 1.44 x 1.33 | 1.7 → 1.9 | +12.4% |
+| hall_bath | 3.33 x 3.16 | 3.52 x 3.25 | 10.0 → 10.8 | +8.6% |
+| buzz_room | 4.37 x 3.54 | 4.46 x 3.70 | 15.5 → 16.5 | +6.6% |
+| girls_room_b | 4.36 x 5.18 | 4.45 x 5.23 | 22.6 → 23.3 | +3.1% |
+| main_stair_opening | 2.78 x 5.57 | 2.87 x 5.63 | 15.5 → 16.1 | +4.2% |
+| attic_stair | 2.66 x 1.34 | 2.74 x 1.55 | 3.6 → 4.2 | +19.2% |
+
 ## 4. Doors and openings
 
 | between | kind | position along wall (m) | width (m) | placed from |
@@ -88,7 +108,6 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | kevin_jeff_room / hall_end | door | 6.05-6.82 | 0.77 | measured |
 | kevin_jeff_room / closet_1 | door | 3.50-4.33 | 0.83 | measured, slid -1 cm onto the shared wall |
 | girls_room_a / hall_end | door | 5.74-6.50 | 0.76 | topology (centred; position unverified) |
-| linen_closet / hall_corridor | door | 9.59-10.35 | 0.76 | topology (centred; position unverified) |
 | buzz_room / hall_corridor_south | door | 11.49-12.25 | 0.76 | topology (centred; position unverified) |
 | girls_room_b / hall_corridor_south | door | 11.49-12.25 | 0.76 | topology (centred; position unverified) |
 | attic_stair / hall_corridor_south | door | 1.57-2.33 | 0.76 | topology (centred; position unverified) |
@@ -105,19 +124,19 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | adult fits door kevin_jeff_room/hall_end | pass | 0.77 m wide x 2.03 m |
 | adult fits door kevin_jeff_room/closet_1 | pass | 0.83 m wide x 2.03 m |
 | adult fits door girls_room_a/hall_end | pass | 0.76 m wide x 2.03 m |
-| adult fits door linen_closet/hall_corridor | pass | 0.76 m wide x 2.03 m |
 | adult fits door buzz_room/hall_corridor_south | pass | 0.76 m wide x 2.03 m |
 | adult fits door girls_room_b/hall_corridor_south | pass | 0.76 m wide x 2.03 m |
 | adult fits door attic_stair/hall_corridor_south | pass | 0.76 m wide x 2.03 m |
-| adult fits hall hall_end | pass | narrowest 1.00 m |
-| adult fits hall hall_corridor | pass | narrowest 1.34 m |
-| adult fits hall hall_corridor_south | pass | narrowest 1.34 m |
+| adult fits hall hall_end | pass | narrowest 1.23 m |
+| adult fits hall hall_corridor | pass | narrowest 1.47 m |
+| adult fits hall hall_corridor_south | pass | narrowest 1.55 m |
 
 ## Flags (need a decision or more evidence)
 
 - wall hall_bath/linen_closet 0 cm: too thin
 - wall hall_corridor/linen_closet 0 cm: too thin
 - door hall_bath/hall_corridor: no shared wall found within 0.8 m
+- door linen_closet/hall_corridor: no shared wall found within 0.8 m
 - unresolved: closet_2: no access side known
 - unresolved: strip above girls_room_a (closet or shelf)
 - unresolved: left edge of main_stair_opening (hidden in the overhead)

@@ -29,6 +29,8 @@ FACE_MAX = 0.80       # m: facing edges farther apart than this are not one wall
 DOOR_W, DOOR_H = 0.762, 2.032     # 30 x 80 in
 ADULT = {"capsule_diameter": 0.55, "height": 1.85, "min_hall": 0.90}
 CEILING_ASSUMED = 2.74  # 9 ft; not yet measured
+WALL_T = 0.14         # m: interior wall thickness built (5.5 in). User decision Oct 13: thin Marina's thick walls,
+                      # keep each wall's centreline, rooms take the freed space. Exterior walls are untouched.
 
 
 def edges_of(poly):
@@ -116,9 +118,9 @@ def facing_pairs(polys, edges):
     names = list(edges)
     for ia, a in enumerate(names):
         for b in names[ia + 1:]:
-            for ea in edges[a]:
+            for ia_, ea in enumerate(edges[a]):
                 sa = outward_sign(polys[a], ea)
-                for eb in edges[b]:
+                for ib_, eb in enumerate(edges[b]):
                     if ea[0] != eb[0]:
                         continue
                     sb = outward_sign(polys[b], eb)
@@ -127,7 +129,7 @@ def facing_pairs(polys, edges):
                     gap = (eb[1] - ea[1]) * sa
                     lo, hi = max(ea[2], eb[2]), min(ea[3], eb[3])
                     if -0.05 < gap <= FACE_MAX and hi - lo > 0.3:
-                        out.append({"a": a, "b": b, "axis": ea[0], "coord_a": ea[1], "coord_b": eb[1], "gap": gap, "lo": lo, "hi": hi})
+                        out.append({"a": a, "b": b, "ia": ia_, "ib": ib_, "sa": sa, "axis": ea[0], "coord_a": ea[1], "coord_b": eb[1], "gap": gap, "lo": lo, "hi": hi})
     return out
 
 
@@ -192,6 +194,32 @@ def main():
             note = "thick: chase, closet or measurement error"; flags.append(f"wall {a}/{b} {p['gap'] * 100:.0f} cm: thick")
         log.append(f"| {a} / {b} | {p['gap'] * 100:.0f} | {p['hi'] - p['lo']:.2f} | {note} |")
 
+    # 3b. thin interior walls to WALL_T around their centrelines; each side grows outward by half the excess
+    before = {n: final[n].copy() for n in final}
+    move = {}
+    for p in pairs:
+        if p["gap"] <= WALL_T:
+            continue
+        d = (p["gap"] - WALL_T) / 2
+        for n, k, sgn in ((p["a"], p["ia"], p["sa"]), (p["b"], p["ib"], -p["sa"])):
+            if (n, k) not in move or d < abs(move[(n, k)]):  # an edge facing several neighbours takes the smallest move
+                move[(n, k)] = sgn * d
+    for (n, k), m in move.items():
+        edges[n][k][1] += m
+    final = {n: rebuild(e) for n, e in edges.items()}
+    log += ["", f"## 3b. Interior walls thinned to {WALL_T * 100:.0f} cm (centrelines kept; rooms take the space)", "",
+            "| space | before (m) | after (m) | area before → after (m²) | change |", "|---|---|---|---|---|"]
+    for n in sp:
+        b0, b1 = np.ptp(before[n], axis=0), np.ptp(final[n], axis=0)
+        a0, a1 = area(before[n]), area(final[n])
+        log.append(f"| {n} | {b0[0]:.2f} x {b0[1]:.2f} | {b1[0]:.2f} x {b1[1]:.2f} | {a0:.1f} → {a1:.1f} | {(a1 / a0 - 1):+.1%} |")
+    pairs = facing_pairs(final, edges)
+    best = {}
+    for p in pairs:
+        key = tuple(sorted((p["a"], p["b"])))
+        if key not in best or p["hi"] - p["lo"] > best[key]["hi"] - best[key]["lo"]:
+            best[key] = p
+
     # 4. doors
     doors, rules = [], []
     log += ["", "## 4. Doors and openings", "", "| between | kind | position along wall (m) | width (m) | placed from |", "|---|---|---|---|---|"]
@@ -248,6 +276,8 @@ def main():
         "scale": {"door_height_m": DOOR_H, "door_range_in": [78, 80], "note": "80 in nominal; area check brackets 78-80 in"},
         "ceiling_height_m": {"value": CEILING_ASSUMED, "assumed": True},
         "bodies": {"kevin": {"eye_height": 1.1, "crawl_height": 0.4}, "bandit": {"eye_height": 1.7, "crouch_height": 1.1, **ADULT}},
+        "walls": {"interior_thickness_m": WALL_T, "exterior": "unchanged from the calibrated overhead",
+                  "note": "user decision Oct 13: thin walls, rooms take the freed space (a few % larger than measured)"},
         "spaces": [{"name": n, "kind": sp[n]["kind"], "anchor": n in ANCHORS, "polygon_xz": to_spec(final[n]),
                     "area_m2": round(area(final[n]), 2)} for n in sp],
         "doors": [{**d, "wall_coord_spec": round(d["wall_coord"] - o[0 if d["wall_axis"] == "x" else 1], 3),
