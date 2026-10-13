@@ -1,0 +1,21 @@
+{
+ "suite": "upper_hall",
+ "status": "not measurable end-to-end; to be authored by the reconciler as the space between measured rooms",
+ "source": "Marina CG tour Part 2, hall walk frames 135-376 (4 fps, 9:00 + frame/4 s); room captions read from frames",
+ "door_order_along_walk": [
+  {"frames": "135-160", "what": "start at top of stairs, looking down the short leg to the attic door ('Buzz's Room' caption, f153)"},
+  {"frames": "159-195", "what": "Hall Bathroom (caption f171), doorway beside the attic door"},
+  {"frames": "183-219", "what": "uncaptioned bedroom (Michael Jordan cutout, green-blanket bed) next to the hall bath; matches the room beside the parents' suite in the overhead"},
+  {"frames": "225-255", "what": "Girl's Room (caption f231)"},
+  {"frames": "261-300", "what": "stair-landing gallery: railing and damask wallpaper wall; Linen Closet (caption f285)"},
+  {"frames": "315-333", "what": "Girl's Room caption(s) f321/f327 - one or two doors, unresolved"},
+  {"frames": "345-363", "what": "Kevin & Jeff's Room (caption f357)"},
+  {"frames": "369-376", "what": "Parents' Room (caption f375) at the far end"}
+ ],
+ "measured": [
+  {"what": "hall width at the stair top / attic-door leg", "value_m": 1.58, "range_m": [1.54, 1.66],
+   "evidence": "real-vggt-hall walls y=0.17 / -0.12 (0.29 units) x 5.45 m/unit (attic door, 80 in; 78-84 in range)"}
+ ],
+ "reliable_clips": ["135-205 (gate 6/6)", "320-376 (gate 5/5)"],
+ "failed_clips": ["195-268 and 258-330 (green walls + landing; gate 2/5, 2/6; stitch residual 8.9%, scale 59x)"]
+}
