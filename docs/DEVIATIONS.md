@@ -28,6 +28,7 @@ The house must **feel** authentic. A room that is a notably different shape or s
 | 19 | Doors placed from topology (centred on the shared wall, position not measured): linen_closet / hall_corridor (prop door), girls_room_b / hall_corridor_south | Up to half the wall length | No view of the door position; girls' room B is checked loosely by the overhead's open door leaf (17 cm, tol 40) | Low | A frame showing each doorway; then a measured span |
 | 20 | Landing and flight-2 slab depth 0.20 m (authored): headroom under the landing is 1.95 m (leak/headroom check reports 21 points) | Marina's landing top is 2.20 m above the foyer; slab depth not measured | Marina's walk 1068-1072 s passes under the landing, so it must be a slab | Low-medium (an adult walks under it) | Measure the landing underside in Marina's walk frames (door-scaled) |
 | 21 | Attic stairwell open above (no attic built) | — | Attic not in scope yet | Low | Build the attic |
+| 22 | What is behind the arched foyer door (rear right) is unknown: built as a closed prop door | — | Marina's walk shows it closed (1068-1071 s) | Low | A frame with the door open, or the film |
 | 17 | Parents' bath 0.63 m wall stub reads -9 cm | Pre-existing | Likely furniture against the wall | Low | Look at the frames |
 
 ## Settled (kept for the record)
