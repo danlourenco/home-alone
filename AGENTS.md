@@ -2,7 +2,8 @@
 
 Goal: a faithful, walkable Unity recreation of the McCallister house. Faithfulness is non-negotiable; do not propose "good enough" geometry.
 
-- **How the house gets built (start here):** [docs/RECONCILIATION.md](docs/RECONCILIATION.md). Experiment log: [tasks/sfm-plan.md](tasks/sfm-plan.md). HANDOFF.md below its first entry is history.
+- **Current state and next step (read first):** [docs/STATUS.md](docs/STATUS.md).
+- **How the house gets built:** [docs/RECONCILIATION.md](docs/RECONCILIATION.md). Experiment log: [tasks/sfm-plan.md](tasks/sfm-plan.md). HANDOFF.md below its first entry is history.
 - **Scale the players, not the house:** true-scale house; Kevin is a kid-sized body (can hide under beds), bandits are adults.
 - **Engine:** Unity only (`unity/HomeAlone`). The Godot files at repo root are retired; don't extend them.
 - **Method:** geometry comes from structure-from-motion on Marina Coates's tour videos (repo root `*.mp4`, 1080p copies), not hand-picked landmarks. Tooling in `tools/sfm/`; regenerable outputs in `sfm-work/` (gitignored). Python via `uv run --with numpy --with matplotlib python -I ...`; COLMAP is Homebrew 4.2.1, CPU only.

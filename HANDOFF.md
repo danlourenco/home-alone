@@ -1,3 +1,5 @@
+> **October 13, 2026 — CURRENT: read [docs/STATUS.md](docs/STATUS.md).** Upstairs measured, reconciled into `spec/house_spec.json`, built as a Unity grey-box (`SpecGreybox.cs`), and verified with independent evidence (`verify-plan` skill). Next: the main staircase (plan in STATUS.md). Everything below is history.
+
 > **October 12, 2026 — CURRENT PRIORITY: [SfM reconstruction plan](tasks/sfm-plan.md).** Supersedes everything below, including the Buzz landmark-calibration loop (do not resume it). Unity only; Godot retired. Spike passed: Buzz room + upper hall solved jointly from Marina Part 2 via COLMAP (`tools/sfm/`, outputs in gitignored `sfm-work/`). Entries below are history.
 
 > CURRENT Buzz candidate B: 3.90×4.80×2.40m, estimated. Main house untouched. Shelves stop 65cm from door wall; dresser/bed clearance67cm. Fourteen waypoint route passes Edit/Play; Unity left in Play mode. Same-scale plan: art/home_alone/references/buzz-poc/footprint-comparison.svg. Poster is topology corroboration, NOT measured scale.
