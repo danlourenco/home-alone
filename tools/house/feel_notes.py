@@ -50,7 +50,7 @@ def old_model_xy(pos):
 def main():
     FB.mkdir(parents=True, exist_ok=True); f = FB / "feel-notes.jsonl"
     notes = [json.loads(l) for l in f.read_text().splitlines() if l.strip()] if f.exists() else []
-    rows = ["| # | scene | where | shape/size | lighting issue | note | screenshot |", "|---|---|---|---|---|---|---|"]
+    rows = ["| # | scene | where | shape/size | lighting | note | screenshot |", "|---|---|---|---|---|---|---|"]
     old = []
     for i, n in enumerate(notes, 1):
         if n["scene"].startswith("Greybox"):
@@ -59,7 +59,7 @@ def main():
             xy = old_model_xy(n["pos"]); up = n["pos"][1] > 3.5    # old model: ground ~1.3, upper floor ~5.2 (native)
             old.append((i, xy, n["rating"], up))
             where = f"old model {'upper' if up else 'ground'} floor plan ({xy[0]:.1f}, {xy[1]:.1f}) m, see map"
-        light = "yes" if n.get("lighting_issue") else ("" if "lighting_issue" in n else "(not asked)")
+        light = n.get("lighting", "(not asked)")
         rows.append(f"| {i} | {n['scene']} | {where} | {n['rating']} | {light} | {n['note']} | [{n['shot']}]({n['shot']}) |")
     (FB / "feel-notes.md").write_text("# Feel notes (walk-and-annotate, key M in Unity)\n\n" + "\n".join(rows) + "\n")
     print("\n".join(rows))
@@ -70,7 +70,7 @@ def main():
         sys.path.insert(0, str(ROOT / "tools/survey"))
         from glb_section import section
         fig, axes = plt.subplots(1, 2, figsize=(24, 10))
-        col = {"feels right": "tab:green", "feels off": "tab:red", "shape/size right": "tab:green", "shape/size off": "tab:red", "not sure": "tab:orange"}
+        col = {"feels right": "tab:green", "feels off": "tab:red", "right": "tab:green", "off": "tab:red", "not sure": "tab:orange"}
         for ax, (title, h, upper) in zip(axes, (("ground floor", 1.75, False), ("upper floor", 5.7, True))):
             S = section(h)
             S = S[(np.abs(S[..., 0]) < 14).all(1) & (S[..., 1] > -4).all(1) & (S[..., 1] < 16).all(1)]
@@ -79,7 +79,7 @@ def main():
             for i, xy, r, up in old:
                 if up == upper:
                     ax.plot(*xy, "o", color=col.get(r, "k"), ms=12); ax.text(xy[0] + 0.25, xy[1] + 0.25, str(i), fontsize=11)
-            ax.set_aspect("equal"); ax.set_title(f"Old model {title}: feel notes (green right, red off, orange unsure)")
+            ax.set_aspect("equal"); ax.set_title(f"Old model {title}: SHAPE ratings (green right, red off, orange unsure)")
         fig.savefig(FB / "feel-notes-old-model.png", dpi=70)
     print(f"\n{len(notes)} notes -> {FB / 'feel-notes.md'}")
 

@@ -16,7 +16,7 @@ public class FeelNotes : MonoBehaviour
     }
 
     static string Dir => Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/feedback"));
-    bool open, lighting; string note = "", rating = "", shot = ""; int saved; string flash = ""; float flashUntil;
+    bool open; string note = "", rating = "", light = "", shot = ""; int saved; string flash = ""; float flashUntil;
     FpsController fc;
 
     void Start()
@@ -38,7 +38,7 @@ public class FeelNotes : MonoBehaviour
         var tex = ScreenCapture.CaptureScreenshotAsTexture();
         shot = $"shots/{System.DateTime.Now:yyyyMMdd-HHmmss}-{UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}.png";
         File.WriteAllBytes(Path.Combine(Dir, shot), tex.EncodeToPNG()); Destroy(tex);
-        open = true; note = ""; rating = ""; lighting = false;
+        open = true; note = ""; rating = ""; light = "";
         if (fc) fc.enabled = false;
         Cursor.lockState = CursorLockMode.None; Cursor.visible = true;
     }
@@ -57,9 +57,9 @@ public class FeelNotes : MonoBehaviour
         string Esc(string s) => s.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", " ");
         var line = $"{{\"time\":\"{System.DateTime.Now:s}\",\"scene\":\"{UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}\"," +
                    $"\"pos\":[{p.x:F3},{p.y:F3},{p.z:F3}],\"yaw\":{e.y:F1},\"pitch\":{(e.x > 180 ? e.x - 360 : e.x):F1}," +
-                   $"\"rating\":\"{rating}\",\"lighting_issue\":{(lighting ? "true" : "false")},\"note\":\"{Esc(note)}\",\"shot\":\"{shot}\"}}";
+                   $"\"rating\":\"{rating}\",\"lighting\":\"{light}\",\"note\":\"{Esc(note)}\",\"shot\":\"{shot}\"}}";
         File.AppendAllText(Path.Combine(Dir, "feel-notes.jsonl"), line + "\n");
-        saved++; flash = $"Saved note {saved} ({rating})"; flashUntil = Time.time + 2f;
+        saved++; flash = $"Saved note {saved} (shape {rating}, lighting {light})"; flashUntil = Time.time + 2f;
         Close();
     }
 
@@ -70,21 +70,24 @@ public class FeelNotes : MonoBehaviour
                   Time.time < flashUntil ? flash : $"M: mark how this spot feels   ({saved} notes so far)", hint);
         if (!open) return;
         var w = 600f; var r = new Rect((Screen.width - w) / 2, Screen.height / 2 - 130, w, 255);
-        GUI.Box(r, "Room SHAPE and SIZE: how do they feel compared with the film / Marina?");
+        GUI.Box(r, "How does this spot feel compared with the film / Marina?");
         GUILayout.BeginArea(new Rect(r.x + 16, r.y + 34, w - 32, 215));
-        GUILayout.BeginHorizontal();
-        foreach (var opt in new[] { "shape/size right", "shape/size off", "not sure" })
-            if (GUILayout.Toggle(rating == opt, opt, "Button", GUILayout.Height(34))) rating = opt;
+        GUILayout.BeginHorizontal(); GUILayout.Label("Shape / size", GUILayout.Width(90));
+        foreach (var opt in new[] { "right", "off", "not sure" })
+            if (GUILayout.Toggle(rating == opt, opt, "Button", GUILayout.Height(30))) rating = opt;
         GUILayout.EndHorizontal();
-        lighting = GUILayout.Toggle(lighting, "  also a lighting / look problem (separate from shape)");
+        GUILayout.BeginHorizontal(); GUILayout.Label("Lighting", GUILayout.Width(90));
+        foreach (var opt in new[] { "right", "off", "not sure" })
+            if (GUILayout.Toggle(light == opt, opt, "Button", GUILayout.Height(30))) light = opt;
+        GUILayout.EndHorizontal();
         GUILayout.Label("What feels right or off? (size, shape, a doorway, the route, lighting...)");
         GUI.SetNextControlName("note");
         note = GUILayout.TextArea(note, GUILayout.Height(60));
         GUI.FocusControl("note");
         GUILayout.BeginHorizontal();
-        GUI.enabled = rating != "";
+        GUI.enabled = rating != "" && light != "";
         if (GUILayout.Button("Save  (Enter)", GUILayout.Height(30)) ||
-            (rating != "" && Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return && !Event.current.shift)) Save();
+            (rating != "" && light != "" && Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return && !Event.current.shift)) Save();
         GUI.enabled = true;
         if (GUILayout.Button("Cancel  (Esc)", GUILayout.Height(30)) ||
             (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Escape)) Close();
