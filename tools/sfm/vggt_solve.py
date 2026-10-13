@@ -59,5 +59,10 @@ for shot in sorted(p for p in (ws / "images").iterdir() if p.is_dir() and p.name
         keep = conf > np.median(conf)
         idx = np.random.default_rng(0).choice(keep.sum(), min(200_000, keep.sum()), replace=False)
         np.save(txt.parent / "points.npy", wp[keep][idx])
+        # Full per-pixel maps + the preprocessed frames they index, for measuring features (doors) in 3D.
+        np.savez_compressed(txt.parent / "pixels.npz", names=np.array([p.name for p in part]),
+                            images=(imgs.permute(0, 2, 3, 1).cpu().numpy() * 255).astype(np.uint8),
+                            world=pred["world_points"][0].cpu().numpy().astype(np.float32),
+                            conf=pred["world_points_conf"][0].cpu().numpy().astype(np.float32))
         print(f"model {model_id}: {shot.name} frames {start}-{start + len(part) - 1}")
         model_id += 1

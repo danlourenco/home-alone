@@ -183,3 +183,17 @@ Next: fit Buzz walls from agreed-window points (COLMAP sparse + VGGT depth as cr
 - Agreement ~1.3%. Consistent with the spike's 0.77–0.80; contradicts the Sept 11 overhead survey (4.21×6.97 m = 0.60) → that survey's depth stretched ~30%, the likely root of the Buzz confusion and possibly of "floors don't stack".
 Lessons: per-chunk VGGT on a camera pan sees only part of a room — run a room in one pass; first-peak wall picking grabs furniture fronts — use outermost peak before a gap.
 Open: metric scale (door height / Marina's stated areas / stair rise); parameter-sensitivity spread; film-set check.
+
+## Buzz room metric scale from door height (Oct 12) — provisional
+`tools/sfm/door_scale.py` on the one-pass VGGT model (`real-vggt-buzzall`): door top/floor edges snapped to intensity edges in frames 38, 41, 44 (overlay `sfm-work/buzz-door-measure.jpg`, visually confirmed); 3D separation along up.
+- Door height 0.997 / 0.997 / 1.011 units → median 0.9974, spread 1.4%.
+- Buzz sides (room_dims VGGT 1.711 × 2.133 units) at assumed door height:
+  | Door | Buzz room |
+  |---|---|
+  | 78 in | 3.40 × 4.24 m |
+  | **80 in** | **3.49 × 4.35 m** |
+  | 84 in | 3.66 × 4.56 m |
+- Compare: Sept 18 walkable candidate 3.65 × 4.27 m (estimated); candidate B 3.90 × 4.80; overhead survey 4.21 × 6.97 (rejected).
+- FAILED: ceiling height from point-histogram peaks (0.86 m — picked furniture planes). Discarded; measure the ceiling–wall junction directly instead.
+- INCONCLUSIVE: door height/width shape check (2.05–2.32 vs 2.50 standard) — width edges caught casing vs leaf inconsistently.
+Door height is an assumption (source weight 1/5). Next anchors to cross-check scale: Marina's stated floor areas (needs the upstairs floor assembled), other doors in other rooms (consistency), stair rise/going, bed length.
