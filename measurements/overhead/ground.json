@@ -1,0 +1,20 @@
+{
+ "image": "sfm-work/ground/overhead_994.jpg",
+ "image_source": "Marina CG tour Part 1 (1080p copy), main-floor overhead at 16:34 (994 s), no arrows or labels",
+ "note": "wall-top edges in overhead pixels, read from 2x gridded crops (+-3-5 px). Calibrated by tools/sfm/overhead_rectify.py (wall vanishing points + one measured aspect + area anchors), not by SfM rooms.",
+ "origin_px": [297, 455],
+ "aspect": {"room": "den", "pixels": [[303, 462], [525, 461], [486, 898], [242, 900]], "ratio_w_over_h": 0.53,
+            "source": "sfm-work/rooms/den (gate 5/6): inner walls 0.73 x 1.38 units (plan-0.05.png; the 0.50 line is the window seat, not the wall); +-0.03"},
+ "scale": [
+  {"name": "main floor gross outline = 2,620 ft2 (Marina)", "kind": "area", "m2": 243.4, "use": true,
+   "pixels": [[297,455],[527,455],[527,408],[622,408],[622,368],[727,368],[727,408],[797,408],[797,320],[1027,320],[1027,240],[1205,240],[1205,50],[1497,50],[1560,455],[1645,918],[1390,918],[1390,980],[1335,980],[1335,1028],[520,1028],[520,980],[482,980],[485,922],[232,922]]},
+  {"name": "kitchen + breakfast = 477 ft2 (Marina, boundary ambiguous)", "kind": "area", "m2": 44.3, "use": false,
+   "pixels": [[1240,60],[1468,78],[1517,452],[1297,455],[1284,552],[1047,552],[1052,460],[1100,460],[1100,250],[1240,250]]}
+ ],
+ "checks": [
+  {"name": "den vs downloaded model (3.6 x 6.9 m, rough)", "kind": "dims", "w": 3.6, "h": 6.9, "pixels": [[303, 462], [525, 461], [486, 898], [242, 900]]},
+  {"name": "living vs downloaded model (3.9 x 10.3, rough)", "kind": "dims", "w": 3.9, "h": 10.3, "pixels": [[542,420],[797,418],[803,945],[497,945]]},
+  {"name": "dining vs downloaded model (4.0 x 7.4, rough)", "kind": "dims", "w": 4.0, "h": 7.4, "pixels": [[1057,585],[1335,583],[1372,950],[1065,950]]},
+  {"name": "foyer width vs downloaded model (~4.7)", "kind": "dims", "w": 4.7, "h": 9.0, "pixels": [[820,330],[1040,330],[1043,872],[818,872]]}
+ ]
+}
