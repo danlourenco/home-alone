@@ -3,6 +3,10 @@
  "level": "upstairs",
  "units": "metres",
  "frame": "x = across the overhead (right), z = down the overhead; origin = min corner of all spaces; y up. Front facade is the +x side (parents' room / Kevin / hall bath / Buzz row).",
+ "origin_plan_m": [
+  -0.704,
+  -4.578
+ ],
  "scale": {
   "door_height_m": 2.032,
   "door_range_in": [

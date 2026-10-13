@@ -1,0 +1,166 @@
+{
+ "note": "Independent measurements the plan must agree with. Points are in PLAN metres (same frame as measurements/overhead/upstairs-trace.plan.json). Every fixed tracing mistake adds the checkpoint that would have caught it (see .claude/skills/verify-plan/SKILL.md).",
+ "registrations": {
+  "hall-s1": "hall clip frames 135-205 (sfm-work/rooms/hall-s1, gate 6/6, 5.47 m/unit from the attic door). Plan = clip + (6.31, 1.605): translation fitted on the arch and attic-door centres (residual 0.1 m along the hall)"
+ },
+ "checks": [
+  {
+   "name": "hall bath doorway centre",
+   "type": "on_door",
+   "door": [
+    "hall_bath",
+    "hall_corridor"
+   ],
+   "plan": [
+    10.06,
+    3.8
+   ],
+   "tol": 0.3,
+   "source": "hall-s1 frames 185-199: jambs 3.4-4.1 along the hall, wall at 2.2",
+   "caught": "Oct 13: bath door traced behind closets, unreachable from the hall"
+  },
+  {
+   "name": "end bay is open hall",
+   "type": "inside",
+   "space": "hall_corridor",
+   "plan": [
+    9.81,
+    3.2
+   ],
+   "tol": 0.0,
+   "source": "hall-s1 frames 178-199: camera walks into the bay; nothing between corridor and bath door",
+   "caught": "Oct 13: bay traced as linen closet and closet_2"
+  },
+  {
+   "name": "Buzz doorway centre",
+   "type": "on_door",
+   "door": [
+    "buzz_room",
+    "hall_corridor"
+   ],
+   "plan": [
+    10.76,
+    3.37
+   ],
+   "tol": 0.3,
+   "source": "hall-s1 frames 148-192: doorway in the cross wall beside the arch",
+   "caught": "Oct 13: Buzz door assumed on the attic leg"
+  },
+  {
+   "name": "arch to attic leg",
+   "type": "on_door",
+   "door": [
+    "hall_corridor",
+    "hall_corridor_south"
+   ],
+   "plan": [
+    10.86,
+    1.93
+   ],
+   "tol": 0.3,
+   "source": "hall-s1 frame 148 arch piers"
+  },
+  {
+   "name": "attic door",
+   "type": "on_door",
+   "door": [
+    "attic_stair",
+    "hall_corridor_south"
+   ],
+   "plan": [
+    12.79,
+    1.96
+   ],
+   "tol": 0.35,
+   "source": "hall-s1 frames 148/160 door slab; film attic-door shot"
+  },
+  {
+   "name": "parents' hall door",
+   "type": "on_door",
+   "door": [
+    "parents_bedroom",
+    "hall_end"
+   ],
+   "plan": [
+    4.5,
+    1.46
+   ],
+   "tol": 0.3,
+   "source": "parents SfM frames 402/407"
+  },
+  {
+   "name": "parents' bath door",
+   "type": "on_door",
+   "door": [
+    "parents_bedroom",
+    "parents_bath"
+   ],
+   "plan": [
+    3.26,
+    -1.35
+   ],
+   "tol": 0.3,
+   "source": "parents SfM frame 413"
+  },
+  {
+   "name": "girls' room B door (open leaf in overhead)",
+   "type": "on_door",
+   "door": [
+    "girls_room_b",
+    "hall_corridor_south"
+   ],
+   "overhead_px": [
+    930,
+    776
+   ],
+   "tol": 0.4,
+   "source": "overhead f_00041 open door leaf; hall walk f222-261"
+  },
+  {
+   "name": "Marina's 7'6\" (girls' room A depth)",
+   "type": "dimension",
+   "space": "girls_room_a",
+   "axis": "x",
+   "stage": "plan",
+   "expect_m": 2.286,
+   "tol_pct": 6,
+   "source": "label on Marina's overhead. The bracket is drawn ~3 px past each inner wall edge (zoom check Oct 13), so it measures toward wall centres; inner depth reads ~5% less. Bracket ends themselves check at -0.6% in overhead_fit.py"
+  },
+  {
+   "name": "Kevin's room vs its own doors",
+   "type": "dimension",
+   "space": "kevin_jeff_room",
+   "axis": "both",
+   "stage": "plan",
+   "expect_m": [
+    3.6,
+    4.57
+   ],
+   "tol_pct": 4,
+   "source": "kevin SfM, 3 doors, 0.7% spread"
+  },
+  {
+   "name": "Buzz's room vs its own door",
+   "type": "dimension",
+   "space": "buzz_room",
+   "axis": "both",
+   "stage": "plan",
+   "expect_m": [
+    4.35,
+    3.49
+   ],
+   "tol_pct": 4,
+   "source": "buzz SfM, frames 38/41/44"
+  },
+  {
+   "name": "parents' bath width",
+   "type": "dimension",
+   "space": "parents_bath",
+   "axis": "y",
+   "stage": "plan",
+   "expect_m": 2.63,
+   "tol_pct": 5,
+   "source": "parents SfM"
+  }
+ ]
+}

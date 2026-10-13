@@ -278,6 +278,7 @@ def main():
         "version": 1, "level": "upstairs", "units": "metres",
         "frame": "x = across the overhead (right), z = down the overhead; origin = min corner of all spaces; y up. "
                  "Front facade is the +x side (parents' room / Kevin / hall bath / Buzz row).",
+        "origin_plan_m": [round(float(o[0]), 4), round(float(o[1]), 4)],
         "scale": {"door_height_m": DOOR_H, "door_range_in": [78, 80], "note": "80 in nominal; area check brackets 78-80 in"},
         "ceiling_height_m": {"default": CEILINGS["default"], "source": "measured on door walls in 3 spaces (Oct 13); per-space values on each space"},
         "bodies": {"kevin": {"eye_height": 1.1, "crawl_height": 0.4}, "bandit": {"eye_height": 1.7, "crouch_height": 1.1, **ADULT}},
