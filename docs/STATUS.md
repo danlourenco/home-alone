@@ -1,6 +1,6 @@
 # Current status — start here (October 13, 2026)
 
-The upstairs is measured, reconciled into a spec, built as a walkable Unity grey-box, and verified against video. That includes independent evidence. **Next: the main staircase.** Background reading: [RECONCILIATION.md](RECONCILIATION.md) for the architecture, [tasks/sfm-plan.md](../tasks/sfm-plan.md) for the full experiment log, and the `verify-plan` skill for every check.
+The upstairs is measured, reconciled into a spec, built as a walkable Unity grey-box, and verified against video. That includes independent evidence. **Next: the ground floor.** Background reading: [RECONCILIATION.md](RECONCILIATION.md) for the architecture, [tasks/sfm-plan.md](../tasks/sfm-plan.md) for the full experiment log, and the `verify-plan` skill for every check.
 
 Branch `unity-sfm-reconstruction`, pushed to `origin`. Git LFS covers `*.glb *.blend *.exr *.fbx *.psd *.tif *.tiff *.npz`.
 
@@ -56,15 +56,14 @@ Key files:
 
 ## Open items
 
-1. **The ground floor** (next). The stair's foot and foyer are only a floor patch so far.
+1. **The ground floor** (next). Same method; Marina Part 1 (the 1080p `copy.mp4`) is the main-floor tour. The stair's foot and foyer are only a floor patch so far.
 2. **Hall feels narrow in play (user, Oct 13).** Built widths match the measurements: 1.59 m at the stair top vs 1.58 measured, 1.25 m at the far end vs 1.22 measured. Before changing anything, check against a film shot of the hall: matched camera, then overlay. Possible causes: the play FOV/eye height, no trim or furniture, or Marina's model being narrower than the set. Scale work is deferred by the user.
 3. The attic leg looks about 10 cm wider in hall-s1 than in the overhead (leave-one-out); unresolved.
 4. Buzz's room, the girls' rooms and the hall bath have only consistency or overhead evidence. Buzz's own clip calibrated the overhead, and the girls' rooms have no interior video.
 5. Kevin's crawl test and hideable furniture (bed clearances) are not started.
-6. The ground floor is not started. It uses the same method, and Marina Part 1 is the main-floor tour.
-7. The attic stair is located (behind the hall-end door, matching the film shot) but has no steps modelled.
+6. The attic stair is located (behind the hall-end door, matching the film shot) but has no steps modelled.
 
-## Next: the main staircase. What we know and a plan
+## The main staircase (done): evidence, method and plan as run
 
 **Done (Oct 13, later): the main stair is measured, decided and built.** Record: `measurements/rooms/stairs.json`.
 - Measured (flight 1): 13 risers of 0.169 m, going 0.241 m (pitch 35.0 deg by vanishing points), tread band 1.12 m; landing at 2.20 m.
