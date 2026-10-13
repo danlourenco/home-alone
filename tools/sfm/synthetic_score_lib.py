@@ -56,3 +56,18 @@ def load_model(ws, model, with_names=False):
     if with_names:
         return np.array(est), np.array(true), shots, names
     return np.array(est), np.array(true), shots
+
+
+def load_centers(model):
+    """Frame name -> estimated camera centre, for real footage with no truth file."""
+    txt = Path(model) / "txt"
+    txt.mkdir(exist_ok=True)
+    if (Path(model) / "images.bin").exists():
+        subprocess.run(["colmap", "model_converter", "--input_path", model, "--output_path", txt, "--output_type", "TXT"],
+                       check=True, capture_output=True)
+    out = {}
+    for l in image_lines(txt):
+        f = l.split()
+        R = quat_to_R(*map(float, f[1:5]))
+        out[Path(f[-1]).name] = -R.T @ np.array(list(map(float, f[5:8])))
+    return out

@@ -167,3 +167,11 @@ Insight: methods are usually right LOCALLY; the day's failures were GLOBAL (alon
 2. Global assembly by constraints, not SfM chaining: doorways/shared walls between accepted pieces, house envelope, stair geometry; analysis-by-synthesis (align corners/door frames/trim of the house_spec blockout to Marina frames) for placement and for rooms with no agreement.
 3. Rooms with no agreeing pair are flagged, never silently trusted.
 Next: grow synthetic evidence for the gate (more routes/rooms, independent pairs), then first real run: Buzz room + hall with COLMAP and VGGT, gated.
+
+## First gated run on real footage — Buzz room + upper hall (Oct 12)
+Part 2 9:00–10:40 at 4 fps; shot_buzz frames 1–89, shot_hall 135–400 (90–134 excluded: title fade/card/film, padded). COLMAP SIFT per-shot pinhole (`sfm-work/real-colmap`) vs VGGT-1B 40-frame chunks (`sfm-work/real-vggt`); `tools/sfm/agreement.py 2 ...` (truth-free mode).
+- 26/34 windows agree within 2%.
+- Buzz room: every window agrees (0.6–1.9%).
+- Hall frames ~206–265 disagree (3–22%) — the same flat-green-wall stretch where the Oct 12 spike split into pieces. Gate flagged the known weak spot unprompted.
+- Hall frames ~265–400 agree (0.2–0.9%).
+Next: fit Buzz walls from agreed-window points (COLMAP sparse + VGGT depth as cross-check), report Buzz width/depth with spread, and confront the 0.77–0.80 (spike) vs 0.60 (overhead survey) contradiction.

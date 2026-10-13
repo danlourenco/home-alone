@@ -1,6 +1,7 @@
 """Does agreement between two reconstruction methods predict that both are correct?
 Splits each shot into windows of consecutive frames; per window and method pair: Sim3-align one method to
 the other (disagreement) and each to truth (error), both as median residual / window path length.
+Real footage (no gt.json): reports agreement only.
 usage: PYTHONPATH=tools/sfm uv run --with numpy python tools/sfm/agreement.py <gate_pct> <name>=<ws> ...
 """
 import itertools
@@ -9,7 +10,7 @@ from pathlib import Path
 
 import numpy as np
 
-from synthetic_score_lib import load_model, umeyama
+from synthetic_score_lib import load_centers, load_model, umeyama
 
 gate = float(sys.argv[1]) / 100
 methods = dict(a.split("=", 1) for a in sys.argv[2:])
@@ -19,10 +20,15 @@ WINDOW = 10
 est, truth, shot_of = {}, {}, {}
 for m, ws in methods.items():
     for model in sorted(p for p in (Path(ws) / "sparse").iterdir() if p.is_dir()):
-        e, t, shots, names = load_model(ws, model, with_names=True)
-        for n, ec, tc, s in zip(names, e, t, shots):
-            est.setdefault(n, {})[m] = (model.name, ec)
-            truth[n], shot_of[n] = tc, s
+        if (Path(ws) / "gt.json").exists():
+            e, t, shots, names = load_model(ws, model, with_names=True)
+            for n, ec, tc, s in zip(names, e, t, shots):
+                est.setdefault(n, {})[m] = (model.name, ec)
+                truth[n], shot_of[n] = tc, s
+        else:  # real footage: no truth; shot = folder recorded in the model's image names
+            for n, ec in load_centers(model).items():
+                est.setdefault(n, {})[m] = (model.name, ec)
+                truth[n], shot_of[n] = None, 0
 
 
 def rel_residual(src, dst):
@@ -46,13 +52,20 @@ for shot in sorted(set(shot_of.values())):
             if len(common) < 6:
                 continue
             A = np.array([est[n][a][1] for n in common]); B = np.array([est[n][b][1] for n in common])
+            if truth[common[0]] is None:
+                rows.append((shot, w, a, b, rel_residual(B, A), np.nan, np.nan))
+                continue
             T = np.array([truth[n] for n in common])
             rows.append((shot, w, a, b, rel_residual(B, A), rel_residual(A, T), rel_residual(B, T)))
 
 print(f"{'shot':>4} {'win':>4} {'pair':<18} {'disagree':>8} {'errA':>7} {'errB':>7}")
 for shot, w, a, b, d, ea, eb in rows:
     print(f"{shot:>4} {w:>4} {a + '/' + b:<18} {d:8.1%} {ea:7.1%} {eb:7.1%}{'  <- AGREE' if d < gate else ''}")
-d = np.array([r[4] for r in rows]); worst = np.array([max(r[5], r[6]) for r in rows])
+d = np.array([r[4] for r in rows])
+if np.isnan(rows[0][5]):
+    print(f"\nwindows compared: {len(rows)}; agree (< {gate:.0%}): {(d < gate).sum()}  [no truth: agreement only]")
+    sys.exit()
+worst = np.array([max(r[5], r[6]) for r in rows])
 acc = d < gate
 print(f"\nwindows compared: {len(rows)}; gate: disagreement < {gate:.0%}")
 print(f"accepted {acc.sum()}: both methods truly within {gate:.0%} in {(worst[acc] < gate).sum()}, "
