@@ -132,8 +132,6 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 
 ## Flags (need a decision or more evidence)
 
-- door buzz_room/hall_corridor: measured span needs +4 cm to fit its wall
-- door buzz_room/hall_corridor: 0.76 m door on only 0.76 m of shared wall
 - unresolved: strip above girls_room_a (closet or shelf)
 - unresolved: left edge of main_stair_opening (hidden in the overhead)
-- ceiling height 2.74 m is ASSUMED (not measured)
+- ceiling 2.4 m in rooms not measured directly (Kevin 2.40 / parents 2.50 / attic leg 2.29 measured)

@@ -28,7 +28,9 @@ WALL_MIN, WALL_MAX = 0.08, 0.50   # m: plausible wall thickness between facing s
 FACE_MAX = 0.80       # m: facing edges farther apart than this are not one wall
 DOOR_W, DOOR_H = 0.762, 2.032     # 30 x 80 in
 ADULT = {"capsule_diameter": 0.55, "height": 1.85, "min_hall": 0.90}
-CEILING_ASSUMED = 2.74  # 9 ft; not yet measured
+# Ceiling heights, measured Oct 13 on door walls (wall height / door height x 80 in, door_scale.py):
+# parents 2.42 m and Kevin 2.30-2.33 m to the crown's lower edge (+~0.08 m crown), hall attic leg 2.29 m to the ceiling.
+CEILINGS = {"default": 2.40, "parents_bedroom": 2.50, "parents_bath": 2.50, "hall_corridor_south": 2.29}
 WALL_T = 0.14         # m: interior wall thickness built (5.5 in). User decision Oct 13: thin Marina's thick walls,
                       # keep each wall's centreline, rooms take the freed space. Exterior walls are untouched.
 
@@ -237,13 +239,13 @@ def main():
                 shift = max(p["lo"] - lo, 0) - max(hi - p["hi"], 0)
                 lo, hi = lo + shift, hi + shift
                 src = f"measured, slid {shift * 100:+.0f} cm onto the shared wall"
-                if abs(shift) > 0.15 or lo < p["lo"] - 1e-9 or hi > p["hi"] + 1e-9:
+                if abs(shift) > 0.15 or lo < p["lo"] - 0.005 or hi > p["hi"] + 0.005:
                     flags.append(f"door {d['a']}/{d['b']}: measured span needs {shift * 100:+.0f} cm to fit its wall")
         else:
             wd = d.get("width", DOOR_W)
             mid = (p["lo"] + p["hi"]) / 2; lo, hi = mid - wd / 2, mid + wd / 2; src = "topology (centred; position unverified)"
         w = hi - lo
-        if d["kind"] in ("door", "fake_door") and w > (p["hi"] - p["lo"]) + 1e-6:
+        if d["kind"] in ("door", "fake_door") and w > (p["hi"] - p["lo"]) + 0.005:
             flags.append(f"door {d['a']}/{d['b']}: {w:.2f} m door on only {p['hi'] - p['lo']:.2f} m of shared wall")
         doors.append({"between": [d["a"], d["b"]], "kind": d["kind"], "wall_axis": "x" if p["axis"] == 0 else "y",
                       "wall_coord": round(wall_c, 3), "wall_thickness": round(p["gap"], 3), "span": [round(lo, 3), round(hi, 3)],
@@ -266,7 +268,7 @@ def main():
 
     log += ["", "## Flags (need a decision or more evidence)", ""] + [f"- {f}" for f in flags] + \
            [f"- unresolved: {u}" for u in topo.get("unresolved", [])] + \
-           [f"- ceiling height {CEILING_ASSUMED} m is ASSUMED (not measured)"]
+           [f"- ceiling {CEILINGS['default']} m in rooms not measured directly (Kevin 2.40 / parents 2.50 / attic leg 2.29 measured)"]
 
     # spec: x = across (plan y), z = along (plan x), origin at the outline's min corner, y up
     allp = np.vstack(list(final.values()))
@@ -277,12 +279,12 @@ def main():
         "frame": "x = across the overhead (right), z = down the overhead; origin = min corner of all spaces; y up. "
                  "Front facade is the +x side (parents' room / Kevin / hall bath / Buzz row).",
         "scale": {"door_height_m": DOOR_H, "door_range_in": [78, 80], "note": "80 in nominal; area check brackets 78-80 in"},
-        "ceiling_height_m": {"value": CEILING_ASSUMED, "assumed": True},
+        "ceiling_height_m": {"default": CEILINGS["default"], "source": "measured on door walls in 3 spaces (Oct 13); per-space values on each space"},
         "bodies": {"kevin": {"eye_height": 1.1, "crawl_height": 0.4}, "bandit": {"eye_height": 1.7, "crouch_height": 1.1, **ADULT}},
         "walls": {"interior_thickness_m": WALL_T, "exterior": "unchanged from the calibrated overhead",
                   "note": "user decision Oct 13: thin walls, rooms take the freed space (a few % larger than measured)"},
         "spaces": [{"name": n, "kind": sp[n]["kind"], "anchor": n in ANCHORS, "polygon_xz": to_spec(final[n]),
-                    "area_m2": round(area(final[n]), 2)} for n in sp],
+                    "area_m2": round(area(final[n]), 2), "ceiling_m": CEILINGS.get(n, CEILINGS["default"])} for n in sp],
         "doors": [{**d, "wall_coord_spec": round(d["wall_coord"] - o[0 if d["wall_axis"] == "x" else 1], 3),
                    "span_spec": [round(v - o[1 if d["wall_axis"] == "x" else 0], 3) for v in d["span"]],
                    "spec_axis": "z" if d["wall_axis"] == "x" else "x"} for d in doors],
