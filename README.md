@@ -2,6 +2,23 @@
 
 A small Godot 4 experiment for asymmetric trap defense (Kevin) versus intrusion (Bandit).
 
+## Blender house blockout
+
+An editable [Blender model and reference notes](art/home_alone/README.md) are in
+`art/home_alone`. Open `scenes/House_Blockout_Preview.tscn` and press F6 for a
+standalone walkthrough of the ground floor, upstairs, and attic. The existing
+multiplayer startup scene remains the MVP level.
+
+## Marina house FPS walkthrough
+
+Open `scenes/Marina_House_Walkthrough.tscn` in Godot and choose **Run Current Scene (F6)**, or launch directly on this Mac:
+
+```sh
+/Applications/Godot.app/Contents/MacOS/Godot --path /Users/dlo/Dev/home-alone --scene res://scenes/Marina_House_Walkthrough.tscn
+```
+
+WASD moves, mouse looks, Shift sprints, Space jumps, C/Ctrl crouches, and R resets to the foyer. Esc releases the cursor; click to recapture. [Editable Blender source, controls and current limitations](art/home_alone/marina/README.md).
+
 ## Prerequisites
 - Godot 4.2 or later (project targets the 4.2 feature set).
 - A terminal for running multiple local instances (examples below use `godot4` on the PATH).

@@ -1,0 +1,26 @@
+{
+  "Unity main stair": {
+    "run_m": 4.2,
+    "rise_m": 3.0,
+    "pitch_degrees": 35.54,
+    "upper_level_m": 3.0
+  },
+  "Godot main stair / candidate to recover": {
+    "run_m": 4.8,
+    "rise_m": 2.68,
+    "pitch_degrees": 29.18,
+    "upper_level_m": 3.35
+  },
+  "Unity breakfast stair": {
+    "run_m": 2.6,
+    "rise_m": 2.2,
+    "pitch_degrees": 40.24,
+    "upper_level_m": 3.0
+  },
+  "Godot breakfast stair": {
+    "run_m": 3.55,
+    "rise_m": 3.35,
+    "pitch_degrees": 43.34,
+    "upper_level_m": 3.35
+  }
+}

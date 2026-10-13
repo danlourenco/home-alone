@@ -1,0 +1,5 @@
+var study=UnityEngine.GameObject.Find("Disposable proportion study");if(study)study.SetActive(false);
+var roots=UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+int restored=0;foreach(var root in roots)if(root.name.StartsWith("Study baseline ")){root.name=root.name.Substring(15);root.SetActive(true);restored++;}
+if(study){var meshes=new System.Collections.Generic.HashSet<UnityEngine.Mesh>();foreach(var mf in study.GetComponentsInChildren<UnityEngine.MeshFilter>(true))if(mf.sharedMesh&&mf.sharedMesh.name=="Disposable study mesh")meshes.Add(mf.sharedMesh);foreach(var mc in study.GetComponentsInChildren<UnityEngine.MeshCollider>(true))if(mc.sharedMesh&&mc.sharedMesh.name=="Disposable study mesh")meshes.Add(mc.sharedMesh);UnityEngine.Object.DestroyImmediate(study);foreach(var mesh in meshes)UnityEngine.Object.DestroyImmediate(mesh);}
+UnityEngine.Physics.SyncTransforms();return "Restored roots="+restored;

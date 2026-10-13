@@ -1,0 +1,15 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# SfM workspaces (regenerable)
+/sfm-work/
+
+# Source videos (large; re-download from YouTube)
+*.mp4
+# OS / editor backups
+.DS_Store
+*.blend1
+unity/HomeAlone/Assets/_Recovery/
+unity/HomeAlone/Assets/_Recovery.meta
+__pycache__/

@@ -1,0 +1,30 @@
+{
+  "observed": {
+    "556": [
+      1169,
+      1011
+    ],
+    "560": [
+      1652,
+      672
+    ]
+  },
+  "footpost_world": [
+    0.6859406849592611,
+    0.34186095685747386,
+    1.1254099748675237
+  ],
+  "post_to_post_length": 1.1254099748675215,
+  "lateral_misalignment": -0.03114347853549493,
+  "fit_rms_pixels": 15.352924421874176,
+  "withheld559_observed": [
+    1623,
+    694
+  ],
+  "withheld559_predicted": [
+    1663.2019229407952,
+    651.4508682234144
+  ],
+  "withheld559_error_pixels": 58.5373660415198,
+  "note": "Free 3D point triangulation; bed alignment NOT forced. All values conditional on fitted cameras. Finial centres approximate."
+}

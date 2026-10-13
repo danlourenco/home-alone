@@ -1,0 +1,690 @@
+[
+  {
+    "id": "M01",
+    "label": "Entry and main stair",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 200,
+    "timecode": "00:03:20.000",
+    "file": "frames/M01-03m20s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=200s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M02",
+    "label": "Dining room",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 220,
+    "timecode": "00:03:40.000",
+    "file": "frames/M02-03m40s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=220s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M03",
+    "label": "Dining side opening",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 230,
+    "timecode": "00:03:50.000",
+    "file": "frames/M03-03m50s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=230s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M04",
+    "label": "Main stair",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 340,
+    "timecode": "00:05:40.000",
+    "file": "frames/M04-05m40s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=340s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M05",
+    "label": "Landing",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 350,
+    "timecode": "00:05:50.000",
+    "file": "frames/M05-05m50s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=350s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M06",
+    "label": "Living fireplace",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 420,
+    "timecode": "00:07:00.000",
+    "file": "frames/M06-07m00s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=420s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M07",
+    "label": "Living piano end",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 440,
+    "timecode": "00:07:20.000",
+    "file": "frames/M07-07m20s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=440s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M08",
+    "label": "Den TV wall",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 570,
+    "timecode": "00:09:30.000",
+    "file": "frames/M08-09m30s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=570s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M09",
+    "label": "Den window and desk",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 590,
+    "timecode": "00:09:50.000",
+    "file": "frames/M09-09m50s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=590s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M10",
+    "label": "Kitchen / breakfast plan",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 790,
+    "timecode": "00:13:10.000",
+    "file": "frames/M10-13m10s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=790s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M11",
+    "label": "Window-seat diagram",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 870,
+    "timecode": "00:14:30.000",
+    "file": "frames/M11-14m30s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=870s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M12",
+    "label": "Back door and sink",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 880,
+    "timecode": "00:14:40.000",
+    "file": "frames/M12-14m40s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=880s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M13",
+    "label": "Window seats",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 890,
+    "timecode": "00:14:50.000",
+    "file": "frames/M13-14m50s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=890s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M14",
+    "label": "Kitchen reverse",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 900,
+    "timecode": "00:15:00.000",
+    "file": "frames/M14-15m00s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=900s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M15",
+    "label": "Breakfast and stair",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 910,
+    "timecode": "00:15:10.000",
+    "file": "frames/M15-15m10s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=910s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M16",
+    "label": "Aligned room openings",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 1000,
+    "timecode": "00:16:40.000",
+    "file": "frames/M16-16m40s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=1000s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M17",
+    "label": "Kitchen area annotation",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 803,
+    "timecode": "00:13:23.000",
+    "file": "frames/M17-13m23s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=803s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M18",
+    "label": "Breakfast hutch and foyer opening",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 925,
+    "timecode": "00:15:25.000",
+    "file": "frames/M18-15m25s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=925s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M19",
+    "label": "Breakfast toward kitchen",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 940,
+    "timecode": "00:15:40.000",
+    "file": "frames/M19-15m40s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=940s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M20",
+    "label": "Foyer rear arch and stair",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 1067,
+    "timecode": "00:17:47.000",
+    "file": "frames/M20-17m47s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=1067s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M21",
+    "label": "L-shaped island and window-seat wall",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 1085,
+    "timecode": "00:18:05.000",
+    "file": "frames/M21-18m05s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=1085s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M22",
+    "label": "Kitchen sink and rear door",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 1097,
+    "timecode": "00:18:17.000",
+    "file": "frames/M22-18m17s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=1097s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M23",
+    "label": "Breakfast dining connection and stair",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 1114,
+    "timecode": "00:18:34.000",
+    "file": "frames/M23-18m34s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=1114s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M24",
+    "label": "Breakfast into dining",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 1125,
+    "timecode": "00:18:45.000",
+    "file": "frames/M24-18m45s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=1125s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M25",
+    "label": "Living room into den",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 1145,
+    "timecode": "00:19:05.000",
+    "file": "frames/M25-19m05s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=1145s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M26",
+    "label": "Den sofa and TV arrangement",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 560,
+    "timecode": "00:09:20.000",
+    "file": "frames/M26-09m20s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=560s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M27",
+    "label": "Den into living room",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 580,
+    "timecode": "00:09:40.000",
+    "file": "frames/M27-09m40s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=580s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M28",
+    "label": "Living room into foyer",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 1175,
+    "timecode": "00:19:35.000",
+    "file": "frames/M28-19m35s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=1175s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "M29",
+    "label": "Foyer into dining room",
+    "video_id": "5GByoLZIzlM",
+    "timestamp_seconds": 1182,
+    "timecode": "00:19:42.000",
+    "file": "frames/M29-19m42s.png",
+    "url": "https://www.youtube.com/watch?v=5GByoLZIzlM&t=1182s",
+    "native_pixels": [
+      640,
+      360
+    ],
+    "evidence_type": "Decoded local MP4 video frame",
+    "source_stream_index": 0,
+    "timing_note": "FFmpeg accurate seek to the requested timestamp, decoded video stream 0; no resizing or enhancement."
+  },
+  {
+    "id": "U01",
+    "label": "Upper-floor plan",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 5,
+    "approximate_seconds": 50,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=50s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U02",
+    "label": "Bedroom labels",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 7,
+    "approximate_seconds": 70,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=70s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U03",
+    "label": "Bedroom / attic labels",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 8,
+    "approximate_seconds": 80,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=80s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U04",
+    "label": "Parents bedroom",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 20,
+    "approximate_seconds": 200,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=200s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U05",
+    "label": "Parents vanity",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 21,
+    "approximate_seconds": 210,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=210s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U06",
+    "label": "Tub and shower",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 22,
+    "approximate_seconds": 220,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=220s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U07",
+    "label": "Kevin / Jeff room",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 36,
+    "approximate_seconds": 360,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=360s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U08",
+    "label": "Bedroom doors",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 39,
+    "approximate_seconds": 390,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=390s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U09",
+    "label": "Hall bathroom",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 46,
+    "approximate_seconds": 460,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=460s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U10",
+    "label": "Buzz room",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 54,
+    "approximate_seconds": 540,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=540s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U11",
+    "label": "Green upper hall",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 58,
+    "approximate_seconds": 580,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=580s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U12",
+    "label": "Hall to Kevin / Jeff",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 63,
+    "approximate_seconds": 630,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=630s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U13",
+    "label": "Attic plan",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 84,
+    "approximate_seconds": 840,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=840s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U14",
+    "label": "Attic roof structure",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 87,
+    "approximate_seconds": 870,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=870s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U15",
+    "label": "Attic stove and beds",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 89,
+    "approximate_seconds": 890,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=890s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  },
+  {
+    "id": "U16",
+    "label": "Basement-door diagram",
+    "video_id": "kU7aY1anpAI",
+    "storyboard_frame_index": 94,
+    "approximate_seconds": 940,
+    "url": "https://www.youtube.com/watch?v=kU7aY1anpAI&t=940s",
+    "native_pixels": [
+      320,
+      180
+    ],
+    "evidence_type": "YouTube storyboard thumbnail",
+    "timing_note": "10-second storyboard sampling; seek nearby for exact matching frame."
+  }
+]

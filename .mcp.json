@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "unity-editor-mcp": {
+      "type": "stdio",
+      "command": "/Users/dlo/.unity/bin/unity",
+      "args": [
+        "mcp",
+        "--project-path",
+        "/Users/dlo/Dev/home-alone/unity/HomeAlone"
+      ],
+      "env": {}
+    }
+  }
+}

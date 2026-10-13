@@ -1,0 +1,39 @@
+{
+  "door_height": 1.0,
+  "door_width": 0.40969149658640874,
+  "room_width": 1.796514727221148,
+  "room_depth": 2.3622047244094486,
+  "room_height": 1.18,
+  "door_left": 0.07242720736775617,
+  "bed_left": 0.7895113708625122,
+  "bed_width": 0.5402089422147326,
+  "bed_length": 0.98,
+  "note": "Joint bed-wall candidate. Head depth hits zero bound and is NOT recovered. Depth/height/bed length remain provisional. September 18: depth set to 4.80m / 2.032 as practical candidate B; not a recovered dimension.",
+  "camera": [
+    0.5127195263363256,
+    0.4518242577923651,
+    -1.20352319997091,
+    -0.1472940631604268,
+    0.14590398821317765,
+    0.011004450296361613
+  ],
+  "vertical_fov": 39.30011897607245,
+  "head_height": 0.615727372375888,
+  "head_z": -2.3134692589256995e-15,
+  "camera_position": [
+    0.4351108025497704,
+    0.4353429427982633,
+    -1.9468278109714177
+  ],
+  "camera_forward": [
+    0.03396745146660091,
+    0.006122186051897443,
+    0.9994041880434613
+  ],
+  "camera_up": [
+    0.0011410419739477044,
+    0.9999803483074393,
+    -0.006164496909415449
+  ],
+  "joint_fit_rms_pixels": 0.5808339740181598
+}

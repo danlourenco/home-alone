@@ -1,0 +1,59 @@
+{
+  "source_file": "Tour the Home Alone House_ Part 1, Main Floor [CG Tour].mp4",
+  "source_sha256": "909943d826b3fe5e04933949870be20cb6f0d4e0f523c75ac7bd2d53ba5eea2b",
+  "source_size_bytes": 61643941,
+  "video_id": "5GByoLZIzlM",
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 640,
+        "height": 360,
+        "avg_frame_rate": "25/1",
+        "duration": "1232.760000",
+        "disposition": {
+          "attached_pic": 0
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_type": "audio",
+        "avg_frame_rate": "0/0",
+        "duration": "1232.909932",
+        "disposition": {
+          "attached_pic": 0
+        }
+      },
+      {
+        "index": 2,
+        "codec_name": "bin_data",
+        "codec_type": "data",
+        "avg_frame_rate": "0/0",
+        "duration": "1233.000000",
+        "disposition": {
+          "attached_pic": 0
+        }
+      },
+      {
+        "index": 3,
+        "codec_name": "png",
+        "codec_type": "video",
+        "width": 1280,
+        "height": 720,
+        "avg_frame_rate": "0/0",
+        "duration": "1233.000000",
+        "disposition": {
+          "attached_pic": 1
+        }
+      }
+    ]
+  },
+  "extraction_stream": 0,
+  "selected_frame_count": 29,
+  "note": "1280x720 PNG stream is attached cover art; the motion video is 640x360 H.264. Originals preserve decoded native resolution."
+}

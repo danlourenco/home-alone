@@ -1,0 +1,585 @@
+{
+ "ground": {
+  "px_per_m": 79.308,
+  "origin_px": [
+   459,
+   1426
+  ],
+  "axes": "X east (+right in overhead), Y toward rear (+up in overhead); metres from front-left outer corner",
+  "rooms": {
+   "den": {
+    "x": [
+     0.09,
+     4.11
+    ],
+    "y": [
+     1.02,
+     8.54
+    ],
+    "w": 4.02,
+    "d": 7.52,
+    "area_m2": 30.2,
+    "area_ft2": 325
+   },
+   "living": {
+    "x": [
+     4.3,
+     8.97
+    ],
+    "y": [
+     0.37,
+     9.38
+    ],
+    "w": 4.67,
+    "d": 9.01,
+    "area_m2": 42.1,
+    "area_ft2": 453
+   },
+   "fireplace_recess": {
+    "x": [
+     5.94,
+     7.49
+    ],
+    "y": [
+     9.52,
+     10.18
+    ],
+    "w": 1.55,
+    "d": 0.66,
+    "area_m2": 1.0,
+    "area_ft2": 11
+   },
+   "foyer": {
+    "x": [
+     9.15,
+     13.28
+    ],
+    "y": [
+     0.2,
+     11.05
+    ],
+    "w": 4.13,
+    "d": 10.85,
+    "area_m2": 44.8,
+    "area_ft2": 482
+   },
+   "vestibule": {
+    "x": [
+     9.15,
+     13.28
+    ],
+    "y": [
+     0.2,
+     1.46
+    ],
+    "w": 4.13,
+    "d": 1.26,
+    "area_m2": 5.2,
+    "area_ft2": 56
+   },
+   "dining": {
+    "x": [
+     13.44,
+     18.47
+    ],
+    "y": [
+     0.42,
+     6.39
+    ],
+    "w": 5.03,
+    "d": 5.97,
+    "area_m2": 30.0,
+    "area_ft2": 323
+   },
+   "sunroom": {
+    "x": [
+     18.6,
+     22.56
+    ],
+    "y": [
+     1.15,
+     8.49
+    ],
+    "w": 3.96,
+    "d": 7.34,
+    "area_m2": 29.1,
+    "area_ft2": 313
+   },
+   "service_stair_bay": {
+    "x": [
+     13.44,
+     14.46
+    ],
+    "y": [
+     6.86,
+     12.68
+    ],
+    "w": 1.02,
+    "d": 5.82,
+    "area_m2": 5.9,
+    "area_ft2": 64
+   },
+   "breakfast": {
+    "x": [
+     14.56,
+     17.5
+    ],
+    "y": [
+     6.86,
+     12.68
+    ],
+    "w": 2.94,
+    "d": 5.82,
+    "area_m2": 17.1,
+    "area_ft2": 184
+   },
+   "breakfast_extension": {
+    "x": [
+     17.5,
+     18.6
+    ],
+    "y": [
+     6.86,
+     8.69
+    ],
+    "w": 1.1,
+    "d": 1.83,
+    "area_m2": 2.0,
+    "area_ft2": 22
+   },
+   "kitchen": {
+    "x": [
+     17.5,
+     22.58
+    ],
+    "y": [
+     8.69,
+     16.8
+    ],
+    "w": 5.08,
+    "d": 8.11,
+    "area_m2": 41.2,
+    "area_ft2": 443
+   },
+   "closet_off_breakfast": {
+    "x": [
+     18.04,
+     19.43
+    ],
+    "y": [
+     7.89,
+     8.49
+    ],
+    "w": 1.39,
+    "d": 0.6,
+    "area_m2": 0.8,
+    "area_ft2": 9
+   }
+  },
+  "openings": {
+   "den_living_double_door": {
+    "wall": "x=785..800",
+    "x_m": 4.11,
+    "y_m": [
+     1.84,
+     3.61
+    ],
+    "width_m": 1.77
+   },
+   "living_foyer_cased": {
+    "wall": "x=1170..1185",
+    "x_m": 8.97,
+    "y_m": [
+     1.71,
+     3.48
+    ],
+    "width_m": 1.77
+   },
+   "foyer_dining_french": {
+    "wall": "x=1512..1525",
+    "x_m": 13.28,
+    "y_m": [
+     1.71,
+     3.61
+    ],
+    "width_m": 1.89
+   },
+   "dining_sunroom_french": {
+    "wall": "x=1924..1934",
+    "x_m": 18.47,
+    "y_m": [
+     1.71,
+     3.98
+    ],
+    "width_m": 2.27
+   },
+   "foyer_breakfast_arch": {
+    "wall": "x=1512..1525",
+    "x_m": 13.28,
+    "y_m": [
+     7.51,
+     9.28
+    ],
+    "width_m": 1.77
+   },
+   "breakfast_corridor": {
+    "wall": "x=1607..1613",
+    "x_m": 14.48,
+    "y_m": [
+     6.87,
+     8.5
+    ],
+    "width_m": 1.63
+   },
+   "service_stair_landing_open": {
+    "wall": "x=1607..1613",
+    "x_m": 14.48,
+    "y_m": [
+     10.93,
+     11.83
+    ],
+    "width_m": 0.9
+   },
+   "kitchen_back_door": {
+    "wall": "y=82..94",
+    "y_m": 16.95,
+    "x_m": [
+     17.92,
+     18.67
+    ],
+    "width_m": 0.76
+   },
+   "kitchen_rear_window": {
+    "wall": "y=82..94",
+    "y_m": 16.95,
+    "x_m": [
+     19.93,
+     20.69
+    ],
+    "width_m": 0.76
+   },
+   "vestibule_inner_door": {
+    "wall": "y=1300..1309",
+    "y_m": 1.59,
+    "x_m": [
+     10.67,
+     11.87
+    ],
+    "width_m": 1.2
+   }
+  },
+  "features": {
+   "front_door_centre": [
+    11.23,
+    0.03
+   ],
+   "main_stair_foot": [
+    9.81,
+    3.73
+   ],
+   "main_stair_top_landing": [
+    9.81,
+    7.89
+   ],
+   "foyer_rear_arch_door": [
+    10.48,
+    11.05
+   ],
+   "foyer_to_breakfast_opening": [
+    13.28,
+    8.4
+   ],
+   "kitchen_back_door": [
+    18.3,
+    16.8
+   ],
+   "kitchen_rear_window_sink": [
+    20.31,
+    16.8
+   ],
+   "window_seat_1": [
+    22.58,
+    14.32
+   ],
+   "window_seat_2": [
+    22.58,
+    12.05
+   ],
+   "fridge": [
+    22.14,
+    16.47
+   ],
+   "island_long_leg_x": [
+    19.91,
+    20.62
+   ],
+   "island_y": [
+    11.71,
+    14.99
+   ],
+   "island_L_foot": [
+    18.93,
+    20.62
+   ],
+   "island_L_y": [
+    11.71,
+    12.22
+   ],
+   "service_stair_foot": [
+    13.95,
+    9.15
+   ],
+   "service_stair_landing": [
+    13.95,
+    12.31
+   ],
+   "living_fireplace": [
+    6.72,
+    9.52
+   ],
+   "dining_table": [
+    15.9,
+    3.48
+   ],
+   "breakfast_table": [
+    16.25,
+    9.53
+   ]
+  },
+  "interior_area_m2": 243.4,
+  "kitchen_share": 0.1693,
+  "envelope_m": {
+   "width": 22.76,
+   "depth": 16.96
+  },
+  "wall_thickness_m": 0.16
+ },
+ "upper": {
+  "px_per_m": 53.909,
+  "origin_px": [
+   742,
+   1098
+  ],
+  "axes": "X east, Y toward rear; metres from the upper block front-left outer corner (separate frame from ground)",
+  "rooms": {
+   "parents_bedroom": {
+    "x": [
+     3.77,
+     9.87
+    ],
+    "y": [
+     14.8,
+     18.9
+    ],
+    "w": 6.1,
+    "d": 4.1,
+    "area_m2": 25.0,
+    "area_ft2": 269
+   },
+   "parents_bedroom_L": {
+    "x": [
+     3.77,
+     7.87
+    ],
+    "y": [
+     12.89,
+     14.8
+    ],
+    "w": 4.1,
+    "d": 1.91,
+    "area_m2": 7.8,
+    "area_ft2": 84
+   },
+   "master_bath": {
+    "x": [
+     0.17,
+     2.6
+    ],
+    "y": [
+     13.78,
+     18.05
+    ],
+    "w": 2.43,
+    "d": 4.27,
+    "area_m2": 10.4,
+    "area_ft2": 112
+   },
+   "master_bath_L": {
+    "x": [
+     2.6,
+     3.49
+    ],
+    "y": [
+     13.78,
+     15.93
+    ],
+    "w": 0.89,
+    "d": 2.15,
+    "area_m2": 1.9,
+    "area_ft2": 21
+   },
+   "girls_room_rear": {
+    "x": [
+     0.24,
+     6.23
+    ],
+    "y": [
+     10.13,
+     12.69
+    ],
+    "w": 5.99,
+    "d": 2.56,
+    "area_m2": 15.3,
+    "area_ft2": 165
+   },
+   "girls_room_rear_notch": {
+    "x": [
+     0.24,
+     3.49
+    ],
+    "y": [
+     12.69,
+     13.54
+    ],
+    "w": 3.25,
+    "d": 0.85,
+    "area_m2": 2.8,
+    "area_ft2": 30
+   },
+   "linen_closet": {
+    "x": [
+     6.55,
+     7.87
+    ],
+    "y": [
+     10.13,
+     12.58
+    ],
+    "w": 1.32,
+    "d": 2.45,
+    "area_m2": 3.2,
+    "area_ft2": 35
+   },
+   "kevin_jeff_room": {
+    "x": [
+     8.11,
+     13.56
+    ],
+    "y": [
+     10.07,
+     14.34
+    ],
+    "w": 5.45,
+    "d": 4.27,
+    "area_m2": 23.3,
+    "area_ft2": 250
+   },
+   "hall_bathroom": {
+    "x": [
+     8.46,
+     13.5
+    ],
+    "y": [
+     7.49,
+     9.76
+    ],
+    "w": 5.04,
+    "d": 2.27,
+    "area_m2": 11.4,
+    "area_ft2": 123
+   },
+   "upper_hall": {
+    "x": [
+     6.55,
+     8.2
+    ],
+    "y": [
+     0.28,
+     9.76
+    ],
+    "w": 1.65,
+    "d": 9.48,
+    "area_m2": 15.6,
+    "area_ft2": 168
+   },
+   "main_stair_well": {
+    "x": [
+     6.55,
+     8.16
+    ],
+    "y": [
+     1.82,
+     4.97
+    ],
+    "w": 1.61,
+    "d": 3.15,
+    "area_m2": 5.1,
+    "area_ft2": 55
+   },
+   "girls_room_front": {
+    "x": [
+     0.24,
+     6.23
+    ],
+    "y": [
+     0.46,
+     5.53
+    ],
+    "w": 5.99,
+    "d": 5.07,
+    "area_m2": 30.4,
+    "area_ft2": 327
+   },
+   "buzz_room": {
+    "x": [
+     8.55,
+     12.76
+    ],
+    "y": [
+     0.28,
+     7.25
+    ],
+    "w": 4.21,
+    "d": 6.97,
+    "area_m2": 29.3,
+    "area_ft2": 316
+   }
+  },
+  "interior_area_m2": 176.5,
+  "facade_width_m": 13.02,
+  "depth_m": 19.22,
+  "wall_thickness_m": 0.32
+ },
+ "attic": {
+  "px_per_m": 112.133,
+  "source": "Part 2 14:00 orthographic top-down frame (1920x1080)",
+  "room": {
+   "w": 5.15,
+   "d": 8.58
+  },
+  "stair_well": {
+   "x": [
+    2.02,
+    3.14
+   ],
+   "y_from_rear": [
+    3.84,
+    6.38
+   ]
+  },
+  "chimney": {
+   "x": [
+    2.14,
+    2.94
+   ],
+   "depth_from_rear_wall": 0.82
+  }
+ },
+ "calibration": {
+  "main_floor_ft2": 2620,
+  "upstairs_ft2": 1900,
+  "attic_ft2": 476,
+  "kitchen_ft2": 477,
+  "source": "Marina Coates tour onscreen figures: Part 1 13:23 (kitchen), Part 2 11:00 (floor table)"
+ }
+}

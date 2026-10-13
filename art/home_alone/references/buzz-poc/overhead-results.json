@@ -1,0 +1,117 @@
+{
+  "source": "Marina Part 2 00:50 overhead50.jpg",
+  "method": "Wall-top quadrilateral mapped to unit square; aspect ratio remains unknown",
+  "wall_top_corners": [
+    [
+      1060.0,
+      711.0
+    ],
+    [
+      1306.0,
+      711.0
+    ],
+    [
+      1321.0,
+      1014.0
+    ],
+    [
+      1065.0,
+      1014.0
+    ]
+  ],
+  "landmarks": {
+    "bed_head_left": {
+      "pixel": [
+        1137,
+        725
+      ],
+      "normalized": [
+        0.31148397118294446,
+        0.047992715391413705
+      ]
+    },
+    "bed_head_right": {
+      "pixel": [
+        1209,
+        725
+      ],
+      "normalized": [
+        0.6036182008088047,
+        0.047992715391413705
+      ]
+    },
+    "bed_foot_left": {
+      "pixel": [
+        1134,
+        848
+      ],
+      "normalized": [
+        0.28635980397323024,
+        0.4620329873004163
+      ]
+    },
+    "bed_foot_right": {
+      "pixel": [
+        1219,
+        848
+      ],
+      "normalized": [
+        0.6256521051799544,
+        0.4620329873004163
+      ]
+    },
+    "dresser": {
+      "pixel": [
+        1268,
+        875
+      ],
+      "normalized": [
+        0.8165612118984482,
+        0.551130247578041
+      ]
+    },
+    "desk": {
+      "pixel": [
+        1166,
+        989
+      ],
+      "normalized": [
+        0.3974236270984755,
+        0.9204583667451307
+      ]
+    },
+    "window_near_head": {
+      "pixel": [
+        1284,
+        799
+      ],
+      "normalized": [
+        0.8941101593783971,
+        0.2987085311198917
+      ]
+    },
+    "window_near_desk": {
+      "pixel": [
+        1292,
+        947
+      ],
+      "normalized": [
+        0.8988010091289755,
+        0.7856641265052408
+      ]
+    },
+    "third_window": {
+      "pixel": [
+        1271,
+        1006
+      ],
+      "normalized": [
+        0.8060344827586206,
+        0.974602519099732
+      ]
+    }
+  },
+  "limitation": "Furniture and floor are below wall tops. These are apparent positions, not coplanar recovered coordinates.",
+  "corner_perturbation_max_normalized_change": 0.018422344261452284,
+  "apparent_bed_depth_fraction": 0.4140402719090026
+}

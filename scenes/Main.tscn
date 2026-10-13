@@ -1,10 +1,11 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://byo7t6gsrx4p7"]
 
-[ext_resource type="PackedScene" path="res://scenes/Level_House_MVP.tscn" id=1]
-[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id=2]
+[ext_resource type="PackedScene" path="res://scenes/Level_House_MVP.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="2"]
 
 [node name="Main" type="Node3D"]
 
 [node name="Level" parent="." instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49748552, 0.029721975, -0.29027963)
 
 [node name="HUD" parent="." instance=ExtResource("2")]

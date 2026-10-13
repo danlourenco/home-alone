@@ -1,0 +1,46 @@
+{
+  "source": "tour559.jpg; withheld from joint geometry fit",
+  "door_pixels": [
+    [
+      835.0,
+      83.0
+    ],
+    [
+      1123.0,
+      81.0
+    ],
+    [
+      1123.0,
+      821.0
+    ],
+    [
+      835.0,
+      818.0
+    ]
+  ],
+  "head_observed": [
+    [
+      1355,
+      367
+    ],
+    [
+      1770,
+      368
+    ]
+  ],
+  "head_predicted": [
+    [
+      1359.4537134981406,
+      365.70217131564823
+    ],
+    [
+      1776.784848768931,
+      363.2044860310384
+    ]
+  ],
+  "head_error_pixels": [
+    4.638957126062485,
+    8.308497279518688
+  ],
+  "note": "Only camera pose fitted from door; headposts withheld. Approximate manual landmarks."
+}

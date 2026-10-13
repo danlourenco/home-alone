@@ -1,0 +1,32 @@
+if(!UnityEditor.EditorApplication.isPlaying||UnityEngine.GameObject.Find("Opening edge study"))throw new System.Exception("Play only; no duplicate study");
+var root=new UnityEngine.GameObject("Opening edge study");
+System.Func<UnityEngine.Vector3,bool> inside=p=>p.y>=5.20f&&p.y<=6.29f&&p.z>=4.575f&&p.z<=7.49f&&p.x>=-.98f&&p.x<=2.75f;
+UnityEngine.Material rail=null,white=null;
+foreach(var name in new[]{"object204","object229"}){
+ var original=UnityEngine.GameObject.Find("IntactGLB").GetComponentsInChildren<UnityEngine.MeshFilter>().Single(m=>m.name==name).gameObject;
+ var clone=UnityEngine.Object.Instantiate(original,original.transform.position,original.transform.rotation,root.transform);clone.transform.localScale=original.transform.lossyScale;clone.name=name+" opening study";
+ var cache=new System.Collections.Generic.Dictionary<UnityEngine.Mesh,UnityEngine.Mesh>();
+ System.Func<UnityEngine.Mesh,UnityEngine.Mesh> cut=source=>{
+  if(cache.TryGetValue(source,out var prior))return prior;
+  var m=UnityEngine.Object.Instantiate(source);m.name="Opening study mesh";
+  var w=m.vertices.Select(v=>clone.transform.TransformPoint(v)).ToArray();
+  for(int sub=0;sub<m.subMeshCount;sub++){var ids=m.GetTriangles(sub);var keep=new System.Collections.Generic.List<int>();for(int i=0;i<ids.Length;i+=3)if(!(inside(w[ids[i]])&&inside(w[ids[i+1]])&&inside(w[ids[i+2]])))keep.AddRange(new[]{ids[i],ids[i+1],ids[i+2]});m.SetTriangles(keep,sub);}m.RecalculateBounds();cache.Add(source,m);return m;};
+ var mf=clone.GetComponent<UnityEngine.MeshFilter>();mf.sharedMesh=cut(mf.sharedMesh);
+ foreach(var mc in clone.GetComponents<UnityEngine.MeshCollider>())if(mc.sharedMesh)mc.sharedMesh=cut(mc.sharedMesh);
+ rail=UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Material>("Assets/Materials/IntactFoyer/LandingMahogany.mat");white=UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEngine.Material>("Assets/Materials/IntactFoyer/FrontWindowIvory.mat");
+ original.SetActive(false);
+}
+System.Action<string,UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Material> box=(name,pos,size,mat)=>{
+ var g=UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Cube);g.name=name;g.transform.SetParent(root.transform);g.transform.position=pos;g.transform.localScale=size;var r=g.GetComponent<UnityEngine.Renderer>();r.sharedMaterial=mat;r.shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off;};
+box("Added upper floor",new UnityEngine.Vector3(2.3445f,5.0925f,6.075f),new UnityEngine.Vector3(.689f,.245f,2.81f),white);
+box("Transverse rail",new UnityEngine.Vector3(.5165f,6.234f,4.6265f),new UnityEngine.Vector3(2.967f,.074f,.087f),rail);
+box("Return rail",new UnityEngine.Vector3(2,6.234f,6.054f),new UnityEngine.Vector3(.094f,.074f,2.856f),rail);
+box("Rear connection guard",new UnityEngine.Vector3(2.3445f,6.234f,7.482f),new UnityEngine.Vector3(.689f,.074f,.087f),rail);
+for(int i=0;i<=20;i++)box("Study transverse baluster",new UnityEngine.Vector3(-.943f+i*2.943f/20,5.706f,4.6265f),new UnityEngine.Vector3(.045f,.982f,.045f),white);
+for(int i=0;i<=20;i++)box("Study return baluster",new UnityEngine.Vector3(2,5.706f,4.67f+i*2.812f/20),new UnityEngine.Vector3(.045f,.982f,.045f),white);
+for(int i=1;i<5;i++)box("Study rear baluster",new UnityEngine.Vector3(2+i*.689f/5,5.706f,7.482f),new UnityEngine.Vector3(.045f,.982f,.045f),white);
+// Neutral new geometry: copied scene meshes retain their source finishes.
+var neutral=new UnityEngine.Material(UnityEngine.Shader.Find("HDRP/Unlit"));neutral.name="Opening neutral preview";neutral.SetColor("_UnlitColor",new UnityEngine.Color(.08f,.07f,.06f));
+foreach(var renderer in root.GetComponentsInChildren<UnityEngine.Renderer>())if(!renderer.name.Contains("opening study"))renderer.sharedMaterial=neutral;
+var fixture=UnityEngine.GameObject.Find("Brass candle chandelier");var fixtureCopy=UnityEngine.Object.Instantiate(fixture,fixture.transform.position,fixture.transform.rotation,root.transform);fixtureCopy.name="Study chandelier shifted over void";fixtureCopy.transform.position+=UnityEngine.Vector3.left*.7f;fixture.SetActive(false);
+UnityEngine.Physics.SyncTransforms();return "Local opening test: rail X2.689->2.000; added floor1.936m2; front edge Z4.6265 unchanged; fixture copy shifted0.70m into void";

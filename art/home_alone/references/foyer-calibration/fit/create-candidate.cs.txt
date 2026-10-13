@@ -1,0 +1,29 @@
+if(!UnityEditor.EditorApplication.isPlaying) throw new System.Exception("Play only");
+if(UnityEngine.GameObject.Find("Disposable proportion study")) throw new System.Exception("Study already exists");
+var study=new UnityEngine.GameObject("Disposable proportion study");study.SetActive(false);
+var names=new[]{"IntactGLB","FoyerNight","ParentsBedroomDetails","ParentsEnsuiteDetails","KevinBedroomDetails","Main front window assemblies","BuzzBedroomDetails","Film rear landing","Film sheer curtains","Film linen closet door","Film upper hall dressing"};
+System.Func<float,float> warp=x=>x<=-.943f?x:x<1.170f?-.943f+(x+.943f)*.75f:x-.52825f;
+int count=0;
+foreach(var name in names){
+ var original=UnityEngine.GameObject.Find(name); if(!original)continue;
+ var clone=UnityEngine.Object.Instantiate(original,study.transform);clone.name=name;
+ foreach(var tr in clone.GetComponentsInChildren<UnityEngine.Transform>(true)){
+  var cache=new System.Collections.Generic.Dictionary<UnityEngine.Mesh,UnityEngine.Mesh>();
+  System.Func<UnityEngine.Mesh,UnityEngine.Mesh> deform=source=>{
+   if(cache.TryGetValue(source,out var found))return found;
+   var mesh=UnityEngine.Object.Instantiate(source);mesh.name="Disposable study mesh";
+   var vertices=mesh.vertices;
+   for(int i=0;i<vertices.Length;i++){var w=tr.TransformPoint(vertices[i]);w.x=warp(w.x);vertices[i]=tr.InverseTransformPoint(w);}
+   mesh.vertices=vertices;mesh.RecalculateNormals();mesh.RecalculateBounds();cache.Add(source,mesh);count++;return mesh;
+  };
+  var mf=tr.GetComponent<UnityEngine.MeshFilter>();if(mf&&mf.sharedMesh)mf.sharedMesh=deform(mf.sharedMesh);
+  foreach(var mc in tr.GetComponents<UnityEngine.MeshCollider>())if(mc.sharedMesh)mc.sharedMesh=deform(mc.sharedMesh);
+  foreach(var box in tr.GetComponents<UnityEngine.BoxCollider>()){
+   var b=new UnityEngine.Bounds();bool first=true;
+   for(int i=0;i<8;i++){var p=box.center+UnityEngine.Vector3.Scale(box.size*.5f,new UnityEngine.Vector3((i&1)==0?-1:1,(i&2)==0?-1:1,(i&4)==0?-1:1));var w=tr.TransformPoint(p);w.x=warp(w.x);p=tr.InverseTransformPoint(w);if(first){b=new UnityEngine.Bounds(p,UnityEngine.Vector3.zero);first=false;}else b.Encapsulate(p);}
+   box.center=b.center;box.size=b.size;
+  }
+ }
+ original.name="Study baseline "+name;original.SetActive(false);
+}
+study.SetActive(true);UnityEngine.Physics.SyncTransforms();return "Disposable meshes="+count+"; central strip 2.113m -> 1.58475m; original roots inactive, untouched";

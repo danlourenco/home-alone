@@ -1,0 +1,7 @@
+[mcp_servers.unity-editor-mcp]
+command = "/Users/dlo/.unity/bin/unity"
+args = [
+    "mcp",
+    "--project-path",
+    "/Users/dlo/Dev/home-alone/unity/HomeAlone",
+]

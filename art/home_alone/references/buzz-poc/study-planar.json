@@ -1,0 +1,22 @@
+{
+  "door_height": 1.0,
+  "door_width": 0.42,
+  "room_width": 1.8417179553877843,
+  "room_depth": 2.1,
+  "room_height": 1.18,
+  "door_left": 0.07424959353053542,
+  "bed_left": 0.808812945755499,
+  "bed_width": 0.5527109352127876,
+  "bed_length": 0.98,
+  "note": "Width inferred by wall rectification. Bed apparent width includes unresolved parallax. Depth, height and bed length are provisional PoC assumptions, not recovered dimensions.",
+  "camera": [
+    0.5127195263363256,
+    0.4518242577923651,
+    -1.20352319997091,
+    -0.1472940631604268,
+    0.14590398821317765,
+    0.011004450296361613
+  ],
+  "vertical_fov": 60,
+  "door_camera_rms_pixels": 2.5641001835791837
+}
