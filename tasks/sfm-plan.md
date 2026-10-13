@@ -259,3 +259,14 @@ Also:
 - Lessons:
   - Grey-box renders need an absolute edge-strength threshold; a percentile cut picks up the ceiling light falloff.
   - The registration is translation-only (0.1 m residual), so it limits accuracy. Next: fit the registration from several features (rotation + translation + scale) and add door casings, then turn per-view thresholds into verify-plan checkpoints.
+- Render-and-compare v2 (Oct 13):
+  - **Registration.** The hall clip's registration is now a 2D similarity fitted only on wall lines that both the clip and the overhead show (`tools/house/register_clip.py`): rotation −0.14°, scale 1.0085, anchors within 0.2–5 cm. The scale agrees to 0.85%: an independent check that the door-based clip scale and the overhead calibration match. The old translation-only fit was 17.5 cm out along the hall.
+  - **Clip-derived geometry is generated, not hand-copied.** The script writes the end bay, the bath/Buzz/attic doors and the checkpoint points from clip coordinates. The density check moved the bay's north wall to clip 3.05 (plan ~9.36); the earlier 2.4 was a plot misreading.
+  - **Comparison renders** use a camera headlight with room lights off, because ceiling hotspots made false edges.
+  - **Door casings** (7 cm, 2 cm proud) are added to every real door.
+  - **Matched views per clip** (median px at 960×540): hall 6 / 3.6 / 5.4 / 16 / 18 / 8; parents 10 / 8.5 / 19 / 10 / 19 / 7.6; Kevin 7.1 / 31 / 7.3 / 9 / 9 / 6.4. Kevin's door views land on Marina's casings.
+  - **Explained outliers:**
+    - parents f402: the armoire hides the notch corner.
+    - parents f498: tub/shower close-up, not modelled.
+    - hall f178/f192: the bath door is under 1 m away and its open leaf isn't modelled.
+  - **Unexplained, follow up:** Kevin f225, window-wall corner about 60 px (~25 cm) left of real. Every other Kevin view agrees, so check that frame's pose (VGGT chunk) before touching the plan.

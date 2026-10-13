@@ -2,7 +2,7 @@
 how far the grey-box's structural edges land from the real frame's edges.
 
   poses    <clip> <frame-idx,...>   clip camera poses -> Unity world (via the clip's registration in
-                                    measurements/checkpoints/upstairs.json) -> spec/captures/matched/poses.json
+                                    measurements/checkpoints/upstairs.json) -> spec/captures/matched/<clip>/poses.json
   compare  <clip>                   after Unity renders (SpecGreybox.RenderMatched): edge overlay per frame, and the
                                     chamfer distance from every grey-box edge pixel to the nearest edge in Marina's frame
 
@@ -32,7 +32,9 @@ def clip_frame(clip):
 def poses(clip, idxs):
     w, p, reg = clip_frame(clip)
     a, b = map(np.array, p["plane_axes"]); Rp = np.array(p["rotation"]); up = np.array(p["up"])
-    S, off = reg["m_per_unit"], np.array(reg["offset"])
+    S, sim = reg["m_per_unit"], reg["similarity"]          # clip plan metres -> floor plan (register_clip.py)
+    th, k, tr = np.radians(sim["rotation_deg"]), sim["scale"], np.array(sim["translation"])
+    M = np.array([[np.cos(th), np.sin(th)], [-np.sin(th), np.cos(th)]])
     spec = json.loads((ROOT / "spec/house_spec.json").read_text())
     o = np.array(spec["origin_plan_m"])
     d = np.load(w / "vggt/sparse/0/pixels.npz")
@@ -50,10 +52,10 @@ def poses(clip, idxs):
         R, t = quat_to_R(*map(float, f[1:5])), np.array(list(map(float, f[5:8])))
         C = -R.T @ t
         fwd, upv = R.T @ [0, 0, 1], -R.T @ [0, 1, 0]
-        pos = to_unity(np.array([C @ a, C @ b]) @ Rp * S + off, (C @ up - floor) * S)
+        pos = to_unity(k * (np.array([C @ a, C @ b]) @ Rp * S) @ M + tr, k * (C @ up - floor) * S)
         dirs = []
         for D in (fwd, upv):
-            v = np.array([D @ a, D @ b]) @ Rp
+            v = (np.array([D @ a, D @ b]) @ Rp) @ M
             dirs.append([float(v[1]), float(D @ up), float(-v[0])])
         hfov = 2 * np.degrees(np.arctan(960 / focal))
         vfov = 2 * np.degrees(np.arctan(np.tan(np.radians(hfov / 2)) * 1080 / 1920))
@@ -61,8 +63,8 @@ def poses(clip, idxs):
         out.append({"name": name, "frame": str(ROOT / "sfm-work/rooms" / clip / "all/images" / Path(f[-1]).name),
                     "pos": pos, "forward": dirs[0], "up": dirs[1], "vfov": float(vfov)})
         print(f"{name}: Unity pos {np.round(pos, 2)}, eye {pos[1]:.2f} m, vfov {vfov:.1f} deg")
-    OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "poses.json").write_text(json.dumps({"clip": clip, "poses": out}, indent=1) + "\n")
+    (OUT / clip).mkdir(parents=True, exist_ok=True)
+    (OUT / clip / "poses.json").write_text(json.dumps({"clip": clip, "poses": out}, indent=1) + "\n")
 
 
 def edges(img, frac=None, absolute=None):
@@ -76,11 +78,12 @@ def edges(img, frac=None, absolute=None):
 
 def compare(clip):
     from scipy.ndimage import distance_transform_edt
-    P = json.loads((OUT / "poses.json").read_text())
+    D = OUT / clip
+    P = json.loads((D / "poses.json").read_text())
     rows, tiles = [], []
     for p in P["poses"]:
         frame = Image.open(p["frame"]).convert("RGB").resize((960, 540))
-        render = Image.open(OUT / f"{p['name']}.png").convert("RGB").resize((960, 540))
+        render = Image.open(D / f"{p['name']}.png").convert("RGB").resize((960, 540))
         fe, re_ = edges(frame, frac=12), edges(render, absolute=3.0)
         dist = distance_transform_edt(~fe)          # px to nearest edge in Marina's frame
         dd = dist[re_]
@@ -93,11 +96,12 @@ def compare(clip):
     sheet = Image.new("RGB", (1920, 540 * -(-len(tiles) // 2)))
     for k, t in enumerate(tiles):
         sheet.paste(t, ((k % 2) * 960, (k // 2) * 540))
-    sheet.save(OUT / "compare.png")
+    sheet.save(D / "compare.png")
     print(f"{'frame':<14} {'median px':>9} {'90% px':>7}   (960x540; grey-box edge -> nearest edge in Marina's frame)")
     for n, m, q in rows:
         print(f"{n:<14} {m:9.1f} {q:7.1f}")
-    print(f"-> {OUT / 'compare.png'}")
+    print(f"-> {D / 'compare.png'}")
+    (D / "scores.json").write_text(json.dumps([{"frame": n, "median_px": round(m, 1), "p90_px": round(q, 1)} for n, m, q in rows], indent=1) + "\n")
 
 
 if __name__ == "__main__":

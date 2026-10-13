@@ -18,6 +18,7 @@ public static class SpecGreybox
     const float HalfWall = 0.07f;      // each space builds half of the spec's 14 cm interior wall, outward
     const float ArchHead = 2.20f;      // arches: header height (not measured yet)
     const float RailHeight = 0.95f;
+    const float CasingW = 0.07f, CasingProud = 0.02f;   // door trim: 2 3/4 in wide, 3/4 in proud (Marina's doors have it)
     static Material mFloor, mWall, mCeil, mHall, mProp, mRail;
 
     static string SpecPath => Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/house_spec.json"));
@@ -129,6 +130,13 @@ public static class SpecGreybox
                 if (dl > cur) Seg(g, "Wall", alongX, t0, t1, cur, dl, 0f, s.ceil);
                 float head = d.kind == "door" ? d.height : d.kind == "arch" ? ArchHead : s.ceil;
                 if (head < s.ceil) Seg(g, d.kind + "_Header", alongX, t0, t1, dl, dh, head, s.ceil);
+                if (d.kind == "door")
+                {   // casing on this room's face: two legs and a head, proud of the wall toward the room
+                    float f0 = t0, f1 = t0 - sgn * CasingProud;
+                    Trim(g, alongX, f0, f1, dl - CasingW, dl, 0f, head + CasingW);
+                    Trim(g, alongX, f0, f1, dh, dh + CasingW, 0f, head + CasingW);
+                    Trim(g, alongX, f0, f1, dl - CasingW, dh + CasingW, head, head + CasingW);
+                }
                 cur = Mathf.Max(cur, dh);
             }
             if (cur < hi) Seg(g, "Wall", alongX, t0, t1, cur, hi, 0f, s.ceil);
@@ -139,6 +147,12 @@ public static class SpecGreybox
     {
         float ta = Mathf.Min(t0, t1), tb = Mathf.Max(t0, t1);
         if (alongX) Box(p, n, s0, s1, ta, tb, y0, y1, mWall); else Box(p, n, ta, tb, s0, s1, y0, y1, mWall);
+    }
+
+    static void Trim(GameObject p, bool alongX, float t0, float t1, float s0, float s1, float y0, float y1)
+    {
+        float ta = Mathf.Min(t0, t1), tb = Mathf.Max(t0, t1);
+        if (alongX) Box(p, "Casing", s0, s1, ta, tb, y0, y1, mProp); else Box(p, "Casing", ta, tb, s0, s1, y0, y1, mProp);
     }
 
     static void Prop(GameObject p, bool alongX, float t0, float t1, float sgn, Door d)
@@ -268,20 +282,29 @@ public static class SpecGreybox
     // Run: Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.RenderMatched -quit -logFile -
     public static void RenderMatched()
     {
-        string dir = Path.Combine(CaptureDir, "matched");
-        var j = JObject.Parse(File.ReadAllText(Path.Combine(dir, "poses.json")));
+        string root = Path.Combine(CaptureDir, "matched");
         EditorSceneManager.OpenScene("Assets/Scenes/Greybox_Upstairs.unity");
+        // Comparison lighting: room point lights off (their ceiling hotspots read as false edges); one shadowless
+        // directional light from the camera, so each plane gets a flat shade and only geometry makes edges.
+        foreach (var l in Object.FindObjectsByType<Light>(FindObjectsSortMode.None)) l.gameObject.SetActive(false);
+        var head = new GameObject("Headlight").AddComponent<Light>(); head.type = LightType.Directional; head.intensity = 8000f;
+        head.shadows = LightShadows.None; head.gameObject.AddComponent<HDAdditionalLightData>();
         var go = new GameObject("MatchCam"); var cam = go.AddComponent<Camera>(); go.AddComponent<HDAdditionalCameraData>(); cam.nearClipPlane = 0.05f;
         var rt = new RenderTexture(1920, 1080, 24); cam.targetTexture = rt;
-        foreach (var p in j["poses"])
+        foreach (var clipDir in Directory.GetDirectories(root).Where(d => File.Exists(Path.Combine(d, "poses.json"))))
         {
-            Vector3 V(JToken t) => new Vector3((float)t[0], (float)t[1], (float)t[2]);
-            go.transform.SetPositionAndRotation(V(p["pos"]), Quaternion.LookRotation(V(p["forward"]), V(p["up"])));
-            cam.fieldOfView = (float)p["vfov"];
-            Shot(cam, rt, Path.Combine("matched", (string)p["name"]));
+            var j = JObject.Parse(File.ReadAllText(Path.Combine(clipDir, "poses.json")));
+            foreach (var p in j["poses"])
+            {
+                Vector3 V(JToken t) => new Vector3((float)t[0], (float)t[1], (float)t[2]);
+                go.transform.SetPositionAndRotation(V(p["pos"]), Quaternion.LookRotation(V(p["forward"]), V(p["up"])));
+                head.transform.rotation = Quaternion.LookRotation(V(p["forward"]) + new Vector3(0.25f, -0.35f, 0.15f), Vector3.up);
+                cam.fieldOfView = (float)p["vfov"];
+                Shot(cam, rt, Path.Combine("matched", Path.GetFileName(clipDir), (string)p["name"]));
+            }
         }
         RenderTexture.active = null; Object.DestroyImmediate(go); rt.Release();
-        Debug.Log("SpecGreybox: matched renders written to " + dir);
+        Debug.Log("SpecGreybox: matched renders written under " + root);
     }
 
     static void Shot(Camera cam, RenderTexture rt, string name)

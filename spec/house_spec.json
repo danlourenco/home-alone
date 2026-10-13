@@ -110,7 +110,7 @@
    "anchor": true,
    "polygon_xz": [
     [
-     7.06,
+     7.061,
      3.861
     ],
     [
@@ -122,7 +122,7 @@
      7.74
     ],
     [
-     7.06,
+     7.061,
      7.74
     ]
    ],
@@ -172,11 +172,11 @@
      5.471
     ],
     [
-     6.92,
+     6.921,
      5.471
     ],
     [
-     6.92,
+     6.921,
      7.74
     ],
     [
@@ -202,14 +202,14 @@
     ],
     [
      7.233,
-     9.394
+     9.907
     ],
     [
-     8.355,
-     9.394
+     8.371,
+     9.907
     ],
     [
-     8.355,
+     8.371,
      11.4
     ],
     [
@@ -217,7 +217,7 @@
      11.4
     ]
    ],
-   "area_m2": 7.41,
+   "area_m2": 6.86,
    "ceiling_m": 2.4
   },
   {
@@ -285,14 +285,14 @@
     ],
     [
      8.275,
-     9.254
+     9.767
     ],
     [
      7.373,
-     9.254
+     9.767
     ]
    ],
-   "area_m2": 0.43,
+   "area_m2": 0.89,
    "ceiling_m": 2.4
   },
   {
@@ -313,11 +313,11 @@
      11.4
     ],
     [
-     8.495,
+     8.415,
      11.4
     ],
     [
-     8.495,
+     8.415,
      8.781
     ],
     [
@@ -325,7 +325,7 @@
      8.781
     ]
    ],
-   "area_m2": 10.6,
+   "area_m2": 10.81,
    "ceiling_m": 2.4
   },
   {
@@ -512,7 +512,7 @@
    ],
    "kind": "door",
    "wall_axis": "y",
-   "wall_coord": 2.412,
+   "wall_coord": 2.413,
    "wall_thickness": 0.14,
    "span": [
     6.05,
@@ -523,7 +523,7 @@
    "opens": true,
    "placed_from": "measured",
    "source": "SfM: Kevin door_b (frames 279/292), placed with the overhead fit (room flipped vertically)",
-   "wall_coord_spec": 6.99,
+   "wall_coord_spec": 6.991,
    "span_spec": [
     6.754,
     7.524
@@ -587,21 +587,21 @@
    ],
    "kind": "door",
    "wall_axis": "y",
-   "wall_coord": 3.847,
-   "wall_thickness": 0.14,
+   "wall_coord": 3.815,
+   "wall_thickness": 0.044,
    "span": [
-    9.7,
-    10.4
+    9.57,
+    10.245
    ],
-   "width": 0.7,
+   "width": 0.675,
    "height": 2.032,
    "opens": true,
    "placed_from": "measured",
-   "source": "measured: hall clip frames 185-199, bath doorway in the end bay's east wall (leaf swings into the bath)",
-   "wall_coord_spec": 8.425,
+   "source": "bath doorway in the bay's east wall, measured opening (hall-s1 frames 185-199; leaf hinged at the south jamb) (clip hall-s1 via registration)",
+   "wall_coord_spec": 8.393,
    "span_spec": [
-    10.404,
-    11.104
+    10.274,
+    10.949
    ],
    "spec_axis": "x"
   },
@@ -611,24 +611,24 @@
     "hall_corridor"
    ],
    "kind": "fake_door",
-   "wall_axis": "x",
-   "wall_coord": 8.62,
+   "wall_axis": "y",
+   "wall_coord": 2.725,
    "wall_thickness": 0.14,
    "span": [
-    2.935,
-    3.545
+    8.265,
+    8.875
    ],
    "width": 0.61,
    "height": 2.032,
    "opens": false,
    "placed_from": "topology (centred; position unverified)",
    "source": "Muto's set model (linen closet beside the bathroom) + overhead shelf; prop door, does not open (user decision Oct 13); 24 in linen-closet door",
-   "wall_coord_spec": 9.324,
+   "wall_coord_spec": 7.303,
    "span_spec": [
-    7.513,
-    8.123
+    8.969,
+    9.579
    ],
-   "spec_axis": "z"
+   "spec_axis": "x"
   },
   {
    "between": [
@@ -641,17 +641,17 @@
    "wall_thickness": 0.14,
    "span": [
     3.014,
-    3.774
+    3.776
    ],
-   "width": 0.76,
+   "width": 0.762,
    "height": 2.032,
    "opens": true,
-   "placed_from": "measured, slid +4 cm onto the shared wall",
-   "source": "measured: hall clip frames 148-192, Buzz's doorway in the cross wall beside the arch, facing up the hall; jambs measured 2.93-3.73 incl. casing, 0.76 m door centred in them",
+   "placed_from": "measured, slid +8 cm onto the shared wall",
+   "source": "Buzz's doorway in the cross wall beside the arch; jambs incl. casing (hall-s1 frames 148-192) (clip hall-s1 via registration)",
    "wall_coord_spec": 11.47,
    "span_spec": [
     7.592,
-    8.352
+    8.354
    ],
    "spec_axis": "z"
   },
@@ -690,18 +690,18 @@
    "wall_coord": 12.887,
    "wall_thickness": 0.14,
    "span": [
-    1.565,
-    2.327
+    1.534,
+    2.296
    ],
    "width": 0.762,
    "height": 2.032,
    "opens": true,
-   "placed_from": "topology (centred; position unverified)",
-   "source": "hall walk f135-165 + film attic-door shot",
+   "placed_from": "measured",
+   "source": "attic door slab edges incl. casing (hall-s1 frames 148/160) (clip hall-s1 via registration)",
    "wall_coord_spec": 13.591,
    "span_spec": [
-    6.143,
-    6.905
+    6.112,
+    6.874
    ],
    "spec_axis": "z"
   },

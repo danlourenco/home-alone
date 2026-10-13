@@ -51,10 +51,10 @@
    "a": "hall_bath",
    "b": "hall_corridor",
    "kind": "door",
-   "source": "measured: hall clip frames 185-199, bath doorway in the end bay's east wall (leaf swings into the bath)",
+   "source": "bath doorway in the bay's east wall, measured opening (hall-s1 frames 185-199; leaf hinged at the south jamb) (clip hall-s1 via registration)",
    "span": [
-    9.7,
-    10.4
+    9.57,
+    10.245
    ]
   },
   {
@@ -68,10 +68,10 @@
    "a": "buzz_room",
    "b": "hall_corridor",
    "kind": "door",
-   "source": "measured: hall clip frames 148-192, Buzz's doorway in the cross wall beside the arch, facing up the hall; jambs measured 2.93-3.73 incl. casing, 0.76 m door centred in them",
+   "source": "Buzz's doorway in the cross wall beside the arch; jambs incl. casing (hall-s1 frames 148-192) (clip hall-s1 via registration)",
    "span": [
-    2.97,
-    3.73
+    2.936,
+    3.698
    ]
   },
   {
@@ -84,7 +84,11 @@
    "a": "attic_stair",
    "b": "hall_corridor_south",
    "kind": "door",
-   "source": "hall walk f135-165 + film attic-door shot"
+   "source": "attic door slab edges incl. casing (hall-s1 frames 148/160) (clip hall-s1 via registration)",
+   "span": [
+    1.534,
+    2.296
+   ]
   },
   {
    "a": "hall_end",

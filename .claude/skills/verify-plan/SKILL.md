@@ -48,12 +48,17 @@ Unproven checkpoints don't count. The Oct 13 proof: the pre-fix trace fails 7 ch
 ## After the grey-box builds: matched-camera compare
 
 ```bash
-uv run --with numpy --with scipy --with pillow python tools/house/match_cameras.py poses hall-s1 0,11,21,36,48,59
+uv run --with numpy --with scipy python tools/house/register_clip.py hall-s1        # after changing anchors/features
+for c in "hall-s1 0,11,21,36,48,59" "parents 0,6,12,21,30,46" "kevin 0,12,24,32,41,49"; do
+  set -- ${=c}; uv run --with numpy --with scipy --with pillow python tools/house/match_cameras.py poses $1 $2; done
+Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.Build -quit -logFile -
 Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.RenderMatched -quit -logFile -
-uv run --with numpy --with scipy --with pillow python tools/house/match_cameras.py compare hall-s1
+for c in hall-s1 parents kevin; do uv run --with numpy --with scipy --with pillow python tools/house/match_cameras.py compare $c; done
 ```
 
-The run writes `spec/captures/matched/compare.png`: grey-box edges in magenta over Marina's frames, scored as the median and 90th-percentile px to the nearest real edge, at 960×540. The Oct 13 baseline is 6–11 px looking down the hall and 17–22 px at the hall end, where the camera is about 0.5 m from the doorways. A view that gets worse than its baseline means the plan moved the wrong way. Look at the overlay before believing the number: light glare and missing door casings make edges that aren't geometry.
+Per-clip baselines live in `spec/captures/matched/<clip>/scores.json`. Registrations are in `measurements/checkpoints/upstairs.json`: hall-s1 is fitted, the parents' clip IS the plan frame, and Kevin's is placed by the overhead fit (90° turn).
+
+The run writes `spec/captures/matched/compare.png`: grey-box edges in magenta over Marina's frames, scored as the median and 90th-percentile px to the nearest real edge, at 960×540. Oct 13 baselines (median px): hall 3.6–8 for views down the hall and into Buzz's room, 16–18 through the bath door (under 1 m away, open leaf not modelled); parents 7.6–10, plus 19 where the armoire hides the notch corner and at the tub close-up; Kevin 6.4–9, plus 31 at f225 (open question). A view that gets worse than its baseline means the plan moved the wrong way. Look at the overlay before believing the number: light glare and missing door casings make edges that aren't geometry.
 
 ## Where checkpoints come from
 

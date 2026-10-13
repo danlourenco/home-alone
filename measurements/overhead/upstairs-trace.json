@@ -143,7 +143,7 @@
   {
    "name": "hall_corridor",
    "kind": "hall",
-   "notes": "end bay (x 8.69-10.61, y 2.59-3.77) measured from hall clip frames 135-205 (sfm-work/rooms/hall-s1, gate 6/6), scaled from the attic door (0.3714 units, 0.9% spread, 5.47 m/unit) and placed by matching the arch and attic leg to the overhead (leg 2.03 m vs 1.97 m); bath door in its east wall, Buzz's door in the cross wall",
+   "notes": "hall + end bay; bay north wall where the hall's east wall ends (clip first 3.05, density check), bay east wall at clip second 2.21 holds the bath door (clip hall-s1, registration residual <= 5.1 cm)",
    "m": [
     [
      7.29,
@@ -154,16 +154,16 @@
      2.59
     ],
     [
-     8.69,
+     9.215,
      2.59
     ],
     [
-     8.69,
-     3.77
+     9.215,
+     3.793
     ],
     [
      10.61,
-     3.77
+     3.793
     ],
     [
      10.61,
@@ -219,7 +219,7 @@
   {
    "name": "linen_closet",
    "kind": "closet",
-   "notes": "shallow closet behind the end bay's north wall (was closet_2's footprint). Prop door, does not open (user decision Oct 13)",
+   "notes": "closet north of the end bay (the overhead's closet_2 footprint; the bay north wall is at plan ~9.36). Prop door on the bay's north wall, does not open (user decision Oct 13)",
    "m": [
     [
      8.09,
@@ -230,11 +230,11 @@
      3.61
     ],
     [
-     8.55,
+     9.05,
      3.61
     ],
     [
-     8.55,
+     9.05,
      2.87
     ]
    ]
