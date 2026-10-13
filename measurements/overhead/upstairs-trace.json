@@ -143,33 +143,33 @@
   {
    "name": "hall_corridor",
    "kind": "hall",
-   "px": [
+   "notes": "end bay (x 8.69-10.61, y 2.59-3.77) measured from hall clip frames 135-205 (sfm-work/rooms/hall-s1, gate 6/6), scaled from the attic door (0.3714 units, 0.9% spread, 5.47 m/unit) and placed by matching the arch and attic leg to the overhead (leg 2.03 m vs 1.97 m); bath door in its east wall, Buzz's door in the cross wall",
+   "m": [
     [
-     957,
-     485
+     7.29,
+     1.21
     ],
     [
-     1040,
-     485
+     7.29,
+     2.59
     ],
     [
-     1040,
-     640
+     8.69,
+     2.59
     ],
     [
-     1108,
-     640
+     8.69,
+     3.77
     ],
     [
-     1108,
-     687
+     10.61,
+     3.77
     ],
     [
-     957,
-     687
+     10.61,
+     1.27
     ]
-   ],
-   "notes": "includes the alcove at its south-east end (no wall band between them in the overhead); the hall bath door is on the alcove's east wall"
+   ]
   },
   {
    "name": "hall_corridor_south",
@@ -217,50 +217,27 @@
    ]
   },
   {
-   "name": "closet_2",
-   "kind": "closet",
-   "px": [
-    [
-     1057,
-     532
-    ],
-    [
-     1102,
-     532
-    ],
-    [
-     1102,
-     590
-    ],
-    [
-     1057,
-     590
-    ]
-   ],
-   "notes": "sealed: access side never found; no door needed (user decision Oct 13)"
-  },
-  {
    "name": "linen_closet",
    "kind": "closet",
-   "px": [
+   "notes": "shallow closet behind the end bay's north wall (was closet_2's footprint). Prop door, does not open (user decision Oct 13)",
+   "m": [
     [
-     1048,
-     607
+     8.09,
+     2.87
     ],
     [
-     1108,
-     607
+     8.09,
+     3.61
     ],
     [
-     1108,
-     628
+     8.55,
+     3.61
     ],
     [
-     1048,
-     628
+     8.55,
+     2.87
     ]
-   ],
-   "notes": "shallow built-in along the alcove's north side (green shelf in the overhead). Door is a prop and does not open (user decision Oct 13)"
+   ]
   },
   {
    "name": "hall_bath",

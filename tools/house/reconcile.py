@@ -240,7 +240,8 @@ def main():
                 if abs(shift) > 0.15 or lo < p["lo"] - 1e-9 or hi > p["hi"] + 1e-9:
                     flags.append(f"door {d['a']}/{d['b']}: measured span needs {shift * 100:+.0f} cm to fit its wall")
         else:
-            mid = (p["lo"] + p["hi"]) / 2; lo, hi = mid - DOOR_W / 2, mid + DOOR_W / 2; src = "topology (centred; position unverified)"
+            wd = d.get("width", DOOR_W)
+            mid = (p["lo"] + p["hi"]) / 2; lo, hi = mid - wd / 2, mid + wd / 2; src = "topology (centred; position unverified)"
         w = hi - lo
         if d["kind"] in ("door", "fake_door") and w > (p["hi"] - p["lo"]) + 1e-6:
             flags.append(f"door {d['a']}/{d['b']}: {w:.2f} m door on only {p['hi'] - p['lo']:.2f} m of shared wall")

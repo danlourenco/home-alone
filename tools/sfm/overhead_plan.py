@@ -35,7 +35,11 @@ def main():
     totals = {}
     print(f"{'space':<22} {'kind':<8} {'m2':>6} {'ft2':>6}  bbox m")
     for s in t["spaces"]:
-        px = np.array(s["px"], float); pl = to_plan(H, px)
+        if "m" in s:  # measured directly (e.g. a gated SfM clip) in plan metres; overrides the overhead reading
+            pl = np.array(s["m"], float); Hi = np.linalg.inv(H)
+            q = np.c_[pl, np.ones(len(pl))] @ Hi.T; px = q[:, :2] / q[:, 2:]
+        else:
+            px = np.array(s["px"], float); pl = to_plan(H, px)
         A = area(pl); totals[s["kind"]] = totals.get(s["kind"], 0) + A
         bb = np.ptp(pl, axis=0)
         print(f"{s['name']:<22} {s['kind']:<8} {A:6.1f} {A * FT2:6.0f}  {bb[0]:.2f} x {bb[1]:.2f}")

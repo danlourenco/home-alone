@@ -51,19 +51,28 @@
    "a": "hall_bath",
    "b": "hall_corridor",
    "kind": "door",
-   "source": "hall walk f159-177: bath door on the left near Buzz's door; placed on the hall alcove's east wall"
+   "source": "measured: hall clip frames 185-199, bath doorway in the end bay's east wall (leaf swings into the bath)",
+   "span": [
+    9.7,
+    10.4
+   ]
   },
   {
    "a": "linen_closet",
    "b": "hall_corridor",
    "kind": "fake_door",
-   "source": "Muto's set model (linen closet beside the bathroom) + overhead shelf; prop door, does not open (user decision Oct 13)"
+   "source": "Muto's set model (linen closet beside the bathroom) + overhead shelf; prop door, does not open (user decision Oct 13); 24 in linen-closet door",
+   "width": 0.61
   },
   {
    "a": "buzz_room",
-   "b": "hall_corridor_south",
+   "b": "hall_corridor",
    "kind": "door",
-   "source": "topology: hall walk f153 (Buzz's doorway on the left before the attic door)"
+   "source": "measured: hall clip frames 148-192, Buzz's doorway in the cross wall beside the arch, facing up the hall; jambs measured 2.93-3.73 incl. casing, 0.76 m door centred in them",
+   "span": [
+    2.97,
+    3.73
+   ]
   },
   {
    "a": "girls_room_b",
