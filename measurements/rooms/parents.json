@@ -30,14 +30,6 @@
     ],
     [
      0.83,
-     0.72
-    ],
-    [
-     0.68,
-     0.72
-    ],
-    [
-     0.68,
      1.12
     ],
     [
@@ -47,11 +39,11 @@
    ],
    "confidence": "walls x=1.30, y=-0.39, y=0.60, x=0.68 and y=1.12 crisp in density; left (window) wall x=-0.21 sparse (glass), position from window-frame points",
    "open": [
-    "step at (0.68-0.83, 0.60-0.72) is small (0.5 x 0.4 m); seen in density, not yet confirmed in frames",
     "notch (x 0.68-1.30, y 0.60-1.12) = the neighbouring bedroom per Marina's overhead (girls/all/images/f_00041.jpg)"
    ],
    "review": [
-    "top-left 'angled corner' in density was the folding screen (frames 46-52, overhead); corner is square"
+    "top-left 'angled corner' in density was the folding screen (frames 46-52, overhead); corner is square",
+    "'step' at x 0.68-0.83 was the armoire front (0.5 m deep, frames 402/407); overhead shows one corner. Removed (Oct 13)"
    ]
   },
   {
@@ -84,7 +76,8 @@
    ],
    "confidence": "y=-1.20 and x=1.26 crisp; shared wall with bedroom 0.05 units (~17 cm) thick",
    "open": [
-    "overhead suggests the bath may stop ~0.2 units short of the bedroom's hall-side wall (x=1.26 here); oblique view hides that wall's inner face, SfM kept"
+    "overhead suggests the bath may stop ~0.2 units short of the bedroom's hall-side wall (x=1.26 here); oblique view hides that wall's inner face, SfM kept",
+    "far (tub/shower) end: SfM x=0.32 from sparse points; Marina's overhead calibrated on the bedroom puts it at x=0.02 (bath 3.59 m long, not 3.26). Overhead favoured; confirm with render-and-compare"
    ],
    "review": [
     "L-shape confirmed by Marina's overhead: narrow at the window end next to the bedroom",
