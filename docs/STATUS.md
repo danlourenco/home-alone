@@ -55,6 +55,13 @@ Key files:
   - Adult walk test: 11/11 in both builds.
 - **Proven detection limits:** wall check 10 cm; door centres 10 cm; walk test blocks doors under 0.55 m. The image edge score **cannot** detect 20 cm and is visual-only.
 
+## Feel notes (walk-and-annotate, Unity key M; `tools/house/feel_notes.py`)
+
+The user walks a scene and rates each spot's shape/size and lighting separately. First pass, old model (IntactHouseReference), Oct 13:
+- Living room and dining room: shape right, lighting too dark. Old model 3.8 x 10.1 m and 3.8 x 7.4 m; Marina (new build) 4.5 x 8.4 m and 4.6 x 5.9 m. Same floor area (±3%), different proportions. **Next:** rate the same rooms in the new grey-box, to tell whether it's the area or the proportions that feels right.
+- Buzz's room: shape off ("too small for a bed and dresser"). Old model ~3.8 x 3.2 m; Marina 4.35 x 3.49 m from Buzz's own door (new build 4.46 x 3.68). Marina's tour frame (references/buzz-bedroom/tour556.jpg) shows clear wall either side of the bed. The new build is the bigger, Marina-measured room.
+- Ground-floor lighting is far too dark in the old model (all three ground notes). That's for the art/lighting pass; the grey-box only carries layout.
+
 ## Open items
 
 1. **The ground floor: first build done (Oct 13).** Calibrated with the `overhead-floor` skill, stacked under the upstairs by `tools/house/stack_floor.py` (no stretch, user decision: rooms keep Marina's shapes, the upstairs overhangs the front by ~1.6 m), reconciled with `reconcile.py --floor ground`, built at -2.535 m. Tests: ground doors 7/7, stair 20/20. `verify_plan.py --floor ground`: 4/4 (2 independent: stair width -0.4%, den width +1.7%; both FAIL on an injected 6% scale error). Den/living doorway placed from the den clip's wall gap. Stairs use the adult-body rule, not the 0.90 m hall minimum. Side effect of the stretch: gross 2,988 ft2 vs Marina's 2,620, kitchen 590 vs 477 (the stretch also pushed the rear kitchen wing back). Open: sunroom in/out of 2,620; second dining door; foyer width 3.76 traced vs 3.49 from clip A (lateral). Was: Same method; Marina Part 1 (the 1080p `copy.mp4`) is the main-floor tour. The stair's foot and foyer are only a floor patch so far.
