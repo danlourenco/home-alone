@@ -45,19 +45,20 @@ def main():
     k = (front - well_rear_y) / (gf[1] - well_rear_y)
     np.savetxt(ROOT / "measurements/overhead/ground.reg.H.txt", Hr)
     T["calibration"] = "measurements/overhead/ground.reg.H.txt"
-    # user decision Oct 13 (2): stretch only IN FRONT of the rear wall line, so the rear kitchen wing keeps Marina's size
-    T["stretch"] = {"pivot_y": round(float(well_rear_y), 4), "k": round(float(k), 4),
-                    "note": "main block stacked under the upstairs facade; behind the rear wall line (kitchen wing) as measured"}
+    # User decision Oct 13 (3): NO stretch. The real-house plan matches Marina's ground floor as measured, and the film's
+    # upstairs was a separate set that never had to stack. Rooms keep Marina's shapes; the upstairs front wall overhangs
+    # the ground floor's by (k-1) x depth. docs/DEVIATIONS.md #1. The stretch k is still computed and reported.
+    T.pop("stretch", None)
     T["registration"] = {"turn": "ground (x,y) -> upstairs (-y, x)", "translation_m": t.round(3).tolist(),
-                         "front_back_stretch": round(float(k), 4),
-                         "stretch_note": "user decision Oct 13: ground main facade stacked under the upstairs facade (Marina's two floors differ by ~1.6 m front-to-back)",
+                         "stretch_needed_to_stack_facades": round(float(k), 4),
+                         "stretch_note": "NOT applied (user decision Oct 13): rooms keep Marina's shapes; upstairs overhangs the front",
                          "pinned_by": "foyer rear wall = stairwell rear edge (landing); foyer photo wall = stairwell south edge (flight 1)"}
     (ROOT / "measurements/overhead/ground-trace.json").write_text(json.dumps(T, indent=1) + "\n")
 
     # independent check: exterior walls of the two floors (wall-top outer edges, both traced from their overheads)
     import sys; sys.path.insert(0, str(ROOT / "tools/sfm")); from calib import mapper
     go = mapper(T)[0](G["scale"][0]["pixels"])
-    print(f"translation {t.round(3)} m, front-to-back stretch {k:.3f}")
+    print(f"translation {t.round(3)} m; a {k:.3f} front-to-back stretch would stack the facades (not applied)")
     print(f"{'exterior edge':<26}{'upstairs':>10}{'ground':>10}{'diff':>8}")
     for name, k, fn in (("front facade (plan y max)", 1, np.max), ("rear wall (plan y min)", 1, np.min),
                         ("north side (plan x min)", 0, np.min), ("south side (plan x max)", 0, np.max)):

@@ -10,7 +10,7 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | den | 1.7 |
 | living_room | 10.7 |
 | foyer | 14.3 |
-| vestibule | 1.1 |
+| vestibule | 1.0 |
 | dining_room | 1.7 |
 | sunroom | 7.3 |
 | kitchen | 20.3 |
@@ -21,9 +21,9 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | line | walls (space) | before (m) | after (m) | largest move (cm) |
 |---|---|---|---|---|
 | x = 10.64 | foyer, vestibule | 10.65, 10.57 | 10.64 | 6.9 |
-| y = 6.98 | vestibule, dining_room | 7.04, 6.93 | 6.98 | 6.6 |
-| x = 6.90 | dining_room, kitchen, back_stair | 6.92, 6.93, 6.86 | 6.90 | 4.0 |
-| y = -1.88 | kitchen, back_stair | -1.88, -1.88 | -1.88 | 0.0 |
+| y = 5.55 | vestibule, dining_room | 5.61, 5.51 | 5.55 | 5.8 |
+| x = 6.90 | dining_room, kitchen, back_stair | 6.92, 6.93, 6.86 | 6.90 | 3.9 |
+| y = -2.21 | kitchen, back_stair | -2.21, -2.21 | -2.21 | 0.0 |
 | y = -6.08 | kitchen, back_stair | -6.08, -6.09 | -6.08 | 0.6 |
 
 ### Anchor rooms vs their own SfM measurement
@@ -35,43 +35,43 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 
 | between | thickness (cm) | length (m) | note |
 |---|---|---|---|
-| back_stair / foyer | 17 | 2.68 |  |
-| back_stair / kitchen | 15 | 4.21 |  |
-| den / living_room | 23 | 7.87 |  |
-| dining_room / foyer | 17 | 5.12 |  |
-| dining_room / kitchen | 55 | 3.77 | thick: chase, closet or measurement error |
-| dining_room / sunroom | 24 | 5.62 |  |
-| dining_room / vestibule | 37 | 1.08 |  |
-| foyer / kitchen | 17 | 1.80 |  |
-| foyer / living_room | 31 | 8.34 |  |
-| foyer / vestibule | 26 | 3.29 |  |
-| kitchen / sunroom | 25 | 2.93 |  |
-| living_room / vestibule | 31 | 0.95 |  |
+| back_stair / foyer | 17 | 2.35 |  |
+| back_stair / kitchen | 15 | 3.88 |  |
+| den / living_room | 23 | 6.90 |  |
+| dining_room / foyer | 17 | 4.48 |  |
+| dining_room / kitchen | 48 | 3.77 |  |
+| dining_room / sunroom | 24 | 4.93 |  |
+| dining_room / vestibule | 37 | 0.94 |  |
+| foyer / kitchen | 17 | 1.57 |  |
+| foyer / living_room | 31 | 7.31 |  |
+| foyer / vestibule | 23 | 3.29 |  |
+| kitchen / sunroom | 22 | 2.93 |  |
+| living_room / vestibule | 31 | 0.83 |  |
 
 ## 3b. Interior walls thinned to 14 cm (centrelines kept; rooms take the space)
 
 | space | before (m) | after (m) | area before → after (m²) | change |
 |---|---|---|---|---|
-| den | 3.66 x 7.88 | 3.71 x 7.88 | 28.9 → 29.2 | +1.2% |
-| living_room | 4.37 x 9.55 | 4.50 x 9.55 | 41.7 → 43.0 | +3.0% |
-| foyer | 3.56 x 10.15 | 3.67 x 10.21 | 36.2 → 37.4 | +3.5% |
-| vestibule | 3.36 x 1.14 | 3.57 x 1.20 | 3.8 → 4.3 | +11.7% |
-| dining_room | 4.55 x 6.50 | 4.62 x 6.71 | 29.6 → 31.0 | +4.7% |
-| sunroom | 3.73 x 7.88 | 3.78 x 7.94 | 29.4 → 30.0 | +2.1% |
-| kitchen | 7.89 x 9.70 | 7.90 x 9.90 | 51.1 → 52.2 | +2.1% |
-| back_stair | 0.87 x 4.21 | 0.90 x 4.21 | 3.7 → 3.8 | +2.6% |
+| den | 3.66 x 6.91 | 3.71 x 6.91 | 25.3 → 25.6 | +1.2% |
+| living_room | 4.37 x 8.37 | 4.50 x 8.37 | 36.6 → 37.7 | +3.0% |
+| foyer | 3.56 x 8.90 | 3.67 x 8.94 | 31.7 → 32.8 | +3.4% |
+| vestibule | 3.36 x 1.00 | 3.57 x 1.04 | 3.4 → 3.7 | +10.8% |
+| dining_room | 4.55 x 5.70 | 4.62 x 5.87 | 25.9 → 27.1 | +4.5% |
+| sunroom | 3.73 x 6.91 | 3.78 x 6.95 | 25.8 → 26.3 | +1.9% |
+| kitchen | 7.89 x 9.14 | 7.90 x 9.31 | 48.0 → 48.9 | +1.9% |
+| back_stair | 0.87 x 3.87 | 0.90 x 3.87 | 3.4 → 3.5 | +2.6% |
 
 ## 4. Doors and openings
 
 | between | kind | position along wall (m) | width (m) | placed from |
 |---|---|---|---|---|
-| den / living_room | arch | -0.87-1.05 | 1.92 | read in the overhead |
-| living_room / foyer | arch | 3.51-5.21 | 1.70 | read in the overhead |
-| foyer / dining_room | arch | 3.35-5.30 | 1.95 | read in the overhead |
+| den / living_room | arch | -1.33-0.36 | 1.68 | read in the overhead |
+| living_room / foyer | arch | 2.51-4.00 | 1.49 | read in the overhead |
+| foyer / dining_room | arch | 2.37-4.08 | 1.71 | read in the overhead |
 | foyer / vestibule | arch | 8.09-9.74 | 1.65 | read in the overhead |
 | dining_room / kitchen | door | 5.72-6.73 | 1.01 | read in the overhead |
-| dining_room / sunroom | arch | 3.19-5.32 | 2.13 | read in the overhead |
-| foyer / back_stair | door | -2.89--1.88 | 1.01 | read in the overhead |
+| dining_room / sunroom | arch | 2.23-4.10 | 1.87 | read in the overhead |
+| foyer / back_stair | door | -3.10--2.21 | 0.89 | read in the overhead |
 | back_stair / kitchen | open | 6.02-6.92 | 0.90 | full shared wall |
 
 ## 5. Body rules (adult, hard)
@@ -79,14 +79,13 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | rule | result | value |
 |---|---|---|
 | adult fits door dining_room/kitchen | pass | 1.01 m wide x 2.03 m |
-| adult fits door foyer/back_stair | pass | 1.01 m wide x 2.03 m |
+| adult fits door foyer/back_stair | pass | 0.89 m wide x 2.03 m |
 | adult fits hall foyer | pass | narrowest 3.67 m (min 0.90) |
-| adult fits hall vestibule | pass | narrowest 1.20 m (min 0.90) |
+| adult fits hall vestibule | pass | narrowest 1.04 m (min 0.90) |
 | adult fits stair back_stair | pass | narrowest 0.90 m (min 0.65) |
 
 ## Flags (need a decision or more evidence)
 
-- wall dining_room/kitchen 55 cm: thick
 - unresolved: sunroom: room or porch, and whether Marina's 2,620 ft2 includes it
 - unresolved: second dining-room door (rear wall, right) leads to the kitchen's lower-right nook: not modelled
 - ceiling 2.32 m in rooms not measured directly (Kevin 2.40 / parents 2.50 / attic leg 2.29 measured)

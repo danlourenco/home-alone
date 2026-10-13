@@ -44,23 +44,23 @@
    "anchor": false,
    "polygon_xz": [
     [
-     2.687,
+     2.355,
      19.917
     ],
     [
-     2.687,
+     2.355,
      16.21
     ],
     [
-     10.569,
+     9.266,
      16.21
     ],
     [
-     10.569,
+     9.266,
      19.917
     ]
    ],
-   "area_m2": 29.22,
+   "area_m2": 25.62,
    "ceiling_m": 2.32
   },
   {
@@ -69,23 +69,23 @@
    "anchor": false,
    "polygon_xz": [
     [
-     1.805,
+     1.583,
      16.07
     ],
     [
-     1.805,
+     1.583,
      11.569
     ],
     [
-     11.354,
+     9.954,
      11.569
     ],
     [
-     11.354,
+     9.954,
      16.07
     ]
    ],
-   "area_m2": 42.98,
+   "area_m2": 37.68,
    "ceiling_m": 2.32
   },
   {
@@ -94,23 +94,23 @@
    "anchor": false,
    "polygon_xz": [
     [
-     0.009,
+     0.008,
      11.429
     ],
     [
-     0.009,
-     7.763
+     0.008,
+     7.762
     ],
     [
-     10.216,
-     7.763
+     8.948,
+     7.762
     ],
     [
-     10.216,
+     8.948,
      11.429
     ]
    ],
-   "area_m2": 37.43,
+   "area_m2": 32.79,
    "ceiling_m": 2.32
   },
   {
@@ -119,23 +119,23 @@
    "anchor": false,
    "polygon_xz": [
     [
-     10.357,
+     9.088,
      11.429
     ],
     [
-     10.357,
+     9.088,
      7.863
     ],
     [
-     11.555,
+     10.13,
      7.863
     ],
     [
-     11.555,
+     10.13,
      11.429
     ]
    ],
-   "area_m2": 4.27,
+   "area_m2": 3.71,
    "ceiling_m": 2.32
   },
   {
@@ -144,23 +144,23 @@
    "anchor": false,
    "polygon_xz": [
     [
-     4.849,
-     7.623
+     4.26,
+     7.622
     ],
     [
-     4.849,
+     4.26,
      3.004
     ],
     [
-     11.555,
+     10.13,
      3.004
     ],
     [
-     11.555,
-     7.623
+     10.13,
+     7.622
     ]
    ],
-   "area_m2": 30.97,
+   "area_m2": 27.11,
    "ceiling_m": 2.32
   },
   {
@@ -169,23 +169,23 @@
    "anchor": false,
    "polygon_xz": [
     [
-     2.792,
+     2.456,
      2.864
     ],
     [
-     2.792,
+     2.456,
      -0.915
     ],
     [
-     10.73,
+     9.407,
      -0.915
     ],
     [
-     10.73,
+     9.407,
      2.864
     ]
    ],
-   "area_m2": 30.0,
+   "area_m2": 26.27,
    "ceiling_m": 2.32
   },
   {
@@ -202,27 +202,27 @@
      -0.28
     ],
     [
-     2.652,
+     2.316,
      -0.28
     ],
     [
-     2.652,
+     2.316,
      3.649
     ],
     [
-     4.709,
+     4.12,
      3.649
     ],
     [
-     4.709,
-     7.623
+     4.12,
+     7.622
     ],
     [
-     2.702,
-     7.623
+     2.369,
+     7.622
     ],
     [
-     2.702,
+     2.369,
      6.587
     ],
     [
@@ -234,7 +234,7 @@
      3.923
     ]
    ],
-   "area_m2": 52.17,
+   "area_m2": 48.85,
    "ceiling_m": 2.32
   },
   {
@@ -244,22 +244,22 @@
    "polygon_xz": [
     [
      -1.505,
-     7.623
+     7.622
     ],
     [
      -1.505,
      6.726
     ],
     [
-     2.702,
+     2.369,
      6.726
     ],
     [
-     2.702,
-     7.623
+     2.369,
+     7.622
     ]
    ],
-   "area_m2": 3.77,
+   "area_m2": 3.47,
    "ceiling_m": 2.32
   }
  ],
@@ -274,18 +274,18 @@
    "wall_coord": 15.436,
    "wall_thickness": 0.14,
    "span": [
-    -0.868,
-    1.051
+    -1.326,
+    0.357
    ],
-   "width": 1.919,
+   "width": 1.683,
    "height": null,
    "opens": true,
    "placed_from": "read in the overhead",
    "source": "den clip (gate 5/6): 1.62 m gap in the living-side wall at door height (0.35-0.65 of floor-ceiling), 12-35% of the den's depth from the bookshelf wall; mapped onto the traced shared wall",
    "wall_coord_spec": 16.14,
    "span_spec": [
-    3.71,
-    5.629
+    3.252,
+    4.935
    ],
    "spec_axis": "z"
   },
@@ -299,18 +299,18 @@
    "wall_coord": 10.795,
    "wall_thickness": 0.14,
    "span": [
-    3.51,
-    5.208
+    2.513,
+    4.002
    ],
-   "width": 1.698,
+   "width": 1.489,
    "height": null,
    "opens": true,
    "placed_from": "read in the overhead",
    "source": "overhead: French door leaves at the living/foyer wall, y 750-850 px",
    "wall_coord_spec": 11.499,
    "span_spec": [
-    8.088,
-    9.786
+    7.091,
+    8.58
    ],
    "spec_axis": "z"
   },
@@ -321,21 +321,21 @@
    ],
    "kind": "arch",
    "wall_axis": "x",
-   "wall_coord": 6.989,
+   "wall_coord": 6.988,
    "wall_thickness": 0.14,
    "span": [
-    3.349,
-    5.303
+    2.372,
+    4.085
    ],
-   "width": 1.954,
+   "width": 1.713,
    "height": null,
    "opens": true,
    "placed_from": "read in the overhead",
    "source": "overhead: French door leaves on the dining room's left wall, y 740-855 px",
-   "wall_coord_spec": 7.693,
+   "wall_coord_spec": 7.692,
    "span_spec": [
-    7.927,
-    9.881
+    6.95,
+    8.663
    ],
    "spec_axis": "z"
   },
@@ -346,7 +346,7 @@
    ],
    "kind": "arch",
    "wall_axis": "y",
-   "wall_coord": 5.708,
+   "wall_coord": 4.44,
    "wall_thickness": 0.14,
    "span": [
     8.09,
@@ -357,7 +357,7 @@
    "opens": true,
    "placed_from": "read in the overhead",
    "source": "foyer/vestibule opening (stairs-a and 4:30 vestibule frames)",
-   "wall_coord_spec": 10.286,
+   "wall_coord_spec": 9.018,
    "span_spec": [
     8.794,
     10.443
@@ -371,7 +371,7 @@
    ],
    "kind": "door",
    "wall_axis": "y",
-   "wall_coord": 0.201,
+   "wall_coord": -0.388,
    "wall_thickness": 0.14,
    "span": [
     5.72,
@@ -382,7 +382,7 @@
    "opens": true,
    "placed_from": "read in the overhead",
    "source": "overhead: open door leaf, dining room's rear wall (left)",
-   "wall_coord_spec": 4.779,
+   "wall_coord_spec": 4.19,
    "span_spec": [
     6.424,
     7.438
@@ -399,18 +399,18 @@
    "wall_coord": 2.23,
    "wall_thickness": 0.14,
    "span": [
-    3.19,
-    5.318
+    2.233,
+    4.099
    ],
-   "width": 2.128,
+   "width": 1.866,
    "height": null,
    "opens": true,
    "placed_from": "read in the overhead",
    "source": "overhead: French door on the dining room's right wall",
    "wall_coord_spec": 2.934,
    "span_spec": [
-    7.768,
-    9.896
+    6.811,
+    8.677
    ],
    "spec_axis": "z"
   },
@@ -421,21 +421,21 @@
    ],
    "kind": "door",
    "wall_axis": "x",
-   "wall_coord": 6.989,
+   "wall_coord": 6.988,
    "wall_thickness": 0.14,
    "span": [
-    -2.889,
-    -1.878
+    -3.097,
+    -2.211
    ],
-   "width": 1.011,
+   "width": 0.886,
    "height": 2.032,
    "opens": true,
    "placed_from": "read in the overhead",
    "source": "foyer rear-right door under an arch (stairs-a frames 41-57, the scale door)",
-   "wall_coord_spec": 7.693,
+   "wall_coord_spec": 7.692,
    "span_spec": [
-    1.689,
-    2.7
+    1.481,
+    2.367
    ],
    "spec_axis": "z"
   },
@@ -446,28 +446,26 @@
    ],
    "kind": "open",
    "wall_axis": "y",
-   "wall_coord": -1.876,
+   "wall_coord": -2.209,
    "wall_thickness": -0.0,
    "span": [
     6.022,
-    6.919
+    6.918
    ],
    "width": 0.896,
    "height": null,
    "opens": true,
    "placed_from": "full shared wall",
    "source": "service stair foot opens to the breakfast area (no wall)",
-   "wall_coord_spec": 2.702,
+   "wall_coord_spec": 2.369,
    "span_spec": [
     6.726,
-    7.623
+    7.622
    ],
    "spec_axis": "x"
   }
  ],
- "flags": [
-  "wall dining_room/kitchen 55 cm: thick"
- ],
+ "flags": [],
  "stair": null,
  "floor_y_m": -2.535,
  "sources": {
