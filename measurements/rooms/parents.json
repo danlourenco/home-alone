@@ -1,0 +1,145 @@
+{
+ "suite": "parents",
+ "source": "Marina CG tour Part 2, frames 338-653 (4 fps); VGGT sfm-work/rooms/parents/vggt/sparse/0; plan frame = plan-0.05.json rotation",
+ "units": "VGGT model units in the plan frame; metres = units * m_per_unit",
+ "m_per_unit": {
+  "78in": 3.379,
+  "80in": 3.465,
+  "84in": 3.639
+ },
+ "scale_note": "bedroom hall door (6-panel, closed), frames 402/407/413: 0.585/0.586/0.602 units, median 0.5864, spread 2.8%",
+ "rooms": [
+  {
+   "name": "parents_bedroom",
+   "polygon": [
+    [
+     -0.21,
+     -0.39
+    ],
+    [
+     1.3,
+     -0.39
+    ],
+    [
+     1.3,
+     0.6
+    ],
+    [
+     0.83,
+     0.6
+    ],
+    [
+     0.83,
+     0.72
+    ],
+    [
+     0.68,
+     0.72
+    ],
+    [
+     0.68,
+     1.12
+    ],
+    [
+     -0.21,
+     1.12
+    ]
+   ],
+   "confidence": "walls x=1.30, y=-0.39, y=0.60, x=0.68 and y=1.12 crisp in density; left (window) wall x=-0.21 sparse (glass), position from window-frame points",
+   "open": [
+    "step at (0.68-0.83, 0.60-0.72) is small (0.5 x 0.4 m); seen in density, not yet confirmed in frames",
+    "notch (x 0.68-1.30, y 0.60-1.12) = the neighbouring bedroom per Marina's overhead (girls/all/images/f_00041.jpg)"
+   ],
+   "review": [
+    "top-left 'angled corner' in density was the folding screen (frames 46-52, overhead); corner is square"
+   ]
+  },
+  {
+   "name": "parents_bath",
+   "polygon": [
+    [
+     0.48,
+     -0.44
+    ],
+    [
+     1.26,
+     -0.44
+    ],
+    [
+     1.26,
+     -1.2
+    ],
+    [
+     0.32,
+     -1.2
+    ],
+    [
+     0.32,
+     -0.62
+    ],
+    [
+     0.48,
+     -0.62
+    ]
+   ],
+   "confidence": "y=-1.20 and x=1.26 crisp; shared wall with bedroom 0.05 units (~17 cm) thick",
+   "open": [
+    "overhead suggests the bath may stop ~0.2 units short of the bedroom's hall-side wall (x=1.26 here); oblique view hides that wall's inner face, SfM kept"
+   ],
+   "review": [
+    "L-shape confirmed by Marina's overhead: narrow at the window end next to the bedroom",
+    "bath/bedroom width ratio 0.50 (SfM) vs ~0.50 (overhead)"
+   ]
+  }
+ ],
+ "doors": [
+  {
+   "name": "bedroom_to_hall",
+   "wall": "x=1.30",
+   "span": [
+    [
+     1.3,
+     0.31
+    ],
+    [
+     1.3,
+     0.53
+    ]
+   ],
+   "evidence": "door slab edges, frames 402 and 407 agree within 0.02 units"
+  },
+  {
+   "name": "bedroom_to_bath",
+   "wall": "y=-0.39",
+   "span": [
+    [
+     0.83,
+     -0.39
+    ],
+    [
+     1.05,
+     -0.39
+    ]
+   ],
+   "evidence": "open casing, frame 413 (casing outer edges)"
+  }
+ ],
+ "features": [
+  {
+   "name": "fireplace",
+   "wall": "x=1.30",
+   "span": [
+    [
+     1.3,
+     -0.2
+    ],
+    [
+     1.3,
+     0.11
+    ]
+   ],
+   "depth_into_room": 0.09
+  }
+ ],
+ "cross_check": "Marina's angled upstairs overhead, girls/all/images/f_00041.jpg: plan mapping = SfM +x -> overhead down, SfM -y -> overhead left"
+}
