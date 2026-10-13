@@ -3,7 +3,7 @@ using System.IO;
 using UnityEngine;
 
 /// Walk-and-annotate: how does this spot FEEL compared with the film / Marina? Works in every scene with an
-/// FpsController (attached automatically on Play). Press N: a screenshot is taken, then a small panel asks
+/// FpsController (attached automatically on Play). Press M (mark): a screenshot is taken, then a small panel asks
 /// "feels right / feels off / not sure" plus a note. Each note is one JSON line in spec/feedback/feel-notes.jsonl
 /// with the scene, position, view direction and screenshot, so tools/house/feel_notes.py can map it to a room.
 public class FeelNotes : MonoBehaviour
@@ -29,7 +29,7 @@ public class FeelNotes : MonoBehaviour
 
     void Update()
     {
-        if (!open && Input.GetKeyDown(KeyCode.N)) StartCoroutine(Begin());
+        if (!open && Input.GetKeyDown(KeyCode.M)) StartCoroutine(Begin());
     }
 
     IEnumerator Begin()
@@ -67,7 +67,7 @@ public class FeelNotes : MonoBehaviour
     {
         var hint = new GUIStyle(GUI.skin.label) { fontSize = 16 }; hint.normal.textColor = Color.white;
         GUI.Label(new Rect(14, Screen.height - 34, 900, 28),
-                  Time.time < flashUntil ? flash : $"N: note how this spot feels   ({saved} notes so far)", hint);
+                  Time.time < flashUntil ? flash : $"M: mark how this spot feels   ({saved} notes so far)", hint);
         if (!open) return;
         var w = 560f; var r = new Rect((Screen.width - w) / 2, Screen.height / 2 - 120, w, 230);
         GUI.Box(r, "How does this spot feel compared with the film / Marina?");

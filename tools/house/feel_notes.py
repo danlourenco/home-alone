@@ -1,4 +1,4 @@
-"""Read the walk-and-annotate notes (Unity FeelNotes, key N) and place each one.
+"""Read the walk-and-annotate notes (Unity FeelNotes, key M) and place each one.
 
   Greybox_Upstairs scene: notes map to the room they stand in (spec polygons; floor chosen by height).
   IntactHouseReference (the old downloaded model): notes are placed on that model's floor plan (glb_section.py) and
@@ -58,7 +58,7 @@ def main():
             old.append((i, xy, n["rating"], up))
             where = f"old model {'upper' if up else 'ground'} floor plan ({xy[0]:.1f}, {xy[1]:.1f}) m, see map"
         rows.append(f"| {i} | {n['scene']} | {where} | {n['rating']} | {n['note']} | [{n['shot']}]({n['shot']}) |")
-    (FB / "feel-notes.md").write_text("# Feel notes (walk-and-annotate, key N in Unity)\n\n" + "\n".join(rows) + "\n")
+    (FB / "feel-notes.md").write_text("# Feel notes (walk-and-annotate, key M in Unity)\n\n" + "\n".join(rows) + "\n")
     print("\n".join(rows))
     if old:
         import matplotlib
