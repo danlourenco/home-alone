@@ -45,6 +45,15 @@ Every tracing mistake you fix adds the checkpoint that would have caught it, in 
 
 Unproven checkpoints don't count. The Oct 13 proof: the pre-fix trace fails 7 checks, and the fixed trace passes 12.
 
+## Shape drift: does every room still feel like Marina's? (gate)
+
+```bash
+uv run --with numpy python tools/house/shape_drift.py        # both floors; exit 1 if a room drifts past 5%
+uv run --with numpy --with matplotlib --with pillow python tools/house/verify_plan.py --floor ground
+```
+
+Compares each built room with Marina's overhead as traced, before stretching, thinning or stacking. Width, depth, proportion and area are checked per room. The rule (user, Oct 13): a room of notably different shape or size than Marina's is not acceptable. Every flagged room must be fixed or listed in `docs/DEVIATIONS.md`. Wall thinning makes small rooms read +10-15% (they gain a fixed 10-30 cm per side). Proportion changes are the ones that change feel.
+
 ## Wall-by-wall 3D check against the video (numeric gate)
 
 ```bash
