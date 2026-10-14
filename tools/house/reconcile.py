@@ -148,6 +148,9 @@ def facing_pairs(polys, edges):
 
 MEASURED = "--measured" in sys.argv
 STAIR = ROOT / "measurements/rooms/stairs.json"
+# --variant <name> --risers <landing>+<total>: a comparison build (spec/house_spec[.ground].<name>.json) with the stair's riser
+# counts changed and the rise refitted to --floor-to-floor; measurements untouched (tools/house/stair_variants.py)
+VARIANT = sys.argv[sys.argv.index("--variant") + 1] if "--variant" in sys.argv else None
 
 
 def wall_of(p):
@@ -173,6 +176,9 @@ def stair_spec(final, o):
     floor (a grey-box stair); rails are boxes; walk_path is the route the Unity walk test climbs and descends."""
     S = json.loads(STAIR.read_text()); m, a = S["measured"], S["authored"]
     r, g, n1, n = m["rise_m"]["value"], m["going_m"]["value"], m["risers_floor_to_landing"]["value"], a["risers_total"]
+    if VARIANT:
+        n1, n = map(int, sys.argv[sys.argv.index("--risers") + 1].split("+")); n += n1
+        r = float(sys.argv[sys.argv.index("--floor-to-floor") + 1]) / n
     F = n * r
     sx = lambda P: np.c_[P[:, 1] - o[1], P[:, 0] - o[0]]
     well, hall = sx(final["main_stair_opening"]), sx(final["hall_corridor"])
@@ -415,16 +421,19 @@ def main():
                    "spec_axis": "z" if d["wall_axis"] == "x" else "x"} for d in doors],
         "flags": flags,
         "stair": stair_spec(final, o) if FLOOR == "upstairs" else None,
-        "floor_y_m": 0.0 if FLOOR == "upstairs" else -round(json.loads((ROOT / "spec/house_spec.json").read_text())["stair"]["floor_to_floor_m"], 3),
+        "floor_y_m": 0.0 if FLOOR == "upstairs" else -round(json.loads((ROOT / f"spec/house_spec{'.' + VARIANT if VARIANT else ''}.json").read_text())["stair"]["floor_to_floor_m"], 3),
         "sources": {"plan": str(PLAN.relative_to(ROOT)), "doors": str(DOORS.relative_to(ROOT)), "anchors": ANCHORS},
     }
     spec["windows"] = windows_spec(spec["spaces"])
     (ROOT / "spec").mkdir(exist_ok=True)
     tag =(".measured" if MEASURED else "") if FLOOR == "upstairs" else ("." + FLOOR + (".measured" if MEASURED else ""))
+    if VARIANT:
+        tag += "." + VARIANT
     if MEASURED:
         spec["walls"] = {"interior_thickness_m": None, "note": "as measured: walls NOT thinned (comparison build only)"}
     (ROOT / f"spec/house_spec{tag}.json").write_text(json.dumps(spec, indent=1) + "\n")
-    (ROOT / f"spec/{FLOOR}-changes{'.measured' if MEASURED else ''}.md").write_text("\n".join(log) + "\n")
+    if not VARIANT:
+        (ROOT / f"spec/{FLOOR}-changes{'.measured' if MEASURED else ''}.md").write_text("\n".join(log) + "\n")
     print("\n".join(log))
 
 

@@ -68,15 +68,15 @@
   "door height from edge pixels (door_scale.py) on this door: 14% short, because the slab is recessed under an arch and the top-edge pixel takes the arch's depth. Re-checked the upstairs doors with the robust method: Kevin +0.8%, parents +0.6% (inside the 78-80 in bracket)."
  ],
  "authored": {
-  "decided": "user, Oct 13: floor-to-floor 15 risers (2 steps above the landing); full-width landing along the rear wall; flight 2 = 2 risers at the landing's north end, rising toward the front onto a gallery along the north side of the well to the hall",
-  "risers_total": 15,
-  "floor_to_floor_m": 2.535,
+  "decided": "user, Oct 14: 17 risers = 13 + 4 (4 steps above the landing), at Marina's measured rise, so floor-to-floor 17 x 0.169 = 2.873 m. Sources: a summary the user found (13 + 4 = 17), the September model's flight 2 (4 risers, glb section Oct 14), and the exterior's floor height. Flight 2 keeps the measured going (3 treads x 0.241 m), so the stair head moves 0.482 m along the north-side gallery. Was (Oct 13): 15 risers, 2 above the landing. Full-width landing along the rear wall; flight 2 at the landing's north end, rising toward the front onto the gallery",
+  "risers_total": 17,
+  "floor_to_floor_m": 2.873,
   "flight_1_width_m": 1.2,
   "flight_1_width_note": "tread band 1.125 m measured + stringer/tread ends",
   "landing_depth_m": 1.58,
   "landing_depth_note": "clip B top nosing to rear wall, 0.53 units x 4.02 m/unit x 0.742 (depth-stretch correction = true going / 3D going); depth-direction, so +-0.15 m",
   "gallery_width_m": 1.2,
-  "gallery_note": "gallery = flight 2's width, running to the hall (not measured; Marina's upstairs shows the whole well open)",
+  "gallery_note": "gallery = flight 2's width, running to the hall (not measured; Marina's upstairs shows the whole well open); stair head moved to plan y -2.275 (was -2.757) for flight 2's 3 treads (Oct 14)",
   "landing_width_note": "Marina's main-floor landing spans the foyer (~4 m in clip B); the upstairs well is 2.83 m, so the build uses the well's width (floors don't stack exactly in Marina's models)",
   "flight_2_width_m": 1.2,
   "flight_2_note": "same width as flight 1 in the user's main-floor plan drawing"

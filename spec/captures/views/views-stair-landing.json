@@ -1,0 +1,17 @@
+[
+ {
+  "name": "../stair-options/now-gallery",
+  "pos": [
+   0.5,
+   0.85,
+   -9.15
+  ],
+  "look_at": [
+   2.6,
+   0.25,
+   -9.2
+  ],
+  "vfov": 55,
+  "note": "on the landing looking up flight 2 to the gallery"
+ }
+]

@@ -1,0 +1,75 @@
+{
+ "change": "Main stair 13 + 4 = 17 risers (was 13 + 2) at Marina's measured rise 0.169 m and going 0.241 m: floor-to-floor 2.873 m, flight 2 has 3 full treads, the stair head moves 0.482 m along the north-side gallery",
+ "target": "Greybox_Upstairs",
+ "premise": "The main stair has 4 risers above the landing (17 in all); flight 1's 13 is measured",
+ "claim": {
+  "value": [
+   13,
+   4
+  ],
+  "data": [
+   "user-summary:13+4"
+  ],
+  "scale": [
+   "count"
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-10-13",
+   "what": "15 risers (13 + 2) chosen by the user; flight 2 never filmed",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "September model (glb section, Oct 14): flight 2 = 4 risers from a full-width landing, same U layout",
+   "agrees": true,
+   "data": [
+    "glb:intact"
+   ],
+   "scale": [
+    "count"
+   ],
+   "independent": true
+  },
+  {
+   "what": "exterior floor-to-floor 3.02 m = 17 x 0.178 (shell_fit.py); 15 risers would need 0.201 m rises",
+   "agrees": true,
+   "data": [
+    "glb:intact-exterior"
+   ],
+   "scale": [
+    "door-80in:glb"
+   ],
+   "independent": true
+  },
+  {
+   "what": "Marina 349 s: her climb ends on the landing with the upper flight's railing rising at right; steps not shown",
+   "agrees": true,
+   "data": [
+    "marina-frame:349"
+   ],
+   "scale": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/stair-options/current-p1-335.png",
+   "spec/captures/stair-options/current-p1-345.png",
+   "spec/captures/stair-options/current-foyer-wide.png"
+  ],
+  "after": [
+   "spec/captures/stair-options/now-p1-335.png",
+   "spec/captures/stair-options/now-p1-345.png",
+   "spec/captures/stair-options/now-foyer-wide.png",
+   "spec/captures/stair-options/now-gallery.png",
+   "spec/captures/stair-options/compare.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "user_words": "(Oct 14) 'looks like that's the faithful one' (13 + 4); foyer must stay as close to Marina's as possible"
+}

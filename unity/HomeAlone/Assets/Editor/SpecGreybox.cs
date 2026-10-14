@@ -37,7 +37,11 @@ public static class SpecGreybox
     static List<Win> Windows = new List<Win>();
     class Space { public string name, kind, opens; public float ceil; public List<Vector2> pts; }
 
-    static string GroundPath => Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/house_spec.ground.json"));
+    static string GroundPath
+    {   // a variant's own ground floor when it has one (stair variants move the ground floor), else the main one
+        get { var v = Path.GetFullPath(Path.Combine(Application.dataPath, $"../../../spec/house_spec.ground{Tag}.json"));
+              return File.Exists(v) ? v : Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/house_spec.ground.json")); }
+    }
     static float FloorY;   // vertical offset of the floor being built (ground floor sits at -floor_to_floor); Box adds it
 
     static (List<Space>, List<Door>) Parse(JObject j)
