@@ -111,7 +111,7 @@ A check is **independent** only if its evidence played no part in building the p
 - The room sizes of Kevin and Buzz were inputs to the overhead calibration.
 - The walls checked by `check_walls.py` for hall-s1, parents and Kevin were partly used to fit those clips' registrations.
 
-`verify_plan.py` prints each check's kind. To get independent evidence, use clips the plan was not built from (hall-s4, the Buzz clip). Alternatively, fit a registration on some walls and check the others (held-out). Never count a consistency pass as proof of faithfulness.
+`verify_plan.py` prints each check's kind. To get independent evidence, use clips the plan was not built from (hall-s4, the Buzz clip). Alternatively, fit a registration on some walls and check the others (held-out). Never count a consistency pass as proof of faithfulness. Before any geometry change, the `change-gate` skill makes this mechanical: its tool fails a change with no independent agreeing check.
 
 ## Where checkpoints come from
 

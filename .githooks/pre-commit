@@ -1,0 +1,11 @@
+#!/bin/sh
+# Change gate (skill change-gate): a commit that changes geometry inputs or a built house scene must stage a
+# changes/*.json record that passes tools/house/change_gate.py. Pure rebuild outputs: commit with --no-verify and say so.
+geo=$(git diff --cached --name-only | grep -E '^(measurements/|spec/house_spec|spec/furniture\.json|tools/house/reconcile\.py|unity/HomeAlone/Assets/Scenes/(IntactHouseReference|Greybox_Upstairs)\.unity)')
+[ -z "$geo" ] && exit 0
+recs=$(git diff --cached --name-only --diff-filter=AM | grep -E '^changes/.*\.json$')
+if [ -z "$recs" ]; then
+  echo "change gate: geometry changed ($(echo $geo | tr '\n' ' ')) but no changes/*.json record is staged. See .claude/skills/change-gate/SKILL.md"
+  exit 1
+fi
+uv run -q python tools/house/change_gate.py $recs
