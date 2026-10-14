@@ -1,0 +1,610 @@
+[
+ {
+  "name": "../sheet/parents_bedroom-latest-a",
+  "room": "parents_bedroom",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   6.059,
+   1.3,
+   -4.831
+  ],
+  "look_at": [
+   3.21,
+   1.0,
+   -0.0
+  ],
+  "vfov": 60,
+  "note": "doorway to hall_end; far corner on the L entering",
+  "file": "parents_bedroom-latest-a.png"
+ },
+ {
+  "name": "../sheet/parents_bedroom-latest-b",
+  "room": "parents_bedroom",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   3.71,
+   1.3,
+   -0.5
+  ],
+  "look_at": [
+   6.059,
+   1.0,
+   -5.331
+  ],
+  "vfov": 60,
+  "note": "far corner (L) back to the doorway to hall_end",
+  "file": "parents_bedroom-latest-b.png"
+ },
+ {
+  "name": "../sheet/parents_bath-latest-a",
+  "room": "parents_bath",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   2.57,
+   1.3,
+   -3.964
+  ],
+  "look_at": [
+   0.343,
+   1.0,
+   -0.872
+  ],
+  "vfov": 60,
+  "note": "doorway to parents_bedroom; far corner on the R entering",
+  "file": "parents_bath-latest-a.png"
+ },
+ {
+  "name": "../sheet/parents_bath-latest-b",
+  "room": "parents_bath",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   0.843,
+   1.3,
+   -1.372
+  ],
+  "look_at": [
+   3.07,
+   1.0,
+   -3.964
+  ],
+  "vfov": 60,
+  "note": "far corner (R) back to the doorway to parents_bedroom",
+  "file": "parents_bath-latest-b.png"
+ },
+ {
+  "name": "../sheet/kevin_jeff_room-latest-a",
+  "room": "kevin_jeff_room",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   7.561,
+   1.3,
+   -7.139
+  ],
+  "look_at": [
+   11.664,
+   1.0,
+   -3.861
+  ],
+  "vfov": 60,
+  "note": "doorway to hall_end; far corner on the L entering",
+  "file": "kevin_jeff_room-latest-a.png"
+ },
+ {
+  "name": "../sheet/kevin_jeff_room-latest-b",
+  "room": "kevin_jeff_room",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   11.164,
+   1.3,
+   -4.361
+  ],
+  "look_at": [
+   7.061,
+   1.0,
+   -7.139
+  ],
+  "vfov": 60,
+  "note": "far corner (L) back to the doorway to hall_end",
+  "file": "kevin_jeff_room-latest-b.png"
+ },
+ {
+  "name": "../sheet/girls_room_a-latest-a",
+  "room": "girls_room_a",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   5.034,
+   1.3,
+   -7.104
+  ],
+  "look_at": [
+   0.343,
+   1.0,
+   -5.414
+  ],
+  "vfov": 60,
+  "note": "doorway to hall_end; far corner on the R entering",
+  "file": "girls_room_a-latest-a.png"
+ },
+ {
+  "name": "../sheet/girls_room_a-latest-b",
+  "room": "girls_room_a",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   0.843,
+   1.3,
+   -5.914
+  ],
+  "look_at": [
+   5.534,
+   1.0,
+   -7.104
+  ],
+  "vfov": 60,
+  "note": "far corner (R) back to the doorway to hall_end",
+  "file": "girls_room_a-latest-b.png"
+ },
+ {
+  "name": "../sheet/girls_room_b-latest-a",
+  "room": "girls_room_b",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   5.142,
+   1.3,
+   -12.531
+  ],
+  "look_at": [
+   0.396,
+   1.0,
+   -15.989
+  ],
+  "vfov": 60,
+  "note": "doorway to hall_corridor_south; far corner on the L entering",
+  "file": "girls_room_b-latest-a.png"
+ },
+ {
+  "name": "../sheet/girls_room_b-latest-b",
+  "room": "girls_room_b",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   0.896,
+   1.3,
+   -15.489
+  ],
+  "look_at": [
+   5.642,
+   1.0,
+   -12.531
+  ],
+  "vfov": 60,
+  "note": "far corner (L) back to the doorway to hall_corridor_south",
+  "file": "girls_room_b-latest-b.png"
+ },
+ {
+  "name": "../sheet/hall_bath-latest-a",
+  "room": "hall_bath",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   8.963,
+   1.3,
+   -10.611
+  ],
+  "look_at": [
+   11.664,
+   1.0,
+   -7.88
+  ],
+  "vfov": 60,
+  "note": "doorway to hall_corridor; far corner on the L entering",
+  "file": "hall_bath-latest-a.png"
+ },
+ {
+  "name": "../sheet/hall_bath-latest-b",
+  "room": "hall_bath",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   11.164,
+   1.3,
+   -8.38
+  ],
+  "look_at": [
+   8.463,
+   1.0,
+   -10.611
+  ],
+  "vfov": 60,
+  "note": "far corner (L) back to the doorway to hall_corridor",
+  "file": "hall_bath-latest-b.png"
+ },
+ {
+  "name": "../sheet/buzz_room-latest-a",
+  "room": "buzz_room",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   7.895,
+   1.3,
+   -12.041
+  ],
+  "look_at": [
+   11.158,
+   1.0,
+   -15.998
+  ],
+  "vfov": 60,
+  "note": "doorway to hall_corridor; far corner on the L entering",
+  "file": "buzz_room-latest-a.png"
+ },
+ {
+  "name": "../sheet/buzz_room-latest-b",
+  "room": "buzz_room",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   10.658,
+   1.3,
+   -15.498
+  ],
+  "look_at": [
+   7.895,
+   1.0,
+   -11.541
+  ],
+  "vfov": 60,
+  "note": "far corner (L) back to the doorway to hall_corridor",
+  "file": "buzz_room-latest-b.png"
+ },
+ {
+  "name": "../sheet/den-latest-a",
+  "room": "den",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   7.753,
+   -1.235,
+   -16.71
+  ],
+  "look_at": [
+   2.355,
+   -1.535,
+   -19.917
+  ],
+  "vfov": 60,
+  "note": "doorway to living_room; far corner on the R entering",
+  "file": "den-latest-a.png"
+ },
+ {
+  "name": "../sheet/den-latest-b",
+  "room": "den",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   2.855,
+   -1.235,
+   -19.417
+  ],
+  "look_at": [
+   7.753,
+   -1.535,
+   -16.21
+  ],
+  "vfov": 60,
+  "note": "far corner (R) back to the doorway to living_room",
+  "file": "den-latest-b.png"
+ },
+ {
+  "name": "../sheet/living_room-latest-a",
+  "room": "living_room",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   7.835,
+   -1.235,
+   -12.069
+  ],
+  "look_at": [
+   1.583,
+   -1.535,
+   -16.07
+  ],
+  "vfov": 60,
+  "note": "doorway to foyer; far corner on the R entering",
+  "file": "living_room-latest-a.png"
+ },
+ {
+  "name": "../sheet/living_room-latest-b",
+  "room": "living_room",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   2.083,
+   -1.235,
+   -15.57
+  ],
+  "look_at": [
+   7.835,
+   -1.535,
+   -11.569
+  ],
+  "vfov": 60,
+  "note": "far corner (R) back to the doorway to foyer",
+  "file": "living_room-latest-b.png"
+ },
+ {
+  "name": "../sheet/foyer-latest-a",
+  "room": "foyer",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   8.448,
+   -1.235,
+   -9.619
+  ],
+  "look_at": [
+   0.008,
+   -1.535,
+   -7.762
+  ],
+  "vfov": 60,
+  "note": "doorway to vestibule; far corner on the R entering",
+  "file": "foyer-latest-a.png"
+ },
+ {
+  "name": "../sheet/foyer-latest-b",
+  "room": "foyer",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   0.508,
+   -1.235,
+   -8.262
+  ],
+  "look_at": [
+   8.948,
+   -1.535,
+   -9.619
+  ],
+  "vfov": 60,
+  "note": "far corner (R) back to the doorway to vestibule",
+  "file": "foyer-latest-b.png"
+ },
+ {
+  "name": "../sheet/dining_room-latest-a",
+  "room": "dining_room",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   7.806,
+   -1.235,
+   -7.122
+  ],
+  "look_at": [
+   4.26,
+   -1.535,
+   -3.004
+  ],
+  "vfov": 60,
+  "note": "doorway to foyer; far corner on the L entering",
+  "file": "dining_room-latest-a.png"
+ },
+ {
+  "name": "../sheet/dining_room-latest-b",
+  "room": "dining_room",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   4.76,
+   -1.235,
+   -3.504
+  ],
+  "look_at": [
+   7.806,
+   -1.535,
+   -7.622
+  ],
+  "vfov": 60,
+  "note": "far corner (L) back to the doorway to foyer",
+  "file": "dining_room-latest-b.png"
+ },
+ {
+  "name": "../sheet/sunroom-latest-a",
+  "room": "sunroom",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   7.744,
+   -1.235,
+   -2.364
+  ],
+  "look_at": [
+   2.456,
+   -1.535,
+   0.915
+  ],
+  "vfov": 60,
+  "note": "doorway to dining_room; far corner on the L entering",
+  "file": "sunroom-latest-a.png"
+ },
+ {
+  "name": "../sheet/sunroom-latest-b",
+  "room": "sunroom",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   2.956,
+   -1.235,
+   0.415
+  ],
+  "look_at": [
+   7.744,
+   -1.535,
+   -2.864
+  ],
+  "vfov": 60,
+  "note": "far corner (L) back to the doorway to dining_room",
+  "file": "sunroom-latest-b.png"
+ },
+ {
+  "name": "../sheet/kitchen-latest-a",
+  "room": "kitchen",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   3.62,
+   -1.235,
+   -6.931
+  ],
+  "look_at": [
+   -5.192,
+   -1.535,
+   0.28
+  ],
+  "vfov": 60,
+  "note": "doorway to dining_room; far corner on the R entering",
+  "file": "kitchen-latest-a.png"
+ },
+ {
+  "name": "../sheet/kitchen-latest-b",
+  "room": "kitchen",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   -4.692,
+   -1.235,
+   -0.22
+  ],
+  "look_at": [
+   4.12,
+   -1.535,
+   -6.931
+  ],
+  "vfov": 60,
+  "note": "far corner (R) back to the doorway to dining_room",
+  "file": "kitchen-latest-b.png"
+ },
+ {
+  "name": "../sheet/vestibule-latest-a",
+  "room": "vestibule",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   9.588,
+   -1.235,
+   -9.619
+  ],
+  "look_at": [
+   10.13,
+   -1.535,
+   -11.429
+  ],
+  "vfov": 60,
+  "note": "doorway to foyer; far corner on the R entering",
+  "file": "vestibule-latest-a.png"
+ },
+ {
+  "name": "../sheet/vestibule-latest-b",
+  "room": "vestibule",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   9.63,
+   -1.235,
+   -10.929
+  ],
+  "look_at": [
+   9.088,
+   -1.535,
+   -9.619
+  ],
+  "vfov": 60,
+  "note": "far corner (R) back to the doorway to foyer",
+  "file": "vestibule-latest-b.png"
+ },
+ {
+  "name": "../sheet/hall_corridor-latest-a",
+  "room": "hall_corridor",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   6.06,
+   1.3,
+   -5.97
+  ],
+  "look_at": [
+   6.49,
+   1.0,
+   -13.52
+  ],
+  "vfov": 60,
+  "note": "from the parents'-door end (hall_end) looking along the hall to the attic door",
+  "file": "hall_corridor-latest-a.png"
+ },
+ {
+  "name": "../sheet/hall_corridor-latest-b",
+  "room": "hall_corridor",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   6.49,
+   1.3,
+   -13.02
+  ],
+  "look_at": [
+   6.06,
+   1.0,
+   -5.47
+  ],
+  "vfov": 60,
+  "note": "from the attic-door end looking back to the parents' door",
+  "file": "hall_corridor-latest-b.png"
+ },
+ {
+  "name": "../sheet/main_stair-latest-a",
+  "room": "main_stair",
+  "model": "latest",
+  "view": "a",
+  "pos": [
+   6.172,
+   -1.235,
+   -10.801
+  ],
+  "look_at": [
+   0.79,
+   0.662,
+   -10.801
+  ],
+  "vfov": 60,
+  "note": "foyer, 1.7 m before the first riser, looking up flight 1 to the half landing",
+  "file": "main_stair-latest-a.png"
+ },
+ {
+  "name": "../sheet/main_stair-latest-b",
+  "room": "main_stair",
+  "model": "latest",
+  "view": "b",
+  "pos": [
+   0.79,
+   0.962,
+   -10.801
+  ],
+  "look_at": [
+   4.472,
+   -1.535,
+   -10.801
+  ],
+  "vfov": 60,
+  "note": "half landing (2 risers below the upper floor) looking down flight 1",
+  "file": "main_stair-latest-b.png"
+ }
+]

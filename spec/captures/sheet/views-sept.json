@@ -1,0 +1,686 @@
+[
+ {
+  "name": "../sheet/parents_bedroom-sept-a",
+  "room": "parents_bedroom",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   9.556,
+   6.9,
+   3.31
+  ],
+  "look_at": [
+   14.8,
+   6.512,
+   7.29
+  ],
+  "vfov": 60,
+  "note": "same functional doorway; far corner on the L entering; view b stands beside the four-poster bed, which fills the near foreground",
+  "file": "parents_bedroom-sept-a.png"
+ },
+ {
+  "name": "../sheet/parents_bedroom-sept-b",
+  "room": "parents_bedroom",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   14.154,
+   6.9,
+   6.644
+  ],
+  "look_at": [
+   8.91,
+   6.512,
+   3.31
+  ],
+  "vfov": 60,
+  "note": "far corner back to the doorway; view b stands beside the four-poster bed, which fills the near foreground",
+  "file": "parents_bedroom-sept-b.png"
+ },
+ {
+  "name": "../sheet/parents_bath-sept-a",
+  "room": "parents_bath",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   10.05,
+   6.9,
+   8.106
+  ],
+  "look_at": [
+   10.86,
+   6.512,
+   10.77
+  ],
+  "vfov": 60,
+  "note": "same functional doorway; far corner on the R entering; Sept bath is L-shaped; corner taken in the main room, the tub alcove (X 10.86..12.5 native) is to the right of it",
+  "file": "parents_bath-sept-a.png"
+ },
+ {
+  "name": "../sheet/parents_bath-sept-b",
+  "room": "parents_bath",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   10.214,
+   6.9,
+   10.124
+  ],
+  "look_at": [
+   10.05,
+   6.512,
+   7.46
+  ],
+  "vfov": 60,
+  "note": "far corner back to the doorway; Sept bath is L-shaped; corner taken in the main room, the tub alcove (X 10.86..12.5 native) is to the right of it",
+  "file": "parents_bath-sept-b.png"
+ },
+ {
+  "name": "../sheet/kevin_jeff_room-sept-a",
+  "room": "kevin_jeff_room",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   5.94,
+   6.9,
+   1.364
+  ],
+  "look_at": [
+   9.86,
+   6.512,
+   -2.3
+  ],
+  "vfov": 60,
+  "note": "same functional doorway; far corner on the L entering",
+  "file": "kevin_jeff_room-sept-a.png"
+ },
+ {
+  "name": "../sheet/kevin_jeff_room-sept-b",
+  "room": "kevin_jeff_room",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   9.214,
+   6.9,
+   -1.654
+  ],
+  "look_at": [
+   5.94,
+   6.512,
+   2.01
+  ],
+  "vfov": 60,
+  "note": "far corner back to the doorway",
+  "file": "kevin_jeff_room-sept-b.png"
+ },
+ {
+  "name": "../sheet/girls_room_b-sept-a",
+  "room": "girls_room_b",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   -2.29,
+   6.9,
+   5.316
+  ],
+  "look_at": [
+   -6.09,
+   6.512,
+   10.77
+  ],
+  "vfov": 60,
+  "note": "same functional doorway; far corner on the L entering",
+  "file": "girls_room_b-sept-a.png"
+ },
+ {
+  "name": "../sheet/girls_room_b-sept-b",
+  "room": "girls_room_b",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   -5.444,
+   6.9,
+   10.124
+  ],
+  "look_at": [
+   -2.29,
+   6.512,
+   4.67
+  ],
+  "vfov": 60,
+  "note": "far corner back to the doorway",
+  "file": "girls_room_b-sept-b.png"
+ },
+ {
+  "name": "../sheet/hall_bath-sept-a",
+  "room": "hall_bath",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   -0.11,
+   6.9,
+   -0.686
+  ],
+  "look_at": [
+   4.35,
+   6.512,
+   -2.3
+  ],
+  "vfov": 60,
+  "note": "same functional doorway; far corner on the L entering; Sept bath door opens off a small hall bay that also serves Buzz's door",
+  "file": "hall_bath-sept-a.png"
+ },
+ {
+  "name": "../sheet/hall_bath-sept-b",
+  "room": "hall_bath",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   3.704,
+   6.9,
+   -1.654
+  ],
+  "look_at": [
+   -0.11,
+   6.512,
+   -0.04
+  ],
+  "vfov": 60,
+  "note": "far corner back to the doorway; Sept bath door opens off a small hall bay that also serves Buzz's door",
+  "file": "hall_bath-sept-b.png"
+ },
+ {
+  "name": "../sheet/buzz_room-sept-a",
+  "room": "buzz_room",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   -1.806,
+   6.9,
+   0.98
+  ],
+  "look_at": [
+   -6.09,
+   6.512,
+   -2.3
+  ],
+  "vfov": 60,
+  "note": "same functional doorway; far corner on the L entering; Sept layout is turned 90 deg relative to Marina's (DEVIATIONS 'Old model'); doorway and corner picked by function (door at the shelves-wall corner, far corner at the front window / desk wall)",
+  "file": "buzz_room-sept-a.png"
+ },
+ {
+  "name": "../sheet/buzz_room-sept-b",
+  "room": "buzz_room",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   -5.444,
+   6.9,
+   -1.654
+  ],
+  "look_at": [
+   -1.16,
+   6.512,
+   0.98
+  ],
+  "vfov": 60,
+  "note": "far corner back to the doorway; Sept layout is turned 90 deg relative to Marina's (DEVIATIONS 'Old model'); doorway and corner picked by function (door at the shelves-wall corner, far corner at the front window / desk wall)",
+  "file": "buzz_room-sept-b.png"
+ },
+ {
+  "name": "../sheet/den-sept-a",
+  "room": "den",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   -6.926,
+   2.99,
+   1.36
+  ],
+  "look_at": [
+   -11.03,
+   2.602,
+   7.98
+  ],
+  "vfov": 60,
+  "note": "same functional doorway; far corner on the R entering",
+  "file": "den-sept-a.png"
+ },
+ {
+  "name": "../sheet/den-sept-b",
+  "room": "den",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   -10.384,
+   2.99,
+   7.334
+  ],
+  "look_at": [
+   -6.28,
+   2.602,
+   1.36
+  ],
+  "vfov": 60,
+  "note": "far corner back to the doorway",
+  "file": "den-sept-b.png"
+ },
+ {
+  "name": "../sheet/living_room-sept-a",
+  "room": "living_room",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   -1.806,
+   2.99,
+   1.36
+  ],
+  "look_at": [
+   -6.09,
+   2.602,
+   10.77
+  ],
+  "vfov": 60,
+  "note": "same functional doorway; far corner on the R entering; looks broken in Sept: a loose dark door-leaf-like panel stands near the far corner and partly blocks view b",
+  "file": "living_room-sept-a.png"
+ },
+ {
+  "name": "../sheet/living_room-sept-b",
+  "room": "living_room",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   -5.444,
+   2.99,
+   10.124
+  ],
+  "look_at": [
+   -1.16,
+   2.602,
+   1.36
+  ],
+  "vfov": 60,
+  "note": "far corner back to the doorway; looks broken in Sept: a loose dark door-leaf-like panel stands near the far corner and partly blocks view b",
+  "file": "living_room-sept-b.png"
+ },
+ {
+  "name": "../sheet/foyer-sept-a",
+  "room": "foyer",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   1.98,
+   2.99,
+   0.846
+  ],
+  "look_at": [
+   4.73,
+   2.602,
+   9.12
+  ],
+  "vfov": 60,
+  "note": "same functional doorway; far corner on the R entering; Sept foyer's rear-north corner is the closet front at native z 9.12 (the closet behind it is not the foyer)",
+  "file": "foyer-sept-a.png"
+ },
+ {
+  "name": "../sheet/foyer-sept-b",
+  "room": "foyer",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   4.084,
+   2.99,
+   8.474
+  ],
+  "look_at": [
+   1.98,
+   2.602,
+   0.2
+  ],
+  "vfov": 60,
+  "note": "far corner back to the doorway; Sept foyer's rear-north corner is the closet front at native z 9.12 (the closet behind it is not the foyer)",
+  "file": "foyer-sept-b.png"
+ },
+ {
+  "name": "../sheet/dining_room-sept-a",
+  "room": "dining_room",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   5.746,
+   2.99,
+   1.36
+  ],
+  "look_at": [
+   9.86,
+   2.602,
+   7.29
+  ],
+  "vfov": 60,
+  "note": "same functional doorway; far corner on the L entering",
+  "file": "dining_room-sept-a.png"
+ },
+ {
+  "name": "../sheet/dining_room-sept-b",
+  "room": "dining_room",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   9.214,
+   2.99,
+   6.644
+  ],
+  "look_at": [
+   5.1,
+   2.602,
+   1.36
+  ],
+  "vfov": 60,
+  "note": "far corner back to the doorway",
+  "file": "dining_room-sept-b.png"
+ },
+ {
+  "name": "../sheet/sunroom-sept-a",
+  "room": "sunroom",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   10.506,
+   2.99,
+   1.36
+  ],
+  "look_at": [
+   14.8,
+   2.602,
+   7.29
+  ],
+  "vfov": 60,
+  "note": "same functional doorway; far corner on the L entering",
+  "file": "sunroom-sept-a.png"
+ },
+ {
+  "name": "../sheet/sunroom-sept-b",
+  "room": "sunroom",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   14.154,
+   2.99,
+   6.644
+  ],
+  "look_at": [
+   9.86,
+   2.602,
+   1.36
+  ],
+  "vfov": 60,
+  "note": "far corner back to the doorway",
+  "file": "sunroom-sept-b.png"
+ },
+ {
+  "name": "../sheet/kitchen-sept-a",
+  "room": "kitchen",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   5.74,
+   2.99,
+   8.106
+  ],
+  "look_at": [
+   15.56,
+   2.602,
+   17.92
+  ],
+  "vfov": 60,
+  "note": "same functional doorway; far corner on the R entering; doorway differs: Sept's foyer-end dining door opens into the back-stair bay, which is open to the kitchen/breakfast room (the grey-box door also lands beside the back stair); Sept has a second, direct dining->kitchen door at X 9.0",
+  "file": "kitchen-sept-a.png"
+ },
+ {
+  "name": "../sheet/kitchen-sept-b",
+  "room": "kitchen",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   14.914,
+   2.99,
+   17.274
+  ],
+  "look_at": [
+   5.74,
+   2.602,
+   7.46
+  ],
+  "vfov": 60,
+  "note": "far corner back to the doorway; doorway differs: Sept's foyer-end dining door opens into the back-stair bay, which is open to the kitchen/breakfast room (the grey-box door also lands beside the back stair); Sept has a second, direct dining->kitchen door at X 9.0",
+  "file": "kitchen-sept-b.png"
+ },
+ {
+  "name": "../sheet/vestibule-sept-a",
+  "room": "vestibule",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   1.98,
+   2.99,
+   -0.686
+  ],
+  "look_at": [
+   -0.97,
+   2.602,
+   -2.3
+  ],
+  "vfov": 60,
+  "note": "same functional doorway; far corner on the R entering",
+  "file": "vestibule-sept-a.png"
+ },
+ {
+  "name": "../sheet/vestibule-sept-b",
+  "room": "vestibule",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   -0.324,
+   2.99,
+   -1.654
+  ],
+  "look_at": [
+   1.98,
+   2.602,
+   -0.04
+  ],
+  "vfov": 60,
+  "note": "far corner back to the doorway",
+  "file": "vestibule-sept-b.png"
+ },
+ {
+  "name": "../sheet/hall_corridor-sept-a",
+  "room": "hall_corridor",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   8.264,
+   6.9,
+   3.31
+  ],
+  "look_at": [
+   -3.21,
+   6.512,
+   3.31
+  ],
+  "vfov": 60,
+  "note": "from the parents'-door end looking along the hall to the attic door",
+  "file": "hall_corridor-sept-a.png"
+ },
+ {
+  "name": "../sheet/hall_corridor-sept-b",
+  "room": "hall_corridor",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   -2.564,
+   6.9,
+   3.31
+  ],
+  "look_at": [
+   8.91,
+   6.512,
+   3.31
+  ],
+  "vfov": 60,
+  "note": "from the attic-door end looking back to the parents' door",
+  "file": "hall_corridor-sept-b.png"
+ },
+ {
+  "name": "../sheet/main_stair-sept-a",
+  "room": "main_stair",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   0.115,
+   2.99,
+   1.954
+  ],
+  "look_at": [
+   0.115,
+   5.742,
+   9.42
+  ],
+  "vfov": 60,
+  "note": "foyer, 1.7 m before the first riser, looking up flight 1 to the half landing",
+  "file": "main_stair-sept-a.png"
+ },
+ {
+  "name": "../sheet/main_stair-sept-b",
+  "room": "main_stair",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   0.115,
+   6.13,
+   9.42
+  ],
+  "look_at": [
+   0.115,
+   2.602,
+   4.15
+  ],
+  "vfov": 60,
+  "note": "half landing (4 risers below the upper floor here) looking down flight 1",
+  "file": "main_stair-sept-b.png"
+ },
+ {
+  "name": "../sheet/attic-sept-a",
+  "room": "attic",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   -9.2,
+   10.23,
+   3.3
+  ],
+  "look_at": [
+   5.0,
+   9.842,
+   9.0
+  ],
+  "vfov": 60,
+  "note": "top of the attic stair, turned to look east into the attic at its far (rear, east-partition) corner. Grey-box: room not present (it stops at the attic-stair door)",
+  "file": "attic-sept-a.png"
+ },
+ {
+  "name": "../sheet/attic-sept-b",
+  "room": "attic",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   4.354,
+   10.23,
+   8.354
+  ],
+  "look_at": [
+   -9.2,
+   9.842,
+   3.3
+  ],
+  "vfov": 60,
+  "note": "far corner back to the attic stair top. Grey-box: room not present",
+  "file": "attic-sept-b.png"
+ },
+ {
+  "name": "../sheet/upper_west_wing-sept-a",
+  "room": "upper_west_wing",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   -6.946,
+   6.9,
+   6.43
+  ],
+  "look_at": [
+   -11.03,
+   6.512,
+   -0.91
+  ],
+  "vfov": 60,
+  "note": "Sept only: west-wing room over the den, entered through girls_room_b; possible stand-in for girls_room_a but not where Marina's girls_room_a is",
+  "file": "upper_west_wing-sept-a.png"
+ },
+ {
+  "name": "../sheet/upper_west_wing-sept-b",
+  "room": "upper_west_wing",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   -10.384,
+   6.9,
+   -0.264
+  ],
+  "look_at": [
+   -6.3,
+   6.512,
+   6.43
+  ],
+  "vfov": 60,
+  "note": "Sept only: far corner back to the door from girls_room_b",
+  "file": "upper_west_wing-sept-b.png"
+ },
+ {
+  "name": "../sheet/basement-sept-a",
+  "room": "basement",
+  "model": "sept",
+  "view": "a",
+  "pos": [
+   5.6,
+   -0.55,
+   10.0
+  ],
+  "look_at": [
+   -6.0,
+   -0.938,
+   -2.0
+  ],
+  "vfov": 60,
+  "note": "near the foot of the basement stair looking across the basement to the front-west. Grey-box: room not present",
+  "file": "basement-sept-a.png"
+ },
+ {
+  "name": "../sheet/basement-sept-b",
+  "room": "basement",
+  "model": "sept",
+  "view": "b",
+  "pos": [
+   3.0,
+   -0.55,
+   4.0
+  ],
+  "look_at": [
+   3.0,
+   -0.938,
+   -6.0
+  ],
+  "vfov": 60,
+  "note": "looking straight at the front perimeter: there is no perimeter wall, the crawl space is open to the snow outside. Grey-box: room not present",
+  "file": "basement-sept-b.png"
+ }
+]

@@ -494,6 +494,21 @@ public static class SpecGreybox
         EditorSceneManager.OpenScene($"Assets/Scenes/{(si >= 0 ? a[si + 1] : "Greybox_Upstairs")}.unity");
         var go = new GameObject("ViewCam"); var cam = go.AddComponent<Camera>(); go.AddComponent<HDAdditionalCameraData>(); cam.nearClipPlane = 0.05f;
         var rt = new RenderTexture(1920, 1080, 24); cam.targetTexture = rt;
+        // Render-only fill, never saved (the scene is not saved): "-fill <intensity>" hangs a shadowless point light on the
+        // camera; "-ev <EV100>" fixes exposure through a temporary top-priority global volume (scene assets untouched).
+        int fi = System.Array.IndexOf(a, "-fill"), ei = System.Array.IndexOf(a, "-ev");
+        if (fi >= 0)
+        {
+            var l = new GameObject("FillLight").AddComponent<Light>(); l.transform.SetParent(go.transform, false);
+            l.type = LightType.Point; l.range = 25f; l.intensity = float.Parse(a[fi + 1]); l.shadows = LightShadows.None;
+            l.gameObject.AddComponent<HDAdditionalLightData>();
+        }
+        if (ei >= 0)
+        {
+            var prof = ScriptableObject.CreateInstance<VolumeProfile>(); var ex = prof.Add<Exposure>(true);
+            ex.mode.value = ExposureMode.Fixed; ex.fixedExposure.value = float.Parse(a[ei + 1]);
+            var vol = new GameObject("FillExposure").AddComponent<Volume>(); vol.isGlobal = true; vol.priority = 10000f; vol.sharedProfile = prof;
+        }
         foreach (var v in JArray.Parse(File.ReadAllText(Path.Combine(CaptureDir, "views", vi >= 0 ? a[vi + 1] : "views.json"))))
         {
             Vector3 V(JToken t) => new Vector3((float)t[0], (float)t[1], (float)t[2]);
@@ -501,6 +516,7 @@ public static class SpecGreybox
             var hidden = (v["hide"] ?? new JArray()).Select(h => GameObject.Find((string)h)).Where(o => o).ToList();
             hidden.ForEach(o => o.SetActive(false));
             go.transform.position = V(v["pos"]); go.transform.LookAt(V(v["look_at"])); cam.fieldOfView = (float)v["vfov"];
+            if (fi >= 0 || ei >= 0) cam.Render();   // warm-up frame: HDRP's first frame has no sky ambient yet (came out all brown)
             Shot(cam, rt, Path.Combine("views", (string)v["name"]));
             hidden.ForEach(o => o.SetActive(true));
         }
