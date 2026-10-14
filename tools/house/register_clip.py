@@ -106,7 +106,7 @@ def main(clip):
         if "standard_width" in spec:   # measured jambs include casing: centre a standard door in them
             mid = (lo + hi) / 2; lo, hi = mid - spec["standard_width"] / 2, mid + spec["standard_width"] / 2
         for d in D["doors"]:
-            if sorted((d["a"], d["b"])) == sorted((a, b)):
+            if sorted((d["a"], d["b"])) == sorted((a, b)) and not d.get("pinned"):   # pinned: placed from other evidence (its source says which)
                 d["span"] = [round(lo, 3), round(hi, 3)]
                 d["source"] = spec["note"] + f" (clip {clip} via registration)"
     for cp in C["checks"]:

@@ -72,11 +72,12 @@
    "a": "buzz_room",
    "b": "hall_corridor",
    "kind": "door",
-   "source": "Buzz's doorway in the cross wall beside the arch; jambs incl. casing (hall-s1 frames 148-192) (clip hall-s1 via registration)",
+   "source": "Marina's room-side frames: shelves corner to the door casing's outer edge 1.04 m in Part 2 563 s (twin-mattress scale, tools/house/mattress_ruler.py), door casing to head post 0.46 m in 563 s and in 560 s (door scale). Shifted +0.167 m along the wall from the hall-s1 registration [2.936, 3.698] (frames 148-192), which disagrees by 0.17 m; DEVIATIONS 26",
    "span": [
-    2.936,
-    3.698
-   ]
+    3.103,
+    3.865
+   ],
+   "pinned": true
   },
   {
    "a": "girls_room_b",

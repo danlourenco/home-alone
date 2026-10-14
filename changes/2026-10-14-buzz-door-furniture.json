@@ -1,0 +1,84 @@
+{
+ "change": "Buzz's door pinned at Marina's room-side position (+0.167 m along the wall; the reconciler fits +0.095 m against the hall end); chest, desk and shelves re-placed as wall fractions from the 0:50 overhead (chest 0.93 m, desk 1.41 m, shelves 2.71 m)",
+ "target": "Greybox_Upstairs",
+ "premise": "Marina's door casing is 1.04 m from the shelves corner, and her chest, desk and shelves sit at the overhead's fractions of their walls",
+ "claim": {
+  "value": [
+   1.04
+  ],
+  "data": [
+   "marina-frame:563",
+   "marina-overhead:50"
+  ],
+  "scale": [
+   "mattress-39in:563",
+   "overhead-fraction:50"
+  ]
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "door casing to head post 0.46 m in 560 s at door scale (consistent with the door position relative to the bed)",
+   "agrees": true,
+   "data": [
+    "marina-frame:560"
+   ],
+   "scale": [
+    "door-80in:560"
+   ],
+   "independent": true
+  },
+  {
+   "what": "chest width 0.93 m vs 550 s: chest 630 px against the window stool 620 px (0.91 m)",
+   "agrees": true,
+   "data": [
+    "marina-frame:550"
+   ],
+   "scale": [
+    "stool-0.91m:550"
+   ],
+   "independent": true
+  },
+  {
+   "what": "desk width 1.41 m vs 541.5 s front edge ~1.44 m at growth-chart scale",
+   "agrees": true,
+   "data": [
+    "marina-frame:541.5"
+   ],
+   "scale": [
+    "growth-chart:541.5"
+   ],
+   "independent": true
+  },
+  {
+   "what": "hall-s1 registration put the door 0.17 m nearer the shelves corner",
+   "agrees": false,
+   "data": [
+    "vggt:hall-s1"
+   ],
+   "scale": [
+    "door-80in:hall-s1"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/buzz-windows/before-p2-540.png",
+   "spec/captures/buzz-windows/before-p2-550.png",
+   "spec/captures/buzz-windows/before-p2-556.png",
+   "spec/captures/buzz-windows/before-outside-front.png",
+   "spec/captures/buzz-windows/before-outside-side.png"
+  ],
+  "after": [
+   "spec/captures/buzz-windows/now-p2-540.png",
+   "spec/captures/buzz-windows/now-p2-550.png",
+   "spec/captures/buzz-windows/now-p2-556.png",
+   "spec/captures/buzz-windows/now-outside-front.png",
+   "spec/captures/buzz-windows/now-outside-side.png",
+   "spec/captures/buzz-windows/compare.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "user_words": "(Oct 14) asked to move the door and re-place the other furniture faithfully"
+}
