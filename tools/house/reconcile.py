@@ -215,6 +215,26 @@ def stair_spec(final, o):
             "boxes": B, "walk_path": [[round(float(v), 3) for v in q] for q in path]}
 
 
+def windows_spec(spaces):
+    """measurements/windows/<floor>.json (fractions of a room wall) -> spec windows: the wall line and the span along it,
+    resolved on the built room, so windows follow the room when it is rebuilt."""
+    p = ROOT / f"measurements/windows/{FLOOR}.json"
+    if not p.exists():
+        return []
+    polys = {s["name"]: np.array(s["polygon_xz"]) for s in spaces}
+    out = []
+    for w in json.loads(p.read_text())["windows"]:
+        P = polys[w["room"]]
+        ax = 0 if w["side"][0] == "x" else 1                  # x_max: the wall is x = max, the window spans z
+        coord = P[:, ax].max() if w["side"].endswith("max") else P[:, ax].min()
+        lo, hi = P[:, 1 - ax].min(), P[:, 1 - ax].max()
+        c = lo + w["centre_frac"] * (hi - lo)
+        out.append({"room": w["room"], "name": w["name"], "wall_axis": "x" if ax == 0 else "z", "wall_coord_spec": round(float(coord), 3),
+                    "span_spec": [round(float(c - w["width_m"] / 2), 3), round(float(c + w["width_m"] / 2), 3)],
+                    "sill_m": w["sill_m"], "head_m": w["head_m"]})
+    return out
+
+
 def main():
     plan = json.loads(PLAN.read_text())
     topo = json.loads(DOORS.read_text())
@@ -398,8 +418,9 @@ def main():
         "floor_y_m": 0.0 if FLOOR == "upstairs" else -round(json.loads((ROOT / "spec/house_spec.json").read_text())["stair"]["floor_to_floor_m"], 3),
         "sources": {"plan": str(PLAN.relative_to(ROOT)), "doors": str(DOORS.relative_to(ROOT)), "anchors": ANCHORS},
     }
+    spec["windows"] = windows_spec(spec["spaces"])
     (ROOT / "spec").mkdir(exist_ok=True)
-    tag = (".measured" if MEASURED else "") if FLOOR == "upstairs" else ("." + FLOOR + (".measured" if MEASURED else ""))
+    tag =(".measured" if MEASURED else "") if FLOOR == "upstairs" else ("." + FLOOR + (".measured" if MEASURED else ""))
     if MEASURED:
         spec["walls"] = {"interior_thickness_m": None, "note": "as measured: walls NOT thinned (comparison build only)"}
     (ROOT / f"spec/house_spec{tag}.json").write_text(json.dumps(spec, indent=1) + "\n")

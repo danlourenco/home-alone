@@ -1,0 +1,35 @@
+{
+ "note": "Window openings (clear, inside the casing). side = which edge of the room's bounding box in spec coordinates; centre_frac = along that wall from its low-coordinate end. Written by tools/house/buzz_windows.py (Marina Part 2: 0:50 overhead, 541.5 s chart, 563.0 s head)",
+ "windows": [
+  {
+   "room": "buzz_room",
+   "name": "front_hall_side",
+   "side": "x_max",
+   "centre_frac": 0.292,
+   "width_m": 0.72,
+   "sill_m": 0.81,
+   "head_m": 2.15,
+   "width_source": "assumed = desk-wall window"
+  },
+  {
+   "room": "buzz_room",
+   "name": "front_desk_side",
+   "side": "x_max",
+   "centre_frac": 0.789,
+   "width_m": 0.72,
+   "sill_m": 0.81,
+   "head_m": 2.15,
+   "width_source": "assumed = desk-wall window"
+  },
+  {
+   "room": "buzz_room",
+   "name": "desk_wall",
+   "side": "z_max",
+   "centre_frac": 0.837,
+   "width_m": 0.72,
+   "sill_m": 0.81,
+   "head_m": 2.15,
+   "width_source": "measured, 541.5 s stool at chart scale"
+  }
+ ]
+}

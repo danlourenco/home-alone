@@ -1438,5 +1438,43 @@
    "kevin_jeff_room": "measurements/rooms/kevin.json",
    "buzz_room": "measurements/rooms/buzz.json"
   }
- }
+ },
+ "windows": [
+  {
+   "room": "buzz_room",
+   "name": "front_hall_side",
+   "wall_axis": "x",
+   "wall_coord_spec": 11.158,
+   "span_spec": [
+    12.482,
+    13.202
+   ],
+   "sill_m": 0.81,
+   "head_m": 2.15
+  },
+  {
+   "room": "buzz_room",
+   "name": "front_desk_side",
+   "wall_axis": "x",
+   "wall_coord_spec": 11.158,
+   "span_spec": [
+    14.698,
+    15.418
+   ],
+   "sill_m": 0.81,
+   "head_m": 2.15
+  },
+  {
+   "room": "buzz_room",
+   "name": "desk_wall",
+   "wall_axis": "z",
+   "wall_coord_spec": 15.998,
+   "span_spec": [
+    10.197,
+    10.917
+   ],
+   "sill_m": 0.81,
+   "head_m": 2.15
+  }
+ ]
 }

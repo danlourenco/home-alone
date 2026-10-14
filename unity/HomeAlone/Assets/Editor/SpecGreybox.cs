@@ -19,7 +19,8 @@ public static class SpecGreybox
     const float ArchHead = 2.20f;      // arches: header height (not measured yet)
     const float RailHeight = 0.95f;
     const float CasingW = 0.07f, CasingProud = 0.02f;   // door trim: 2 3/4 in wide, 3/4 in proud (Marina's doors have it)
-    static Material mFloor, mWall, mCeil, mHall, mProp, mRail;
+    const float StoolProud = 0.04f, StoolT = 0.025f;      // window stool: 1 1/2 in into the room past the casing, 1 in thick
+    static Material mFloor, mWall, mCeil, mHall, mProp, mRail, mGlass;
 
     // "-variant measured" (command line) builds/renders spec/house_spec.measured.json: walls as measured, not thinned.
     static string Variant
@@ -32,6 +33,8 @@ public static class SpecGreybox
     static string CaptureDir => Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/captures"));
 
     class Door { public string a, b, kind; public bool alongX; public float coord, lo, hi, height; }
+    class Win { public string room; public bool alongX; public float coord, lo, hi, sill, head; }
+    static List<Win> Windows = new List<Win>();
     class Space { public string name, kind, opens; public float ceil; public List<Vector2> pts; }
 
     static string GroundPath => Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/house_spec.ground.json"));
@@ -52,6 +55,13 @@ public static class SpecGreybox
                 a = (string)d["between"][0], b = (string)d["between"][1], kind = (string)d["kind"], alongX = alongX,
                 coord = alongX ? -c : c, lo = alongX ? l : -h, hi = alongX ? h : -l,
                 height = d["height"].Type == JTokenType.Null ? 0f : (float)d["height"] };
+        }).ToList();
+        // windows: wall_axis "x" = the wall x = coord (runs along z), "z" = the wall z = coord; spec z -> world -z
+        Windows = (j["windows"] ?? new JArray()).Select(w => {
+            bool alongX = (string)w["wall_axis"] == "z";
+            float c = (float)w["wall_coord_spec"], l = (float)w["span_spec"][0], h = (float)w["span_spec"][1];
+            return new Win { room = (string)w["room"], alongX = alongX, coord = alongX ? -c : c, lo = alongX ? l : -h, hi = alongX ? h : -l,
+                             sill = (float)w["sill_m"], head = (float)w["head_m"] };
         }).ToList();
         return (spaces, doors);
     }
@@ -226,7 +236,37 @@ public static class SpecGreybox
                 cur = Mathf.Max(cur, dh);
             }
             if (cur < hi) Seg(g, "Wall", alongX, t0, t1, cur, hi, 0f, s.ceil);
+            foreach (var w in Windows.Where(w => w.room == s.name && w.alongX == alongX && Mathf.Abs(w.coord - coord) < 0.05f))
+                Window(g, alongX, t0, t1, sgn, w, s.ceil);
         }
+    }
+
+    // A window replaces its stretch of wall: wall below the sill and above the head, a glass pane in the middle of the
+    // wall (it has a collider, so the leak check still sees a closed house), casing on the room face and a stool.
+    // The wall run is cut by removing the window's span from the full-height segment built above.
+    static void Window(GameObject g, bool alongX, float t0, float t1, float sgn, Win w, float ceil)
+    {
+        var wg = Child(g, "Window");
+        foreach (Transform seg in g.transform.Cast<Transform>().Where(c => c.name == "Wall").ToList())
+        {   // split the full-height wall segment that spans the window
+            var b = seg.GetComponent<Renderer>().bounds; float s0 = alongX ? b.min.x : b.min.z, s1 = alongX ? b.max.x : b.max.z;
+            float tc = alongX ? b.center.z : b.center.x;
+            if (Mathf.Abs(tc - (t0 + t1) / 2) > 1e-3f || s0 > w.lo + 1e-4f || s1 < w.hi - 1e-4f) continue;
+            Object.DestroyImmediate(seg.gameObject);
+            Seg(g, "Wall", alongX, t0, t1, s0, w.lo, 0f, ceil);
+            Seg(g, "Wall", alongX, t0, t1, w.hi, s1, 0f, ceil);
+            break;
+        }
+        Seg(wg, "Wall_BelowSill", alongX, t0, t1, w.lo, w.hi, 0f, w.sill);
+        Seg(wg, "Wall_AboveHead", alongX, t0, t1, w.lo, w.hi, w.head, ceil);
+        float tm = (t0 + t1) / 2, ta = tm - 0.006f, tb = tm + 0.006f;
+        if (alongX) Box(wg, "Glass", w.lo, w.hi, ta, tb, w.sill, w.head, mGlass); else Box(wg, "Glass", ta, tb, w.lo, w.hi, w.sill, w.head, mGlass);
+        float f0 = t0, f1 = t0 - sgn * CasingProud;
+        Trim(wg, alongX, f0, f1, w.lo - CasingW, w.lo, w.sill, w.head + CasingW);
+        Trim(wg, alongX, f0, f1, w.hi, w.hi + CasingW, w.sill, w.head + CasingW);
+        Trim(wg, alongX, f0, f1, w.lo - CasingW, w.hi + CasingW, w.head, w.head + CasingW);
+        Trim(wg, alongX, t1, t0 - sgn * StoolProud, w.lo - CasingW - 0.025f, w.hi + CasingW + 0.025f, w.sill - StoolT, w.sill);   // stool
+        Trim(wg, alongX, f0, f1, w.lo - CasingW, w.hi + CasingW, w.sill - StoolT - 0.09f, w.sill - StoolT);                      // apron
     }
 
     static void Seg(GameObject p, string n, bool alongX, float t0, float t1, float s0, float s1, float y0, float y1)
@@ -273,6 +313,8 @@ public static class SpecGreybox
         mFloor = Mat("Floor", new Color(0.50f, 0.40f, 0.30f)); mHall = Mat("HallRunner", new Color(0.45f, 0.10f, 0.10f));
         mWall = Mat("Wall", new Color(0.82f, 0.80f, 0.74f)); mCeil = Mat("Ceiling", new Color(0.92f, 0.92f, 0.90f));
         mProp = Mat("PropDoor", new Color(0.95f, 0.93f, 0.86f)); mRail = Mat("Rail", new Color(0.30f, 0.18f, 0.10f));
+        mGlass = Mat("Glass", new Color(0.75f, 0.85f, 0.90f, 0.15f));
+        mGlass.SetFloat("_SurfaceType", 1f); mGlass.SetFloat("_Smoothness", 0.95f); HDMaterial.ValidateMaterial(mGlass);
     }
 
     static Material Mat(string n, Color c)
@@ -401,7 +443,7 @@ public static class SpecGreybox
     }
 
     // Leaks: from a 0.5 m grid at eye height in every space (both floors), rays go up and in 16 horizontal directions.
-    // A ray that hits nothing within 40 m escaped the house (a hole to the sky or outside). The grey-box has no windows,
+    // A ray that hits nothing within 40 m escaped the house (a hole to the sky or outside). Window glass has a collider,
     // so every escape is a defect. Headroom: on the ground floor, any grid point with < 2.0 m clear above the floor is
     // reported with the object above it; only the main stair's flight 1 (steps, rails) may stand there.
     static string LeakAndHeadroom(List<Space> up, List<Space> ground, float gy)

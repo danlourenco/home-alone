@@ -1,21 +1,118 @@
 {
- "change": "Adopt the grey-box Buzz room (4.46 x 3.68 m built, Marina trace 4.37 x 3.63) as the base and dress it: door casing, three windows, furniture",
+ "change": "Grey-box Buzz room kept at its built size (4.46 x 3.68 m) and given its three windows (clear 0.72 m, sill 0.81 m, head 2.15 m; positions as fractions of each wall from Marina's overhead)",
  "target": "Greybox_Upstairs",
  "premise": "Marina's Buzz room is about 4.37 x 3.63 m (door wall to desk wall x shelves wall to front windows), larger than the September model's 3.89 x 3.23",
- "claim": {"value": [4.37, 3.63], "data": ["overhead-trace:upstairs"], "scale": ["overhead-calib:upstairs"], "upstream": ["vggt:real-vggt-buzzall", "door-80in:buzz-clip"]},
+ "claim": {
+  "value": [
+   4.37,
+   3.63
+  ],
+  "data": [
+   "overhead-trace:upstairs"
+  ],
+  "scale": [
+   "overhead-calib:upstairs"
+  ],
+  "upstream": [
+   "vggt:real-vggt-buzzall",
+   "door-80in:buzz-clip"
+  ]
+ },
  "history": [
-  {"date": "2026-09-15", "what": "single-view headpost/footpost depth fit", "outcome": "failed"},
-  {"date": "2026-09-18", "what": "candidate 3.65 x 4.27 and 3.90 x 4.80 rooms (estimated)", "outcome": "failed"},
-  {"date": "2026-10-13", "what": "grey-box built at Marina's measured size: user 'still not marina's layout'", "outcome": "failed"},
-  {"date": "2026-10-13", "what": "old model resized to 4.35 x 3.54: user 'terrible', 'looks broken', 'worse than before'", "outcome": "failed"}
+  {
+   "date": "2026-09-15",
+   "what": "single-view headpost/footpost depth fit",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-09-18",
+   "what": "candidate 3.65 x 4.27 and 3.90 x 4.80 rooms (estimated)",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-13",
+   "what": "grey-box built at Marina's measured size: user 'still not marina's layout'",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-13",
+   "what": "old model resized to 4.35 x 3.54: user 'terrible', 'looks broken', 'worse than before'",
+   "outcome": "failed"
+  }
  ],
  "premise_reviewed": "Census of the four failures: all four took their size from the Buzz SfM (vggt:real-vggt-buzzall) scaled by an 80 in door in the same clip; the overhead trace inherits that scale. So that solve and scale are the suspect. The 2026-10-14 mattress ruler (tools/house/mattress_ruler.py) shares neither: the twin mattress between the headboard posts measures the door wall at 3.57 m (spread 3.44-3.91), which contains the trace 3.63 and excludes the September 3.24. The premise holds for that dimension. The 4.37 m door-to-desk dimension still has no independent check (no known-size object in the shelves-wall or front-wall plane in Marina's frames; the 0:50 overhead is too oblique for 5%). Of the failures, the Oct 13 old-model resize also broke the mesh (a look failure, not a size failure); the Oct 13 grey-box note was about layout.",
  "checks": [
-  {"what": "twin mattress between the headboard posts, Marina Part 2 563.0 s, door wall 3.57 m (3.44-3.91)", "agrees": true, "data": ["marina-frame:563"], "scale": ["mattress-39in:563"], "independent": true},
-  {"what": "Buzz SfM 3.49 m (door wall)", "agrees": true, "data": ["vggt:real-vggt-buzzall"], "scale": ["door-80in:buzz-clip"]},
-  {"what": "September census 3.89 x 3.23 (tools/house/sept_census.py)", "agrees": false, "data": ["glb:intact"], "scale": ["door-80in:glb"]}
+  {
+   "what": "twin mattress between the headboard posts, Marina Part 2 563.0 s, door wall 3.57 m (3.44-3.91)",
+   "agrees": true,
+   "data": [
+    "marina-frame:563"
+   ],
+   "scale": [
+    "mattress-39in:563"
+   ],
+   "independent": true
+  },
+  {
+   "what": "Buzz SfM 3.49 m (door wall)",
+   "agrees": true,
+   "data": [
+    "vggt:real-vggt-buzzall"
+   ],
+   "scale": [
+    "door-80in:buzz-clip"
+   ]
+  },
+  {
+   "what": "September census 3.89 x 3.23 (tools/house/sept_census.py)",
+   "agrees": false,
+   "data": [
+    "glb:intact"
+   ],
+   "scale": [
+    "door-80in:glb"
+   ]
+  },
+  {
+   "what": "desk-wall window centre 0.61 m from the front corner in Marina 543 s (bulletin-board scale) vs 0.60 m from the 0:50 overhead",
+   "agrees": true,
+   "data": [
+    "marina-frame:543"
+   ],
+   "scale": [
+    "board-36x24in:543"
+   ],
+   "independent": true
+  },
+  {
+   "what": "sill 0.81 m from the growth chart's 3 ft/5 ft marks (541.5 s); board 36x24 in agrees on scale within 3%; desk top 0.79 m vs standard 0.74-0.76",
+   "agrees": true,
+   "data": [
+    "marina-frame:541.5"
+   ],
+   "scale": [
+    "growth-chart:541.5"
+   ],
+   "independent": true
+  }
  ],
- "renders": {"before": [], "after": []},
+ "renders": {
+  "before": [
+   "spec/captures/buzz-windows/before-p2-540.png",
+   "spec/captures/buzz-windows/before-p2-550.png",
+   "spec/captures/buzz-windows/before-p2-556.png",
+   "spec/captures/buzz-windows/before-outside-front.png",
+   "spec/captures/buzz-windows/before-outside-side.png"
+  ],
+  "after": [
+   "spec/captures/buzz-windows/after-p2-540.png",
+   "spec/captures/buzz-windows/after-p2-550.png",
+   "spec/captures/buzz-windows/after-p2-556.png",
+   "spec/captures/buzz-windows/after-outside-front.png",
+   "spec/captures/buzz-windows/after-outside-side.png",
+   "spec/captures/buzz-windows/compare.jpg"
+  ]
+ },
  "user_walk": "pending",
  "user_words": ""
 }

@@ -1,0 +1,77 @@
+[
+ {
+  "name": "../buzz-windows/before-p2-540",
+  "pos": [
+   9.664,
+   1.292,
+   -14.182
+  ],
+  "look_at": [
+   9.516,
+   1.171,
+   -15.164
+  ],
+  "vfov": 37.19,
+  "note": "Marina p2-540 (buzz_room); pinned at front-window wall / desk wall"
+ },
+ {
+  "name": "../buzz-windows/before-p2-550",
+  "pos": [
+   8.324,
+   1.324,
+   -13.148
+  ],
+  "look_at": [
+   9.306,
+   1.199,
+   -13.288
+  ],
+  "vfov": 37.43,
+  "note": "Marina p2-550 (buzz_room); pinned at shelves wall / door wall"
+ },
+ {
+  "name": "../buzz-windows/before-p2-556",
+  "pos": [
+   8.216,
+   1.398,
+   -14.922
+  ],
+  "look_at": [
+   8.6,
+   1.317,
+   -14.002
+  ],
+  "vfov": 38.61,
+  "note": "Marina p2-556 (buzz_room); pinned at shelves wall / desk wall"
+ },
+ {
+  "name": "../buzz-windows/before-outside-front",
+  "pos": [
+   14.4,
+   1.5,
+   -13.9
+  ],
+  "look_at": [
+   11.158,
+   1.5,
+   -13.9
+  ],
+  "vfov": 50,
+  "note": "outside the front facade, facing Buzz's two front windows"
+ },
+ {
+  "name": "../buzz-windows/before-outside-side",
+  "pos": [
+   9.3,
+   1.5,
+   -19.5
+  ],
+  "look_at": [
+   9.3,
+   1.5,
+   -15.998
+  ],
+  "vfov": 50,
+  "note": "outside Buzz's desk wall"
+ }
+]
