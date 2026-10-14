@@ -1,5 +1,7 @@
 # Current status — start here (October 13, 2026)
 
+**PIVOT (user, Oct 13 evening): correct the EXISTING model, not the grey-box.** The working scene is again `IntactHouseReference` (the downloaded GLB at 0.774 m/unit, edited by the September `SurveyBuilder` editor scripts; the source GLB stays untouched). The ground floor there feels right to the user. Upstairs, Buzz's room feels cramped (3.82 × 3.24 m against Marina's 4.35 × 3.49 m; the hall beside it is 1.89 m wide against her 1.58 m). Apply the same principles to the old model: Marina is the authority, cite frames, take a census before fixing, prove every check fails on an injected error, log departures in DEVIATIONS.md, never move outside walls, and use the room-feel skill order. The grey-box, spec and checks below stay as the measurement record and as the target numbers.
+
 The upstairs is measured, reconciled into a spec, built as a walkable Unity grey-box, and verified against video. That includes independent evidence. **Next: the ground floor.** Every deviation from measurement is in [DEVIATIONS.md](DEVIATIONS.md) (top: the upstairs front wall overhangs the ground floor's by ~1.6 m; rooms keep Marina's shapes). Shape check: `uv run --with numpy python tools/house/shape_drift.py`. Background reading: [RECONCILIATION.md](RECONCILIATION.md) for the architecture, [tasks/sfm-plan.md](../tasks/sfm-plan.md) for the full experiment log, and the `verify-plan` skill for every check.
 
 Branch `unity-sfm-reconstruction`, pushed to `origin`. Git LFS covers `*.glb *.blend *.exr *.fbx *.psd *.tif *.tiff *.npz`.

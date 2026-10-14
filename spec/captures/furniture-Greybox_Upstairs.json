@@ -1,0 +1,6 @@
+{"scene":"Greybox_Upstairs","m_per_unit":1.0000,"pieces":[
+{"path":"Furniture/Buzz desk","name":"Buzz desk","size":[1.200,0.750,0.600]},
+{"path":"Furniture/Buzz mattress","name":"Buzz mattress","size":[0.990,0.230,1.910]},
+{"path":"Furniture/Buzz nightstand","name":"Buzz nightstand","size":[0.500,0.650,0.400]},
+{"path":"Furniture/Buzz chest","name":"Buzz chest","size":[0.480,1.100,0.800]}
+]}
