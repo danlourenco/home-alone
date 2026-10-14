@@ -29,8 +29,10 @@ public static partial class SurveyBuilder
         source.Single(r=>r.name=="object43").enabled=false;
         var wall=source.Single(r=>r.name=="object50").sharedMaterial;
         // Close the unsupported side-wing doorway. Wing remains accessible from the rear bedroom.
-        Box(root,"Film desk wall - former side wing doorway",-6.285f,-6.10f,.20f,1.56f,5.22f,8.0f,wall);
-        foreach(var r in source.Where(r=>r.name=="object24"||r.name=="object25"))r.transform.position+=new Vector3(-5.86f,6.13f,-.48f)-r.bounds.center;
+        // Desk-wall pieces follow the moved west wall (BuzzShiftX) and shelves-wall pieces the moved north wall (BuzzShiftZ): BuzzRoomResize.cs.
+        float sx=BuzzShiftX,sz=BuzzShiftZ;
+        Box(root,"Film desk wall - former side wing doorway",-6.285f+sx,-6.10f+sx,.20f,1.56f,5.22f,8.0f,wall);
+        foreach(var r in source.Where(r=>r.name=="object24"||r.name=="object25"))r.transform.position+=new Vector3(-5.86f+sx,6.13f,-.48f)-r.bounds.center;
         var bed=Child(root,"Buzz wooden bed");
         Box(bed,"Bed frame",-4.70f,-3.40f,-1.04f,1.34f,5.49f,5.65f,wood);
         Box(bed,"Mattress",-4.66f,-3.44f,-1.00f,1.30f,5.65f,5.87f,ivory);
@@ -49,13 +51,13 @@ public static partial class SurveyBuilder
             for(int i=0;i<7;i++)Cyl(bed,"Board spindle",-4.64f+i*.20f,z,5.64f,top-.14f,.016f,wood);
         }
         // Marina Part 2 0:50: offset toward hall, preserving bed size; inferred, not surveyed.
-        bed.transform.SetPositionAndRotation(new Vector3(-2.85f,0,-4.15f),Quaternion.Euler(0,90,0));
+        bed.transform.SetPositionAndRotation(new Vector3(-2.85f,0,-4.15f+sz),Quaternion.Euler(0,90,0));
         var beside=Child(root,"Buzz bedside table and lamp");
         Box(beside,"Bedside cabinet",-3.14f,-2.52f,.91f,1.54f,5.22f,5.91f,wood);
         for(int i=0;i<2;i++)Box(beside,"Bedside drawer",-3.10f,-2.56f,.88f,.90f,5.32f+i*.26f,5.54f+i*.26f,wood);
         Cyl(beside,"Bedside lamp",-2.82f,1.19f,5.92f,6.30f,.025f,brass);
         FixtureShade(beside,"Green bedside shade",new Vector3(-2.82f,6.20f,1.19f),green,new[]{new Vector2(.21f,0),new Vector2(.13f,.23f)});
-        beside.transform.position=new Vector3(1.10f,0,-2.59f);
+        beside.transform.position=new Vector3(1.10f,0,-2.59f+sz);
         // Marina Part 2 550 s (tour550.jpg, camera pose from the gated Buzz clip): a 2-column, 5-drawer chest 0.87 m wide
         // with its top at eye level, 1.31 m; centred between the front windows. Was 0.56 x 0.80 m. Front face unchanged (walk route).
         var dresser=Child(root,"Window chest of drawers");
@@ -81,11 +83,11 @@ public static partial class SurveyBuilder
             BedroomSoft(shelves,"Trophy cup",new Vector3(-5.81f,7.88f,z),new Vector3(.11f,.11f,.10f),brass);
         }
         shelves.transform.localScale=new Vector3(1,1,1.7f);
-        shelves.transform.SetPositionAndRotation(new Vector3(-1.864f,0,-4.30f),Quaternion.Euler(0,90,0));
+        shelves.transform.SetPositionAndRotation(new Vector3(-1.864f,0,-4.30f+sz),Quaternion.Euler(0,90,0));
         BuzzPicture(root,"Ice T poster","BedWallReference.jpg",new UnityEngine.Rect(1190f/1920,1-540f/1080,190f/1920,335f/1080),new Vector3(-1.33f,7.14f,-1.12f),new Vector2(.64f,1.0f),90);
         BuzzPicture(root,"Basketball poster","SportsReference.jpg",new UnityEngine.Rect(1030f/1920,1-290f/1080,300f/1920,290f/1080),new Vector3(-3.55f,7.08f,-2.25f),new Vector2(.70f,.72f),180);
-        BuzzPicture(root,"Desk bulletin board","DeskReference.jpg",new UnityEngine.Rect(560f/1920,1-505f/1080,730f/1920,490f/1080),new Vector3(-6.075f,7.13f,-.35f),new Vector2(1.10f,.76f),270);
-        Box(root,"Desk papers",-5.98f,-5.68f,-.95f,-.72f,6.08f,6.10f,ivory);
+        BuzzPicture(root,"Desk bulletin board","DeskReference.jpg",new UnityEngine.Rect(560f/1920,1-505f/1080,730f/1920,490f/1080),new Vector3(-6.075f+sx,7.13f,-.35f),new Vector2(1.10f,.76f),270);
+        Box(root,"Desk papers",-5.98f+sx,-5.68f+sx,-.95f,-.72f,6.08f,6.10f,ivory);
         Cyl(root,"Bulls red wastebasket",-1.60f,-1.90f,5.22f,5.64f,.16f,red);
         Box(root,"Basketball backboard",-1.35f,-1.32f,-1.86f,-1.25f,6.5f,6.98f,ivory);
         for(int i=0;i<24;i++){
@@ -195,8 +197,8 @@ public static partial class SurveyBuilder
         const string path="Assets/Materials/IntactFoyer/BuzzJordanSilhouette.asset";var saved=AssetDatabase.LoadAssetAtPath<Mesh>(path);
         if(saved){EditorUtility.CopySerialized(mesh,saved);UnityEngine.Object.DestroyImmediate(mesh);mesh=saved;}else AssetDatabase.CreateAsset(mesh,path);
         var go=Child(root,"Michael Jordan cutout");go.AddComponent<MeshFilter>().sharedMesh=mesh;go.AddComponent<MeshRenderer>().sharedMaterial=BuzzPrint("Jordan.jpg");
-        go.transform.SetPositionAndRotation(new Vector3(-6.055f,5.23f,1.15f),Quaternion.Euler(0,270,0));
-        Box(root,"Cutout support foot",-6.06f,-5.90f,.96f,1.34f,5.22f,5.25f,FoyerFinish("BuzzCardboard",new Color(.30f,.23f,.13f),.02f));
+        go.transform.SetPositionAndRotation(new Vector3(-6.055f+BuzzShiftX,5.23f,1.15f),Quaternion.Euler(0,270,0));
+        Box(root,"Cutout support foot",-6.06f+BuzzShiftX,-5.90f+BuzzShiftX,.96f,1.34f,5.22f,5.25f,FoyerFinish("BuzzCardboard",new Color(.30f,.23f,.13f),.02f));
     }
     static void AddBuzzTerrarium(GameObject root)
     {
@@ -238,7 +240,7 @@ public static partial class SurveyBuilder
         animation.Pose(0);spider.transform.localPosition+=Vector3.up*.07f;
         // Patrol uses a separate floor parent so the animation stays above the substrate.
         var habitat=Child(tank,"Spider substrate origin");habitat.transform.localPosition=new Vector3(0,.07f,0);spider.transform.SetParent(habitat.transform,false);animation.Pose(0);
-        tank.transform.SetPositionAndRotation(new Vector3(-4.73f,6.29f,1.50f),Quaternion.Euler(0,180,0));
+        tank.transform.SetPositionAndRotation(new Vector3(-4.73f,6.29f,1.50f+BuzzShiftZ),Quaternion.Euler(0,180,0));
     }
     public static string CheckBuzzBedroom()
     {
@@ -252,7 +254,8 @@ public static partial class SurveyBuilder
         }}spider.Pose(0);var start=spider.transform.localPosition;spider.Pose(4);if(Vector3.Distance(start,spider.transform.localPosition)<.01f)throw new InvalidOperationException("Spider does not move.");}
         finally{spider.transform.localPosition=position;spider.transform.localRotation=rotation;}
         var fps=GameObject.Find("Player").GetComponent<FpsController>();var cc=fps.GetComponent<CharacterController>();var original=fps.transform.position;bool enabled=fps.enabled;
-        var route=new[]{new Vector3(-.50f,5.22f,1.04f),new Vector3(-2.05f,5.22f,1.04f),new Vector3(-4.5f,5.22f,.70f),new Vector3(-4.5f,5.22f,-.5f),new Vector3(-4.5f,5.22f,-1.42f),new Vector3(-2.6f,5.22f,-1.38f),new Vector3(-4.5f,5.22f,-1.42f)};
+        // the door moved with the north wall (BuzzShiftZ); (-6.4, .35) is in the strip gained from the side wing (BuzzRoomResize.cs)
+        var route=new[]{new Vector3(-.50f,5.22f,1.04f+BuzzShiftZ),new Vector3(-2.05f,5.22f,1.04f+BuzzShiftZ),new Vector3(-4.5f,5.22f,.70f),new Vector3(-6.4f,5.22f,.35f),new Vector3(-4.5f,5.22f,.70f),new Vector3(-4.5f,5.22f,-.5f),new Vector3(-4.5f,5.22f,-1.42f),new Vector3(-2.6f,5.22f,-1.38f),new Vector3(-4.5f,5.22f,-1.42f)};
         try{fps.enabled=false;cc.enabled=false;fps.transform.position=route[0]+Vector3.up*.12f;cc.enabled=true;Physics.SyncTransforms();
             foreach(var target in route.Concat(route.Reverse())){
                 for(int i=0;i<600;i++){var d=target-fps.transform.position;d.y=0;if(d.magnitude<.08f)break;fps.TickMotion(d,false,false,1f/60);}

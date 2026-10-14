@@ -1,0 +1,11 @@
+[object50] [object50] PASS Buzz room door wall to desk wall: -6.77..-1.16 native = 4.35 m (expected -6.77..-1.16, Marina 4.35 m)
+[object51] [object50] PASS Buzz room shelves wall to front windows: -2.30..2.27 native = 3.54 m (expected -2.30..2.27, Marina 3.49 m)
+[object210] [object231] PASS hall band north of Buzz (east of its bedroom door): 2.45..4.50 native = 1.59 m (expected 2.44..4.50, Marina 1.35 m)
+[object77] [object245] PASS corridor east of Buzz's door, west face (south of the door): -0.97..0.93 native = 1.47 m (expected -0.98..NaN, Marina 1.14 m)
+[Film desk wall - former side wing doorway] [object245] PASS corridor east of Buzz's door, east face: -6.78..0.93 native = 5.97 m (expected NaN..0.90, Marina 1.14 m)
+[object2990] [object2990] PASS Buzz's door opening along the east wall (frame jambs, from inside): 0.77..2.08 native = 1.01 m (expected 0.77..2.08, Marina NaN m)
+[object52] [Film desk wall - former side wing doorway] PASS wing south room, east wall: -11.03..-6.96 native = 3.15 m (expected NaN..-6.96, Marina NaN m)
+PASS enclosure from Buzz room: 0/400 rays escape
+PASS enclosure from Buzz new strip at the side window: 0/400 rays escape
+PASS enclosure from hall band: 0/400 rays escape
+PASS enclosure from wing south room: 0/400 rays escape

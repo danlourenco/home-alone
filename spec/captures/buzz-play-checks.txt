@@ -1,0 +1,15 @@
+PASS side wing alternate entry, Buzz furnishings, Jordan cutout, eight animated legs, 60-second tank containment and 14 walking checkpoints.
+PASS spawn settles on intact floor.
+PASS target (0.10, 1.31, 3.70) actual (0.11, 1.39, 3.67)
+PASS target (0.10, 4.45, 8.80) actual (0.10, 4.53, 8.75)
+PASS target (3.55, 4.45, 8.80) actual (3.54, 4.53, 8.80)
+PASS target (3.55, 5.22, 6.70) actual (3.55, 5.29, 6.76)
+PASS target (3.55, 5.22, 3.50) actual (3.55, 5.30, 3.55)
+PASS target (0.10, 5.22, 3.50) actual (0.11, 5.30, 3.50)
+PASS target (3.55, 5.22, 3.50) actual (3.49, 5.30, 3.50)
+PASS target (3.55, 5.22, 6.70) actual (3.55, 5.29, 6.65)
+PASS target (3.55, 4.45, 8.80) actual (3.55, 4.53, 8.75)
+PASS target (0.10, 4.45, 8.80) actual (0.11, 4.53, 8.80)
+PASS target (0.10, 1.31, 3.70) actual (0.10, 1.39, 3.72)
+
+PASS three dressed windows, aligned interior sills within 3mm, no dressing colliders. PASS 75 window assemblies, transparent glazing, physical barriers and non-overlapping frame joints
