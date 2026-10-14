@@ -1,0 +1,2534 @@
+[
+ {
+  "still": "p2-178",
+  "room": "parents_bedroom",
+  "job": "parents",
+  "second": 178,
+  "frame_in_job": "s_0178.jpg",
+  "clip_start_s": 92,
+  "room_frame": {
+   "p_u": [
+    -0.0016,
+    0.0032
+   ],
+   "dist_m": {
+    "window wall": 0.759,
+    "hall-door wall": 4.486,
+    "bath-door wall": 1.381,
+    "front wall": 3.834
+   },
+   "eye_m": 1.348,
+   "forward": [
+    0.9388914662006778,
+    0.34137820221425724,
+    -0.044087841277422726
+   ],
+   "pitch_deg": -2.5,
+   "roll_deg": 0.0,
+   "vfov_deg": 45.21
+  },
+  "reprojection": {
+   "rms_px_518": 0.45,
+   "rms_px_1920": 1.7,
+   "inliers": 17716,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0
+  },
+  "fit": {
+   "frames_in_fit": 43,
+   "gravity_tilt_deg": 0.89,
+   "walls_u": [
+    -0.2265,
+    1.3268,
+    -0.4059,
+    1.1384
+   ],
+   "m_per_unit": 3.3768,
+   "scale_axes": [
+    3.3671,
+    3.3865
+   ],
+   "scale_spread_pct": 0.6,
+   "size_src": "measurements/rooms/parents.json polygon x 3.465 m/u (80 in hall door)",
+   "ceiling_m": 2.49
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     13.819,
+     6.962,
+     5.506
+    ],
+    "look_at": [
+     12.88,
+     6.918,
+     5.164
+    ],
+    "vfov": 45.21,
+    "pin": "window wall / bath-door wall"
+   },
+   "latest": {
+    "pos": [
+     4.591,
+     1.348,
+     -0.759
+    ],
+    "look_at": [
+     4.932,
+     1.304,
+     -1.698
+    ],
+    "vfov": 45.21,
+    "pin": "window wall / bath-door wall"
+   }
+  },
+  "note": "clean match (scale spread 0.6%, ceiling 2.49 m vs 2.42-2.50 measured)"
+ },
+ {
+  "still": "p2-247",
+  "room": "parents_bedroom",
+  "job": "parents",
+  "second": 247,
+  "frame_in_job": "s_0247.jpg",
+  "clip_start_s": 92,
+  "room_frame": {
+   "p_u": [
+    0.6143,
+    0.5936
+   ],
+   "dist_m": {
+    "window wall": 2.839,
+    "hall-door wall": 2.406,
+    "bath-door wall": 3.375,
+    "front wall": 1.84
+   },
+   "eye_m": 1.269,
+   "forward": [
+    -0.7482586002318657,
+    -0.6629688816213557,
+    -0.02411076897939534
+   ],
+   "pitch_deg": -1.4,
+   "roll_deg": 0.1,
+   "vfov_deg": 46.11
+  },
+  "reprojection": {
+   "rms_px_518": 1.05,
+   "rms_px_1920": 3.9,
+   "inliers": 13068,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0066
+  },
+  "fit": {
+   "frames_in_fit": 43,
+   "gravity_tilt_deg": 0.89,
+   "walls_u": [
+    -0.2265,
+    1.3268,
+    -0.4059,
+    1.1384
+   ],
+   "m_per_unit": 3.3768,
+   "scale_axes": [
+    3.3671,
+    3.3865
+   ],
+   "scale_spread_pct": 0.6,
+   "size_src": "measurements/rooms/parents.json polygon x 3.465 m/u (80 in hall door)",
+   "ceiling_m": 2.49
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     12.019,
+     6.86,
+     1.377
+    ],
+    "look_at": [
+     12.767,
+     6.835,
+     2.04
+    ],
+    "vfov": 46.11,
+    "pin": "hall-door wall / front wall"
+   },
+   "latest": {
+    "pos": [
+     6.651,
+     1.269,
+     -2.925
+    ],
+    "look_at": [
+     5.988,
+     1.245,
+     -2.177
+    ],
+    "vfov": 46.11,
+    "pin": "hall-door wall / front wall"
+   }
+  },
+  "note": "clean match; windows on the right in all three"
+ },
+ {
+  "still": "p2-636",
+  "room": "parents_bedroom",
+  "job": "parents",
+  "second": 636,
+  "frame_in_job": "s_0636.jpg",
+  "clip_start_s": 92,
+  "room_frame": {
+   "p_u": [
+    1.4161,
+    0.4753
+   ],
+   "dist_m": {
+    "window wall": 5.547,
+    "hall-door wall": -0.302,
+    "bath-door wall": 2.976,
+    "front wall": 2.239
+   },
+   "eye_m": 1.291,
+   "forward": [
+    -0.9798456138944414,
+    -0.19940245742756316,
+    -0.011884145054407005
+   ],
+   "pitch_deg": -0.7,
+   "roll_deg": 0.1,
+   "vfov_deg": 41.37
+  },
+  "reprojection": {
+   "rms_px_518": 0.96,
+   "rms_px_1920": 3.6,
+   "inliers": 16988,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0059
+  },
+  "fit": {
+   "frames_in_fit": 43,
+   "gravity_tilt_deg": 0.89,
+   "walls_u": [
+    -0.2265,
+    1.3268,
+    -0.4059,
+    1.1384
+   ],
+   "m_per_unit": 3.3768,
+   "scale_axes": [
+    3.3671,
+    3.3865
+   ],
+   "scale_spread_pct": 0.6,
+   "size_src": "measurements/rooms/parents.json polygon x 3.465 m/u (80 in hall door)",
+   "ceiling_m": 2.49
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     8.52,
+     6.888,
+     1.893
+    ],
+    "look_at": [
+     9.5,
+     6.876,
+     2.092
+    ],
+    "vfov": 41.37,
+    "pin": "hall-door wall / front wall"
+   },
+   "latest": {
+    "pos": [
+     6.252,
+     1.291,
+     -5.633
+    ],
+    "look_at": [
+     6.053,
+     1.279,
+     -4.653
+    ],
+    "vfov": 41.37,
+    "pin": "hall-door wall / front wall"
+   }
+  },
+  "note": "camera stands 0.30 m into the hall doorway: inside the Sept door wall (white render), in the grey-box it sees the room through the door"
+ },
+ {
+  "still": "p2-217",
+  "room": "parents_bath",
+  "job": "parents",
+  "second": 217,
+  "frame_in_job": "s_0217.jpg",
+  "clip_start_s": 92,
+  "room_frame": {
+   "p_u": [
+    0.8117,
+    0.9502
+   ],
+   "dist_m": {
+    "far end wall": 1.576,
+    "near end wall": 1.546,
+    "tub wall": 1.606,
+    "bedroom-door wall": 1.146
+   },
+   "eye_m": 1.386,
+   "forward": [
+    0.30297482251722907,
+    -0.9525909368568855,
+    -0.02787048508323625
+   ],
+   "pitch_deg": -1.6,
+   "roll_deg": 0.8,
+   "vfov_deg": 46.35
+  },
+  "reprojection": {
+   "rms_px_518": 1.29,
+   "rms_px_1920": 4.8,
+   "inliers": 3813,
+   "points": 18700,
+   "shift_from_camera_head_u": 0.0339
+  },
+  "fit": {
+   "frames_in_fit": 18,
+   "gravity_tilt_deg": 1.61,
+   "walls_u": [
+    0.3777,
+    1.2375,
+    0.508,
+    1.266
+   ],
+   "m_per_unit": 3.6308,
+   "scale_axes": [
+    3.7919,
+    3.4697
+   ],
+   "scale_spread_pct": 8.9,
+   "size_src": "measurements/rooms/parents.json bath polygon x 3.465 m/u",
+   "ceiling_m": 2.12
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     11.297,
+     7.011,
+     8.941
+    ],
+    "look_at": [
+     10.994,
+     6.983,
+     9.893
+    ],
+    "vfov": 46.35,
+    "pin": "near end wall / bedroom-door wall"
+   },
+   "latest": {
+    "pos": [
+     1.924,
+     1.386,
+     -2.89
+    ],
+    "look_at": [
+     0.971,
+     1.358,
+     -3.193
+    ],
+    "vfov": 46.35,
+    "pin": "near end wall / bedroom-door wall"
+   }
+  },
+  "note": "bath shape disagrees with the old polygon by 9% (L-shaped bath, no door scale); Sept bath is L-shaped the other way: camera lands in its tub alcove"
+ },
+ {
+  "still": "p2-223",
+  "room": "parents_bath",
+  "job": "parents",
+  "second": 223,
+  "frame_in_job": "s_0223.jpg",
+  "clip_start_s": 92,
+  "room_frame": {
+   "p_u": [
+    1.0931,
+    0.9446
+   ],
+   "dist_m": {
+    "far end wall": 2.598,
+    "near end wall": 0.524,
+    "tub wall": 1.585,
+    "bedroom-door wall": 1.167
+   },
+   "eye_m": 1.312,
+   "forward": [
+    -0.9700405911074116,
+    -0.2112230732341772,
+    -0.12002526791260694
+   ],
+   "pitch_deg": -6.9,
+   "roll_deg": -0.5,
+   "vfov_deg": 44.78
+  },
+  "reprojection": {
+   "rms_px_518": 1.04,
+   "rms_px_1920": 3.8,
+   "inliers": 10971,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0028
+  },
+  "fit": {
+   "frames_in_fit": 18,
+   "gravity_tilt_deg": 1.61,
+   "walls_u": [
+    0.3777,
+    1.2375,
+    0.508,
+    1.266
+   ],
+   "m_per_unit": 3.6308,
+   "scale_axes": [
+    3.7919,
+    3.4697
+   ],
+   "scale_spread_pct": 8.9,
+   "size_src": "measurements/rooms/parents.json bath polygon x 3.465 m/u",
+   "ceiling_m": 2.12
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     9.977,
+     6.915,
+     8.968
+    ],
+    "look_at": [
+     10.947,
+     6.795,
+     9.179
+    ],
+    "vfov": 44.78,
+    "pin": "near end wall / bedroom-door wall"
+   },
+   "latest": {
+    "pos": [
+     1.903,
+     1.312,
+     -3.912
+    ],
+    "look_at": [
+     1.692,
+     1.192,
+     -2.942
+    ],
+    "vfov": 44.78,
+    "pin": "near end wall / bedroom-door wall"
+   }
+  },
+  "note": "as 217; grey-box bath is a bare box"
+ },
+ {
+  "still": "p2-355",
+  "room": "kevin_jeff_room",
+  "job": "kevin",
+  "second": 355,
+  "frame_in_job": "s_0355.jpg",
+  "clip_start_s": 307,
+  "room_frame": {
+   "p_u": [
+    0.0032,
+    -0.0015
+   ],
+   "dist_m": {
+    "hall-door wall": 0.447,
+    "front-window wall": 4.116,
+    "closet-door wall": 0.045,
+    "windows'-corner wall": 3.565
+   },
+   "eye_m": 1.321,
+   "forward": [
+    0.735789325195214,
+    0.6681183473865261,
+    -0.11059811397247554
+   ],
+   "pitch_deg": -6.3,
+   "roll_deg": -0.3,
+   "vfov_deg": 42.09
+  },
+  "reprojection": {
+   "rms_px_518": 0.6,
+   "rms_px_1920": 2.2,
+   "inliers": 18023,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0
+  },
+  "fit": {
+   "frames_in_fit": 58,
+   "gravity_tilt_deg": 0.57,
+   "walls_u": [
+    -0.1486,
+    1.4012,
+    -0.0167,
+    1.2094
+   ],
+   "m_per_unit": 2.9441,
+   "scale_axes": [
+    2.952,
+    2.9362
+   ],
+   "scale_spread_pct": 0.5,
+   "size_src": "measurements/rooms/kevin.json polygon x 2.914 m/u (80 in doors)",
+   "ceiling_m": 2.31
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     5.058,
+     6.927,
+     1.432
+    ],
+    "look_at": [
+     5.726,
+     6.816,
+     0.697
+    ],
+    "vfov": 42.09,
+    "pin": "hall-door wall / closet-door wall"
+   },
+   "latest": {
+    "pos": [
+     7.507,
+     1.321,
+     -7.695
+    ],
+    "look_at": [
+     8.243,
+     1.21,
+     -7.027
+    ],
+    "vfov": 42.09,
+    "pin": "hall-door wall / closet-door wall"
+   }
+  },
+  "note": "clean match (scale spread 0.5%, ceiling 2.31 m vs 2.30-2.33 measured); camera 5 cm off the closet wall = in the doorway corner"
+ },
+ {
+  "still": "p2-376",
+  "room": "kevin_jeff_room",
+  "job": "kevin",
+  "second": 376,
+  "frame_in_job": "s_0376.jpg",
+  "clip_start_s": 307,
+  "room_frame": {
+   "p_u": [
+    1.1405,
+    0.7202
+   ],
+   "dist_m": {
+    "hall-door wall": 3.795,
+    "front-window wall": 0.768,
+    "closet-door wall": 2.17,
+    "windows'-corner wall": 1.44
+   },
+   "eye_m": 1.367,
+   "forward": [
+    -0.993793048595494,
+    0.0893007299103109,
+    -0.06633819563991483
+   ],
+   "pitch_deg": -3.8,
+   "roll_deg": 0.0,
+   "vfov_deg": 40.94
+  },
+  "reprojection": {
+   "rms_px_518": 0.97,
+   "rms_px_1920": 3.6,
+   "inliers": 12819,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.01
+  },
+  "fit": {
+   "frames_in_fit": 58,
+   "gravity_tilt_deg": 0.57,
+   "walls_u": [
+    -0.1486,
+    1.4012,
+    -0.0167,
+    1.2094
+   ],
+   "m_per_unit": 2.9441,
+   "scale_axes": [
+    2.952,
+    2.9362
+   ],
+   "scale_spread_pct": 0.5,
+   "size_src": "measurements/rooms/kevin.json polygon x 2.914 m/u (80 in doors)",
+   "ceiling_m": 2.31
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     8.0,
+     6.986,
+     -1.308
+    ],
+    "look_at": [
+     8.089,
+     6.92,
+     -0.314
+    ],
+    "vfov": 40.94,
+    "pin": "front-window wall / windows'-corner wall"
+   },
+   "latest": {
+    "pos": [
+     10.892,
+     1.367,
+     -5.3
+    ],
+    "look_at": [
+     9.898,
+     1.301,
+     -5.211
+    ],
+    "vfov": 40.94,
+    "pin": "front-window wall / windows'-corner wall"
+   }
+  },
+  "note": "clean match"
+ },
+ {
+  "still": "p2-451",
+  "room": "hall_bath",
+  "job": "hallbath",
+  "second": 451,
+  "frame_in_job": "s_0451.jpg",
+  "clip_start_s": 445,
+  "room_frame": {
+   "p_u": [
+    -0.026,
+    -0.0058
+   ],
+   "dist_m": {
+    "hall-door wall": 0.578,
+    "window wall": 2.741,
+    "Kevin-side wall": 0.856,
+    "Buzz-side wall": 2.322
+   },
+   "eye_m": 1.09,
+   "forward": [
+    0.9972210614259512,
+    -0.0048209836210220385,
+    -0.07434320927579577
+   ],
+   "pitch_deg": -4.3,
+   "roll_deg": -3.0,
+   "vfov_deg": 41.73
+  },
+  "reprojection": {
+   "rms_px_518": 0.69,
+   "rms_px_1920": 2.6,
+   "inliers": 17434,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0001
+  },
+  "fit": {
+   "frames_in_fit": 58,
+   "gravity_tilt_deg": 0.05,
+   "walls_u": [
+    -0.287,
+    1.2117,
+    -0.3923,
+    1.0428
+   ],
+   "m_per_unit": 2.2144,
+   "scale_axes": [
+    2.1085,
+    2.3203
+   ],
+   "scale_spread_pct": 9.6,
+   "size_src": "spec/house_spec.measured.json hall_bath (overhead trace; no door scale)",
+   "ceiling_m": 2.01
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     3.244,
+     6.628,
+     -0.787
+    ],
+    "look_at": [
+     3.249,
+     6.554,
+     -1.784
+    ],
+    "vfov": 41.73,
+    "pin": "hall-door wall / Kevin-side wall"
+   },
+   "latest": {
+    "pos": [
+     8.988,
+     1.09,
+     -8.736
+    ],
+    "look_at": [
+     9.985,
+     1.016,
+     -8.731
+    ],
+    "vfov": 41.73,
+    "pin": "hall-door wall / Kevin-side wall"
+   }
+  },
+  "note": "hall bath: clip vs spec shape differ 10% (hall_bath +10% from wall thinning); Sept bath is smaller, camera almost on its tiled wall; grey-box render is white: camera 0.1 m inside the notch/closet_1 wall"
+ },
+ {
+  "still": "p2-481",
+  "room": "hall_bath",
+  "job": "hallbath",
+  "second": 481,
+  "frame_in_job": "s_0481.jpg",
+  "clip_start_s": 445,
+  "room_frame": {
+   "p_u": [
+    0.2391,
+    -0.3195
+   ],
+   "dist_m": {
+    "hall-door wall": 1.165,
+    "window wall": 2.154,
+    "Kevin-side wall": 0.161,
+    "Buzz-side wall": 3.017
+   },
+   "eye_m": 1.188,
+   "forward": [
+    0.697527805266098,
+    0.716505170893723,
+    0.008677612760257709
+   ],
+   "pitch_deg": 0.5,
+   "roll_deg": -1.6,
+   "vfov_deg": 41.67
+  },
+  "reprojection": {
+   "rms_px_518": 0.82,
+   "rms_px_1920": 3.0,
+   "inliers": 16878,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0006
+  },
+  "fit": {
+   "frames_in_fit": 58,
+   "gravity_tilt_deg": 0.05,
+   "walls_u": [
+    -0.287,
+    1.2117,
+    -0.3923,
+    1.0428
+   ],
+   "m_per_unit": 2.2144,
+   "scale_axes": [
+    2.1085,
+    2.3203
+   ],
+   "scale_spread_pct": 9.6,
+   "size_src": "spec/house_spec.measured.json hall_bath (overhead trace; no door scale)",
+   "ceiling_m": 2.01
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     4.142,
+     6.755,
+     -1.545
+    ],
+    "look_at": [
+     3.425,
+     6.764,
+     -2.243
+    ],
+    "vfov": 41.67,
+    "pin": "hall-door wall / Kevin-side wall"
+   },
+   "latest": {
+    "pos": [
+     9.575,
+     1.188,
+     -8.041
+    ],
+    "look_at": [
+     10.273,
+     1.197,
+     -8.758
+    ],
+    "vfov": 41.67,
+    "pin": "hall-door wall / Kevin-side wall"
+   }
+  },
+  "note": "as 451; grey-box fine"
+ },
+ {
+  "still": "p2-540",
+  "room": "buzz_room",
+  "job": "buzz",
+  "second": 540,
+  "frame_in_job": "s_0540.jpg",
+  "clip_start_s": 540,
+  "room_frame": {
+   "p_u": [
+    -0.0061,
+    0.0123
+   ],
+   "dist_m": {
+    "front-window wall": 1.496,
+    "shelves wall": 1.981,
+    "door wall": 2.549,
+    "desk wall": 1.818
+   },
+   "eye_m": 1.292,
+   "forward": [
+    0.1476196101981154,
+    0.9816139994424555,
+    -0.12100581301550452
+   ],
+   "pitch_deg": -7.0,
+   "roll_deg": -0.3,
+   "vfov_deg": 37.19
+  },
+  "reprojection": {
+   "rms_px_518": 0.47,
+   "rms_px_1920": 1.7,
+   "inliers": 16721,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0
+  },
+  "fit": {
+   "frames_in_fit": 48,
+   "gravity_tilt_deg": 2.55,
+   "walls_u": [
+    -0.7329,
+    0.9563,
+    -1.2265,
+    0.8956
+   ],
+   "m_per_unit": 2.058,
+   "scale_axes": [
+    2.0661,
+    2.0499
+   ],
+   "scale_spread_pct": 0.8,
+   "size_src": "measurements/rooms/buzz.json (80 in door)",
+   "ceiling_m": 2.19
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     -3.741,
+     6.889,
+     -0.367
+    ],
+    "look_at": [
+     -4.723,
+     6.768,
+     -0.22
+    ],
+    "vfov": 37.19,
+    "pin": "front-window wall / desk wall"
+   },
+   "latest": {
+    "pos": [
+     9.664,
+     1.292,
+     -14.182
+    ],
+    "look_at": [
+     9.516,
+     1.171,
+     -15.164
+    ],
+    "vfov": 37.19,
+    "pin": "front-window wall / desk wall"
+   }
+  },
+  "note": "regression vs views-buzz-old.json: door wall 2.55 vs 2.50 m, shelves wall 1.98 vs 1.92 m, eye 1.29 vs 1.30 m"
+ },
+ {
+  "still": "p2-550",
+  "room": "buzz_room",
+  "job": "buzz",
+  "second": 550,
+  "frame_in_job": "s_0550.jpg",
+  "clip_start_s": 540,
+  "room_frame": {
+   "p_u": [
+    0.5415,
+    -0.445
+   ],
+   "dist_m": {
+    "front-window wall": 2.623,
+    "shelves wall": 0.854,
+    "door wall": 1.608,
+    "desk wall": 2.759
+   },
+   "eye_m": 1.324,
+   "forward": [
+    -0.9822655578556857,
+    0.13988029179415543,
+    -0.1248514229716316
+   ],
+   "pitch_deg": -7.2,
+   "roll_deg": -0.2,
+   "vfov_deg": 37.43
+  },
+  "reprojection": {
+   "rms_px_518": 0.87,
+   "rms_px_1920": 3.2,
+   "inliers": 15304,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0107
+  },
+  "fit": {
+   "frames_in_fit": 48,
+   "gravity_tilt_deg": 2.55,
+   "walls_u": [
+    -0.7329,
+    0.9563,
+    -1.2265,
+    0.8956
+   ],
+   "m_per_unit": 2.058,
+   "scale_axes": [
+    2.0661,
+    2.0499
+   ],
+   "scale_spread_pct": 0.8,
+   "size_src": "measurements/rooms/buzz.json (80 in door)",
+   "ceiling_m": 2.19
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     -3.238,
+     6.931,
+     0.767
+    ],
+    "look_at": [
+     -3.377,
+     6.806,
+     -0.216
+    ],
+    "vfov": 37.43,
+    "pin": "shelves wall / door wall"
+   },
+   "latest": {
+    "pos": [
+     8.324,
+     1.324,
+     -13.148
+    ],
+    "look_at": [
+     9.306,
+     1.199,
+     -13.288
+    ],
+    "vfov": 37.43,
+    "pin": "shelves wall / door wall"
+   }
+  },
+  "note": "regression: 1.61/0.85 m vs 1.55/0.86 m"
+ },
+ {
+  "still": "p2-556",
+  "room": "buzz_room",
+  "job": "buzz",
+  "second": 556,
+  "frame_in_job": "s_0556.jpg",
+  "clip_start_s": 540,
+  "room_frame": {
+   "p_u": [
+    0.5936,
+    0.3719
+   ],
+   "dist_m": {
+    "front-window wall": 2.73,
+    "shelves wall": 0.746,
+    "door wall": 3.289,
+    "desk wall": 1.078
+   },
+   "eye_m": 1.398,
+   "forward": [
+    -0.3841377359074529,
+    -0.9197414069523397,
+    -0.08070900934360599
+   ],
+   "pitch_deg": -4.6,
+   "roll_deg": 0.5,
+   "vfov_deg": 38.61
+  },
+  "reprojection": {
+   "rms_px_518": 0.99,
+   "rms_px_1920": 3.7,
+   "inliers": 14743,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0064
+  },
+  "fit": {
+   "frames_in_fit": 48,
+   "gravity_tilt_deg": 2.55,
+   "walls_u": [
+    -0.7329,
+    0.9563,
+    -1.2265,
+    0.8956
+   ],
+   "m_per_unit": 2.058,
+   "scale_axes": [
+    2.0661,
+    2.0499
+   ],
+   "scale_spread_pct": 0.8,
+   "size_src": "measurements/rooms/buzz.json (80 in door)",
+   "ceiling_m": 2.19
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     -4.697,
+     7.026,
+     0.906
+    ],
+    "look_at": [
+     -3.777,
+     6.945,
+     0.522
+    ],
+    "vfov": 38.61,
+    "pin": "shelves wall / desk wall"
+   },
+   "latest": {
+    "pos": [
+     8.216,
+     1.398,
+     -14.922
+    ],
+    "look_at": [
+     8.6,
+     1.317,
+     -14.002
+    ],
+    "vfov": 38.61,
+    "pin": "shelves wall / desk wall"
+   }
+  },
+  "note": "regression: 3.29/0.75 m vs 3.25/0.69 m"
+ },
+ {
+  "still": "p2-609",
+  "room": "hall_corridor",
+  "job": "hall",
+  "second": 609,
+  "frame_in_job": "s_0609.jpg",
+  "clip_start_s": 540,
+  "room_frame": {
+   "p_u": [
+    0.0077,
+    0.0073
+   ],
+   "dist_m": {
+    "parents'-door end wall": 5.0,
+    "Kevin-side wall": 0.337,
+    "stair-side wall": 0.883
+   },
+   "eye_m": 1.138,
+   "forward": [
+    0.939886093265808,
+    0.3390686181889581,
+    -0.040578366711432126
+   ],
+   "pitch_deg": -2.3,
+   "roll_deg": 0.1,
+   "vfov_deg": 41.98
+  },
+  "reprojection": {
+   "rms_px_518": 0.82,
+   "rms_px_1920": 3.0,
+   "inliers": 15711,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0001
+  },
+  "fit": {
+   "frames_in_fit": 61,
+   "gravity_tilt_deg": 1.69,
+   "walls_u": [
+    null,
+    1.1209,
+    -0.0677,
+    0.204
+   ],
+   "m_per_unit": 4.4909,
+   "scale_axes": [
+    4.4909
+   ],
+   "scale_spread_pct": null,
+   "size_src": "measurements/rooms/hall.json far-end passage 1.22 m (hall-s4, 80 in door)",
+   "ceiling_m": 1.97
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     2.45,
+     6.69,
+     2.535
+    ],
+    "look_at": [
+     3.39,
+     6.65,
+     2.874
+    ],
+    "vfov": 41.98,
+    "pin": "parents'-door end wall / Kevin-side wall"
+   },
+   "latest": {
+    "pos": [
+     6.896,
+     1.138,
+     -10.47
+    ],
+    "look_at": [
+     6.557,
+     1.097,
+     -9.53
+    ],
+    "vfov": 41.98,
+    "pin": "parents'-door end wall / Kevin-side wall"
+   }
+  },
+  "note": "hall: scale from the far-end passage width (1.22 m); eye 1.14 m agrees with hall-s1 (1.03-1.19, attic-door scale), an independent check. Sept hall is 1.86 m wide vs Marina's 1.22-1.58, so the far walls differ"
+ },
+ {
+  "still": "p2-615",
+  "room": "hall_corridor",
+  "job": "hall",
+  "second": 615,
+  "frame_in_job": "s_0615.jpg",
+  "clip_start_s": 540,
+  "room_frame": {
+   "p_u": [
+    0.3518,
+    0.0732
+   ],
+   "dist_m": {
+    "parents'-door end wall": 3.454,
+    "Kevin-side wall": 0.633,
+    "stair-side wall": 0.587
+   },
+   "eye_m": 1.092,
+   "forward": [
+    0.996435261343751,
+    0.07365436786892504,
+    -0.04113154561452481
+   ],
+   "pitch_deg": -2.4,
+   "roll_deg": 0.1,
+   "vfov_deg": 41.49
+  },
+  "reprojection": {
+   "rms_px_518": 1.03,
+   "rms_px_1920": 3.8,
+   "inliers": 14510,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0033
+  },
+  "fit": {
+   "frames_in_fit": 61,
+   "gravity_tilt_deg": 1.69,
+   "walls_u": [
+    null,
+    1.1209,
+    -0.0677,
+    0.204
+   ],
+   "m_per_unit": 4.4909,
+   "scale_axes": [
+    4.4909
+   ],
+   "scale_spread_pct": null,
+   "size_src": "measurements/rooms/hall.json far-end passage 1.22 m (hall-s4, 80 in door)",
+   "ceiling_m": 1.97
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     4.447,
+     6.631,
+     3.742
+    ],
+    "look_at": [
+     5.444,
+     6.59,
+     3.815
+    ],
+    "vfov": 41.49,
+    "pin": "parents'-door end wall / stair-side wall"
+   },
+   "latest": {
+    "pos": [
+     6.221,
+     1.092,
+     -8.924
+    ],
+    "look_at": [
+     6.147,
+     1.051,
+     -7.928
+    ],
+    "vfov": 41.49,
+    "pin": "parents'-door end wall / stair-side wall"
+   }
+  },
+  "note": "as 609"
+ },
+ {
+  "still": "p2-621",
+  "room": "hall_corridor",
+  "job": "hall",
+  "second": 621,
+  "frame_in_job": "s_0621.jpg",
+  "clip_start_s": 540,
+  "room_frame": {
+   "p_u": [
+    0.7072,
+    0.0353
+   ],
+   "dist_m": {
+    "parents'-door end wall": 1.858,
+    "Kevin-side wall": 0.462,
+    "stair-side wall": 0.758
+   },
+   "eye_m": 1.092,
+   "forward": [
+    0.7628728660438087,
+    0.6463817825344436,
+    -0.014682692590275586
+   ],
+   "pitch_deg": -0.8,
+   "roll_deg": 0.1,
+   "vfov_deg": 41.12
+  },
+  "reprojection": {
+   "rms_px_518": 0.95,
+   "rms_px_1920": 3.5,
+   "inliers": 14004,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0001
+  },
+  "fit": {
+   "frames_in_fit": 61,
+   "gravity_tilt_deg": 1.69,
+   "walls_u": [
+    null,
+    1.1209,
+    -0.0677,
+    0.204
+   ],
+   "m_per_unit": 4.4909,
+   "scale_axes": [
+    4.4909
+   ],
+   "scale_spread_pct": null,
+   "size_src": "measurements/rooms/hall.json far-end passage 1.22 m (hall-s4, 80 in door)",
+   "ceiling_m": 1.97
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     6.509,
+     6.631,
+     2.697
+    ],
+    "look_at": [
+     7.272,
+     6.616,
+     3.343
+    ],
+    "vfov": 41.12,
+    "pin": "parents'-door end wall / Kevin-side wall"
+   },
+   "latest": {
+    "pos": [
+     6.771,
+     1.092,
+     -7.328
+    ],
+    "look_at": [
+     6.125,
+     1.077,
+     -6.565
+    ],
+    "vfov": 41.12,
+    "pin": "parents'-door end wall / Kevin-side wall"
+   }
+  },
+  "note": "this is the hall end with girls' room A's door on the left and the parents' door on the right (the caption says Girl's Room); camera is in the hall, not in girls' room B. girls_room_a does not exist in Sept (back-stair hall there)"
+ },
+ {
+  "still": "p2-892",
+  "room": "attic",
+  "job": "attic",
+  "second": 892,
+  "frame_in_job": "s_0892.jpg",
+  "clip_start_s": 775,
+  "room_frame": {
+   "p_u": [
+    -0.2707,
+    -0.2396
+   ],
+   "dist_m": {
+    "front eave wall": 1.46,
+    "rear eave wall": 3.602,
+    "east gable wall": 3.047,
+    "stair-end gable wall": 5.697
+   },
+   "eye_m": 2.007,
+   "forward": [
+    0.6108233019729941,
+    -0.7796957963427155,
+    -0.13772929583900326
+   ],
+   "pitch_deg": -7.9,
+   "roll_deg": 0.1,
+   "vfov_deg": 43.44
+  },
+  "reprojection": {
+   "rms_px_518": 1.34,
+   "rms_px_1920": 5.0,
+   "inliers": 5205,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0064
+  },
+  "fit": {
+   "frames_in_fit": 58,
+   "gravity_tilt_deg": 1.9,
+   "walls_u": [
+    -0.6806,
+    0.7407,
+    -1.0953,
+    1.36
+   ],
+   "m_per_unit": 3.5616,
+   "scale_axes": [
+    3.6165,
+    3.5067
+   ],
+   "scale_spread_pct": 3.1,
+   "size_src": "Marina's 476 ft2 attic label split by the clip's 1.464:2.453 aspect (no door in the attic); eave/gable assignment unverified",
+   "ceiling_m": 3.46
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     1.363,
+     11.143,
+     -0.214
+    ],
+    "look_at": [
+     2.143,
+     11.005,
+     0.397
+    ],
+    "vfov": 43.44,
+    "pin": "front eave wall / east gable wall"
+   }
+  },
+  "note": "attic (Sept only): scale from Marina's 476 ft2 label, eave/gable assignment unverified; eye 2.0 m (camera high); Sept attic layout differs (stair at the west end, not the middle)"
+ },
+ {
+  "still": "p2-910",
+  "room": "attic",
+  "job": "attic",
+  "second": 910,
+  "frame_in_job": "s_0910.jpg",
+  "clip_start_s": 775,
+  "room_frame": {
+   "p_u": [
+    -0.0869,
+    -0.5736
+   ],
+   "dist_m": {
+    "front eave wall": 2.114,
+    "rear eave wall": 2.948,
+    "east gable wall": 1.858,
+    "stair-end gable wall": 6.887
+   },
+   "eye_m": 1.816,
+   "forward": [
+    -0.4979131421837234,
+    0.852431090605231,
+    -0.1595109357075799
+   ],
+   "pitch_deg": -9.2,
+   "roll_deg": 0.3,
+   "vfov_deg": 44.53
+  },
+  "reprojection": {
+   "rms_px_518": 1.07,
+   "rms_px_1920": 4.0,
+   "inliers": 11694,
+   "points": 18635,
+   "shift_from_camera_head_u": 0.0054
+  },
+  "fit": {
+   "frames_in_fit": 58,
+   "gravity_tilt_deg": 1.9,
+   "walls_u": [
+    -0.6806,
+    0.7407,
+    -1.0953,
+    1.36
+   ],
+   "m_per_unit": 3.5616,
+   "scale_axes": [
+    3.6165,
+    3.5067
+   ],
+   "scale_spread_pct": 3.1,
+   "size_src": "Marina's 476 ft2 attic label split by the clip's 1.464:2.453 aspect (no door in the attic); eave/gable assignment unverified",
+   "ceiling_m": 3.46
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     2.899,
+     10.896,
+     0.631
+    ],
+    "look_at": [
+     2.047,
+     10.737,
+     0.133
+    ],
+    "vfov": 44.53,
+    "pin": "front eave wall / east gable wall"
+   }
+  },
+  "note": "as 892"
+ },
+ {
+  "still": "p1-1079",
+  "room": "kitchen",
+  "job": "kitchen",
+  "second": 1079,
+  "frame_in_job": "s_1079.jpg",
+  "clip_start_s": 1060,
+  "room_frame": {
+   "p_u": [
+    0.202,
+    0.1363
+   ],
+   "dist_m": {
+    "dining-door wall": 1.016,
+    "rear wall": 7.063,
+    "foyer-side wall": 0.745,
+    "far side wall": 8.574
+   },
+   "eye_m": 1.275,
+   "forward": [
+    0.9684103961013157,
+    0.2492316957069528,
+    0.00805397901225451
+   ],
+   "pitch_deg": 0.5,
+   "roll_deg": -1.1,
+   "vfov_deg": 41.13
+  },
+  "reprojection": {
+   "rms_px_518": 0.84,
+   "rms_px_1920": 3.1,
+   "inliers": 16361,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0025
+  },
+  "fit": {
+   "frames_in_fit": 59,
+   "gravity_tilt_deg": 0.09,
+   "walls_u": [
+    0.0909,
+    0.9744,
+    0.0548,
+    1.0738
+   ],
+   "m_per_unit": 9.1456,
+   "scale_axes": [
+    10.5381,
+    7.7531
+   ],
+   "scale_spread_pct": 30.5,
+   "size_src": "spec/house_spec.ground.json kitchen extents (overhead trace; the built kitchen is 590 ft2 vs Marina's 477)",
+   "ceiling_m": 2.39
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     5.863,
+     2.957,
+     8.773
+    ],
+    "look_at": [
+     6.112,
+     2.965,
+     9.741
+    ],
+    "vfov": 41.13,
+    "pin": "dining-door wall / foyer-side wall"
+   },
+   "latest": {
+    "pos": [
+     3.104,
+     -1.26,
+     -6.877
+    ],
+    "look_at": [
+     2.136,
+     -1.252,
+     -6.628
+    ],
+    "vfov": 41.13,
+    "pin": "dining-door wall / foyer-side wall"
+   }
+  },
+  "note": "kitchen near walls (dining door / foyer side) not resolved by the fit: scale spread 30%; position +-1 m. Sept camera lands in the back-stair bay beside the kitchen"
+ },
+ {
+  "still": "p1-1088",
+  "room": "kitchen",
+  "job": "kitchen",
+  "second": 1088,
+  "frame_in_job": "s_1088.jpg",
+  "clip_start_s": 1060,
+  "room_frame": {
+   "p_u": [
+    0.6766,
+    0.3678
+   ],
+   "dist_m": {
+    "dining-door wall": 5.357,
+    "rear wall": 2.723,
+    "foyer-side wall": 2.862,
+    "far side wall": 6.457
+   },
+   "eye_m": 1.372,
+   "forward": [
+    0.8783838163633823,
+    0.47728496130871023,
+    -0.02531673082060605
+   ],
+   "pitch_deg": -1.5,
+   "roll_deg": -0.9,
+   "vfov_deg": 40.97
+  },
+  "reprojection": {
+   "rms_px_518": 1.27,
+   "rms_px_1920": 4.7,
+   "inliers": 9575,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0056
+  },
+  "fit": {
+   "frames_in_fit": 59,
+   "gravity_tilt_deg": 0.09,
+   "walls_u": [
+    0.0909,
+    0.9744,
+    0.0548,
+    1.0738
+   ],
+   "m_per_unit": 9.1456,
+   "scale_axes": [
+    10.5381,
+    7.7531
+   ],
+   "scale_spread_pct": 30.5,
+   "size_src": "spec/house_spec.ground.json kitchen extents (overhead trace; the built kitchen is 590 ft2 vs Marina's 477)",
+   "ceiling_m": 2.39
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     8.598,
+     3.083,
+     11.782
+    ],
+    "look_at": [
+     9.075,
+     3.057,
+     12.66
+    ],
+    "vfov": 40.97,
+    "pin": "rear wall / foyer-side wall"
+   },
+   "latest": {
+    "pos": [
+     -2.469,
+     -1.163,
+     -4.76
+    ],
+    "look_at": [
+     -3.347,
+     -1.188,
+     -4.283
+    ],
+    "vfov": 40.97,
+    "pin": "rear wall / foyer-side wall"
+   }
+  },
+  "note": "pinned at the rear / far-side corner; grey-box render black on the left: camera 1 m inside the grey kitchen's rear-wing wall (grey kitchen is 590 ft2, a different L than Marina's); Sept plausible (island, window)"
+ },
+ {
+  "still": "p1-1100",
+  "room": "kitchen",
+  "job": "kitchen",
+  "second": 1100,
+  "frame_in_job": "s_1100.jpg",
+  "clip_start_s": 1060,
+  "room_frame": {
+   "p_u": [
+    0.847,
+    0.7332
+   ],
+   "dist_m": {
+    "dining-door wall": 6.915,
+    "rear wall": 1.165,
+    "foyer-side wall": 6.204,
+    "far side wall": 3.115
+   },
+   "eye_m": 1.537,
+   "forward": [
+    0.025273515200430363,
+    0.9986468141840219,
+    -0.045450962030713006
+   ],
+   "pitch_deg": -2.6,
+   "roll_deg": -1.1,
+   "vfov_deg": 38.77
+  },
+  "reprojection": {
+   "rms_px_518": 1.28,
+   "rms_px_1920": 4.8,
+   "inliers": 5698,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0337
+  },
+  "fit": {
+   "frames_in_fit": 59,
+   "gravity_tilt_deg": 0.09,
+   "walls_u": [
+    0.0909,
+    0.9744,
+    0.0548,
+    1.0738
+   ],
+   "m_per_unit": 9.1456,
+   "scale_axes": [
+    10.5381,
+    7.7531
+   ],
+   "scale_spread_pct": 30.5,
+   "size_src": "spec/house_spec.ground.json kitchen extents (overhead trace; the built kitchen is 590 ft2 vs Marina's 477)",
+   "ceiling_m": 2.39
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     11.575,
+     3.296,
+     13.795
+    ],
+    "look_at": [
+     12.574,
+     3.25,
+     13.82
+    ],
+    "vfov": 38.77,
+    "pin": "rear wall / far side wall"
+   },
+   "latest": {
+    "pos": [
+     -4.027,
+     -0.998,
+     -2.835
+    ],
+    "look_at": [
+     -4.052,
+     -1.043,
+     -1.836
+    ],
+    "vfov": 38.77,
+    "pin": "rear wall / far side wall"
+   }
+  },
+  "note": "pinned at the rear / far-side corner; Sept window + cabinets line up with Marina's sink window; grey-box shows a bare wall"
+ },
+ {
+  "still": "p1-1121",
+  "room": "dining_room",
+  "job": "dining",
+  "second": 1121,
+  "frame_in_job": "s_1121.jpg",
+  "clip_start_s": 1060,
+  "room_frame": {
+   "p_u": [
+    0.1612,
+    0.6028
+   ],
+   "dist_m": {
+    "sunroom-arch wall": 0.785,
+    "foyer-arch wall": 3.835,
+    "kitchen-door wall": -1.329,
+    "French-door wall": 5.667
+   },
+   "eye_m": 1.235,
+   "forward": [
+    0.4071714802572788,
+    0.9004444813952166,
+    -0.15300693314355304
+   ],
+   "pitch_deg": -8.8,
+   "roll_deg": 3.5,
+   "vfov_deg": 40.29
+  },
+  "reprojection": {
+   "rms_px_518": 1.15,
+   "rms_px_1920": 4.3,
+   "inliers": 1704,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.2083
+  },
+  "fit": {
+   "frames_in_fit": 58,
+   "gravity_tilt_deg": 3.52,
+   "walls_u": [
+    0.0557,
+    0.6761,
+    0.7812,
+    1.3638
+   ],
+   "m_per_unit": 7.4468,
+   "scale_axes": [
+    7.4468
+   ],
+   "scale_spread_pct": null,
+   "size_src": "spec/house_spec.ground.json dining width 4.62 (overhead trace); depth not used: the clip reads ~4.1 m kitchen door to French doors vs 5.87 built",
+   "ceiling_m": 2.03
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     8.846,
+     2.906,
+     9.007
+    ],
+    "look_at": [
+     8.439,
+     2.753,
+     8.107
+    ],
+    "vfov": 40.29,
+    "pin": "sunroom-arch wall / kitchen-door wall"
+   },
+   "latest": {
+    "pos": [
+     2.931,
+     -1.3,
+     -3.789
+    ],
+    "look_at": [
+     3.831,
+     -1.453,
+     -4.196
+    ],
+    "vfov": 40.29,
+    "pin": "sunroom-arch wall / kitchen-door wall"
+   }
+  },
+  "note": "camera is in the butler's pantry 1.3 m before the dining room's kitchen-door wall (outside the dining room in both models, as in the still)"
+ },
+ {
+  "still": "p1-1127",
+  "room": "dining_room",
+  "job": "dining",
+  "second": 1127,
+  "frame_in_job": "s_1127.jpg",
+  "clip_start_s": 1060,
+  "room_frame": {
+   "p_u": [
+    0.2236,
+    0.8942
+   ],
+   "dist_m": {
+    "sunroom-arch wall": 1.25,
+    "foyer-arch wall": 3.37,
+    "kitchen-door wall": 0.841,
+    "French-door wall": 3.497
+   },
+   "eye_m": 1.264,
+   "forward": [
+    0.05828930780530575,
+    0.9966947091648539,
+    -0.0565863350851172
+   ],
+   "pitch_deg": -3.2,
+   "roll_deg": -1.6,
+   "vfov_deg": 38.78
+  },
+  "reprojection": {
+   "rms_px_518": 1.16,
+   "rms_px_1920": 4.3,
+   "inliers": 3381,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0161
+  },
+  "fit": {
+   "frames_in_fit": 58,
+   "gravity_tilt_deg": 3.52,
+   "walls_u": [
+    0.0557,
+    0.6761,
+    0.7812,
+    1.3638
+   ],
+   "m_per_unit": 7.4468,
+   "scale_axes": [
+    7.4468
+   ],
+   "scale_spread_pct": null,
+   "size_src": "spec/house_spec.ground.json dining width 4.62 (overhead trace); depth not used: the clip reads ~4.1 m kitchen door to French doors vs 5.87 built",
+   "ceiling_m": 2.03
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     8.245,
+     2.943,
+     6.203
+    ],
+    "look_at": [
+     8.187,
+     2.886,
+     5.207
+    ],
+    "vfov": 38.78,
+    "pin": "sunroom-arch wall / kitchen-door wall"
+   },
+   "latest": {
+    "pos": [
+     5.101,
+     -1.271,
+     -4.254
+    ],
+    "look_at": [
+     6.098,
+     -1.328,
+     -4.312
+    ],
+    "vfov": 38.78,
+    "pin": "sunroom-arch wall / kitchen-door wall"
+   }
+  },
+  "note": "dining scale from the room width only; the clip reads ~4.1 m kitchen door to French doors vs 5.87 m built: Marina's dining room is shallower than the grey-box's"
+ },
+ {
+  "still": "p1-1145",
+  "room": "living_room",
+  "job": "living",
+  "second": 1145,
+  "frame_in_job": "s_1145.jpg",
+  "clip_start_s": 1060,
+  "room_frame": {
+   "p_u": [
+    0.157,
+    0.5015
+   ],
+   "dist_m": {
+    "front-window wall": 2.506,
+    "rear wall": 5.895,
+    "foyer-door wall": -0.904,
+    "den-arch wall": 5.387
+   },
+   "eye_m": 1.2,
+   "forward": [
+    -0.11254245784917721,
+    0.9917653005689574,
+    -0.06112105830752372
+   ],
+   "pitch_deg": -3.5,
+   "roll_deg": -0.1,
+   "vfov_deg": 41.67
+  },
+  "reprojection": {
+   "rms_px_518": 1.19,
+   "rms_px_1920": 4.4,
+   "inliers": 9521,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0052
+  },
+  "fit": {
+   "frames_in_fit": 42,
+   "gravity_tilt_deg": 1.5,
+   "walls_u": [
+    -0.0936,
+    0.7463,
+    0.5918,
+    1.04
+   ],
+   "m_per_unit": 10.0029,
+   "scale_axes": [
+    9.9658,
+    10.04
+   ],
+   "scale_spread_pct": 0.7,
+   "size_src": "spec/house_spec.ground.json living room (overhead trace)",
+   "ceiling_m": 2.56
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     0.008,
+     2.86,
+     0.838
+    ],
+    "look_at": [
+     -0.984,
+     2.799,
+     0.725
+    ],
+    "vfov": 41.67,
+    "pin": "front-window wall / foyer-door wall"
+   },
+   "latest": {
+    "pos": [
+     7.448,
+     -1.335,
+     -10.665
+    ],
+    "look_at": [
+     7.561,
+     -1.396,
+     -11.657
+    ],
+    "vfov": 41.67,
+    "pin": "front-window wall / foyer-door wall"
+   }
+  },
+  "note": "camera in the foyer 0.9 m before the living-room doorway (as in the still); both renders look through the doorway"
+ },
+ {
+  "still": "p1-1172",
+  "room": "living_room",
+  "job": "living",
+  "second": 1172,
+  "frame_in_job": "s_1172.jpg",
+  "clip_start_s": 1060,
+  "room_frame": {
+   "p_u": [
+    0.0869,
+    1.0023
+   ],
+   "dist_m": {
+    "front-window wall": 1.805,
+    "rear wall": 6.596,
+    "foyer-door wall": 4.106,
+    "den-arch wall": 0.377
+   },
+   "eye_m": 1.394,
+   "forward": [
+    0.80038407684233,
+    -0.5955307476310236,
+    -0.06876378526001593
+   ],
+   "pitch_deg": -3.9,
+   "roll_deg": -0.7,
+   "vfov_deg": 41.26
+  },
+  "reprojection": {
+   "rms_px_518": 1.17,
+   "rms_px_1920": 4.4,
+   "inliers": 11487,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0138
+  },
+  "fit": {
+   "frames_in_fit": 42,
+   "gravity_tilt_deg": 1.5,
+   "walls_u": [
+    -0.0936,
+    0.7463,
+    0.5918,
+    1.04
+   ],
+   "m_per_unit": 10.0029,
+   "scale_axes": [
+    9.9658,
+    10.04
+   ],
+   "scale_spread_pct": 0.7,
+   "size_src": "spec/house_spec.ground.json living room (overhead trace)",
+   "ceiling_m": 2.56
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     -5.603,
+     3.111,
+     -0.068
+    ],
+    "look_at": [
+     -5.007,
+     3.042,
+     0.732
+    ],
+    "vfov": 41.26,
+    "pin": "front-window wall / den-arch wall"
+   },
+   "latest": {
+    "pos": [
+     8.149,
+     -1.141,
+     -15.693
+    ],
+    "look_at": [
+     7.349,
+     -1.21,
+     -15.097
+    ],
+    "vfov": 41.26,
+    "pin": "front-window wall / den-arch wall"
+   }
+  },
+  "note": "living room (scale spread 0.7%); camera at the den arch looking back at the fireplace wall"
+ },
+ {
+  "still": "p1-1157",
+  "room": "den",
+  "job": "living",
+  "second": 1157,
+  "frame_in_job": "s_1157.jpg",
+  "clip_start_s": 1060,
+  "room_frame": {
+   "p_u": [
+    0.2055,
+    1.0248
+   ],
+   "dist_m": {
+    "front-window wall": 2.205,
+    "bookshelf wall": 4.134,
+    "living-arch wall": 0.731,
+    "far end wall": 3.347
+   },
+   "eye_m": 1.172,
+   "forward": [
+    -0.4208113347971786,
+    0.9050485852524652,
+    -0.06168369994356788
+   ],
+   "pitch_deg": -3.5,
+   "roll_deg": 0.4,
+   "vfov_deg": 38.02
+  },
+  "reprojection": {
+   "rms_px_518": 1.06,
+   "rms_px_1920": 3.9,
+   "inliers": 3148,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.1323
+  },
+  "fit": {
+   "frames_in_fit": 19,
+   "gravity_tilt_deg": 1.97,
+   "walls_u": [
+    -0.0623,
+    0.7075,
+    0.936,
+    1.4312
+   ],
+   "m_per_unit": 8.2343,
+   "scale_axes": [
+    8.9771,
+    7.4915
+   ],
+   "scale_spread_pct": 18.0,
+   "size_src": "spec/house_spec.ground.json den (overhead trace; den clip registration)",
+   "ceiling_m": 2.2
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     -7.224,
+     2.824,
+     1.849
+    ],
+    "look_at": [
+     -8.129,
+     2.763,
+     1.428
+    ],
+    "vfov": 38.02,
+    "pin": "front-window wall / living-arch wall"
+   },
+   "latest": {
+    "pos": [
+     7.061,
+     -1.363,
+     -16.941
+    ],
+    "look_at": [
+     7.482,
+     -1.425,
+     -17.846
+    ],
+    "vfov": 38.02,
+    "pin": "front-window wall / living-arch wall"
+   }
+  },
+  "note": "DEN, not living room: 0.7 m inside the den arch looking at the den's front windows (the fit puts it 0.73 m past the living-arch wall)"
+ },
+ {
+  "still": "p1-1160",
+  "room": "den",
+  "job": "living",
+  "second": 1160,
+  "frame_in_job": "s_1160.jpg",
+  "clip_start_s": 1060,
+  "room_frame": {
+   "p_u": [
+    0.1487,
+    1.0421
+   ],
+   "dist_m": {
+    "front-window wall": 1.738,
+    "bookshelf wall": 4.601,
+    "living-arch wall": 0.874,
+    "far end wall": 3.204
+   },
+   "eye_m": 0.768,
+   "forward": [
+    0.40758294333537515,
+    0.9127359898700684,
+    0.028091940089264897
+   ],
+   "pitch_deg": 1.6,
+   "roll_deg": -2.6,
+   "vfov_deg": 38.36
+  },
+  "reprojection": {
+   "rms_px_518": 1.25,
+   "rms_px_1920": 4.6,
+   "inliers": 3185,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.159
+  },
+  "fit": {
+   "frames_in_fit": 19,
+   "gravity_tilt_deg": 1.97,
+   "walls_u": [
+    -0.0623,
+    0.7075,
+    0.936,
+    1.4312
+   ],
+   "m_per_unit": 8.2343,
+   "scale_axes": [
+    8.9771,
+    7.4915
+   ],
+   "scale_spread_pct": 18.0,
+   "size_src": "spec/house_spec.ground.json den (overhead trace; den clip registration)",
+   "ceiling_m": 2.2
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     -7.409,
+     2.302,
+     1.245
+    ],
+    "look_at": [
+     -8.322,
+     2.33,
+     1.653
+    ],
+    "vfov": 38.36,
+    "pin": "front-window wall / living-arch wall"
+   },
+   "latest": {
+    "pos": [
+     7.528,
+     -1.767,
+     -17.084
+    ],
+    "look_at": [
+     7.12,
+     -1.739,
+     -17.997
+    ],
+    "vfov": 38.36,
+    "pin": "front-window wall / living-arch wall"
+   }
+  },
+  "note": "den; eye 0.77 m is suspicious (PnP shift 0.10 u): pose +-0.3 m"
+ },
+ {
+  "still": "p1-1163",
+  "room": "den",
+  "job": "living",
+  "second": 1163,
+  "frame_in_job": "s_1163.jpg",
+  "clip_start_s": 1060,
+  "room_frame": {
+   "p_u": [
+    0.0578,
+    1.1642
+   ],
+   "dist_m": {
+    "front-window wall": 0.989,
+    "bookshelf wall": 5.349,
+    "living-arch wall": 1.879,
+    "far end wall": 2.199
+   },
+   "eye_m": 1.185,
+   "forward": [
+    0.992933996379185,
+    -0.007250438853460731,
+    -0.11844623240480705
+   ],
+   "pitch_deg": -6.8,
+   "roll_deg": -2.3,
+   "vfov_deg": 41.86
+  },
+  "reprojection": {
+   "rms_px_518": 1.18,
+   "rms_px_1920": 4.4,
+   "inliers": 2771,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0186
+  },
+  "fit": {
+   "frames_in_fit": 19,
+   "gravity_tilt_deg": 1.97,
+   "walls_u": [
+    -0.0623,
+    0.7075,
+    0.936,
+    1.4312
+   ],
+   "m_per_unit": 8.2343,
+   "scale_axes": [
+    8.9771,
+    7.4915
+   ],
+   "scale_spread_pct": 18.0,
+   "size_src": "spec/house_spec.ground.json den (overhead trace; den clip registration)",
+   "ceiling_m": 2.2
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     -8.708,
+     2.841,
+     0.278
+    ],
+    "look_at": [
+     -8.7,
+     2.723,
+     1.271
+    ],
+    "vfov": 41.86,
+    "pin": "front-window wall / living-arch wall"
+   },
+   "latest": {
+    "pos": [
+     8.277,
+     -1.35,
+     -18.089
+    ],
+    "look_at": [
+     7.284,
+     -1.468,
+     -18.082
+    ],
+    "vfov": 41.86,
+    "pin": "front-window wall / living-arch wall"
+   }
+  },
+  "note": "den bookshelf wall ahead in all three; den scale spread 18% (Marina's den reads longer than the spec's 3.71 m)"
+ },
+ {
+  "still": "p1-335",
+  "room": "main_stair",
+  "job": "stairs",
+  "second": 335,
+  "frame_in_job": "s_0335.jpg",
+  "clip_start_s": 305,
+  "room_frame": {
+   "ref": "foyer floor / first riser / flight centreline",
+   "forward": [
+    0.7762537356016901,
+    0.6115887252401836,
+    -0.1529358333534316
+   ],
+   "levels_seen": 4,
+   "risers_seen": 8,
+   "m_per_unit_vertical": 4.151,
+   "m_per_unit_along": 3.08,
+   "height_m": 1.281,
+   "along_m": -1.497,
+   "across_left_m": -1.434,
+   "pitch_deg": -8.8,
+   "roll_deg": -1.1,
+   "vfov_deg": 41.43,
+   "job": "stairs"
+  },
+  "reprojection": {
+   "rms_px_518": 0.44,
+   "rms_px_1920": 1.6,
+   "inliers": 18492,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0004
+  },
+  "fit": {
+   "method": "per-still local rise/going scale from the still's own point map"
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     1.968,
+     2.965,
+     2.216
+    ],
+    "look_at": [
+     1.356,
+     2.812,
+     2.992
+    ],
+    "vfov": 41.43,
+    "pin": "foyer floor / first riser / flight centreline"
+   },
+   "latest": {
+    "pos": [
+     5.969,
+     -1.254,
+     -9.367
+    ],
+    "look_at": [
+     5.193,
+     -1.407,
+     -9.979
+    ],
+    "vfov": 41.43,
+    "pin": "foyer floor / first riser / flight centreline"
+   }
+  },
+  "note": "stair frame from the still's own treads and risers (rise 0.169 / going 0.241 m); clean match in both models"
+ },
+ {
+  "still": "p1-345",
+  "room": "main_stair",
+  "job": "stairs",
+  "second": 345,
+  "frame_in_job": "s_0345.jpg",
+  "clip_start_s": 305,
+  "room_frame": {
+   "ref": "foyer floor / first riser / flight centreline",
+   "forward": [
+    0.9787472019745367,
+    -0.004980151772143726,
+    -0.20501003076762425
+   ],
+   "levels_seen": 6,
+   "risers_seen": 6,
+   "m_per_unit_vertical": 3.801,
+   "m_per_unit_along": 3.087,
+   "height_m": 2.464,
+   "along_m": 1.807,
+   "across_left_m": 0.046,
+   "pitch_deg": -11.8,
+   "roll_deg": -0.0,
+   "vfov_deg": 40.92,
+   "job": "stairs",
+   "note": "along/height from the riser count in the frame (6 ahead) and the 335 eye height; local VGGT read was inconsistent"
+  },
+  "reprojection": {
+   "rms_px_518": 1.07,
+   "rms_px_1920": 4.0,
+   "inliers": 12917,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0057
+  },
+  "fit": {
+   "method": "per-still local rise/going scale from the still's own point map"
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     0.056,
+     4.493,
+     6.485
+    ],
+    "look_at": [
+     0.061,
+     4.288,
+     7.463
+    ],
+    "vfov": 40.92,
+    "pin": "foyer floor / first riser / flight centreline"
+   },
+   "latest": {
+    "pos": [
+     2.665,
+     -0.071,
+     -10.847
+    ],
+    "look_at": [
+     1.686,
+     -0.276,
+     -10.842
+    ],
+    "vfov": 40.92,
+    "pin": "foyer floor / first riser / flight centreline"
+   }
+  },
+  "note": "on the flight: along/height from the riser count (6 ahead) + the 335 eye height, not from VGGT depth (straight climb drifts); both renders are a touch close/low"
+ },
+ {
+  "still": "p1-1067",
+  "room": "foyer",
+  "job": "foyer1",
+  "second": 1067,
+  "frame_in_job": "s_1067.jpg",
+  "clip_start_s": 1060,
+  "room_frame": {
+   "ref": "foyer floor / first riser / flight centreline",
+   "forward": [
+    -0.9896222711544029,
+    0.13369565963974572,
+    -0.052661475755006806
+   ],
+   "levels_seen": 3,
+   "risers_seen": 9,
+   "m_per_unit_vertical": 6.46,
+   "m_per_unit_along": 4.987,
+   "height_m": 1.316,
+   "along_m": 4.687,
+   "across_left_m": -0.496,
+   "pitch_deg": -3.0,
+   "roll_deg": 1.1,
+   "vfov_deg": 37.59,
+   "job": "foyer1"
+  },
+  "reprojection": {
+   "rms_px_518": 1.18,
+   "rms_px_1920": 4.4,
+   "inliers": 5476,
+   "points": 37265,
+   "shift_from_camera_head_u": 0.0022
+  },
+  "fit": {
+   "method": "per-still local rise/going scale from the still's own point map"
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     0.756,
+     3.01,
+     10.206
+    ],
+    "look_at": [
+     0.622,
+     2.958,
+     9.216
+    ],
+    "vfov": 37.59,
+    "pin": "foyer floor / first riser / flight centreline"
+   },
+   "latest": {
+    "pos": [
+     -0.215,
+     -1.219,
+     -10.305
+    ],
+    "look_at": [
+     0.775,
+     -1.272,
+     -10.439
+    ],
+    "vfov": 37.59,
+    "pin": "foyer floor / first riser / flight centreline"
+   }
+  },
+  "note": "UNRELIABLE: the foyer solve is poor (15% PnP inliers); puts the camera 4.7 m behind the first riser = inside the rear foyer wall in both models (white renders). Needs a solve of a proper foyer pan (stairs-a 312-320 s has one, but not this frame)"
+ },
+ {
+  "still": "p1-1187",
+  "room": "foyer",
+  "job": "foyer2",
+  "second": 1187,
+  "frame_in_job": "s_1187.jpg",
+  "clip_start_s": 1060,
+  "room_frame": {
+   "ref": "foyer floor / first riser / flight centreline",
+   "forward": [
+    0.988116952663718,
+    -0.09945622941080054,
+    -0.11718936082236428
+   ],
+   "levels_seen": 4,
+   "risers_seen": 8,
+   "m_per_unit_vertical": 6.378,
+   "m_per_unit_along": 5.208,
+   "height_m": 1.274,
+   "along_m": -1.795,
+   "across_left_m": 1.079,
+   "pitch_deg": -6.7,
+   "roll_deg": 0.4,
+   "vfov_deg": 41.79,
+   "job": "foyer2"
+  },
+  "reprojection": {
+   "rms_px_518": 1.15,
+   "rms_px_1920": 4.3,
+   "inliers": 13128,
+   "points": 18633,
+   "shift_from_camera_head_u": 0.0022
+  },
+  "fit": {
+   "method": "per-still local rise/going scale from the still's own point map"
+  },
+  "models": {
+   "sept": {
+    "pos": [
+     -1.279,
+     2.956,
+     1.831
+    ],
+    "look_at": [
+     -1.18,
+     2.839,
+     2.819
+    ],
+    "vfov": 41.79,
+    "pin": "foyer floor / first riser / flight centreline"
+   },
+   "latest": {
+    "pos": [
+     6.267,
+     -1.261,
+     -11.88
+    ],
+    "look_at": [
+     5.279,
+     -1.378,
+     -11.781
+    ],
+    "vfov": 41.79,
+    "pin": "foyer floor / first riser / flight centreline"
+   }
+  },
+  "note": "UNRELIABLE: 1.8 m before the first riser is plausible but 1.08 m left of the flight centreline puts the camera in the stair wall (35% inliers); grey render white, Sept shows the stair from inside the wall"
+ }
+]

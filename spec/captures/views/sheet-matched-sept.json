@@ -1,0 +1,467 @@
+[
+ {
+  "name": "../sheet-matched/p2-178-sept",
+  "pos": [
+   13.819,
+   6.962,
+   5.506
+  ],
+  "look_at": [
+   12.88,
+   6.918,
+   5.164
+  ],
+  "vfov": 45.21,
+  "note": "Marina p2-178 (parents_bedroom); pinned at window wall / bath-door wall"
+ },
+ {
+  "name": "../sheet-matched/p2-247-sept",
+  "pos": [
+   12.019,
+   6.86,
+   1.377
+  ],
+  "look_at": [
+   12.767,
+   6.835,
+   2.04
+  ],
+  "vfov": 46.11,
+  "note": "Marina p2-247 (parents_bedroom); pinned at hall-door wall / front wall"
+ },
+ {
+  "name": "../sheet-matched/p2-636-sept",
+  "pos": [
+   8.52,
+   6.888,
+   1.893
+  ],
+  "look_at": [
+   9.5,
+   6.876,
+   2.092
+  ],
+  "vfov": 41.37,
+  "note": "Marina p2-636 (parents_bedroom); pinned at hall-door wall / front wall"
+ },
+ {
+  "name": "../sheet-matched/p2-217-sept",
+  "pos": [
+   11.297,
+   7.011,
+   8.941
+  ],
+  "look_at": [
+   10.994,
+   6.983,
+   9.893
+  ],
+  "vfov": 46.35,
+  "note": "Marina p2-217 (parents_bath); pinned at near end wall / bedroom-door wall"
+ },
+ {
+  "name": "../sheet-matched/p2-223-sept",
+  "pos": [
+   9.977,
+   6.915,
+   8.968
+  ],
+  "look_at": [
+   10.947,
+   6.795,
+   9.179
+  ],
+  "vfov": 44.78,
+  "note": "Marina p2-223 (parents_bath); pinned at near end wall / bedroom-door wall"
+ },
+ {
+  "name": "../sheet-matched/p2-355-sept",
+  "pos": [
+   5.058,
+   6.927,
+   1.432
+  ],
+  "look_at": [
+   5.726,
+   6.816,
+   0.697
+  ],
+  "vfov": 42.09,
+  "note": "Marina p2-355 (kevin_jeff_room); pinned at hall-door wall / closet-door wall"
+ },
+ {
+  "name": "../sheet-matched/p2-376-sept",
+  "pos": [
+   8.0,
+   6.986,
+   -1.308
+  ],
+  "look_at": [
+   8.089,
+   6.92,
+   -0.314
+  ],
+  "vfov": 40.94,
+  "note": "Marina p2-376 (kevin_jeff_room); pinned at front-window wall / windows'-corner wall"
+ },
+ {
+  "name": "../sheet-matched/p2-451-sept",
+  "pos": [
+   3.244,
+   6.628,
+   -0.787
+  ],
+  "look_at": [
+   3.249,
+   6.554,
+   -1.784
+  ],
+  "vfov": 41.73,
+  "note": "Marina p2-451 (hall_bath); pinned at hall-door wall / Kevin-side wall"
+ },
+ {
+  "name": "../sheet-matched/p2-481-sept",
+  "pos": [
+   4.142,
+   6.755,
+   -1.545
+  ],
+  "look_at": [
+   3.425,
+   6.764,
+   -2.243
+  ],
+  "vfov": 41.67,
+  "note": "Marina p2-481 (hall_bath); pinned at hall-door wall / Kevin-side wall"
+ },
+ {
+  "name": "../sheet-matched/p2-540-sept",
+  "pos": [
+   -3.741,
+   6.889,
+   -0.367
+  ],
+  "look_at": [
+   -4.723,
+   6.768,
+   -0.22
+  ],
+  "vfov": 37.19,
+  "note": "Marina p2-540 (buzz_room); pinned at front-window wall / desk wall"
+ },
+ {
+  "name": "../sheet-matched/p2-550-sept",
+  "pos": [
+   -3.238,
+   6.931,
+   0.767
+  ],
+  "look_at": [
+   -3.377,
+   6.806,
+   -0.216
+  ],
+  "vfov": 37.43,
+  "note": "Marina p2-550 (buzz_room); pinned at shelves wall / door wall"
+ },
+ {
+  "name": "../sheet-matched/p2-556-sept",
+  "pos": [
+   -4.697,
+   7.026,
+   0.906
+  ],
+  "look_at": [
+   -3.777,
+   6.945,
+   0.522
+  ],
+  "vfov": 38.61,
+  "note": "Marina p2-556 (buzz_room); pinned at shelves wall / desk wall"
+ },
+ {
+  "name": "../sheet-matched/p2-609-sept",
+  "pos": [
+   2.45,
+   6.69,
+   2.535
+  ],
+  "look_at": [
+   3.39,
+   6.65,
+   2.874
+  ],
+  "vfov": 41.98,
+  "note": "Marina p2-609 (hall_corridor); pinned at parents'-door end wall / Kevin-side wall"
+ },
+ {
+  "name": "../sheet-matched/p2-615-sept",
+  "pos": [
+   4.447,
+   6.631,
+   3.742
+  ],
+  "look_at": [
+   5.444,
+   6.59,
+   3.815
+  ],
+  "vfov": 41.49,
+  "note": "Marina p2-615 (hall_corridor); pinned at parents'-door end wall / stair-side wall"
+ },
+ {
+  "name": "../sheet-matched/p2-621-sept",
+  "pos": [
+   6.509,
+   6.631,
+   2.697
+  ],
+  "look_at": [
+   7.272,
+   6.616,
+   3.343
+  ],
+  "vfov": 41.12,
+  "note": "Marina p2-621 (hall_corridor); pinned at parents'-door end wall / Kevin-side wall"
+ },
+ {
+  "name": "../sheet-matched/p2-892-sept",
+  "pos": [
+   1.363,
+   11.143,
+   -0.214
+  ],
+  "look_at": [
+   2.143,
+   11.005,
+   0.397
+  ],
+  "vfov": 43.44,
+  "note": "Marina p2-892 (attic); pinned at front eave wall / east gable wall"
+ },
+ {
+  "name": "../sheet-matched/p2-910-sept",
+  "pos": [
+   2.899,
+   10.896,
+   0.631
+  ],
+  "look_at": [
+   2.047,
+   10.737,
+   0.133
+  ],
+  "vfov": 44.53,
+  "note": "Marina p2-910 (attic); pinned at front eave wall / east gable wall"
+ },
+ {
+  "name": "../sheet-matched/p1-1079-sept",
+  "pos": [
+   5.863,
+   2.957,
+   8.773
+  ],
+  "look_at": [
+   6.112,
+   2.965,
+   9.741
+  ],
+  "vfov": 41.13,
+  "note": "Marina p1-1079 (kitchen); pinned at dining-door wall / foyer-side wall"
+ },
+ {
+  "name": "../sheet-matched/p1-1088-sept",
+  "pos": [
+   8.598,
+   3.083,
+   11.782
+  ],
+  "look_at": [
+   9.075,
+   3.057,
+   12.66
+  ],
+  "vfov": 40.97,
+  "note": "Marina p1-1088 (kitchen); pinned at rear wall / foyer-side wall"
+ },
+ {
+  "name": "../sheet-matched/p1-1100-sept",
+  "pos": [
+   11.575,
+   3.296,
+   13.795
+  ],
+  "look_at": [
+   12.574,
+   3.25,
+   13.82
+  ],
+  "vfov": 38.77,
+  "note": "Marina p1-1100 (kitchen); pinned at rear wall / far side wall"
+ },
+ {
+  "name": "../sheet-matched/p1-1121-sept",
+  "pos": [
+   8.846,
+   2.906,
+   9.007
+  ],
+  "look_at": [
+   8.439,
+   2.753,
+   8.107
+  ],
+  "vfov": 40.29,
+  "note": "Marina p1-1121 (dining_room); pinned at sunroom-arch wall / kitchen-door wall"
+ },
+ {
+  "name": "../sheet-matched/p1-1127-sept",
+  "pos": [
+   8.245,
+   2.943,
+   6.203
+  ],
+  "look_at": [
+   8.187,
+   2.886,
+   5.207
+  ],
+  "vfov": 38.78,
+  "note": "Marina p1-1127 (dining_room); pinned at sunroom-arch wall / kitchen-door wall"
+ },
+ {
+  "name": "../sheet-matched/p1-1145-sept",
+  "pos": [
+   0.008,
+   2.86,
+   0.838
+  ],
+  "look_at": [
+   -0.984,
+   2.799,
+   0.725
+  ],
+  "vfov": 41.67,
+  "note": "Marina p1-1145 (living_room); pinned at front-window wall / foyer-door wall"
+ },
+ {
+  "name": "../sheet-matched/p1-1172-sept",
+  "pos": [
+   -5.603,
+   3.111,
+   -0.068
+  ],
+  "look_at": [
+   -5.007,
+   3.042,
+   0.732
+  ],
+  "vfov": 41.26,
+  "note": "Marina p1-1172 (living_room); pinned at front-window wall / den-arch wall"
+ },
+ {
+  "name": "../sheet-matched/p1-1157-sept",
+  "pos": [
+   -7.224,
+   2.824,
+   1.849
+  ],
+  "look_at": [
+   -8.129,
+   2.763,
+   1.428
+  ],
+  "vfov": 38.02,
+  "note": "Marina p1-1157 (den); pinned at front-window wall / living-arch wall"
+ },
+ {
+  "name": "../sheet-matched/p1-1160-sept",
+  "pos": [
+   -7.409,
+   2.302,
+   1.245
+  ],
+  "look_at": [
+   -8.322,
+   2.33,
+   1.653
+  ],
+  "vfov": 38.36,
+  "note": "Marina p1-1160 (den); pinned at front-window wall / living-arch wall"
+ },
+ {
+  "name": "../sheet-matched/p1-1163-sept",
+  "pos": [
+   -8.708,
+   2.841,
+   0.278
+  ],
+  "look_at": [
+   -8.7,
+   2.723,
+   1.271
+  ],
+  "vfov": 41.86,
+  "note": "Marina p1-1163 (den); pinned at front-window wall / living-arch wall"
+ },
+ {
+  "name": "../sheet-matched/p1-335-sept",
+  "pos": [
+   1.968,
+   2.965,
+   2.216
+  ],
+  "look_at": [
+   1.356,
+   2.812,
+   2.992
+  ],
+  "vfov": 41.43,
+  "note": "Marina p1-335 (main_stair); pinned at foyer floor / first riser / flight centreline"
+ },
+ {
+  "name": "../sheet-matched/p1-345-sept",
+  "pos": [
+   0.056,
+   4.493,
+   6.485
+  ],
+  "look_at": [
+   0.061,
+   4.288,
+   7.463
+  ],
+  "vfov": 40.92,
+  "note": "Marina p1-345 (main_stair); pinned at foyer floor / first riser / flight centreline"
+ },
+ {
+  "name": "../sheet-matched/p1-1067-sept",
+  "pos": [
+   0.756,
+   3.01,
+   10.206
+  ],
+  "look_at": [
+   0.622,
+   2.958,
+   9.216
+  ],
+  "vfov": 37.59,
+  "note": "Marina p1-1067 (main_stair); pinned at foyer floor / first riser / flight centreline"
+ },
+ {
+  "name": "../sheet-matched/p1-1187-sept",
+  "pos": [
+   -1.279,
+   2.956,
+   1.831
+  ],
+  "look_at": [
+   -1.18,
+   2.839,
+   2.819
+  ],
+  "vfov": 41.79,
+  "note": "Marina p1-1187 (main_stair); pinned at foyer floor / first riser / flight centreline"
+ }
+]
