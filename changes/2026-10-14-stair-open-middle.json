@@ -1,0 +1,66 @@
+{
+ "change": "Main stair opened in the middle: landing, flight 2, gallery and well edge shifted 0.654 m north into the empty strip beside the well (landing 3.57 m wide, open well 1.03 m between the flights); stair and gallery railings become a handrail on spindles",
+ "target": "Greybox_Upstairs",
+ "premise": "Marina's foyer landing is ~4 m wide (clip B), wider than the 2.83 m upstairs well it was squeezed to, so her flights have an open middle",
+ "claim": {
+  "value": [
+   3.57,
+   1.03
+  ],
+  "data": [
+   "vggt:stairs-b"
+  ],
+  "scale": [
+   "door-80in:stairs-a"
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-10-13",
+   "what": "landing built at the upstairs well width 2.83 m (floors don't stack exactly)",
+   "outcome": "failed"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "September model (glb section): U stair with a 1.13 m open middle between flights",
+   "agrees": true,
+   "data": [
+    "glb:intact"
+   ],
+   "scale": [
+    "door-80in:glb"
+   ],
+   "independent": true
+  },
+  {
+   "what": "ground foyer 3.67 m wide (overhead trace, ground floor): the landing spans the foyer",
+   "agrees": true,
+   "data": [
+    "overhead-trace:ground"
+   ],
+   "scale": [
+    "overhead-calib:ground"
+   ],
+   "independent": true
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/stair-options/now-p1-335.png",
+   "spec/captures/stair-options/now-p1-345.png",
+   "spec/captures/stair-options/now-foyer-wide.png",
+   "spec/captures/stair-options/now-gallery.png"
+  ],
+  "after": [
+   "spec/captures/stair-options/open-p1-335.png",
+   "spec/captures/stair-options/open-p1-345.png",
+   "spec/captures/stair-options/open-foyer-wide.png",
+   "spec/captures/stair-options/open-gallery.png",
+   "spec/captures/stair-options/compare-open.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "user_words": "(Oct 14) 'why is the staircase not open in the middle?'"
+}

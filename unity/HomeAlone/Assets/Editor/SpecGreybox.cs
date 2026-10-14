@@ -101,6 +101,10 @@ public static class SpecGreybox
         Lights(root, spaces);
     }
 
+    // Opens the grey-box ready to walk (Play, click the Game view). Launch: Unity -projectPath unity/HomeAlone -executeMethod SpecGreybox.OpenForWalk
+    [MenuItem("HomeAlone/Open Greybox For Walk")]
+    public static void OpenForWalk() => EditorSceneManager.OpenScene("Assets/Scenes/Greybox_Upstairs.unity");
+
     [MenuItem("HomeAlone/Build Greybox From Spec")]
     public static void Build()
     {
@@ -295,9 +299,17 @@ public static class SpecGreybox
 
     static void Rail(GameObject p, Door d)
     {
+        // open balustrade: a 6 cm handrail and 4 cm spindles at most 0.12 m apart (a body still can't pass)
         var g = Child(p, "Rail");
-        if (d.alongX) Box(g, "Rail", d.lo, d.hi, d.coord - 0.03f, d.coord + 0.03f, 0f, RailHeight, mRail);
-        else Box(g, "Rail", d.coord - 0.03f, d.coord + 0.03f, d.lo, d.hi, 0f, RailHeight, mRail);
+        if (d.alongX) Box(g, "Rail", d.lo, d.hi, d.coord - 0.03f, d.coord + 0.03f, RailHeight - 0.06f, RailHeight, mRail);
+        else Box(g, "Rail", d.coord - 0.03f, d.coord + 0.03f, d.lo, d.hi, RailHeight - 0.06f, RailHeight, mRail);
+        int k = Mathf.Max(1, Mathf.CeilToInt((d.hi - d.lo) / 0.12f));
+        for (int i = 0; i < k; i++)
+        {
+            float s = d.lo + (i + 0.5f) * (d.hi - d.lo) / k;
+            if (d.alongX) Box(g, "Spindle", s - 0.02f, s + 0.02f, d.coord - 0.02f, d.coord + 0.02f, 0f, RailHeight - 0.06f, mRail);
+            else Box(g, "Spindle", d.coord - 0.02f, d.coord + 0.02f, s - 0.02f, s + 0.02f, 0f, RailHeight - 0.06f, mRail);
+        }
     }
 
     static void Box(GameObject p, string n, float x0, float x1, float z0, float z1, float y0, float y1, Material m)

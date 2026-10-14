@@ -192,6 +192,18 @@ def stair_spec(final, o):
     B = []
     box = lambda name, kind, x0, x1, y0, y1, z0, z1_: B.append({"name": name, "kind": kind, "x": [round(float(x0), 3), round(float(x1), 3)],
                                                              "y": [round(float(y0), 3), round(float(y1), 3)], "z": [round(float(z0), 3), round(float(z1_), 3)]})
+
+    def rail(name, x0, x1, y0, y1, z0, z1_):
+        """An open balustrade in the box (x0..x1, z0..z1_), floor y0, handrail top y1: a 6 cm handrail and 4 cm spindles
+        at most 0.12 m apart along its long side (Marina's stair has turned spindles, not a solid panel)."""
+        along_x = (x1 - x0) >= (z1_ - z0)
+        a0, a1 = (x0, x1) if along_x else (z0, z1_)
+        box(name + "_cap", "rail", x0, x1, y1 - 0.06, y1, z0, z1_)
+        k = max(1, int(np.ceil((a1 - a0) / 0.12)))
+        for i in range(k):
+            c = a0 + (i + 0.5) * (a1 - a0) / k
+            if along_x: box(f"{name}_spindle{i}", "rail", c - 0.02, c + 0.02, y0, y1 - 0.06, z0, z1_)
+            else: box(f"{name}_spindle{i}", "rail", x0, x1, y0, y1 - 0.06, c - 0.02, c + 0.02)
     for k in range(1, n1):                                                # flight 1 treads (the n1-th riser lands on the landing)
         box(f"flight1_step{k:02d}", "step", xl + (n1 - 1 - k) * g, xl + (n1 - k) * g, -F, -F + k * r, z1, zs)
     SLAB = 0.20   # landing / flight-2 construction depth (authored). Marina's walk 1068-1072 s passes UNDER the landing to
@@ -202,10 +214,10 @@ def stair_spec(final, o):
     x0 = xl + (n1 - 1) * g                                                # foot of flight 1
     box("foyer_floor_under_well", "floor", xw, xe + 1.0, -F - 0.2, -F, zn, zs)
     for k in range(1, n1):                                                # flight 1 open-side balustrade, stepped with the treads
-        box(f"flight1_rail{k:02d}", "rail", xl + (n1 - 1 - k) * g, xl + (n1 - k) * g, -F + k * r, -F + k * r + 0.9, z1 - 0.06, z1)
-    box("landing_rail", "rail", xl, xl + 0.06, -F + n1 * r, -F + n1 * r + 0.9, zg, z1)   # landing edge over the foyer
+        rail(f"flight1_rail{k:02d}", xl + (n1 - 1 - k) * g, xl + (n1 - k) * g, -F + k * r, -F + k * r + 0.9, z1 - 0.06, z1)
+    rail("landing_rail", xl, xl + 0.06, -F + n1 * r, -F + n1 * r + 0.9, zg, z1)   # landing edge over the foyer
     for k in range(n1 + 1, n):
-        box(f"flight2_rail{k - n1:02d}", "rail", xl + (k - n1 - 1) * g2, xl + (k - n1) * g2, -F + k * r, -F + k * r + 0.9, zg, zg + 0.06)
+        rail(f"flight2_rail{k - n1:02d}", xl + (k - n1 - 1) * g2, xl + (k - n1) * g2, -F + k * r, -F + k * r + 0.9, zg, zg + 0.06)
     box("well_wall_south", "wall", xw - 0.07, xe, -F, 0, zs, zs + 0.07)    # the photo wall, foyer floor to the upper floor
     box("well_wall_west", "wall", xw - 0.07, xw, -F, 2.4, zn - 0.07, zs + 0.07)   # rear wall (landing window not modelled)
     # north edge of the well: only the upper floor's edge (fascia). A full-height wall here stood inside the foyer, which is

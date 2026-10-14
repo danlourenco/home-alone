@@ -144,7 +144,7 @@
   {
    "name": "hall_corridor",
    "kind": "hall",
-   "notes": "hall + end bay; bay north wall where the hall's east wall ends (clip first 3.05, density check), bay east wall at clip second 2.21 holds the bath door | plus the north-side gallery from the stair head (authored, measurements/rooms/stairs.json) (clip hall-s1, registration residual <= 5.1 cm)",
+   "notes": "hall + end bay; bay north wall where the hall's east wall ends (clip first 3.05, density check), bay east wall at clip second 2.21 holds the bath door | plus the north-side gallery from the stair head (authored, measurements/rooms/stairs.json) (clip hall-s1, registration residual <= 5.1 cm) | gallery and stair head shifted 0.654 m north (Oct 14): the landing widened toward Marina's ~4 m foyer landing",
    "m": [
     [
      7.29,
@@ -171,19 +171,19 @@
      1.27
     ],
     [
-     9.03,
+     8.376,
      1.24
     ],
     [
-     9.03,
+     8.376,
      -2.275
     ],
     [
-     7.83,
+     7.176,
      -2.275
     ],
     [
-     7.83,
+     7.176,
      1.056
     ]
    ]
@@ -334,22 +334,22 @@
   {
    "name": "main_stair_opening",
    "kind": "opening",
-   "notes": "the well left open above the main stair (measurements/rooms/stairs.json): Marina's overhead hole minus the north-side gallery that flight 2 arrives on (user decision Oct 13). West edge = the squared rear wall.",
+   "notes": "the well left open above the main stair (measurements/rooms/stairs.json): Marina's overhead hole minus the north-side gallery that flight 2 arrives on (user decision Oct 13). West edge = the squared rear wall. | north edge shifted 0.654 m (Oct 14, wider landing; open middle between the flights)",
    "m": [
     [
-     7.83,
+     7.176,
      -4.578
     ],
     [
-     7.83,
+     7.176,
      -2.275
     ],
     [
-     9.18,
+     8.526,
      -2.275
     ],
     [
-     9.18,
+     8.526,
      0.97
     ],
     [

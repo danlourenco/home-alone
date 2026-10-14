@@ -77,7 +77,7 @@
   "landing_depth_note": "clip B top nosing to rear wall, 0.53 units x 4.02 m/unit x 0.742 (depth-stretch correction = true going / 3D going); depth-direction, so +-0.15 m",
   "gallery_width_m": 1.2,
   "gallery_note": "gallery = flight 2's width, running to the hall (not measured; Marina's upstairs shows the whole well open); stair head moved to plan y -2.275 (was -2.757) for flight 2's 3 treads (Oct 14)",
-  "landing_width_note": "Marina's main-floor landing spans the foyer (~4 m in clip B); the upstairs well is 2.83 m, so the build uses the well's width (floors don't stack exactly in Marina's models)",
+  "landing_width_note": "Marina's main-floor landing spans the foyer (~4 m in clip B). Oct 14 (user: 'why is the staircase not open in the middle?'): the well, landing, flight 2 and gallery shifted 0.654 m north into the empty strip beside the well, so the landing is 3.57 m (foyer 3.67 m) and the open well between the flights is 1.03 m (was 0.38; September model 1.13). Was: the upstairs well's 2.83 m",
   "flight_2_width_m": 1.2,
   "flight_2_note": "same width as flight 1 in the user's main-floor plan drawing"
  }
