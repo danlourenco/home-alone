@@ -123,6 +123,7 @@ public static class SpecGreybox
         report += "UPSTAIRS " + RoomWalk(spaces, doors);
         if (gj != null) { FloorY = (float)gj["floor_y_m"]; report += "GROUND " + RoomWalk(gspaces, gdoors); FloorY = 0f; }
         player.SetActive(true);
+        Furniture(root);   // after the gates: placeholder furniture is for feel walks, not geometry checks
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, $"walk-test{Tag}.txt"), report);
         if (Variant == "")
@@ -137,6 +138,19 @@ public static class SpecGreybox
         }
         EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), $"Assets/Scenes/Greybox_Upstairs{SceneTag}.unity");
         Debug.Log("SpecGreybox: built from " + SpecPath + (gj != null ? " + " + GroundPath : "") + "\n" + report);
+    }
+
+    // spec/furniture.json: standard-size placeholder boxes placed from Marina's views (sources in the file)
+    static void Furniture(GameObject root)
+    {
+        var f = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/furniture.json"));
+        if (!File.Exists(f)) return;
+        var g = Child(root, "Furniture"); var m = Mat("Furniture", new Color(0.36f, 0.24f, 0.15f));
+        foreach (var p in JObject.Parse(File.ReadAllText(f))["pieces"])
+        {
+            float V(string k, int i) => (float)p[k][i];
+            Box(g, (string)p["name"], V("x", 0), V("x", 1), -V("z", 1), -V("z", 0), V("y", 0), V("y", 1), m);
+        }
     }
 
     static void PlanShot(List<Space> spaces, string name)
@@ -501,7 +515,8 @@ public static class SpecGreybox
         var cc = p.AddComponent<CharacterController>(); cc.radius = 0.275f; cc.height = 1.85f; cc.center = new Vector3(0, 0.925f, 0); cc.stepOffset = 0.3f;
         var camGo = new GameObject("Camera"); camGo.transform.parent = p.transform; camGo.transform.localPosition = new Vector3(0, 1.7f, 0);
         var cam = camGo.AddComponent<Camera>(); cam.tag = "MainCamera"; cam.nearClipPlane = 0.05f; camGo.AddComponent<HDAdditionalCameraData>(); camGo.AddComponent<AudioListener>();
-        p.AddComponent<FpsController>().cam = camGo.transform;
+        var fc = p.AddComponent<FpsController>(); fc.cam = camGo.transform;
+        fc.eyeOffset = fc.standHeight - 1.28f;   // eye 1.28 m = IntactHouseReference's (1.65 units x 0.774), so feel walks compare like with like; adult is 1.65
     }
 
     // Adult capsule (spec bodies.bandit: diameter 0.55, height 1.85) swept straight through every real door and
