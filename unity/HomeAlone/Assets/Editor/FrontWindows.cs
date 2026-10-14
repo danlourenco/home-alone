@@ -74,7 +74,7 @@ public static partial class SurveyBuilder
         foreach(float x in new[]{-5.24f,-2.202f,10.049f})specs.Add((new Vector3(x,6.784f,10.947f),1.329f,1.621f,180,3,4,"Rear upper sash"));
         foreach(float x in new[]{-5.395f,-2.047f})specs.Add((new Vector3(x,2.904f,10.947f),1.021f,1.621f,180,3,4,"Rear lower sash"));
         foreach(float x in new[]{1.39f,2.71f})specs.Add((new Vector3(x,6.30f,10.947f),1.25f,1.94f,180,3,4,"Stair landing sash"));
-        foreach(float x in new[]{-6.285f+BuzzShiftX,10.049f})specs.Add((new Vector3(x,6.642f,-1.803f),.872f,1.621f,x<0?90:270,2,4,"Recessed side sash"));   // Buzz's west wall moved (BuzzRoomResize.cs)
+        foreach(float x in new[]{-6.285f,10.049f})specs.Add((new Vector3(x,6.642f,-1.803f),.872f,1.621f,x<0?90:270,2,4,"Recessed side sash"));
         specs.Add((new Vector3(13.847f,3.171f,18.792f),1.33f,1.375f,180,3,4,"Kitchen rear sash"));
         specs.Add((new Vector3(16.696f,3.173f,14.87f),1.221f,1.376f,270,3,4,"Kitchen side sash"));
         specs.Add((new Vector3(9.479f,3.098f,17.398f),1.046f,1.228f,90,2,4,"Rear service sash"));
