@@ -9,6 +9,8 @@ using UnityEngine.Rendering.HighDefinition;
 
 public static partial class SurveyBuilder
 {
+    // Run: Unity -batchmode -projectPath unity/HomeAlone -executeMethod SurveyBuilder.FurnishBuzzBedroomBatch -quit -logFile -
+    public static void FurnishBuzzBedroomBatch(){EditorSceneManager.OpenScene(IntactScene);FurnishBuzzBedroom();}
     [MenuItem("HomeAlone/Reference/Furnish Buzz Bedroom")]
     public static void FurnishBuzzBedroom()
     {
@@ -54,12 +56,14 @@ public static partial class SurveyBuilder
         Cyl(beside,"Bedside lamp",-2.82f,1.19f,5.92f,6.30f,.025f,brass);
         FixtureShade(beside,"Green bedside shade",new Vector3(-2.82f,6.20f,1.19f),green,new[]{new Vector2(.21f,0),new Vector2(.13f,.23f)});
         beside.transform.position=new Vector3(1.10f,0,-2.59f);
+        // Marina Part 2 550 s (tour550.jpg, camera pose from the gated Buzz clip): a 2-column, 5-drawer chest 0.87 m wide
+        // with its top at eye level, 1.31 m; centred between the front windows. Was 0.56 x 0.80 m. Front face unchanged (walk route).
         var dresser=Child(root,"Window chest of drawers");
-        Box(dresser,"Chest",-3.91f,-3.19f,-2.21f,-1.74f,5.22f,6.25f,wood);
-        Box(dresser,"Chest top",-3.95f,-3.15f,-2.24f,-1.70f,6.25f,6.30f,wood);
-        for(int i=0;i<4;i++){
-            float y=5.30f+i*.23f;Box(dresser,"Drawer",-3.87f,-3.23f,-1.73f,-1.70f,y,y+.19f,wood);
-            BedroomRod(dresser,new Vector3(-3.69f,y+.09f,-1.68f),new Vector3(-3.43f,y+.09f,-1.68f),.01f,brass);
+        Box(dresser,"Chest",-4.17f,-3.09f,-2.31f,-1.74f,5.22f,6.86f,wood);
+        Box(dresser,"Chest top",-4.21f,-3.05f,-2.31f,-1.70f,6.86f,6.91f,wood);
+        for(int i=0;i<5;i++)foreach(float x in new[]{-4.13f,-3.61f}){
+            float y=5.30f+i*.31f;Box(dresser,"Drawer",x,x+.48f,-1.73f,-1.70f,y,y+.26f,wood);
+            BedroomRod(dresser,new Vector3(x+.16f,y+.13f,-1.68f),new Vector3(x+.32f,y+.13f,-1.68f),.01f,brass);
         }
         // West-wall shelves above the source desk, with the terrarium on the lowest shelf.
         var shelves=Child(root,"Buzz display shelves");

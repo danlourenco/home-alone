@@ -487,13 +487,14 @@ public static class SpecGreybox
     }
 
     // Named one-off views (spec/captures/views/views.json: [{name, pos, look_at, vfov}], Unity world coordinates).
-    // Run: Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.RenderViews -quit -logFile -
+    // Run: Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.RenderViews -quit -logFile - [-scene IntactHouseReference] [-views views-buzz-old.json]
     public static void RenderViews()
     {
-        EditorSceneManager.OpenScene("Assets/Scenes/Greybox_Upstairs.unity");
+        var a = System.Environment.GetCommandLineArgs(); int si = System.Array.IndexOf(a, "-scene"), vi = System.Array.IndexOf(a, "-views");
+        EditorSceneManager.OpenScene($"Assets/Scenes/{(si >= 0 ? a[si + 1] : "Greybox_Upstairs")}.unity");
         var go = new GameObject("ViewCam"); var cam = go.AddComponent<Camera>(); go.AddComponent<HDAdditionalCameraData>(); cam.nearClipPlane = 0.05f;
         var rt = new RenderTexture(1920, 1080, 24); cam.targetTexture = rt;
-        foreach (var v in JArray.Parse(File.ReadAllText(Path.Combine(CaptureDir, "views/views.json"))))
+        foreach (var v in JArray.Parse(File.ReadAllText(Path.Combine(CaptureDir, "views", vi >= 0 ? a[vi + 1] : "views.json"))))
         {
             Vector3 V(JToken t) => new Vector3((float)t[0], (float)t[1], (float)t[2]);
             // optional "hide": object paths to switch off for this view (e.g. "Upstairs", "Ground/Ceilings")

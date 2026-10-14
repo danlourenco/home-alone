@@ -1,0 +1,92 @@
+[
+ {
+  "name": "buzz-old-marina-540",
+  "pos": [
+   -4.396,
+   6.897,
+   -0.606
+  ],
+  "look_at": [
+   -5.377,
+   6.771,
+   -0.457
+  ],
+  "vfov": 37.07,
+  "note": "Marina Part 2 540.00s (buzzall f001); D=2.50 m from door wall, L=1.92 m from shelves wall, eye 1.30 m; pinned at the door corner"
+ },
+ {
+  "name": "buzz-old-marina-545",
+  "pos": [
+   -3.506,
+   6.788,
+   -0.137
+  ],
+  "look_at": [
+   -4.315,
+   6.724,
+   -0.721
+  ],
+  "vfov": 37.9,
+  "note": "Marina Part 2 545.00s (buzzall f021); D=1.82 m from door wall, L=1.56 m from shelves wall, eye 1.21 m; pinned at the door corner"
+ },
+ {
+  "name": "buzz-old-marina-550",
+  "pos": [
+   -3.163,
+   6.914,
+   0.765
+  ],
+  "look_at": [
+   -3.326,
+   6.826,
+   -0.217
+  ],
+  "vfov": 37.66,
+  "note": "Marina Part 2 550.00s (buzzall f041); D=1.55 m from door wall, L=0.86 m from shelves wall, eye 1.31 m; pinned at the door corner"
+ },
+ {
+  "name": "buzz-old-marina-554",
+  "pos": [
+   -4.589,
+   7.005,
+   0.993
+  ],
+  "look_at": [
+   -3.957,
+   6.946,
+   0.221
+  ],
+  "vfov": 38.46,
+  "note": "Marina Part 2 554.00s (buzzall f057); D=2.65 m from door wall, L=0.69 m from shelves wall, eye 1.38 m; pinned at the door corner"
+ },
+ {
+  "name": "buzz-old-marina-556",
+  "pos": [
+   -5.358,
+   6.965,
+   0.985
+  ],
+  "look_at": [
+   -4.445,
+   6.903,
+   0.583
+  ],
+  "vfov": 38.64,
+  "note": "Marina Part 2 556.00s (buzzall f065); D=3.25 m from door wall, L=0.69 m from shelves wall, eye 1.35 m; pinned at the door corner"
+ },
+ {
+  "name": "buzz-old-marina-560",
+  "pos": [
+   -6.415,
+   6.781,
+   1.136
+  ],
+  "look_at": [
+   -5.423,
+   6.659,
+   1.158
+  ],
+  "vfov": 38.97,
+  "note": "Marina Part 2 560.00s (buzzall f081); D=4.07 m from door wall, L=0.58 m from shelves wall, eye 1.21 m; pinned at the door corner"
+ }
+]

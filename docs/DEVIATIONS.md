@@ -31,6 +31,22 @@ The house must **feel** authentic. A room that is a notably different shape or s
 | 22 | What is behind the arched foyer door (rear right) is unknown: built as a closed prop door | — | Marina's walk shows it closed (1068-1071 s) | Low | A frame with the door open, or the film |
 | 17 | Parents' bath 0.63 m wall stub reads -9 cm | Pre-existing | Likely furniture against the wall | Low | Look at the frames |
 
+## Old model (IntactHouseReference): Buzz's room vs Marina (Oct 13, census; walls NOT moved, user decision pending)
+
+Marina's overhead is turned 90 deg relative to the old model: her door wall = old east wall (X -1.16 native), her shelves wall = old north wall (Y 1.88). Same topology (door at the corner, bed off the door wall, shelves wall, chest between two front windows, third window on the desk wall, attic stair beside the shelves wall). Sizes differ. Evidence: `spec/captures/buzz-old-vs-marina/all.png` (Marina frame | old scene rendered from her own camera, poses from the gated Buzz clip `sfm-work/real-vggt-buzzall`, 2.038 m/unit at 80 in doors, pinned at the door corner, eye 1.28 m from the clip's floor peak).
+
+| # | What | Old model | Marina | Shape risk | How to revisit |
+|---|---|---|---|---|---|
+| O1 | **Room depth, door wall to desk wall** | 3.82 m (triangle census X -6.10..-1.16) | 4.35 m (VGGT) / 4.37 (trace): old is **-0.53 m, -12%**. Independent proof: 9 of her 45 camera positions (556-562 s) stand 3.9-4.10 m from the door wall, beyond the old west wall; still beyond at a 76 in door (3.90 m), inside only below ~75 in. The 560 s render is black (camera in the wall) | **High** (the "cramped" feel) | West wall borders the wing room (object52/93) for Y > -0.95 m but is EXTERIOR with the side window for Y -1.80..-0.95 (recessed side sash at -1.40 m). Growing west moves an outside wall and its window: user decision. Growing east takes the 1.45 m corridor to 0.92 m |
+| O2 | **Room width, shelves wall to front-window wall** | 3.25 m (Y -2.32..1.88) | 3.49 (VGGT) / 3.64 (trace): old **-0.24..-0.39 m, -7..-11%** | High | The hall band north of Buzz (Y 1.59..3.46 m) is 1.87 m where Marina's corridor piece + attic-stair strip is 1.35-1.37 m (+0.50 m). Moving Buzz's north wall north 0.30 m (0.39 native) gives 3.55 m and leaves 1.57 m of hall: interior walls only. Recommended; the attic stairwell (Y 1.78..3.27 m, 1.49 wide vs Marina 1.37) shifts with it |
+| O3 | Door position along the door wall | leaf 0.33..1.11 m from the shelves-wall corner | casing 0.04..0.80 m (hall-s1 148-192; tour556 shows the casing at the corner) | Medium | Moves with any wall fix; 0.29 m |
+| O4 | Front windows | sill 0.47 m, head 1.73 m, 0.73 m wide (native 0.94 x 1.62 at y 6.64), 1.04 m of wall between | sill 0.82 m, head >= 1.97 m, ~1.08 m wide incl. curtains, 1.10 m between (tour550 at the 550 s pose) | Medium (exterior, not touched) | Exterior shell pass |
+| O5 | Chest between the front windows | was 0.56 w x 0.80 h, 1 column x 4 drawers | 0.87 w x 1.31 h, 2 columns x 5 drawers (tour550, pose-derived; +-0.1 m from the eye height) | — | **Applied Oct 13** (`BuzzBedroom.cs`): 0.84 x 0.44 x 1.27 m, front face unchanged. `CheckBuzzBedroom` (Play mode) not yet re-run |
+| O6 | Bed to chest passage | 0.70 m (bed frame Z -0.75 to chest front -1.70 native) | ~0.83 m (overhead50, oblique reading) | Medium | Follows O2 |
+| O7 | Ceiling | 2.41-2.43 m (horizontal planes at z 8.34-8.36 over the room) | unmeasured in Buzz; 2.29-2.42 next door | Low | — |
+
+Not changed by any of this: the bed (0.94 x 1.78 m mattress, old; Marina ~1.0 x 1.82 from the overhead), shelves, desk, Jordan, windows, walls.
+
 ## Settled (kept for the record)
 
 - Ground floor front-to-back stretch (×1.141, tried Oct 13): removed. It changed every main-block room's proportions by 12-18%, and the real-house plan sided with Marina's ground floor as measured. Replaced by #1.
