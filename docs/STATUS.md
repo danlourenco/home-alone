@@ -16,7 +16,7 @@ Branch `unity-sfm-reconstruction`, pushed to `origin`. Git LFS covers `*.glb *.b
 - **Closets don't need to open.** The linen closet has a prop door; the other shallow closets are sealed.
 - **Door height** is 80 in nominal, 78–80 in honest. The area check brackets Marina's 1,900 ft², and 84 in is ruled out.
 - **Marina's model is the authority for both floors and how they stack** (user, Oct 13). The downloaded whole-house model (`HOME_ALONE_FINAL.glb`, IntactHouseReference, 0.774 m/unit from its doors) is a sanity check only. A uniform house or player scale for feel is allowed later as a build-time knob.
-- **Never contact Marina.**
+- **Agents never contact Marina.** The user wrote to her on Oct 14, 2026 (mockingbirdlanedesign@gmail.com) asking for room dimensions or plans and where her furniture came from. If she replies, her numbers are a new source: log them with their provenance and use them as independent checks (Buzz door-to-desk length, DEVIATIONS 23, first).
 - Commit and push work. The user likes plain-language summaries.
 
 ## Pipeline (all re-runnable)
