@@ -89,4 +89,4 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 - unresolved: sunroom: room or porch, and whether Marina's 2,620 ft2 includes it
 - unresolved: second dining-room door (rear wall, right) leads to the kitchen's lower-right nook: not modelled
 - unresolved: what is behind the arched foyer door (closet or the service stair's foot): built as a closed prop door
-- ceiling 2.32 m in rooms not measured directly (Kevin 2.40 / parents 2.50 / attic leg 2.29 measured)
+- ceiling 2.438 m in rooms not measured directly (Kevin 2.40 / parents 2.50 / attic leg 2.29 measured)

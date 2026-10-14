@@ -1,0 +1,72 @@
+{
+ "change": "Ground-floor ceilings 2.32 -> 2.438 m (8 ft standard, inside the living 2.44 and dining 2.42 m door-jamb measurements)",
+ "target": "Greybox_Upstairs",
+ "premise": "Marina's ground-floor ceilings are ~8 ft; the 2.32 m in use was the landing balustrade's base, not a ceiling",
+ "claim": {
+  "value": [
+   2.438
+  ],
+  "data": [
+   "marina-frame:1175"
+  ],
+  "scale": [
+   "door-80in:1175"
+  ]
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "dining room 1125 s door jamb: 2.42 m (spread 2.33-2.46)",
+   "agrees": true,
+   "data": [
+    "marina-frame:1125"
+   ],
+   "scale": [
+    "door-80in:1125"
+   ],
+   "independent": true
+  },
+  {
+   "what": "September model ground ceiling 2.40 m (glb)",
+   "agrees": true,
+   "data": [
+    "glb:intact"
+   ],
+   "scale": [
+    "door-80in:glb"
+   ],
+   "independent": true
+  },
+  {
+   "what": "8 ft US residential standard",
+   "agrees": true,
+   "data": [
+    "standard:8ft"
+   ],
+   "scale": [
+    "standard"
+   ],
+   "independent": true
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/ground-ceiling/before-p1-1145.png",
+   "spec/captures/ground-ceiling/before-p1-1172.png",
+   "spec/captures/ground-ceiling/before-p1-1121.png",
+   "spec/captures/ground-ceiling/before-p1-1127.png",
+   "spec/captures/ground-ceiling/before-p1-335.png"
+  ],
+  "after": [
+   "spec/captures/ground-ceiling/after-p1-1145.png",
+   "spec/captures/ground-ceiling/after-p1-1172.png",
+   "spec/captures/ground-ceiling/after-p1-1121.png",
+   "spec/captures/ground-ceiling/after-p1-1127.png",
+   "spec/captures/ground-ceiling/after-p1-335.png",
+   "spec/captures/ground-ceiling/compare.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "user_words": "(Oct 14) 'can you confirm there aren't higher ceilings on the first floor?' / 'aren't 8 ft ceilings the standard? shouldn't we lean into sensible defaults?'"
+}

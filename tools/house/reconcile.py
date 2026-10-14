@@ -36,7 +36,8 @@ ADULT = {"capsule_diameter": 0.55, "height": 1.85, "min_hall": 0.90}
 # Ceiling heights, measured Oct 13 on door walls (wall height / door height x 80 in, door_scale.py):
 # parents 2.42 m and Kevin 2.30-2.33 m to the crown's lower edge (+~0.08 m crown), hall attic leg 2.29 m to the ceiling.
 CEILINGS = {"default": 2.40, "parents_bedroom": 2.50, "parents_bath": 2.50, "hall_corridor_south": 2.29} if FLOOR == "upstairs" else \
-    {"default": 2.32}   # ground: the foyer ceiling meets the wall at 2.32 m (clip A, 3 frames, measurements/rooms/stairs.json)
+    {"default": 2.438}  # ground: 8 ft standard, inside the measured living 2.44 / dining 2.42 m (tools/house/ground_ceiling.py, Oct 14). Was 2.32, the
+                        # landing balustrade's base in the stair clip, misread as the foyer ceiling. Kitchen (beams) unmeasured
 # Which way each stairwell opening leads (sources): the main stair goes DOWN to the foyer (measured, stairs.json); the
 # attic stair goes UP from this floor (Part 2 attic segment: the CG walk climbs it from the hall-end door). A "down"
 # opening has no floor and cuts the ceiling below; an "up" opening has a floor and no ceiling (attic not built).
@@ -422,7 +423,8 @@ def main():
                  "Front facade is the +x side (parents' room / Kevin / hall bath / Buzz row).",
         "origin_plan_m": [round(float(o[0]), 4), round(float(o[1]), 4)],
         "scale": {"door_height_m": DOOR_H, "door_range_in": [78, 80], "note": "80 in nominal; area check brackets 78-80 in"},
-        "ceiling_height_m": {"default": CEILINGS["default"], "source": "measured on door walls in 3 spaces (Oct 13); per-space values on each space"},
+        "ceiling_height_m": {"default": CEILINGS["default"], "source": "measured on door walls in 3 spaces (Oct 13); per-space values on each space" if FLOOR == "upstairs"
+                             else "8 ft standard, agreeing with door-jamb measurements in the living and dining rooms (tools/house/ground_ceiling.py, Oct 14)"},
         "bodies": {"kevin": {"eye_height": 1.1, "crawl_height": 0.4}, "bandit": {"eye_height": 1.7, "crouch_height": 1.1, **ADULT}},
         "walls": {"interior_thickness_m": WALL_T, "exterior": "unchanged from the calibrated overhead",
                   "note": "user decision Oct 13: thin walls, rooms take the freed space (a few % larger than measured)"},

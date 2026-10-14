@@ -1,0 +1,77 @@
+[
+ {
+  "name": "../ground-ceiling/before-p1-1145",
+  "pos": [
+   7.448,
+   -1.673,
+   -10.665
+  ],
+  "look_at": [
+   7.561,
+   -1.734,
+   -11.657
+  ],
+  "vfov": 41.67,
+  "note": "Marina p1-1145 (living_room); pinned at front-window wall / foyer-door wall"
+ },
+ {
+  "name": "../ground-ceiling/before-p1-1172",
+  "pos": [
+   8.149,
+   -1.479,
+   -15.693
+  ],
+  "look_at": [
+   7.349,
+   -1.548,
+   -15.097
+  ],
+  "vfov": 41.26,
+  "note": "Marina p1-1172 (living_room); pinned at front-window wall / den-arch wall"
+ },
+ {
+  "name": "../ground-ceiling/before-p1-1121",
+  "pos": [
+   2.931,
+   -1.6380000000000001,
+   -3.789
+  ],
+  "look_at": [
+   3.831,
+   -1.7910000000000001,
+   -4.196
+  ],
+  "vfov": 40.29,
+  "note": "Marina p1-1121 (dining_room); pinned at sunroom-arch wall / kitchen-door wall"
+ },
+ {
+  "name": "../ground-ceiling/before-p1-1127",
+  "pos": [
+   5.101,
+   -1.609,
+   -4.254
+  ],
+  "look_at": [
+   6.098,
+   -1.6660000000000001,
+   -4.312
+  ],
+  "vfov": 38.78,
+  "note": "Marina p1-1127 (dining_room); pinned at sunroom-arch wall / kitchen-door wall"
+ },
+ {
+  "name": "../ground-ceiling/before-p1-335",
+  "pos": [
+   5.969,
+   -1.592,
+   -9.367
+  ],
+  "look_at": [
+   5.193,
+   -1.745,
+   -9.979
+  ],
+  "vfov": 41.43,
+  "note": "Marina p1-335 (main_stair); pinned at foyer floor / first riser / flight centreline"
+ }
+]

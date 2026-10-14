@@ -16,8 +16,8 @@
   "note": "80 in nominal; area check brackets 78-80 in"
  },
  "ceiling_height_m": {
-  "default": 2.32,
-  "source": "measured on door walls in 3 spaces (Oct 13); per-space values on each space"
+  "default": 2.438,
+  "source": "8 ft standard, agreeing with door-jamb measurements in the living and dining rooms (tools/house/ground_ceiling.py, Oct 14)"
  },
  "bodies": {
   "kevin": {
@@ -61,7 +61,7 @@
     ]
    ],
    "area_m2": 25.62,
-   "ceiling_m": 2.32
+   "ceiling_m": 2.438
   },
   {
    "name": "living_room",
@@ -86,7 +86,7 @@
     ]
    ],
    "area_m2": 37.68,
-   "ceiling_m": 2.32
+   "ceiling_m": 2.438
   },
   {
    "name": "foyer",
@@ -111,7 +111,7 @@
     ]
    ],
    "area_m2": 32.79,
-   "ceiling_m": 2.32
+   "ceiling_m": 2.438
   },
   {
    "name": "vestibule",
@@ -136,7 +136,7 @@
     ]
    ],
    "area_m2": 3.71,
-   "ceiling_m": 2.32
+   "ceiling_m": 2.438
   },
   {
    "name": "dining_room",
@@ -161,7 +161,7 @@
     ]
    ],
    "area_m2": 27.11,
-   "ceiling_m": 2.32
+   "ceiling_m": 2.438
   },
   {
    "name": "sunroom",
@@ -186,7 +186,7 @@
     ]
    ],
    "area_m2": 26.27,
-   "ceiling_m": 2.32
+   "ceiling_m": 2.438
   },
   {
    "name": "kitchen",
@@ -235,7 +235,7 @@
     ]
    ],
    "area_m2": 48.85,
-   "ceiling_m": 2.32
+   "ceiling_m": 2.438
   },
   {
    "name": "back_stair",
@@ -260,7 +260,7 @@
     ]
    ],
    "area_m2": 3.47,
-   "ceiling_m": 2.32
+   "ceiling_m": 2.438
   }
  ],
  "doors": [
