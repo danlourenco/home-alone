@@ -1,0 +1,69 @@
+{
+ "change": "Buzz bed, headboard, mattress and nightstand placed from the front corner as in Marina (placeholders; bed 1.19 m across the head posts, nightstand 0.66 m)",
+ "target": "Greybox_Upstairs",
+ "premise": "Along Buzz's headboard wall Marina has, from the front corner: 0.10 m wall, nightstand 0.66 m, 0.11 m gap, bed 1.19 m (head posts)",
+ "claim": {
+  "value": [
+   0.1,
+   0.66,
+   0.11,
+   1.19
+  ],
+  "data": [
+   "marina-frame:563"
+  ],
+  "scale": [
+   "mattress-39in:563"
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-10-13",
+   "what": "bed placed from overhead fractions (0.33 m door gap); user: Marina has a bit more space between door and bed",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-14",
+   "what": "bed shifted +0.13 m to Marina's 0.46 m door gap; user (mid-turn): nightstand should be closer to the corner, bed with it",
+   "outcome": "failed"
+  }
+ ],
+ "premise_reviewed": "Both earlier placements keyed off something other than Marina's own arrangement (overhead fractions, then the door gap). This one copies her sequence from the front corner, which the user asked for. Built door wall is 3.685 m vs 3.57 by mattress and the built door sits 0.17 m nearer the shelves corner than Marina's, so the door-to-bed gap comes out 0.74 m vs her 0.46 (DEVIATIONS 26).",
+ "checks": [
+  {
+   "what": "0:50 overhead: bed edge to front wall 0.89 m (fraction of the room width, scaled by the mattress-measured 3.57 m wall) vs 0.88",
+   "agrees": true,
+   "data": [
+    "marina-overhead:50"
+   ],
+   "scale": [
+    "overhead-fraction:50"
+   ],
+   "independent": true
+  },
+  {
+   "what": "door casing to head post 0.46 m in 560 s at door scale vs 0.46 in 563 s (mattress)",
+   "agrees": true,
+   "data": [
+    "marina-frame:560"
+   ],
+   "scale": [
+    "door-80in:560"
+   ],
+   "independent": true
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/buzz-windows/after-p2-556.png",
+   "spec/captures/buzz-windows/after-p2-550.png"
+  ],
+  "after": [
+   "spec/captures/buzz-windows/bed-p2-556.png",
+   "spec/captures/buzz-windows/bed-p2-550.png",
+   "spec/captures/buzz-windows/compare-bed.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "user_words": ""
+}
