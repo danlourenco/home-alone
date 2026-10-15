@@ -329,7 +329,11 @@
      1000
     ]
    ],
-   "notes": "door from the south corridor on its right wall (open leaf visible ~y 772-780)"
+   "notes": "door from the south corridor on its right wall (open leaf visible ~y 772-780)",
+   "authored": {
+    "m": [[10.902, -2.995], [10.898, 0.96], [15.277, 1.066], [15.293, -2.995]],
+    "why": "DEVIATIONS 32 (user Oct 15: never seen in the film, license to resize): rear wall moved forward to plan y -2.995 (spec x 1.583), flush with the living room's rear wall below; depth 5.24 -> ~4.05 m (real-house plan: 12'10\" = 3.92 m)"
+   }
   },
   {
    "name": "main_stair_opening",

@@ -36,7 +36,9 @@ def main():
     totals = {}
     print(f"{'space':<22} {'kind':<8} {'m2':>6} {'ft2':>6}  bbox m")
     for s in t["spaces"]:
-        if "m" in s:  # measured directly (e.g. a gated SfM clip) in plan metres; overrides the overhead reading
+        if "authored" in s:  # a deliberate departure (logged in DEVIATIONS); shape_drift still compares with the reading
+            pl = np.array(s["authored"]["m"], float); px = inv(pl)
+        elif "m" in s:  # measured directly (e.g. a gated SfM clip) in plan metres; overrides the overhead reading
             pl = np.array(s["m"], float); px = inv(pl)
         else:
             px = np.array(s["px"], float); pl = fwd(px)

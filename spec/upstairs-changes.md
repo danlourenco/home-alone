@@ -18,7 +18,7 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | linen_closet | 0.0 |
 | hall_bath | 4.1 |
 | buzz_room | 6.6 |
-| girls_room_b | 8.3 |
+| girls_room_b | 5.3 |
 | main_stair_opening | 0.0 |
 | attic_stair | 2.8 |
 | girls_a_closet | 0.9 |
@@ -38,11 +38,12 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | y = 1.26 | hall_corridor, hall_corridor_south, attic_stair | 1.25, 1.27, 1.27 | 1.26 | 1.0 |
 | y = -0.71 | hall_corridor, main_stair_opening | -0.71, -0.71 | -0.71 | 0.0 |
 | x = 7.18 | hall_corridor, main_stair_opening | 7.18, 7.18 | 7.18 | 0.0 |
-| x = 10.93 | hall_corridor_south, buzz_room, girls_room_b | 11.01, 10.93, 10.90 | 10.93 | 8.2 |
+| x = 10.93 | hall_corridor_south, buzz_room, girls_room_b | 11.01, 10.93, 10.90 | 10.93 | 8.0 |
 | y = 2.61 | hall_corridor_south, attic_stair | 2.60, 2.61 | 2.61 | 0.5 |
 | y = 2.87 | closet_1, linen_closet | 2.87, 2.87 | 2.87 | 0.0 |
 | x = 8.13 | linen_closet, hall_bath | 8.09, 8.17 | 8.13 | 4.3 |
 | y = 1.00 | girls_room_b, main_stair_opening | 1.01, 0.97 | 1.00 | 2.9 |
+| y = -3.00 | girls_room_b, main_stair_opening | -3.00, -3.00 | -3.00 | 0.0 |
 
 ### Anchor rooms vs their own SfM measurement
 
@@ -95,12 +96,12 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | girls_room_a | 2.22 x 5.09 | 2.27 x 5.19 | 9.6 → 10.1 | +5.3% |
 | hall_end | 2.06 x 1.05 | 2.27 x 1.25 | 2.2 → 2.8 | +30.9% |
 | hall_corridor | 3.42 x 4.50 | 3.57 x 4.50 | 8.4 → 9.7 | +15.3% |
-| hall_corridor_south | 1.81 x 1.34 | 1.99 x 1.55 | 2.4 → 3.1 | +26.5% |
+| hall_corridor_south | 1.81 x 1.34 | 1.98 x 1.55 | 2.4 → 3.1 | +26.6% |
 | closet_1 | 0.61 x 1.46 | 0.76 x 1.60 | 0.9 → 1.2 | +37.5% |
 | linen_closet | 0.92 x 0.74 | 0.99 x 0.90 | 0.7 → 0.9 | +30.3% |
 | hall_bath | 3.32 x 3.16 | 3.52 x 3.25 | 9.9 → 10.8 | +8.8% |
-| buzz_room | 4.37 x 3.54 | 4.46 x 3.69 | 15.5 → 16.4 | +6.3% |
-| girls_room_b | 4.36 x 5.18 | 4.45 x 5.24 | 22.6 → 23.4 | +3.4% |
+| buzz_room | 4.37 x 3.54 | 4.46 x 3.69 | 15.5 → 16.4 | +6.4% |
+| girls_room_b | 4.36 x 3.99 | 4.45 x 4.06 | 17.4 → 18.1 | +3.8% |
 | main_stair_opening | 3.42 x 3.99 | 3.57 x 3.99 | 11.4 → 11.9 | +4.3% |
 | attic_stair | 2.66 x 1.34 | 2.74 x 1.55 | 3.6 → 4.2 | +19.0% |
 | girls_a_closet | 0.30 x 2.39 | 0.42 x 2.44 | 0.7 → 1.0 | +46.4% |

@@ -23,12 +23,16 @@ def area(P):
     return 0.5 * abs(x @ np.roll(y, -1) - y @ np.roll(x, -1))
 
 
+AUTHORED = {}   # rooms deliberately resized (trace "authored"), reported but not failed
+
+
 def marina(floor):
     """Room polygons in plan metres from Marina's overhead alone (no stretch, no thinning, no squaring)."""
     t = json.loads((ROOT / f"measurements/overhead/{floor}-trace.json").read_text())
     t = {k: v for k, v in t.items() if k != "stretch"}
     fwd, _ = mapper(t)
     out = {}
+    AUTHORED[floor] = {s["name"] for s in t["spaces"] if "authored" in s}
     for s in t["spaces"]:
         if s["kind"] in ("opening", "closet"):
             continue
@@ -59,10 +63,11 @@ def main():
             dx, dy = db / dm - 1
             dr = (db[0] / db[1]) / (dm[0] / dm[1]) - 1
             da = ab / am - 1
-            flag = abs(dr) * 100 > tol or abs(da) * 100 > tol
+            authored = n in AUTHORED[floor]
+            flag = (abs(dr) * 100 > tol or abs(da) * 100 > tol) and not authored
             bad += flag
             print(f"{n:<20}{dm[0]:5.2f}>{db[0]:5.2f} {dx:+4.0%}{dm[1]:5.2f}>{db[1]:5.2f} {dy:+4.0%}"
-                  f"{dm[0] / dm[1]:7.2f}>{db[0] / db[1]:5.2f} {dr:+4.0%}{am:6.1f}>{ab:5.1f} {da:+4.0%}  {'<-- DRIFT' if flag else ''}")
+                  f"{dm[0] / dm[1]:7.2f}>{db[0] / db[1]:5.2f} {dr:+4.0%}{am:6.1f}>{ab:5.1f} {da:+4.0%}  {'<-- DRIFT' if flag else 'authored (DEVIATIONS)' if authored else ''}")
     print(f"\n{bad} room(s) drift more than {tol:.0f}% in proportion or area. Each must be listed in docs/DEVIATIONS.md or fixed.")
     sys.exit(1 if bad else 0)
 

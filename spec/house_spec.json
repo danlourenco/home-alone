@@ -210,11 +210,11 @@
     ],
     [
      8.371,
-     11.396
+     11.397
     ],
     [
      5.637,
-     11.396
+     11.397
     ],
     [
      5.637,
@@ -243,11 +243,11 @@
    "polygon_xz": [
     [
      5.78,
-     11.536
+     11.537
     ],
     [
      7.333,
-     11.536
+     11.537
     ],
     [
      7.333,
@@ -326,11 +326,11 @@
     ],
     [
      11.664,
-     11.396
+     11.397
     ],
     [
      8.415,
-     11.396
+     11.397
     ],
     [
      8.415,
@@ -341,7 +341,7 @@
      8.781
     ]
    ],
-   "area_m2": 10.79,
+   "area_m2": 10.8,
    "ceiling_m": 2.4
   },
   {
@@ -351,11 +351,11 @@
    "polygon_xz": [
     [
      7.473,
-     11.536
+     11.537
     ],
     [
      11.158,
-     11.536
+     11.537
     ],
     [
      11.158,
@@ -375,23 +375,23 @@
    "anchor": false,
    "polygon_xz": [
     [
-     0.396,
-     11.536
+     1.583,
+     11.537
     ],
     [
      5.64,
-     11.536
+     11.537
     ],
     [
      5.64,
      15.989
     ],
     [
-     0.396,
+     1.583,
      15.989
     ]
    ],
-   "area_m2": 23.35,
+   "area_m2": 18.06,
    "ceiling_m": 2.4
   },
   {
@@ -418,11 +418,11 @@
     ],
     [
      5.577,
-     11.396
+     11.397
     ],
     [
      1.583,
-     11.396
+     11.397
     ]
    ],
    "area_m2": 11.85,
@@ -663,7 +663,7 @@
    ],
    "kind": "door",
    "wall_axis": "x",
-   "wall_coord": 10.762,
+   "wall_coord": 10.763,
    "wall_thickness": 0.14,
    "span": [
     3.031,
@@ -674,7 +674,7 @@
    "opens": true,
    "placed_from": "measured, slid -7 cm onto the shared wall",
    "source": "Marina's room-side frames: shelves corner to the door casing's outer edge 1.04 m in Part 2 563 s (twin-mattress scale, tools/house/mattress_ruler.py), door casing to head post 0.46 m in 563 s and in 560 s (door scale). Shifted +0.167 m along the wall from the hall-s1 registration [2.936, 3.698] (frames 148-192), which disagrees by 0.17 m; DEVIATIONS 26",
-   "wall_coord_spec": 11.466,
+   "wall_coord_spec": 11.467,
    "span_spec": [
     7.609,
     8.371
@@ -763,7 +763,7 @@
    ],
    "kind": "arch",
    "wall_axis": "x",
-   "wall_coord": 10.762,
+   "wall_coord": 10.763,
    "wall_thickness": 0.14,
    "span": [
     1.202,
@@ -774,7 +774,7 @@
    "opens": true,
    "placed_from": "full shared wall",
    "source": "header band in overhead",
-   "wall_coord_spec": 11.466,
+   "wall_coord_spec": 11.467,
    "span_spec": [
     5.78,
     7.333
@@ -792,9 +792,9 @@
    "wall_thickness": 0.06,
    "span": [
     8.526,
-    10.692
+    10.693
    ],
-   "width": 2.166,
+   "width": 2.167,
    "height": null,
    "opens": true,
    "placed_from": "full shared wall",
@@ -802,7 +802,7 @@
    "wall_coord_spec": 5.607,
    "span_spec": [
     9.23,
-    11.396
+    11.397
    ],
    "spec_axis": "x"
   },
@@ -2374,8 +2374,8 @@
    "wall_axis": "x",
    "wall_coord_spec": 11.158,
    "span_spec": [
-    12.479,
-    13.199
+    12.48,
+    13.2
    ],
    "sill_m": 0.81,
    "head_m": 2.15

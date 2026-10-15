@@ -1,0 +1,64 @@
+{
+ "change": "girls_room_b rear wall moved forward from spec x ~0.40 to 1.583 (flush with the living room's rear wall on the floor below): depth 5.24 -> ~4.05 m; width, door and front wall unchanged. Authored via the trace's \"authored\" override; shape_drift still reports it against Marina's reading",
+ "target": "Greybox_Upstairs",
+ "premise": "The room behind Buzz's is never seen in the film (user, Oct 15: license to resize it); fitting it over the ground floor removes the upstairs' whole rear overhang, and the real house's room in that place is 12'10\" deep",
+ "claim": {
+  "value": [
+   4.05
+  ],
+  "data": [
+   "user-license:2026-10-15",
+   "spec:house_spec.ground"
+  ],
+  "scale": [
+   "overhead-trace:ground"
+  ],
+  "upstream": [
+   "overhead-trace:upstairs"
+  ],
+  "applies_to": [
+   "girls_room_b"
+  ],
+  "measured_in": [],
+  "assumed": {
+   "girls_room_b": "DEVIATIONS 32"
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-13",
+   "what": "girls_room_b traced from Marina's overhead at 5.24 m deep (overhead only; no in-room check)",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Real-house second-floor plan (Eric, dimensional-baseline/dimensioned-second-floor.png), measured in pixels against its own 14'11\" widths (27.6 px/ft): the bedroom behind Buzz's is 354 px = 12'10\" = 3.92 m deep; built 4.05 (+3%)",
+   "agrees": true,
+   "data": [
+    "eric-plan:second-floor"
+   ],
+   "scale": [
+    "eric-plan:labels"
+   ],
+   "type": "metric"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/girls-b/before-inside.png",
+   "spec/captures/girls-b/before-doorway.png",
+   "spec/captures/girls-b/before-rear-outside.png",
+   "spec/captures/girls-b/before-side-outside.png"
+  ],
+  "after": [
+   "spec/captures/girls-b/after-inside.png",
+   "spec/captures/girls-b/after-doorway.png",
+   "spec/captures/girls-b/after-rear-outside.png",
+   "spec/captures/girls-b/after-side-outside.png"
+  ]
+ },
+ "user_walk": "pending",
+ "sheet": "spec/captures/girls-b/compare.jpg"
+}

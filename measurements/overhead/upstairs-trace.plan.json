@@ -317,7 +317,7 @@
    "polygon_m": [
     [
      10.902,
-     -4.266
+     -2.995
     ],
     [
      10.898,
@@ -329,10 +329,10 @@
     ],
     [
      15.293,
-     -4.099
+     -2.995
     ]
    ],
-   "area_m2": 22.78
+   "area_m2": 17.58
   },
   {
    "name": "main_stair_opening",
@@ -413,11 +413,11 @@
   }
  ],
  "totals_m2": {
-  "room": 106.22,
+  "room": 101.01,
   "hall": 12.8,
   "closet": 2.45,
   "opening": 15.13,
-  "net_floor_excl_openings": 121.47,
+  "net_floor_excl_openings": 116.26,
   "gross_outline": 183.17
  }
 }
