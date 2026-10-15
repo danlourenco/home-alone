@@ -103,10 +103,29 @@ def shell(rooms, ground_y):
     return base64.b64encode(S.tobytes()).decode(), int(keep.sum())
 
 
+def odd_walls(E, t=2 * HALF):
+    """Facing faces of two spaces on one floor (opposite sides of one wall) whose separation AFTER the grid is not the
+    built thickness: a wall thicker or thinner than 14 cm, which the grid did not fix (e.g. a near-miss just past SNAP_TOL)."""
+    out = []
+    for i, a in enumerate(E):
+        for b in E[i + 1:]:
+            if a["floor"] != b["floor"] or a["axis"] != b["axis"] or a["room"] == b["room"] or a["out"] != -b["out"]:
+                continue
+            lo, hi = max(a["lo"], b["lo"]), min(a["hi"], b["hi"])
+            fa, fb = a["face"] + a["snap"], b["face"] + b["snap"]
+            sep = (fb - fa) * a["out"]                          # positive when b lies beyond a's outward side
+            if hi - lo < 0.2 or not (0.03 < sep < 0.60) or abs(sep - t) < 0.01:
+                continue
+            out.append({"floor": a["floor"], "axis": a["axis"], "rooms": [a["room"], b["room"]], "a": fa, "b": fb,
+                        "lo": lo, "hi": hi, "thickness": round(sep, 4), "excess": round(sep - t, 4)})
+    return out
+
+
 def main():
     up = json.loads((ROOT / "spec/house_spec.json").read_text()); gr = json.loads((ROOT / "spec/house_spec.ground.json").read_text())
     E = edges("upstairs", up) + edges("ground", gr)
     lines = cluster(E)
+    odd = odd_walls(E)
     stacks = [{"up": u["id"], "ground": g["id"], "axis": u["axis"], "up_coord": u["coord"], "ground_coord": g["coord"],
                "offset": round(u["coord"] - g["coord"], 4), "lo": max(u["lo"], g["lo"]), "hi": min(u["hi"], g["hi"])}
               for u in lines if u["floors"] == ["upstairs"] for g in lines if g["floors"] == ["ground"]
@@ -119,12 +138,15 @@ def main():
     shell_b64, shell_n = shell(rooms, gr["floor_y_m"])
     out = ROOT / "spec/captures/wall-grid"; out.mkdir(parents=True, exist_ok=True)
     (out / "preview.json").write_text(json.dumps({"params": {"half_wall": HALF, "snap_tol": SNAP_TOL, "reach": REACH, "max_spread": MAX_SPREAD},
-                                                  "rooms": rooms, "edges": E, "lines": lines, "stacks": stacks, "shell": shell_b64, "shell_fit": "tools/house/shell_fit.py: ground-floor fit, IoU 0.77 ground / 0.65 upstairs", "doors": doors, "stair": stair}, indent=0))
+                                                  "rooms": rooms, "edges": E, "lines": lines, "stacks": stacks, "odd": odd, "shell": shell_b64, "shell_fit": "tools/house/shell_fit.py: ground-floor fit, IoU 0.77 ground / 0.65 upstairs", "doors": doors, "stair": stair}, indent=0))
     html = (ROOT / "tools/house/wall_grid_preview.template.html").read_text()
     (out / "preview.html").write_text(html.replace("__DATA__", (out / "preview.json").read_text().replace("</", "<\\/")))
     moved = sorted((e for e in E if abs(e["snap"]) > 0.0005), key=lambda e: -abs(e["snap"]))
     print(f"{len(E)} wall faces -> {len(lines)} lines ({sum(l['conflict'] for l in lines)} conflicts); "
           f"{len(moved)} faces move: {sum(abs(e['snap']) > 0.04 for e in moved)} over 1.5 in, {sum(abs(e['snap']) > 0.10 for e in moved)} over 4 in")
+    print(f"{len(odd)} walls not 14 cm thick after the grid:")
+    for o in sorted(odd, key=lambda o: -abs(o["excess"])):
+        print(f"  {o['floor']:8s} {o['rooms'][0]} / {o['rooms'][1]}: {o['thickness'] / 0.0254:.1f} in thick ({o['excess'] / 0.0254:+.1f}) over {o['hi'] - o['lo']:.2f} m")
     print(f"shell: {shell_n} triangles kept (exterior and roof)")
     print(f"{len(stacks)} cross-floor stacking candidates (within {STACK_TOL} m, overlapping >0.3 m):")
     for k in sorted(stacks, key=lambda k: abs(k["offset"])):

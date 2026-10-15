@@ -7,17 +7,17 @@
 :root {
   --paper: #eef1ef; --sheet: #fbfcfb; --ink: #1c2321; --muted: #5d6864; --rule: #cfd6d3;
   --poche: #3a403e; --room: #e3e9e6; --up: #2457c5; --stack: #7a4fc1;
-  --ok: #2f8f5b; --warn: #b9800f; --bad: #c23b2a; --door: #9aa5a1;
+  --ok: #2f8f5b; --warn: #b9800f; --bad: #c23b2a; --door: #9aa5a1; --odd: #c2187a;
   --display: "Barlow Condensed", "Arial Narrow", sans-serif; --body: "Barlow", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --paper: #111514; --sheet: #171c1b; --ink: #e2e8e5; --muted: #95a29d; --rule: #2c3533;
   --poche: #b9c4c0; --room: #222a28; --up: #7aa2ff; --stack: #b394ee;
-  --ok: #4fbf84; --warn: #e2ab3c; --bad: #ef6b58; --door: #5d6a66; color-scheme: dark } }
+  --ok: #4fbf84; --warn: #e2ab3c; --bad: #ef6b58; --door: #5d6a66; --odd: #f06aae; color-scheme: dark } }
 :root[data-theme="dark"] {
   --paper: #111514; --sheet: #171c1b; --ink: #e2e8e5; --muted: #95a29d; --rule: #2c3533;
   --poche: #b9c4c0; --room: #222a28; --up: #7aa2ff; --stack: #b394ee;
-  --ok: #4fbf84; --warn: #e2ab3c; --bad: #ef6b58; --door: #5d6a66; color-scheme: dark }
+  --ok: #4fbf84; --warn: #e2ab3c; --bad: #ef6b58; --door: #5d6a66; --odd: #f06aae; color-scheme: dark }
 body { background: var(--paper); color: var(--ink); font: 15px/1.5 var(--body);
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 28px; }
 header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 24px; margin-bottom: 14px; }
@@ -93,6 +93,7 @@ ol.moves .dot { width: 8px; height: 8px; border-radius: 50%; }
       <span><i style="background:var(--ok)"></i>Moves up to 1½ in</span>
       <span><i style="background:var(--warn)"></i>1½ to 4 in: needs a reason</span>
       <span><i style="background:var(--bad)"></i>Over 4 in: refused without a measurement</span>
+      <span><i style="background:var(--odd)"></i>Wall still thicker than 5½ in after the grid: needs a decision</span>
       <span><i style="background:var(--stack)"></i>Stacking view: upstairs wall (dashed) over a main-floor wall (solid)</span>
       <span>Street (front) at the bottom. Scroll or pinch to zoom, drag to pan.</span>
     </div>
@@ -107,6 +108,11 @@ ol.moves .dot { width: 8px; height: 8px; border-radius: 50%; }
     <div class="panel">
       <h2>Every move, largest first</h2>
       <ol class="moves" id="moves"></ol>
+    </div>
+    <div class="panel">
+      <h2>Walls the grid does not fix</h2>
+      <ol class="moves" id="odd"></ol>
+      <p class="note">Two rooms on either side of one wall, traced farther apart than one 5½ in wall. Either one room's wall moves to close it, or the wall really is thicker (a chimney breast, a closet back). Each needs your call or a measurement.</p>
     </div>
     <div class="panel">
       <h2>Walls that might stack</h2>
@@ -201,6 +207,13 @@ function draw() {
     hit.addEventListener('pointerleave', () => tip.hidden = true);
     hit.addEventListener('click', () => pick(e));
   }
+  if (!stackView()) for (const o of (D.odd || []).filter(o => fl.includes(o.floor))) {
+    const r = o.axis === 'x' ? rectXZ(o.a, o.b, o.lo, o.hi, { fill: 'var(--odd)', 'fill-opacity': .55 }) : rectXZ(o.lo, o.hi, o.a, o.b, { fill: 'var(--odd)', 'fill-opacity': .55 });
+    const m = (o.lo + o.hi) / 2, [lx, ly] = o.axis === 'x' ? P((o.a + o.b) / 2, m) : P(m, (o.a + o.b) / 2);
+    const t = el('text', { x: lx + .25, y: ly - .25, 'font-size': .28, fill: 'var(--odd)', 'font-weight': 600, 'font-family': 'IBM Plex Mono, monospace' }); t.textContent = `${inch(o.thickness).toFixed(1)}″ wall`;
+    r.addEventListener('pointermove', ev => showTip(ev, `<b>${nice(o.rooms[0])} / ${nice(o.rooms[1])}</b><br>the wall between them comes out <b>${inch(o.thickness).toFixed(1)} in</b> thick (${inch(o.excess).toFixed(1)} in more than the 5½ in standard) over ${ftin(o.hi - o.lo)}`));
+    r.addEventListener('pointerleave', () => tip.hidden = true);
+  }
   if (stackView()) for (const k of D.stacks) {
     const e = { axis: k.axis, lo: k.lo, hi: k.hi };
     seg(e, k.ground_coord, { stroke: 'var(--stack)', 'stroke-width': .09 });
@@ -239,6 +252,15 @@ function list() {
     li.innerHTML = `<span class="dot" style="background:var(--${sev(e.snap)})"></span><span>${nice(e.room)} <span style="color:var(--muted)">· ${side(e)}${floor === 'both' ? (e.floor === 'ground' ? ' · main' : ' · up') : ''}</span></span><span class="mono">${Math.abs(inch(e.snap)).toFixed(1)} in</span>`;
     li.tabIndex = 0; li.addEventListener('click', () => pick(e)); li.addEventListener('keydown', ev => { if (ev.key === 'Enter') pick(e); });
     ol.appendChild(li);
+  }
+  const od = document.getElementById('odd'); od.replaceChildren();
+  const odd = (D.odd || []).filter(o => fl.includes(o.floor));
+  if (!odd.length) od.innerHTML = '<li style="cursor:default"><span></span><span style="color:var(--muted)">None on this floor.</span><span></span></li>';
+  for (const o of odd.sort((a, b) => b.excess - a.excess)) {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="dot" style="background:var(--odd)"></span><span>${nice(o.rooms[0])} / ${nice(o.rooms[1])}</span><span class="mono">${inch(o.thickness).toFixed(1)} in</span>`;
+    li.addEventListener('click', () => { if (floor === 'both') setFloor(o.floor); const [a, b] = o.axis === 'x' ? P(o.a, (o.lo + o.hi) / 2) : P((o.lo + o.hi) / 2, o.a); const w = 5, h = w * full[3] / full[2]; vb = [a - w / 2, b - h / 2, w, h]; draw(); });
+    od.appendChild(li);
   }
   const st = document.getElementById('stacks'); st.replaceChildren();
   for (const k of D.stacks.slice().sort((a, b) => Math.abs(a.offset) - Math.abs(b.offset))) {
