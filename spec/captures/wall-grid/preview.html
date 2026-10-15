@@ -1,0 +1,4116 @@
+<title>McCallister Wall Grid</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: drafting table. The plan sheet fills the left; a narrow schedule of moves runs down the right, like a drawing's revision block. */
+:root {
+  --paper: #eef1ef; --sheet: #fbfcfb; --ink: #1c2321; --muted: #5d6864; --rule: #cfd6d3;
+  --poche: #3a403e; --room: #e3e9e6; --up: #2457c5; --stack: #7a4fc1;
+  --ok: #2f8f5b; --warn: #b9800f; --bad: #c23b2a; --door: #9aa5a1;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif; --body: "Barlow", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #111514; --sheet: #171c1b; --ink: #e2e8e5; --muted: #95a29d; --rule: #2c3533;
+  --poche: #b9c4c0; --room: #222a28; --up: #7aa2ff; --stack: #b394ee;
+  --ok: #4fbf84; --warn: #e2ab3c; --bad: #ef6b58; --door: #5d6a66; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #111514; --sheet: #171c1b; --ink: #e2e8e5; --muted: #95a29d; --rule: #2c3533;
+  --poche: #b9c4c0; --room: #222a28; --up: #7aa2ff; --stack: #b394ee;
+  --ok: #4fbf84; --warn: #e2ab3c; --bad: #ef6b58; --door: #5d6a66; color-scheme: dark }
+body { background: var(--paper); color: var(--ink); font: 15px/1.5 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 28px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 24px; margin-bottom: 14px; }
+h1 { font: 600 30px/1.1 var(--display); letter-spacing: .01em; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); max-width: 72ch; margin: 0; }
+.wrap { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+@media (max-width: 900px) { .wrap { grid-template-columns: minmax(0, 1fr); } }
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; min-width: 0; }
+.bar { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding: 10px 12px; border-bottom: 1px solid var(--rule); }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; }
+.seg button { font: 500 13px var(--body); background: transparent; color: var(--ink); border: 0; padding: 5px 11px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--rule); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--sheet); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--up); outline-offset: 2px; }
+label.chk { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--muted); cursor: pointer; }
+.lab { font: 600 11px var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+svg#plan { display: block; width: 100%; height: min(72vh, 760px); touch-action: none; cursor: grab; }
+svg#plan.drag { cursor: grabbing; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 8px 12px; border-top: 1px solid var(--rule); font-size: 12.5px; color: var(--muted); }
+.legend i { display: inline-block; width: 18px; height: 4px; vertical-align: middle; margin-right: 6px; border-radius: 1px; }
+aside { display: grid; gap: 16px; min-width: 0; }
+.panel { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 12px 14px; min-width: 0; }
+.panel h2 { font: 600 17px var(--display); letter-spacing: .02em; margin: 0 0 8px; }
+.tally { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 4px; }
+.tally div { border-top: 3px solid; padding-top: 4px; }
+.tally b { font: 600 24px var(--display); display: block; font-variant-numeric: tabular-nums; }
+.tally span { font-size: 12px; color: var(--muted); }
+ol.moves { list-style: none; margin: 0; padding: 0; max-height: 360px; overflow: auto; font-size: 13px; }
+ol.moves li { display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 5px 4px; border-bottom: 1px solid var(--rule); cursor: pointer; }
+ol.moves li:hover, ol.moves li.sel { background: var(--room); }
+ol.moves .dot { width: 8px; height: 8px; border-radius: 50%; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 12.5px; }
+.note { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+#tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--sheet); font-size: 12.5px; line-height: 1.4; padding: 7px 9px; border-radius: 3px; max-width: 280px; z-index: 5; }
+.zoom { display: inline-flex; gap: 4px; margin-left: auto; }
+.zoom button { font: 600 14px var(--body); width: 30px; height: 28px; border: 1px solid var(--rule); background: transparent; color: var(--ink); border-radius: 3px; cursor: pointer; }
+@media (prefers-reduced-motion: no-preference) { .pulse { animation: pulse 1.2s ease-in-out 2; } @keyframes pulse { 50% { stroke-width: .28; } } }
+</style>
+
+<header>
+  <h1>McCallister Wall Grid</h1>
+  <p class="sub">Proposed shared wall lines before the rebuild. Nothing has moved yet. Each coloured stroke is a room wall that would slide onto a shared line; hover for the room and the distance.</p>
+</header>
+
+<div class="wrap">
+  <section class="sheet" aria-label="Floor plan">
+    <div class="bar">
+      <span class="lab">Floor</span>
+      <span class="seg" role="group" aria-label="Floor">
+        <button id="f-ground" data-floor="ground">Main floor</button>
+        <button id="f-upstairs" data-floor="upstairs">Upstairs</button>
+        <button id="f-both" data-floor="both">Both, stacked</button>
+      </span>
+      <label class="chk"><input type="checkbox" id="exag" checked> Exaggerate moves ×10</label>
+      <label class="chk"><input type="checkbox" id="stk" checked> Stacking candidates</label>
+      <span class="zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button><button id="zreset" aria-label="Reset view" style="width:auto;padding:0 8px;font-size:12px">Fit</button></span>
+    </div>
+    <svg id="plan" role="img" aria-label="Plan of the house with proposed wall moves"></svg>
+    <div class="legend">
+      <span><i style="background:var(--poche)"></i>Wall as built (half per room)</span>
+      <span><i style="background:var(--ok)"></i>Moves up to 1½ in</span>
+      <span><i style="background:var(--warn)"></i>1½ to 4 in: needs a reason</span>
+      <span><i style="background:var(--bad)"></i>Over 4 in: refused without a measurement</span>
+      <span><i style="background:var(--stack)"></i>Upstairs wall over a main-floor wall</span>
+      <span>Street (front) at the bottom. Scroll or pinch to zoom, drag to pan.</span>
+    </div>
+  </section>
+
+  <aside>
+    <div class="panel">
+      <h2 id="sumh">Moves</h2>
+      <div class="tally" id="tally"></div>
+      <p class="note" id="sumnote"></p>
+    </div>
+    <div class="panel">
+      <h2>Every move, largest first</h2>
+      <ol class="moves" id="moves"></ol>
+    </div>
+    <div class="panel">
+      <h2>Walls that might stack</h2>
+      <ol class="moves" id="stacks"></ol>
+      <p class="note">An upstairs wall within a foot of a main-floor wall, overlapping for at least a foot. Nothing is snapped across floors until you say which of these are really one wall.</p>
+      <p class="note"><b>Not detected here:</b> the picture wall's corner (main floor) against the upper flight's edge and the gallery (upstairs). They are 8½ in apart and meet only through the stair. The film decides that one (frames 1616, 3175, 10673).</p>
+    </div>
+  </aside>
+</div>
+<div id="tip" hidden></div>
+
+<script id="data" type="application/json">{
+"params": {
+"half_wall": 0.07,
+"snap_tol": 0.1,
+"reach": 1.0,
+"max_spread": 0.2
+},
+"rooms": [
+{
+"floor": "upstairs",
+"name": "parents_bath",
+"kind": "room",
+"poly": [
+[
+0.343,
+0.872
+],
+[
+2.409,
+0.872
+],
+[
+2.409,
+2.373
+],
+[
+3.07,
+2.373
+],
+[
+3.07,
+4.436
+],
+[
+0.343,
+4.436
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "parents_bedroom",
+"kind": "room",
+"poly": [
+[
+3.21,
+0.0
+],
+[
+8.491,
+0.0
+],
+[
+8.491,
+3.721
+],
+[
+6.817,
+3.721
+],
+[
+6.817,
+5.331
+],
+[
+3.21,
+5.331
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "kevin_jeff_room",
+"kind": "room",
+"poly": [
+[
+7.061,
+3.861
+],
+[
+11.664,
+3.861
+],
+[
+11.664,
+7.74
+],
+[
+7.061,
+7.74
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "girls_room_a",
+"kind": "room",
+"poly": [
+[
+0.343,
+5.414
+],
+[
+2.851,
+5.414
+],
+[
+2.851,
+6.036
+],
+[
+5.534,
+6.036
+],
+[
+5.534,
+7.689
+],
+[
+0.343,
+7.689
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "hall_end",
+"kind": "hall",
+"poly": [
+[
+5.674,
+5.471
+],
+[
+6.921,
+5.471
+],
+[
+6.921,
+7.74
+],
+[
+5.674,
+7.74
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "hall_corridor",
+"kind": "hall",
+"poly": [
+[
+5.634,
+7.88
+],
+[
+7.233,
+7.88
+],
+[
+7.233,
+9.907
+],
+[
+8.371,
+9.907
+],
+[
+8.371,
+11.397
+],
+[
+5.637,
+11.397
+],
+[
+5.637,
+9.17
+],
+[
+3.868,
+9.17
+],
+[
+3.868,
+7.829
+],
+[
+5.634,
+7.829
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "hall_corridor_south",
+"kind": "hall",
+"poly": [
+[
+5.78,
+11.537
+],
+[
+7.333,
+11.537
+],
+[
+7.333,
+13.521
+],
+[
+5.78,
+13.521
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "closet_1",
+"kind": "closet",
+"poly": [
+[
+7.373,
+7.88
+],
+[
+8.973,
+7.88
+],
+[
+8.973,
+8.641
+],
+[
+7.373,
+8.641
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "linen_closet",
+"kind": "closet",
+"poly": [
+[
+7.373,
+8.781
+],
+[
+8.275,
+8.781
+],
+[
+8.275,
+9.767
+],
+[
+7.373,
+9.767
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "hall_bath",
+"kind": "room",
+"poly": [
+[
+9.114,
+7.88
+],
+[
+11.664,
+7.88
+],
+[
+11.664,
+11.397
+],
+[
+8.415,
+11.397
+],
+[
+8.415,
+8.781
+],
+[
+9.114,
+8.781
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "buzz_room",
+"kind": "room",
+"poly": [
+[
+7.473,
+11.537
+],
+[
+11.158,
+11.537
+],
+[
+11.158,
+15.998
+],
+[
+7.473,
+15.998
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "girls_room_b",
+"kind": "room",
+"poly": [
+[
+1.583,
+11.537
+],
+[
+5.64,
+11.537
+],
+[
+5.64,
+15.989
+],
+[
+1.583,
+15.989
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "main_stair_opening",
+"kind": "opening",
+"poly": [
+[
+1.583,
+7.829
+],
+[
+3.868,
+7.829
+],
+[
+3.868,
+9.23
+],
+[
+5.577,
+9.23
+],
+[
+5.577,
+11.397
+],
+[
+1.583,
+11.397
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "attic_stair",
+"kind": "opening",
+"poly": [
+[
+5.78,
+13.661
+],
+[
+7.333,
+13.661
+],
+[
+7.333,
+16.396
+],
+[
+5.78,
+16.396
+]
+]
+},
+{
+"floor": "upstairs",
+"name": "girls_a_closet",
+"kind": "closet",
+"poly": [
+[
+2.991,
+5.471
+],
+[
+5.434,
+5.471
+],
+[
+5.434,
+5.896
+],
+[
+2.991,
+5.896
+]
+]
+},
+{
+"floor": "ground",
+"name": "den",
+"kind": "room",
+"poly": [
+[
+2.355,
+19.917
+],
+[
+2.355,
+16.21
+],
+[
+9.266,
+16.21
+],
+[
+9.266,
+19.917
+]
+]
+},
+{
+"floor": "ground",
+"name": "living_room",
+"kind": "room",
+"poly": [
+[
+1.581,
+16.07
+],
+[
+1.581,
+11.57
+],
+[
+9.954,
+11.57
+],
+[
+9.954,
+16.07
+]
+]
+},
+{
+"floor": "ground",
+"name": "foyer",
+"kind": "hall",
+"poly": [
+[
+1.581,
+11.43
+],
+[
+1.581,
+8.953
+],
+[
+2.986,
+8.953
+],
+[
+2.986,
+7.778
+],
+[
+8.948,
+7.778
+],
+[
+8.948,
+11.43
+]
+]
+},
+{
+"floor": "ground",
+"name": "back_hall",
+"kind": "hall",
+"poly": [
+[
+0.008,
+11.345
+],
+[
+0.008,
+7.778
+],
+[
+2.846,
+7.778
+],
+[
+2.846,
+8.813
+],
+[
+1.443,
+8.813
+],
+[
+1.443,
+11.345
+]
+]
+},
+{
+"floor": "ground",
+"name": "vestibule",
+"kind": "hall",
+"poly": [
+[
+9.088,
+11.43
+],
+[
+9.088,
+7.863
+],
+[
+10.13,
+7.863
+],
+[
+10.13,
+11.43
+]
+]
+},
+{
+"floor": "ground",
+"name": "dining_room",
+"kind": "room",
+"poly": [
+[
+4.26,
+7.638
+],
+[
+4.26,
+3.004
+],
+[
+10.13,
+3.004
+],
+[
+10.13,
+7.638
+]
+]
+},
+{
+"floor": "ground",
+"name": "sunroom",
+"kind": "room",
+"poly": [
+[
+2.456,
+2.864
+],
+[
+2.456,
+-0.915
+],
+[
+9.407,
+-0.915
+],
+[
+9.407,
+2.864
+]
+]
+},
+{
+"floor": "ground",
+"name": "kitchen",
+"kind": "room",
+"poly": [
+[
+-5.192,
+3.923
+],
+[
+-5.192,
+-0.28
+],
+[
+2.316,
+-0.28
+],
+[
+2.316,
+3.649
+],
+[
+4.12,
+3.649
+],
+[
+4.12,
+7.638
+],
+[
+2.369,
+7.638
+],
+[
+2.369,
+6.657
+],
+[
+-1.505,
+6.657
+],
+[
+-1.505,
+3.923
+]
+]
+},
+{
+"floor": "ground",
+"name": "back_stair",
+"kind": "hall",
+"poly": [
+[
+-1.505,
+7.638
+],
+[
+-1.505,
+6.657
+],
+[
+2.369,
+6.657
+],
+[
+2.369,
+7.638
+]
+]
+}
+],
+"edges": [
+{
+"floor": "upstairs",
+"room": "parents_bath",
+"kind": "room",
+"axis": "z",
+"face": 0.872,
+"centre": 0.802,
+"out": -1,
+"lo": 0.343,
+"hi": 2.409,
+"w": 1.0,
+"line": 0,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "parents_bath",
+"kind": "room",
+"axis": "x",
+"face": 2.409,
+"centre": 2.479,
+"out": 1,
+"lo": 0.872,
+"hi": 2.373,
+"w": 1.0,
+"line": 1,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "parents_bath",
+"kind": "room",
+"axis": "z",
+"face": 2.373,
+"centre": 2.303,
+"out": -1,
+"lo": 2.409,
+"hi": 3.07,
+"w": 1.0,
+"line": 2,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "parents_bath",
+"kind": "room",
+"axis": "x",
+"face": 3.07,
+"centre": 3.14,
+"out": 1,
+"lo": 2.373,
+"hi": 4.436,
+"w": 1.0,
+"line": 3,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "parents_bath",
+"kind": "room",
+"axis": "z",
+"face": 4.436,
+"centre": 4.506,
+"out": 1,
+"lo": 0.343,
+"hi": 3.07,
+"w": 1.0,
+"line": 4,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "parents_bath",
+"kind": "room",
+"axis": "x",
+"face": 0.343,
+"centre": 0.273,
+"out": -1,
+"lo": 0.872,
+"hi": 4.436,
+"w": 1.0,
+"line": 5,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "parents_bedroom",
+"kind": "room",
+"axis": "z",
+"face": 0.0,
+"centre": -0.07,
+"out": -1,
+"lo": 3.21,
+"hi": 8.491,
+"w": 5.0,
+"line": 6,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "parents_bedroom",
+"kind": "room",
+"axis": "x",
+"face": 8.491,
+"centre": 8.561,
+"out": 1,
+"lo": 0.0,
+"hi": 3.721,
+"w": 5.0,
+"line": 7,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "parents_bedroom",
+"kind": "room",
+"axis": "z",
+"face": 3.721,
+"centre": 3.791,
+"out": 1,
+"lo": 6.817,
+"hi": 8.491,
+"w": 5.0,
+"line": 8,
+"snap": -0.0
+},
+{
+"floor": "upstairs",
+"room": "parents_bedroom",
+"kind": "room",
+"axis": "x",
+"face": 6.817,
+"centre": 6.887,
+"out": 1,
+"lo": 3.721,
+"hi": 5.331,
+"w": 5.0,
+"line": 9,
+"snap": -0.0
+},
+{
+"floor": "upstairs",
+"room": "parents_bedroom",
+"kind": "room",
+"axis": "z",
+"face": 5.331,
+"centre": 5.401,
+"out": 1,
+"lo": 3.21,
+"hi": 6.817,
+"w": 5.0,
+"line": 10,
+"snap": -0.0071
+},
+{
+"floor": "upstairs",
+"room": "parents_bedroom",
+"kind": "room",
+"axis": "x",
+"face": 3.21,
+"centre": 3.14,
+"out": -1,
+"lo": 0.0,
+"hi": 5.331,
+"w": 5.0,
+"line": 3,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "kevin_jeff_room",
+"kind": "room",
+"axis": "z",
+"face": 3.861,
+"centre": 3.791,
+"out": -1,
+"lo": 7.061,
+"hi": 11.664,
+"w": 5.0,
+"line": 8,
+"snap": -0.0
+},
+{
+"floor": "upstairs",
+"room": "kevin_jeff_room",
+"kind": "room",
+"axis": "x",
+"face": 11.664,
+"centre": 11.734,
+"out": 1,
+"lo": 3.861,
+"hi": 7.74,
+"w": 5.0,
+"line": 11,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "kevin_jeff_room",
+"kind": "room",
+"axis": "z",
+"face": 7.74,
+"centre": 7.81,
+"out": 1,
+"lo": 7.061,
+"hi": 11.664,
+"w": 5.0,
+"line": 12,
+"snap": -0.0128
+},
+{
+"floor": "upstairs",
+"room": "kevin_jeff_room",
+"kind": "room",
+"axis": "x",
+"face": 7.061,
+"centre": 6.991,
+"out": -1,
+"lo": 3.861,
+"hi": 7.74,
+"w": 5.0,
+"line": 13,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "girls_room_a",
+"kind": "room",
+"axis": "z",
+"face": 5.414,
+"centre": 5.344,
+"out": -1,
+"lo": 0.343,
+"hi": 2.851,
+"w": 1.0,
+"line": 10,
+"snap": 0.0499
+},
+{
+"floor": "upstairs",
+"room": "girls_room_a",
+"kind": "room",
+"axis": "x",
+"face": 2.851,
+"centre": 2.921,
+"out": 1,
+"lo": 5.414,
+"hi": 6.036,
+"w": 1.0,
+"line": 14,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "girls_room_a",
+"kind": "room",
+"axis": "z",
+"face": 6.036,
+"centre": 5.966,
+"out": -1,
+"lo": 2.851,
+"hi": 5.534,
+"w": 1.0,
+"line": 15,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "girls_room_a",
+"kind": "room",
+"axis": "x",
+"face": 5.534,
+"centre": 5.604,
+"out": 1,
+"lo": 6.036,
+"hi": 7.689,
+"w": 1.0,
+"line": 16,
+"snap": 0.0333
+},
+{
+"floor": "upstairs",
+"room": "girls_room_a",
+"kind": "room",
+"axis": "z",
+"face": 7.689,
+"centre": 7.759,
+"out": 1,
+"lo": 0.343,
+"hi": 5.534,
+"w": 1.0,
+"line": 12,
+"snap": 0.0382
+},
+{
+"floor": "upstairs",
+"room": "girls_room_a",
+"kind": "room",
+"axis": "x",
+"face": 0.343,
+"centre": 0.273,
+"out": -1,
+"lo": 5.414,
+"hi": 7.689,
+"w": 1.0,
+"line": 5,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "hall_end",
+"kind": "hall",
+"axis": "z",
+"face": 5.471,
+"centre": 5.401,
+"out": -1,
+"lo": 5.674,
+"hi": 6.921,
+"w": 1.0,
+"line": 10,
+"snap": -0.0071
+},
+{
+"floor": "upstairs",
+"room": "hall_end",
+"kind": "hall",
+"axis": "x",
+"face": 6.921,
+"centre": 6.991,
+"out": 1,
+"lo": 5.471,
+"hi": 7.74,
+"w": 1.0,
+"line": 13,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "hall_end",
+"kind": "hall",
+"axis": "z",
+"face": 7.74,
+"centre": 7.81,
+"out": 1,
+"lo": 5.674,
+"hi": 6.921,
+"w": 1.0,
+"line": 12,
+"snap": -0.0128
+},
+{
+"floor": "upstairs",
+"room": "hall_end",
+"kind": "hall",
+"axis": "x",
+"face": 5.674,
+"centre": 5.604,
+"out": -1,
+"lo": 5.471,
+"hi": 7.74,
+"w": 1.0,
+"line": 16,
+"snap": 0.0333
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor",
+"kind": "hall",
+"axis": "z",
+"face": 7.88,
+"centre": 7.81,
+"out": -1,
+"lo": 5.634,
+"hi": 7.233,
+"w": 1.0,
+"line": 12,
+"snap": -0.0128
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor",
+"kind": "hall",
+"axis": "x",
+"face": 7.233,
+"centre": 7.303,
+"out": 1,
+"lo": 7.88,
+"hi": 9.907,
+"w": 1.0,
+"line": 17,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor",
+"kind": "hall",
+"axis": "z",
+"face": 9.907,
+"centre": 9.837,
+"out": -1,
+"lo": 7.233,
+"hi": 8.371,
+"w": 1.0,
+"line": 18,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor",
+"kind": "hall",
+"axis": "x",
+"face": 8.371,
+"centre": 8.441,
+"out": 1,
+"lo": 9.907,
+"hi": 11.397,
+"w": 1.0,
+"line": 19,
+"snap": -0.064
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor",
+"kind": "hall",
+"axis": "z",
+"face": 11.397,
+"centre": 11.467,
+"out": 1,
+"lo": 5.637,
+"hi": 8.371,
+"w": 1.0,
+"line": 20,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor",
+"kind": "hall",
+"axis": "x",
+"face": 5.637,
+"centre": 5.567,
+"out": -1,
+"lo": 9.17,
+"hi": 11.397,
+"w": 1.0,
+"line": 21,
+"snap": 0.1018
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor",
+"kind": "hall",
+"axis": "z",
+"face": 9.17,
+"centre": 9.24,
+"out": 1,
+"lo": 3.868,
+"hi": 5.637,
+"w": 1.0,
+"line": 22,
+"snap": -0.04
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor",
+"kind": "hall",
+"axis": "x",
+"face": 3.868,
+"centre": 3.798,
+"out": -1,
+"lo": 7.829,
+"hi": 9.17,
+"w": 1.0,
+"line": 23,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor",
+"kind": "hall",
+"axis": "z",
+"face": 7.829,
+"centre": 7.759,
+"out": -1,
+"lo": 3.868,
+"hi": 5.634,
+"w": 1.0,
+"line": 12,
+"snap": 0.0382
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor",
+"kind": "hall",
+"axis": "x",
+"face": 5.634,
+"centre": 5.704,
+"out": 1,
+"lo": 7.829,
+"hi": 7.88,
+"w": 1.0,
+"line": 16,
+"snap": -0.0667
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor_south",
+"kind": "hall",
+"axis": "z",
+"face": 11.537,
+"centre": 11.467,
+"out": -1,
+"lo": 5.78,
+"hi": 7.333,
+"w": 1.0,
+"line": 20,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor_south",
+"kind": "hall",
+"axis": "x",
+"face": 7.333,
+"centre": 7.403,
+"out": 1,
+"lo": 11.537,
+"hi": 13.521,
+"w": 1.0,
+"line": 24,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor_south",
+"kind": "hall",
+"axis": "z",
+"face": 13.521,
+"centre": 13.591,
+"out": 1,
+"lo": 5.78,
+"hi": 7.333,
+"w": 1.0,
+"line": 25,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "hall_corridor_south",
+"kind": "hall",
+"axis": "x",
+"face": 5.78,
+"centre": 5.71,
+"out": -1,
+"lo": 11.537,
+"hi": 13.521,
+"w": 1.0,
+"line": 21,
+"snap": -0.0412
+},
+{
+"floor": "upstairs",
+"room": "closet_1",
+"kind": "closet",
+"axis": "z",
+"face": 7.88,
+"centre": 7.81,
+"out": -1,
+"lo": 7.373,
+"hi": 8.973,
+"w": 1.0,
+"line": 12,
+"snap": -0.0128
+},
+{
+"floor": "upstairs",
+"room": "closet_1",
+"kind": "closet",
+"axis": "x",
+"face": 8.973,
+"centre": 9.043,
+"out": 1,
+"lo": 7.88,
+"hi": 8.641,
+"w": 1.0,
+"line": 26,
+"snap": 0.0005
+},
+{
+"floor": "upstairs",
+"room": "closet_1",
+"kind": "closet",
+"axis": "z",
+"face": 8.641,
+"centre": 8.711,
+"out": 1,
+"lo": 7.373,
+"hi": 8.973,
+"w": 1.0,
+"line": 27,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "closet_1",
+"kind": "closet",
+"axis": "x",
+"face": 7.373,
+"centre": 7.303,
+"out": -1,
+"lo": 7.88,
+"hi": 8.641,
+"w": 1.0,
+"line": 17,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "linen_closet",
+"kind": "closet",
+"axis": "z",
+"face": 8.781,
+"centre": 8.711,
+"out": -1,
+"lo": 7.373,
+"hi": 8.275,
+"w": 1.0,
+"line": 27,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "linen_closet",
+"kind": "closet",
+"axis": "x",
+"face": 8.275,
+"centre": 8.345,
+"out": 1,
+"lo": 8.781,
+"hi": 9.767,
+"w": 1.0,
+"line": 19,
+"snap": 0.032
+},
+{
+"floor": "upstairs",
+"room": "linen_closet",
+"kind": "closet",
+"axis": "z",
+"face": 9.767,
+"centre": 9.837,
+"out": 1,
+"lo": 7.373,
+"hi": 8.275,
+"w": 1.0,
+"line": 18,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "linen_closet",
+"kind": "closet",
+"axis": "x",
+"face": 7.373,
+"centre": 7.303,
+"out": -1,
+"lo": 8.781,
+"hi": 9.767,
+"w": 1.0,
+"line": 17,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "hall_bath",
+"kind": "room",
+"axis": "z",
+"face": 7.88,
+"centre": 7.81,
+"out": -1,
+"lo": 9.114,
+"hi": 11.664,
+"w": 1.0,
+"line": 12,
+"snap": -0.0128
+},
+{
+"floor": "upstairs",
+"room": "hall_bath",
+"kind": "room",
+"axis": "x",
+"face": 11.664,
+"centre": 11.734,
+"out": 1,
+"lo": 7.88,
+"hi": 11.397,
+"w": 1.0,
+"line": 11,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "hall_bath",
+"kind": "room",
+"axis": "z",
+"face": 11.397,
+"centre": 11.467,
+"out": 1,
+"lo": 8.415,
+"hi": 11.664,
+"w": 1.0,
+"line": 20,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "hall_bath",
+"kind": "room",
+"axis": "x",
+"face": 8.415,
+"centre": 8.345,
+"out": -1,
+"lo": 8.781,
+"hi": 11.397,
+"w": 1.0,
+"line": 19,
+"snap": 0.032
+},
+{
+"floor": "upstairs",
+"room": "hall_bath",
+"kind": "room",
+"axis": "z",
+"face": 8.781,
+"centre": 8.711,
+"out": -1,
+"lo": 8.415,
+"hi": 9.114,
+"w": 1.0,
+"line": 27,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "hall_bath",
+"kind": "room",
+"axis": "x",
+"face": 9.114,
+"centre": 9.044,
+"out": -1,
+"lo": 7.88,
+"hi": 8.781,
+"w": 1.0,
+"line": 26,
+"snap": -0.0005
+},
+{
+"floor": "upstairs",
+"room": "buzz_room",
+"kind": "room",
+"axis": "z",
+"face": 11.537,
+"centre": 11.467,
+"out": -1,
+"lo": 7.473,
+"hi": 11.158,
+"w": 5.0,
+"line": 20,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "buzz_room",
+"kind": "room",
+"axis": "x",
+"face": 11.158,
+"centre": 11.228,
+"out": 1,
+"lo": 11.537,
+"hi": 15.998,
+"w": 5.0,
+"line": 28,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "buzz_room",
+"kind": "room",
+"axis": "z",
+"face": 15.998,
+"centre": 16.068,
+"out": 1,
+"lo": 7.473,
+"hi": 11.158,
+"w": 5.0,
+"line": 29,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "buzz_room",
+"kind": "room",
+"axis": "x",
+"face": 7.473,
+"centre": 7.403,
+"out": -1,
+"lo": 11.537,
+"hi": 15.998,
+"w": 5.0,
+"line": 24,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "girls_room_b",
+"kind": "room",
+"axis": "z",
+"face": 11.537,
+"centre": 11.467,
+"out": -1,
+"lo": 1.583,
+"hi": 5.64,
+"w": 1.0,
+"line": 20,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "girls_room_b",
+"kind": "room",
+"axis": "x",
+"face": 5.64,
+"centre": 5.71,
+"out": 1,
+"lo": 11.537,
+"hi": 15.989,
+"w": 1.0,
+"line": 21,
+"snap": -0.0412
+},
+{
+"floor": "upstairs",
+"room": "girls_room_b",
+"kind": "room",
+"axis": "z",
+"face": 15.989,
+"centre": 16.059,
+"out": 1,
+"lo": 1.583,
+"hi": 5.64,
+"w": 1.0,
+"line": 30,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "girls_room_b",
+"kind": "room",
+"axis": "x",
+"face": 1.583,
+"centre": 1.513,
+"out": -1,
+"lo": 11.537,
+"hi": 15.989,
+"w": 1.0,
+"line": 31,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "main_stair_opening",
+"kind": "opening",
+"axis": "z",
+"face": 7.829,
+"centre": 7.759,
+"out": -1,
+"lo": 1.583,
+"hi": 3.868,
+"w": 1.0,
+"line": 12,
+"snap": 0.0382
+},
+{
+"floor": "upstairs",
+"room": "main_stair_opening",
+"kind": "opening",
+"axis": "x",
+"face": 3.868,
+"centre": 3.938,
+"out": 1,
+"lo": 7.829,
+"hi": 9.23,
+"w": 1.0,
+"line": 32,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "main_stair_opening",
+"kind": "opening",
+"axis": "z",
+"face": 9.23,
+"centre": 9.16,
+"out": -1,
+"lo": 3.868,
+"hi": 5.577,
+"w": 1.0,
+"line": 22,
+"snap": 0.04
+},
+{
+"floor": "upstairs",
+"room": "main_stair_opening",
+"kind": "opening",
+"axis": "x",
+"face": 5.577,
+"centre": 5.647,
+"out": 1,
+"lo": 9.23,
+"hi": 11.397,
+"w": 1.0,
+"line": 21,
+"snap": 0.0218
+},
+{
+"floor": "upstairs",
+"room": "main_stair_opening",
+"kind": "opening",
+"axis": "z",
+"face": 11.397,
+"centre": 11.467,
+"out": 1,
+"lo": 1.583,
+"hi": 5.577,
+"w": 1.0,
+"line": 20,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "main_stair_opening",
+"kind": "opening",
+"axis": "x",
+"face": 1.583,
+"centre": 1.513,
+"out": -1,
+"lo": 7.829,
+"hi": 11.397,
+"w": 1.0,
+"line": 31,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "attic_stair",
+"kind": "opening",
+"axis": "z",
+"face": 13.661,
+"centre": 13.591,
+"out": -1,
+"lo": 5.78,
+"hi": 7.333,
+"w": 1.0,
+"line": 25,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "attic_stair",
+"kind": "opening",
+"axis": "x",
+"face": 7.333,
+"centre": 7.403,
+"out": 1,
+"lo": 13.661,
+"hi": 16.396,
+"w": 1.0,
+"line": 24,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "attic_stair",
+"kind": "opening",
+"axis": "z",
+"face": 16.396,
+"centre": 16.466,
+"out": 1,
+"lo": 5.78,
+"hi": 7.333,
+"w": 1.0,
+"line": 33,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "attic_stair",
+"kind": "opening",
+"axis": "x",
+"face": 5.78,
+"centre": 5.71,
+"out": -1,
+"lo": 13.661,
+"hi": 16.396,
+"w": 1.0,
+"line": 21,
+"snap": -0.0412
+},
+{
+"floor": "upstairs",
+"room": "girls_a_closet",
+"kind": "closet",
+"axis": "z",
+"face": 5.471,
+"centre": 5.401,
+"out": -1,
+"lo": 2.991,
+"hi": 5.434,
+"w": 1.0,
+"line": 10,
+"snap": -0.0071
+},
+{
+"floor": "upstairs",
+"room": "girls_a_closet",
+"kind": "closet",
+"axis": "x",
+"face": 5.434,
+"centre": 5.504,
+"out": 1,
+"lo": 5.471,
+"hi": 5.896,
+"w": 1.0,
+"line": 34,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "girls_a_closet",
+"kind": "closet",
+"axis": "z",
+"face": 5.896,
+"centre": 5.966,
+"out": 1,
+"lo": 2.991,
+"hi": 5.434,
+"w": 1.0,
+"line": 15,
+"snap": 0.0
+},
+{
+"floor": "upstairs",
+"room": "girls_a_closet",
+"kind": "closet",
+"axis": "x",
+"face": 2.991,
+"centre": 2.921,
+"out": -1,
+"lo": 5.471,
+"hi": 5.896,
+"w": 1.0,
+"line": 14,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "den",
+"kind": "room",
+"axis": "x",
+"face": 2.355,
+"centre": 2.285,
+"out": -1,
+"lo": 16.21,
+"hi": 19.917,
+"w": 1.0,
+"line": 35,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "den",
+"kind": "room",
+"axis": "z",
+"face": 16.21,
+"centre": 16.14,
+"out": -1,
+"lo": 2.355,
+"hi": 9.266,
+"w": 1.0,
+"line": 36,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "den",
+"kind": "room",
+"axis": "x",
+"face": 9.266,
+"centre": 9.336,
+"out": 1,
+"lo": 16.21,
+"hi": 19.917,
+"w": 1.0,
+"line": 37,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "den",
+"kind": "room",
+"axis": "z",
+"face": 19.917,
+"centre": 19.987,
+"out": 1,
+"lo": 2.355,
+"hi": 9.266,
+"w": 1.0,
+"line": 38,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "living_room",
+"kind": "room",
+"axis": "x",
+"face": 1.581,
+"centre": 1.511,
+"out": -1,
+"lo": 11.57,
+"hi": 16.07,
+"w": 1.0,
+"line": 39,
+"snap": 0.0007
+},
+{
+"floor": "ground",
+"room": "living_room",
+"kind": "room",
+"axis": "z",
+"face": 11.57,
+"centre": 11.5,
+"out": -1,
+"lo": 1.581,
+"hi": 9.954,
+"w": 1.0,
+"line": 40,
+"snap": -0.0213
+},
+{
+"floor": "ground",
+"room": "living_room",
+"kind": "room",
+"axis": "x",
+"face": 9.954,
+"centre": 10.024,
+"out": 1,
+"lo": 11.57,
+"hi": 16.07,
+"w": 1.0,
+"line": 41,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "living_room",
+"kind": "room",
+"axis": "z",
+"face": 16.07,
+"centre": 16.14,
+"out": 1,
+"lo": 1.581,
+"hi": 9.954,
+"w": 1.0,
+"line": 36,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "foyer",
+"kind": "hall",
+"axis": "x",
+"face": 1.581,
+"centre": 1.511,
+"out": -1,
+"lo": 8.953,
+"hi": 11.43,
+"w": 1.0,
+"line": 39,
+"snap": 0.0007
+},
+{
+"floor": "ground",
+"room": "foyer",
+"kind": "hall",
+"axis": "z",
+"face": 8.953,
+"centre": 8.883,
+"out": -1,
+"lo": 1.581,
+"hi": 2.986,
+"w": 1.0,
+"line": 42,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "foyer",
+"kind": "hall",
+"axis": "x",
+"face": 2.986,
+"centre": 2.916,
+"out": -1,
+"lo": 7.778,
+"hi": 8.953,
+"w": 1.0,
+"line": 43,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "foyer",
+"kind": "hall",
+"axis": "z",
+"face": 7.778,
+"centre": 7.708,
+"out": -1,
+"lo": 2.986,
+"hi": 8.948,
+"w": 1.0,
+"line": 44,
+"snap": 0.0142
+},
+{
+"floor": "ground",
+"room": "foyer",
+"kind": "hall",
+"axis": "x",
+"face": 8.948,
+"centre": 9.018,
+"out": 1,
+"lo": 7.778,
+"hi": 11.43,
+"w": 1.0,
+"line": 45,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "foyer",
+"kind": "hall",
+"axis": "z",
+"face": 11.43,
+"centre": 11.5,
+"out": 1,
+"lo": 1.581,
+"hi": 8.948,
+"w": 1.0,
+"line": 40,
+"snap": -0.0213
+},
+{
+"floor": "ground",
+"room": "back_hall",
+"kind": "hall",
+"axis": "x",
+"face": 0.008,
+"centre": -0.062,
+"out": -1,
+"lo": 7.778,
+"hi": 11.345,
+"w": 1.0,
+"line": 46,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "back_hall",
+"kind": "hall",
+"axis": "z",
+"face": 7.778,
+"centre": 7.708,
+"out": -1,
+"lo": 0.008,
+"hi": 2.846,
+"w": 1.0,
+"line": 44,
+"snap": 0.0142
+},
+{
+"floor": "ground",
+"room": "back_hall",
+"kind": "hall",
+"axis": "x",
+"face": 2.846,
+"centre": 2.916,
+"out": 1,
+"lo": 7.778,
+"hi": 8.813,
+"w": 1.0,
+"line": 43,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "back_hall",
+"kind": "hall",
+"axis": "z",
+"face": 8.813,
+"centre": 8.883,
+"out": 1,
+"lo": 1.443,
+"hi": 2.846,
+"w": 1.0,
+"line": 42,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "back_hall",
+"kind": "hall",
+"axis": "x",
+"face": 1.443,
+"centre": 1.513,
+"out": 1,
+"lo": 8.813,
+"hi": 11.345,
+"w": 1.0,
+"line": 39,
+"snap": -0.0013
+},
+{
+"floor": "ground",
+"room": "back_hall",
+"kind": "hall",
+"axis": "z",
+"face": 11.345,
+"centre": 11.415,
+"out": 1,
+"lo": 0.008,
+"hi": 1.443,
+"w": 1.0,
+"line": 40,
+"snap": 0.0638
+},
+{
+"floor": "ground",
+"room": "vestibule",
+"kind": "hall",
+"axis": "x",
+"face": 9.088,
+"centre": 9.018,
+"out": -1,
+"lo": 7.863,
+"hi": 11.43,
+"w": 1.0,
+"line": 45,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "vestibule",
+"kind": "hall",
+"axis": "z",
+"face": 7.863,
+"centre": 7.793,
+"out": -1,
+"lo": 9.088,
+"hi": 10.13,
+"w": 1.0,
+"line": 44,
+"snap": -0.0708
+},
+{
+"floor": "ground",
+"room": "vestibule",
+"kind": "hall",
+"axis": "x",
+"face": 10.13,
+"centre": 10.2,
+"out": 1,
+"lo": 7.863,
+"hi": 11.43,
+"w": 1.0,
+"line": 47,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "vestibule",
+"kind": "hall",
+"axis": "z",
+"face": 11.43,
+"centre": 11.5,
+"out": 1,
+"lo": 9.088,
+"hi": 10.13,
+"w": 1.0,
+"line": 40,
+"snap": -0.0213
+},
+{
+"floor": "ground",
+"room": "dining_room",
+"kind": "room",
+"axis": "x",
+"face": 4.26,
+"centre": 4.19,
+"out": -1,
+"lo": 3.004,
+"hi": 7.638,
+"w": 1.0,
+"line": 48,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "dining_room",
+"kind": "room",
+"axis": "z",
+"face": 3.004,
+"centre": 2.934,
+"out": -1,
+"lo": 4.26,
+"hi": 10.13,
+"w": 1.0,
+"line": 49,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "dining_room",
+"kind": "room",
+"axis": "x",
+"face": 10.13,
+"centre": 10.2,
+"out": 1,
+"lo": 3.004,
+"hi": 7.638,
+"w": 1.0,
+"line": 47,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "dining_room",
+"kind": "room",
+"axis": "z",
+"face": 7.638,
+"centre": 7.708,
+"out": 1,
+"lo": 4.26,
+"hi": 10.13,
+"w": 1.0,
+"line": 44,
+"snap": 0.0142
+},
+{
+"floor": "ground",
+"room": "sunroom",
+"kind": "room",
+"axis": "x",
+"face": 2.456,
+"centre": 2.386,
+"out": -1,
+"lo": -0.915,
+"hi": 2.864,
+"w": 1.0,
+"line": 50,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "sunroom",
+"kind": "room",
+"axis": "z",
+"face": -0.915,
+"centre": -0.985,
+"out": -1,
+"lo": 2.456,
+"hi": 9.407,
+"w": 1.0,
+"line": 51,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "sunroom",
+"kind": "room",
+"axis": "x",
+"face": 9.407,
+"centre": 9.477,
+"out": 1,
+"lo": -0.915,
+"hi": 2.864,
+"w": 1.0,
+"line": 52,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "sunroom",
+"kind": "room",
+"axis": "z",
+"face": 2.864,
+"centre": 2.934,
+"out": 1,
+"lo": 2.456,
+"hi": 9.407,
+"w": 1.0,
+"line": 49,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "kitchen",
+"kind": "room",
+"axis": "x",
+"face": -5.192,
+"centre": -5.262,
+"out": -1,
+"lo": -0.28,
+"hi": 3.923,
+"w": 1.0,
+"line": 53,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "kitchen",
+"kind": "room",
+"axis": "z",
+"face": -0.28,
+"centre": -0.35,
+"out": -1,
+"lo": -5.192,
+"hi": 2.316,
+"w": 1.0,
+"line": 54,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "kitchen",
+"kind": "room",
+"axis": "x",
+"face": 2.316,
+"centre": 2.386,
+"out": 1,
+"lo": -0.28,
+"hi": 3.649,
+"w": 1.0,
+"line": 50,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "kitchen",
+"kind": "room",
+"axis": "z",
+"face": 3.649,
+"centre": 3.579,
+"out": -1,
+"lo": 2.316,
+"hi": 4.12,
+"w": 1.0,
+"line": 55,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "kitchen",
+"kind": "room",
+"axis": "x",
+"face": 4.12,
+"centre": 4.19,
+"out": 1,
+"lo": 3.649,
+"hi": 7.638,
+"w": 1.0,
+"line": 48,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "kitchen",
+"kind": "room",
+"axis": "z",
+"face": 7.638,
+"centre": 7.708,
+"out": 1,
+"lo": 2.369,
+"hi": 4.12,
+"w": 1.0,
+"line": 44,
+"snap": 0.0142
+},
+{
+"floor": "ground",
+"room": "kitchen",
+"kind": "room",
+"axis": "x",
+"face": 2.369,
+"centre": 2.299,
+"out": -1,
+"lo": 6.657,
+"hi": 7.638,
+"w": 1.0,
+"line": 56,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "kitchen",
+"kind": "room",
+"axis": "z",
+"face": 6.657,
+"centre": 6.727,
+"out": 1,
+"lo": -1.505,
+"hi": 2.369,
+"w": 1.0,
+"line": 57,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "kitchen",
+"kind": "room",
+"axis": "x",
+"face": -1.505,
+"centre": -1.575,
+"out": -1,
+"lo": 3.923,
+"hi": 6.657,
+"w": 1.0,
+"line": 58,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "kitchen",
+"kind": "room",
+"axis": "z",
+"face": 3.923,
+"centre": 3.993,
+"out": 1,
+"lo": -5.192,
+"hi": -1.505,
+"w": 1.0,
+"line": 59,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "back_stair",
+"kind": "hall",
+"axis": "x",
+"face": -1.505,
+"centre": -1.575,
+"out": -1,
+"lo": 6.657,
+"hi": 7.638,
+"w": 1.0,
+"line": 58,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "back_stair",
+"kind": "hall",
+"axis": "z",
+"face": 6.657,
+"centre": 6.587,
+"out": -1,
+"lo": -1.505,
+"hi": 2.369,
+"w": 1.0,
+"line": 60,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "back_stair",
+"kind": "hall",
+"axis": "x",
+"face": 2.369,
+"centre": 2.439,
+"out": 1,
+"lo": 6.657,
+"hi": 7.638,
+"w": 1.0,
+"line": 61,
+"snap": 0.0
+},
+{
+"floor": "ground",
+"room": "back_stair",
+"kind": "hall",
+"axis": "z",
+"face": 7.638,
+"centre": 7.708,
+"out": 1,
+"lo": -1.505,
+"hi": 2.369,
+"w": 1.0,
+"line": 44,
+"snap": 0.0142
+}
+],
+"lines": [
+{
+"id": 0,
+"axis": "z",
+"coord": 0.802,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 0.343,
+"hi": 2.409
+},
+{
+"id": 1,
+"axis": "x",
+"coord": 2.479,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 0.872,
+"hi": 2.373
+},
+{
+"id": 2,
+"axis": "z",
+"coord": 2.303,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 2.409,
+"hi": 3.07
+},
+{
+"id": 3,
+"axis": "x",
+"coord": 3.14,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 2,
+"lo": 0.0,
+"hi": 5.331
+},
+{
+"id": 4,
+"axis": "z",
+"coord": 4.506,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 0.343,
+"hi": 3.07
+},
+{
+"id": 5,
+"axis": "x",
+"coord": 0.273,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 2,
+"lo": 0.872,
+"hi": 7.689
+},
+{
+"id": 6,
+"axis": "z",
+"coord": -0.07,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 3.21,
+"hi": 8.491
+},
+{
+"id": 7,
+"axis": "x",
+"coord": 8.561,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 0.0,
+"hi": 3.721
+},
+{
+"id": 8,
+"axis": "z",
+"coord": 3.791,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 2,
+"lo": 6.817,
+"hi": 11.664
+},
+{
+"id": 9,
+"axis": "x",
+"coord": 6.887,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 3.721,
+"hi": 5.331
+},
+{
+"id": 10,
+"axis": "z",
+"coord": 5.3939,
+"spread": 0.057,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 4,
+"lo": 0.343,
+"hi": 6.921
+},
+{
+"id": 11,
+"axis": "x",
+"coord": 11.734,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 2,
+"lo": 3.861,
+"hi": 11.397
+},
+{
+"id": 12,
+"axis": "z",
+"coord": 7.7972,
+"spread": 0.051,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 8,
+"lo": 0.343,
+"hi": 11.664
+},
+{
+"id": 13,
+"axis": "x",
+"coord": 6.991,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 2,
+"lo": 3.861,
+"hi": 7.74
+},
+{
+"id": 14,
+"axis": "x",
+"coord": 2.921,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 2,
+"lo": 5.414,
+"hi": 6.036
+},
+{
+"id": 15,
+"axis": "z",
+"coord": 5.966,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 2,
+"lo": 2.851,
+"hi": 5.534
+},
+{
+"id": 16,
+"axis": "x",
+"coord": 5.6373,
+"spread": 0.1,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 3,
+"lo": 5.471,
+"hi": 7.88
+},
+{
+"id": 17,
+"axis": "x",
+"coord": 7.303,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 3,
+"lo": 7.88,
+"hi": 9.907
+},
+{
+"id": 18,
+"axis": "z",
+"coord": 9.837,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 2,
+"lo": 7.233,
+"hi": 8.371
+},
+{
+"id": 19,
+"axis": "x",
+"coord": 8.377,
+"spread": 0.096,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 3,
+"lo": 8.781,
+"hi": 11.397
+},
+{
+"id": 20,
+"axis": "z",
+"coord": 11.467,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 6,
+"lo": 1.583,
+"hi": 11.664
+},
+{
+"id": 21,
+"axis": "x",
+"coord": 5.6688,
+"spread": 0.143,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 5,
+"lo": 9.17,
+"hi": 16.396
+},
+{
+"id": 22,
+"axis": "z",
+"coord": 9.2,
+"spread": 0.08,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 2,
+"lo": 3.868,
+"hi": 5.637
+},
+{
+"id": 23,
+"axis": "x",
+"coord": 3.798,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 7.829,
+"hi": 9.17
+},
+{
+"id": 24,
+"axis": "x",
+"coord": 7.403,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 3,
+"lo": 11.537,
+"hi": 16.396
+},
+{
+"id": 25,
+"axis": "z",
+"coord": 13.591,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 2,
+"lo": 5.78,
+"hi": 7.333
+},
+{
+"id": 26,
+"axis": "x",
+"coord": 9.0435,
+"spread": 0.001,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 2,
+"lo": 7.88,
+"hi": 8.781
+},
+{
+"id": 27,
+"axis": "z",
+"coord": 8.711,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 3,
+"lo": 7.373,
+"hi": 9.114
+},
+{
+"id": 28,
+"axis": "x",
+"coord": 11.228,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 11.537,
+"hi": 15.998
+},
+{
+"id": 29,
+"axis": "z",
+"coord": 16.068,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 7.473,
+"hi": 11.158
+},
+{
+"id": 30,
+"axis": "z",
+"coord": 16.059,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 1.583,
+"hi": 5.64
+},
+{
+"id": 31,
+"axis": "x",
+"coord": 1.513,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 2,
+"lo": 7.829,
+"hi": 15.989
+},
+{
+"id": 32,
+"axis": "x",
+"coord": 3.938,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 7.829,
+"hi": 9.23
+},
+{
+"id": 33,
+"axis": "z",
+"coord": 16.466,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 5.78,
+"hi": 7.333
+},
+{
+"id": 34,
+"axis": "x",
+"coord": 5.504,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"upstairs"
+],
+"members": 1,
+"lo": 5.471,
+"hi": 5.896
+},
+{
+"id": 35,
+"axis": "x",
+"coord": 2.285,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": 16.21,
+"hi": 19.917
+},
+{
+"id": 36,
+"axis": "z",
+"coord": 16.14,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 2,
+"lo": 1.581,
+"hi": 9.954
+},
+{
+"id": 37,
+"axis": "x",
+"coord": 9.336,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": 16.21,
+"hi": 19.917
+},
+{
+"id": 38,
+"axis": "z",
+"coord": 19.987,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": 2.355,
+"hi": 9.266
+},
+{
+"id": 39,
+"axis": "x",
+"coord": 1.5117,
+"spread": 0.002,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 3,
+"lo": 8.813,
+"hi": 16.07
+},
+{
+"id": 40,
+"axis": "z",
+"coord": 11.4787,
+"spread": 0.085,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 4,
+"lo": 0.008,
+"hi": 10.13
+},
+{
+"id": 41,
+"axis": "x",
+"coord": 10.024,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": 11.57,
+"hi": 16.07
+},
+{
+"id": 42,
+"axis": "z",
+"coord": 8.883,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 2,
+"lo": 1.443,
+"hi": 2.986
+},
+{
+"id": 43,
+"axis": "x",
+"coord": 2.916,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 2,
+"lo": 7.778,
+"hi": 8.953
+},
+{
+"id": 44,
+"axis": "z",
+"coord": 7.7222,
+"spread": 0.085,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 6,
+"lo": -1.505,
+"hi": 10.13
+},
+{
+"id": 45,
+"axis": "x",
+"coord": 9.018,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 2,
+"lo": 7.778,
+"hi": 11.43
+},
+{
+"id": 46,
+"axis": "x",
+"coord": -0.062,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": 7.778,
+"hi": 11.345
+},
+{
+"id": 47,
+"axis": "x",
+"coord": 10.2,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 2,
+"lo": 3.004,
+"hi": 11.43
+},
+{
+"id": 48,
+"axis": "x",
+"coord": 4.19,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 2,
+"lo": 3.004,
+"hi": 7.638
+},
+{
+"id": 49,
+"axis": "z",
+"coord": 2.934,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 2,
+"lo": 2.456,
+"hi": 10.13
+},
+{
+"id": 50,
+"axis": "x",
+"coord": 2.386,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 2,
+"lo": -0.915,
+"hi": 3.649
+},
+{
+"id": 51,
+"axis": "z",
+"coord": -0.985,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": 2.456,
+"hi": 9.407
+},
+{
+"id": 52,
+"axis": "x",
+"coord": 9.477,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": -0.915,
+"hi": 2.864
+},
+{
+"id": 53,
+"axis": "x",
+"coord": -5.262,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": -0.28,
+"hi": 3.923
+},
+{
+"id": 54,
+"axis": "z",
+"coord": -0.35,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": -5.192,
+"hi": 2.316
+},
+{
+"id": 55,
+"axis": "z",
+"coord": 3.579,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": 2.316,
+"hi": 4.12
+},
+{
+"id": 56,
+"axis": "x",
+"coord": 2.299,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": 6.657,
+"hi": 7.638
+},
+{
+"id": 57,
+"axis": "z",
+"coord": 6.727,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": -1.505,
+"hi": 2.369
+},
+{
+"id": 58,
+"axis": "x",
+"coord": -1.575,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 2,
+"lo": 3.923,
+"hi": 7.638
+},
+{
+"id": 59,
+"axis": "z",
+"coord": 3.993,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": -5.192,
+"hi": -1.505
+},
+{
+"id": 60,
+"axis": "z",
+"coord": 6.587,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": -1.505,
+"hi": 2.369
+},
+{
+"id": 61,
+"axis": "x",
+"coord": 2.439,
+"spread": 0.0,
+"conflict": false,
+"floors": [
+"ground"
+],
+"members": 1,
+"lo": 6.657,
+"hi": 7.638
+}
+],
+"stacks": [
+{
+"up": 1,
+"ground": 50,
+"axis": "x",
+"up_coord": 2.479,
+"ground_coord": 2.386,
+"offset": 0.093,
+"lo": 0.872,
+"hi": 2.373
+},
+{
+"up": 12,
+"ground": 44,
+"axis": "z",
+"up_coord": 7.7972,
+"ground_coord": 7.7222,
+"offset": 0.075,
+"lo": 0.343,
+"hi": 10.13
+},
+{
+"up": 20,
+"ground": 40,
+"axis": "z",
+"up_coord": 11.467,
+"ground_coord": 11.4787,
+"offset": -0.0117,
+"lo": 1.583,
+"hi": 10.13
+},
+{
+"up": 26,
+"ground": 45,
+"axis": "x",
+"up_coord": 9.0435,
+"ground_coord": 9.018,
+"offset": 0.0255,
+"lo": 7.88,
+"hi": 8.781
+},
+{
+"up": 29,
+"ground": 36,
+"axis": "z",
+"up_coord": 16.068,
+"ground_coord": 16.14,
+"offset": -0.072,
+"lo": 7.473,
+"hi": 9.954
+},
+{
+"up": 30,
+"ground": 36,
+"axis": "z",
+"up_coord": 16.059,
+"ground_coord": 16.14,
+"offset": -0.081,
+"lo": 1.583,
+"hi": 5.64
+},
+{
+"up": 31,
+"ground": 39,
+"axis": "x",
+"up_coord": 1.513,
+"ground_coord": 1.5117,
+"offset": 0.0013,
+"lo": 8.813,
+"hi": 15.989
+}
+],
+"doors": [
+{
+"floor": "upstairs",
+"between": [
+"parents_bedroom",
+"hall_end"
+],
+"kind": "door",
+"axis": "x",
+"coord": 5.401,
+"span": [
+5.674,
+6.444
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"parents_bedroom",
+"parents_bath"
+],
+"kind": "door",
+"axis": "z",
+"coord": 3.14,
+"span": [
+3.584,
+4.344
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"kevin_jeff_room",
+"hall_end"
+],
+"kind": "door",
+"axis": "z",
+"coord": 6.991,
+"span": [
+6.754,
+7.524
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"kevin_jeff_room",
+"closet_1"
+],
+"kind": "door",
+"axis": "x",
+"coord": 7.81,
+"span": [
+8.088,
+8.918
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"girls_room_a",
+"hall_end"
+],
+"kind": "door",
+"axis": "z",
+"coord": 5.604,
+"span": [
+6.714,
+7.494
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"hall_bath",
+"hall_corridor"
+],
+"kind": "door",
+"axis": "z",
+"coord": 8.393,
+"span": [
+10.274,
+10.949
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"linen_closet",
+"hall_corridor"
+],
+"kind": "fake_door",
+"axis": "z",
+"coord": 7.303,
+"span": [
+8.969,
+9.579
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"buzz_room",
+"hall_corridor"
+],
+"kind": "door",
+"axis": "x",
+"coord": 11.467,
+"span": [
+7.609,
+8.371
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"girls_room_b",
+"hall_corridor_south"
+],
+"kind": "door",
+"axis": "z",
+"coord": 5.71,
+"span": [
+12.148,
+12.91
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"attic_stair",
+"hall_corridor_south"
+],
+"kind": "door",
+"axis": "x",
+"coord": 13.591,
+"span": [
+6.112,
+6.874
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"hall_end",
+"hall_corridor"
+],
+"kind": "arch",
+"axis": "x",
+"coord": 7.81,
+"span": [
+5.674,
+6.921
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"hall_corridor",
+"hall_corridor_south"
+],
+"kind": "arch",
+"axis": "x",
+"coord": 11.467,
+"span": [
+5.78,
+7.333
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"main_stair_opening",
+"hall_corridor"
+],
+"kind": "rail",
+"axis": "z",
+"coord": 5.607,
+"span": [
+9.23,
+11.397
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"main_stair_opening",
+"hall_corridor"
+],
+"kind": "rail",
+"axis": "x",
+"coord": 9.2,
+"span": [
+3.868,
+5.577
+]
+},
+{
+"floor": "upstairs",
+"between": [
+"main_stair_opening",
+"hall_corridor"
+],
+"kind": "open",
+"axis": "z",
+"coord": 3.868,
+"span": [
+7.829,
+9.17
+]
+},
+{
+"floor": "ground",
+"between": [
+"den",
+"living_room"
+],
+"kind": "arch",
+"axis": "x",
+"coord": 16.14,
+"span": [
+6.999,
+8.507
+]
+},
+{
+"floor": "ground",
+"between": [
+"living_room",
+"foyer"
+],
+"kind": "arch",
+"axis": "x",
+"coord": 11.5,
+"span": [
+7.091,
+8.58
+]
+},
+{
+"floor": "ground",
+"between": [
+"foyer",
+"dining_room"
+],
+"kind": "arch",
+"axis": "x",
+"coord": 7.708,
+"span": [
+6.95,
+8.663
+]
+},
+{
+"floor": "ground",
+"between": [
+"foyer",
+"vestibule"
+],
+"kind": "arch",
+"axis": "z",
+"coord": 9.018,
+"span": [
+8.794,
+10.443
+]
+},
+{
+"floor": "ground",
+"between": [
+"dining_room",
+"kitchen"
+],
+"kind": "door",
+"axis": "z",
+"coord": 4.19,
+"span": [
+6.424,
+7.438
+]
+},
+{
+"floor": "ground",
+"between": [
+"dining_room",
+"kitchen"
+],
+"kind": "door",
+"axis": "z",
+"coord": 4.19,
+"span": [
+3.671,
+4.701
+]
+},
+{
+"floor": "ground",
+"between": [
+"dining_room",
+"sunroom"
+],
+"kind": "fake_door",
+"axis": "x",
+"coord": 2.934,
+"span": [
+6.811,
+8.677
+]
+},
+{
+"floor": "ground",
+"between": [
+"back_stair",
+"kitchen"
+],
+"kind": "open",
+"axis": "z",
+"coord": 2.369,
+"span": [
+6.657,
+7.638
+]
+},
+{
+"floor": "ground",
+"between": [
+"back_stair",
+"kitchen"
+],
+"kind": "open",
+"axis": "x",
+"coord": 6.657,
+"span": [
+-1.505,
+2.369
+]
+},
+{
+"floor": "ground",
+"between": [
+"foyer",
+"kitchen"
+],
+"kind": "arch",
+"axis": "x",
+"coord": 7.708,
+"span": [
+3.043,
+4.025
+]
+},
+{
+"floor": "ground",
+"between": [
+"foyer",
+"back_hall"
+],
+"kind": "fake_door",
+"axis": "z",
+"coord": 1.512,
+"span": [
+8.967,
+9.887
+]
+}
+],
+"stair": [
+{
+"name": "flight1_step01",
+"kind": "step",
+"x": [
+6.231,
+6.526
+],
+"y": [
+-3.026,
+-2.848
+],
+"z": [
+10.23,
+11.43
+]
+},
+{
+"name": "flight1_step02",
+"kind": "step",
+"x": [
+5.936,
+6.231
+],
+"y": [
+-3.026,
+-2.67
+],
+"z": [
+10.23,
+11.43
+]
+},
+{
+"name": "flight1_step03",
+"kind": "step",
+"x": [
+5.641,
+5.936
+],
+"y": [
+-3.026,
+-2.492
+],
+"z": [
+10.23,
+11.43
+]
+},
+{
+"name": "flight1_step04",
+"kind": "step",
+"x": [
+5.346,
+5.641
+],
+"y": [
+-3.026,
+-2.314
+],
+"z": [
+10.23,
+11.43
+]
+},
+{
+"name": "flight1_step05",
+"kind": "step",
+"x": [
+5.051,
+5.346
+],
+"y": [
+-3.026,
+-2.136
+],
+"z": [
+10.23,
+11.43
+]
+},
+{
+"name": "flight1_step06",
+"kind": "step",
+"x": [
+4.756,
+5.051
+],
+"y": [
+-3.026,
+-1.958
+],
+"z": [
+10.23,
+11.43
+]
+},
+{
+"name": "flight1_step07",
+"kind": "step",
+"x": [
+4.461,
+4.756
+],
+"y": [
+-3.026,
+-1.78
+],
+"z": [
+10.23,
+11.43
+]
+},
+{
+"name": "flight1_step08",
+"kind": "step",
+"x": [
+4.166,
+4.461
+],
+"y": [
+-3.026,
+-1.602
+],
+"z": [
+10.23,
+11.43
+]
+},
+{
+"name": "flight1_step09",
+"kind": "step",
+"x": [
+3.871,
+4.166
+],
+"y": [
+-3.026,
+-1.424
+],
+"z": [
+10.23,
+11.43
+]
+},
+{
+"name": "flight1_step10",
+"kind": "step",
+"x": [
+3.576,
+3.871
+],
+"y": [
+-3.026,
+-1.246
+],
+"z": [
+10.23,
+11.43
+]
+},
+{
+"name": "flight1_step11",
+"kind": "step",
+"x": [
+3.281,
+3.576
+],
+"y": [
+-3.026,
+-1.068
+],
+"z": [
+10.23,
+11.43
+]
+},
+{
+"name": "flight1_step12",
+"kind": "step",
+"x": [
+2.986,
+3.281
+],
+"y": [
+-3.026,
+-0.89
+],
+"z": [
+10.23,
+11.43
+]
+},
+{
+"name": "landing",
+"kind": "landing",
+"x": [
+1.581,
+2.986
+],
+"y": [
+-0.762,
+-0.712
+],
+"z": [
+7.778,
+11.43
+]
+},
+{
+"name": "flight2_step01",
+"kind": "step",
+"x": [
+2.986,
+3.28
+],
+"y": [
+-0.762,
+-0.534
+],
+"z": [
+7.778,
+9.17
+]
+},
+{
+"name": "flight2_step02",
+"kind": "step",
+"x": [
+3.28,
+3.574
+],
+"y": [
+-0.584,
+-0.356
+],
+"z": [
+7.778,
+9.17
+]
+},
+{
+"name": "flight2_step03",
+"kind": "step",
+"x": [
+3.574,
+3.868
+],
+"y": [
+-0.406,
+-0.178
+],
+"z": [
+7.778,
+9.17
+]
+}
+]
+}</script>
+<script>
+const D = JSON.parse(document.getElementById('data').textContent);
+const svg = document.getElementById('plan'), tip = document.getElementById('tip');
+const NS = 'http://www.w3.org/2000/svg';
+let floor = 'both', exag = 10, showStacks = true, sel = null;
+try { floor = localStorage.getItem('wg-floor') || floor; } catch (e) {}
+
+// spec (x front +, z) -> sheet (X right, Y down): street at the bottom, the garage side (large z) on the left as seen from the street
+const xs = D.rooms.flatMap(r => r.poly.map(p => p[0])), zs = D.rooms.flatMap(r => r.poly.map(p => p[1]));
+const Z1 = Math.max(...zs) + 1, X0 = Math.min(...xs) - 1;
+const P = (x, z) => [Z1 - z, x - X0];
+const full = [0, 0, Z1 - Math.min(...zs) + 1, Math.max(...xs) + 1 - X0];
+let vb = full.slice();
+
+const inch = m => m / 0.0254;
+function ftin(m) { const s = m < 0 ? '−' : ''; let t = Math.abs(inch(m)); let f = Math.floor(t / 12), i = Math.round((t - f * 12) * 4) / 4; if (i === 12) { f++; i = 0; } return `${s}${f}′ ${i}″`; }
+const inStr = m => `${m >= 0 ? '+' : '−'}${Math.abs(inch(m)).toFixed(1)} in`;
+const sev = m => Math.abs(m) > 0.10 ? 'bad' : Math.abs(m) > 0.04 ? 'warn' : 'ok';
+const nice = n => n.replace(/_/g, ' ').replace(/\bb\b/, 'B').replace(/\ba\b/, 'A').replace(/^\w/, c => c.toUpperCase());
+function side(e) { return e.axis === 'x' ? (e.out > 0 ? 'front wall' : 'back wall') : (e.out > 0 ? 'left-side wall' : 'right-side wall'); }
+
+function el(tag, attrs, parent) { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); (parent || svg).appendChild(n); return n; }
+function rectXZ(x0, x1, z0, z1, attrs, g) { const [a, b] = P(Math.min(x0, x1), Math.max(z0, z1)), [c, d] = P(Math.max(x0, x1), Math.min(z0, z1)); return el('rect', Object.assign({ x: a, y: b, width: c - a, height: d - b }, attrs), g); }
+function seg(e, c, attrs, g) { // a wall-face line at coordinate c along the edge's extent
+  const [a, b] = e.axis === 'x' ? P(c, e.lo) : P(e.lo, c), [p, q] = e.axis === 'x' ? P(c, e.hi) : P(e.hi, c);
+  return el('line', Object.assign({ x1: a, y1: b, x2: p, y2: q }, attrs), g);
+}
+const floors = () => floor === 'both' ? ['ground', 'upstairs'] : [floor];
+
+function draw() {
+  svg.replaceChildren();
+  svg.setAttribute('viewBox', vb.join(' '));
+  const fl = floors();
+  for (const f of fl) {
+    const ghost = floor === 'both' && f === 'upstairs';
+    const g = el('g', { opacity: ghost ? 0.9 : 1 });
+    for (const r of D.rooms.filter(r => r.floor === f)) {
+      const pts = r.poly.map(p => P(p[0], p[1]).join(',')).join(' ');
+      el('polygon', { points: pts, fill: ghost ? 'none' : 'var(--room)', stroke: ghost ? 'var(--up)' : 'none', 'stroke-width': .025, 'stroke-dasharray': ghost ? '.12 .08' : '' }, g);
+      if (!ghost || floor !== 'both') {
+        const cx = r.poly.reduce((s, p) => s + p[0], 0) / r.poly.length, cz = r.poly.reduce((s, p) => s + p[1], 0) / r.poly.length;
+        const [tx, ty] = P(cx, cz); const t = el('text', { x: tx, y: ty, 'font-size': .32, 'text-anchor': 'middle', fill: 'var(--muted)', 'font-family': 'Barlow Condensed, sans-serif' }, g);
+        t.textContent = nice(r.name);
+      }
+    }
+    if (!ghost) for (const e of D.edges.filter(e => e.floor === f)) {   // the wall as built: this room's half, face to centreline
+      if (e.axis === 'x') rectXZ(e.face, e.centre, e.lo, e.hi, { fill: 'var(--poche)' }, g); else rectXZ(e.lo, e.hi, e.face, e.centre, { fill: 'var(--poche)' }, g);
+    }
+    for (const d of D.doors.filter(d => d.floor === f && !ghost)) {
+      const e = { axis: d.axis, lo: d.span[0], hi: d.span[1] };
+      seg(e, d.coord, { stroke: 'var(--sheet)', 'stroke-width': .16, 'stroke-linecap': 'butt' }, g);
+      seg(e, d.coord, { stroke: 'var(--door)', 'stroke-width': .03 }, g);
+    }
+  }
+  // the stair (flights and landing) for orientation
+  for (const b of D.stair) rectXZ(b.x[0], b.x[1], b.z[0], b.z[1], { fill: 'none', stroke: 'var(--muted)', 'stroke-width': .012 });
+  // proposed moves
+  for (const e of D.edges.filter(e => fl.includes(e.floor) && Math.abs(e.snap) > 0.0005)) {
+    const c = e.face + e.snap * exag, col = `var(--${sev(e.snap)})`;
+    const ln = seg(e, c, { stroke: col, 'stroke-width': .09, 'stroke-linecap': 'round', class: sel === e ? 'pulse' : '' });
+    const hit = seg(e, c, { stroke: 'transparent', 'stroke-width': .5 });
+    hit.style.cursor = 'pointer';
+    hit.addEventListener('pointermove', ev => showTip(ev, `<b>${nice(e.room)}</b> · ${e.floor === 'ground' ? 'main floor' : 'upstairs'}<br>${side(e)}, ${ftin(e.hi - e.lo)} long<br>moves <b>${inStr(e.snap)}</b> onto a shared line${e.w > 1 ? '<br>measured room: weighted ×5' : ''}`));
+    hit.addEventListener('pointerleave', () => tip.hidden = true);
+    hit.addEventListener('click', () => pick(e));
+  }
+  if (showStacks && floor === 'both') for (const k of D.stacks) {
+    const e = { axis: k.axis, lo: k.lo, hi: k.hi };
+    seg(e, k.up_coord, { stroke: 'var(--stack)', 'stroke-width': .05, 'stroke-dasharray': '.18 .1' });
+    seg(e, k.ground_coord, { stroke: 'var(--stack)', 'stroke-width': .05 });
+    const hit = seg(e, (k.up_coord + k.ground_coord) / 2, { stroke: 'transparent', 'stroke-width': .5 });
+    hit.addEventListener('pointermove', ev => showTip(ev, `<b>Possible stacked wall</b><br>upstairs line vs main-floor line: <b>${inStr(k.offset)}</b> apart over ${ftin(k.hi - k.lo)}`));
+    hit.addEventListener('pointerleave', () => tip.hidden = true);
+  }
+  const [sx, sy] = P(X0 + full[3] - 0.4, Z1 - full[2] / 2);
+  const s = el('text', { x: full[2] / 2, y: full[3] - 0.25, 'font-size': .36, 'text-anchor': 'middle', fill: 'var(--muted)', 'letter-spacing': '.2', 'font-family': 'Barlow Condensed, sans-serif' }); s.textContent = 'STREET';
+}
+
+function showTip(ev, html) { tip.innerHTML = html; tip.hidden = false; const w = tip.offsetWidth, h = tip.offsetHeight; let x = ev.clientX + 14, y = ev.clientY + 14; if (x + w > innerWidth - 8) x = ev.clientX - w - 14; if (y + h > innerHeight - 8) y = ev.clientY - h - 14; tip.style.left = x + 'px'; tip.style.top = y + 'px'; }
+
+function pick(e) {
+  sel = e;
+  if (floor !== 'both' && floor !== e.floor) setFloor(e.floor);
+  const [a, b] = e.axis === 'x' ? P(e.face, (e.lo + e.hi) / 2) : P((e.lo + e.hi) / 2, e.face);
+  const w = 6, h = w * full[3] / full[2]; vb = [a - w / 2, b - h / 2, w, h];
+  draw(); list();
+}
+
+function list() {
+  const fl = floors(), mv = D.edges.filter(e => fl.includes(e.floor) && Math.abs(e.snap) > 0.0005).sort((a, b) => Math.abs(b.snap) - Math.abs(a.snap));
+  const n = { ok: 0, warn: 0, bad: 0 }; mv.forEach(e => n[sev(e.snap)]++);
+  document.getElementById('tally').innerHTML = [['ok', 'up to 1½ in'], ['warn', '1½–4 in'], ['bad', 'over 4 in']].map(([k, t]) => `<div style="border-color:var(--${k})"><b>${n[k]}</b><span>${t}</span></div>`).join('');
+  const tot = D.edges.filter(e => fl.includes(e.floor)).length;
+  document.getElementById('sumh').textContent = `Moves · ${floor === 'both' ? 'both floors' : floor === 'ground' ? 'main floor' : 'upstairs'}`;
+  document.getElementById('sumnote').textContent = `${mv.length} of ${tot} wall faces would move. Measured rooms (parents', Kevin's, Buzz's) count five times when a shared line is placed, so they barely move.`;
+  const ol = document.getElementById('moves'); ol.replaceChildren();
+  for (const e of mv) {
+    const li = document.createElement('li'); if (e === sel) li.className = 'sel';
+    li.innerHTML = `<span class="dot" style="background:var(--${sev(e.snap)})"></span><span>${nice(e.room)} <span style="color:var(--muted)">· ${side(e)}${floor === 'both' ? (e.floor === 'ground' ? ' · main' : ' · up') : ''}</span></span><span class="mono">${inStr(e.snap)}</span>`;
+    li.tabIndex = 0; li.addEventListener('click', () => pick(e)); li.addEventListener('keydown', ev => { if (ev.key === 'Enter') pick(e); });
+    ol.appendChild(li);
+  }
+  const st = document.getElementById('stacks'); st.replaceChildren();
+  for (const k of D.stacks.slice().sort((a, b) => Math.abs(a.offset) - Math.abs(b.offset))) {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="dot" style="background:var(--stack)"></span><span>${k.axis === 'x' ? 'Front-to-back position' : 'Side-to-side position'} <span style="color:var(--muted)">· ${ftin(k.hi - k.lo)} overlap</span></span><span class="mono">${inStr(k.offset)}</span>`;
+    li.addEventListener('click', () => { setFloor('both'); const [a, b] = k.axis === 'x' ? P(k.ground_coord, (k.lo + k.hi) / 2) : P((k.lo + k.hi) / 2, k.ground_coord); const w = 8, h = w * full[3] / full[2]; vb = [a - w / 2, b - h / 2, w, h]; draw(); });
+    st.appendChild(li);
+  }
+}
+
+function setFloor(f) { floor = f; try { localStorage.setItem('wg-floor', f); } catch (e) {} document.querySelectorAll('[data-floor]').forEach(b => b.setAttribute('aria-pressed', b.dataset.floor === f)); draw(); list(); }
+document.querySelectorAll('[data-floor]').forEach(b => b.addEventListener('click', () => setFloor(b.dataset.floor)));
+document.getElementById('exag').addEventListener('change', ev => { exag = ev.target.checked ? 10 : 1; draw(); });
+document.getElementById('stk').addEventListener('change', ev => { showStacks = ev.target.checked; draw(); });
+
+function zoom(f, cx, cy) { const [x, y, w, h] = vb; cx ??= x + w / 2; cy ??= y + h / 2; const nw = Math.min(Math.max(w * f, 1), full[2] * 2), nh = nw * h / w; vb = [cx - (cx - x) * nw / w, cy - (cy - y) * nh / h, nw, nh]; draw(); }
+document.getElementById('zin').onclick = () => zoom(0.7); document.getElementById('zout').onclick = () => zoom(1 / 0.7);
+document.getElementById('zreset').onclick = () => { vb = full.slice(); draw(); };
+function toPlan(ev) { const r = svg.getBoundingClientRect(), s = Math.max(vb[2] / r.width, vb[3] / r.height); const ox = (r.width * s - vb[2]) / 2, oy = (r.height * s - vb[3]) / 2; return [vb[0] - ox + (ev.clientX - r.left) * s, vb[1] - oy + (ev.clientY - r.top) * s, s]; }
+svg.addEventListener('wheel', ev => { ev.preventDefault(); const [px, py] = toPlan(ev); zoom(ev.deltaY > 0 ? 1.15 : 1 / 1.15, px, py); }, { passive: false });
+let drag = null;
+svg.addEventListener('pointerdown', ev => { if (ev.target.getAttribute('stroke') === 'transparent') return; drag = { x: ev.clientX, y: ev.clientY, vb: vb.slice() }; svg.classList.add('drag'); svg.setPointerCapture(ev.pointerId); });
+svg.addEventListener('pointermove', ev => { if (!drag) return; const s = toPlan(ev)[2]; vb = [drag.vb[0] - (ev.clientX - drag.x) * s, drag.vb[1] - (ev.clientY - drag.y) * s, vb[2], vb[3]]; draw(); });
+svg.addEventListener('pointerup', () => { drag = null; svg.classList.remove('drag'); });
+
+setFloor(floor);
+</script>

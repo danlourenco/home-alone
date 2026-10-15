@@ -1,0 +1,237 @@
+<title>McCallister Wall Grid</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: drafting table. The plan sheet fills the left; a narrow schedule of moves runs down the right, like a drawing's revision block. */
+:root {
+  --paper: #eef1ef; --sheet: #fbfcfb; --ink: #1c2321; --muted: #5d6864; --rule: #cfd6d3;
+  --poche: #3a403e; --room: #e3e9e6; --up: #2457c5; --stack: #7a4fc1;
+  --ok: #2f8f5b; --warn: #b9800f; --bad: #c23b2a; --door: #9aa5a1;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif; --body: "Barlow", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #111514; --sheet: #171c1b; --ink: #e2e8e5; --muted: #95a29d; --rule: #2c3533;
+  --poche: #b9c4c0; --room: #222a28; --up: #7aa2ff; --stack: #b394ee;
+  --ok: #4fbf84; --warn: #e2ab3c; --bad: #ef6b58; --door: #5d6a66; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #111514; --sheet: #171c1b; --ink: #e2e8e5; --muted: #95a29d; --rule: #2c3533;
+  --poche: #b9c4c0; --room: #222a28; --up: #7aa2ff; --stack: #b394ee;
+  --ok: #4fbf84; --warn: #e2ab3c; --bad: #ef6b58; --door: #5d6a66; color-scheme: dark }
+body { background: var(--paper); color: var(--ink); font: 15px/1.5 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 28px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 24px; margin-bottom: 14px; }
+h1 { font: 600 30px/1.1 var(--display); letter-spacing: .01em; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); max-width: 72ch; margin: 0; }
+.wrap { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+@media (max-width: 900px) { .wrap { grid-template-columns: minmax(0, 1fr); } }
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; min-width: 0; }
+.bar { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding: 10px 12px; border-bottom: 1px solid var(--rule); }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; }
+.seg button { font: 500 13px var(--body); background: transparent; color: var(--ink); border: 0; padding: 5px 11px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--rule); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--sheet); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--up); outline-offset: 2px; }
+label.chk { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--muted); cursor: pointer; }
+.lab { font: 600 11px var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+svg#plan { display: block; width: 100%; height: min(72vh, 760px); touch-action: none; cursor: grab; }
+svg#plan.drag { cursor: grabbing; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 8px 12px; border-top: 1px solid var(--rule); font-size: 12.5px; color: var(--muted); }
+.legend i { display: inline-block; width: 18px; height: 4px; vertical-align: middle; margin-right: 6px; border-radius: 1px; }
+aside { display: grid; gap: 16px; min-width: 0; }
+.panel { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 12px 14px; min-width: 0; }
+.panel h2 { font: 600 17px var(--display); letter-spacing: .02em; margin: 0 0 8px; }
+.tally { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 4px; }
+.tally div { border-top: 3px solid; padding-top: 4px; }
+.tally b { font: 600 24px var(--display); display: block; font-variant-numeric: tabular-nums; }
+.tally span { font-size: 12px; color: var(--muted); }
+ol.moves { list-style: none; margin: 0; padding: 0; max-height: 360px; overflow: auto; font-size: 13px; }
+ol.moves li { display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 5px 4px; border-bottom: 1px solid var(--rule); cursor: pointer; }
+ol.moves li:hover, ol.moves li.sel { background: var(--room); }
+ol.moves .dot { width: 8px; height: 8px; border-radius: 50%; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 12.5px; }
+.note { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+#tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--sheet); font-size: 12.5px; line-height: 1.4; padding: 7px 9px; border-radius: 3px; max-width: 280px; z-index: 5; }
+.zoom { display: inline-flex; gap: 4px; margin-left: auto; }
+.zoom button { font: 600 14px var(--body); width: 30px; height: 28px; border: 1px solid var(--rule); background: transparent; color: var(--ink); border-radius: 3px; cursor: pointer; }
+@media (prefers-reduced-motion: no-preference) { .pulse { animation: pulse 1.2s ease-in-out 2; } @keyframes pulse { 50% { stroke-width: .28; } } }
+</style>
+
+<header>
+  <h1>McCallister Wall Grid</h1>
+  <p class="sub">Proposed shared wall lines before the rebuild. Nothing has moved yet. Each coloured stroke is a room wall that would slide onto a shared line; hover for the room and the distance.</p>
+</header>
+
+<div class="wrap">
+  <section class="sheet" aria-label="Floor plan">
+    <div class="bar">
+      <span class="lab">Floor</span>
+      <span class="seg" role="group" aria-label="Floor">
+        <button id="f-ground" data-floor="ground">Main floor</button>
+        <button id="f-upstairs" data-floor="upstairs">Upstairs</button>
+        <button id="f-both" data-floor="both">Both, stacked</button>
+      </span>
+      <label class="chk"><input type="checkbox" id="exag" checked> Exaggerate moves ×10</label>
+      <label class="chk"><input type="checkbox" id="stk" checked> Stacking candidates</label>
+      <span class="zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button><button id="zreset" aria-label="Reset view" style="width:auto;padding:0 8px;font-size:12px">Fit</button></span>
+    </div>
+    <svg id="plan" role="img" aria-label="Plan of the house with proposed wall moves"></svg>
+    <div class="legend">
+      <span><i style="background:var(--poche)"></i>Wall as built (half per room)</span>
+      <span><i style="background:var(--ok)"></i>Moves up to 1½ in</span>
+      <span><i style="background:var(--warn)"></i>1½ to 4 in: needs a reason</span>
+      <span><i style="background:var(--bad)"></i>Over 4 in: refused without a measurement</span>
+      <span><i style="background:var(--stack)"></i>Upstairs wall over a main-floor wall</span>
+      <span>Street (front) at the bottom. Scroll or pinch to zoom, drag to pan.</span>
+    </div>
+  </section>
+
+  <aside>
+    <div class="panel">
+      <h2 id="sumh">Moves</h2>
+      <div class="tally" id="tally"></div>
+      <p class="note" id="sumnote"></p>
+    </div>
+    <div class="panel">
+      <h2>Every move, largest first</h2>
+      <ol class="moves" id="moves"></ol>
+    </div>
+    <div class="panel">
+      <h2>Walls that might stack</h2>
+      <ol class="moves" id="stacks"></ol>
+      <p class="note">An upstairs wall within a foot of a main-floor wall, overlapping for at least a foot. Nothing is snapped across floors until you say which of these are really one wall.</p>
+      <p class="note"><b>Not detected here:</b> the picture wall's corner (main floor) against the upper flight's edge and the gallery (upstairs). They are 8½ in apart and meet only through the stair. The film decides that one (frames 1616, 3175, 10673).</p>
+    </div>
+  </aside>
+</div>
+<div id="tip" hidden></div>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+const D = JSON.parse(document.getElementById('data').textContent);
+const svg = document.getElementById('plan'), tip = document.getElementById('tip');
+const NS = 'http://www.w3.org/2000/svg';
+let floor = 'both', exag = 10, showStacks = true, sel = null;
+try { floor = localStorage.getItem('wg-floor') || floor; } catch (e) {}
+
+// spec (x front +, z) -> sheet (X right, Y down): street at the bottom, the garage side (large z) on the left as seen from the street
+const xs = D.rooms.flatMap(r => r.poly.map(p => p[0])), zs = D.rooms.flatMap(r => r.poly.map(p => p[1]));
+const Z1 = Math.max(...zs) + 1, X0 = Math.min(...xs) - 1;
+const P = (x, z) => [Z1 - z, x - X0];
+const full = [0, 0, Z1 - Math.min(...zs) + 1, Math.max(...xs) + 1 - X0];
+let vb = full.slice();
+
+const inch = m => m / 0.0254;
+function ftin(m) { const s = m < 0 ? '−' : ''; let t = Math.abs(inch(m)); let f = Math.floor(t / 12), i = Math.round((t - f * 12) * 4) / 4; if (i === 12) { f++; i = 0; } return `${s}${f}′ ${i}″`; }
+const inStr = m => `${m >= 0 ? '+' : '−'}${Math.abs(inch(m)).toFixed(1)} in`;
+const sev = m => Math.abs(m) > 0.10 ? 'bad' : Math.abs(m) > 0.04 ? 'warn' : 'ok';
+const nice = n => n.replace(/_/g, ' ').replace(/\bb\b/, 'B').replace(/\ba\b/, 'A').replace(/^\w/, c => c.toUpperCase());
+function side(e) { return e.axis === 'x' ? (e.out > 0 ? 'front wall' : 'back wall') : (e.out > 0 ? 'left-side wall' : 'right-side wall'); }
+
+function el(tag, attrs, parent) { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); (parent || svg).appendChild(n); return n; }
+function rectXZ(x0, x1, z0, z1, attrs, g) { const [a, b] = P(Math.min(x0, x1), Math.max(z0, z1)), [c, d] = P(Math.max(x0, x1), Math.min(z0, z1)); return el('rect', Object.assign({ x: a, y: b, width: c - a, height: d - b }, attrs), g); }
+function seg(e, c, attrs, g) { // a wall-face line at coordinate c along the edge's extent
+  const [a, b] = e.axis === 'x' ? P(c, e.lo) : P(e.lo, c), [p, q] = e.axis === 'x' ? P(c, e.hi) : P(e.hi, c);
+  return el('line', Object.assign({ x1: a, y1: b, x2: p, y2: q }, attrs), g);
+}
+const floors = () => floor === 'both' ? ['ground', 'upstairs'] : [floor];
+
+function draw() {
+  svg.replaceChildren();
+  svg.setAttribute('viewBox', vb.join(' '));
+  const fl = floors();
+  for (const f of fl) {
+    const ghost = floor === 'both' && f === 'upstairs';
+    const g = el('g', { opacity: ghost ? 0.9 : 1 });
+    for (const r of D.rooms.filter(r => r.floor === f)) {
+      const pts = r.poly.map(p => P(p[0], p[1]).join(',')).join(' ');
+      el('polygon', { points: pts, fill: ghost ? 'none' : 'var(--room)', stroke: ghost ? 'var(--up)' : 'none', 'stroke-width': .025, 'stroke-dasharray': ghost ? '.12 .08' : '' }, g);
+      if (!ghost || floor !== 'both') {
+        const cx = r.poly.reduce((s, p) => s + p[0], 0) / r.poly.length, cz = r.poly.reduce((s, p) => s + p[1], 0) / r.poly.length;
+        const [tx, ty] = P(cx, cz); const t = el('text', { x: tx, y: ty, 'font-size': .32, 'text-anchor': 'middle', fill: 'var(--muted)', 'font-family': 'Barlow Condensed, sans-serif' }, g);
+        t.textContent = nice(r.name);
+      }
+    }
+    if (!ghost) for (const e of D.edges.filter(e => e.floor === f)) {   // the wall as built: this room's half, face to centreline
+      if (e.axis === 'x') rectXZ(e.face, e.centre, e.lo, e.hi, { fill: 'var(--poche)' }, g); else rectXZ(e.lo, e.hi, e.face, e.centre, { fill: 'var(--poche)' }, g);
+    }
+    for (const d of D.doors.filter(d => d.floor === f && !ghost)) {
+      const e = { axis: d.axis, lo: d.span[0], hi: d.span[1] };
+      seg(e, d.coord, { stroke: 'var(--sheet)', 'stroke-width': .16, 'stroke-linecap': 'butt' }, g);
+      seg(e, d.coord, { stroke: 'var(--door)', 'stroke-width': .03 }, g);
+    }
+  }
+  // the stair (flights and landing) for orientation
+  for (const b of D.stair) rectXZ(b.x[0], b.x[1], b.z[0], b.z[1], { fill: 'none', stroke: 'var(--muted)', 'stroke-width': .012 });
+  // proposed moves
+  for (const e of D.edges.filter(e => fl.includes(e.floor) && Math.abs(e.snap) > 0.0005)) {
+    const c = e.face + e.snap * exag, col = `var(--${sev(e.snap)})`;
+    const ln = seg(e, c, { stroke: col, 'stroke-width': .09, 'stroke-linecap': 'round', class: sel === e ? 'pulse' : '' });
+    const hit = seg(e, c, { stroke: 'transparent', 'stroke-width': .5 });
+    hit.style.cursor = 'pointer';
+    hit.addEventListener('pointermove', ev => showTip(ev, `<b>${nice(e.room)}</b> · ${e.floor === 'ground' ? 'main floor' : 'upstairs'}<br>${side(e)}, ${ftin(e.hi - e.lo)} long<br>moves <b>${inStr(e.snap)}</b> onto a shared line${e.w > 1 ? '<br>measured room: weighted ×5' : ''}`));
+    hit.addEventListener('pointerleave', () => tip.hidden = true);
+    hit.addEventListener('click', () => pick(e));
+  }
+  if (showStacks && floor === 'both') for (const k of D.stacks) {
+    const e = { axis: k.axis, lo: k.lo, hi: k.hi };
+    seg(e, k.up_coord, { stroke: 'var(--stack)', 'stroke-width': .05, 'stroke-dasharray': '.18 .1' });
+    seg(e, k.ground_coord, { stroke: 'var(--stack)', 'stroke-width': .05 });
+    const hit = seg(e, (k.up_coord + k.ground_coord) / 2, { stroke: 'transparent', 'stroke-width': .5 });
+    hit.addEventListener('pointermove', ev => showTip(ev, `<b>Possible stacked wall</b><br>upstairs line vs main-floor line: <b>${inStr(k.offset)}</b> apart over ${ftin(k.hi - k.lo)}`));
+    hit.addEventListener('pointerleave', () => tip.hidden = true);
+  }
+  const [sx, sy] = P(X0 + full[3] - 0.4, Z1 - full[2] / 2);
+  const s = el('text', { x: full[2] / 2, y: full[3] - 0.25, 'font-size': .36, 'text-anchor': 'middle', fill: 'var(--muted)', 'letter-spacing': '.2', 'font-family': 'Barlow Condensed, sans-serif' }); s.textContent = 'STREET';
+}
+
+function showTip(ev, html) { tip.innerHTML = html; tip.hidden = false; const w = tip.offsetWidth, h = tip.offsetHeight; let x = ev.clientX + 14, y = ev.clientY + 14; if (x + w > innerWidth - 8) x = ev.clientX - w - 14; if (y + h > innerHeight - 8) y = ev.clientY - h - 14; tip.style.left = x + 'px'; tip.style.top = y + 'px'; }
+
+function pick(e) {
+  sel = e;
+  if (floor !== 'both' && floor !== e.floor) setFloor(e.floor);
+  const [a, b] = e.axis === 'x' ? P(e.face, (e.lo + e.hi) / 2) : P((e.lo + e.hi) / 2, e.face);
+  const w = 6, h = w * full[3] / full[2]; vb = [a - w / 2, b - h / 2, w, h];
+  draw(); list();
+}
+
+function list() {
+  const fl = floors(), mv = D.edges.filter(e => fl.includes(e.floor) && Math.abs(e.snap) > 0.0005).sort((a, b) => Math.abs(b.snap) - Math.abs(a.snap));
+  const n = { ok: 0, warn: 0, bad: 0 }; mv.forEach(e => n[sev(e.snap)]++);
+  document.getElementById('tally').innerHTML = [['ok', 'up to 1½ in'], ['warn', '1½–4 in'], ['bad', 'over 4 in']].map(([k, t]) => `<div style="border-color:var(--${k})"><b>${n[k]}</b><span>${t}</span></div>`).join('');
+  const tot = D.edges.filter(e => fl.includes(e.floor)).length;
+  document.getElementById('sumh').textContent = `Moves · ${floor === 'both' ? 'both floors' : floor === 'ground' ? 'main floor' : 'upstairs'}`;
+  document.getElementById('sumnote').textContent = `${mv.length} of ${tot} wall faces would move. Measured rooms (parents', Kevin's, Buzz's) count five times when a shared line is placed, so they barely move.`;
+  const ol = document.getElementById('moves'); ol.replaceChildren();
+  for (const e of mv) {
+    const li = document.createElement('li'); if (e === sel) li.className = 'sel';
+    li.innerHTML = `<span class="dot" style="background:var(--${sev(e.snap)})"></span><span>${nice(e.room)} <span style="color:var(--muted)">· ${side(e)}${floor === 'both' ? (e.floor === 'ground' ? ' · main' : ' · up') : ''}</span></span><span class="mono">${inStr(e.snap)}</span>`;
+    li.tabIndex = 0; li.addEventListener('click', () => pick(e)); li.addEventListener('keydown', ev => { if (ev.key === 'Enter') pick(e); });
+    ol.appendChild(li);
+  }
+  const st = document.getElementById('stacks'); st.replaceChildren();
+  for (const k of D.stacks.slice().sort((a, b) => Math.abs(a.offset) - Math.abs(b.offset))) {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="dot" style="background:var(--stack)"></span><span>${k.axis === 'x' ? 'Front-to-back position' : 'Side-to-side position'} <span style="color:var(--muted)">· ${ftin(k.hi - k.lo)} overlap</span></span><span class="mono">${inStr(k.offset)}</span>`;
+    li.addEventListener('click', () => { setFloor('both'); const [a, b] = k.axis === 'x' ? P(k.ground_coord, (k.lo + k.hi) / 2) : P((k.lo + k.hi) / 2, k.ground_coord); const w = 8, h = w * full[3] / full[2]; vb = [a - w / 2, b - h / 2, w, h]; draw(); });
+    st.appendChild(li);
+  }
+}
+
+function setFloor(f) { floor = f; try { localStorage.setItem('wg-floor', f); } catch (e) {} document.querySelectorAll('[data-floor]').forEach(b => b.setAttribute('aria-pressed', b.dataset.floor === f)); draw(); list(); }
+document.querySelectorAll('[data-floor]').forEach(b => b.addEventListener('click', () => setFloor(b.dataset.floor)));
+document.getElementById('exag').addEventListener('change', ev => { exag = ev.target.checked ? 10 : 1; draw(); });
+document.getElementById('stk').addEventListener('change', ev => { showStacks = ev.target.checked; draw(); });
+
+function zoom(f, cx, cy) { const [x, y, w, h] = vb; cx ??= x + w / 2; cy ??= y + h / 2; const nw = Math.min(Math.max(w * f, 1), full[2] * 2), nh = nw * h / w; vb = [cx - (cx - x) * nw / w, cy - (cy - y) * nh / h, nw, nh]; draw(); }
+document.getElementById('zin').onclick = () => zoom(0.7); document.getElementById('zout').onclick = () => zoom(1 / 0.7);
+document.getElementById('zreset').onclick = () => { vb = full.slice(); draw(); };
+function toPlan(ev) { const r = svg.getBoundingClientRect(), s = Math.max(vb[2] / r.width, vb[3] / r.height); const ox = (r.width * s - vb[2]) / 2, oy = (r.height * s - vb[3]) / 2; return [vb[0] - ox + (ev.clientX - r.left) * s, vb[1] - oy + (ev.clientY - r.top) * s, s]; }
+svg.addEventListener('wheel', ev => { ev.preventDefault(); const [px, py] = toPlan(ev); zoom(ev.deltaY > 0 ? 1.15 : 1 / 1.15, px, py); }, { passive: false });
+let drag = null;
+svg.addEventListener('pointerdown', ev => { if (ev.target.getAttribute('stroke') === 'transparent') return; drag = { x: ev.clientX, y: ev.clientY, vb: vb.slice() }; svg.classList.add('drag'); svg.setPointerCapture(ev.pointerId); });
+svg.addEventListener('pointermove', ev => { if (!drag) return; const s = toPlan(ev)[2]; vb = [drag.vb[0] - (ev.clientX - drag.x) * s, drag.vb[1] - (ev.clientY - drag.y) * s, vb[2], vb[3]]; draw(); });
+svg.addEventListener('pointerup', () => { drag = null; svg.classList.remove('drag'); });
+
+setFloor(floor);
+</script>
