@@ -16,9 +16,9 @@
   {
    "where": "ground, the pocket between kitchen (jog at spec x 2.316-4.12, z 3.649), dining (z 3.004) and sunroom (z 2.864)",
    "found": "~1.9 x 0.7 m claimed by no room; the user asked (Oct 15) whether it is the chute to the basement",
-   "decision": "model it as a sealed vertical SHAFT (laundry chute) where Marina's overhead shows a small green-lined open-topped square in a thick white wall block (overhead_994 px ~1335-1380, 455-480); the rest of the pocket is solid wall (a chase). Not a gap: V2's void check accepts it as a declared shaft",
+   "decision": "KEEP the chute: a real vertical shaft (its own space, kind 'shaft') where Marina's overhead shows the green-lined square, with the hatch on the breakfast-area wall (Marina 1116 s: white-framed green recess); it stays open/usable for gameplay (a trap). The rest of the pocket is the chase wall around it. Not a gap: V2 accepts declared shafts",
    "evidence": "Marina's main-floor overhead (shaft open at the wall-top cut, green lining); the poster notes a laundry chute outside the parents' room upstairs at 00:03:19. Film confirmation of the chute still to do",
-   "by": "proposed Oct 15 after the user's question; user may overrule"
+   "by": "user, Oct 15: 'that chase should stay there as it's central to the movie and can be used as a trap'"
   }
  ],
  "open": [
