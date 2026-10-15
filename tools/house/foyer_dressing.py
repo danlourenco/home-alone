@@ -234,6 +234,16 @@ def main():
     P.append(box("vestibule_opening_casing_head", [XF - 0.03, XF], [head, head + 0.12], [min(ja[2], jb[2]) - 0.06, max(ja[2], jb[2]) + 0.06], C["white"],
                  note=f"203 s inner jambs x 545/975 at row 150 -> head {head:.2f} m"))
     da, db = c203.on((638, 215), 0, XV), c203.on((810, 215), 0, XV)
+    # Kevin's basement door (film 3607-3617; Marina 932-938 s): white six-panel door on the breakfast area's rear wall between
+    # the back stair's high end and the red-valance window, a brass switch on its left. Closed prop: what is behind it is not
+    # shown anywhere. Width and place along the wall AUTHORED (~0.8 m, Marina 938 s)
+    XB = -1.505
+    P.append(box("basement_door", [XB, XB + 0.035], [0, 2.032], [5.95, 6.75], C["white"], collide=True, note="Marina 932-938 s; film 3612"))
+    for nm, za, zb in (("basement_casing_l", 5.88, 5.95), ("basement_casing_r", 6.75, 6.82)):
+        P.append(box(nm, [XB, XB + 0.02], [0, 2.10], [za, zb], C["white"]))
+    P.append(box("basement_casing_head", [XB, XB + 0.02], [2.032, 2.10], [5.88, 6.82], C["white"]))
+    P.append(box("basement_knob", [XB + 0.035, XB + 0.075], [0.92, 0.96], [6.62, 6.66], C["gilt"]))
+    P.append(box("basement_switch", [XB, XB + 0.012], [1.18, 1.30], [6.88, 6.96], C["gilt"], note="film 3612: brass switch plate beside it"))
     P.append(box("front_door", [XV - 0.05, XV], [0, da[1]], [db[2], da[2]], C["white"], note=f"203 s leaf x 638-810, head row 215 -> {da[1]:.2f} m"))
     for name, (u0, u1) in (("sidelight_left", (550, 618)), ("sidelight_right", (830, 900))):
         sa_, sb_ = c203.on((u0, 230), 0, XV), c203.on((u1, 495), 0, XV)

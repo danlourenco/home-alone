@@ -1,0 +1,58 @@
+[
+ {
+  "name": "../kitchen-compare/after-note-1626",
+  "pos": [
+   0.27,
+   -1.296,
+   -2.403
+  ],
+  "look_at": [
+   0.087,
+   -1.449,
+   -3.374
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../kitchen-compare/after-note-1649",
+  "pos": [
+   1.29,
+   -1.296,
+   -2.616
+  ],
+  "look_at": [
+   0.674,
+   -1.421,
+   -3.394
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../kitchen-compare/after-marina-916",
+  "pos": [
+   1.68,
+   -1.806,
+   -0.94
+  ],
+  "look_at": [
+   1.68,
+   -1.806,
+   -1.94
+  ],
+  "vfov": 41.4
+ },
+ {
+  "name": "../kitchen-compare/after-marina-933-approx",
+  "pos": [
+   1.6,
+   -1.806,
+   -3.4
+  ],
+  "look_at": [
+   1.9,
+   -1.806,
+   -4.4
+  ],
+  "vfov": 41.4
+ }
+]

@@ -175,30 +175,58 @@ def door_on(p, doors):
 
 
 def service_stair_spec(final, o):
-    """The service (back) stair in its traced enclosure: foot at the breakfast-area end (the enclosure's open east side),
-    rising west at the main stair's measured rise, risers spread over the enclosure's length. Built only up to the
-    enclosure's ceiling and closed there: Marina's upstairs has no arrival for it (Muto: it never reached the upstairs
-    set); the user accepted closing it (Oct 15). Going and count are AUTHORED (DEVIATIONS 30)."""
-    S = json.loads(STAIR.read_text()); r = S["measured"]["rise_m"]["value"]; n = S["authored"]["risers_total"]
+    """The service (back) stair (film 912/928/1044/2528, Marina 916-936 s; Oct 15 rebuild): its foot is a short run of 3 steps
+    rising from the breakfast area toward the wall, between a short dark newel (by the foyer doorway) and a tall dark turned
+    post; a quarter landing in the enclosure's doorway-end corner; then the flight rises along the wall toward the rear.
+    Open side to the room: white cut stringer, dark treads, white risers, white turned balusters, dark rail; the triangle
+    under the flight is closed with the room's wallpaper (the step boxes, solid). Built up to the ceiling and closed there
+    (Marina's flight runs into the ceiling; no upstairs arrival). Going from Marina 916 s (rise/going ~0.68); the turn's
+    exact geometry is AUTHORED (DEVIATIONS 30)."""
+    S = json.loads(STAIR.read_text()); r = S["measured"]["rise_m"]["value"]
     P = np.c_[final["back_stair"][:, 1] - o[1], final["back_stair"][:, 0] - o[0]]
     x0, x1, z0, z1 = P[:, 0].min(), P[:, 0].max(), P[:, 1].min(), P[:, 1].max()
-    g = (x1 - x0) / (n - 1)
+    g, w, nb = 0.262, z1 - z0, 3                            # going (Marina 916 s), flight width = the enclosure's depth, steps at the foot
+    xl = x1 - w                                             # the landing: the enclosure's doorway-end square
     ceil = CEILINGS.get("back_stair", CEILINGS["default"])
     B = []
-    for k in range(1, n):
-        if k * r > ceil - 0.05:
-            break
-        B.append({"name": f"service_step{k:02d}", "kind": "step", "x": [round(float(x1 - k * g), 3), round(float(x1 - (k - 1) * g), 3)],
-                  "y": [0.0, round(k * r, 3)], "z": [round(float(z0), 3), round(float(z1), 3)]})
-        xa, xb = x1 - k * g, x1 - (k - 1) * g                # open side (the breakfast area, z0): 2 spindles a tread, rail 0.9 m above
-        B.append({"name": f"service_rail{k:02d}_cap", "kind": "rail", "x": [round(float(xa), 3), round(float(xb), 3)],
-                  "y": [round(k * r + 0.84, 3), round(k * r + 0.9, 3)], "z": [round(float(z0), 3), round(float(z0) + 0.06, 3)]})
-        for i in (0.25, 0.75):
+    box = lambda name, kind, xa, xb, ya, yb, za, zb: B.append({"name": name, "kind": kind, "x": [round(float(min(xa, xb)), 3), round(float(max(xa, xb)), 3)],
+                                                             "y": [round(float(ya), 3), round(float(yb), 3)], "z": [round(float(min(za, zb)), 3), round(float(max(za, zb)), 3)]})
+    def tread(name, xa, xb, za, zb, h, front):             # solid step, dark tread on top (nosing), white riser on its front face
+        box(name, "step", xa, xb, 0.0, h, za, zb)
+        box(name + "_tread", "tread", xa, xb, h - 0.025, h + 0.005, za, zb)
+        fa, fb = front
+        box(name + "_riser", "riser", *fa, h - r, h - 0.025, *fb)
+    for k in range(1, nb + 1):                              # the foot: rising +z from the room toward the wall
+        za, zb = z0 - (nb - k + 1) * g, z0 - (nb - k) * g
+        tread(f"service_foot{k:02d}", xl, x1, za, zb, k * r, ((xl, x1), (za - 0.01, za)))
+    h = (nb + 1) * r
+    box("service_landing", "step", xl, x1, 0.0, h, z0, z1); box("service_landing_tread", "tread", xl, x1, h - 0.025, h + 0.005, z0, z1)
+    box("service_landing_riser", "riser", xl, x1, h - r, h - 0.025, z0 - 0.01, z0)
+    k = 0
+    while (nb + 2 + k) * r <= ceil - 0.05 and xl - (k + 1) * g >= x0 - 1e-6:   # the flight: rising -x along the wall
+        k += 1; xa, xb = xl - k * g, xl - (k - 1) * g; hk = (nb + 1 + k) * r
+        tread(f"service_step{k:02d}", xa, xb, z0, z1, hk, ((xb, xb + 0.01), (z0, z1)))
+        box(f"service_rail{k:02d}_cap", "rail", xa, xb, hk + 0.84, hk + 0.9, z0, z0 + 0.06)
+        for i in (0.25, 0.75):                              # 2 white balusters a tread on the open side
             c = xa + i * g
-            B.append({"name": f"service_rail{k:02d}_spindle{i}", "kind": "rail", "x": [round(float(c - 0.02), 3), round(float(c + 0.02), 3)],
-                      "y": [round(k * r, 3), round(k * r + 0.84, 3)], "z": [round(float(z0) + 0.01, 3), round(float(z0) + 0.05, 3)]})
-    return {"rise_m": r, "going_m": round(float(g), 3), "risers": len(B), "boxes": B, "walk_path": [],
-            "authored": f"going {g:.3f} m = enclosure length / {n - 1} treads; {len(B)} risers built, closed at the {ceil} m ceiling"}
+            box(f"service_rail{k:02d}_spindle{i}", "spindle", c - 0.02, c + 0.02, hk, hk + 0.84, z0 + 0.01, z0 + 0.05)
+    xt = xl - k * g; ht = (nb + 1 + k) * r
+    # white cut stringer along the open side, under the treads' ends (a band following the flight)
+    for j in range(1, k + 1):
+        xa, xb = xl - j * g, xl - (j - 1) * g; hj = (nb + 1 + j) * r
+        box(f"service_stringer{j:02d}", "stringer", xa, xb, hj - r - 0.12, hj - 0.025, z0 - 0.02, z0)
+    # posts and the foot's rails: the short newel at the foot by the doorway, the tall turned post where the flight turns
+    box("service_newel", "newel", x1 - 0.1, x1, 0.0, r + 1.0, z0 - nb * g, z0 - nb * g + 0.1)
+    box("service_newel_post", "newel", xl, xl + 0.1, 0.0, h + 1.05, z0 - 0.1, z0)
+    for kk in range(1, nb + 1):                             # the foot's open side toward the room (x = xl): balusters and a raking rail
+        za, zb = z0 - (nb - kk + 1) * g, z0 - (nb - kk) * g
+        box(f"service_foot_rail{kk:02d}_cap", "rail", xl, xl + 0.06, kk * r + 0.84, kk * r + 0.9, za, zb)
+        for i in (0.25, 0.75):
+            c = za + i * g
+            box(f"service_foot_rail{kk:02d}_spindle{i}", "spindle", xl + 0.01, xl + 0.05, kk * r, kk * r + 0.84, c - 0.02, c + 0.02)
+    box("service_newel_rail", "rail", x1 - 0.06, x1, r + 0.84, r + 0.9, z0 - nb * g, z1)   # from the newel back to the wall
+    return {"rise_m": r, "going_m": g, "risers": nb + 1 + k, "boxes": B, "walk_path": [],
+            "authored": f"foot {nb} steps + quarter landing + {k} flight steps (going {g} m, Marina 916 s); top {ht:.2f} m at x {xt:.2f}, closed at the {ceil} m ceiling"}
 
 
 def attic_stair_spec(final, o, ceil):

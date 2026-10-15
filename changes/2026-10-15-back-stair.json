@@ -1,0 +1,80 @@
+{
+ "change": "Back stair rebuilt (reconcile.service_stair_spec): 3 foot steps toward the wall between newel and tall post, quarter landing, flight along the wall (going 0.262), dressed parts (dark treads/posts, white risers/stringer/balusters, papered spandrel); Kevin's basement door prop on the breakfast rear wall; kitchen walls cream and floor quarry tile (colours)",
+ "target": "House_WallGrid",
+ "premise": "The back stair turns at its foot toward the breakfast table and has an open, dressed side over a papered spandrel; the basement door is on the breakfast area's rear wall",
+ "claim": {
+  "value": [
+   0.262,
+   3
+  ],
+  "data": [
+   "marina-frame:p1-916",
+   "marina-frame:p1-933"
+  ],
+  "scale": [
+   "stair-rise:0.178"
+  ],
+  "upstream": [
+   "marina-clip:stairs-a"
+  ],
+  "applies_to": [
+   "back_stair",
+   "kitchen"
+  ],
+  "measured_in": [
+   "back_stair"
+  ],
+  "assumed": {
+   "kitchen": "DEVIATIONS 38"
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-15",
+   "what": "straight solid flight from the doorway end (old service stair)",
+   "outcome": "failed"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "film 912/928/1044/2528: newel by the foyer doorway, bottom steps facing the table, tall turned post, white stringer over a floral-papered spandrel, dark treads, white risers",
+   "agrees": true,
+   "data": [
+    "film:912",
+    "film:928",
+    "film:1044",
+    "film:2528"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  },
+  {
+   "what": "film 3607-3617: Kevin opens the basement door in the breakfast area; brass switch beside it, window to its right",
+   "agrees": true,
+   "data": [
+    "film:3612"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/kitchen-compare/note-1626.png",
+   "spec/captures/kitchen-compare/note-1649.png",
+   "spec/captures/kitchen-compare/marina-916.png"
+  ],
+  "after": [
+   "spec/captures/kitchen-compare/after-note-1626.png",
+   "spec/captures/kitchen-compare/after-note-1649.png",
+   "spec/captures/kitchen-compare/after-marina-916.png"
+  ]
+ },
+ "user_walk": "pending",
+ "sheet": "spec/captures/kitchen-compare/index.html"
+}

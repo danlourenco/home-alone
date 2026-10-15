@@ -313,7 +313,8 @@ public static class SpecGreybox
         var stairPath = Stair(root, j["stair"], true, stairOnly: true);
         var atticPath = Stair(root, j["attic_stair"], false, "AtticStair", dress: false, stairOnly: true);
         FloorY = gy;
-        if (gj["stair"] != null && gj["stair"].Type != JTokenType.Null) Stair(groot, gj["stair"], false, stairOnly: true);   // service stair
+        if (gj["stair"] != null && gj["stair"].Type != JTokenType.Null)   // service stair: its solid steps read as the papered wall under it
+            Stair(groot, gj["stair"], false, "ServiceStair", dress: false, stairOnly: true, stepMat: Mat("Paper_Kitchen", KitchenWall));
         Dressing(groot, gy);
         FloorY = 0f;
         Lights(root, spaces); FloorY = gy; Lights(groot, gspaces); FloorY = 0f;
@@ -345,6 +346,9 @@ public static class SpecGreybox
     // One storey from geometry.json at the current FloorY: walls (papered on the faces of the named rooms, over the wainscot),
     // floor plate, ceilings, finishes, door/window trim, prop doors, glass, rails, arch tops. Returns the rooms and openings in
     // the spec's shape for the gates.
+    static readonly HashSet<string> KitchenRooms = new HashSet<string> { "kitchen", "back_stair" };
+    static readonly Color KitchenWall = new Color(0.88f, 0.84f, 0.72f);
+
     static (List<Space>, List<Door>) Storey(GameObject root, JObject st, HashSet<string> papered, bool carpetHalls)
     {
         var specLike = new JObject {
@@ -361,9 +365,15 @@ public static class SpecGreybox
         {
             var w = Dress["walls"]; wpMat = w["wallpaper_texture"] != null ? Wallpaper(w) : DressMat(w["wallpaper"]); wsMat = DressMat(w["wainscot"]); ws = (float)w["wainscot_m"];
         }
-        bool InPaper(float x, float zSpec) => paperRooms.Any(r => Inside(r.pts, new Vector2(x, -zSpec)));
+        // the kitchen and breakfast area: cream small-floral paper (a colour for now), no wainscot; quarry-tile floor (Oct 15 references)
+        var creamRooms = spaces.Where(sp => KitchenRooms.Contains(sp.name)).ToList();
+        var creamMat = Mat("Paper_Kitchen", KitchenWall);
+        bool InCream(float x, float zSpec) => creamRooms.Any(r => Inside(r.pts, new Vector2(x, -zSpec)));
+        bool InPaper(float x, float zSpec) => paperRooms.Any(r => Inside(r.pts, new Vector2(x, -zSpec))) || InCream(x, zSpec);
         void Piece(float x0, float x1, float z0, float z1, float y0, float y1, bool pap)
-        {   // spec z -> world -z; papered: wainscot below, paper above
+        {   // spec z -> world -z; papered: wainscot below, paper above (cream rooms: one colour)
+            if (pap && InCream((x0 + x1) / 2 + (x1 - x0), (z0 + z1) / 2) | InCream((x0 + x1) / 2 - (x1 - x0), (z0 + z1) / 2) | InCream((x0 + x1) / 2, (z0 + z1) / 2 + (z1 - z0)) | InCream((x0 + x1) / 2, (z0 + z1) / 2 - (z1 - z0)))
+            { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, creamMat); return; }
             if (!pap || wpMat == null) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, mWall); return; }
             if (y0 < ws && y1 > ws) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, ws, wsMat); Box(gw, "Wall", x0, x1, -z1, -z0, ws, y1, wpMat); }
             else Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, y1 <= ws ? wsMat : wpMat);
@@ -389,7 +399,9 @@ public static class SpecGreybox
         }
         foreach (var b in st["floor"])   // the plate, one piece per room carrying its finish (halls carpeted), walls' cells plain
             Box(gf, b["room"] != null && b["room"].Type != JTokenType.Null ? "Floor_" + (string)b["room"] : "FloorPlate", (float)b["x"][0], (float)b["x"][1],
-                -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], (string)b["finish"] == "hall" && carpetHalls ? mHall : mFloor);   // the ground halls (foyer, passage) are wood
+                -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1],
+                b["room"] != null && b["room"].Type != JTokenType.Null && KitchenRooms.Contains((string)b["room"]) ? Mat("Tile_Quarry", new Color(0.50f, 0.24f, 0.14f))
+                : (string)b["finish"] == "hall" && carpetHalls ? mHall : mFloor);   // the ground halls (foyer, passage) are wood
         Box3(gc, "Ceiling", st["ceilings"], mCeil);
         foreach (var o in st["openings"])
         {
@@ -854,7 +866,7 @@ public static class SpecGreybox
     }
 
     // The main stair: solid steps, landing, rails and well walls as spec boxes (spec z -> world -z); returns the walk path.
-    static List<Vector3> Stair(GameObject root, JToken st, bool skipFloorPatch, string child = "MainStair", bool dress = true, bool stairOnly = false)
+    static List<Vector3> Stair(GameObject root, JToken st, bool skipFloorPatch, string child = "MainStair", bool dress = true, bool stairOnly = false, Material stepMat = null)
     {
         if (st == null || st.Type == JTokenType.Null) return new List<Vector3>();
         var g = Child(root, child);
@@ -862,8 +874,15 @@ public static class SpecGreybox
         {
             string kind = (string)b["kind"];
             if (stairOnly && (kind == "wall" || kind == "ceiling" || kind == "floor")) continue;   // the wall grid builds the stair hall itself
+            if (kind == "tread" || kind == "newel" || kind == "riser" || kind == "stringer" || kind == "spindle")
+            {   // the back stair (film 912/928/1044): dark wood treads and posts, white risers, stringer and balusters
+                var pm = kind == "tread" || kind == "newel" ? Mat("Wood_StairDark", new Color(0.24f, 0.12f, 0.07f)) : Mat("Paint_StairWhite", new Color(0.9f, 0.9f, 0.87f));
+                Box(g, (string)b["name"], (float)b["x"][0], (float)b["x"][1], -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], pm);
+                continue;
+            }
             if (kind == "floor" && skipFloorPatch) continue;   // the ground floor's foyer is built for real
             var m = kind == "rail" ? mRail : kind == "wall" ? mWall : kind == "floor" || (!dress && kind == "step") ? mFloor : kind == "ceiling" ? mCeil : mHall;   // attic treads: bare wood (film)
+            if (stepMat != null && kind == "step") m = stepMat;
             string name = (string)b["name"]; var ds = dress ? Dress?["stair"] : null;
             if (ds != null)
             {
@@ -989,7 +1008,7 @@ public static class SpecGreybox
     {
         // only surfaces seen from inside a room count: the point just in front of a face must be in a room's open volume
         bool Seen(Vector3 q) => SeamRooms.Any(r => q.y > r.y0 + 0.002f && q.y < r.y1 - 0.002f && Inside(r.pts, new Vector2(q.x, q.z)));
-        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors", "Arch_Spandrel" };   // an arch's curve is stepped on purpose (grey-box)
+        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors", "Arch_Spandrel", "_tread", "_riser", "stringer", "newel" };   // an arch's curve is stepped on purpose (grey-box)
         var boxes = roots.Where(r => r != null).SelectMany(r => r.GetComponentsInChildren<MeshRenderer>())
             .Where(m => !skip.Any(k => m.name.Contains(k) || (m.transform.parent != null && m.transform.parent.name.Contains(k)) ||
                                         (m.transform.parent?.parent != null && m.transform.parent.parent.name.Contains(k))))
@@ -1068,7 +1087,7 @@ public static class SpecGreybox
                         if (Physics.Raycast(new Vector3(x, y0 + 0.05f, z), Vector3.up, out var hit, 2.0f))
                         {
                             var n = hit.collider.name;
-                            if (n.StartsWith("flight1_") || n.StartsWith("Floor")) continue;
+                            if (n.StartsWith("flight1_") || n.StartsWith("service_") || n.StartsWith("Floor")) continue;   // standing on a stair: its own treads are not a ceiling
                             low++; if (low <= 12) lines.Add($"LOW     {s.name} at ({x:F1}, {-z:F1}): {hit.distance:F2} m clear under {hit.collider.transform.parent?.name}/{n}");
                         }
                     }
