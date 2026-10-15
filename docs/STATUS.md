@@ -6,6 +6,8 @@ The upstairs is measured, reconciled into a spec, built as a walkable Unity grey
 
 Branch `unity-sfm-reconstruction`, pushed to `origin`. Git LFS covers `*.glb *.blend *.exr *.fbx *.psd *.tif *.tiff *.npz`.
 
+**NOW (Oct 15): the wall-grid rebuild, [tasks/wall-grid-plan.md](../tasks/wall-grid-plan.md).** Build the house like a house: one shared grid of wall lines across both floors, walls as objects shared by the rooms on both sides, one floor plate and ceiling per storey, openings cut into walls, all generated and verified in Python before Unity. The uncommitted corner-post/threshold stopgaps in SpecGreybox.cs are removed by it. Its verification plan (V1-V6) is the bar for every phase.
+
 ## User decisions (binding)
 
 - **Exterior = the film's house; upstairs drawn only from inside** (user, Oct 15: "the outside needs to look the same as the movie"). Marina's upstairs set is 11.3 m deep and cannot fit the real 8.75 m house; her ground floor does. Ground floor and exterior share one space; the upstairs keeps Marina's rooms and is rendered only when the player is upstairs/on the stair (DEVIATIONS 1). Next: measure the exterior against film stills and fix the shell.
