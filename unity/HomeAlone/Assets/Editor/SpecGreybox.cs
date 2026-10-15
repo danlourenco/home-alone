@@ -135,7 +135,7 @@ public static class SpecGreybox
         Dress = File.Exists(dp) ? JObject.Parse(File.ReadAllText(dp)) : null;
 
         EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-        MakeMaterials();
+        MakeMaterials(); HoleProbes.Clear();
         FloorY = 0f;
         var root = new GameObject("Upstairs");
         var ceilings = Child(root, "Ceilings");
@@ -157,6 +157,7 @@ public static class SpecGreybox
             FloorY = 0f;
         }
         Volume(root);
+        Daylight(root, gj != null ? (float)gj["floor_y_m"] : 0f);
         Player(spaces.First(s => s.name == "hall_corridor"));
 
         var player = GameObject.Find("Player"); player.SetActive(false);   // the test bodies walk alone
@@ -195,6 +196,99 @@ public static class SpecGreybox
         }
         EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), $"Assets/Scenes/Greybox_Upstairs{SceneTag}.unity");
         Debug.Log("SpecGreybox: built from " + SpecPath + (gj != null ? " + " + GroundPath : "") + "\n" + report);
+    }
+
+    // ---- Wall-grid PILOT (tasks/wall-grid-plan.md phase 3): the upstairs built from spec/geometry.json (tools/house/wall_graph.py
+    // --json): walls are the storey's one union, already cut for openings, so nothing here decides geometry. Saved as its own
+    // scene (Pilot_WallGrid); the working scene is untouched. Same gates as Build: walk, room walk, seams, leaks.
+    [MenuItem("HomeAlone/Build Wall-Grid Pilot")]
+    public static void BuildPilot()
+    {
+        var geo = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/geometry.json"))));
+        var up = (JObject)geo["upstairs"];
+        // the rooms and openings in the spec's own shape, so the existing gates read them
+        var specLike = new JObject {
+            ["spaces"] = new JArray(up["rooms"].Select(r => new JObject { ["name"] = r["name"], ["kind"] = r["kind"], ["opens"] = r["opens"],
+                                                                          ["ceiling_m"] = r["ceil"], ["polygon_xz"] = r["poly"] })),
+            ["doors"] = new JArray(up["openings"].Where(o => (string)o["kind"] != "window").Select(o => new JObject {
+                ["between"] = o["between"], ["kind"] = o["kind"], ["spec_axis"] = o["axis"], ["wall_coord_spec"] = o["c"],
+                ["span_spec"] = new JArray(o["lo"], o["hi"]), ["height"] = o["height"] })) };
+        var (spaces, doors) = Parse(specLike);
+        Windows = new List<Win>();
+        EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        MakeMaterials(); HoleProbes.Clear(); FloorY = 0f; Dress = null; WallMat = null;
+        var root = new GameObject("Upstairs"); var gw = Child(root, "Walls"); var gf = Child(root, "Floor"); var gc = Child(root, "Ceilings");
+        var go = Child(root, "Openings");
+        Box3(gw, "Wall", up["walls"], mWall);
+        Box3(gf, "FloorPlate", up["floor"], mFloor);
+        Box3(gc, "Ceiling", up["ceilings"], mCeil);
+        foreach (var c in up["ceilings"])   // each room's floor finish: carpet in the halls, wood elsewhere (3 mm on the plate)
+        {
+            var room = spaces.First(r => r.name == (string)c["room"]);
+            Box(gf, "Finish_" + room.name, (float)c["x"][0], (float)c["x"][1], -(float)c["z"][1], -(float)c["z"][0], 0f, 0.003f, room.kind == "hall" ? mHall : mFloor);
+        }
+        foreach (var o in up["openings"])
+        {
+            string kind = (string)o["kind"]; bool alongX = (string)o["axis"] == "z";
+            float c = (float)o["c"], lo = (float)o["lo"], hi = (float)o["hi"];
+            float wc = alongX ? -c : c, s0 = alongX ? lo : -hi, s1 = alongX ? hi : -lo;    // world: wall centre, span
+            const float h = 0.07f;
+            if (kind == "door")
+            {   // casing on both faces, proud away from the wall
+                float head = (float)o["height"];
+                foreach (float side in new[] { -1f, 1f })
+                {
+                    float f0 = wc + side * h, f1 = f0 + side * CasingProud;
+                    Trim(go, alongX, f0, f1, s0 - CasingW, s0, 0f, head + CasingW);
+                    Trim(go, alongX, f0, f1, s1, s1 + CasingW, 0f, head + CasingW);
+                    Trim(go, alongX, f0, f1, s0 - CasingW, s1 + CasingW, head, head + CasingW);
+                }
+            }
+            else if (kind == "fake_door")
+                foreach (float side in new[] { -1f, 1f })
+                {
+                    float f0 = wc + side * h, f1 = f0 + side * 0.03f;
+                    if (alongX) Box(go, "PropDoor", s0, s1, Mathf.Min(f0, f1), Mathf.Max(f0, f1), 0f, 2.032f, mProp);
+                    else Box(go, "PropDoor", Mathf.Min(f0, f1), Mathf.Max(f0, f1), s0, s1, 0f, 2.032f, mProp);
+                }
+            else if (kind == "window")
+            {
+                float sill = (float)o["sill"], whead = (float)o["head"], ta = wc - 0.006f, tb = wc + 0.006f;
+                if (alongX) Box(go, "Glass", s0, s1, ta, tb, sill, whead, mGlass); else Box(go, "Glass", ta, tb, s0, s1, sill, whead, mGlass);
+                float ow = (float)o["faces"][0] * (alongX ? -1f : 1f);           // spec outward -> world (z flips)
+                float f0 = wc - ow * h, f1 = f0 - ow * CasingProud;              // the room's face, trim proud into the room
+                Trim(go, alongX, f0, f1, s0 - CasingW, s0, sill, whead + CasingW);
+                Trim(go, alongX, f0, f1, s1, s1 + CasingW, sill, whead + CasingW);
+                Trim(go, alongX, f0, f1, s0 - CasingW, s1 + CasingW, whead, whead + CasingW);
+                Trim(go, alongX, f0, f0 - ow * StoolProud, s0 - CasingW - 0.025f, s1 + CasingW + 0.025f, sill - StoolT, sill);
+            }
+        }
+        foreach (var d in doors.Where(d => d.kind == "rail")) Rail(go, d);
+        Lights(root, spaces);
+        Volume(root);
+        Daylight(root, -3.026f);
+        Player(spaces.First(s => s.name == "hall_corridor"));
+        var player = GameObject.Find("Player"); player.SetActive(false);
+        Physics.SyncTransforms();
+        string report = "PILOT (upstairs from spec/geometry.json)\n" + WalkTest(spaces, doors);
+        var walkIn = doors.Where(d => d.kind != "fake_door").SelectMany(d => new[] { d.a, d.b }).ToHashSet();
+        SeamRooms = spaces.Where(sp => walkIn.Contains(sp.name)).Select(sp => (sp.pts, 0f, sp.ceil)).ToList();
+        report += SeamCheck(root);
+        report += LeakAndHeadroom(spaces.Where(sp => sp.opens != "down").ToList(), null, 0f);
+        // the stairwell has no stair in the pilot (upstairs only): walks into it are not part of the pilot
+        var well = spaces.Where(sp => sp.opens == "down").Select(sp => sp.name).ToHashSet();
+        report += "UPSTAIRS " + RoomWalk(spaces.Where(sp => !well.Contains(sp.name)).ToList(), doors.Where(d => !well.Contains(d.a) && !well.Contains(d.b)).ToList());
+        player.SetActive(true);
+        Directory.CreateDirectory(CaptureDir);
+        File.WriteAllText(Path.Combine(CaptureDir, "walk-test-pilot.txt"), report);
+        EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), "Assets/Scenes/Pilot_WallGrid.unity");
+        Debug.Log("SpecGreybox.BuildPilot\n" + report);
+    }
+
+    static void Box3(GameObject p, string n, JToken boxes, Material m)
+    {   // geometry boxes in spec coordinates (x, z, y) -> world (z flips)
+        foreach (var b in boxes)
+            Box(p, n, (float)b["x"][0], (float)b["x"][1], -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], m);
     }
 
     // spec/dressing/foyer.json (tools/house/foyer_dressing.py): finishes and pieces measured from Marina's frames. Finishes
@@ -321,9 +415,29 @@ public static class SpecGreybox
         return ceil;
     }
 
+    static List<(Vector3 p, string what)> HoleProbes = new();
+
+    // Each edge's slab stops at the room's corner, so at an outside corner the two slabs leave a HalfWall-square column
+    // open to the outdoors (daylight leaked through it, Oct 15). A post fills the outer quadrant of each convex corner.
+    static void CornerPosts(GameObject g, Space s)
+    {
+        foreach (var v in s.pts)
+        {
+            var quads = new[] { new Vector2(1, 1), new Vector2(1, -1), new Vector2(-1, 1), new Vector2(-1, -1) };
+            var ins = quads.Where(q => Inside(s.pts, v + q * 0.02f)).ToList();
+            if (ins.Count != 1) continue;                       // reflex corners: the two slabs already overlap
+            var o = -ins[0];
+            float x0 = Mathf.Min(v.x, v.x + o.x * HalfWall), x1 = Mathf.Max(v.x, v.x + o.x * HalfWall);
+            float z0 = Mathf.Min(v.y, v.y + o.y * HalfWall), z1 = Mathf.Max(v.y, v.y + o.y * HalfWall);
+            Box(g, "CornerPost", x0, x1, z0, z1, 0f, s.ceil, mWall);
+            HoleProbes.Add((new Vector3((x0 + x1) / 2, FloorY + 1.2f, (z0 + z1) / 2), $"corner {s.name} ({v.x:F2}, {-v.y:F2})"));
+        }
+    }
+
     static void Walls(GameObject g, Space s, List<Door> doors)
     {
         SetFinish(s);
+        CornerPosts(g, s);
         for (int i = 0, n = s.pts.Count; i < n; i++)
         {
             Vector2 a = s.pts[i], b = s.pts[(i + 1) % n];
@@ -345,6 +459,13 @@ public static class SpecGreybox
             {
                 if (d.kind == "fake_door") { Prop(g, alongX, t0, t1, sgn, d); continue; }
                 float dl = Mathf.Max(d.lo, lo), dh = Mathf.Min(d.hi, hi);
+                if (d.kind != "rail" && s.kind != "opening")
+                {   // threshold: floor under this half of the wall's thickness (daylight showed the gap, Oct 15)
+                    float ta = Mathf.Min(t0, t1), tb = Mathf.Max(t0, t1);
+                    if (alongX) Box(g, "Threshold", dl, dh, ta, tb, -0.2f, 0f, mFloor); else Box(g, "Threshold", ta, tb, dl, dh, -0.2f, 0f, mFloor);
+                    var tp = alongX ? new Vector3((dl + dh) / 2, FloorY - 0.05f, (t0 + t1) / 2) : new Vector3((t0 + t1) / 2, FloorY - 0.05f, (dl + dh) / 2);
+                    HoleProbes.Add((tp, $"threshold {s.name}/{d.a}-{d.b}"));
+                }
                 if (dl > cur) Seg(g, "Wall", alongX, t0, t1, cur, dl, 0f, ceil);
                 float head = d.kind == "door" ? d.height : d.kind == "arch" ? ArchHead : ceil;
                 if (head < ceil) Seg(g, d.kind + "_Header", alongX, t0, t1, dl, dh, head, ceil);
@@ -472,6 +593,30 @@ public static class SpecGreybox
             l.transform.position = new Vector3(x, s.ceil - 0.3f + FloorY, z); l.type = LightType.Point; l.range = 8f;
             l.intensity = 900f; l.color = new Color(1f, 0.95f, 0.88f); l.gameObject.AddComponent<HDAdditionalLightData>();
         }
+    }
+
+    // Winter daylight (user, Oct 15: natural light through the windows for daytime scenes): a low December sun, a snow
+    // ground outside the windows, and the room lamps on N (HouseNightMode: day = lamps off). The house's compass bearing is
+    // NOT measured yet: FrontAzimuth is a placeholder until the film's daytime exterior shadows (frames 4382, 11908) set it.
+    const float FrontAzimuth = 90f;                       // compass bearing the front (+spec x) faces; placeholder, DEVIATIONS 34
+    const float SunAzimuth = 155f, SunElevation = 21f;    // Chicago, Dec 21, ~10:30 am
+    static void Daylight(GameObject root, float groundY)
+    {
+        var day = Child(root, "Daylight");
+        float rel = (SunAzimuth - FrontAzimuth) * Mathf.Deg2Rad, el = SunElevation * Mathf.Deg2Rad;
+        var toSun = new Vector3(Mathf.Cos(rel) * Mathf.Cos(el), Mathf.Sin(el), -Mathf.Sin(rel) * Mathf.Cos(el));   // spec +z (right, from inside facing front) -> world -z
+        var sun = new GameObject("Sun").AddComponent<Light>(); sun.transform.parent = day.transform;
+        sun.type = LightType.Directional; sun.transform.rotation = Quaternion.LookRotation(-toSun);
+        sun.gameObject.AddComponent<HDAdditionalLightData>();   // first: adding it resets the light's intensity
+        sun.intensity = 100000f; sun.color = Color.white; sun.shadows = LightShadows.Soft;   // the sky model reddens a low sun; white keeps the snow white
+        var snow = GameObject.CreatePrimitive(PrimitiveType.Cube); snow.name = "Outdoors_Snow"; snow.transform.parent = day.transform;
+        Object.DestroyImmediate(snow.GetComponent<Collider>());
+        snow.transform.position = new Vector3(6f, groundY - 0.12f, -8f); snow.transform.localScale = new Vector3(200f, 0.2f, 200f);   // top 2 cm under the ground floor (hidden by its floor boxes)
+        snow.GetComponent<Renderer>().sharedMaterial = Mat("Snow", new Color(0.92f, 0.94f, 0.97f));
+        var lamps = root.transform.Cast<Transform>().SelectMany(t => t.GetComponentsInChildren<Transform>(true)).FirstOrDefault(t => t.name == "Lights");
+        var mode = new GameObject("Day and night - press N").AddComponent<HouseNightMode>(); mode.transform.parent = day.transform;
+        mode.nightLayer = lamps != null ? lamps.gameObject : null; mode.interiorLights = new Light[0]; mode.daytimeEnabled = new bool[0];
+        if (lamps != null) lamps.gameObject.SetActive(false);
     }
 
     static void Volume(GameObject root)
@@ -621,7 +766,7 @@ public static class SpecGreybox
     {
         // only surfaces seen from inside a room count: the point just in front of a face must be in a room's open volume
         bool Seen(Vector3 q) => SeamRooms.Any(r => q.y > r.y0 + 0.002f && q.y < r.y1 - 0.002f && Inside(r.pts, new Vector2(q.x, q.z)));
-        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker" };
+        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors" };
         var boxes = roots.Where(r => r != null).SelectMany(r => r.GetComponentsInChildren<MeshRenderer>())
             .Where(m => !skip.Any(k => m.name.Contains(k) || (m.transform.parent != null && m.transform.parent.name.Contains(k)) ||
                                         (m.transform.parent?.parent != null && m.transform.parent.parent.name.Contains(k))))
@@ -667,6 +812,8 @@ public static class SpecGreybox
                     gap++; if (gap <= 200) lines.Add($"GAP     {axn[f.ax]}={f.c:F3} ({-Mathf.Min(ou, ov) * 100:F1} cm): {Where(f.box)} | {Where(g.box)}");
                 }
             }
+        foreach (var (hp, what) in HoleProbes)   // thresholds and outside corners must be solid (a hole there sees the outdoors)
+            if (!Solid(hp)) { gap++; if (gap <= 200) lines.Add($"GAP     hole at {what}: ({hp.x:F2}, {hp.y:F2}, {-hp.z:F2}) is empty"); }
         lines.Insert(0, $"Seam check: {boxes.Count} structural boxes, {over} overlaps (flicker), {ledge} ledges, {gap} gaps");
         return string.Join("\n", lines) + "\n";
     }

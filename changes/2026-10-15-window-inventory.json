@@ -1,0 +1,28 @@
+{
+ "change": "Window inventory: 27 windows and glazed doors on both floors (measurements/windows/{upstairs,ground}.json; Buzz's 3 unchanged), resolved onto the built rooms by reconcile.py windows_spec (now per polygon edge, so L-shaped rooms place them on the right span). Built first in the wall-grid pilot (Pilot_WallGrid)",
+ "target": "Pilot_WallGrid",
+ "premise": "Each window sits where Marina's overhead shows it, as a fraction along its wall; widths from the overhead or a face-on tour frame; sill/head from Buzz's measured window unless a frame gives its own",
+ "claim": {
+  "value": [27],
+  "data": ["overhead:994", "overhead:upstairs"],
+  "scale": ["overhead-trace:ground", "overhead-trace:upstairs"],
+  "upstream": ["marina-frame:541.5"],
+  "applies_to": ["windows"],
+  "measured_in": ["windows"],
+  "assumed": {}
+ },
+ "history": [{"date": "2026-10-14", "what": "Buzz's three windows (buzz_windows.py)", "outcome": "ok"}],
+ "premise_reviewed": "",
+ "checks": [
+  {"what": "living-room windows: Marina 458 s face-on (fractions 0.871 / 0.151) vs the overhead, within 0.015 of the wall", "agrees": true, "data": ["marina-frame:458"], "scale": ["none"], "type": "ratio"},
+  {"what": "living-room French doors: Marina 438 s face-on 0.304 / 0.683 vs the overhead 0.317 / 0.733 (same spacing)", "agrees": true, "data": ["marina-frame:438"], "scale": ["none"], "type": "ratio"},
+  {"what": "Kevin's desk-side window: Marina 356 s puts it at 0.70 of the wall, the overhead at 0.79-0.81", "agrees": false, "data": ["marina-frame:356"], "scale": ["none"], "type": "ratio",
+   "disposition": "The frame's 0.70 was used (not averaged): the overhead is read on wall tops and this wall's end was ambiguous in it. Low confidence; check on the walk"}
+ ],
+ "renders": {
+  "before": ["spec/captures/pilot/before-parents-corner.png", "spec/captures/pilot/before-kevin-room.png"],
+  "after": ["spec/captures/pilot/after-parents-corner.png", "spec/captures/pilot/after-kevin-room.png"]
+ },
+ "sheet": "spec/captures/pilot/compare.jpg",
+ "user_walk": "pending"
+}

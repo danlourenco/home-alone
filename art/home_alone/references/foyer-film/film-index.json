@@ -1,0 +1,1224 @@
+[
+ {
+  "first": 18,
+  "last": 24,
+  "camera": "inside front door behind cop, looking at stair (living room opening left, rear arch right)",
+  "scene": "opening credits; cop arrives, kids pass",
+  "visible": [
+   "stair foot/newel",
+   "flight 1 (~10 treads)",
+   "landing",
+   "landing window",
+   "flight 2 (upper short flight)",
+   "upper gallery/balustrade",
+   "ceiling/chandelier",
+   "arched/rear door",
+   "living room opening",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   21
+  ]
+ },
+ {
+  "first": 25,
+  "last": 35,
+  "camera": "high on flight 1 / landing looking down at front door and vestibule",
+  "scene": "opening credits; cop waits in foyer",
+  "visible": [
+   "front door",
+   "sidelights",
+   "vestibule",
+   "picture/painting",
+   "picture wall under landing",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   30,
+   28
+  ]
+ },
+ {
+  "first": 36,
+  "last": 46,
+  "camera": "by stair foot looking at front door/vestibule (handheld)",
+  "scene": "credits; Buzz, aunt with pillow, cop",
+  "visible": [
+   "front door",
+   "vestibule",
+   "stair foot/newel",
+   "picture/painting",
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   41
+  ]
+ },
+ {
+  "first": 47,
+  "last": 53,
+  "camera": "medium on cop near front door",
+  "scene": "credits; cop asks who's in charge",
+  "visible": [
+   "picture/painting",
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 1,
+  "best": [
+   50
+  ]
+ },
+ {
+  "first": 54,
+  "last": 60,
+  "camera": "high on flight 1 / landing looking down at foyer floor (repeat of 25-35)",
+  "scene": "credits; family chaos in foyer",
+  "visible": [
+   "vestibule",
+   "picture/painting",
+   "picture wall under landing",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   57
+  ]
+ },
+ {
+  "first": 361,
+  "last": 366,
+  "camera": "medium on Linnie at top of stair",
+  "scene": "Linnie: 'you're what the French call les incompetents'",
+  "visible": [
+   "landing window",
+   "picture/painting"
+  ],
+  "static": true,
+  "measure_value": 1,
+  "best": [
+   364
+  ]
+ },
+ {
+  "first": 371,
+  "last": 379,
+  "camera": "medium on Linnie at top of stair (same setup)",
+  "scene": "Linnie scolds Kevin",
+  "visible": [
+   "landing window",
+   "picture/painting"
+  ],
+  "static": true,
+  "measure_value": 1,
+  "best": [
+   375
+  ]
+ },
+ {
+  "first": 382,
+  "last": 387,
+  "camera": "foyer floor at foot of flight 1 looking up at the landing",
+  "scene": "Buzz on landing hurls duffel bag down the stairs",
+  "visible": [
+   "flight 1 (~4 treads)",
+   "landing",
+   "landing window",
+   "picture/painting",
+   "picture wall under landing",
+   "flight 2 (upper short flight)",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   384
+  ]
+ },
+ {
+  "first": 392,
+  "last": 397,
+  "camera": "medium on cop / Linnie by foyer wall",
+  "scene": "cop in foyer; Linnie at top of stair",
+  "visible": [
+   "picture/painting",
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 1,
+  "best": [
+   393
+  ]
+ },
+ {
+  "first": 739,
+  "last": 743,
+  "camera": "medium on kids at stair foot",
+  "scene": "pizza night: Fuller and Megan",
+  "visible": [
+   "stair foot/newel",
+   "flight 1"
+  ],
+  "static": false,
+  "measure_value": 1,
+  "best": [
+   741
+  ]
+ },
+ {
+  "first": 770,
+  "last": 775,
+  "camera": "vestibule/front door looking at stair foot and living room opening",
+  "scene": "pizza night: cop questions Fuller and Megan",
+  "visible": [
+   "stair foot/newel",
+   "flight 1 (~6 treads)",
+   "living room opening",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   772
+  ]
+ },
+ {
+  "first": 776,
+  "last": 787,
+  "camera": "in foyer looking at front door wall (door, right sidelight, sconce, picture)",
+  "scene": "pizza night: cop at the front door",
+  "visible": [
+   "front door",
+   "sidelights",
+   "picture/painting",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   778
+  ]
+ },
+ {
+  "first": 788,
+  "last": 808,
+  "camera": "medium at front door",
+  "scene": "pizza boy arrives; cop at the door",
+  "visible": [
+   "front door",
+   "sidelights"
+  ],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   795
+  ]
+ },
+ {
+  "first": 809,
+  "last": 812,
+  "camera": "by front door looking at living room opening and stair foot",
+  "scene": "pizza night: Uncle Frank, cop, kids run through",
+  "visible": [
+   "stair foot/newel",
+   "flight 1 (~4 treads)",
+   "living room opening",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   811
+  ]
+ },
+ {
+  "first": 813,
+  "last": 821,
+  "camera": "medium on Uncle Frank, flight 1 behind",
+  "scene": "pizza night",
+  "visible": [
+   "flight 1"
+  ],
+  "static": false,
+  "measure_value": 1,
+  "best": [
+   815
+  ]
+ },
+ {
+  "first": 822,
+  "last": 824,
+  "camera": "by front door looking at living room opening and stair foot (as 809-812)",
+  "scene": "pizza night: kids run past cop and pizza boy",
+  "visible": [
+   "stair foot/newel",
+   "flight 1 (~4 treads)",
+   "living room opening",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   822
+  ]
+ },
+ {
+  "first": 825,
+  "last": 849,
+  "camera": "medium/close shot-reverse in foyer",
+  "scene": "pizza night: cop and family",
+  "visible": [
+   "flight 1",
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   840
+  ]
+ },
+ {
+  "first": 850,
+  "last": 905,
+  "camera": "medium shot-reverse in foyer, flight 1 behind Peter",
+  "scene": "pizza night: Peter and cop; wide 891-905",
+  "visible": [
+   "stair foot/newel",
+   "flight 1",
+   "living room opening",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   893
+  ]
+ },
+ {
+  "first": 1152,
+  "last": 1174,
+  "camera": "foyer by the door under the landing, then panning toward living room opening",
+  "scene": "Kate confronts Kevin after the milk spill",
+  "visible": [
+   "stair foot/newel",
+   "flight 1",
+   "arched/rear door",
+   "living room opening",
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   1157
+  ]
+ },
+ {
+  "first": 1175,
+  "last": 1236,
+  "camera": "medium/close shot-reverse in foyer",
+  "scene": "Kevin 'I hope I never see any of you again'; cop leaves",
+  "visible": [
+   "flight 1",
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 1,
+  "best": [
+   1189
+  ]
+ },
+ {
+  "first": 1237,
+  "last": 1241,
+  "camera": "foyer floor at stair foot looking up flight 1",
+  "scene": "Kate marches Kevin up the stairs",
+  "visible": [
+   "stair foot/newel",
+   "flight 1",
+   "landing",
+   "landing window",
+   "picture/painting",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   1238
+  ]
+ },
+ {
+  "first": 1242,
+  "last": 1252,
+  "camera": "medium on cop by the front door",
+  "scene": "cop leaves",
+  "visible": [
+   "front door"
+  ],
+  "static": false,
+  "measure_value": 1,
+  "best": [
+   1250
+  ]
+ },
+ {
+  "first": 1253,
+  "last": 1264,
+  "camera": "top of flight 2 / gallery looking down at the landing",
+  "scene": "Kate and Kevin climb to the third floor",
+  "visible": [
+   "landing",
+   "landing window",
+   "picture/painting",
+   "flight 2 (upper short flight)",
+   "upper gallery/balustrade"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   1258
+  ]
+ },
+ {
+  "first": 1546,
+  "last": 1555,
+  "camera": "inside front door looking out (door open, sidelight curtain)",
+  "scene": "morning: van driver at the door",
+  "visible": [
+   "front door",
+   "sidelights"
+  ],
+  "static": true,
+  "measure_value": 2,
+  "best": [
+   1551
+  ]
+ },
+ {
+  "first": 1612,
+  "last": 1625,
+  "camera": "just inside front door by living room opening, looking at stair and rear hall",
+  "scene": "Kate wakes, family rushes down the stairs",
+  "visible": [
+   "flight 1 (13 treads)",
+   "stair foot/newel",
+   "landing",
+   "landing window",
+   "flight 2 (upper short flight)",
+   "upper gallery/balustrade",
+   "picture wall under landing",
+   "arched/rear door",
+   "ceiling/chandelier",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": true,
+  "measure_value": 5,
+  "best": [
+   1616,
+   1620
+  ]
+ },
+ {
+  "first": 1687,
+  "last": 1692,
+  "camera": "just inside front door looking at stair and rear hall (same setup)",
+  "scene": "family rushes out; kids run down and past",
+  "visible": [
+   "flight 1 (13 treads)",
+   "stair foot/newel",
+   "landing",
+   "flight 2 (upper short flight)",
+   "upper gallery/balustrade",
+   "picture wall under landing",
+   "arched/rear door",
+   "ceiling/chandelier",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": true,
+  "measure_value": 5,
+  "best": [
+   1689
+  ]
+ },
+ {
+  "first": 1693,
+  "last": 1706,
+  "camera": "handheld at stair foot looking up flight 1",
+  "scene": "Peter with plant at stair foot; family rush",
+  "visible": [
+   "stair foot/newel",
+   "flight 1",
+   "landing",
+   "landing window"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   1697
+  ]
+ },
+ {
+  "first": 2048,
+  "last": 2062,
+  "camera": "upper gallery looking along balustrade to parents' bedroom door",
+  "scene": "Kevin emerges, finds the house empty",
+  "visible": [
+   "upper gallery/balustrade",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   2056
+  ]
+ },
+ {
+  "first": 2080,
+  "last": 2103,
+  "camera": "on landing/flight 2 looking across stairwell at upper gallery and arch to upper hall",
+  "scene": "Kevin walks the empty upstairs; 'I made my family disappear' build-up",
+  "visible": [
+   "upper gallery/balustrade",
+   "flight 2 (upper short flight)",
+   "picture/painting",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": true,
+  "measure_value": 5,
+  "best": [
+   2090,
+   2085
+  ]
+ },
+ {
+  "first": 2675,
+  "last": 2679,
+  "camera": "foyer near dining room opening looking at flight 1, rear arch door",
+  "scene": "Kevin runs through foyer celebrating ('I made my family disappear')",
+  "visible": [
+   "flight 1 (13 treads)",
+   "stair foot/newel",
+   "landing",
+   "picture wall under landing",
+   "arched/rear door",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   2677
+  ]
+ },
+ {
+  "first": 2680,
+  "last": 2687,
+  "camera": "upper gallery hall, handheld",
+  "scene": "Kevin runs and screams upstairs",
+  "visible": [
+   "upper gallery/balustrade"
+  ],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   2683
+  ]
+ },
+ {
+  "first": 3170,
+  "last": 3185,
+  "camera": "just inside front door by living room opening, low, looking at stair (locked off)",
+  "scene": "Kevin sleds down the stairs: set-up",
+  "visible": [
+   "flight 1 (13 treads)",
+   "stair foot/newel",
+   "landing",
+   "landing window",
+   "picture/painting",
+   "picture wall under landing",
+   "arched/rear door",
+   "ceiling/chandelier",
+   "wainscot"
+  ],
+  "static": true,
+  "measure_value": 5,
+  "best": [
+   3175,
+   3180
+  ]
+ },
+ {
+  "first": 3186,
+  "last": 3191,
+  "camera": "medium on Kevin on the landing",
+  "scene": "Kevin on sled on the landing",
+  "visible": [
+   "landing"
+  ],
+  "static": false,
+  "measure_value": 1,
+  "best": [
+   3188
+  ]
+ },
+ {
+  "first": 3192,
+  "last": 3198,
+  "camera": "behind Kevin on the landing looking down flight 1 to front door",
+  "scene": "Kevin sleds down the stairs",
+  "visible": [
+   "flight 1 (13 treads)",
+   "front door",
+   "vestibule",
+   "picture/painting",
+   "picture wall under landing",
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   3196
+  ]
+ },
+ {
+  "first": 3199,
+  "last": 3207,
+  "camera": "just inside front door, low, looking at stair (same as 3170-3185)",
+  "scene": "Kevin sleds down the stairs",
+  "visible": [
+   "flight 1 (13 treads)",
+   "stair foot/newel",
+   "landing",
+   "landing window",
+   "picture/painting",
+   "picture wall under landing",
+   "arched/rear door",
+   "ceiling/chandelier",
+   "wainscot"
+  ],
+  "static": true,
+  "measure_value": 5,
+  "best": [
+   3201
+  ]
+ },
+ {
+  "first": 3220,
+  "last": 3229,
+  "camera": "sled POV from landing down flight 1 toward open front door",
+  "scene": "Kevin sleds down and out the front door",
+  "visible": [
+   "front door",
+   "sidelights",
+   "vestibule",
+   "picture/painting",
+   "picture wall under landing",
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   3225
+  ]
+ },
+ {
+  "first": 3232,
+  "last": 3233,
+  "camera": "landing looking down flight 1",
+  "scene": "sled run, second take",
+  "visible": [
+   "flight 1",
+   "front door",
+   "picture wall under landing"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   3233
+  ]
+ },
+ {
+  "first": 3882,
+  "last": 3885,
+  "camera": "inside front door, close",
+  "scene": "Kevin slams the door on Marley",
+  "visible": [
+   "front door"
+  ],
+  "static": false,
+  "measure_value": 1,
+  "best": [
+   3884
+  ]
+ },
+ {
+  "first": 3886,
+  "last": 3893,
+  "camera": "foyer near dining room opening looking at flight 1 and rear arch door",
+  "scene": "Kevin runs up the stairs fleeing Marley",
+  "visible": [
+   "flight 1 (13 treads)",
+   "stair foot/newel",
+   "picture wall under landing",
+   "arched/rear door",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   3888
+  ]
+ },
+ {
+  "first": 3894,
+  "last": 3900,
+  "camera": "upper gallery hall",
+  "scene": "Kevin runs upstairs screaming",
+  "visible": [
+   "upper gallery/balustrade"
+  ],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   3896
+  ]
+ },
+ {
+  "first": 9320,
+  "last": 9338,
+  "camera": "inside front door, close",
+  "scene": "Kevin comes home from church and locks up",
+  "visible": [
+   "front door",
+   "sidelights"
+  ],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   9330
+  ]
+ },
+ {
+  "first": 9356,
+  "last": 9362,
+  "camera": "inner foyer, low, facing front door wall (locked off)",
+  "scene": "Kevin lays out toy cars by the front door",
+  "visible": [
+   "front door",
+   "sidelights",
+   "picture/painting",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": true,
+  "measure_value": 4,
+  "best": [
+   9358
+  ]
+ },
+ {
+  "first": 10244,
+  "last": 10252,
+  "camera": "inner foyer facing front door with fanlight (locked off)",
+  "scene": "Kevin celebrates after the hot doorknob",
+  "visible": [
+   "front door",
+   "sidelights",
+   "picture/painting",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": true,
+  "measure_value": 5,
+  "best": [
+   10248
+  ]
+ },
+ {
+  "first": 10663,
+  "last": 10665,
+  "camera": "low on flight 1 looking up at Kevin on the landing",
+  "scene": "Kevin on landing taunts bandits",
+  "visible": [
+   "landing",
+   "landing window",
+   "picture/painting",
+   "flight 2 (upper short flight)"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   10664
+  ]
+ },
+ {
+  "first": 10671,
+  "last": 10675,
+  "camera": "just inside front door by living room opening, looking at stair and rear hall",
+  "scene": "bandits slip on toys at the foot of the stairs; Kevin on landing",
+  "visible": [
+   "flight 1 (13 treads)",
+   "stair foot/newel",
+   "landing",
+   "landing window",
+   "picture wall under landing",
+   "arched/rear door",
+   "living room opening",
+   "ceiling/chandelier",
+   "wainscot"
+  ],
+  "static": true,
+  "measure_value": 5,
+  "best": [
+   10673
+  ]
+ },
+ {
+  "first": 10676,
+  "last": 10683,
+  "camera": "medium on Kevin on the landing",
+  "scene": "Kevin taunts",
+  "visible": [
+   "landing",
+   "landing window"
+  ],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   10680
+  ]
+ },
+ {
+  "first": 10684,
+  "last": 10685,
+  "camera": "low at stair foot looking up flight 1",
+  "scene": "Kevin climbs; bandits coming",
+  "visible": [
+   "flight 1 (13 treads)",
+   "stair foot/newel",
+   "landing",
+   "landing window",
+   "picture wall under landing",
+   "arched/rear door"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   10685
+  ]
+ },
+ {
+  "first": 10686,
+  "last": 10690,
+  "camera": "low at stair foot",
+  "scene": "bandits down on the floor at the stairs",
+  "visible": [
+   "stair foot/newel",
+   "flight 1",
+   "arched/rear door"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   10688
+  ]
+ },
+ {
+  "first": 10691,
+  "last": 10699,
+  "camera": "high from landing looking down at foyer floor and picture wall",
+  "scene": "bandits get up",
+  "visible": [
+   "picture wall under landing",
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   10695
+  ]
+ },
+ {
+  "first": 10700,
+  "last": 10702,
+  "camera": "foyer floor looking up at upper balustrade",
+  "scene": "Kevin swings the paint can",
+  "visible": [
+   "upper gallery/balustrade"
+  ],
+  "static": true,
+  "measure_value": 3,
+  "best": [
+   10701
+  ]
+ },
+ {
+  "first": 10705,
+  "last": 10709,
+  "camera": "low in foyer looking up flight 1 to landing window",
+  "scene": "paint can swings down the stairwell",
+  "visible": [
+   "flight 1",
+   "landing",
+   "landing window",
+   "picture/painting",
+   "picture wall under landing"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   10706
+  ]
+ },
+ {
+  "first": 10710,
+  "last": 10714,
+  "camera": "floor level by stair foot looking at front vestibule and living room opening",
+  "scene": "Marv flattened by the paint can",
+  "visible": [
+   "vestibule",
+   "living room opening",
+   "picture/painting",
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   10714
+  ]
+ },
+ {
+  "first": 10715,
+  "last": 10720,
+  "camera": "medium on Harry at the newel",
+  "scene": "Harry next",
+  "visible": [
+   "stair foot/newel",
+   "landing window",
+   "picture wall under landing"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   10716
+  ]
+ },
+ {
+  "first": 10721,
+  "last": 10725,
+  "camera": "low in foyer looking up flight 1",
+  "scene": "Harry hit by paint can",
+  "visible": [
+   "flight 1",
+   "landing",
+   "picture wall under landing"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   10723
+  ]
+ },
+ {
+  "first": 10726,
+  "last": 10728,
+  "camera": "floor level",
+  "scene": "Harry on the floor",
+  "visible": [],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   10727
+  ]
+ },
+ {
+  "first": 10729,
+  "last": 10732,
+  "camera": "foyer floor looking up at upper balustrade",
+  "scene": "Kevin with second paint can",
+  "visible": [
+   "upper gallery/balustrade"
+  ],
+  "static": true,
+  "measure_value": 3,
+  "best": [
+   10730
+  ]
+ },
+ {
+  "first": 10733,
+  "last": 10741,
+  "camera": "top of stair / upper gallery",
+  "scene": "Kevin flees upstairs",
+  "visible": [
+   "upper gallery/balustrade",
+   "flight 2 (upper short flight)"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   10737
+  ]
+ },
+ {
+  "first": 10742,
+  "last": 10747,
+  "camera": "floor level",
+  "scene": "Marv on the floor among toys",
+  "visible": [],
+  "static": true,
+  "measure_value": 2,
+  "best": [
+   10744
+  ]
+ },
+ {
+  "first": 10769,
+  "last": 10791,
+  "camera": "high from landing looking down at foyer floor, front door, picture wall",
+  "scene": "bandits get up and charge the stairs",
+  "visible": [
+   "front door",
+   "sidelights",
+   "picture/painting",
+   "picture wall under landing",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   10775
+  ]
+ },
+ {
+  "first": 10824,
+  "last": 10827,
+  "camera": "flight 2 handrail, bandits climbing",
+  "scene": "bandits chase Kevin upstairs",
+  "visible": [
+   "flight 2 (upper short flight)",
+   "picture/painting"
+  ],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   10825
+  ]
+ },
+ {
+  "first": 11964,
+  "last": 11973,
+  "camera": "low on flight 1 looking up at landing window",
+  "scene": "Christmas morning: Kevin runs down the stairs",
+  "visible": [
+   "landing",
+   "landing window",
+   "picture/painting",
+   "flight 2 (upper short flight)",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   11966
+  ]
+ },
+ {
+  "first": 11977,
+  "last": 11981,
+  "camera": "foyer looking into dining room through its opening",
+  "scene": "Kevin looks for family in the dining room",
+  "visible": [
+   "dining French doors",
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   11979
+  ]
+ },
+ {
+  "first": 11982,
+  "last": 11991,
+  "camera": "medium on Kevin, dining room behind",
+  "scene": "Kevin calls out",
+  "visible": [
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 1,
+  "best": [
+   11985
+  ]
+ },
+ {
+  "first": 12009,
+  "last": 12013,
+  "camera": "behind Kevin in foyer",
+  "scene": "Kevin alone in the foyer",
+  "visible": [
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 1,
+  "best": [
+   12010
+  ]
+ },
+ {
+  "first": 12089,
+  "last": 12100,
+  "camera": "inside front door, then following Kate into dining room",
+  "scene": "Kate comes home",
+  "visible": [
+   "front door",
+   "dining French doors"
+  ],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   12091
+  ]
+ },
+ {
+  "first": 12106,
+  "last": 12113,
+  "camera": "medium on Kate in foyer by dining opening",
+  "scene": "Kate looks for Kevin",
+  "visible": [
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   12110
+  ]
+ },
+ {
+  "first": 12129,
+  "last": 12131,
+  "camera": "close on balusters of flight 2",
+  "scene": "Kevin runs down",
+  "visible": [
+   "flight 2 (upper short flight)"
+  ],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   12130
+  ]
+ },
+ {
+  "first": 12132,
+  "last": 12136,
+  "camera": "low on flight 1 looking up at landing window",
+  "scene": "Kevin turns at the landing",
+  "visible": [
+   "landing",
+   "landing window",
+   "picture/painting",
+   "flight 2 (upper short flight)",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 4,
+  "best": [
+   12133
+  ]
+ },
+ {
+  "first": 12137,
+  "last": 12144,
+  "camera": "dining room doorway looking across foyer into living room opening",
+  "scene": "Kevin comes down to Kate",
+  "visible": [
+   "vestibule",
+   "stair foot/newel",
+   "flight 1",
+   "living room opening",
+   "picture/painting",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 5,
+  "best": [
+   12138
+  ]
+ },
+ {
+  "first": 12145,
+  "last": 12179,
+  "camera": "shot-reverse: Kate at living room opening / Kevin at dining opening",
+  "scene": "reunion: 'Merry Christmas, sweetheart'",
+  "visible": [
+   "living room opening",
+   "dining French doors",
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   12145,
+   12157
+  ]
+ },
+ {
+  "first": 12204,
+  "last": 12205,
+  "camera": "wide across foyer",
+  "scene": "Kate and Kevin embrace",
+  "visible": [
+   "vestibule",
+   "living room opening",
+   "wainscot",
+   "people standing (full body)"
+  ],
+  "static": false,
+  "measure_value": 3,
+  "best": [
+   12204
+  ]
+ },
+ {
+  "first": 12251,
+  "last": 12409,
+  "camera": "medium/close in foyer, front door and dining opening behind",
+  "scene": "family arrives; Buzz; Peter; 'Kevin, what did you do to my room?'",
+  "visible": [
+   "front door",
+   "sidelights",
+   "dining French doors",
+   "living room opening",
+   "picture/painting",
+   "wainscot"
+  ],
+  "static": false,
+  "measure_value": 2,
+  "best": [
+   12397,
+   12322
+  ]
+ }
+]

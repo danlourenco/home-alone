@@ -1,0 +1,4 @@
+[
+ {"name": "../daylight/buzz-floor", "pos": [9.3, 2.2, -13.0], "look_at": [9.6, 0.0, -15.2], "vfov": 90},
+ {"name": "../daylight/outside-sunside", "pos": [16.0, 4.0, -24.0], "look_at": [8.0, 0.0, -12.0], "vfov": 60}
+]

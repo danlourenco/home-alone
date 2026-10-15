@@ -1430,5 +1430,186 @@
   "doors": "measurements/overhead/ground-doors.json",
   "anchors": {}
  },
- "windows": []
+ "windows": [
+  {
+   "room": "den",
+   "name": "side_twin",
+   "wall_axis": "z",
+   "wall_coord_spec": 19.917,
+   "span_spec": [
+    5.704,
+    8.004
+   ],
+   "sill_m": 0.53,
+   "head_m": 2.15
+  },
+  {
+   "room": "den",
+   "name": "front_wide",
+   "wall_axis": "x",
+   "wall_coord_spec": 9.266,
+   "span_spec": [
+    16.881,
+    19.431
+   ],
+   "sill_m": 0.53,
+   "head_m": 2.15
+  },
+  {
+   "room": "living_room",
+   "name": "rear_den_side",
+   "wall_axis": "x",
+   "wall_coord_spec": 1.581,
+   "span_spec": [
+    15.229,
+    15.749
+   ],
+   "sill_m": 0.82,
+   "head_m": 2.15
+  },
+  {
+   "room": "living_room",
+   "name": "rear_foyer_side",
+   "wall_axis": "x",
+   "wall_coord_spec": 1.581,
+   "span_spec": [
+    11.99,
+    12.51
+   ],
+   "sill_m": 0.82,
+   "head_m": 2.15
+  },
+  {
+   "room": "living_room",
+   "name": "front_french_foyer_side",
+   "wall_axis": "x",
+   "wall_coord_spec": 9.954,
+   "span_spec": [
+    12.563,
+    13.313
+   ],
+   "sill_m": 0.0,
+   "head_m": 2.03
+  },
+  {
+   "room": "living_room",
+   "name": "front_french_den_side",
+   "wall_axis": "x",
+   "wall_coord_spec": 9.954,
+   "span_spec": [
+    14.268,
+    15.018
+   ],
+   "sill_m": 0.0,
+   "head_m": 2.03
+  },
+  {
+   "room": "dining_room",
+   "name": "front_french_sunroom_side",
+   "wall_axis": "x",
+   "wall_coord_spec": 10.13,
+   "span_spec": [
+    4.367,
+    5.117
+   ],
+   "sill_m": 0.0,
+   "head_m": 2.03
+  },
+  {
+   "room": "dining_room",
+   "name": "front_french_foyer_side",
+   "wall_axis": "x",
+   "wall_coord_spec": 10.13,
+   "span_spec": [
+    6.327,
+    7.077
+   ],
+   "sill_m": 0.0,
+   "head_m": 2.03
+  },
+  {
+   "room": "kitchen",
+   "name": "back_door",
+   "wall_axis": "x",
+   "wall_coord_spec": -5.192,
+   "span_spec": [
+    2.626,
+    3.446
+   ],
+   "sill_m": 0.0,
+   "head_m": 2.03
+  },
+  {
+   "room": "kitchen",
+   "name": "sink",
+   "wall_axis": "x",
+   "wall_coord_spec": -5.192,
+   "span_spec": [
+    0.778,
+    1.528
+   ],
+   "sill_m": 1.05,
+   "head_m": 2.03
+  },
+  {
+   "room": "kitchen",
+   "name": "side_rear",
+   "wall_axis": "z",
+   "wall_coord_spec": -0.28,
+   "span_spec": [
+    -4.201,
+    -3.481
+   ],
+   "sill_m": 1.05,
+   "head_m": 2.03
+  },
+  {
+   "room": "kitchen",
+   "name": "side_seat",
+   "wall_axis": "z",
+   "wall_coord_spec": -0.28,
+   "span_spec": [
+    -1.287,
+    -0.087
+   ],
+   "sill_m": 1.05,
+   "head_m": 2.03
+  },
+  {
+   "room": "kitchen",
+   "name": "side_front",
+   "wall_axis": "z",
+   "wall_coord_spec": -0.28,
+   "span_spec": [
+    0.83,
+    1.55
+   ],
+   "sill_m": 0.82,
+   "head_m": 2.03
+  },
+  {
+   "room": "kitchen",
+   "name": "breakfast_rear",
+   "wall_axis": "x",
+   "wall_coord_spec": -1.505,
+   "span_spec": [
+    4.991,
+    5.791
+   ],
+   "sill_m": 0.82,
+   "head_m": 2.15
+  },
+  {
+   "room": "kitchen",
+   "name": "side_upper",
+   "wall_axis": "z",
+   "wall_coord_spec": 3.923,
+   "span_spec": [
+    -3.93,
+    -3.21
+   ],
+   "sill_m": 0.82,
+   "head_m": 2.15
+  }
+ ]
 }

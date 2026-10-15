@@ -309,9 +309,15 @@ def windows_spec(spaces):
     for w in json.loads(p.read_text())["windows"]:
         P = polys[w["room"]]
         ax = 0 if w["side"][0] == "x" else 1                  # x_max: the wall is x = max, the window spans z
-        coord = P[:, ax].max() if w["side"].endswith("max") else P[:, ax].min()
-        lo, hi = P[:, 1 - ax].min(), P[:, 1 - ax].max()
+        if "edge" in w:   # a wall that is not on the room's bounding box (L-shaped rooms): polygon edge i -> i+1
+            p, q = P[w["edge"]], P[(w["edge"] + 1) % len(P)]
+            assert abs(p[ax] - q[ax]) < 1e-6, f"{w['room']}/{w['name']}: edge {w['edge']} is not an {w['side'][0]} = const wall"
+            coord, lo, hi = p[ax], min(p[1 - ax], q[1 - ax]), max(p[1 - ax], q[1 - ax])
+        else:
+            coord = P[:, ax].max() if w["side"].endswith("max") else P[:, ax].min()
+            lo, hi = P[:, 1 - ax].min(), P[:, 1 - ax].max()
         c = lo + w["centre_frac"] * (hi - lo)
+        assert lo <= c - w["width_m"] / 2 and c + w["width_m"] / 2 <= hi, f"{w['room']}/{w['name']}: window runs past its wall"
         out.append({"room": w["room"], "name": w["name"], "wall_axis": "x" if ax == 0 else "z", "wall_coord_spec": round(float(coord), 3),
                     "span_spec": [round(float(c - w["width_m"] / 2), 3), round(float(c + w["width_m"] / 2), 3)],
                     "sill_m": w["sill_m"], "head_m": w["head_m"]})

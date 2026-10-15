@@ -2711,6 +2711,114 @@
    ],
    "sill_m": 0.81,
    "head_m": 2.15
+  },
+  {
+   "room": "parents_bedroom",
+   "name": "side_bank",
+   "wall_axis": "z",
+   "wall_coord_spec": 0.0,
+   "span_spec": [
+    4.2,
+    7.501
+   ],
+   "sill_m": 0.81,
+   "head_m": 2.15
+  },
+  {
+   "room": "parents_bedroom",
+   "name": "front_twin",
+   "wall_axis": "x",
+   "wall_coord_spec": 8.491,
+   "span_spec": [
+    1.518,
+    3.058
+   ],
+   "sill_m": 0.81,
+   "head_m": 2.15
+  },
+  {
+   "room": "parents_bath",
+   "name": "rear",
+   "wall_axis": "x",
+   "wall_coord_spec": 0.343,
+   "span_spec": [
+    3.056,
+    3.656
+   ],
+   "sill_m": 0.54,
+   "head_m": 2.15
+  },
+  {
+   "room": "kevin_jeff_room",
+   "name": "front_dresser_side",
+   "wall_axis": "x",
+   "wall_coord_spec": 11.664,
+   "span_spec": [
+    4.337,
+    4.937
+   ],
+   "sill_m": 0.82,
+   "head_m": 2.2
+  },
+  {
+   "room": "kevin_jeff_room",
+   "name": "front_desk_side",
+   "wall_axis": "x",
+   "wall_coord_spec": 11.664,
+   "span_spec": [
+    6.276,
+    6.876
+   ],
+   "sill_m": 0.82,
+   "head_m": 2.2
+  },
+  {
+   "room": "hall_bath",
+   "name": "front",
+   "wall_axis": "x",
+   "wall_coord_spec": 11.664,
+   "span_spec": [
+    9.331,
+    10.051
+   ],
+   "sill_m": 0.81,
+   "head_m": 2.15
+  },
+  {
+   "room": "girls_room_a",
+   "name": "rear",
+   "wall_axis": "x",
+   "wall_coord_spec": 0.343,
+   "span_spec": [
+    6.555,
+    7.276
+   ],
+   "sill_m": 0.81,
+   "head_m": 2.15
+  },
+  {
+   "room": "girls_room_b",
+   "name": "rear_front_side",
+   "wall_axis": "x",
+   "wall_coord_spec": 1.583,
+   "span_spec": [
+    12.29,
+    13.01
+   ],
+   "sill_m": 0.81,
+   "head_m": 2.15
+  },
+  {
+   "room": "girls_room_b",
+   "name": "rear_side_end",
+   "wall_axis": "x",
+   "wall_coord_spec": 1.583,
+   "span_spec": [
+    15.001,
+    15.721
+   ],
+   "sill_m": 0.81,
+   "head_m": 2.15
   }
  ]
 }

@@ -51,7 +51,7 @@ def main():
     common = {"width_m": round(width, 2), "sill_m": round(sill, 2), "head_m": round(head, 2)}
     src = "tools/house/buzz_windows.py (Marina Part 2: 0:50 overhead, 541.5 s chart, 563.0 s head)"
     out = {"note": "Window openings (clear, inside the casing). side = which edge of the room's bounding box in spec "
-                   "coordinates; centre_frac = along that wall from its low-coordinate end. Written by " + src,
+                   "coordinates; centre_frac = along that wall from its low-coordinate end; optional edge = polygon edge index (edge i runs from vertex i to i+1) for a wall off the bounding box. Written by " + src,
            "windows": [
                {"room": "buzz_room", "name": "front_hall_side", "side": "x_max", "centre_frac": round(front[0], 3), **common,
                 "width_source": "assumed = desk-wall window"},
@@ -62,6 +62,8 @@ def main():
            ]}
     p = ROOT / "measurements/windows/upstairs.json"
     p.parent.mkdir(parents=True, exist_ok=True)
+    if p.exists():   # keep the other rooms' windows
+        out["windows"] += [w for w in json.loads(p.read_text())["windows"] if w["room"] != "buzz_room"]
     p.write_text(json.dumps(out, indent=1) + "\n")
     print(f"-> {p.relative_to(ROOT)}")
     return sill, head, desk_frac

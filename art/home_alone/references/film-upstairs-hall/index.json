@@ -1,0 +1,206 @@
+[
+ {
+  "first": 85,
+  "last": 98,
+  "camera": "Inside parents' bedroom doorway looking out across the hall",
+  "direction": "reverse/cross",
+  "visible": "Kevin in the parents' doorway; hall's far wall behind him: green wall, a white panel door, sconce, poinsettias. Frames 92-95 are Kate inserts.",
+  "end_door_position": null,
+  "end_wall_fully_in_view": false,
+  "best": [
+   87
+  ]
+ },
+ {
+  "first": 229,
+  "last": 245,
+  "camera": "In the hall/doorway near a bedroom, looking across",
+  "direction": "cross",
+  "visible": "Kevin with aunt and uncle; green wall, white door and casing behind him. Close-up.",
+  "end_door_position": null,
+  "end_wall_fully_in_view": false,
+  "best": [
+   238
+  ]
+ },
+ {
+  "first": 325,
+  "last": 360,
+  "camera": "Mid-hall, moving with the kids",
+  "direction": "toward attic-stair door end (opposite end)",
+  "visible": "325-330 Megan/Kevin in the hall; 331-344 bathroom doorway; 345-360 hall with sconces, white end door and ficus (attic end).",
+  "end_door_position": null,
+  "end_wall_fully_in_view": false,
+  "best": [
+   352
+  ]
+ },
+ {
+  "first": 408,
+  "last": 433,
+  "camera": "Parents' end of the hall, about eye height, looking down the hall",
+  "direction": "toward attic-stair door end (opposite end)",
+  "visible": "Kevin stands in the hall. Visible: console + globe left, sconces on the left wall, arch, white end door (attic stair) under the arch, ficus and stair balustrade right, picture on the right wall. Frames 428-430 are a cop insert.",
+  "end_door_position": null,
+  "end_wall_fully_in_view": false,
+  "best": [
+   410,
+   433
+  ]
+ },
+ {
+  "first": 1267,
+  "last": 1290,
+  "camera": "Attic-door end, looking at the attic door",
+  "direction": "toward attic-stair door end (opposite end)",
+  "visible": "Kate opens the attic-stair door (1269-1276), the stairs show through it (1277-1290). Sconce and green walls with framed prints.",
+  "end_door_position": null,
+  "end_wall_fully_in_view": false,
+  "best": [
+   1276
+  ]
+ },
+ {
+  "first": 1331,
+  "last": 1335,
+  "camera": "Attic-door end, beside the open attic door",
+  "direction": "toward parents' bedroom door (end door)",
+  "visible": "Kate at the attic door; behind her the hall runs to the parents' end (lamp and curtains through the far doorway, poinsettias right). Shallow focus, Kate occludes the left half.",
+  "end_door_position": null,
+  "end_wall_fully_in_view": false,
+  "best": [
+   1333
+  ]
+ },
+ {
+  "first": 2048,
+  "last": 2062,
+  "camera": "Stair-landing side, looking across to the attic end",
+  "direction": "toward attic-stair door end (opposite end)",
+  "visible": "Kevin comes out of the attic-stair door: sconce left, ficus and balustrade right, damask landing wall.",
+  "end_door_position": null,
+  "end_wall_fully_in_view": false,
+  "best": [
+   2059
+  ]
+ },
+ {
+  "first": 2080,
+  "last": 2103,
+  "camera": "Across the stairwell from the front landing, wide",
+  "direction": "toward attic-stair door end (opposite end)",
+  "visible": "Arch spanning the hall, white attic door centred under it, open bathroom door to its right, ficus right, balustrade across the foreground; Kevin walks out to the rail.",
+  "end_door_position": null,
+  "end_wall_fully_in_view": false,
+  "best": [
+   2084
+  ]
+ },
+ {
+  "first": 2295,
+  "last": 2304,
+  "camera": "Mid-hall, looking toward the attic end, Kevin walking toward camera",
+  "direction": "toward attic-stair door end (opposite end)",
+  "visible": "Arch and ficus at the end; console with globe left; open door right with clothes.",
+  "end_door_position": null,
+  "end_wall_fully_in_view": false,
+  "best": [
+   2296
+  ]
+ },
+ {
+  "first": 2680,
+  "last": 2687,
+  "camera": "Top of the stairs on the landing, about eye height",
+  "direction": "toward parents' bedroom door (end door)",
+  "visible": "Kevin runs from the parents' room toward the camera; 2686-2687 empty. Visible: balustrade newel left, damask landing wall, a left-side door casing, green left wall with pictures, the parents' doorway open (lamp, side table, chair, swagged window), console with candles and globe against the right wall, two sconces on the right wall, poinsettias right, a right-side door (knob) at the right edge. End-wall measurement on 2687 (px): left casing outer edge ~743, opening ~785-1013, right casing outer ~1037-1077, right side wall (green, sconces) from ~1077. The left side wall meets the casing directly.",
+  "end_door_position": {
+   "left": 0.0,
+   "right": "0-0.12",
+   "basis": "2687: end wall ~743-1077 px; door casing 743-1037..1077"
+  },
+  "end_wall_fully_in_view": true,
+  "best": [
+   2687,
+   2685
+  ]
+ },
+ {
+  "first": 3894,
+  "last": 3900,
+  "camera": "Same set-up as 2680-2687 (top of stairs)",
+  "direction": "toward parents' bedroom door (end door)",
+  "visible": "Kevin runs screaming toward camera; 3894 has him small at the far end. Same framing as 2687.",
+  "end_door_position": {
+   "left": 0.0,
+   "right": "0-0.12",
+   "basis": "same set-up as 2687"
+  },
+  "end_wall_fully_in_view": true,
+  "best": [
+   3894
+  ]
+ },
+ {
+  "first": 10733,
+  "last": 10741,
+  "camera": "Low (about knee height) at the top of the stairs beside the newel, tripwire in frame",
+  "direction": "toward parents' bedroom door (end door)",
+  "visible": "Kevin runs to the parents' room. Visible: balustrade left, damask wall with triple switch plate, left-side door casing, green left wall with pictures, parents' doorway open (door leaf swung into the room, hinges on the right jamb), console with globe and sconces on the right wall. 10741 end-wall px: left casing 1132-1182, opening 1182-1455, right jamb/casing 1455-1552; the far sconce's backplate is at ~1655 and the picture at 1675+ is foreshortened (it is on the side wall).",
+  "end_door_position": {
+   "left": 0.0,
+   "right": "0-0.18",
+   "basis": "10741: casing 1132-1552 px; right corner lies between 1552 and the far sconce backplate (~1655)"
+  },
+  "end_wall_fully_in_view": true,
+  "best": [
+   10741,
+   10736
+  ]
+ },
+ {
+  "first": 10819,
+  "last": 10822,
+  "camera": "Low in the hall near the stair top",
+  "direction": "toward parents' bedroom door (end door)",
+  "visible": "Kevin bursts out of the parents' room with the BB gun. End doorway fully framed: casing 800-1172 px, opening 855-1130, hinges on the right jamb; the left wall (pictures, chair rail) recedes straight into the left casing; two sconces on the right wall, the far one's backplate at ~1250.",
+  "end_door_position": {
+   "left": 0.0,
+   "right": "0-0.17",
+   "basis": "10819: left wall meets casing at 800; right corner lies between casing 1172 and the far sconce backplate ~1250; end wall <=800-1250"
+  },
+  "end_wall_fully_in_view": true,
+  "best": [
+   10819
+  ]
+ },
+ {
+  "first": 10828,
+  "last": 10829,
+  "camera": "From a doorway at the attic end, looking the full length of the hall",
+  "direction": "toward parents' bedroom door (end door)",
+  "visible": "The only frame with the whole hall length: ficus and balustrade left, console with poinsettias right, an arch spanning the hall just before the end, then a short vestibule with the parents' doorway (casing 1090-1260 px) and a sconce right of it (~1290). The arch's left jamb (1085) hides the left corner. Vanishing point from the runner edges is ~(1235,240), which puts the right corner at about the arch jamb (~1300), so the green strip 1260-1300 would be end wall.",
+  "end_door_position": {
+   "left": 0.0,
+   "right": "~0.2",
+   "basis": "10828: casing 1090-1260 px; inferred right corner ~1300 from the arch-jamb/vanishing-point projection (estimate)"
+  },
+  "end_wall_fully_in_view": true,
+  "best": [
+   10828
+  ]
+ },
+ {
+  "first": 10899,
+  "last": 11029,
+  "camera": "Attic-door end, low",
+  "direction": "toward attic-stair door end (opposite end)",
+  "visible": "Harry on the floor by the attic stairs; Marv at the attic door between the sconces (10899-10901, 10958-10963, 10996-11002, 11009-11029). The other frames in the range are close-ups.",
+  "end_door_position": null,
+  "end_wall_fully_in_view": false,
+  "best": [
+   10998,
+   11019
+  ]
+ }
+]

@@ -1,0 +1,4 @@
+[
+ {"name": "../daylight/buzz-room", "pos": [8.0, 1.5, -12.0], "look_at": [11.0, 1.4, -14.5], "vfov": 75},
+ {"name": "../daylight/buzz-desk", "pos": [9.2, 1.5, -12.3], "look_at": [10.2, 1.2, -16.0], "vfov": 75}
+]

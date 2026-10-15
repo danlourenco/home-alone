@@ -1,0 +1,878 @@
+[
+ {
+  "first": 2,
+  "last": 17,
+  "view": "front-oblique-left",
+  "time": "night",
+  "note": "Opening credits: whole front from the street, slightly from the left; both storeys, 2 front dormers, roof, portico, Christmas lights; detached garage/drive at far left, white neighbour right. Credit text over ~4-16.",
+  "best": [
+   10,
+   3,
+   17
+  ]
+ },
+ {
+  "first": 532,
+  "last": 536,
+  "view": "window-from-outside",
+  "time": "night",
+  "note": "Ground-floor window in brick wall seen from outside, kids inside.",
+  "best": [
+   534
+  ]
+ },
+ {
+  "first": 558,
+  "last": 581,
+  "view": "window-from-outside",
+  "time": "night",
+  "note": "Same window from outside, kids at glass.",
+  "best": [
+   570
+  ]
+ },
+ {
+  "first": 593,
+  "last": 604,
+  "view": "window-from-outside",
+  "time": "night",
+  "note": "Same window from outside.",
+  "best": [
+   598
+  ]
+ },
+ {
+  "first": 711,
+  "last": 738,
+  "view": "front-facade",
+  "time": "night",
+  "note": "Centre of front: portico, front door, flanking ground-floor windows; pizza car arrives (occludes left from 719).",
+  "best": [
+   714
+  ]
+ },
+ {
+  "first": 1464,
+  "last": 1480,
+  "view": "front-facade",
+  "time": "night",
+  "note": "Storm night, whole front from street with roof and 2 dormers lit, lamp post right, neighbour house right.",
+  "best": [
+   1470,
+   1475
+  ]
+ },
+ {
+  "first": 1485,
+  "last": 1489,
+  "view": "window-from-outside",
+  "time": "night",
+  "note": "Front window with shutters banging in wind.",
+  "best": [
+   1487
+  ]
+ },
+ {
+  "first": 1490,
+  "last": 1501,
+  "view": "front-door-closeup",
+  "time": "night",
+  "note": "Front door with wreath.",
+  "best": [
+   1495
+  ]
+ },
+ {
+  "first": 1533,
+  "last": 1538,
+  "view": "front-facade",
+  "time": "night",
+  "note": "Whole front from street, transformer sparks at right.",
+  "best": [
+   1535
+  ]
+ },
+ {
+  "first": 1556,
+  "last": 1563,
+  "view": "front-door-closeup",
+  "time": "day",
+  "note": "Portico and front door, vans, man shovelling.",
+  "best": [
+   1560
+  ]
+ },
+ {
+  "first": 1564,
+  "last": 1577,
+  "view": "front-facade",
+  "time": "day",
+  "note": "Front facade from across the street (both floors, roof edge, portico) with utility worker and cherry-picker in right foreground, airport vans in drive.",
+  "best": [
+   1570
+  ]
+ },
+ {
+  "first": 1630,
+  "last": 1657,
+  "view": "front-facade",
+  "time": "day",
+  "note": "Centre-front lower facade: portico, door, French windows, shutters, steps, 2nd-floor sills; airport vans in front.",
+  "best": [
+   1640,
+   1650
+  ]
+ },
+ {
+  "first": 1707,
+  "last": 1735,
+  "view": "front-door-closeup",
+  "time": "day",
+  "note": "Porch seen past van windshield; 1730-1735 porch, steps, railing and left French windows from the left.",
+  "best": [
+   1733
+  ]
+ },
+ {
+  "first": 1736,
+  "last": 1745,
+  "view": "front-door-closeup",
+  "time": "day",
+  "note": "Porch column, brick, door with wreath.",
+  "best": [
+   1740
+  ]
+ },
+ {
+  "first": 1819,
+  "last": 1839,
+  "view": "front-door-closeup",
+  "time": "day",
+  "note": "Front door and portico close, family locking up (shutters, columns, sidelights).",
+  "best": [
+   1830
+  ]
+ },
+ {
+  "first": 1884,
+  "last": 1897,
+  "view": "front-oblique-right",
+  "time": "day",
+  "note": "Whole house from the right-front: roof with dormers and flagpole, right end with single-storey glass/greenhouse extension; trees and vans partly occlude.",
+  "best": [
+   1890,
+   1886
+  ]
+ },
+ {
+  "first": 2498,
+  "last": 2504,
+  "view": "front-door-closeup",
+  "time": "day",
+  "note": "Front door from outside, Kevin exits.",
+  "best": [
+   2500
+  ]
+ },
+ {
+  "first": 2505,
+  "last": 2511,
+  "view": "front-facade",
+  "time": "day",
+  "note": "Close pan along front ground-floor French windows and shutters, Kevin running.",
+  "best": [
+   2508
+  ]
+ },
+ {
+  "first": 2513,
+  "last": 2527,
+  "view": "garage",
+  "time": "day",
+  "note": "Detached 2-car brick garage with oculus gable, driveway; left side wall of the house (windows) at right edge of frame.",
+  "best": [
+   2515,
+   2525
+  ]
+ },
+ {
+  "first": 3237,
+  "last": 3244,
+  "view": "front-door-closeup",
+  "time": "day",
+  "note": "Portico, door, French windows from left-front (3237); porch railing/column and facade behind Kevin on sled (3238-3244).",
+  "best": [
+   3237
+  ]
+ },
+ {
+  "first": 3295,
+  "last": 3299,
+  "view": "front-oblique-right",
+  "time": "night",
+  "note": "House in mid-ground from the street, lamp post, bandits' van entering right.",
+  "best": [
+   3297
+  ]
+ },
+ {
+  "first": 3375,
+  "last": 3378,
+  "view": "front-facade",
+  "time": "night",
+  "note": "Centre/right half of front from van POV: portico at left, gable dormer, right wing; lights outline windows.",
+  "best": [
+   3377
+  ]
+ },
+ {
+  "first": 3431,
+  "last": 3435,
+  "view": "front-facade",
+  "time": "night",
+  "note": "Repeat of the van POV of the front (centre/right half).",
+  "best": [
+   3433
+  ]
+ },
+ {
+  "first": 3489,
+  "last": 3536,
+  "view": "front-facade",
+  "time": "night",
+  "note": "Front centre-left with portico; van pulls in front from ~3500 (occludes ground floor).",
+  "best": [
+   3492
+  ]
+ },
+ {
+  "first": 3584,
+  "last": 3593,
+  "view": "rear",
+  "time": "night",
+  "note": "Kitchen-wing back door with lantern, window, basement stairwell with awning, trash cans; bandits walk past.",
+  "best": [
+   3588
+  ]
+ },
+ {
+  "first": 3601,
+  "last": 3633,
+  "view": "other-exterior",
+  "time": "night",
+  "note": "Basement exterior stairwell and basement door (3601-3604, 3620-3633; 3605-3619 are inserts).",
+  "best": [
+   3625
+  ]
+ },
+ {
+  "first": 3809,
+  "last": 3849,
+  "view": "front-facade",
+  "time": "night",
+  "note": "Front ground floor centre from the walk: portico, door, steps, flanking French windows (dolly-in).",
+  "best": [
+   3812,
+   3820
+  ]
+ },
+ {
+  "first": 3855,
+  "last": 3881,
+  "view": "front-door-closeup",
+  "time": "night",
+  "note": "Front steps/door with Kevin (3855-3858, 3870-3874); door close 3879-3881.",
+  "best": [
+   3872
+  ]
+ },
+ {
+  "first": 4138,
+  "last": 4143,
+  "view": "front-facade",
+  "time": "night",
+  "note": "Front centre + both floors of the left half, police car at left.",
+  "best": [
+   4140
+  ]
+ },
+ {
+  "first": 4144,
+  "last": 4194,
+  "view": "front-door-closeup",
+  "time": "night",
+  "note": "Officer at front door (4144-4150, 4173-4194); 4168-4172 wider front with portico.",
+  "best": [
+   4170
+  ]
+ },
+ {
+  "first": 4377,
+  "last": 4384,
+  "view": "front-facade",
+  "time": "day",
+  "note": "Whole front straight-on, clear sky: both storeys, 2 dormers, roof, portico, shutters, steps. Dissolve 4377-4379; clean 4380-4384. Tree trunk at right edge.",
+  "best": [
+   4382,
+   4384
+  ]
+ },
+ {
+  "first": 4440,
+  "last": 4446,
+  "view": "front-facade",
+  "time": "day",
+  "note": "Whole front straight-on, clear sky (same set-up as 4382).",
+  "best": [
+   4443
+  ]
+ },
+ {
+  "first": 4567,
+  "last": 4585,
+  "view": "rear",
+  "time": "day",
+  "note": "Single-storey rear kitchen wing: white back door with dog door and red curtains, window, lantern, iron railing over basement stairwell, hipped roof; 2-storey main block behind.",
+  "best": [
+   4575
+  ]
+ },
+ {
+  "first": 5539,
+  "last": 5559,
+  "view": "front-facade",
+  "time": "night",
+  "note": "Whole front straight-on with lights, both dormers, chimney; dissolve 5539-5541, van enters bottom right from ~5551.",
+  "best": [
+   5548,
+   5545
+  ]
+ },
+ {
+  "first": 5571,
+  "last": 5594,
+  "view": "window-from-outside",
+  "time": "night",
+  "note": "Front ground-floor windows with lights (5571-5578) and close window shots (5583-5594).",
+  "best": [
+   5575
+  ]
+ },
+ {
+  "first": 5676,
+  "last": 5682,
+  "view": "window-from-outside",
+  "time": "night",
+  "note": "Front window close with cut-outs.",
+  "best": [
+   5679
+  ]
+ },
+ {
+  "first": 5692,
+  "last": 5702,
+  "view": "front-facade",
+  "time": "night",
+  "note": "Whole front straight-on, bandits' van in front.",
+  "best": [
+   5696
+  ]
+ },
+ {
+  "first": 5703,
+  "last": 5714,
+  "view": "window-from-outside",
+  "time": "night",
+  "note": "Kevin and mannequin seen through a muntined window from outside.",
+  "best": [
+   5708
+  ]
+ },
+ {
+  "first": 5939,
+  "last": 5969,
+  "view": "front-door-closeup",
+  "time": "night",
+  "note": "Front porch and lower facade with pizza car (5939-5960); door wreath close 5961-5969.",
+  "best": [
+   5950
+  ]
+ },
+ {
+  "first": 5970,
+  "last": 6014,
+  "view": "rear",
+  "time": "night",
+  "note": "Side passage to kitchen wing: basement light-well and stairwell with awning, back door with lantern (5970-5980); back door close 5981-6014.",
+  "best": [
+   5975
+  ]
+ },
+ {
+  "first": 6101,
+  "last": 6118,
+  "view": "side-right",
+  "time": "night",
+  "note": "Kitchen-wing back steps, trash cans, basement window well, then pizza boy runs along the side wall with windows (6112-6118).",
+  "best": [
+   6105,
+   6115
+  ]
+ },
+ {
+  "first": 6119,
+  "last": 6126,
+  "view": "side-right",
+  "time": "night",
+  "note": "Glass greenhouse/conservatory behind lit hedge at the right side of the house.",
+  "best": [
+   6122
+  ]
+ },
+ {
+  "first": 6127,
+  "last": 6138,
+  "view": "front-facade",
+  "time": "night",
+  "note": "Front lawn and porch, front windows 6133-6138.",
+  "best": [
+   6135
+  ]
+ },
+ {
+  "first": 6397,
+  "last": 6401,
+  "view": "front-oblique-left",
+  "time": "day",
+  "note": "Whole house from the street, slightly left (overcast): detached garage at far left, roof, 3 dormers, chimney, portico, steps; green-shuttered neighbour right.",
+  "best": [
+   6399
+  ]
+ },
+ {
+  "first": 6809,
+  "last": 6818,
+  "view": "rear",
+  "time": "day",
+  "note": "Rear of house from the back yard (van POV): main block rear with dormer and chimney, single-storey kitchen wing with back door, detached garage rear at right, tire swing, treehouse. 6819+ pans off to neighbours.",
+  "best": [
+   6810,
+   6813
+  ]
+ },
+ {
+  "first": 6912,
+  "last": 6920,
+  "view": "rear",
+  "time": "day",
+  "note": "Back door close (Marv at dog door).",
+  "best": [
+   6915
+  ]
+ },
+ {
+  "first": 6945,
+  "last": 6951,
+  "view": "rear",
+  "time": "day",
+  "note": "Back door close.",
+  "best": [
+   6948
+  ]
+ },
+ {
+  "first": 6969,
+  "last": 6979,
+  "view": "rear",
+  "time": "day",
+  "note": "Back door close.",
+  "best": [
+   6975
+  ]
+ },
+ {
+  "first": 7005,
+  "last": 7013,
+  "view": "rear",
+  "time": "day",
+  "note": "Back door close.",
+  "best": [
+   7009
+  ]
+ },
+ {
+  "first": 7026,
+  "last": 7031,
+  "view": "rear",
+  "time": "day",
+  "note": "Back door close.",
+  "best": [
+   7028
+  ]
+ },
+ {
+  "first": 7045,
+  "last": 7072,
+  "view": "rear",
+  "time": "day",
+  "note": "Back door wider with storm door and railing (7045-7048), trash cans by wall (7049-7064), kitchen wing wide (7065-7072).",
+  "best": [
+   7068,
+   7046
+  ]
+ },
+ {
+  "first": 7636,
+  "last": 7649,
+  "view": "rear",
+  "time": "day",
+  "note": "Kitchen wing and main-block rear seen from distance through bushes: back door, railing, chimney, upper windows, hip roofs.",
+  "best": [
+   7640
+  ]
+ },
+ {
+  "first": 7778,
+  "last": 7791,
+  "view": "other-exterior",
+  "time": "day",
+  "note": "Bandits against brick wall by a ground-floor window (wall/window close).",
+  "best": [
+   7785
+  ]
+ },
+ {
+  "first": 7823,
+  "last": 7833,
+  "view": "rear",
+  "time": "day",
+  "note": "Kitchen wing with back door and window behind bandits.",
+  "best": [
+   7830
+  ]
+ },
+ {
+  "first": 7848,
+  "last": 7855,
+  "view": "window-from-outside",
+  "time": "day",
+  "note": "Casement window in slate-shingled roof face (dormer), Kevin inside.",
+  "best": [
+   7850
+  ]
+ },
+ {
+  "first": 9302,
+  "last": 9314,
+  "view": "front-facade",
+  "time": "night",
+  "note": "Front lawn/ground floor (9302-9306), porch steps, portico, door, French windows with shutters (9307-9314).",
+  "best": [
+   9310
+  ]
+ },
+ {
+  "first": 9372,
+  "last": 9381,
+  "view": "front-door-closeup",
+  "time": "night",
+  "note": "Front steps and railing, Kevin pours water.",
+  "best": [
+   9375
+  ]
+ },
+ {
+  "first": 9402,
+  "last": 9407,
+  "view": "other-exterior",
+  "time": "night",
+  "note": "Stone basement stairwell with iron rails (rear), Kevin hoses steps.",
+  "best": [
+   9405
+  ]
+ },
+ {
+  "first": 9434,
+  "last": 9437,
+  "view": "rear",
+  "time": "night",
+  "note": "Rear of main block from the treehouse: rear dormer, 2nd-floor windows incl. arched stair window, kitchen-wing roof lower-left, back-door lantern, chimney edge.",
+  "best": [
+   9435
+  ]
+ },
+ {
+  "first": 9510,
+  "last": 9551,
+  "view": "front-oblique-right",
+  "time": "night",
+  "note": "Whole house from across the street, slightly right, lamp post right; clean 9510-9514, van foreground from ~9515.",
+  "best": [
+   9512,
+   9511
+  ]
+ },
+ {
+  "first": 9658,
+  "last": 9669,
+  "view": "rear",
+  "time": "night",
+  "note": "Kitchen wing and main-block rear wide: back door, window, lantern, basement stairwell awning, upper windows; bandits approach.",
+  "best": [
+   9663
+  ]
+ },
+ {
+  "first": 9751,
+  "last": 9841,
+  "view": "rear",
+  "time": "night",
+  "note": "Back door close (9751-9779, 9804-9809, 9816-9841): door, lantern, railing, trash cans, eave.",
+  "best": [
+   9760,
+   9830
+  ]
+ },
+ {
+  "first": 9842,
+  "last": 9865,
+  "view": "front-facade",
+  "time": "night",
+  "note": "Icy front steps (9842-9849); whole ground floor with portico, steps, French windows both sides (9855-9858, 9864-9865).",
+  "best": [
+   9856
+  ]
+ },
+ {
+  "first": 9898,
+  "last": 10062,
+  "view": "other-exterior",
+  "time": "night",
+  "note": "Basement stone stairwell and basement door (9898-9935, 9949-9956, 9996-10062), rail top 9957-9980.",
+  "best": [
+   10010
+  ]
+ },
+ {
+  "first": 9981,
+  "last": 9995,
+  "view": "front-door-closeup",
+  "time": "night",
+  "note": "Front porch steps, portico, door, windows (Harry on steps).",
+  "best": [
+   9983,
+   9989
+  ]
+ },
+ {
+  "first": 10161,
+  "last": 10219,
+  "view": "front-door-closeup",
+  "time": "night",
+  "note": "Front steps railing (10161-10171), steps top-down (10172-10178), door close (10184-10194), steps (10213-10219).",
+  "best": [
+   10190
+  ]
+ },
+ {
+  "first": 10315,
+  "last": 10372,
+  "view": "rear",
+  "time": "night",
+  "note": "Back door close (10315-10349); kitchen wing wide with back door, lantern, basement window well (10366-10372).",
+  "best": [
+   10370
+  ]
+ },
+ {
+  "first": 10442,
+  "last": 10445,
+  "view": "rear",
+  "time": "night",
+  "note": "Back door close.",
+  "best": [
+   10443
+  ]
+ },
+ {
+  "first": 10459,
+  "last": 10507,
+  "view": "rear",
+  "time": "night",
+  "note": "Kitchen wing wide with back door, basement stairwell, trash cans (10459-10488); window close 10493-10495; side yard wall 10501-10507.",
+  "best": [
+   10470,
+   10465
+  ]
+ },
+ {
+  "first": 10948,
+  "last": 10957,
+  "view": "window-from-outside",
+  "time": "night",
+  "note": "Rear dormer casement window with shutters in slate roof, Kevin inside.",
+  "best": [
+   10950
+  ]
+ },
+ {
+  "first": 11037,
+  "last": 11043,
+  "view": "roof",
+  "time": "night",
+  "note": "Rear roof: dormer, roof slope, gutter, tall brick chimney, 2nd-floor windows; Kevin on zip line.",
+  "best": [
+   11039
+  ]
+ },
+ {
+  "first": 11049,
+  "last": 11051,
+  "view": "rear",
+  "time": "night",
+  "note": "Rear wide from yard: 2-storey main block rear with dormer, tall chimney, arched window, lower porch roof; detached single-storey brick garage at right; treehouse.",
+  "best": [
+   11050
+  ]
+ },
+ {
+  "first": 11082,
+  "last": 11100,
+  "view": "window-from-outside",
+  "time": "night",
+  "note": "Rear dormer window close with bandits.",
+  "best": [
+   11090
+  ]
+ },
+ {
+  "first": 11156,
+  "last": 11167,
+  "view": "rear",
+  "time": "night",
+  "note": "Dormer window (11156-11159); rear from treehouse with dormer, chimney, wing roof (11160-11167).",
+  "best": [
+   11162
+  ]
+ },
+ {
+  "first": 11186,
+  "last": 11205,
+  "view": "rear",
+  "time": "night",
+  "note": "Kitchen-wing roof eave and shuttered window (11186-11198); rear wide like 11050 without Kevin (11199-11205).",
+  "best": [
+   11202
+  ]
+ },
+ {
+  "first": 11227,
+  "last": 11240,
+  "view": "rear",
+  "time": "night",
+  "note": "Rear wall with lit window and back door, bandit on rope (11227-11230, 11237-11240).",
+  "best": [
+   11228
+  ]
+ },
+ {
+  "first": 11249,
+  "last": 11260,
+  "view": "rear",
+  "time": "night",
+  "note": "Rear: dormer, arched window, upper windows (11249-11251); rear brick wall, eave and lamp (11256-11260).",
+  "best": [
+   11250
+  ]
+ },
+ {
+  "first": 11278,
+  "last": 11290,
+  "view": "garage",
+  "time": "night",
+  "note": "Side wall of detached single-storey brick garage with 6-light windows, Kevin with ladder.",
+  "best": [
+   11284
+  ]
+ },
+ {
+  "first": 11304,
+  "last": 11306,
+  "view": "front-oblique-left",
+  "time": "night",
+  "note": "Front left half through trees: portico, steps, both floors, front walk lights.",
+  "best": [
+   11305
+  ]
+ },
+ {
+  "first": 11517,
+  "last": 11648,
+  "view": "window-from-outside",
+  "time": "night",
+  "note": "Kevin at a front sash window seen from outside (11517-11524, 11539-11547, 11598-11601, 11616-11620, 11643-11648); other frames in range are the neighbour house/police.",
+  "best": [
+   11540
+  ]
+ },
+ {
+  "first": 11904,
+  "last": 11913,
+  "view": "front-facade",
+  "time": "day",
+  "note": "Whole front straight-on in falling snow: roof, dormers, portico, French windows, front-walk piers and lamps. Large tree trunk occludes right-centre.",
+  "best": [
+   11908
+  ]
+ },
+ {
+  "first": 12014,
+  "last": 12018,
+  "view": "front-door-closeup",
+  "time": "day",
+  "note": "Portico, door, steps, urns, French windows in snow.",
+  "best": [
+   12016
+  ]
+ },
+ {
+  "first": 12030,
+  "last": 12036,
+  "view": "front-facade",
+  "time": "day",
+  "note": "Whole front straight-on in snow (same set-up as 11908).",
+  "best": [
+   12033
+  ]
+ },
+ {
+  "first": 12037,
+  "last": 12061,
+  "view": "front-door-closeup",
+  "time": "day",
+  "note": "Front door with wreath, sidelights, columns in snow (12037-12055, 12060-12061).",
+  "best": [
+   12050
+  ]
+ },
+ {
+  "first": 12062,
+  "last": 12069,
+  "view": "front-facade",
+  "time": "day",
+  "note": "Whole front in snow, rental truck occluding the right side.",
+  "best": [
+   12066
+  ]
+ },
+ {
+  "first": 12479,
+  "last": 12611,
+  "view": "window-from-outside",
+  "time": "day",
+  "note": "Kevin at front ground-floor window from outside, brick at frame edges (12479-12487, 12514-12541, 12554-12562, 12594-12611).",
+  "best": [
+   12520
+  ]
+ }
+]
