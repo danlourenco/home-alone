@@ -75,6 +75,34 @@ def cluster(E):
     return lines
 
 
+SHELL_C, SHELL_D, GLB_M = 11.06, 8.76, 2.032 / 2.625   # shell_fit.py (ground-floor fit): GLB X = c - spec z, Y = d - spec x; 0.774 m/unit
+GLB_GROUND_Z = 1.3                                       # native height of the GLB's ground floor (sept_census FLOORS)
+
+
+def shell(rooms, ground_y):
+    """The downloaded model as triangles in spec coordinates, its interior dropped (a triangle whose centre lies inside a
+    built room, between that room's floor and ceiling), so the exterior and roof remain. Base64 float32 [x, y, z] x 3."""
+    import base64
+    import numpy as np
+    T = np.load(ROOT / "art/home_alone/references/glb-audit/triangles.npz")["triangles"].astype(float)
+    X, Y = T[..., 0] * GLB_M, T[..., 1] * GLB_M
+    spec = np.stack([SHELL_D - Y, (T[..., 2] - GLB_GROUND_Z) * GLB_M + ground_y, SHELL_C - X], -1)   # (x, y, z)
+    c = spec.mean(1)
+    keep = (np.abs(X).max(1) < 14 * 1.0) & (Y.min(1) > -4) & (Y.max(1) < 16)   # the house, not the site (glb_section)
+    for r in rooms:
+        if r["kind"] == "opening":
+            continue
+        P = r["poly"]; ins = np.zeros(len(c), bool)
+        for (x1, z1), (x2, z2) in zip(P, P[1:] + P[:1]):
+            cross = (z1 > c[:, 2]) != (z2 > c[:, 2])
+            xi = x1 + (c[:, 2] - z1) * (x2 - x1) / ((z2 - z1) or 1e-9)
+            ins ^= cross & (c[:, 0] < xi)
+        band = (c[:, 1] > r["y"] + 0.02) & (c[:, 1] < r["y"] + r["ceil"] - 0.02)
+        keep &= ~(ins & band)
+    S = spec[keep].astype(np.float32)
+    return base64.b64encode(S.tobytes()).decode(), int(keep.sum())
+
+
 def main():
     up = json.loads((ROOT / "spec/house_spec.json").read_text()); gr = json.loads((ROOT / "spec/house_spec.ground.json").read_text())
     E = edges("upstairs", up) + edges("ground", gr)
@@ -83,18 +111,21 @@ def main():
                "offset": round(u["coord"] - g["coord"], 4), "lo": max(u["lo"], g["lo"]), "hi": min(u["hi"], g["hi"])}
               for u in lines if u["floors"] == ["upstairs"] for g in lines if g["floors"] == ["ground"]
               if u["axis"] == g["axis"] and abs(u["coord"] - g["coord"]) <= STACK_TOL and min(u["hi"], g["hi"]) - max(u["lo"], g["lo"]) > 0.3]
-    doors = [{"floor": f, "between": d["between"], "kind": d["kind"], "axis": "x" if d["spec_axis"] == "z" else "z",
+    doors = [{"floor": f, "between": d["between"], "kind": d["kind"], "axis": d["spec_axis"],   # spec_axis names the wall's constant coordinate (SpecGreybox: alongX = spec_axis == "z")
               "coord": d["wall_coord_spec"], "span": d["span_spec"]} for f, sp in (("upstairs", up), ("ground", gr)) for d in sp["doors"]]
-    rooms = [{"floor": f, "name": s["name"], "kind": s["kind"], "poly": s["polygon_xz"]} for f, sp in (("upstairs", up), ("ground", gr)) for s in sp["spaces"]]
+    rooms = [{"floor": f, "name": s["name"], "kind": s["kind"], "poly": s["polygon_xz"], "ceil": s["ceiling_m"], "y": sp.get("floor_y_m", 0.0)}
+             for f, sp in (("upstairs", up), ("ground", gr)) for s in sp["spaces"]]
     stair = [b for b in up["stair"]["boxes"] if b["kind"] in ("step", "landing")]
+    shell_b64, shell_n = shell(rooms, gr["floor_y_m"])
     out = ROOT / "spec/captures/wall-grid"; out.mkdir(parents=True, exist_ok=True)
     (out / "preview.json").write_text(json.dumps({"params": {"half_wall": HALF, "snap_tol": SNAP_TOL, "reach": REACH, "max_spread": MAX_SPREAD},
-                                                  "rooms": rooms, "edges": E, "lines": lines, "stacks": stacks, "doors": doors, "stair": stair}, indent=0))
+                                                  "rooms": rooms, "edges": E, "lines": lines, "stacks": stacks, "shell": shell_b64, "shell_fit": "tools/house/shell_fit.py: ground-floor fit, IoU 0.77 ground / 0.65 upstairs", "doors": doors, "stair": stair}, indent=0))
     html = (ROOT / "tools/house/wall_grid_preview.template.html").read_text()
     (out / "preview.html").write_text(html.replace("__DATA__", (out / "preview.json").read_text().replace("</", "<\\/")))
     moved = sorted((e for e in E if abs(e["snap"]) > 0.0005), key=lambda e: -abs(e["snap"]))
     print(f"{len(E)} wall faces -> {len(lines)} lines ({sum(l['conflict'] for l in lines)} conflicts); "
           f"{len(moved)} faces move: {sum(abs(e['snap']) > 0.04 for e in moved)} over 1.5 in, {sum(abs(e['snap']) > 0.10 for e in moved)} over 4 in")
+    print(f"shell: {shell_n} triangles kept (exterior and roof)")
     print(f"{len(stacks)} cross-floor stacking candidates (within {STACK_TOL} m, overlapping >0.3 m):")
     for k in sorted(stacks, key=lambda k: abs(k["offset"])):
         print(f"  {k['axis']}: upstairs {k['up_coord']:.3f} vs ground {k['ground_coord']:.3f} ({k['offset'] / 0.0254:+.1f} in) over {k['hi'] - k['lo']:.2f} m")

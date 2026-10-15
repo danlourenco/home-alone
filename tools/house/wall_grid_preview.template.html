@@ -54,34 +54,46 @@ ol.moves .dot { width: 8px; height: 8px; border-radius: 50%; }
 #tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--sheet); font-size: 12.5px; line-height: 1.4; padding: 7px 9px; border-radius: 3px; max-width: 280px; z-index: 5; }
 .zoom { display: inline-flex; gap: 4px; margin-left: auto; }
 .zoom button { font: 600 14px var(--body); width: 30px; height: 28px; border: 1px solid var(--rule); background: transparent; color: var(--ink); border-radius: 3px; cursor: pointer; }
-@media (prefers-reduced-motion: no-preference) { .pulse { animation: pulse 1.2s ease-in-out 2; } @keyframes pulse { 50% { stroke-width: .28; } } }
 </style>
 
 <header>
   <h1>McCallister Wall Grid</h1>
-  <p class="sub">Proposed shared wall lines before the rebuild. Nothing has moved yet. Each coloured stroke is a room wall that would slide onto a shared line; hover for the room and the distance.</p>
+  <p class="sub">Nothing has moved yet. Today two rooms that share a wall each draw their own half of it, often an inch or two apart. The rebuild puts each shared wall on one line. <b>A coloured wall below would shift by the amount on its label, in the direction of its arrow.</b> Uncoloured walls already line up.</p>
 </header>
 
 <div class="wrap">
   <section class="sheet" aria-label="Floor plan">
     <div class="bar">
-      <span class="lab">Floor</span>
+      <span class="lab">View</span>
+      <span class="seg" role="group" aria-label="View">
+        <button id="v-plan" data-view="plan">Plan</button>
+        <button id="v-iso" data-view="iso">3D</button>
+      </span>
+      <span class="lab" id="floorlab">Floor</span>
       <span class="seg" role="group" aria-label="Floor">
         <button id="f-ground" data-floor="ground">Main floor</button>
         <button id="f-upstairs" data-floor="upstairs">Upstairs</button>
-        <button id="f-both" data-floor="both">Both, stacked</button>
+        <button id="f-both" data-floor="both">Stacking: upstairs over main</button>
       </span>
-      <label class="chk"><input type="checkbox" id="exag" checked> Exaggerate moves ×10</label>
-      <label class="chk"><input type="checkbox" id="stk" checked> Stacking candidates</label>
       <span class="zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button><button id="zreset" aria-label="Reset view" style="width:auto;padding:0 8px;font-size:12px">Fit</button></span>
     </div>
     <svg id="plan" role="img" aria-label="Plan of the house with proposed wall moves"></svg>
+    <div id="iso" hidden>
+      <div class="bar" style="border-bottom:0;border-top:1px solid var(--rule)">
+        <label class="chk"><input type="checkbox" id="i-ground" checked> Main floor</label>
+        <label class="chk"><input type="checkbox" id="i-up" checked> Upstairs</label>
+        <label class="chk"><input type="checkbox" id="i-shell"> Downloaded exterior (shell)</label>
+        <label class="chk" for="i-gap">Pull floors apart <input type="range" id="i-gap" min="0" max="6" step="0.1" value="2.5"></label>
+        <button class="seg" id="i-reset" style="padding:4px 10px;background:transparent;color:var(--ink);cursor:pointer">Reset view</button>
+      </div>
+      <div id="isocv" style="height:min(72vh,760px);touch-action:none"></div>
+    </div>
     <div class="legend">
-      <span><i style="background:var(--poche)"></i>Wall as built (half per room)</span>
+      <span><i style="background:var(--poche)"></i>Wall that already lines up</span>
       <span><i style="background:var(--ok)"></i>Moves up to 1½ in</span>
       <span><i style="background:var(--warn)"></i>1½ to 4 in: needs a reason</span>
       <span><i style="background:var(--bad)"></i>Over 4 in: refused without a measurement</span>
-      <span><i style="background:var(--stack)"></i>Upstairs wall over a main-floor wall</span>
+      <span><i style="background:var(--stack)"></i>Stacking view: upstairs wall (dashed) over a main-floor wall (solid)</span>
       <span>Street (front) at the bottom. Scroll or pinch to zoom, drag to pan.</span>
     </div>
   </section>
@@ -106,13 +118,15 @@ ol.moves .dot { width: 8px; height: 8px; border-radius: 50%; }
 </div>
 <div id="tip" hidden></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script id="data" type="application/json">__DATA__</script>
 <script>
 const D = JSON.parse(document.getElementById('data').textContent);
 const svg = document.getElementById('plan'), tip = document.getElementById('tip');
 const NS = 'http://www.w3.org/2000/svg';
-let floor = 'both', exag = 10, showStacks = true, sel = null;
-try { floor = localStorage.getItem('wg-floor') || floor; } catch (e) {}
+let floor = 'ground', sel = null;
+try { floor = localStorage.getItem('wg-floor2') || floor; } catch (e) {}
 
 // spec (x front +, z) -> sheet (X right, Y down): street at the bottom, the garage side (large z) on the left as seen from the street
 const xs = D.rooms.flatMap(r => r.poly.map(p => p[0])), zs = D.rooms.flatMap(r => r.poly.map(p => p[1]));
@@ -126,6 +140,7 @@ function ftin(m) { const s = m < 0 ? '−' : ''; let t = Math.abs(inch(m)); let 
 const inStr = m => `${m >= 0 ? '+' : '−'}${Math.abs(inch(m)).toFixed(1)} in`;
 const sev = m => Math.abs(m) > 0.10 ? 'bad' : Math.abs(m) > 0.04 ? 'warn' : 'ok';
 const nice = n => n.replace(/_/g, ' ').replace(/\bb\b/, 'B').replace(/\ba\b/, 'A').replace(/^\w/, c => c.toUpperCase());
+function dirWord(e) { return e.axis === 'x' ? (e.snap > 0 ? 'toward the street' : 'toward the back') : (e.snap > 0 ? 'toward the left side' : 'toward the right side'); }
 function side(e) { return e.axis === 'x' ? (e.out > 0 ? 'front wall' : 'back wall') : (e.out > 0 ? 'left-side wall' : 'right-side wall'); }
 
 function el(tag, attrs, parent) { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); (parent || svg).appendChild(n); return n; }
@@ -135,6 +150,7 @@ function seg(e, c, attrs, g) { // a wall-face line at coordinate c along the edg
   return el('line', Object.assign({ x1: a, y1: b, x2: p, y2: q }, attrs), g);
 }
 const floors = () => floor === 'both' ? ['ground', 'upstairs'] : [floor];
+const stackView = () => floor === 'both';
 
 function draw() {
   svg.replaceChildren();
@@ -163,22 +179,37 @@ function draw() {
   }
   // the stair (flights and landing) for orientation
   for (const b of D.stair) rectXZ(b.x[0], b.x[1], b.z[0], b.z[1], { fill: 'none', stroke: 'var(--muted)', 'stroke-width': .012 });
-  // proposed moves
-  for (const e of D.edges.filter(e => fl.includes(e.floor) && Math.abs(e.snap) > 0.0005)) {
-    const c = e.face + e.snap * exag, col = `var(--${sev(e.snap)})`;
-    const ln = seg(e, c, { stroke: col, 'stroke-width': .09, 'stroke-linecap': 'round', class: sel === e ? 'pulse' : '' });
-    const hit = seg(e, c, { stroke: 'transparent', 'stroke-width': .5 });
+  // proposed moves: the room's wall face drawn where it is now, coloured; a label and an arrow say how far and which way
+  if (!stackView()) for (const e of D.edges.filter(e => fl.includes(e.floor) && Math.abs(e.snap) > 0.0005)) {
+    const col = `var(--${sev(e.snap)})`, on = sel === e;
+    seg(e, e.face, { stroke: col, 'stroke-width': on ? .16 : .09, 'stroke-linecap': 'butt' });
+    const m = (e.lo + e.hi) / 2, dir = Math.sign(e.snap), len = 0.32;
+    // arrow from the wall's midpoint, pointing the way it would move, drawn into the room it belongs to
+    const [ax, ay] = e.axis === 'x' ? P(e.face, m) : P(m, e.face);
+    const [bx, by] = e.axis === 'x' ? P(e.face + dir * len, m) : P(m, e.face + dir * len);
+    el('line', { x1: ax, y1: ay, x2: bx, y2: by, stroke: col, 'stroke-width': .045 });
+    const ux = (bx - ax) / len, uy = (by - ay) / len;   // arrowhead
+    el('polygon', { points: `${bx + ux * .1},${by + uy * .1} ${bx - uy * .07},${by + ux * .07} ${bx + uy * .07},${by - ux * .07}`, fill: col });
+    if (sev(e.snap) !== 'ok' || on) {
+      const [lx, ly] = e.axis === 'x' ? P(e.face - e.out * 0.42, m) : P(m, e.face - e.out * 0.42);
+      const t = el('text', { x: lx, y: ly + .1, 'font-size': on ? .34 : .28, 'text-anchor': 'middle', fill: col, 'font-weight': 600, 'font-family': 'IBM Plex Mono, monospace' });
+      t.textContent = `${Math.abs(inch(e.snap)).toFixed(1)}″`;
+    }
+    const hit = seg(e, e.face, { stroke: 'transparent', 'stroke-width': .5 });
     hit.style.cursor = 'pointer';
-    hit.addEventListener('pointermove', ev => showTip(ev, `<b>${nice(e.room)}</b> · ${e.floor === 'ground' ? 'main floor' : 'upstairs'}<br>${side(e)}, ${ftin(e.hi - e.lo)} long<br>moves <b>${inStr(e.snap)}</b> onto a shared line${e.w > 1 ? '<br>measured room: weighted ×5' : ''}`));
+    hit.addEventListener('pointermove', ev => showTip(ev, `<b>${nice(e.room)}</b> · ${e.floor === 'ground' ? 'main floor' : 'upstairs'}<br>${side(e)}, ${ftin(e.hi - e.lo)} long<br>shifts <b>${Math.abs(inch(e.snap)).toFixed(1)} in</b> ${dirWord(e)} to line up with its neighbour${e.w > 1 ? '<br>measured room: it counts 5× when the shared line is placed' : ''}`));
     hit.addEventListener('pointerleave', () => tip.hidden = true);
     hit.addEventListener('click', () => pick(e));
   }
-  if (showStacks && floor === 'both') for (const k of D.stacks) {
+  if (stackView()) for (const k of D.stacks) {
     const e = { axis: k.axis, lo: k.lo, hi: k.hi };
-    seg(e, k.up_coord, { stroke: 'var(--stack)', 'stroke-width': .05, 'stroke-dasharray': '.18 .1' });
-    seg(e, k.ground_coord, { stroke: 'var(--stack)', 'stroke-width': .05 });
+    seg(e, k.ground_coord, { stroke: 'var(--stack)', 'stroke-width': .09 });
+    seg(e, k.up_coord, { stroke: 'var(--stack)', 'stroke-width': .07, 'stroke-dasharray': '.2 .12' });
+    const m = (k.lo + k.hi) / 2, [lx, ly] = k.axis === 'x' ? P(k.ground_coord - 0.45, m) : P(m, k.ground_coord - 0.45);
+    const t = el('text', { x: lx, y: ly + .1, 'font-size': .3, 'text-anchor': 'middle', fill: 'var(--stack)', 'font-weight': 600, 'font-family': 'IBM Plex Mono, monospace' });
+    t.textContent = `${Math.abs(inch(k.offset)).toFixed(1)}″ apart`;
     const hit = seg(e, (k.up_coord + k.ground_coord) / 2, { stroke: 'transparent', 'stroke-width': .5 });
-    hit.addEventListener('pointermove', ev => showTip(ev, `<b>Possible stacked wall</b><br>upstairs line vs main-floor line: <b>${inStr(k.offset)}</b> apart over ${ftin(k.hi - k.lo)}`));
+    hit.addEventListener('pointermove', ev => showTip(ev, `<b>Possibly one wall on two floors</b><br>the upstairs wall (dashed) is <b>${Math.abs(inch(k.offset)).toFixed(1)} in</b> from the main-floor wall (solid), over ${ftin(k.hi - k.lo)}`));
     hit.addEventListener('pointerleave', () => tip.hidden = true);
   }
   const [sx, sy] = P(X0 + full[3] - 0.4, Z1 - full[2] / 2);
@@ -201,11 +232,11 @@ function list() {
   document.getElementById('tally').innerHTML = [['ok', 'up to 1½ in'], ['warn', '1½–4 in'], ['bad', 'over 4 in']].map(([k, t]) => `<div style="border-color:var(--${k})"><b>${n[k]}</b><span>${t}</span></div>`).join('');
   const tot = D.edges.filter(e => fl.includes(e.floor)).length;
   document.getElementById('sumh').textContent = `Moves · ${floor === 'both' ? 'both floors' : floor === 'ground' ? 'main floor' : 'upstairs'}`;
-  document.getElementById('sumnote').textContent = `${mv.length} of ${tot} wall faces would move. Measured rooms (parents', Kevin's, Buzz's) count five times when a shared line is placed, so they barely move.`;
+  document.getElementById('sumnote').textContent = floor === 'both' ? 'Stacking view: walls are not moved across floors. The list on the right shows each upstairs/main-floor pair that may be one wall; tell me which are.' : `${mv.length} of ${tot} walls on this floor would move. Click one in the list to zoom to it. Measured rooms (parents', Kevin's, Buzz's) count five times when a shared line is placed, so they barely move.`;
   const ol = document.getElementById('moves'); ol.replaceChildren();
   for (const e of mv) {
     const li = document.createElement('li'); if (e === sel) li.className = 'sel';
-    li.innerHTML = `<span class="dot" style="background:var(--${sev(e.snap)})"></span><span>${nice(e.room)} <span style="color:var(--muted)">· ${side(e)}${floor === 'both' ? (e.floor === 'ground' ? ' · main' : ' · up') : ''}</span></span><span class="mono">${inStr(e.snap)}</span>`;
+    li.innerHTML = `<span class="dot" style="background:var(--${sev(e.snap)})"></span><span>${nice(e.room)} <span style="color:var(--muted)">· ${side(e)}${floor === 'both' ? (e.floor === 'ground' ? ' · main' : ' · up') : ''}</span></span><span class="mono">${Math.abs(inch(e.snap)).toFixed(1)} in</span>`;
     li.tabIndex = 0; li.addEventListener('click', () => pick(e)); li.addEventListener('keydown', ev => { if (ev.key === 'Enter') pick(e); });
     ol.appendChild(li);
   }
@@ -218,10 +249,8 @@ function list() {
   }
 }
 
-function setFloor(f) { floor = f; try { localStorage.setItem('wg-floor', f); } catch (e) {} document.querySelectorAll('[data-floor]').forEach(b => b.setAttribute('aria-pressed', b.dataset.floor === f)); draw(); list(); }
+function setFloor(f) { floor = f; try { localStorage.setItem('wg-floor2', f); } catch (e) {} document.querySelectorAll('[data-floor]').forEach(b => b.setAttribute('aria-pressed', b.dataset.floor === f)); draw(); list(); }
 document.querySelectorAll('[data-floor]').forEach(b => b.addEventListener('click', () => setFloor(b.dataset.floor)));
-document.getElementById('exag').addEventListener('change', ev => { exag = ev.target.checked ? 10 : 1; draw(); });
-document.getElementById('stk').addEventListener('change', ev => { showStacks = ev.target.checked; draw(); });
 
 function zoom(f, cx, cy) { const [x, y, w, h] = vb; cx ??= x + w / 2; cy ??= y + h / 2; const nw = Math.min(Math.max(w * f, 1), full[2] * 2), nh = nw * h / w; vb = [cx - (cx - x) * nw / w, cy - (cy - y) * nh / h, nw, nh]; draw(); }
 document.getElementById('zin').onclick = () => zoom(0.7); document.getElementById('zout').onclick = () => zoom(1 / 0.7);
@@ -234,4 +263,78 @@ svg.addEventListener('pointermove', ev => { if (!drag) return; const s = toPlan(
 svg.addEventListener('pointerup', () => { drag = null; svg.classList.remove('drag'); });
 
 setFloor(floor);
+
+// ---- 3D view: walls raised to each room's ceiling, floors at their real heights (ceilings left off: a cutaway) ----
+let view = 'plan', iso = null;
+try { view = localStorage.getItem('wg-view') || view; } catch (e) {}
+function cssv(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+function buildIso() {
+  if (!window.THREE) { document.getElementById('isocv').textContent = 'The 3D library did not load.'; return null; }
+  const host = document.getElementById('isocv'), W = host.clientWidth || 800, H = host.clientHeight || 600;
+  const r = new THREE.WebGLRenderer({ antialias: true }); r.setPixelRatio(devicePixelRatio); r.setSize(W, H); host.replaceChildren(r.domElement);
+  const scene = new THREE.Scene(); scene.background = new THREE.Color(cssv('--sheet'));
+  const asp = W / H, S = 14, cam = new THREE.OrthographicCamera(-S * asp, S * asp, S, -S, -200, 400);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8899aa, 0.85)); const sun = new THREE.DirectionalLight(0xffffff, 0.6); sun.position.set(-8, 20, 14); scene.add(sun);
+  const groups = { ground: new THREE.Group(), upstairs: new THREE.Group() }; scene.add(groups.ground, groups.upstairs);
+  const col = k => new THREE.Color(cssv(k));
+  const mats = { wall: new THREE.MeshLambertMaterial({ color: col('--poche').lerp(new THREE.Color(0xffffff), 0.35) }),
+    ok: new THREE.MeshLambertMaterial({ color: col('--ok') }), warn: new THREE.MeshLambertMaterial({ color: col('--warn') }), bad: new THREE.MeshLambertMaterial({ color: col('--bad') }),
+    floor: { ground: new THREE.MeshLambertMaterial({ color: col('--room') }), upstairs: new THREE.MeshLambertMaterial({ color: col('--room').lerp(col('--up'), 0.18) }) } };
+  // spec (x front+, z, y up) -> three (X = -z so the garage side is on the left from the street, Z = x toward the viewer)
+  const ceilOf = {}; D.rooms.forEach(rm => ceilOf[rm.floor + '/' + rm.name] = rm);
+  const pickables = [];
+  for (const rm of D.rooms) {
+    const shp = new THREE.Shape(rm.poly.map(p => new THREE.Vector2(-p[1], -p[0])));
+    const m = new THREE.Mesh(new THREE.ShapeGeometry(shp), mats.floor[rm.floor]); m.rotation.x = -Math.PI / 2; m.position.y = rm.y + 0.001;
+    groups[rm.floor].add(m);
+  }
+  for (const e of D.edges) {
+    const rm = ceilOf[e.floor + '/' + e.room]; if (!rm) continue;
+    const h = rm.kind === 'opening' ? 1.0 : rm.ceil, k = Math.abs(e.snap) > 0.0005 ? sev(e.snap) : 'wall';
+    const a = Math.min(e.face, e.centre), b = Math.max(e.face, e.centre), len = e.hi - e.lo, mid = (e.lo + e.hi) / 2;
+    const geo = e.axis === 'x' ? new THREE.BoxGeometry(len, h, b - a) : new THREE.BoxGeometry(b - a, h, len);
+    const m = new THREE.Mesh(geo, mats[k]);
+    if (e.axis === 'x') m.position.set(-mid, rm.y + h / 2, (a + b) / 2); else m.position.set(-(a + b) / 2, rm.y + h / 2, mid);
+    m.userData.e = e; groups[e.floor].add(m); pickables.push(m);
+  }
+  // the downloaded model's exterior and roof, placed by shell_fit.py's ground-floor fit; translucent so the rooms show through
+  const shell = new THREE.Group(); scene.add(shell);
+  if (D.shell) {
+    const bin = atob(D.shell), buf = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+    const f = new Float32Array(buf.buffer), pos = new Float32Array(f.length);
+    for (let i = 0; i < f.length; i += 3) { pos[i] = -f[i + 2]; pos[i + 1] = f[i + 1]; pos[i + 2] = f[i]; }
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.computeVertexNormals();
+    shell.add(new THREE.Mesh(g, new THREE.MeshLambertMaterial({ color: 0xc9b79a, transparent: true, opacity: 0.28, side: THREE.DoubleSide, depthWrite: false })));
+    shell.add(new THREE.LineSegments(new THREE.EdgesGeometry(g, 30), new THREE.LineBasicMaterial({ color: 0x8a7a60, transparent: true, opacity: 0.35 })));
+  }
+  const box = new THREE.Box3().setFromObject(groups.ground), c = box.getCenter(new THREE.Vector3());
+  const home = () => { cam.position.set(c.x - 22, c.y + 24, c.z + 26); cam.zoom = 1; cam.updateProjectionMatrix(); ctl.target.copy(c); ctl.update(); };
+  const ctl = new THREE.OrbitControls(cam, r.domElement); ctl.enableDamping = true; home();
+  const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
+  r.domElement.addEventListener('pointermove', ev => {
+    const rc = r.domElement.getBoundingClientRect(); mouse.set((ev.clientX - rc.left) / rc.width * 2 - 1, -(ev.clientY - rc.top) / rc.height * 2 + 1);
+    ray.setFromCamera(mouse, cam); const hit = ray.intersectObjects(pickables.filter(m => m.parent.visible))[0];
+    if (!hit) { tip.hidden = true; return; }
+    const e = hit.object.userData.e;
+    showTip(ev, `<b>${nice(e.room)}</b> · ${e.floor === 'ground' ? 'main floor' : 'upstairs'}<br>${side(e)}` + (Math.abs(e.snap) > 0.0005 ? `<br>shifts <b>${Math.abs(inch(e.snap)).toFixed(1)} in</b> ${dirWord(e)}` : '<br>already lines up'));
+  });
+  r.domElement.addEventListener('pointerleave', () => tip.hidden = true);
+  const apply = () => { groups.ground.visible = document.getElementById('i-ground').checked; groups.upstairs.visible = document.getElementById('i-up').checked; groups.upstairs.position.y = +document.getElementById('i-gap').value; shell.visible = document.getElementById('i-shell').checked;
+    if (shell.visible && +document.getElementById('i-gap').value > 0) { document.getElementById('i-gap').value = 0; groups.upstairs.position.y = 0; } };
+  ['i-ground', 'i-up', 'i-gap', 'i-shell'].forEach(id => document.getElementById(id).addEventListener('input', apply)); apply();
+  document.getElementById('i-reset').onclick = home;
+  (function loop() { requestAnimationFrame(loop); ctl.update(); r.render(scene, cam); })();
+  addEventListener('resize', () => { const w = host.clientWidth, h = host.clientHeight; r.setSize(w, h); const a = w / h; cam.left = -S * a; cam.right = S * a; cam.updateProjectionMatrix(); });
+  return { r };
+}
+function setView(v) {
+  view = v; try { localStorage.setItem('wg-view', v); } catch (e) {}
+  document.querySelectorAll('[data-view]').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === v));
+  const iso3 = v === 'iso';
+  document.getElementById('plan').hidden = iso3; document.getElementById('iso').hidden = !iso3;
+  document.querySelectorAll('[data-floor], #floorlab, .zoom').forEach(n => n.hidden = iso3);
+  if (iso3 && !iso) iso = buildIso();
+}
+document.querySelectorAll('[data-view]').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
+setView(view);
 </script>
