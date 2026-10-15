@@ -15,7 +15,6 @@
   "applies_to": [
    "den",
    "living_room",
-   "foyer",
    "vestibule",
    "dining_room",
    "sunroom",
@@ -26,7 +25,14 @@
    "living_room",
    "dining_room"
   ],
-  "surface": "ceiling-plane"
+  "surface": "ceiling-plane",
+  "assumed": {
+   "den": "DEVIATIONS 11",
+   "vestibule": "DEVIATIONS 11",
+   "sunroom": "DEVIATIONS 11",
+   "kitchen": "DEVIATIONS 11",
+   "back_stair": "DEVIATIONS 11"
+  }
  },
  "history": [],
  "premise_reviewed": "",
@@ -63,6 +69,16 @@
     "standard"
    ],
    "independent": true
+  },
+  {
+   "what": "Oct 14: living-room 3D solve (VGGT, separate from the 1175 s jamb read), furniture as the ruler: ceiling = 6.1 x the seat cushion (16-19 in) and 3.0 x the sofa table / sofa back (28-32 in) -> 7'1\"-9'8\", both overlapping at ~8'1\". Loose: agrees within its spread",
+   "agrees": true,
+   "data": [
+    "marina-clip:living"
+   ],
+   "scale": [
+    "furniture-standard"
+   ]
   }
  ],
  "renders": {
@@ -83,5 +99,6 @@
   ]
  },
  "user_walk": "pending",
- "user_words": "(Oct 14) 'can you confirm there aren't higher ceilings on the first floor?' / 'aren't 8 ft ceilings the standard? shouldn't we lean into sensible defaults?'"
+ "user_words": "(Oct 14) 'can you confirm there aren't higher ceilings on the first floor?' / 'aren't 8 ft ceilings the standard? shouldn't we lean into sensible defaults?'",
+ "note": "Oct 14: the foyer was removed from this record (now changes/2026-10-14-foyer-heights.json, 2.82 m)."
 }

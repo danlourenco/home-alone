@@ -111,7 +111,7 @@
     ]
    ],
    "area_m2": 32.79,
-   "ceiling_m": 2.438
+   "ceiling_m": 2.82
   },
   {
    "name": "vestibule",
@@ -492,7 +492,7 @@
  ],
  "flags": [],
  "stair": null,
- "floor_y_m": -2.873,
+ "floor_y_m": -3.026,
  "sources": {
   "plan": "measurements/overhead/ground-trace.plan.json",
   "doors": "measurements/overhead/ground-doors.json",

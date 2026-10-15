@@ -1,0 +1,62 @@
+[
+ {
+  "name": "../foyer-heights/after-front-looking-back",
+  "pos": [
+   8.6,
+   -1.7759999999999998,
+   -9.6
+  ],
+  "look_at": [
+   0.0,
+   -1.5259999999999998,
+   -9.6
+  ],
+  "vfov": 62,
+  "note": "foyer front (inside the vestibule opening) looking back to the stair and landing, like Marina 1187 s and the film still"
+ },
+ {
+  "name": "../foyer-heights/after-back-looking-front",
+  "pos": [
+   0.9,
+   -1.7759999999999998,
+   -8.5
+  ],
+  "look_at": [
+   9.0,
+   -1.626,
+   -9.6
+  ],
+  "vfov": 62,
+  "note": "under the landing looking to the front door, like Marina 1067 s"
+ },
+ {
+  "name": "../foyer-heights/after-stair-foot",
+  "pos": [
+   5.969,
+   -1.7759999999999998,
+   -9.367
+  ],
+  "look_at": [
+   5.193,
+   -1.9289999999999998,
+   -9.979
+  ],
+  "vfov": 41.43,
+  "note": "Marina p1-335 matched (stair foot)"
+ },
+ {
+  "name": "../foyer-heights/after-up",
+  "pos": [
+   7.2,
+   -1.7759999999999998,
+   -9.6
+  ],
+  "look_at": [
+   3.5,
+   0.8240000000000003,
+   -9.6
+  ],
+  "vfov": 80,
+  "note": "foyer front looking up over the stair to the landing and the open well"
+ }
+]

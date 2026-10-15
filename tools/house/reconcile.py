@@ -36,7 +36,8 @@ ADULT = {"capsule_diameter": 0.55, "height": 1.85, "min_hall": 0.90}
 # Ceiling heights, measured Oct 13 on door walls (wall height / door height x 80 in, door_scale.py):
 # parents 2.42 m and Kevin 2.30-2.33 m to the crown's lower edge (+~0.08 m crown), hall attic leg 2.29 m to the ceiling.
 CEILINGS = {"default": 2.40, "parents_bedroom": 2.50, "parents_bath": 2.50, "hall_corridor_south": 2.29} if FLOOR == "upstairs" else \
-    {"default": 2.438}  # ground: 8 ft standard, inside the measured living 2.44 / dining 2.42 m (tools/house/ground_ceiling.py, Oct 14). Was 2.32, the
+    {"default": 2.438, "foyer": 2.82}  # foyer Oct 14 (2.82 = the most under the 0.2 m upper-floor slab): front ceiling 2.92 m in the clip A solve, 1.40 x a door in the film
+                        # (then-foyer.png), 1.51 x the vestibule opening in Marina 205 s (film_ratios.py). Ground: 8 ft standard, inside the measured living 2.44 / dining 2.42 m (tools/house/ground_ceiling.py, Oct 14). Was 2.32, the
                         # landing balustrade's base in the stair clip, misread as the foyer ceiling. Kitchen (beams) unmeasured
 # Which way each stairwell opening leads (sources): the main stair goes DOWN to the foyer (measured, stairs.json); the
 # attic stair goes UP from this floor (Part 2 attic segment: the CG walk climbs it from the hall-end door). A "down"
@@ -207,7 +208,7 @@ def stair_spec(final, o):
             else: box(f"{name}_spindle{i}", "rail", x0, x1, y0, y1 - 0.06, c - 0.02, c + 0.02)
     for k in range(1, n1):                                                # flight 1 treads (the n1-th riser lands on the landing)
         box(f"flight1_step{k:02d}", "step", xl + (n1 - 1 - k) * g, xl + (n1 - k) * g, -F, -F + k * r, z1, zs)
-    SLAB = 0.20   # landing / flight-2 construction depth (authored). Marina's walk 1068-1072 s passes UNDER the landing to
+    SLAB = 0.28   # landing / flight-2 construction depth: landing underside 1.94-2.07 m in clip A (Oct 14; was 0.20 authored). Marina's walk 1068-1072 s passes UNDER the landing to
                   # the arched door and the kitchen opening, so these are raised slabs, not solid blocks (fixed Oct 13)
     box("landing", "landing", xw, xl, -F + n1 * r - SLAB, -F + n1 * r, zn, zs)          # full width along the rear wall
     for k in range(n1 + 1, n):                                            # flight 2: rises east from the landing's north end

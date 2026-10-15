@@ -12,13 +12,14 @@
    "kind": "two methods on the same footage; agree"
   },
   "rise_m": {
-   "value": 0.169,
+   "value": 0.178,
    "range": [
-    0.163,
-    0.173
+    0.168,
+    0.181
    ],
-   "method": "clip A riser tops (vertical only), door-scaled",
-   "kind": "measured"
+   "method": "Oct 14: 7.0 in, where three rulers overlap: clip A re-run (stair_measure.py stairs-a, median 0.0276 units x 6.47 m/unit = 0.179; scale confirmed by the hall table top 0.76 m = 30 in and chair seats 0.44 m in the same solve), the outlet plate on the stair wall (outlet_ruler.py, 6.6-7.1 in standard plate), the September exterior 3.02 m / 17. Was 0.169 (clip A riser tops, door-scaled), which put the upstairs floor below Marina's foyer ceiling (2.92 m in the same solve)",
+   "kind": "measured (three rulers)",
+   "was": 0.169
   },
   "pitch_deg": {
    "value": 35.0,
@@ -39,12 +40,12 @@
    "kind": "derived"
   },
   "landing_height_m": {
-   "value": 2.2,
+   "value": 2.314,
    "range": [
-    2.14,
-    2.25
+    2.18,
+    2.35
    ],
-   "method": "13 x rise; the landing balustrade base reads 2.32 m above the foyer floor in clip A (3 frames, 1-3 cm spread), which includes its shoe rail",
+   "method": "13 x rise; landing underside reads 1.94-2.07 m in clip A (the white band across the back of the foyer), so the landing structure is ~0.28 m",
    "kind": "derived"
   },
   "tread_band_width_m": {
@@ -68,9 +69,9 @@
   "door height from edge pixels (door_scale.py) on this door: 14% short, because the slab is recessed under an arch and the top-edge pixel takes the arch's depth. Re-checked the upstairs doors with the robust method: Kevin +0.8%, parents +0.6% (inside the 78-80 in bracket)."
  ],
  "authored": {
-  "decided": "user, Oct 14: 17 risers = 13 + 4 (4 steps above the landing), at Marina's measured rise, so floor-to-floor 17 x 0.169 = 2.873 m. Sources: a summary the user found (13 + 4 = 17), the September model's flight 2 (4 risers, glb section Oct 14), and the exterior's floor height. Flight 2 keeps the measured going (3 treads x 0.241 m), so the stair head moves 0.482 m along the north-side gallery. Was (Oct 13): 15 risers, 2 above the landing. Full-width landing along the rear wall; flight 2 at the landing's north end, rising toward the front onto the gallery",
+  "decided": "user, Oct 14: 17 risers = 13 + 4 (4 steps above the landing), at Marina's measured rise, so floor-to-floor 17 x 0.169 = 2.873 m. Sources: a summary the user found (13 + 4 = 17), the September model's flight 2 (4 risers, glb section Oct 14), and the exterior's floor height. Flight 2 keeps the measured going (3 treads x 0.241 m), so the stair head moves 0.482 m along the north-side gallery. Was (Oct 13): 15 risers, 2 above the landing. Full-width landing along the rear wall; flight 2 at the landing's north end, rising toward the front onto the gallery. Oct 14 (user: 'yes'): rise 0.178 m (7.0 in), floor-to-floor 17 x 0.178 = 3.026 m, so the front foyer's 2.82 m ceiling sits under the upper floor's 0.2 m slab; pitch becomes 36.4 deg at the plan going 0.241 (measured 35.0, DEVIATIONS 6)",
   "risers_total": 17,
-  "floor_to_floor_m": 2.873,
+  "floor_to_floor_m": 3.026,
   "flight_1_width_m": 1.2,
   "flight_1_width_note": "tread band 1.125 m measured + stringer/tread ends",
   "landing_depth_m": 1.58,

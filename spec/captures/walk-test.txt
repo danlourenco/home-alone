@@ -42,17 +42,17 @@ ok      kevin down leg 3: ended 0.02 m from waypoint, 0.02 m off its floor heigh
 ok      kevin down leg 4: ended 0.02 m from waypoint, 0.02 m off its floor height
 ok      kevin down leg 5: ended 0.02 m from waypoint, 0.02 m off its floor height
 Leak and headroom check: 1424 points, 0 leaks, 23 low-headroom points (ground floor, outside flight 1)
-LOW     foyer at (0.3, 11.2): 1.95 m clear under MainStair/landing
-LOW     foyer at (0.3, 10.7): 1.95 m clear under MainStair/landing
-LOW     foyer at (0.3, 10.2): 1.95 m clear under MainStair/landing
-LOW     foyer at (0.3, 9.7): 1.95 m clear under MainStair/landing
-LOW     foyer at (0.3, 9.2): 1.95 m clear under MainStair/landing
-LOW     foyer at (0.3, 8.7): 1.95 m clear under MainStair/landing
-LOW     foyer at (0.3, 8.2): 1.95 m clear under MainStair/landing
-LOW     foyer at (0.8, 11.2): 1.95 m clear under MainStair/landing
-LOW     foyer at (0.8, 10.7): 1.95 m clear under MainStair/landing
-LOW     foyer at (0.8, 10.2): 1.95 m clear under MainStair/landing
-LOW     foyer at (0.8, 9.7): 1.95 m clear under MainStair/landing
-LOW     foyer at (0.8, 9.2): 1.95 m clear under MainStair/landing
+LOW     foyer at (0.3, 11.2): 1.98 m clear under MainStair/landing
+LOW     foyer at (0.3, 10.7): 1.98 m clear under MainStair/landing
+LOW     foyer at (0.3, 10.2): 1.98 m clear under MainStair/landing
+LOW     foyer at (0.3, 9.7): 1.98 m clear under MainStair/landing
+LOW     foyer at (0.3, 9.2): 1.98 m clear under MainStair/landing
+LOW     foyer at (0.3, 8.7): 1.98 m clear under MainStair/landing
+LOW     foyer at (0.3, 8.2): 1.98 m clear under MainStair/landing
+LOW     foyer at (0.8, 11.2): 1.98 m clear under MainStair/landing
+LOW     foyer at (0.8, 10.7): 1.98 m clear under MainStair/landing
+LOW     foyer at (0.8, 10.2): 1.98 m clear under MainStair/landing
+LOW     foyer at (0.8, 9.7): 1.98 m clear under MainStair/landing
+LOW     foyer at (0.8, 9.2): 1.98 m clear under MainStair/landing
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 84 legs, 0 blocked
 GROUND Room walk test (both bodies, every doorway to room centre and back): 64 legs, 0 blocked

@@ -1,0 +1,122 @@
+{
+ "change": "Foyer heights: front foyer ceiling 2.438 -> 2.82 m; stair rise 0.169 -> 0.178 m, so floor-to-floor 2.873 -> 3.026 m and the landing 2.20 -> 2.314 m; landing structure 0.20 -> 0.28 m (underside ~2.03 m)",
+ "target": "Greybox_Upstairs",
+ "premise": "The foyer's front ceiling is ~9.5 ft and sits under the upper floor; the stair's rise is ~7 in, so 17 risers put the upper floor above that ceiling",
+ "claim": {
+  "value": [
+   2.82,
+   0.178,
+   3.026
+  ],
+  "data": [
+   "marina-clip:stairs-a"
+  ],
+  "scale": [
+   "door-80in:stairs-a"
+  ],
+  "applies_to": [
+   "foyer",
+   "main_stair"
+  ],
+  "measured_in": [
+   "foyer",
+   "main_stair"
+  ],
+  "surface": "ceiling-plane"
+ },
+ "history": [
+  {
+   "date": "2026-10-13",
+   "what": "foyer ceiling 2.32 m (the landing balustrade's base read as the ceiling)",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-14",
+   "what": "ground ceilings 8 ft everywhere incl. the foyer (living/dining reads applied to every room)",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-14",
+   "what": "13 + 4 = 17 risers at 0.169 m (count confirmed in the film; rise now revised)",
+   "outcome": "ok"
+  }
+ ],
+ "premise_reviewed": "Both failed attempts read the wrong surface or the wrong room: 2.32 m was the landing's front (its underside is ~2.0 m, now modelled as the landing), and 8 ft came from the living and dining rooms. This premise reads the foyer's own ceiling plane in three sources (clip A solve 2.92 m, film 1.40 x a door, Marina 205 s 1.51 x the vestibule opening) and fixes the contradiction they exposed (ceiling above the upper floor at 6 5/8 in risers) by the rise, which a door-free ruler supports.",
+ "checks": [
+  {
+   "what": "outlet plate on the stair's side wall (Marina 198 s, outlet_ruler.py): riser 6.6-7.1 in with a standard plate; 7.0 in inside it",
+   "agrees": true,
+   "data": [
+    "marina-frame:198"
+   ],
+   "scale": [
+    "outlet-plate-4.5in"
+   ]
+  },
+  {
+   "what": "hall table top 0.76 m (30 in) and chair seats 0.44 m in the same solve: the door scale holds",
+   "agrees": true,
+   "data": [
+    "marina-clip:stairs-a"
+   ],
+   "scale": [
+    "furniture-standard"
+   ]
+  },
+  {
+   "what": "film still then-foyer.png: crown on the right wall 1.40 x the right-wall door (film_ratios.py) = 2.84 m at 80 in",
+   "agrees": true,
+   "data": [
+    "film-frame:then-foyer"
+   ],
+   "scale": [
+    "door-80in:then-foyer"
+   ]
+  },
+  {
+   "what": "Marina 205 s: front-wall ceiling 1.51 x the vestibule opening",
+   "agrees": true,
+   "data": [
+    "marina-frame:205"
+   ],
+   "scale": [
+    "door-80in:205"
+   ]
+  },
+  {
+   "what": "September exterior floor-to-floor 3.02 m",
+   "agrees": true,
+   "data": [
+    "glb:intact-exterior"
+   ],
+   "scale": [
+    "door-80in:glb"
+   ]
+  },
+  {
+   "what": "stair pitch 35.0 deg measured depth-free; built 36.4 deg at the plan going",
+   "agrees": false,
+   "data": [
+    "marina-clip:stairs"
+   ],
+   "scale": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/foyer-heights/before-front-looking-back.png",
+   "spec/captures/foyer-heights/before-back-looking-front.png",
+   "spec/captures/foyer-heights/before-stair-foot.png",
+   "spec/captures/foyer-heights/before-up.png"
+  ],
+  "after": [
+   "spec/captures/foyer-heights/after-front-looking-back.png",
+   "spec/captures/foyer-heights/after-back-looking-front.png",
+   "spec/captures/foyer-heights/after-stair-foot.png",
+   "spec/captures/foyer-heights/after-up.png"
+  ]
+ },
+ "user_walk": "pending"
+}
