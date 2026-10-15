@@ -12,7 +12,11 @@
   ],
   "scale": [
    "count"
-  ]
+  ],
+  "applies_to": [
+   "main_stair"
+  ],
+  "measured_in": []
  },
  "history": [
   {

@@ -11,7 +11,22 @@
   ],
   "scale": [
    "door-80in:1175"
-  ]
+  ],
+  "applies_to": [
+   "den",
+   "living_room",
+   "foyer",
+   "vestibule",
+   "dining_room",
+   "sunroom",
+   "kitchen",
+   "back_stair"
+  ],
+  "measured_in": [
+   "living_room",
+   "dining_room"
+  ],
+  "surface": "ceiling-plane"
  },
  "history": [],
  "premise_reviewed": "",

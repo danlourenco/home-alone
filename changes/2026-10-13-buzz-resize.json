@@ -2,20 +2,91 @@
  "change": "Buzz's room resized to 4.35 x 3.54 m in IntactHouseReference (c42cdb7, reverted fb45936)",
  "target": "IntactHouseReference",
  "premise": "Marina's Buzz room is 4.35 x 3.49 m (door wall to desk wall x shelves wall to front windows)",
- "claim": {"value": [4.35, 3.49], "data": ["vggt:real-vggt-buzzall"], "scale": ["door-80in:buzz-clip"]},
+ "claim": {
+  "value": [
+   4.35,
+   3.49
+  ],
+  "data": [
+   "vggt:real-vggt-buzzall"
+  ],
+  "scale": [
+   "door-80in:buzz-clip"
+  ],
+  "applies_to": [
+   "buzz_room"
+  ],
+  "measured_in": [
+   "buzz_room"
+  ]
+ },
  "history": [
-  {"date": "2026-09-15", "what": "single-view headpost/footpost depth fit", "outcome": "failed"},
-  {"date": "2026-09-18", "what": "candidate 3.65 x 4.27 and 3.90 x 4.80 rooms (estimated)", "outcome": "failed"},
-  {"date": "2026-10-13", "what": "grey-box built at Marina's measured size: user 'still not marina's layout'", "outcome": "failed"},
-  {"date": "2026-10-13", "what": "old model resized to 4.35 x 3.54: user 'terrible', 'looks broken', 'worse than before'", "outcome": "failed"}
+  {
+   "date": "2026-09-15",
+   "what": "single-view headpost/footpost depth fit",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-09-18",
+   "what": "candidate 3.65 x 4.27 and 3.90 x 4.80 rooms (estimated)",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-13",
+   "what": "grey-box built at Marina's measured size: user 'still not marina's layout'",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-13",
+   "what": "old model resized to 4.35 x 3.54: user 'terrible', 'looks broken', 'worse than before'",
+   "outcome": "failed"
+  }
  ],
  "premise_reviewed": "",
  "checks": [
-  {"what": "9 of Marina's 45 Buzz-clip cameras stand beyond the old west wall", "agrees": true, "data": ["vggt:real-vggt-buzzall"], "scale": ["door-80in:buzz-clip"]},
-  {"what": "overhead trace 4.37 x 3.63", "agrees": true, "data": ["overhead-trace:upstairs"], "scale": ["overhead-calib:upstairs"], "note": "the overhead calibration used Buzz's SfM size as an input (verify-plan: consistency), so its scale is not independent either", "upstream": ["vggt:real-vggt-buzzall"]},
-  {"what": "older survey overhead aspect 0.60 vs SfM 0.75-0.80", "agrees": false, "data": ["survey-overhead"], "scale": ["survey-scale"]}
+  {
+   "what": "9 of Marina's 45 Buzz-clip cameras stand beyond the old west wall",
+   "agrees": true,
+   "data": [
+    "vggt:real-vggt-buzzall"
+   ],
+   "scale": [
+    "door-80in:buzz-clip"
+   ]
+  },
+  {
+   "what": "overhead trace 4.37 x 3.63",
+   "agrees": true,
+   "data": [
+    "overhead-trace:upstairs"
+   ],
+   "scale": [
+    "overhead-calib:upstairs"
+   ],
+   "note": "the overhead calibration used Buzz's SfM size as an input (verify-plan: consistency), so its scale is not independent either",
+   "upstream": [
+    "vggt:real-vggt-buzzall"
+   ]
+  },
+  {
+   "what": "older survey overhead aspect 0.60 vs SfM 0.75-0.80",
+   "agrees": false,
+   "data": [
+    "survey-overhead"
+   ],
+   "scale": [
+    "survey-scale"
+   ]
+  }
  ],
- "renders": {"before": ["spec/captures/buzz-old-vs-marina/before"], "after": ["spec/captures/buzz-old-vs-marina/all.png"]},
+ "renders": {
+  "before": [
+   "spec/captures/buzz-old-vs-marina/before"
+  ],
+  "after": [
+   "spec/captures/buzz-old-vs-marina/all.png"
+  ]
+ },
  "user_walk": "rejected",
  "user_words": "terrible; still feels wrong, looks broken, worse than before"
 }

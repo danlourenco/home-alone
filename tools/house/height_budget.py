@@ -7,7 +7,7 @@ IN = 0.0254
 COURSE_IN = (2.5, 2.75)
 # (layer, low m, high m, ruler / source); low == high means one built value
 LAYERS = [
-    ("ground ceiling plane", 2.42, 2.44, "Marina 1125/1175 s, door jambs (ground_ceiling.py); no crown in either room, read to the plane"),
+    ("ground ceiling plane", 2.42, 2.44, "LIVING + DINING ONLY, door-80in ruler (ground_ceiling.py). Foyer reads ~2.85-3.05 m (then-foyer.png, entry205). No door-free ruler yet"),
     ("ground floor stack", 0.28, 0.36, "AUTHORED: 1920s oak + subfloor + 2x10-2x12 full-size joists + plaster, 11-14 in; measure at the gallery fascia"),
     ("upstairs ceiling plane", 2.38, 2.50, "Marina door walls Oct 13: parents 2.42 to the crown + 0.08 crown; hall 2.29 (attic leg) excluded"),
 ]

@@ -14,6 +14,12 @@
   ],
   "scale": [
    "mattress-39in:563"
+  ],
+  "applies_to": [
+   "buzz_room"
+  ],
+  "measured_in": [
+   "buzz_room"
   ]
  },
  "history": [

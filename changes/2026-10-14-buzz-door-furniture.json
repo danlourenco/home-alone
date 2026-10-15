@@ -13,6 +13,12 @@
   "scale": [
    "mattress-39in:563",
    "overhead-fraction:50"
+  ],
+  "applies_to": [
+   "buzz_room"
+  ],
+  "measured_in": [
+   "buzz_room"
   ]
  },
  "history": [],

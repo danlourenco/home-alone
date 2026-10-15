@@ -33,6 +33,12 @@ Why this exists (Oct 13): Buzz's room was resized to the SfM size 4.35 m. The "p
 | R1 | No agreeing check is independent of the claim's data, scale and upstream |
 | R2 | Two or more failed attempts are on record and `premise_reviewed` is empty |
 | R3 | Before or after renders are missing on disk |
+| R4 | The claim doesn't list `applies_to` and `measured_in`, or it is built into an item it wasn't measured in without an `assumed` DEVIATIONS row |
+| R5 | A ceiling claim's `surface` is not `ceiling-plane` (crown, beam, landing or soffit edges are not ceilings) |
+
+Independence is judged by **ruler kind**: `door-80in:1125` and `door-80in:1175` are the same ruler. A check resting only on a lead (`user-summary`, `ai`, `summary`, `web-summary`, `recollection`, `standard`, `none`) never counts as evidence. When geometry is committed, every record not rejected is re-gated, so nothing new lands on a change the gate now fails.
+
+**Talking to the user:** say only what the gate says. Never "ruled out", "confirmed" or "proven" for a number whose record fails, and name the ruler and its assumption in the same sentence.
 
 The pre-commit hook blocks commits that touch `measurements/`, `spec/house_spec*`, `spec/furniture.json`, `tools/house/reconcile.py` or the two house scenes unless a staged `changes/*.json` passes. Commit pure rebuild outputs (same inputs, rebuilt) with `--no-verify`, and say so in the message.
 

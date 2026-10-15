@@ -1,4 +1,6 @@
-"""Real-house storey height from brick courses: an absolute ruler that shares nothing with doors, Marina or our model.
+"""Real-house storey height from brick courses. CONDITIONAL: the course height (2.5-2.75 in, modular brick) is ASSUMED,
+not measured, and the French doors only "confirm" it if they are 80 in, the same door assumption as the interior.
+Larger brick or taller doors scale every height here up. Not evidence until the course height has its own ruler.
 Photo: Famartin 2015-05-11, art/home_alone/references/neighborhood/house.jpg (3264x2448), front wall left of the porch.
 The course period is measured by FFT on a plain brick strip; edges were read on a 3x gridded crop of the window column
 (the left French door pair and the upstairs window above it).
@@ -42,5 +44,4 @@ def main():
 
 if __name__ == "__main__":
     door, f2f = main()
-    assert 76 <= door * 2.667 <= 84, "the French doors no longer read as standard doors; recheck the course period"
-    assert max(f2f) < 120, "floor-to-floor reads over 10 ft; 10 ft ceilings would need about 132 in"
+    assert 25 < door < 35, "course period or edges misread: the French door should span about 30 courses"

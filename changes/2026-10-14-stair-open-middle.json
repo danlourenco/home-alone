@@ -12,6 +12,14 @@
   ],
   "scale": [
    "door-80in:stairs-a"
+  ],
+  "applies_to": [
+   "main_stair",
+   "upstairs_gallery"
+  ],
+  "measured_in": [
+   "main_stair",
+   "upstairs_gallery"
   ]
  },
  "history": [

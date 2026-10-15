@@ -16,6 +16,12 @@
   "upstream": [
    "vggt:real-vggt-buzzall",
    "door-80in:buzz-clip"
+  ],
+  "applies_to": [
+   "buzz_room"
+  ],
+  "measured_in": [
+   "buzz_room"
   ]
  },
  "history": [
