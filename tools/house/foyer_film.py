@@ -62,9 +62,13 @@ def main():
               f"clear width {(a['right'] - a['left']) / H:.2f} H, wainscot {(a['floor'] - a['wainscot']) / H:.2f} H; "
               f"crown / door head (door a passage behind, so an upper bound on the true ratio) "
               f"{(a['floor'] - a['crown']) / (a['door_floor'] - a['door_top']):.2f}")
-    print("  CONFLICT: at H ~2.1 m the crown (~2.06 m) barely clears the 2.03 m door, but the frames show ~1 ft of wall between")
-    print("  them; door-vs-arch with a short passage gives a crown of ~2.4-2.6 m. Resolve with a vanishing-point camera solve")
-    print("  of 2677 / 3888 (depth of the door behind the arch), not by choosing")
+    # The door stands a passage behind the arch, so its px height understates it: true crown/door = px ratio / depth ratio.
+    # With the passage = the landing depth (1.40 m, current build: Marina; the camera ~4.5-5 m from the arch), depth ratio
+    # ~1.25-1.3 -> crown ~2.0-2.1 m, H ~2.1 m: consistent with the wainscot (0.70 = Marina's) and the 10673 door. The passage
+    # depth is borrowed from the build; a vanishing-point camera solve of 2677/3888 must confirm it from the film alone.
+    for n, a in ARCH.items():
+        px = (a["floor"] - a["crown"]) / (a["door_floor"] - a["door_top"])
+        print(f"  {n}: crown at depth ratio 1.25-1.30: {2.032 * px / 1.30:.2f}-{2.032 * px / 1.25:.2f} m")
     return R
 
 
