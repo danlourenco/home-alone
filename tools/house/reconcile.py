@@ -188,6 +188,16 @@ def stair_spec(final, o):
     xw, xe, zn, zs = well[:, 0].min(), well[:, 0].max(), well[:, 1].min(), well[:, 1].max()
     xh = well[np.isclose(well[:, 1], zn), 0].max()                      # stair head: the gallery's west edge
     zg = hall[np.isclose(hall[:, 0], xh) & (hall[:, 1] > zn + 0.3), 1].min()   # gallery's south edge
+    # Oct 15 (user: walls don't line up, z-fighting): the well's rear, north and south walls ARE the ground foyer's, traced
+    # 2-5 cm apart on the two floors. The stair and its well walls take the foyer's planes; the well walls start where the
+    # foyer's own walls stop (ceiling on the stair side, landing underside at the rear), so no two faces overlap.
+    G = ROOT / "spec/house_spec.ground.json"
+    fy = None
+    if G.exists():
+        gs = json.loads(G.read_text()); fy = next((s for s in gs["spaces"] if s["name"] == "foyer"), None)
+    if fy:
+        P_ = np.array(fy["polygon_xz"]); xw, zn, zs = P_[:, 0].min(), P_[:, 1].min(), P_[:, 1].max()
+    fc = fy["ceiling_m"] if fy else 0.0                                   # the foyer's walls end here
     W1, DL = a["flight_1_width_m"], a["landing_depth_m"]
     z1 = zs - W1                                                          # flight 1's north (open) side
     xl = xw + DL                                                          # landing's east edge = top nosing of flight 1
@@ -221,14 +231,14 @@ def stair_spec(final, o):
     rail("landing_rail", xl, xl + 0.06, -F + n1 * r, -F + n1 * r + 0.9, zg, z1)   # landing edge over the foyer
     for k in range(n1 + 1, n):
         rail(f"flight2_rail{k - n1:02d}", xl + (k - n1 - 1) * g2, xl + (k - n1) * g2, -F + k * r, -F + k * r + 0.9, zg, zg + 0.06)
-    box("well_wall_south", "wall", xw - 0.07, xe, -F, 0, zs, zs + 0.07)    # the photo wall, foyer floor to the upper floor
-    box("well_wall_west", "wall", xw - 0.07, xw, -F, 2.4, zn - 0.07, zs + 0.07)   # rear wall (landing window not modelled)
+    box("well_wall_south", "wall", xw - 0.07, xe, -F + fc, 0, zs, zs + 0.07)    # the photo wall, above the foyer's own wall
+    box("well_wall_west", "wall", xw - 0.07, xw, (-F + n1 * r - SLAB) if fy else -F, 2.4, zn - 0.07, zs + 0.07)   # rear wall above the landing's underside
     # north edge of the well: only the upper floor's edge (fascia). A full-height wall here stood inside the foyer, which is
     # wider than the well (fixed Oct 13)
-    box("well_fascia_north", "wall", xw, xe, -0.30, 0, zn - 0.07, zn)
+    box("well_fascia_north", "wall", xw, xe, (-F + fc) if fy else -0.30, 0, zn - 0.07, zn)   # from the foyer's wall top (no overlap)
     box("well_ceiling", "ceiling", xw - 0.07, xe, 2.40, 2.55, zn - 0.07, zs + 0.07)   # Marina: chandelier hangs from it
     zm, zf = (zn + zg) / 2, (z1 + zs) / 2
-    path = [[x0 + 0.9, -F, zf], [x0 + 0.3, -F, zf], [xl - 0.4, -F + n1 * r, zf], [xl - 0.4, -F + n1 * r, zm],
+    path = [[x0 + 0.9, -F, zf], [x0 + 0.45, -F, zf], [xl - 0.4, -F + n1 * r, zf], [xl - 0.4, -F + n1 * r, zm],
             [xh + 0.5, 0.0, zm], [xe + 0.4, 0.0, zm]]
     return {"source": str(STAIR.relative_to(ROOT)), "floor_to_floor_m": round(F, 3), "risers": n, "rise_m": r, "going_m": g,
             "measured": "flight 1: 13 risers, rise, going (pitch), tread width; landing height",

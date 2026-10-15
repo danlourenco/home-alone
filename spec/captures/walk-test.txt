@@ -20,27 +20,37 @@ ok      foyer <-> vestibule (arch, 1.65 m)
 ok      dining_room <-> kitchen (door, 1.01 m)
 ok      dining_room <-> sunroom (arch, 1.87 m)
 ok      foyer <-> kitchen (arch, 0.98 m)
-Stair walk test (both bodies, up and down): 20 legs, 0 blocked
-ok      bandit up leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      bandit up leg 2: ended 0.04 m from waypoint, 0.02 m off its floor height
-ok      bandit up leg 3: ended 0.05 m from waypoint, 0.02 m off its floor height
+Stair walk test (both bodies, up and down): 30 legs, 0 blocked
+ok      bandit up leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 2: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
 ok      bandit up leg 4: ended 0.04 m from waypoint, 0.02 m off its floor height
-ok      bandit up leg 5: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      bandit down leg 1: ended 0.05 m from waypoint, 0.02 m off its floor height
-ok      bandit down leg 2: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      bandit down leg 3: ended 0.05 m from waypoint, 0.02 m off its floor height
-ok      bandit down leg 4: ended 0.05 m from waypoint, 0.03 m off its floor height
-ok      bandit down leg 5: ended 0.05 m from waypoint, 0.02 m off its floor height
-ok      kevin up leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      kevin up leg 2: ended 0.04 m from waypoint, 0.02 m off its floor height
-ok      kevin up leg 3: ended 0.05 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 5: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 3: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 4: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 5: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 2: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
 ok      kevin up leg 4: ended 0.04 m from waypoint, 0.02 m off its floor height
-ok      kevin up leg 5: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      kevin down leg 1: ended 0.05 m from waypoint, 0.02 m off its floor height
-ok      kevin down leg 2: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      kevin down leg 3: ended 0.05 m from waypoint, 0.02 m off its floor height
-ok      kevin down leg 4: ended 0.04 m from waypoint, 0.02 m off its floor height
-ok      kevin down leg 5: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 5: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 4: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 5: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      player up leg 1: ended 0.04 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 8)
+ok      player up leg 2: ended 0.00 m from waypoint, 0.03 m off its floor height, 76 frames (clean walk 76)
+ok      player up leg 3: ended 0.02 m from waypoint, 0.03 m off its floor height, 40 frames (clean walk 40)
+ok      player up leg 4: ended 0.04 m from waypoint, 0.03 m off its floor height, 30 frames (clean walk 31)
+ok      player up leg 5: ended 0.01 m from waypoint, 0.03 m off its floor height, 28 frames (clean walk 28)
+ok      player down leg 1: ended 0.03 m from waypoint, 0.03 m off its floor height, 27 frames (clean walk 28)
+ok      player down leg 2: ended 0.01 m from waypoint, 0.03 m off its floor height, 31 frames (clean walk 31)
+ok      player down leg 3: ended 0.03 m from waypoint, 0.03 m off its floor height, 40 frames (clean walk 40)
+ok      player down leg 4: ended 0.03 m from waypoint, 0.03 m off its floor height, 78 frames (clean walk 75)
+ok      player down leg 5: ended 0.01 m from waypoint, 0.03 m off its floor height, 8 frames (clean walk 8)
 Leak and headroom check: 1403 points, 0 leaks, 0 low-headroom points (ground floor, outside flight 1)
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 84 legs, 0 blocked
 GROUND Room walk test (both bodies, every doorway to room centre and back): 64 legs, 0 blocked

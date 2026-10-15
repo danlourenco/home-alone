@@ -264,18 +264,18 @@
     ],
     [
      2.369,
-     6.587
+     6.673
     ],
     [
      -1.505,
-     6.587
+     6.673
     ],
     [
      -1.505,
      3.923
     ]
    ],
-   "area_m2": 48.88,
+   "area_m2": 49.22,
    "ceiling_m": 2.438
   },
   {
@@ -289,18 +289,18 @@
     ],
     [
      -1.505,
-     6.726
+     6.64
     ],
     [
      2.369,
-     6.726
+     6.64
     ],
     [
      2.369,
      7.638
     ]
    ],
-   "area_m2": 3.53,
+   "area_m2": 3.87,
    "ceiling_m": 2.438
   }
  ],
@@ -465,20 +465,45 @@
    "wall_coord": -2.209,
    "wall_thickness": -0.0,
    "span": [
-    6.022,
+    5.969,
     6.934
    ],
-   "width": 0.912,
+   "width": 0.965,
    "height": null,
    "opens": true,
    "placed_from": "full shared wall",
    "source": "service stair foot opens to the breakfast area (no wall)",
    "wall_coord_spec": 2.369,
    "span_spec": [
-    6.726,
+    6.673,
     7.638
    ],
    "spec_axis": "x"
+  },
+  {
+   "between": [
+    "back_stair",
+    "kitchen"
+   ],
+   "kind": "rail",
+   "wall_axis": "x",
+   "wall_coord": 5.953,
+   "wall_thickness": -0.033,
+   "span": [
+    -6.083,
+    -2.209
+   ],
+   "width": 3.874,
+   "height": null,
+   "opens": true,
+   "placed_from": "full shared wall",
+   "source": "side wall between the service stair and the breakfast area. Oct 15: an open balustrade, not a wall: Marina 1074 s shows the service stair's white turned balusters and dark rail through the foyer's opening (user: 'random half wall in the breakfast area')",
+   "wall_coord_spec": 6.657,
+   "span_spec": [
+    -1.505,
+    2.369
+   ],
+   "spec_axis": "z"
   },
   {
    "between": [

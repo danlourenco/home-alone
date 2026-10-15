@@ -1,0 +1,90 @@
+{
+ "change": "Walk fixes from the user's walk (Oct 15): (1) the player's controller skin 0.08 -> 0.03 m (it wedged a 1.8 m body under the upper floor's edge between risers 5 and 6; clearance there is 2.08 m above the nosing line); the stair test now also drives the Player's own controller at its speed and fails a leg that stalls. (2) The stair's well walls, fascia, landing and flights take the ground foyer's wall planes (they were 2-5 cm off: stepped faces and z-fighting) and start where the foyer's walls stop. (3) The service stair's side wall toward the breakfast area becomes an open balustrade. Dressing builds before the gates so the stair test sees its colliders",
+ "target": "Greybox_Upstairs",
+ "premise": "The stairwell's walls are the foyer's walls (one plane each), and the service stair's side is open with balusters",
+ "claim": {
+  "value": [
+   11.43,
+   7.778,
+   1.581
+  ],
+  "data": [
+   "overhead-trace:ground"
+  ],
+  "scale": [
+   "overhead-trace:ground"
+  ],
+  "applies_to": [
+   "main_stair",
+   "back_stair"
+  ],
+  "measured_in": [
+   "main_stair",
+   "back_stair"
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-10-15",
+   "what": "snap the upstairs well onto the ground foyer: the reconciler re-spaced girls' room B by 6 cm; reverted",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-15",
+   "what": "snap the ground foyer onto the upstairs well (and anchor it): the reconciler's wall step still moved it 3-6 cm; reverted",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-15",
+   "what": "invisible ramp colliders on the flights: not needed once the skin was fixed, and slower down (97 vs 78 frames); removed",
+   "outcome": "failed"
+  }
+ ],
+ "premise_reviewed": "The failed attempts all moved PLAN geometry to make two traces agree; the reconciler then re-spaced neighbours. The kept fix leaves both plans as measured and builds the stair's own walls on the ground foyer's planes, which the two traces locate within 2-5 cm of each other (trace noise, 2-3 px). The ramp attempt treated a controller setting as geometry.",
+ "checks": [
+  {
+   "what": "Marina 312 s: foyer 3.71 m wide at the picture wall (foyer_length.py) vs 3.65 built between these planes",
+   "agrees": true,
+   "data": [
+    "marina-frame:312"
+   ],
+   "scale": [
+    "stair-rise:0.178"
+   ]
+  },
+  {
+   "what": "Marina 1074 s: through the foyer's opening to the breakfast room, the service stair's white turned balusters and dark rail, not a wall",
+   "agrees": true,
+   "data": [
+    "marina-frame:1074"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "the Player's own controller at its speed: without the fix it stalls 217 frames (clean 75) between risers 5 and 6, as the user found; with skin 0.03, 78 frames",
+   "agrees": true,
+   "data": [
+    "unity:walk-test"
+   ],
+   "scale": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/feedback/shots/20261015-083930-Greybox_Upstairs.png",
+   "spec/feedback/shots/20261015-084047-Greybox_Upstairs.png",
+   "spec/feedback/shots/20261015-084126-Greybox_Upstairs.png"
+  ],
+  "after": [
+   "spec/captures/feel-fixes/note1.png",
+   "spec/captures/feel-fixes/note2.png",
+   "spec/captures/feel-fixes/note3.png"
+  ]
+ },
+ "sheet": "spec/captures/feel-fixes/compare.jpg",
+ "user_walk": "pending"
+}

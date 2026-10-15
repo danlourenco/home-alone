@@ -1,0 +1,47 @@
+[
+ {
+  "name": "../feel-fixes/note1",
+  "pos": [
+   6.698,
+   -1.6660000000000001,
+   -9.109
+  ],
+  "look_at": [
+   5.712068237706075,
+   -1.540666766435696,
+   -8.998410033618278
+  ],
+  "vfov": 60,
+  "note": "it's weird that the wall and the ceiling under the staircase/gallery walkway don't line up"
+ },
+ {
+  "name": "../feel-fixes/note2",
+  "pos": [
+   4.122,
+   -1.6660000000000001,
+   -6.865
+  ],
+  "look_at": [
+   3.19398849066966,
+   -1.768792536787247,
+   -6.506910160809794
+  ],
+  "vfov": 60,
+  "note": "what is the deal with this random half wall in the breakfast area?"
+ },
+ {
+  "name": "../feel-fixes/note3",
+  "pos": [
+   9.298,
+   -1.6660000000000001,
+   -9.676
+  ],
+  "look_at": [
+   8.316857190310724,
+   -1.6974107590781284,
+   -9.866714842655652
+  ],
+  "vfov": 60,
+  "note": "the walls don't look lined up in places. i'm seeing tons of z thrashing too"
+ }
+]

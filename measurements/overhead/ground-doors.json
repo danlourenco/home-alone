@@ -108,10 +108,10 @@
   {
    "a": "back_stair",
    "b": "kitchen",
-   "kind": "wall",
+   "kind": "rail",
    "wall_axis": "x",
    "near": 5.959,
-   "source": "side wall between the service stair and the breakfast area"
+   "source": "side wall between the service stair and the breakfast area. Oct 15: an open balustrade, not a wall: Marina 1074 s shows the service stair's white turned balusters and dark rail through the foyer's opening (user: 'random half wall in the breakfast area')"
   },
   {
    "a": "foyer",

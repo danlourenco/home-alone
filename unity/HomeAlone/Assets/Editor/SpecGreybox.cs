@@ -45,6 +45,9 @@ public static class SpecGreybox
     // a little over the 0.178 m rise: at 0.3 the controller's step-up probe lifted an adult head into the slab edge over
     // flight 1's lower steps (vertical headroom there 2.26 m, Oct 15)
     const float StepOffset = 0.2f;
+    // the Player's skin: Unity's default 0.08 padded a 1.8 m body to ~2.0 m and wedged it under the upper floor's edge over
+    // flight 1 (2.08 m clear above the nosing line there); Unity's guidance is ~10% of the radius (Oct 15)
+    const float PlayerSkin = 0.03f;
     static float FloorY;   // vertical offset of the floor being built (ground floor sits at -floor_to_floor); Box adds it
 
     static (List<Space>, List<Door>) Parse(JObject j)
@@ -90,6 +93,9 @@ public static class SpecGreybox
                     if (!holes.Any(h => Inside(h.pts, new Vector2((x0 + x1) / 2, (z0 + z1) / 2))))
                         Box(ceilings, s.name + "_Ceiling", x0, x1, z0, z1, s.ceil, s.ceil + 0.15f, mCeil);
                 Walls(g, s, doors);
+                // a balustrade between two rooms (the service stair's open side, Oct 15): built once, by the first-named space
+                foreach (var d in doors.Where(d => d.kind == "rail" && d.a == s.name && spaces.Any(o => o.name == d.b && o.kind != "opening")))
+                    Rail(g, d);
             }
             else
             {
@@ -135,6 +141,7 @@ public static class SpecGreybox
                 -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0])).ToList();
             groot = new GameObject("Ground"); gceil = Child(groot, "Ceilings");
             BuildFloor(groot, gceil, gspaces, gdoors, spaces.Where(s => s.opens == "down").ToList());
+            Dressing(groot, FloorY);   // before the gates: the walk tests see its colliders
             FloorY = 0f;
         }
         Volume(root);
@@ -145,12 +152,14 @@ public static class SpecGreybox
         report += "UPSTAIRS\n" + WalkTest(spaces, doors);
         if (gj != null) { FloorY = (float)gj["floor_y_m"]; report += "GROUND\n" + WalkTest(gspaces, gdoors); FloorY = 0f; }
         report += StairWalk(stairPath);
+        // structure checks: headroom and room reachability are about the building, so the dressing's furniture is off for them
+        var dressing = GameObject.Find("Ground/Dressing"); dressing?.SetActive(false); Physics.SyncTransforms();
         report += LeakAndHeadroom(spaces, gspaces, gj != null ? (float)gj["floor_y_m"] : 0f);
         report += "UPSTAIRS " + RoomWalk(spaces, doors);
         if (gj != null) { FloorY = (float)gj["floor_y_m"]; report += "GROUND " + RoomWalk(gspaces, gdoors); FloorY = 0f; }
+        dressing?.SetActive(true); Physics.SyncTransforms();
         player.SetActive(true);
         Furniture(root);   // after the gates: placeholder furniture is for feel walks, not geometry checks
-        if (gj != null) Dressing(GameObject.Find("Ground"), (float)gj["floor_y_m"]);
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, $"walk-test{Tag}.txt"), report);
         if (Variant == "")
@@ -486,31 +495,41 @@ public static class SpecGreybox
     {
         if (path.Count < 2) return "";
         var lines = new List<string>(); int bad = 0;
-        foreach (var (name, r, h) in new[] { ("bandit", 0.275f, 1.85f), ("kevin", 0.20f, 1.20f) })
+        // "player": the walkable Player itself (FpsController.TickMotion at 60 fps, 1.8 m, its walk speed). The two test bodies
+        // missed the user's stall between risers 5 and 6 (Oct 15); this one reproduces it without the ramps.
+        foreach (var (name, r, h) in new[] { ("bandit", 0.275f, 1.85f), ("kevin", 0.20f, 1.20f), ("player", 0.275f, 1.8f) })
         {
             var go = new GameObject("StairWalker_" + name); var cc = go.AddComponent<CharacterController>();
             cc.radius = r; cc.height = h; cc.center = new Vector3(0, h / 2, 0); cc.stepOffset = StepOffset; cc.skinWidth = 0.02f;
+            var fc = name == "player" ? go.AddComponent<FpsController>() : null;
+            if (fc != null) cc.skinWidth = PlayerSkin;   // exactly the Player's settings
             foreach (var (route, pts) in new[] { ("up", path), ("down", Enumerable.Reverse(path).ToList()) })
             {
                 go.transform.position = pts[0] + Vector3.up * 0.05f; Physics.SyncTransforms();
                 for (int i = 1; i < pts.Count; i++)
                 {
                     Vector3 target = pts[i]; float vy = 0f;
-                    for (int t = 0; t < 1500; t++)
+                    var from = go.transform.position; int used = 0;
+                    for (int t = 0; t < 1500; t++, used++)
                     {
                         var p = go.transform.position; var flat = new Vector3(target.x - p.x, 0, target.z - p.z);
                         if (flat.magnitude < 0.05f) break;
+                        if (fc != null) { fc.TickMotion(flat.normalized, false, false, 1f / 60f); continue; }
                         vy = cc.isGrounded ? -1f : vy - 9.81f * 0.02f;
-                        cc.Move(Vector3.ClampMagnitude(flat, 0.03f) + Vector3.up * vy * 0.02f);
+                        cc.Move(Vector3.ClampMagnitude(flat, 3.5f / 60f) + Vector3.up * vy * 0.02f);   // the player's walk speed per frame
                     }
                     for (int t = 0; t < 25; t++) cc.Move(Vector3.down * 0.05f);   // settle onto the floor
                     var e = go.transform.position; float dxz = new Vector2(e.x - target.x, e.z - target.z).magnitude, dy = Mathf.Abs(e.y - target.y);
-                    bool ok = dxz < 0.15f && dy < 0.1f; if (!ok) bad++;
+                    // the player must also not stall: at most 1.5 x the frames a clean walk at its speed needs (+0.5 s)
+                    float need = new Vector2(target.x - from.x, target.z - from.z).magnitude / (3.5f / 60f);
+                    bool slow = fc != null && used > need * 1.5f + 30;
+                    bool ok = dxz < 0.15f && dy < 0.1f && !slow; if (!ok) bad++;
                     string by = "";
                     if (!ok && Physics.CapsuleCast(e + Vector3.up * (r + 0.05f), e + Vector3.up * (h - r), r * 0.98f,
                                                    new Vector3(target.x - e.x, 0, target.z - e.z).normalized, out var hit, 1f))
                         by = $" by {hit.collider.transform.parent?.name}/{hit.collider.name} at ({e.x:F2}, {e.y:F2}, {-e.z:F2}) spec x,y,z";
-                    lines.Add($"{(ok ? "ok     " : "BLOCKED")} {name} {route} leg {i}: ended {dxz:F2} m from waypoint, {dy:F2} m off its floor height{by}");
+                    lines.Add($"{(ok ? "ok     " : "BLOCKED")} {name} {route} leg {i}: ended {dxz:F2} m from waypoint, {dy:F2} m off its floor height{by}" +
+                              (fc != null ? $", {used} frames (clean walk {need:F0}){(slow ? " STALLED" : "")}" : ""));
                 }
             }
             Object.DestroyImmediate(go);
@@ -691,7 +710,7 @@ public static class SpecGreybox
         var c = Cells(hall.pts).OrderByDescending(q => Mathf.Min(q.Item2 - q.Item1, q.Item4 - q.Item3)).First();
         var (x, z) = ((c.Item1 + c.Item2) / 2, (c.Item3 + c.Item4) / 2);
         var p = new GameObject("Player"); p.transform.position = new Vector3(x, 0.05f, z);
-        var cc = p.AddComponent<CharacterController>(); cc.radius = 0.275f; cc.height = 1.85f; cc.center = new Vector3(0, 0.925f, 0); cc.stepOffset = StepOffset;
+        var cc = p.AddComponent<CharacterController>(); cc.radius = 0.275f; cc.height = 1.85f; cc.center = new Vector3(0, 0.925f, 0); cc.stepOffset = StepOffset; cc.skinWidth = PlayerSkin;
         var camGo = new GameObject("Camera"); camGo.transform.parent = p.transform; camGo.transform.localPosition = new Vector3(0, 1.7f, 0);
         var cam = camGo.AddComponent<Camera>(); cam.tag = "MainCamera"; cam.nearClipPlane = 0.05f; camGo.AddComponent<HDAdditionalCameraData>(); camGo.AddComponent<AudioListener>();
         var fc = p.AddComponent<FpsController>(); fc.cam = camGo.transform;
