@@ -167,7 +167,7 @@ The current builder carries the most special cases here: walls cut under the lan
 | 0 | Baseline: `measurements/baseline/pre-grid.json`; V1 test harness; injected-error proofs | DONE Oct 15 (e9aaf37): baseline + `baseline.py --diff`, proven on injected changes |
 | 1 | Grid + snap log (`wall_graph.grid`); decisions in `measurements/grid-snaps.json` | V1 grid tests; snap report reviewed (preview page); V3 unchanged |
 | 2 | Walls + geometry in Python | V1 all; V2 all on the real house |
-| 3 | **Pilot in Unity:** upstairs from geometry (Pilot_WallGrid) | DONE Oct 15 (ee5eadc, dcdb923): 0/0/0 seams, 0 leaks, 0 blocked; user approved the renders ('that looked good', gallery artifact); walk pending |
+| 3 | **Pilot in Unity:** upstairs from geometry (Pilot_WallGrid) | DONE Oct 15 (ee5eadc, dcdb923): 0/0/0 seams, 0 leaks, 0 blocked; user approved the renders ('that looked good') and walked it ('looks very good'; one note, the stair-head notch, fixed in ec5761a) |
 | 4 | Foyer/stair geometry decided from the film (V4) | Film checkpoints written and agreeing |
 | 5 | **Stair hall** as one two-storey space (see above) | Every stair regression test green; matched renders; user walks it |
 | 6 | Rest of the house; remove the stopgaps | V5 all, known-seams list empty; V6 renders |
