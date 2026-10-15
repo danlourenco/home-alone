@@ -8,6 +8,8 @@ Branch `unity-sfm-reconstruction`, pushed to `origin`. Git LFS covers `*.glb *.b
 
 ## User decisions (binding)
 
+- **Exterior = the film's house; upstairs drawn only from inside** (user, Oct 15: "the outside needs to look the same as the movie"). Marina's upstairs set is 11.3 m deep and cannot fit the real 8.75 m house; her ground floor does. Ground floor and exterior share one space; the upstairs keeps Marina's rooms and is rendered only when the player is upstairs/on the stair (DEVIATIONS 1). Next: measure the exterior against film stills and fix the shell.
+
 - **Faithfulness is non-negotiable.** Never propose "good enough" geometry.
 - **Unity only.** Godot is retired.
 - **Scale the players, not the house.** Kevin is about 1.1 m eye height and can crawl in about 0.4 m. The bandits are about 1.7 m eye height, with a hard adult-capsule rule (0.55 m diameter, 1.85 m tall).
