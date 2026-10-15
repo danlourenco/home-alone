@@ -11,6 +11,6 @@ ok      girls_room_b <-> hall_corridor_south (door, 0.76 m)
 ok      attic_stair <-> hall_corridor_south (door, 0.76 m)
 ok      hall_end <-> hall_corridor (arch, 1.25 m)
 ok      hall_corridor <-> hall_corridor_south (arch, 1.55 m)
-Seam check: 155 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
+Seam check: 162 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
 Leak and headroom check: 500 points, 0 leaks, 0 low-headroom points (ground floor, outside flight 1)
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 80 legs, 0 blocked

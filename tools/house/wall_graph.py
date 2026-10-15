@@ -143,7 +143,9 @@ def openings(floor_spec, rooms):
                 notes.append("CONFLICT " + conflict)
             elif abs(shift) > Q:
                 notes.append(f"door {a}/{b}: slid {shift / 0.0254:+.1f} in so its trim clears the side wall"); lo, hi = lo + shift, hi + shift
-        cuts = {"door": [(0.0, d["height"])], "arch": [(0.0, ARCH_HEAD)], "open": [(0.0, 99.0)], "rail": [(0.0, 99.0)], "fake_door": []}[kind]
+        # an open side or a rail is open only up to the ceiling: above it the ceiling runs on (a slit there showed the sky)
+        top = min([by[n]["ceil"] for n in (a, b) if n in by] or [99.0])
+        cuts = {"door": [(0.0, d["height"])], "arch": [(0.0, ARCH_HEAD)], "open": [(0.0, top)], "rail": [(0.0, top)], "fake_door": []}[kind]
         out.append({"kind": kind, "between": [a, b], "axis": axis, "c": c, "lo": q(lo), "hi": q(hi), "cuts": cuts,
                     "height": d.get("height"), "faces": [x[1] for x in (fa, fb) if x], "conflict": conflict})
     for w in floor_spec.get("windows") or []:
@@ -323,7 +325,8 @@ def build(spec, dec):
                 keys[i, j] = tuple((round(a, 4), round(b, 4)) for a, b in iv)
         walls = [w for w in merge(kind == 2, xs, zs, key=keys) if w[4]]
         floor_rects = merge(((kind == 1) & ~np.isin(owner, [k for k, r in enumerate(rs) if r.get("opens") == "down"])) | (kind == 2), xs, zs)
-        ceil_rects = merge((kind == 1) & np.isin(owner, [k for k, r in enumerate(rs) if r["kind"] != "opening"]), xs, zs, key=owner)
+        # every space has a ceiling except an attic stair (it rises through it); a stairwell's is the storey's ceiling over the well
+        ceil_rects = merge((kind == 1) & np.isin(owner, [k for k, r in enumerate(rs) if r.get("opens") != "up"]), xs, zs, key=owner)
         v = voids(kind)
         vrects = merge(v, xs, zs)
         slivers = [w for w in walls if min(w[1] - w[0], w[3] - w[2]) < SLIVER - Q]

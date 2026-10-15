@@ -118,6 +118,16 @@ def overlap3(B):
     return False
 
 
+def test_every_space_has_a_ceiling():
+    # INJECTED in the pilot (Oct 15): the stairwell had no ceiling and the sky showed above the gallery
+    spec, dec = wg.load()
+    geo, E, report = wg.build(spec, dec)
+    for f, g in geo.items():
+        have = {c["room"] for c in g["ceilings"]}
+        need = {r["name"] for r in g["rooms"] if r.get("opens") != "up"}
+        assert need <= have, (f, need - have)
+
+
 def test_overlap3_catches():
     assert overlap3([(0, 1, 0, 1, 0, 2), (0.5, 2, 0, 1, 1, 3)]) and not overlap3([(0, 1, 0, 1, 0, 1), (0, 1, 0, 1, 1, 2)])
 
