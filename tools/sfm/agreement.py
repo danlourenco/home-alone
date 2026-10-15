@@ -1,4 +1,8 @@
-"""Does agreement between two reconstruction methods predict that both are correct?
+"""CAMERA-PATH CONSISTENCY between two reconstruction methods (Oct 15 review, item 1): it compares camera centres in short
+windows after a similarity fit, which removes scale; it does NOT test walls, room ratios, depth or orientation, so it is
+never evidence that a room's dimensions are right (the stairs-a clip passed 3/3 windows with a wrong 3D stair pitch).
+Real footage: exits 1 when any window disagrees, so tools/sfm/room.py stops before dimensions unless forced.
+Does agreement between two reconstruction methods predict that both are correct?
 Splits each shot into windows of consecutive frames; per window and method pair: Sim3-align one method to
 the other (disagreement) and each to truth (error), both as median residual / window path length.
 Real footage (no gt.json): reports agreement only.
@@ -64,8 +68,10 @@ for shot, w, a, b, d, ea, eb in rows:
     print(f"{shot:>4} {w:>4} {a + '/' + b:<18} {d:8.1%} {ea:7.1%} {eb:7.1%}{'  <- AGREE' if d < gate else ''}")
 d = np.array([r[4] for r in rows])
 if np.isnan(rows[0][5]):
-    print(f"\nwindows compared: {len(rows)}; agree (< {gate:.0%}): {(d < gate).sum()}  [no truth: agreement only]")
-    sys.exit()
+    ok = bool((d < gate).all())
+    print(f"\ncamera-path consistency: {len(rows)} windows, {(d < gate).sum()} within {gate:.0%}  [no truth: paths only, not room geometry]"
+          f" -> {'consistent' if ok else 'INCONSISTENT'}")
+    sys.exit(0 if ok else 1)
 worst = np.array([max(r[5], r[6]) for r in rows])
 acc = d < gate
 print(f"\nwindows compared: {len(rows)}; gate: disagreement < {gate:.0%}")

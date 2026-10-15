@@ -101,7 +101,9 @@
    ],
    "scale": [
     "none"
-   ]
+   ],
+   "type": "angular",
+   "disposition": "RESOLVED Oct 15 (tools/house/pitch_adjudicate.py): the 35 deg line is the skirting/handrail. In the same frame (334 s) the step nosings read 2.8-3.0 deg shallower at every focal 1300-1700 (33.1 vs 35.9 at COLMAP's 1432 px): the two lines are not parallel in Marina's model. The walking surface follows the nosings: going 0.273 (334 s) and 0.275 (203 s). The build's 0.295 is outside that: follow-up in the coupled foyer/stair study"
   }
  ],
  "renders": {

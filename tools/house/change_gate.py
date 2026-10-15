@@ -20,6 +20,12 @@ Rules (exit 1 on any FAIL):
      every ground room including the foyer, which is ~10 ft.)
   R5 a ceiling claim (change or premise says "ceiling") must read the ceiling PLANE ("surface": "ceiling-plane"), not a crown, beam,
      landing or soffit edge. (Oct 14: the landing's front was read as the foyer ceiling twice.)
+  R6 every DISAGREEING check that is evidence needs a "disposition": why the claim stands against it, or what was done
+     (Oct 15 review: a contradicting independent survey left R1 green; contradictions were never adjudicated).
+Check "type": metric (default) | angular | ratio | topological. Only a metric check needs a ruler; an angle, ratio or
+topology read with scale "none" is evidence, not a lead (Oct 15 review: the 35 deg pitch printed as a lead).
+Independence is per failure mode: a claim may list "risks" (e.g. extraction, scale, registration, model-fidelity) and
+each check what it "tests"; R1 then needs an independent agreeing check for EVERY listed risk.
 Independence compares RULER KINDS: "door-80in:1125" and "door-80in:1175" are one ruler (the 80 in door assumption).
 (Oct 14: the 8 ft record passed R1 on a second door frame, the September model's doors and "the 8 ft standard".)
 Leads are never evidence: a check resting only on a summary, an AI answer, a recollection or a standard does not count.
@@ -48,7 +54,10 @@ def inputs(x):
 
 
 def is_lead(x):
-    return all(kind(i) in LEADS for i in x["data"]) or all(kind(i) in LEADS for i in x["scale"])
+    """Rests only on summaries/standards/nothing. A non-metric check (angle, ratio, topology) needs no ruler."""
+    if all(kind(i) in LEADS for i in x["data"]):
+        return True
+    return x.get("type", "metric") == "metric" and all(kind(i) in LEADS for i in x["scale"])
 
 
 def gate(rec):
@@ -58,9 +67,20 @@ def gate(rec):
     indep = [c for c in rec["checks"] if c["agrees"] and not (inputs(c) & ci) and not is_lead(c)]
     for c in rec["checks"]:
         shared = sorted(inputs(c) & ci)
+        how = ("LEAD, not evidence" if is_lead(c) else f"{c.get('type', 'metric')}, ") + ("" if is_lead(c) else "")
         how = "LEAD, not evidence" if is_lead(c) else "consistency (shares " + ", ".join(shared) + ")" if shared else "independent"
-        out.append(("info", f"check '{c['what']}': {'agrees' if c['agrees'] else 'DISAGREES'}, {how}"))
-    out.append(("ok" if indep else "FAIL", f"R1 independent agreeing checks: {len(indep)}"))
+        disp = f" -> disposition: {c['disposition']}" if c.get("disposition") else ""
+        out.append(("info", f"check '{c['what']}' [{c.get('type', 'metric')}]: {'agrees' if c['agrees'] else 'DISAGREES'}, {how}{disp}"))
+    risks = claim.get("risks")
+    if risks:
+        missing = [r for r in risks if not any(r in c.get("tests", []) for c in indep)]
+        out.append(("ok" if not missing else "FAIL", f"R1 independent agreeing checks: {len(indep)}; per risk: " +
+                    ", ".join(f"{r} {'covered' if r not in missing else 'NOT covered'}" for r in risks)))
+    else:
+        out.append(("ok" if indep else "FAIL", f"R1 independent agreeing checks: {len(indep)}"))
+    open_ = [c["what"] for c in rec["checks"] if not c["agrees"] and not is_lead(c) and not c.get("disposition", "").strip()]
+    out.append(("ok" if not open_ else "FAIL", "R6 contradictions: " + ("each disagreeing check has a disposition" if not open_ else
+                f"{len(open_)} without a disposition: " + "; ".join(w[:60] for w in open_))))
     failed = [h for h in rec.get("history", []) if h["outcome"] == "failed"]
     r2 = len(failed) < 2 or rec.get("premise_reviewed", "").strip()
     out.append(("ok" if r2 else "FAIL", f"R2 failed attempts on record: {len(failed)}; premise reviewed: {'yes' if rec.get('premise_reviewed', '').strip() else 'no'}"))
@@ -102,10 +122,24 @@ def selftest():
     res = {m.split()[0]: lvl for lvl, m in gate(rec) if lvl != "info"}
     assert res["R1"] == "ok" and res["R2"] == "ok", res
     rec = json.loads((ROOT / "changes/2026-10-14-ground-ceiling-8ft.json").read_text())
+    # as first written (Oct 14): no furniture check, foyer built in, no assumed rooms (the record has since been repaired)
+    rec["checks"] = [c for c in rec["checks"] if "furniture" not in c["what"]]
+    rec["claim"]["applies_to"] = sorted(set(rec["claim"]["applies_to"]) | {"foyer"}); rec["claim"].pop("assumed", None)
     res = {m.split()[0]: lvl for lvl, m in gate(rec) if lvl != "info"}
     assert res["R1"] == "FAIL" and res["R4"] == "FAIL", res
     rec["claim"]["surface"] = "landing-face"
     assert {m.split()[0]: lvl for lvl, m in gate(rec) if lvl != "info"}["R5"] == "FAIL"
+    rec = json.loads((ROOT / "changes/2026-10-15-foyer-length.json").read_text())
+    rec["checks"].append({"what": "injected: independent survey says 9 m", "agrees": False, "data": ["survey:x"], "scale": ["tape:x"]})
+    assert {m.split()[0]: lvl for lvl, m in gate(rec) if lvl != "info"}["R6"] == "FAIL", "an undisposed contradiction passed"
+    rec["checks"][-1]["disposition"] = "injected"
+    assert {m.split()[0]: lvl for lvl, m in gate(rec) if lvl != "info"}["R6"] == "ok"
+    ang = {"what": "pitch", "agrees": True, "data": ["marina-frame:1"], "scale": ["none"], "type": "angular"}
+    assert not is_lead(ang) and is_lead({**ang, "type": "metric"}), "an angle with no ruler must be evidence"
+    rec["claim"]["risks"] = ["extraction", "scale"]
+    rec["checks"][0]["tests"] = ["extraction"]
+    assert {m.split()[0]: lvl for lvl, m in gate(rec) if lvl != "info"}["R1"] == "FAIL", "an uncovered risk passed"
+    print("selftest PASS: an undisposed contradiction fails R6; an angle with no ruler is evidence; an uncovered listed risk fails R1")
     print("selftest PASS: the circular Buzz record fails R1/R2; adding an independent check and a review passes them;"
           " the Oct 14 8 ft record fails R1 (one door ruler + a standard), R4 (foyer unmeasured); a landing-face read fails R5")
 

@@ -28,7 +28,7 @@
     35.5
    ],
    "method": "tools/sfm/stair_pitch.py: vanishing points of verticals and the skirting/handrail lines, 3 gated frames (116/118/120); +-10% focal moves it 0.9 deg; self-test reads synthetic 30/35/40 deg within 0.1 and rejects a one-line image",
-   "kind": "CONFLICT: superseded Oct 15 by the step-spacing fits (going_m); the skirting and the steps are parallel within 1 deg (312 s), so the old read's focal, not the line, is the suspect"
+   "kind": "RESOLVED Oct 15: 35.0 is the SKIRTING/HANDRAIL line; the nosing line in the same frame reads 33.1 deg (pitch_adjudicate.py), going 0.273-0.275 m from two frames with independent focals. The build still uses 0.295 (pending the coupled study)"
   },
   "going_m": {
    "value": 0.295,
@@ -84,8 +84,8 @@
   "floor_to_floor_m": 3.026,
   "flight_1_width_m": 1.2,
   "flight_1_width_note": "tread band 1.125 m measured + stringer/tread ends",
-  "landing_depth_m": 1.4,
-  "landing_depth_note": "Oct 15: Marina 312 s, the arched door's plane sits 1.34-1.40 x the flight behind the stair foot at every focal (landing 0.34-0.40 x flight = 1.20-1.42 m at the measured going); overhead landing level 82 px = 1.25-1.37 m. Was 1.58 (clip B, depth-stretched)",
+  "landing_depth_m": 1.405,
+  "landing_depth_note": "Oct 15: Marina 312 s, the arched door's plane sits 1.34-1.40 x the flight behind the stair foot at every focal (landing 0.34-0.40 x flight = 1.20-1.42 m at the measured going); overhead landing level 82 px = 1.25-1.37 m. Was 1.58 (clip B, depth-stretched); 1.405 (Oct 15, seam check): flush with the picture wall below, which the ground trace puts 5 mm further front",
   "gallery_width_m": 1.2,
   "gallery_note": "gallery = flight 2's width, running to the hall (not measured; Marina's upstairs shows the whole well open); stair head moved to plan y -2.275 (was -2.757) for flight 2's 3 treads (Oct 14)",
   "landing_width_note": "Marina's main-floor landing spans the foyer (~4 m in clip B). Oct 14 (user: 'why is the staircase not open in the middle?'): the well, landing, flight 2 and gallery shifted 0.654 m north into the empty strip beside the well, so the landing is 3.57 m (foyer 3.67 m) and the open well between the flights is 1.03 m (was 0.38; September model 1.13). Was: the upstairs well's 2.83 m",

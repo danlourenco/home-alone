@@ -1,0 +1,7 @@
+{
+ "note": "Seams the build's seam check may report without failing tools/house/seam_gate.py. Each needs a reason and a plan; anything not listed fails the gate. Matched against the report line with both box names in it.",
+ "known": [
+  {"match": ["hall_corridor/Wall", "hall_corridor/Wall"], "kind": "LEDGE", "reason": "upstairs: the hall's north wall jogs 5 cm where the gallery meets the hall (gallery edge on the stairwell's north edge, hall as traced); predates Oct 15", "plan": "the coupled shell/foyer/stair/upper-hall study (review handoff item 4)"},
+  {"match": ["hall_corridor/door_Header", "hall_bath/Wall"], "kind": "LEDGE", "reason": "upstairs: the hall-bath door header sits 2.6 cm off the bath's wall line; predates Oct 15", "plan": "same study"}
+ ]
+}

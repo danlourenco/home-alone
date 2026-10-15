@@ -12,3 +12,9 @@ if [ -z "$recs" ]; then
 fi
 built=$(grep -L '"user_walk": "rejected"' changes/*.json)
 uv run -q python tools/house/change_gate.py $(echo "$recs $built" | tr ' ' '\n' | sort -u)
+gate=$?
+# Seam gate (Oct 15): a committed grey-box scene must have no unexplained flicker, ledge or gap in its build report
+if echo "$geo" | grep -q 'Greybox_Upstairs\.unity'; then
+  uv run -q python -I tools/house/seam_gate.py || exit 1
+fi
+exit $gate

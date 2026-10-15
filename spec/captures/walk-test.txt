@@ -24,17 +24,17 @@ Stair walk test (both bodies, up and down): 30 legs, 0 blocked
 ok      bandit up leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
 ok      bandit up leg 2: ended 0.00 m from waypoint, 0.02 m off its floor height
 ok      bandit up leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
-ok      bandit up leg 4: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 4: ended 0.03 m from waypoint, 0.02 m off its floor height
 ok      bandit up leg 5: ended 0.01 m from waypoint, 0.02 m off its floor height
 ok      bandit down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
 ok      bandit down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
-ok      bandit down leg 3: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      bandit down leg 4: ended 0.01 m from waypoint, 0.02 m off its floor height
-ok      bandit down leg 5: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 4: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 5: ended 0.01 m from waypoint, 0.02 m off its floor height
 ok      kevin up leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
 ok      kevin up leg 2: ended 0.00 m from waypoint, 0.02 m off its floor height
 ok      kevin up leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
-ok      kevin up leg 4: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 4: ended 0.03 m from waypoint, 0.02 m off its floor height
 ok      kevin up leg 5: ended 0.01 m from waypoint, 0.02 m off its floor height
 ok      kevin down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
 ok      kevin down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
@@ -44,13 +44,19 @@ ok      kevin down leg 5: ended 0.00 m from waypoint, 0.02 m off its floor heigh
 ok      player up leg 1: ended 0.04 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 8)
 ok      player up leg 2: ended 0.00 m from waypoint, 0.03 m off its floor height, 76 frames (clean walk 76)
 ok      player up leg 3: ended 0.02 m from waypoint, 0.03 m off its floor height, 40 frames (clean walk 40)
-ok      player up leg 4: ended 0.04 m from waypoint, 0.03 m off its floor height, 30 frames (clean walk 31)
+ok      player up leg 4: ended 0.03 m from waypoint, 0.03 m off its floor height, 30 frames (clean walk 31)
 ok      player up leg 5: ended 0.01 m from waypoint, 0.03 m off its floor height, 28 frames (clean walk 28)
 ok      player down leg 1: ended 0.03 m from waypoint, 0.03 m off its floor height, 27 frames (clean walk 28)
 ok      player down leg 2: ended 0.01 m from waypoint, 0.03 m off its floor height, 31 frames (clean walk 31)
-ok      player down leg 3: ended 0.03 m from waypoint, 0.03 m off its floor height, 40 frames (clean walk 40)
-ok      player down leg 4: ended 0.03 m from waypoint, 0.03 m off its floor height, 78 frames (clean walk 75)
-ok      player down leg 5: ended 0.01 m from waypoint, 0.03 m off its floor height, 8 frames (clean walk 8)
+ok      player down leg 3: ended 0.02 m from waypoint, 0.03 m off its floor height, 40 frames (clean walk 40)
+ok      player down leg 4: ended 0.04 m from waypoint, 0.03 m off its floor height, 78 frames (clean walk 75)
+ok      player down leg 5: ended 0.02 m from waypoint, 0.03 m off its floor height, 8 frames (clean walk 8)
+Seam check: 351 structural boxes, 0 overlaps (flicker), 3 ledges, 0 gaps
+LEDGE   z -7.880 vs -7.829 (5.1 cm): hall_corridor/Wall at (5.65, 1.20, 7.85) | hall_corridor/Wall at (4.75, 1.20, 7.79)
+LEDGE   x 8.441 vs 8.415 (2.6 cm): hall_corridor/door_Header at (8.41, 2.22, 10.61) | hall_bath/Wall at (8.38, 1.20, 9.53)
+LEDGE   z -7.829 vs -7.880 (5.1 cm): hall_corridor/Wall at (4.75, 1.20, 7.79) | hall_corridor/Wall at (5.67, 1.20, 7.85)
 Leak and headroom check: 1403 points, 0 leaks, 0 low-headroom points (ground floor, outside flight 1)
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 84 legs, 0 blocked
 GROUND Room walk test (both bodies, every doorway to room centre and back): 64 legs, 0 blocked
+skip    bandit back_stair: no cell to stand in (its floor is a stair)
+skip    kevin back_stair: no cell to stand in (its floor is a stair)

@@ -35,6 +35,11 @@ Why this exists (Oct 13): Buzz's room was resized to the SfM size 4.35 m. The "p
 | R3 | Before or after renders are missing on disk |
 | R4 | The claim doesn't list `applies_to` and `measured_in`, or it is built into an item it wasn't measured in without an `assumed` DEVIATIONS row |
 | R5 | A ceiling claim's `surface` is not `ceiling-plane` (crown, beam, landing or soffit edges are not ceilings) |
+| R6 | A disagreeing check that is evidence has no `disposition` (why the claim stands, or what was done about it) |
+
+Each check may give a `type`: `metric` (default), `angular`, `ratio` or `topological`. Only a metric check needs a ruler; an angle or ratio with scale `none` is evidence. If the claim lists `risks` (e.g. `extraction`, `scale`, `registration`, `model-fidelity`), R1 needs an independent agreeing check whose `tests` covers each one: two Marina clips can test extraction but not her model's film accuracy, and two frames on one assumed door can't test the door.
+
+Seams: a committed grey-box scene must also pass `tools/house/seam_gate.py` (no unexplained flicker, ledge or gap in the build's seam check; known ones live in `measurements/checkpoints/seams-known.json` with a reason). The pre-commit hook runs it.
 
 Independence is judged by **ruler kind**: `door-80in:1125` and `door-80in:1175` are the same ruler. A check resting only on a lead (`user-summary`, `ai`, `summary`, `web-summary`, `recollection`, `standard`, `none`) never counts as evidence. When geometry is committed, every record not rejected is re-gated, so nothing new lands on a change the gate now fails.
 

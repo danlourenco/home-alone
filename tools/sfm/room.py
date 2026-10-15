@@ -92,7 +92,13 @@ def analyze(name):
 
     uv = ["uv", "run", "-q", "--with", "numpy", "--with", "matplotlib", "python"]
     env = {**__import__("os").environ, "PYTHONPATH": str(ROOT / "tools/sfm")}
-    agree = run(uv + [ROOT / "tools/sfm/agreement.py", "2", f"colmap={w / 'colmap'}", f"vggt={w / 'vggt'}"], env=env)
+    # camera-path consistency gates promotion: an inconsistent pair stops here unless --force (Oct 15 review, item 1)
+    import subprocess as _sp
+    res = _sp.run(list(map(str, uv + [ROOT / "tools/sfm/agreement.py", "2", f"colmap={w / 'colmap'}", f"vggt={w / 'vggt'}"])),
+                  cwd=ROOT, capture_output=True, text=True, env=env)
+    agree = res.stdout + res.stderr
+    if res.returncode and "--force" not in sys.argv:
+        sys.exit(f"camera paths inconsistent: not promoted (rerun with --force to inspect anyway)\n{agree[-800:]}")
     for m in (w / "colmap/sparse").iterdir():
         (m / "txt").mkdir(exist_ok=True)
         run(["colmap", "model_converter", "--input_path", m, "--output_path", m / "txt", "--output_type", "TXT"])
@@ -103,7 +109,8 @@ def analyze(name):
     d = np.load(w / "vggt/sparse/0/pixels.npz")
     sheet(list(d["images"]), w / "vggt-frames.jpg", cols=6, width=518)
     (w / "report.md").write_text(f"# {name}\n\nKept frame ranges (4 fps): {ranges}\n\n"
-                                 f"## Agreement (COLMAP vs VGGT, 2%)\n```\n{agree.strip()}\n```\n\n"
+                                 f"## Camera-path consistency (COLMAP vs VGGT, 2%; paths only, NOT room accuracy)\n```\n{agree.strip()}\n```\n\n"
+                                 "Not accepted as geometry until held-out geometric checks pass (wall ratios, corners, door offsets in other views).\n\n"
                                  f"## Shape (dims.png)\n```\n{dims.strip()}\n```\n")
     print(agree.splitlines()[-1]); print(dims)
 

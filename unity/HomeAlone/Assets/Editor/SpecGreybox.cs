@@ -88,10 +88,20 @@ public static class SpecGreybox
                 foreach (var (x0, x1, z0, z1) in Cells(s.pts))
                     Box(g, "Floor", x0, x1, z0, z1, -0.2f, 0f, Dress != null && FloorY != 0f && Dress["walls"]["spaces"].Any(n => (string)n == s.name)
                         ? DressMat(Dress["walls"]["floor"]) : s.kind == "hall" && FloorY == 0f ? mHall : mFloor);   // ground halls: wood (Marina's foyer)
-                var hx = holes.SelectMany(h => h.pts.Select(p => p.x)); var hz = holes.SelectMany(h => h.pts.Select(p => p.y));
+                // hole edges within 6 cm of a wall line on this floor snap onto it: the stairwell's edges ARE the foyer's walls, traced
+                // 0.2-5 cm apart on the two floors (seam check: a ceiling strip along the stair wall)
+                float Snap(float v, IEnumerable<float> own) { var o = own.OrderBy(w => Mathf.Abs(w - v)).First(); return Mathf.Abs(o - v) < 0.06f ? o : v; }
+                var hx = holes.SelectMany(h => h.pts.Select(p => Snap(p.x, spaces.SelectMany(o => o.pts).Select(q => q.x)))).ToList();
+                var hz = holes.SelectMany(h => h.pts.Select(p => Snap(p.y, spaces.SelectMany(o => o.pts).Select(q => q.y)))).ToList();
                 foreach (var (x0, x1, z0, z1) in Cells(s.pts, hx, hz))
-                    if (!holes.Any(h => Inside(h.pts, new Vector2((x0 + x1) / 2, (z0 + z1) / 2))))
-                        Box(ceilings, s.name + "_Ceiling", x0, x1, z0, z1, s.ceil, s.ceil + 0.15f, mCeil);
+                    if (x1 - x0 > 0.02f && z1 - z0 > 0.02f && !holes.Any(h => Inside(h.pts, new Vector2((x0 + x1) / 2, (z0 + z1) / 2))))   // no slivers from mm trace offsets
+                    {   // stops under the upper floor's slab, and under a landing's underside when it reaches one (seam check)
+                        float top = FloorY != 0f ? Mathf.Min(s.ceil + 0.15f, -0.2f - FloorY) : s.ceil + 0.15f;
+                        foreach (var L in Landings)
+                            if (x1 > L.x0 - 0.1f && x0 < L.x1 + 0.1f && z1 > L.z0 - 0.1f && z0 < L.z1 + 0.1f && FloorY + top > L.y)
+                                top = Mathf.Max(s.ceil + 0.005f, L.y - FloorY);
+                        Box(ceilings, s.name + "_Ceiling", x0, x1, z0, z1, s.ceil, top, mCeil);
+                    }
                 Walls(g, s, doors);
                 // a balustrade between two rooms (the service stair's open side, Oct 15): built once, by the first-named space
                 foreach (var d in doors.Where(d => d.kind == "rail" && d.a == s.name && spaces.Any(o => o.name == d.b && o.kind != "opening")))
@@ -141,6 +151,7 @@ public static class SpecGreybox
                 -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0])).ToList();
             groot = new GameObject("Ground"); gceil = Child(groot, "Ceilings");
             BuildFloor(groot, gceil, gspaces, gdoors, spaces.Where(s => s.opens == "down").ToList());
+            if (gj["stair"] != null && gj["stair"].Type != JTokenType.Null) Stair(groot, gj["stair"], false);   // the service stair (ground-floor y)
             Dressing(groot, FloorY);   // before the gates: the walk tests see its colliders
             FloorY = 0f;
         }
@@ -154,6 +165,14 @@ public static class SpecGreybox
         report += StairWalk(stairPath);
         // structure checks: headroom and room reachability are about the building, so the dressing's furniture is off for them
         var dressing = GameObject.Find("Ground/Dressing"); dressing?.SetActive(false); Physics.SyncTransforms();
+        float gfy = gj != null ? (float)gj["floor_y_m"] : 0f;
+        SeamRooms = spaces.Select(s => (s.pts, s.opens == "down" ? gfy : 0f, s.ceil)).ToList();
+        if (gspaces != null) SeamRooms.AddRange(gspaces.Select(s => (s.pts, gfy, gfy + s.ceil)));
+        // closed rooms (no way in: back_hall behind its prop door) are never seen
+        var walkIn = doors.Concat(gdoors ?? new List<Door>()).Where(d => d.kind != "fake_door").SelectMany(d => new[] { d.a, d.b }).ToHashSet();
+        var all = spaces.Concat(gspaces ?? new List<Space>()).ToList();
+        SeamRooms = SeamRooms.Where((r, i) => walkIn.Contains(all[i].name) || all[i].kind == "opening").ToList();
+        report += SeamCheck(root, groot);
         report += LeakAndHeadroom(spaces, gspaces, gj != null ? (float)gj["floor_y_m"] : 0f);
         report += "UPSTAIRS " + RoomWalk(spaces, doors);
         if (gj != null) { FloorY = (float)gj["floor_y_m"]; report += "GROUND " + RoomWalk(gspaces, gdoors); FloorY = 0f; }
@@ -553,7 +572,8 @@ public static class SpecGreybox
                 Vector3 Mid((float, float, float, float) q) => new Vector3((q.Item1 + q.Item2) / 2, FloorY, (q.Item3 + q.Item4) / 2);
                 var order = Cells(s.pts).OrderByDescending(q => (q.Item2 - q.Item1) * (q.Item4 - q.Item3)).ToList();
                 var c = order.FirstOrDefault(q => !Physics.CheckCapsule(Mid(q) + Vector3.up * (r + 0.06f), Mid(q) + Vector3.up * (h - r), r));
-                var mid = Mid(c == default ? order[0] : c);
+                if (c == default) { lines.Add($"skip    {name} {s.name}: no cell to stand in (its floor is a stair)"); continue; }
+                var mid = Mid(c);
                 foreach (var d in doors.Where(d => (d.a == s.name || d.b == s.name) && (d.kind == "door" || d.kind == "arch" || d.kind == "open")))
                 {
                     float m = (d.lo + d.hi) / 2;
@@ -578,6 +598,69 @@ public static class SpecGreybox
             Object.DestroyImmediate(go);
         }
         lines.Insert(0, $"Room walk test (both bodies, every doorway to room centre and back): {n} legs, {bad} blocked");
+        return string.Join("\n", lines) + "\n";
+    }
+
+    // Seams (Oct 15, user: "walls and ceilings must line up"): every exposed face of the structural boxes (walls, headers,
+    // floors, ceilings, stair structure; not trim, rails, props or dressing) against every other one facing the same way.
+    //   OVERLAP: coplanar within 1 cm, overlapping, different materials (flicker / z-fighting)
+    //   LEDGE:   the same surface continued 0.5-6 cm off its plane, stacked or end to end (a visible step)
+    //   GAP:     coplanar but 0.5-10 cm short of meeting along the surface (a slit)
+    // A face covered by a touching box (back-to-back walls) is internal and skipped.
+    // Rooms as volumes for the seam check: (polygon, floor y, top y). Stairwells span from the floor below to their ceiling.
+    static List<(List<Vector2> pts, float y0, float y1)> SeamRooms = new();
+
+    static string SeamCheck(params GameObject[] roots)
+    {
+        // only surfaces seen from inside a room count: the point just in front of a face must be in a room's open volume
+        bool Seen(Vector3 q) => SeamRooms.Any(r => q.y > r.y0 + 0.002f && q.y < r.y1 - 0.002f && Inside(r.pts, new Vector2(q.x, q.z)));
+        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker" };
+        var boxes = roots.Where(r => r != null).SelectMany(r => r.GetComponentsInChildren<MeshRenderer>())
+            .Where(m => !skip.Any(k => m.name.Contains(k) || (m.transform.parent != null && m.transform.parent.name.Contains(k)) ||
+                                        (m.transform.parent?.parent != null && m.transform.parent.parent.name.Contains(k))))
+            .Where(m => Quaternion.Angle(m.transform.rotation, Quaternion.identity) < 0.1f)
+            .Select(m => (m, b: m.bounds)).ToList();
+        var faces = new List<(int box, int ax, float c, int n, Vector2 lo, Vector2 hi)>();
+        for (int i = 0; i < boxes.Count; i++)
+            for (int ax = 0; ax < 3; ax++)
+            {
+                var b = boxes[i].b; int u = (ax + 1) % 3, v = (ax + 2) % 3;
+                var lo = new Vector2(b.min[u], b.min[v]); var hi = new Vector2(b.max[u], b.max[v]);
+                faces.Add((i, ax, b.min[ax], -1, lo, hi)); faces.Add((i, ax, b.max[ax], 1, lo, hi));
+            }
+        float Ov(float a0, float a1, float b0, float b1) => Mathf.Min(a1, b1) - Mathf.Max(a0, b0);
+        Vector3 P(int ax, float c, float a, float b) { var q = Vector3.zero; q[ax] = c; q[(ax + 1) % 3] = a; q[(ax + 2) % 3] = b; return q; }
+        bool Solid(Vector3 q, int not = -1) { for (int k = 0; k < boxes.Count; k++) if (k != not && boxes[k].b.Contains(q)) return true; return false; }
+        // internal: the point just outside the face's centre is inside another box (back-to-back walls, a ceiling's edge in a wall)
+        var exposed = faces.Where(f => { var q = P(f.ax, f.c + f.n * 0.003f, (f.lo.x + f.hi.x) / 2, (f.lo.y + f.hi.y) / 2); return !Solid(q, f.box) && Seen(q); }).ToList();
+        var lines = new List<string>(); int over = 0, ledge = 0, gap = 0;
+        string Where(int i) { var c = boxes[i].b.center; return $"{boxes[i].m.transform.parent?.name}/{boxes[i].m.name} at ({c.x:F2}, {c.y:F2}, {-c.z:F2})"; }
+        string[] axn = { "x", "y", "z" };
+        for (int i = 0; i < exposed.Count; i++)
+            for (int j = i + 1; j < exposed.Count; j++)
+            {
+                var f = exposed[i]; var g = exposed[j];
+                if (f.box == g.box || f.ax != g.ax || f.n != g.n) continue;
+                float d = Mathf.Abs(f.c - g.c);
+                if (d > 0.06f) continue;
+                float ou = Ov(f.lo.x, f.hi.x, g.lo.x, g.hi.x), ov = Ov(f.lo.y, f.hi.y, g.lo.y, g.hi.y);
+                if (d < 0.01f && ou > 0.05f && ov > 0.05f)
+                {
+                    if (boxes[f.box].m.sharedMaterial != boxes[g.box].m.sharedMaterial)
+                    { over++; if (over <= 40) lines.Add($"OVERLAP {axn[f.ax]}={f.c:F3}/{g.c:F3}: {Where(f.box)} | {Where(g.box)}"); }
+                }
+                else if (d >= 0.005f && ((ou > 0.05f && Mathf.Abs(ov) < 0.02f && ov <= 0.02f) || (ov > 0.05f && Mathf.Abs(ou) < 0.02f && ou <= 0.02f)))
+                { ledge++; if (ledge <= 200) lines.Add($"LEDGE   {axn[f.ax]} {f.c:F3} vs {g.c:F3} ({d * 100:F1} cm): {Where(f.box)} | {Where(g.box)}"); }
+                else if (d < 0.005f && ((ou > 0.05f && ov < -0.005f && ov > -0.10f) || (ov > 0.05f && ou < -0.005f && ou > -0.10f)))
+                {   // a slit only if it is empty just behind the surface (a wall or slab filling it is a joint, not a gap)
+                    bool alongU = ov < 0;
+                    float a = alongU ? (Mathf.Max(f.lo.x, g.lo.x) + Mathf.Min(f.hi.x, g.hi.x)) / 2 : (Mathf.Min(f.hi.x, g.hi.x) + Mathf.Max(f.lo.x, g.lo.x)) / 2;
+                    float b = alongU ? (Mathf.Min(f.hi.y, g.hi.y) + Mathf.Max(f.lo.y, g.lo.y)) / 2 : (Mathf.Max(f.lo.y, g.lo.y) + Mathf.Min(f.hi.y, g.hi.y)) / 2;
+                    if (Solid(P(f.ax, f.c - f.n * 0.01f, a, b)) || !Seen(P(f.ax, f.c + f.n * 0.01f, a, b))) continue;
+                    gap++; if (gap <= 200) lines.Add($"GAP     {axn[f.ax]}={f.c:F3} ({-Mathf.Min(ou, ov) * 100:F1} cm): {Where(f.box)} | {Where(g.box)}");
+                }
+            }
+        lines.Insert(0, $"Seam check: {boxes.Count} structural boxes, {over} overlaps (flicker), {ledge} ledges, {gap} gaps");
         return string.Join("\n", lines) + "\n";
     }
 

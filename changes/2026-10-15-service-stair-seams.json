@@ -1,0 +1,73 @@
+{
+ "change": "Service stair built (13 risers at the main stair's rise, going = its enclosure / 16 treads, closed at the 2.438 m ceiling; balustrade on its open side toward the breakfast area, which is now open). 'Open' room pairs close onto their shared centreline (a 6 cm unfloored strip let rays out). Seam fixes: stairwell back wall stops at the upper floor; ground ceilings stop under the floor above and at a landing; hole edges snap within 6 cm to the floor's wall lines; landing depth 1.405 (flush with the picture wall); back hall ceiling 2.25. New seam check in the build and tools/house/seam_gate.py in pre-commit",
+ "target": "Greybox_Upstairs",
+ "premise": "The service stair is an open-sided straight flight rising from the breakfast area (Marina 1074 s); one plane per physical wall",
+ "claim": {
+  "value": [
+   0.242,
+   13
+  ],
+  "data": [
+   "overhead-trace:ground"
+  ],
+  "scale": [
+   "stair-rise:0.178"
+  ],
+  "upstream": [
+   "outlet-plate-4.5in:198"
+  ],
+  "applies_to": [
+   "back_stair",
+   "main_stair"
+  ],
+  "measured_in": [
+   "main_stair"
+  ],
+  "assumed": {
+   "back_stair": "DEVIATIONS 30"
+  },
+  "surface": "ceiling-plane",
+  "surface_note": "The only ceiling HEIGHT set is the back hall's: it sits under the landing, so its ceiling plane is the landing's underside (2.26-2.28 m, Marina 312 s), built 1.4 cm lower so the two don't coincide. The other ceiling edits clip slab thickness only"
+ },
+ "history": [
+  {
+   "date": "2026-10-15",
+   "what": "service stair side as a floor-level rail: buried in the steps; moved onto the steps",
+   "outcome": "failed"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Marina 1074 s: through the foyer's opening, the service stair's white turned balusters and dark rail beside the opening (an open side, a rising flight)",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "marina-frame:1074"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "seam check in the same build: 0 overlaps, 0 gaps; 3 known upstairs ledges (measurements/checkpoints/seams-known.json)",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "unity:build"
+   ],
+   "scale": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/feedback/shots/20261015-084047-Greybox_Upstairs.png"
+  ],
+  "after": [
+   "spec/captures/feel-fixes/note2.png"
+  ]
+ },
+ "user_walk": "pending"
+}

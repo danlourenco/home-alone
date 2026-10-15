@@ -37,7 +37,7 @@ ADULT = {"capsule_diameter": 0.55, "height": 1.85, "min_hall": 0.90}
 # Ceiling heights, measured Oct 13 on door walls (wall height / door height x 80 in, door_scale.py):
 # parents 2.42 m and Kevin 2.30-2.33 m to the crown's lower edge (+~0.08 m crown), hall attic leg 2.29 m to the ceiling.
 CEILINGS = {"default": 2.40, "parents_bedroom": 2.50, "parents_bath": 2.50, "hall_corridor_south": 2.29} if FLOOR == "upstairs" else \
-    {"default": 2.438, "foyer": 2.82, "back_hall": 2.26}  # back_hall Oct 15: under the landing (its underside 2.26 m), unknown beyond. foyer Oct 14 (2.82 = the most under the 0.2 m upper-floor slab): front ceiling 2.92 m in the clip A solve, 1.40 x a door in the film
+    {"default": 2.438, "foyer": 2.82, "back_hall": 2.25}  # back_hall Oct 15: just under the landing (underside 2.264 m; a coplanar ceiling flickered, seam check), unknown beyond. foyer Oct 14 (2.82 = the most under the 0.2 m upper-floor slab): front ceiling 2.92 m in the clip A solve, 1.40 x a door in the film
                         # (then-foyer.png), 1.51 x the vestibule opening in Marina 205 s (film_ratios.py). Ground: 8 ft standard, inside the measured living 2.44 / dining 2.42 m (tools/house/ground_ceiling.py, Oct 14). Was 2.32, the
                         # landing balustrade's base in the stair clip, misread as the foyer ceiling. Kitchen (beams) unmeasured
 # Which way each stairwell opening leads (sources): the main stair goes DOWN to the foyer (measured, stairs.json); the
@@ -173,6 +173,33 @@ def door_on(p, doors):
     return next((d for d in cands if "wall_axis" not in d), None)
 
 
+def service_stair_spec(final, o):
+    """The service (back) stair in its traced enclosure: foot at the breakfast-area end (the enclosure's open east side),
+    rising west at the main stair's measured rise, risers spread over the enclosure's length. Built only up to the
+    enclosure's ceiling and closed there: Marina's upstairs has no arrival for it (Muto: it never reached the upstairs
+    set); the user accepted closing it (Oct 15). Going and count are AUTHORED (DEVIATIONS 30)."""
+    S = json.loads(STAIR.read_text()); r = S["measured"]["rise_m"]["value"]; n = S["authored"]["risers_total"]
+    P = np.c_[final["back_stair"][:, 1] - o[1], final["back_stair"][:, 0] - o[0]]
+    x0, x1, z0, z1 = P[:, 0].min(), P[:, 0].max(), P[:, 1].min(), P[:, 1].max()
+    g = (x1 - x0) / (n - 1)
+    ceil = CEILINGS.get("back_stair", CEILINGS["default"])
+    B = []
+    for k in range(1, n):
+        if k * r > ceil - 0.05:
+            break
+        B.append({"name": f"service_step{k:02d}", "kind": "step", "x": [round(float(x1 - k * g), 3), round(float(x1 - (k - 1) * g), 3)],
+                  "y": [0.0, round(k * r, 3)], "z": [round(float(z0), 3), round(float(z1), 3)]})
+        xa, xb = x1 - k * g, x1 - (k - 1) * g                # open side (the breakfast area, z0): 2 spindles a tread, rail 0.9 m above
+        B.append({"name": f"service_rail{k:02d}_cap", "kind": "rail", "x": [round(float(xa), 3), round(float(xb), 3)],
+                  "y": [round(k * r + 0.84, 3), round(k * r + 0.9, 3)], "z": [round(float(z0), 3), round(float(z0) + 0.06, 3)]})
+        for i in (0.25, 0.75):
+            c = xa + i * g
+            B.append({"name": f"service_rail{k:02d}_spindle{i}", "kind": "rail", "x": [round(float(c - 0.02), 3), round(float(c + 0.02), 3)],
+                      "y": [round(k * r, 3), round(k * r + 0.84, 3)], "z": [round(float(z0) + 0.01, 3), round(float(z0) + 0.05, 3)]})
+    return {"rise_m": r, "going_m": round(float(g), 3), "risers": len(B), "boxes": B, "walk_path": [],
+            "authored": f"going {g:.3f} m = enclosure length / {n - 1} treads; {len(B)} risers built, closed at the {ceil} m ceiling"}
+
+
 def stair_spec(final, o):
     """The main stair in spec coordinates (x east, z south, y up; upper floor at y = 0), from the measured flight
     (measurements/rooms/stairs.json) and the well/walkway the trace now holds. Steps are solid boxes down to the foyer
@@ -232,7 +259,7 @@ def stair_spec(final, o):
     for k in range(n1 + 1, n):
         rail(f"flight2_rail{k - n1:02d}", xl + (k - n1 - 1) * g2, xl + (k - n1) * g2, -F + k * r, -F + k * r + 0.9, zg, zg + 0.06)
     box("well_wall_south", "wall", xw - 0.07, xe, -F + fc, 0, zs, zs + 0.07)    # the photo wall, above the foyer's own wall
-    box("well_wall_west", "wall", xw - 0.07, xw, (-F + n1 * r - SLAB) if fy else -F, 2.4, zn - 0.07, zs + 0.07)   # rear wall above the landing's underside
+    box("well_wall_west", "wall", xw - 0.07, xw, (-F + n1 * r - SLAB) if fy else -F, 0 if fy else 2.4, zn - 0.07, zs + 0.07)   # rear wall, landing underside to the upper floor (the upstairs well's own wall goes on above; seam check)
     # north edge of the well: only the upper floor's edge (fascia). A full-height wall here stood inside the foyer, which is
     # wider than the well (fixed Oct 13)
     box("well_fascia_north", "wall", xw, xe, (-F + fc) if fy else -0.30, 0, zn - 0.07, zn)   # from the foyer's wall top (no overlap)
@@ -335,11 +362,11 @@ def main():
     move = {}
     for p in pairs:
         dk = (door_on(p, topo["doors"]) or {}).get("kind")
-        if dk == "open":   # a stair head: no wall, the two floors meet where the trace puts them
-            continue
         is_rail = dk == "rail"
-        t = RAIL_T if is_rail else WALL_T
-        if p["gap"] <= t or (MEASURED and not is_rail):   # rails are a measurement fact, applied in both builds
+        # open (no wall): the two rooms meet on their shared centreline. Was: left as traced, which kept a strip with no
+        # floor and no wall between them (Oct 15: a 6 cm gap beside the service stair let the leak check's rays outside)
+        t = 0.0 if dk == "open" else RAIL_T if is_rail else WALL_T
+        if p["gap"] <= t or (MEASURED and not is_rail and dk != "open"):   # rails and openings are measurement facts, applied in both builds
             continue
         d = (p["gap"] - t) / 2
         for n, k, sgn in ((p["a"], p["ia"], p["sa"]), (p["b"], p["ib"], -p["sa"])):
@@ -448,7 +475,7 @@ def main():
                    "span_spec": [round(v - o[1 if d["wall_axis"] == "x" else 0], 3) for v in d["span"]],
                    "spec_axis": "z" if d["wall_axis"] == "x" else "x"} for d in doors],
         "flags": flags,
-        "stair": stair_spec(final, o) if FLOOR == "upstairs" else None,
+        "stair": stair_spec(final, o) if FLOOR == "upstairs" else (service_stair_spec(final, o) if "back_stair" in final else None),
         "floor_y_m": 0.0 if FLOOR == "upstairs" else -round(json.loads((ROOT / f"spec/house_spec{'.' + VARIANT if VARIANT else ''}.json").read_text())["stair"]["floor_to_floor_m"], 3),
         "sources": {"plan": str(PLAN.relative_to(ROOT)), "doors": str(DOORS.relative_to(ROOT)), "anchors": ANCHORS},
     }
