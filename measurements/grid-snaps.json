@@ -5,13 +5,23 @@
    "where": "upstairs, parents_bedroom / kevin_jeff_room (the parents' L-notch face at spec x 6.817, z 3.72-5.33)",
    "found": "wall 9.6 in thick (+4.1 in) over 1.47 m; the parents' face sits 10.4 cm behind the line kevin_jeff_room and hall_end share",
    "decision": "close it: the parents' bedroom face moves +0.104 m onto the shared wall (the room grows ~4 in); kevin_jeff_room and hall_end (both measured) stay",
-   "by": "user, Oct 15: 'you can grow the parents room'"
+   "by": "user, Oct 15: 'you can grow the parents room'",
+   "close": {
+    "floor": "upstairs",
+    "move": "parents_bedroom",
+    "against": "kevin_jeff_room"
+   }
   },
   {
    "where": "upstairs, hall_end / girls_a_closet (0.42 m stretch)",
    "found": "wall 10.8 in thick (+5.2 in)",
    "decision": "close it: the closet (sealed, unmeasured) grows onto the shared wall; hall_end keeps its measured width (1.22 m, hall-s4)",
-   "by": "user rule, Oct 15 ('no weird gaps'; not visible inside)"
+   "by": "user rule, Oct 15 ('no weird gaps'; not visible inside)",
+   "close": {
+    "floor": "upstairs",
+    "move": "girls_a_closet",
+    "against": "hall_end"
+   }
   },
   {
    "where": "ground, the pocket between kitchen (jog at spec x 2.316-4.12, z 3.649), dining (z 3.004) and sunroom (z 2.864)",
@@ -19,7 +29,21 @@
    "decision": "KEEP the chute: a real vertical shaft (its own space, kind 'shaft') where Marina's overhead shows the green-lined square, with the hatch on the breakfast-area wall (Marina 1116 s: white-framed green recess); it stays open/usable for gameplay (a trap). The rest of the pocket is the chase wall around it. Not a gap: V2 accepts declared shafts",
    "evidence": "Marina's main-floor overhead (shaft open at the wall-top cut, green lining); the poster notes a laundry chute outside the parents' room upstairs at 00:03:19. Film confirmation of the chute still to do",
    "by": "user, Oct 15: 'that chase should stay there as it's central to the movie and can be used as a trap'",
-   "gameplay": "The iron trap (film): the chute opens in the BREAKFAST ROOM (the hatch on the chase wall, Marina 1116 s: white-framed green recess, left of the cabinet; user, Oct 15). Marv pulls the cord in the basement laundry and the iron drops down the shaft onto his face. The shaft runs from that main-floor hatch down to the basement laundry; nothing upstairs"
+   "gameplay": "The iron trap (film): the chute opens in the BREAKFAST ROOM (the hatch on the chase wall, Marina 1116 s: white-framed green recess, left of the cabinet; user, Oct 15). Marv pulls the cord in the basement laundry and the iron drops down the shaft onto his face. The shaft runs from that main-floor hatch down to the basement laundry; nothing upstairs",
+   "shaft": {
+    "floor": "ground",
+    "name": "laundry_chute",
+    "x": [
+     2.456,
+     2.906
+    ],
+    "z": [
+     3.004,
+     3.509
+    ],
+    "hatch_wall": "kitchen x=2.316 face",
+    "note": "spec metres, placed by eye from overhead_994 (the green square sits in the pocket's rear corner on the sunroom side, against the breakfast-area wall that carries the hatch, Marina 1116 s); ~0.45 x 0.5 m. APPROXIMATE: to measure from 1116 s and the film"
+   }
   }
  ],
  "open": [
