@@ -14,9 +14,12 @@
    "count"
   ],
   "applies_to": [
-   "main_stair"
+   "main_stair_flight_1",
+   "main_stair_flight_2"
   ],
-  "measured_in": []
+  "measured_in": [
+   "main_stair_flight_1"
+  ]
  },
  "history": [
   {
@@ -57,6 +60,16 @@
    ],
    "scale": [
     "none"
+   ]
+  },
+  {
+   "what": "film still then-foyer.png: the user counts 12 treads + the landing = 13 risers in flight 1 (Oct 14)",
+   "agrees": true,
+   "data": [
+    "film-frame:then-foyer"
+   ],
+   "scale": [
+    "count"
    ]
   }
  ],
