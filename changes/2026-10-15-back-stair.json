@@ -1,5 +1,5 @@
 {
- "change": "Back stair rebuilt (reconcile.service_stair_spec): 3 foot steps toward the wall between newel and tall post, quarter landing, flight along the wall (going 0.262), dressed parts (dark treads/posts, white risers/stringer/balusters, papered spandrel); Kevin's basement door prop on the breakfast rear wall; kitchen walls cream and floor quarry tile (colours)",
+ "change": "Back stair rebuilt (reconcile.service_stair_spec): 4 foot steps toward the wall between newel and tall post (film 2528: 8 balusters), quarter landing at 0.89 m, flight along the wall to the ceiling (going 0.262); dressed parts; Kevin's basement door under the flight's high end in the stair's open-side plane, papered wall above it; kitchen walls cream, floor quarry tile",
  "target": "House_WallGrid",
  "premise": "The back stair turns at its foot toward the breakfast table and has an open, dressed side over a papered spandrel; the basement door is on the breakfast area's rear wall",
  "claim": {
@@ -26,16 +26,22 @@
   ],
   "assumed": {
    "kitchen": "DEVIATIONS 38"
-  }
+  },
+  "surface": "ceiling-plane"
  },
  "history": [
   {
    "date": "2026-10-15",
    "what": "straight solid flight from the doorway end (old service stair)",
    "outcome": "failed"
+  },
+  {
+   "date": "2026-10-15",
+   "what": "basement door on the breakfast area's rear wall (an outside wall in our plan); 3 foot steps, flight too low for a door under it",
+   "outcome": "failed"
   }
  ],
- "premise_reviewed": "",
+ "premise_reviewed": "The door's place was misread from a search report and not checked against the plan (it opened outdoors); the user pointed to Marina 916 s, where the door is face-on in the stair's open-side plane under its high end. The stair premise stands; the foot gains a step (film 2528) so the flight runs high enough for the door, as in Marina",
  "checks": [
   {
    "what": "film 912/928/1044/2528: newel by the foyer doorway, bottom steps facing the table, tall turned post, white stringer over a floral-papered spandrel, dark treads, white risers",
@@ -56,6 +62,17 @@
    "agrees": true,
    "data": [
     "film:3612"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  },
+  {
+   "what": "Marina 916 s fade (kitchen-compare): door face-on beside where the flight meets the ceiling, window on the side wall to its right",
+   "agrees": true,
+   "data": [
+    "marina-frame:p1-916"
    ],
    "scale": [
     "none"

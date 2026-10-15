@@ -874,9 +874,11 @@ public static class SpecGreybox
         {
             string kind = (string)b["kind"];
             if (stairOnly && (kind == "wall" || kind == "ceiling" || kind == "floor")) continue;   // the wall grid builds the stair hall itself
-            if (kind == "tread" || kind == "newel" || kind == "riser" || kind == "stringer" || kind == "spindle")
-            {   // the back stair (film 912/928/1044): dark wood treads and posts, white risers, stringer and balusters
-                var pm = kind == "tread" || kind == "newel" ? Mat("Wood_StairDark", new Color(0.24f, 0.12f, 0.07f)) : Mat("Paint_StairWhite", new Color(0.9f, 0.9f, 0.87f));
+            if (kind == "tread" || kind == "newel" || kind == "riser" || kind == "stringer" || kind == "spindle" || kind == "spandrel" || kind == "door_prop" || kind == "casing")
+            {   // the back stair (film 912/928/1044): dark wood treads and posts, white risers, stringer and balusters; the papered
+                // wall under its high end with the basement door in it
+                var pm = kind == "tread" || kind == "newel" ? Mat("Wood_StairDark", new Color(0.24f, 0.12f, 0.07f))
+                       : kind == "spandrel" ? (stepMat ?? mWall) : kind == "door_prop" ? mProp : Mat("Paint_StairWhite", new Color(0.9f, 0.9f, 0.87f));
                 Box(g, (string)b["name"], (float)b["x"][0], (float)b["x"][1], -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], pm);
                 continue;
             }
@@ -960,6 +962,10 @@ public static class SpecGreybox
         {
             var go = new GameObject("RoomWalker_" + name); var cc = go.AddComponent<CharacterController>();
             cc.radius = r; cc.height = h; cc.center = new Vector3(0, h / 2, 0); cc.stepOffset = StepOffset; cc.skinWidth = 0.02f;
+            // spaces whose floor is all stair (the back stair): reached by its foot, not sideways through its balustrades
+            Vector3 M0((float, float, float, float) q) => new Vector3((q.Item1 + q.Item2) / 2, FloorY, (q.Item3 + q.Item4) / 2);
+            var stairFloored = spaces.Where(sp => !Cells(sp.pts).Any(q => !Physics.CheckCapsule(M0(q) + Vector3.up * (r + 0.06f), M0(q) + Vector3.up * (h - r), r)))
+                                     .Select(sp => sp.name).ToHashSet();
             foreach (var s in spaces.Where(s => s.kind == "room" || s.kind == "hall"))
             {
                 // target: the centre of the largest cell a body can stand in (an L-shaped foyer's largest cell centres on the stair)
@@ -970,6 +976,7 @@ public static class SpecGreybox
                 var mid = Mid(c);
                 foreach (var d in doors.Where(d => (d.a == s.name || d.b == s.name) && (d.kind == "door" || d.kind == "arch" || d.kind == "open")))
                 {
+                    if (d.kind == "open" && stairFloored.Contains(d.a == s.name ? d.b : d.a)) { lines.Add($"skip    {name} {s.name} via {d.a}/{d.b}: the other side is all stair"); continue; }
                     float m = (d.lo + d.hi) / 2;
                     Vector3 W(float off) => d.alongX ? new Vector3(m, FloorY, d.coord + off) : new Vector3(d.coord + off, FloorY, m);
                     var start = Inside(s.pts, new Vector2(W(0.5f).x, W(0.5f).z)) ? W(0.5f) : W(-0.5f);

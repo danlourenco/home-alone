@@ -175,7 +175,7 @@ def door_on(p, doors):
 
 
 def service_stair_spec(final, o):
-    """The service (back) stair (film 912/928/1044/2528, Marina 916-936 s; Oct 15 rebuild): its foot is a short run of 3 steps
+    """The service (back) stair (film 912/928/1044/2528, Marina 916-936 s; Oct 15 rebuild): its foot is a short run of 4 steps
     rising from the breakfast area toward the wall, between a short dark newel (by the foyer doorway) and a tall dark turned
     post; a quarter landing in the enclosure's doorway-end corner; then the flight rises along the wall toward the rear.
     Open side to the room: white cut stringer, dark treads, white risers, white turned balusters, dark rail; the triangle
@@ -185,7 +185,7 @@ def service_stair_spec(final, o):
     S = json.loads(STAIR.read_text()); r = S["measured"]["rise_m"]["value"]
     P = np.c_[final["back_stair"][:, 1] - o[1], final["back_stair"][:, 0] - o[0]]
     x0, x1, z0, z1 = P[:, 0].min(), P[:, 0].max(), P[:, 1].min(), P[:, 1].max()
-    g, w, nb = 0.262, z1 - z0, 3                            # going (Marina 916 s), flight width = the enclosure's depth, steps at the foot
+    g, w, nb = 0.262, z1 - z0, 4                            # going (Marina 916 s), flight width = the enclosure's depth, 4 foot steps (film 2528: 8 balusters between newel and post; Marina 916 s: the flight runs high)
     xl = x1 - w                                             # the landing: the enclosure's doorway-end square
     ceil = CEILINGS.get("back_stair", CEILINGS["default"])
     B = []
@@ -211,6 +211,21 @@ def service_stair_spec(final, o):
             c = xa + i * g
             box(f"service_rail{k:02d}_spindle{i}", "spindle", c - 0.02, c + 0.02, hk, hk + 0.84, z0 + 0.01, z0 + 0.05)
     xt = xl - k * g; ht = (nb + 1 + k) * r
+    # Kevin's basement door (film 3607-3617; Marina 916/934 s): in the stair's open-side plane, under the flight's high end where
+    # it runs into the ceiling, opening into the space under the stair (the basement stair's head). The open side continues
+    # past the last step as a papered wall up to the ceiling; the steps over the door are a slab, not solid. Closed prop
+    # (nothing behind it is shown). 28 in, at the enclosure's end: AUTHORED (DEVIATIONS 38)
+    xd0, xd1 = x0 + 0.075, x0 + 0.075 + 0.711   # 28 in: its casings fit between the end wall and the first solid step
+    for b in B:
+        if b["kind"] == "step" and b["name"].startswith("service_step") and b["x"][0] < xd1 - 1e-6:
+            b["y"][0] = round(b["y"][1] - 0.22, 3)            # over the door: the flight is a slab (headroom under it)
+    xs = max([b["x"][1] for b in B if b["kind"] == "step" and b["name"].startswith("service_step") and b["y"][0] > 0] or [xt])
+    box("service_spandrel_end", "spandrel", x0, xs, 0.0, ceil, z0, z0 + 0.03)   # up to the first solid step's face
+    box("basement_PropDoor", "door_prop", xd0, xd1, 0.0, 2.032, z0 - 0.035, z0)
+    for nm, xa, xb in (("basement_Casing_l", xd0 - 0.07, xd0), ("basement_Casing_r", xd1, xd1 + 0.07)):
+        box(nm, "casing", xa, xb, 0.0, 2.10, z0 - 0.02, z0)
+    box("basement_Casing_head", "casing", xd0 - 0.07, xd1 + 0.07, 2.032, 2.10, z0 - 0.02, z0)
+    box("basement_PropDoor_knob", "newel", xd0 + 0.05, xd0 + 0.09, 0.92, 0.96, z0 - 0.075, z0 - 0.035)
     # white cut stringer along the open side, under the treads' ends (a band following the flight)
     for j in range(1, k + 1):
         xa, xb = xl - j * g, xl - (j - 1) * g; hj = (nb + 1 + j) * r
