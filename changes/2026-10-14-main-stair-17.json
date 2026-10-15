@@ -94,10 +94,10 @@
    ]
   },
   {
-   "what": "Marina climb clip B: the upper floor ~2 rises past the landing rail (estimate, steps not shown)",
+   "what": "MY ESTIMATE from Marina's climb clip B (she never films flight 2; her climb ends on the landing): upper floor looked ~2 rises past the landing rail. Not her count",
    "agrees": false,
    "data": [
-    "marina-clip:stairs-b"
+    "estimate:stairs-b"
    ],
    "scale": [
     "count"
