@@ -31,6 +31,8 @@ FRONT_WALL_203 = (540, 688)                 # base of the partition at the cased
 DOOR_203 = ((638, 611), (810, 602.5))      # front door leaf, sill corners
 RISERS_312 = [(10, 1050), (80, 922), (145, 818), (198, 720), (242, 643), (282, 575), (317, 520), (347, 468),
               (373, 425), (398, 388), (418, 352), (438, 322), (455, 290)]   # wall-side riser ends, base corner, risers 1-13
+SOFFIT_312 = (1100, 765, 268)     # picture wall: base row, and the top of its wallpaper = the low edge of flight 2's white soffit
+CASING_312 = (1250, 765, 283)     # kitchen opening's casing head on the north wall (base row approximate)
 PICTURE_312, DOOR_312 = ((1015, 763), (1290, 765)), ((812, 730), (985, 733))
 OVERHEAD = dict(foyer_rear_top=330, foyer_rear_landing=415, living_rear_top=417, living_rear_floor=470, trace_front=872,
                 stair_foot=735, landing_nosing=497)   # overhead_994.jpg rows, px
@@ -101,7 +103,10 @@ def frame_312(f=None):
     pic = [floor_pt(cam, p) * s["Hc"] for p in PICTURE_312]
     door = [floor_pt(cam, p) * s["Hc"] for p in DOOR_312]
     flight = 12 * s["going"]
-    return dict(f=cam[0], going=s["going"], rms=s["rms"], Hc=s["Hc"], flight=flight,
+    def height(uf, vf, vt):
+        P = floor_pt(cam, (uf, vf)); X = P[0] * A + P[1] * B - cam[3]
+        r = np.array([uf - P0[0], vt - P0[1], cam[0]]); return np.linalg.lstsq(np.c_[r, -cam[3]], X, rcond=None)[0][1] * s["Hc"]
+    return dict(soffit=height(*SOFFIT_312), casing=height(*CASING_312), f=cam[0], going=s["going"], rms=s["rms"], Hc=s["Hc"], flight=flight,
                 picture=np.mean([p[1] for p in pic]) - foot, door_plane=door[0][1] - foot,
                 door_width=abs(door[1][0] - door[0][0]), foyer_width=pic[1][0] - wall, door_across=(door[0][0] - wall, door[1][0] - wall))
 
@@ -153,7 +158,8 @@ def main():
         print(f"  f {b['f']:.0f}: going {b['going']:.3f} (rms {b['rms']:.1f}), camera {b['Hc']:.2f} m, flight {b['flight']:.2f}, "
               f"foot -> picture wall {b['picture']:.2f} ({b['picture'] / b['flight']:.2f} x flight), -> arched door {b['door_plane']:.2f} "
               f"({b['door_plane'] / b['flight']:.2f} x flight); door {b['door_width']:.2f} m wide at {b['door_across'][0]:.2f}-{b['door_across'][1]:.2f} "
-              f"from the stair wall; foyer width at the picture wall {b['foyer_width']:.2f}")
+              f"from the stair wall; foyer width at the picture wall {b['foyer_width']:.2f}; flight-2 soffit low edge {b['soffit']:.2f} m, "
+              f"kitchen casing head {b['casing']:.2f} m")
     o = overhead()
     print(f"overhead: parallax {o['px_per_m'][0]:.1f}-{o['px_per_m'][1]:.1f} px/m of height; foyer rear wall floor line at y "
           f"{o['foyer_rear_floor'][0]:.0f}-{o['foyer_rear_floor'][1]:.0f} vs the living room's {o['living_rear_floor']} "
@@ -170,4 +176,5 @@ if __name__ == "__main__":
     assert all(abs(b["picture"] / b["flight"] - 1) < 0.08 for b in sweep), "landing front no longer flush with the top riser"
     assert all(1.3 < b["door_plane"] / b["flight"] < 1.5 for b in sweep)
     assert all(abs(b["foyer_width"] - 3.67) < 0.15 and 0.8 < b["door_width"] < 1.0 for b in sweep[1:2]), "f=1454 widths off"
+    assert all(2.2 < b["soffit"] < 2.32 and b["casing"] < b["soffit"] for b in sweep), "landing/soffit edge no longer just under the landing top"
     assert abs(o["foyer_rear_floor"].mean() - o["living_rear_floor"]) < 15, "foyer rear not flush with the living room's"

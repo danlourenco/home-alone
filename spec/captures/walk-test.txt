@@ -41,18 +41,6 @@ ok      kevin down leg 2: ended 0.03 m from waypoint, 0.02 m off its floor heigh
 ok      kevin down leg 3: ended 0.05 m from waypoint, 0.02 m off its floor height
 ok      kevin down leg 4: ended 0.04 m from waypoint, 0.02 m off its floor height
 ok      kevin down leg 5: ended 0.04 m from waypoint, 0.02 m off its floor height
-Leak and headroom check: 1403 points, 0 leaks, 42 low-headroom points (ground floor, outside flight 1)
-LOW     foyer at (1.8, 11.2): 1.98 m clear under MainStair/landing
-LOW     foyer at (1.8, 10.7): 1.98 m clear under MainStair/landing
-LOW     foyer at (1.8, 10.2): 1.98 m clear under MainStair/landing
-LOW     foyer at (1.8, 9.7): 1.98 m clear under MainStair/landing
-LOW     foyer at (1.8, 9.2): 1.98 m clear under MainStair/landing
-LOW     foyer at (2.3, 11.2): 1.98 m clear under MainStair/landing
-LOW     foyer at (2.3, 10.7): 1.98 m clear under MainStair/landing
-LOW     foyer at (2.3, 10.2): 1.98 m clear under MainStair/landing
-LOW     foyer at (2.3, 9.7): 1.98 m clear under MainStair/landing
-LOW     foyer at (2.3, 9.2): 1.98 m clear under MainStair/landing
-LOW     foyer at (2.8, 11.2): 1.98 m clear under MainStair/landing
-LOW     foyer at (2.8, 10.7): 1.98 m clear under MainStair/landing
+Leak and headroom check: 1403 points, 0 leaks, 0 low-headroom points (ground floor, outside flight 1)
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 84 legs, 0 blocked
 GROUND Room walk test (both bodies, every doorway to room centre and back): 64 legs, 0 blocked

@@ -1,0 +1,99 @@
+{
+ "change": "Landing and flight-2 construction depth 0.28 -> 0.05 m: the landing underside / flight 2's soffit low edge 2.03 -> 2.26 m, above the kitchen opening's head (back_hall ceiling follows, 2.03 -> 2.26)",
+ "target": "Greybox_Upstairs",
+ "premise": "Marina's landing is thin: the picture wall is papered up to 2.26 m, where flight 2's white soffit begins, and the kitchen opening's casing head sits below it",
+ "claim": {
+  "value": [
+   2.26,
+   0.05
+  ],
+  "data": [
+   "marina-frame:312"
+  ],
+  "scale": [
+   "stair-rise:0.178"
+  ],
+  "upstream": [
+   "outlet-plate-4.5in:198",
+   "marina-clip:stairs-a"
+  ],
+  "applies_to": [
+   "main_stair",
+   "back_hall"
+  ],
+  "measured_in": [
+   "main_stair"
+  ],
+  "assumed": {
+   "back_hall": "DEVIATIONS 22"
+  },
+  "surface": "ceiling-plane",
+  "surface_note": "the landing's underside plane (picture-wall paper top = flight 2's soffit low edge), not a fascia or trim edge"
+ },
+ "history": [
+  {
+   "date": "2026-10-14",
+   "what": "landing structure 0.28 m (clip A 'underside 1.94-2.07 m', the white band across the back of the foyer)",
+   "outcome": "failed"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "user, Oct 15, looking at Marina 5:12 vs the after render: the smaller flight / landing began below the door height to the kitchen; incorrect",
+   "agrees": true,
+   "data": [
+    "user-review:compare-312"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "film still then-foyer.png (film_ratios.py): landing underside 1.177 x the rear door head (1.093-1.267) = 2.22-2.57 m at 80 in; excludes the old 2.03, includes 2.26 (the film set, not Marina's model)",
+   "agrees": true,
+   "data": [
+    "film-frame:then-foyer"
+   ],
+   "scale": [
+    "door-80in:then-foyer"
+   ]
+  },
+  {
+   "what": "312 s at focal 1300-1600: soffit low edge 2.26-2.28 m, upper floor edge 3.08-3.10 m (built floor-to-floor 3.026: the scale holds), kitchen casing head 2.19-2.21 m",
+   "agrees": true,
+   "data": [
+    "marina-frame:312"
+   ],
+   "scale": [
+    "stair-rise:0.178"
+   ]
+  },
+  {
+   "what": "312 s: over the passage the balustrade's bottom rail and a thin landing edge sit at y 258-270 with wallpaper directly below (no deep fascia)",
+   "agrees": true,
+   "data": [
+    "marina-frame:312"
+   ],
+   "scale": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/foyer-length/slab-before-marina-312.png",
+   "spec/captures/foyer-length/slab-before-marina-203.png",
+   "spec/captures/foyer-length/slab-before-up.png",
+   "spec/captures/foyer-length/slab-before-front-looking-back.png"
+  ],
+  "after": [
+   "spec/captures/foyer-length/slab-after-marina-312.png",
+   "spec/captures/foyer-length/slab-after-marina-203.png",
+   "spec/captures/foyer-length/slab-after-up.png",
+   "spec/captures/foyer-length/slab-after-front-looking-back.png"
+  ]
+ },
+ "sheet": "spec/captures/foyer-length/compare.jpg",
+ "user_walk": "pending"
+}

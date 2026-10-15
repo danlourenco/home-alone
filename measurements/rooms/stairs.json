@@ -46,7 +46,7 @@
     2.18,
     2.35
    ],
-   "method": "13 x rise; landing underside reads 1.94-2.07 m in clip A (the white band across the back of the foyer), so the landing structure is ~0.28 m",
+   "method": "13 x rise. Oct 15: the landing is thin; Marina 312 s papers the picture wall to 2.26-2.28 m, where flight 2's white soffit starts (foyer_length.py), and the film puts the underside at 1.18 x the rear door head (2.22-2.57 m at 80 in), so the structure is ~0.05 m. Was: 'underside 1.94-2.07 m in clip A' (0.28 m), wrong (user, Oct 15)",
    "kind": "derived"
   },
   "tread_band_width_m": {

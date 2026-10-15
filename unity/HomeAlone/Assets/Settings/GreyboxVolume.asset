@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4301080348569476162
+--- !u!114 &-738500290657143286
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,10 +164,10 @@ MonoBehaviour:
   m_Name: GreyboxVolume
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.VolumeProfile
   components:
-  - {fileID: 9164881572960748206}
-  - {fileID: 5181841884652621591}
-  - {fileID: -4301080348569476162}
---- !u!114 &5181841884652621591
+  - {fileID: 8480301513309616600}
+  - {fileID: 3824616024347732805}
+  - {fileID: -738500290657143286}
+--- !u!114 &3824616024347732805
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -310,7 +310,7 @@ MonoBehaviour:
   horizonZenithShift:
     m_OverrideState: 1
     m_Value: 0
---- !u!114 &9164881572960748206
+--- !u!114 &8480301513309616600
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
