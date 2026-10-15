@@ -293,7 +293,7 @@ def stair_spec(final, o):
     # north edge of the well: only the upper floor's edge (fascia). A full-height wall here stood inside the foyer, which is
     # wider than the well (fixed Oct 13)
     box("well_fascia_north", "wall", xw, xe, (-F + fc) if fy else -0.30, 0, zn - 0.07, zn)   # from the foyer's wall top (no overlap)
-    box("well_ceiling", "ceiling", xw - 0.07, xe, 2.40, 2.55, zn - 0.07, zs + 0.07)   # Marina: chandelier hangs from it
+    box("well_ceiling", "ceiling", xw - 0.07, xe + RAIL_T, 2.40, 2.55, zn - 0.07, zs + 0.07)   # Marina: chandelier hangs from it
     zm, zf = (zn + zg) / 2, (z1 + zs) / 2
     path = [[x0 + 0.9, -F, zf], [x0 + 0.45, -F, zf], [xl - 0.4, -F + n1 * r, zf], [xl - 0.4, -F + n1 * r, zm],
             [xh + 0.5, 0.0, zm], [xe + 0.4, 0.0, zm]]

@@ -672,6 +672,31 @@
     2.71
    ],
    "spec_axis": "z"
+  },
+  {
+   "between": [
+    "rear_passage",
+    "under_landing"
+   ],
+   "kind": "fake_door",
+   "wall_axis": "x",
+   "wall_coord": 9.266,
+   "wall_thickness": 0.14,
+   "span": [
+    -2.628,
+    -1.868
+   ],
+   "width": 0.76,
+   "height": 2.032,
+   "opens": false,
+   "placed_from": "measured",
+   "source": "user, Oct 15 walk note: 'the door should be in the alcove, opposite the door on the right' (the door circled in film 3888, under the main stair, likely to the basement). On the passage's left wall facing the closet; into the closed space under the stair (under_landing). Same 30 in width and place along the wall as the closet (authored). The film's knob (2677/3888, 0.84-0.88 m up) reads just left of the arch's jamb from both cameras; the user's placement is kept and that reading logged (DEVIATIONS 36)",
+   "wall_coord_spec": 9.97,
+   "span_spec": [
+    1.95,
+    2.71
+   ],
+   "spec_axis": "z"
   }
  ],
  "flags": [],

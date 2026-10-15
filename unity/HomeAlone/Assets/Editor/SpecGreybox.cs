@@ -378,8 +378,12 @@ public static class SpecGreybox
     static IEnumerable<(float, float, float, float)> Cells(List<Vector2> pts, IEnumerable<float> extraX = null, IEnumerable<float> extraZ = null)
     {
         float x0 = pts.Min(p => p.x), x1 = pts.Max(p => p.x), z0 = pts.Min(p => p.y), z1 = pts.Max(p => p.y);
-        var xs = pts.Select(p => p.x).Concat((extraX ?? Enumerable.Empty<float>()).Where(v => v > x0 && v < x1)).Distinct().OrderBy(v => v).ToList();
-        var zs = pts.Select(p => p.y).Concat((extraZ ?? Enumerable.Empty<float>()).Where(v => v > z0 && v < z1)).Distinct().OrderBy(v => v).ToList();
+        // cut lines closer than 1 cm merge: a 3 mm cell between them was too thin to build and left a slit in the upper hall's
+        // ceiling (walk note Oct 15, 'why is there a gap?': hall vertices at x 5.634 and 5.637)
+        List<float> Merge(IEnumerable<float> v) { var o = new List<float>(); foreach (var q in v.OrderBy(q => q)) if (o.Count == 0 || q - o[^1] > 0.01f) o.Add(q); return o; }
+        var xs = Merge(pts.Select(p => p.x).Concat((extraX ?? Enumerable.Empty<float>()).Where(v => v > x0 && v < x1)));
+        var zs = Merge(pts.Select(p => p.y).Concat((extraZ ?? Enumerable.Empty<float>()).Where(v => v > z0 && v < z1)));
+        xs[^1] = x1; zs[^1] = z1;   // keep the outer edges exact
         for (int i = 0; i + 1 < xs.Count; i++)
             for (int k = 0; k + 1 < zs.Count; k++)
                 if (Inside(pts, new Vector2((xs[i] + xs[i + 1]) / 2, (zs[k] + zs[k + 1]) / 2)))
@@ -420,10 +424,22 @@ public static class SpecGreybox
 
     // Each edge's slab stops at the room's corner, so at an outside corner the two slabs leave a HalfWall-square column
     // open to the outdoors (daylight leaked through it, Oct 15). A post fills the outer quadrant of each convex corner.
-    static void CornerPosts(GameObject g, Space s)
+    // A sliver of wall (< 15 cm) beside a rail or open side stood floor to ceiling like a post (walk note Oct 15: the hall's and
+    // the stairwell's traced edges sit 6 cm apart, so the gallery rail stops short of the corner). Built to newel height
+    // instead: it still closes the floor edge. The wall-grid rebuild (phase 5) aligns the edges.
+    static float Stub(float a, float b, string nextKind, float ceil) =>
+        b - a < 0.15f && (nextKind == "rail" || nextKind == "open") ? Mathf.Min(ceil, 1.10f) : ceil;
+
+    static void CornerPosts(GameObject g, Space s, List<Door> doors)
     {
+        // no post where the corner ends a rail or an open side: there is no wall to close, and the post stood free from
+        // floor to ceiling beside the stair rail (walk note Oct 15)
+        bool OnOpenSide(Vector2 v) => doors.Any(d => (d.a == s.name || d.b == s.name) && (d.kind == "rail" || d.kind == "open")
+            && (d.alongX ? Mathf.Abs(v.y - d.coord) < 0.1f && v.x > d.lo - 0.1f && v.x < d.hi + 0.1f
+                         : Mathf.Abs(v.x - d.coord) < 0.1f && v.y > d.lo - 0.1f && v.y < d.hi + 0.1f));
         foreach (var v in s.pts)
         {
+            if (OnOpenSide(v)) continue;
             var quads = new[] { new Vector2(1, 1), new Vector2(1, -1), new Vector2(-1, 1), new Vector2(-1, -1) };
             var ins = quads.Where(q => Inside(s.pts, v + q * 0.02f)).ToList();
             if (ins.Count != 1) continue;                       // reflex corners: the two slabs already overlap
@@ -438,7 +454,7 @@ public static class SpecGreybox
     static void Walls(GameObject g, Space s, List<Door> doors)
     {
         SetFinish(s);
-        CornerPosts(g, s);
+        CornerPosts(g, s, doors);
         for (int i = 0, n = s.pts.Count; i < n; i++)
         {
             Vector2 a = s.pts[i], b = s.pts[(i + 1) % n];
@@ -467,7 +483,7 @@ public static class SpecGreybox
                     var tp = alongX ? new Vector3((dl + dh) / 2, FloorY - 0.05f, (t0 + t1) / 2) : new Vector3((t0 + t1) / 2, FloorY - 0.05f, (dl + dh) / 2);
                     HoleProbes.Add((tp, $"threshold {s.name}/{d.a}-{d.b}"));
                 }
-                if (dl > cur) Seg(g, "Wall", alongX, t0, t1, cur, dl, 0f, ceil);
+                if (dl > cur) Seg(g, "Wall", alongX, t0, t1, cur, dl, 0f, Stub(cur, dl, d.kind, ceil));
                 float head = d.kind == "door" ? d.height : d.kind == "arch" ? (d.height > 0 ? d.height : ArchHead) : ceil;
                 if (head < ceil) Seg(g, d.kind + "_Header", alongX, t0, t1, dl, dh, head, ceil);
                 if (d.kind == "arch" && d.spring > 0 && d.spring < head) ArchTop(g, alongX, t0, t1, sgn, dl, dh, d.spring, head, ceil);
@@ -480,7 +496,7 @@ public static class SpecGreybox
                 }
                 cur = Mathf.Max(cur, dh);
             }
-            if (cur < hi) Seg(g, "Wall", alongX, t0, t1, cur, hi, 0f, ceil);
+            if (cur < hi) Seg(g, "Wall", alongX, t0, t1, cur, hi, 0f, Stub(cur, hi, cuts.LastOrDefault()?.kind, ceil));
             foreach (var w in Windows.Where(w => w.room == s.name && w.alongX == alongX && Mathf.Abs(w.coord - coord) < 0.05f))
                 Window(g, alongX, t0, t1, sgn, w, ceil);
         }

@@ -977,12 +977,12 @@
    "name": "flight2_soffit",
    "a": [
     2.985,
-    2.164,
+    2.258,
     8.474
    ],
    "b": [
     3.868,
-    2.698,
+    2.792,
     8.474
    ],
    "w": 1.3920000000000003,
@@ -994,6 +994,28 @@
    ],
    "collide": false,
    "note": "Marina 312 s: white sloped soffit meeting the north wall in a diagonal"
+  },
+  {
+   "name": "flight2_stringer_open",
+   "a": [
+    2.985,
+    2.363,
+    9.158
+   ],
+   "b": [
+    3.868,
+    2.897,
+    9.158
+   ],
+   "w": 0.024,
+   "t": 0.1694270292090266,
+   "colour": [
+    0.85,
+    0.85,
+    0.85
+   ],
+   "collide": false,
+   "note": ""
   },
   {
    "name": "flight1_stringer_open",
@@ -1874,50 +1896,6 @@
    ],
    "collide": false,
    "note": "203 s inner jambs x 545/975 at row 150 -> head 1.99 m"
-  },
-  {
-   "name": "understair_basement_door",
-   "x": [
-    3.01,
-    3.62
-   ],
-   "y": [
-    0.0,
-    1.55
-   ],
-   "z": [
-    10.2,
-    10.23
-   ],
-   "colour": [
-    0.85,
-    0.85,
-    0.85
-   ],
-   "collide": true,
-   "note": "film 2677/3888 knob; size authored"
-  },
-  {
-   "name": "understair_basement_knob",
-   "x": [
-    3.53,
-    3.57
-   ],
-   "y": [
-    0.84,
-    0.88
-   ],
-   "z": [
-    10.15,
-    10.2
-   ],
-   "colour": [
-    0.43,
-    0.326,
-    0.237
-   ],
-   "collide": false,
-   "note": "film: 0.84-0.88 m"
   },
   {
    "name": "front_door",

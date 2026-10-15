@@ -21,15 +21,6 @@
   },
   {
    "match": [
-    "hall_corridor/CornerPost",
-    "main_stair_opening/Wall"
-   ],
-   "kind": "LEDGE",
-   "reason": "first reported Oct 15 after the foyer-arch rebuild (the foyer lost its notch under the landing, which changes the seam check's visible-face test there); the interim corner post at the stair head stands 1.0 cm proud of the stairwell wall",
-   "plan": "replaced by the wall-grid stair hall (tasks/wall-grid-plan.md phase 5); the known list must end empty"
-  },
-  {
-   "match": [
     "hall_corridor/Threshold",
     "Ceilings/foyer_Ceiling"
    ],

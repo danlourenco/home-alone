@@ -1,0 +1,68 @@
+{
+ "change": "Walk notes Oct 15 afternoon: (1) flight 2's soffit starts at flight 2's own underside (it followed the landing's, 9 cm lower since the arch change: a gap) and gains an open-side stringer; (2) no corner post where a corner ends a rail or open side, and wall slivers under 15 cm beside a rail stop at newel height (they stood floor to ceiling beside the gallery rail); (3) ceiling cut lines within 1 cm merge (a 3 mm slit across the gallery ceiling); (4) the stairwell ceiling spans the 6 cm rail band to the hall's ceiling (a slit along the well's east edge)",
+ "target": "Greybox_Upstairs",
+ "premise": "Each fix closes a visible gap or removes a free-standing post the user walked into, without moving any measured surface",
+ "claim": {
+  "value": [
+   0.0
+  ],
+  "data": [
+   "walk-note:2026-10-15T15:45",
+   "walk-note:2026-10-15T15:57"
+  ],
+  "scale": [
+   "none"
+  ],
+  "upstream": [],
+  "applies_to": [
+   "main_stair",
+   "hall_corridor",
+   "main_stair_opening"
+  ],
+  "measured_in": [
+   "main_stair",
+   "hall_corridor",
+   "main_stair_opening"
+  ],
+  "assumed": {},
+  "surface": "ceiling-plane"
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "renders from the user's note positions before/after (walk-notes-oct15/*-now vs *-fixed): posts, slits and the see-through gone",
+   "agrees": true,
+   "data": [
+    "render:walk-notes-oct15"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  },
+  {
+   "what": "build gates: 0 overlaps, 0 gaps, 0 leaks, walks 0 blocked; the corner-post ledge no longer reported",
+   "agrees": true,
+   "data": [
+    "build:seam-check"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/walk-notes-oct15/posts-now.png",
+   "spec/captures/walk-notes-oct15/flight2-now.png"
+  ],
+  "after": [
+   "spec/captures/walk-notes-oct15/posts-fixed.png",
+   "spec/captures/walk-notes-oct15/flight2-fixed.png",
+   "spec/captures/walk-notes-oct15/flight2-close.png"
+  ]
+ },
+ "user_walk": "pending"
+}

@@ -1,7 +1,7 @@
 {
- "change": "Two prop doors at the back of the foyer from the film: a short door in the stair's open side under flight 1's top (likely the basement door; dressing understair_basement_door, x 3.01-3.62, 1.55 m tall, knob 0.84-0.88 m) and the closet door on rear_passage's right wall at the arch end (fake_door, spec x 1.95-2.71)",
+ "change": "Two prop doors facing each other in rear_passage at the arch end: the closet on the right wall (spec z 8.785) and the door circled in film 3888, likely to the basement, on the left wall (z 9.97, into under_landing); spec x 1.95-2.71 each",
  "target": "Greybox_Upstairs",
- "premise": "The film shows a door under the main stair's top on its open side and a closet door facing it inside the arch's right side",
+ "premise": "The film's passage behind the arch has a door on each side wall near the arch: a closet and, opposite it, the door seen under the stair",
  "claim": {
   "value": [
    0.86,
@@ -30,7 +30,13 @@
   ],
   "assumed": {}
  },
- "history": [],
+ "history": [
+  {
+   "date": "2026-10-15",
+   "what": "the circled door built in the stair's open side under flight 1 (from where its knob reads in 2677/3888)",
+   "outcome": "failed"
+  }
+ ],
  "premise_reviewed": "",
  "checks": [
   {
@@ -45,7 +51,7 @@
    "type": "topological"
   },
   {
-   "what": "user, Oct 15: circled the door under the stair in 3888 ('ostensibly heading down to the basement') and named the one opposite the closet",
+   "what": "user, Oct 15 walk note: 'the door should be in the alcove, opposite the door on the right'",
    "agrees": true,
    "data": [
     "recollection:user"
@@ -54,17 +60,29 @@
     "none"
    ],
    "type": "topological"
+  },
+  {
+   "what": "2677/3888: the circled door's knob reads just LEFT of the arch's left jamb from both cameras, which a door on the passage's left wall cannot show",
+   "agrees": false,
+   "data": [
+    "film:2677",
+    "film:3888"
+   ],
+   "scale": [
+    "stair-rise:0.178"
+   ],
+   "type": "topological",
+   "disposition": "User placement kept (they know the film); the reading is unexplained and logged in DEVIATIONS 36. Possible causes: the arch's left jamb read, or a door further left that the tree hides"
   }
  ],
  "renders": {
   "before": [
-   "spec/captures/foyer-film-cams/before-inside-foyer.png",
-   "spec/captures/foyer-film-cams/before-3888.png"
+   "spec/captures/foyer-film-cams/after-doors-closet.png",
+   "spec/captures/walk-notes-oct15/flight2-now.png"
   ],
   "after": [
-   "spec/captures/foyer-film-cams/after-doors-closet.png",
-   "spec/captures/foyer-film-cams/after-inside-arch.png",
-   "spec/captures/foyer-film-cams/after-3888.png"
+   "spec/captures/walk-notes-oct15/alcove-fixed.png",
+   "spec/captures/foyer-film-cams/after-inside-arch.png"
   ]
  },
  "user_walk": "pending"

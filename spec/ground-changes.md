@@ -95,6 +95,7 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | foyer / rear_passage | arch | 8.15-9.20 | 1.04 | full shared wall |
 | rear_passage / back_hall | fake_door | 8.26-9.18 | 0.92 | read in the overhead |
 | rear_passage / back_hall | fake_door | -2.63--1.87 | 0.76 | measured |
+| rear_passage / under_landing | fake_door | -2.63--1.87 | 0.76 | measured |
 
 ## 5. Body rules (adult, hard)
 

@@ -131,9 +131,14 @@ def main():
         P.append(box(b["name"] + "_runner", b["x"], [top, top + 0.012], [zc2 - RW / 2, zc2 + RW / 2], C["runner"]))
         P.append(box(b["name"] + "_runner_riser", [b["x"][0] - 0.012, b["x"][0]], [top - r, top], [zc2 - RW / 2, zc2 + RW / 2], C["runner"]))
     # flight 2's smooth white soffit (Marina 312 s: starts at the picture wall's top, 2.26 m, rises to the upper floor)
-    lo = land["y"][0] + F
+    lo = f2[0]["y"][0] + F   # flight 2's own underside (was the landing's: 9 cm lower since the landing's fascia deepened, a gap; walk note Oct 15)
     P.append(seg("flight2_soffit", [XL, lo - 0.006, zc2], [XH, lo + (len(f2)) * r - 0.006, zc2], zg - ZN2, 0.012, C["white"],
                  note="Marina 312 s: white sloped soffit meeting the north wall in a diagonal"))
+    # flight 2's open-side stringer: a white band from the soffit up to the tread line, closing the side (walk note Oct 15: 'I can
+    # see through to the wall on the landing')
+    sl = f2[0]["y"][1] - f2[0]["y"][0] - r                      # the flight's construction depth below the first tread
+    hb = sl + r - 0.03; p2 = np.arctan2(r, (XH - XL) / len(f2))
+    P.append(seg("flight2_stringer_open", [XL, lo + hb / 2, zg - 0.012], [XH, lo + len(f2) * r + hb / 2, zg - 0.012], 0.024, hb * np.cos(p2), C["white"]))
     # open-side stringer: white band along the nosing line; handrail on it; newels (Marina 334 s: white square newel, dark rail)
     pitch = np.arctan2(r, g1)
     drop = 0.12 / np.cos(pitch)
@@ -229,12 +234,6 @@ def main():
     P.append(box("vestibule_opening_casing_head", [XF - 0.03, XF], [head, head + 0.12], [min(ja[2], jb[2]) - 0.06, max(ja[2], jb[2]) + 0.06], C["white"],
                  note=f"203 s inner jambs x 545/975 at row 150 -> head {head:.2f} m"))
     da, db = c203.on((638, 215), 0, XV), c203.on((810, 215), 0, XV)
-    # Door in the stair's open side under flight 1's top, likely to the basement (film 2677/3888: its knob, 0.84-0.88 m up,
-    # just left of the arch; user, Oct 15, circled it: 'a door underneath the main staircase, ostensibly heading down to the
-    # basement'). Short: the open stringer runs over it (bottom ~1.57 m at its far edge). Closed prop: no basement built.
-    # 24 in wide and its place along the stair authored (the stair side runs straight away from the cameras): from the landing end
-    P.append(box("understair_basement_door", [3.01, 3.62], [0, 1.55], [z1 - 0.03, z1], C["white"], collide=True, note="film 2677/3888 knob; size authored"))
-    P.append(box("understair_basement_knob", [3.53, 3.57], [0.84, 0.88], [z1 - 0.08, z1 - 0.03], C["gilt"], note="film: 0.84-0.88 m"))
     P.append(box("front_door", [XV - 0.05, XV], [0, da[1]], [db[2], da[2]], C["white"], note=f"203 s leaf x 638-810, head row 215 -> {da[1]:.2f} m"))
     for name, (u0, u1) in (("sidelight_left", (550, 618)), ("sidelight_right", (830, 900))):
         sa_, sb_ = c203.on((u0, 230), 0, XV), c203.on((u1, 495), 0, XV)
