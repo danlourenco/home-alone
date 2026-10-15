@@ -1,4 +1,62 @@
-# Current status — start here (October 13, 2026)
+# Current status — start here
+
+## RESUME HERE (Oct 15, 2026, evening): phase 5 done, back stair in progress
+
+**Read this section, then `tasks/wall-grid-plan.md` (phases + "Walk notes queued"), then `docs/DEVIATIONS.md` 20-22 and 30-38.**
+
+### The working scene is now `House_WallGrid` (wall-grid builder), not the old `Greybox_Upstairs`
+- Build: `uv run --with numpy python -I tools/house/wall_graph.py --json` (spec -> `spec/geometry.json`), then in the batch copy
+  (a copy of `unity/HomeAlone` in the session scratchpad: `rsync -a --exclude Library --exclude Temp unity/HomeAlone/ <scratch>/ucopy/HomeAlone/`, plus a `spec` symlink at `<scratch>/spec -> repo spec`;
+  never build in the user's open editor): copy `SpecGreybox.cs` in, run `-executeMethod SpecGreybox.BuildWallGrid`, copy
+  `Scenes/House_WallGrid.unity` + `Materials/Greybox` + `Settings/GreyboxVolume.asset` back. Gates land in `spec/captures/walk-test-wallgrid.txt`
+  (door walks, stair walks incl. the Player's controller, seams 0/0/0, leaks, PEEK = no sight line into a closed space, room walks).
+- Spec changes go through the trace/doors files (`measurements/overhead/ground-trace.json` "m" polygons, `ground-doors.json`) and
+  `tools/house/reconcile.py` (stairs are generated there: main stair, `service_stair_spec`, attic), then `verify_plan.py` (both floors),
+  then the change gate (`changes/*.json`, `tools/house/change_gate.py`). Pre-commit hook enforces it.
+- Load for the user (memory: load-scene-for-walk): `~/.unity/bin/unity command list_open_scenes` (isDirty false) -> `editor_stop` ->
+  `recompile` if the script changed -> `open_scene Assets/Scenes/House_WallGrid.unity` -> `editor_play` -> `editor_focus`. Retry if Unity is busy.
+- The user leaves walk notes in Unity (key M): `spec/feedback/feel-notes.jsonl` + `spec/feedback/shots/`. "Look at my comment" = read the last lines there.
+
+### Verification rule (user, Oct 15: "give yourself the tools you need to become as accurate as possible")
+Every placement read from a reference frame goes through **`tools/house/refcam.py`** before it is built:
+`frame` (get a Marina/film frame) -> `grid` (read pixels) -> `solve NAME FRAME points.json` (camera from known 3D points, per-point
+residuals; points files in `measurements/cameras/points/`, cameras in `measurements/cameras/`) -> `measure NAME u v --plane x=..|z=..|h=..`
+(read a position in plan metres) -> `overlay NAME --floor ground` (the build's walls/openings/stairs drawn on the frame) -> `view NAME`
+(Unity camera for a matched render). Never place by eye or from a subagent's plan-terms description alone; name the spaces on both sides
+of any door first (memory: check-placements-against-plan). Known-good: refcam reproduces the film 2677 camera (x 10.50, h 0.81, f 2263).
+
+### What was done Oct 15 (all committed and pushed on branch unity-sfm-reconstruction)
+- **Foyer back wall from the film** (foyer_cameras.py: two film cameras solved from flight 1's nosings): cased segmental arch, crown 2.17,
+  springline 1.91; rear passage to the rear door; the arch's LEFT side runs to the main stair's side (no pier: Marina 195 s / 1070.5 s
+  + user). Passage left wall flush with the stair's side (user). Closet door on the passage's right wall; the user's circled "door
+  under the stair" is on the passage's left wall facing it (both closed props, sizes authored, DEVIATIONS 36).
+- **Phase 5 (wall-grid house, scene House_WallGrid)**: stair hall as one two-storey space (stack decisions in `grid-snaps.json`,
+  DEVIATIONS 37), landing as a slab, rails as 6 cm bands, floor per room, PEEK gate. **User walked it: "looks generally good."**
+- **Comparison pages (fade sliders)**: arch/foyer https://claude.ai/artifact/X3oYBgypJhhUAZ53Vikxg8 ; stair hall vs Marina/film
+  https://claude.ai/artifact/MWNxwxzmFcgFHhvFezCjdN ; back stair / breakfast room https://claude.ai/artifact/Y6g9C2T959jaikXUE66jv8
+- **Back stair rebuilt (TRIAL, d4b1605)**: 4 foot steps toward the wall between a dark newel and a tall post, quarter landing 0.89 m,
+  flight along the wall (going 0.262) to the ceiling; dark treads, white risers/stringer/balusters; papered spandrel; Kevin's basement
+  door under the flight's high end (first put on an outside wall: wrong). Kitchen walls cream, floor quarry tile (colours only).
+
+### NEXT (in order)
+1. **Back stair: the user says it is "still kind of messed up".** My read from the Marina 916 s fade (camera placed by eye, so verify):
+   her stair sits ~0.5 m further toward the foyer doorway (newel just right of the doorway, ~x 2.9; tall post ~x 1.8), her flight is
+   shorter/steeper and meets the ceiling ~x 0.0, and her basement door (~x -1.2 to -0.3, with casing) has wall to spare before the corner
+   (x -1.505). Ours: newel x 2.37, post 1.39, ceiling at -0.71, door jammed at the end (-1.43 to -0.72). Do it properly with refcam:
+   solve Marina 916 s and 933 s cameras from the room's known points (foyer doorway jambs x 3.043/4.025 on the z 7.638 face, head
+   2.20; the back-right corner x -1.505 / z 7.638; the side-wall window x -1.505, z 4.99-5.79, sill 0.82, head 2.15; ceiling 2.438; the
+   hutch-wall corner x 4.12), then `measure` the newel, tall post, the flight's nosings and ceiling arrival, and the door's jambs; then
+   film 2528/928/912 the same way; rebuild `reconcile.service_stair_spec` from those numbers (the stair may extend past the traced
+   back_stair enclosure toward the doorway: check the kitchen floor between it and the hutch wall); overlay before building; update the
+   kitchen-compare page; load for the user. Back-stair references: `art/home_alone/references/back-stair/` and `kitchen/frames/` (best-*.jpg);
+   key ones: film 912, 928, 1044, 2528, 3607-3617; Marina Part 1 916, 924, 933, 934, 938 s; kitchen overhead 812 s.
+2. Queued walk notes (tasks/wall-grid-plan.md): the arch a bit lower (Marina ~1.9-1.95 m vs film 2.17: decide with the user); the passage
+   width and its doors (later); the foyer's north wall line (DEVIATIONS 35); the kitchen's left side / rear wall length (Marina's
+   overhead and interiors disagree); finishes (floral paper, beams, cabinets, hutch, table, fridge).
+3. Phase 6-8 of the wall-grid plan (rest of the house, windows, the chute shaft and hatch, user walk), then the exterior against the film.
+
+---
+
 
 **PIVOT (user, Oct 13 evening): correct the EXISTING model, not the grey-box.** The working scene is again `IntactHouseReference` (the downloaded GLB at 0.774 m/unit, edited by the September `SurveyBuilder` editor scripts; the source GLB stays untouched). The ground floor there feels right to the user. Upstairs, Buzz's room feels cramped (3.82 × 3.24 m against Marina's 4.35 × 3.49 m; the hall beside it is 1.89 m wide against her 1.58 m). Apply the same principles to the old model: Marina is the authority, cite frames, take a census before fixing, prove every check fails on an injected error, log departures in DEVIATIONS.md, never move outside walls, and use the room-feel skill order. The grey-box, spec and checks below stay as the measurement record and as the target numbers.
 
