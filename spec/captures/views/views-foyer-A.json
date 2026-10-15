@@ -1,0 +1,47 @@
+[
+ {
+  "name": "../foyer-heights/A-29",
+  "pos": [
+   8.133,
+   -1.781,
+   -10.279
+  ],
+  "look_at": [
+   7.133,
+   -1.821,
+   -10.279
+  ],
+  "vfov": 36.29,
+  "note": "Marina Part 1 312.25 s: 3.66 m in front of the first riser, -0.52 m across"
+ },
+ {
+  "name": "../foyer-heights/A-32",
+  "pos": [
+   7.734,
+   -1.788,
+   -10.744
+  ],
+  "look_at": [
+   6.734,
+   -1.828,
+   -10.744
+  ],
+  "vfov": 36.46,
+  "note": "Marina Part 1 313.00 s: 3.26 m in front of the first riser, -0.06 m across"
+ },
+ {
+  "name": "../foyer-heights/A-35",
+  "pos": [
+   7.232,
+   -1.76,
+   -10.938
+  ],
+  "look_at": [
+   6.232,
+   -1.8,
+   -10.938
+  ],
+  "vfov": 36.67,
+  "note": "Marina Part 1 313.75 s: 2.76 m in front of the first riser, +0.14 m across"
+ }
+]
