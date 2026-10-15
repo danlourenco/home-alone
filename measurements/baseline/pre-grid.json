@@ -1,0 +1,588 @@
+{
+ "upstairs": {
+  "rooms": {
+   "parents_bath": {
+    "x": [
+     0.343,
+     3.07
+    ],
+    "z": [
+     0.872,
+     4.436
+    ],
+    "depth_x": 2.727,
+    "width_z": 3.564,
+    "area": 8.727,
+    "ceiling": 2.5
+   },
+   "parents_bedroom": {
+    "x": [
+     3.21,
+     8.491
+    ],
+    "z": [
+     0.0,
+     5.331
+    ],
+    "depth_x": 5.281,
+    "width_z": 5.331,
+    "area": 25.458,
+    "ceiling": 2.5
+   },
+   "kevin_jeff_room": {
+    "x": [
+     7.061,
+     11.664
+    ],
+    "z": [
+     3.861,
+     7.74
+    ],
+    "depth_x": 4.603,
+    "width_z": 3.879,
+    "area": 17.855,
+    "ceiling": 2.4
+   },
+   "girls_room_a": {
+    "x": [
+     0.343,
+     5.534
+    ],
+    "z": [
+     5.414,
+     7.689
+    ],
+    "depth_x": 5.191,
+    "width_z": 2.275,
+    "area": 10.141,
+    "ceiling": 2.4
+   },
+   "hall_end": {
+    "x": [
+     5.674,
+     6.921
+    ],
+    "z": [
+     5.471,
+     7.74
+    ],
+    "depth_x": 1.247,
+    "width_z": 2.269,
+    "area": 2.829,
+    "ceiling": 2.4
+   },
+   "hall_corridor": {
+    "x": [
+     3.868,
+     8.371
+    ],
+    "z": [
+     7.829,
+     11.397
+    ],
+    "depth_x": 4.503,
+    "width_z": 3.568,
+    "area": 9.681,
+    "ceiling": 2.4
+   },
+   "hall_corridor_south": {
+    "x": [
+     5.78,
+     7.333
+    ],
+    "z": [
+     11.537,
+     13.521
+    ],
+    "depth_x": 1.553,
+    "width_z": 1.984,
+    "area": 3.081,
+    "ceiling": 2.29
+   },
+   "closet_1": {
+    "x": [
+     7.373,
+     8.973
+    ],
+    "z": [
+     7.88,
+     8.641
+    ],
+    "depth_x": 1.6,
+    "width_z": 0.761,
+    "area": 1.218,
+    "ceiling": 2.4
+   },
+   "linen_closet": {
+    "x": [
+     7.373,
+     8.275
+    ],
+    "z": [
+     8.781,
+     9.767
+    ],
+    "depth_x": 0.902,
+    "width_z": 0.986,
+    "area": 0.889,
+    "ceiling": 2.4
+   },
+   "hall_bath": {
+    "x": [
+     8.415,
+     11.664
+    ],
+    "z": [
+     7.88,
+     11.397
+    ],
+    "depth_x": 3.249,
+    "width_z": 3.517,
+    "area": 10.797,
+    "ceiling": 2.4
+   },
+   "buzz_room": {
+    "x": [
+     7.473,
+     11.158
+    ],
+    "z": [
+     11.537,
+     15.998
+    ],
+    "depth_x": 3.685,
+    "width_z": 4.461,
+    "area": 16.439,
+    "ceiling": 2.4
+   },
+   "girls_room_b": {
+    "x": [
+     1.583,
+     5.64
+    ],
+    "z": [
+     11.537,
+     15.989
+    ],
+    "depth_x": 4.057,
+    "width_z": 4.452,
+    "area": 18.062,
+    "ceiling": 2.4
+   },
+   "main_stair_opening": {
+    "x": [
+     1.583,
+     5.577
+    ],
+    "z": [
+     7.829,
+     11.397
+    ],
+    "depth_x": 3.994,
+    "width_z": 3.568,
+    "area": 11.856,
+    "ceiling": 2.4
+   },
+   "attic_stair": {
+    "x": [
+     5.78,
+     7.333
+    ],
+    "z": [
+     13.661,
+     16.396
+    ],
+    "depth_x": 1.553,
+    "width_z": 2.735,
+    "area": 4.247,
+    "ceiling": 2.4
+   },
+   "girls_a_closet": {
+    "x": [
+     2.991,
+     5.434
+    ],
+    "z": [
+     5.471,
+     5.896
+    ],
+    "depth_x": 2.443,
+    "width_z": 0.425,
+    "area": 1.038,
+    "ceiling": 2.4
+   }
+  },
+  "doors": {
+   "parents_bedroom/hall_end@z=5.40": {
+    "coord": 5.401,
+    "span": [
+     5.674,
+     6.444
+    ],
+    "width": 0.77,
+    "kind": "door"
+   },
+   "parents_bedroom/parents_bath@x=3.14": {
+    "coord": 3.14,
+    "span": [
+     3.584,
+     4.344
+    ],
+    "width": 0.76,
+    "kind": "door"
+   },
+   "kevin_jeff_room/hall_end@x=6.99": {
+    "coord": 6.991,
+    "span": [
+     6.754,
+     7.524
+    ],
+    "width": 0.77,
+    "kind": "door"
+   },
+   "kevin_jeff_room/closet_1@z=7.81": {
+    "coord": 7.81,
+    "span": [
+     8.088,
+     8.918
+    ],
+    "width": 0.83,
+    "kind": "door"
+   },
+   "girls_room_a/hall_end@x=5.60": {
+    "coord": 5.604,
+    "span": [
+     6.714,
+     7.494
+    ],
+    "width": 0.78,
+    "kind": "door"
+   },
+   "hall_bath/hall_corridor@x=8.39": {
+    "coord": 8.393,
+    "span": [
+     10.274,
+     10.949
+    ],
+    "width": 0.675,
+    "kind": "door"
+   },
+   "linen_closet/hall_corridor@x=7.30": {
+    "coord": 7.303,
+    "span": [
+     8.969,
+     9.579
+    ],
+    "width": 0.61,
+    "kind": "fake_door"
+   },
+   "buzz_room/hall_corridor@z=11.47": {
+    "coord": 11.467,
+    "span": [
+     7.609,
+     8.371
+    ],
+    "width": 0.762,
+    "kind": "door"
+   },
+   "girls_room_b/hall_corridor_south@x=5.71": {
+    "coord": 5.71,
+    "span": [
+     12.148,
+     12.91
+    ],
+    "width": 0.762,
+    "kind": "door"
+   },
+   "attic_stair/hall_corridor_south@z=13.59": {
+    "coord": 13.591,
+    "span": [
+     6.112,
+     6.874
+    ],
+    "width": 0.762,
+    "kind": "door"
+   },
+   "hall_end/hall_corridor@z=7.81": {
+    "coord": 7.81,
+    "span": [
+     5.674,
+     6.921
+    ],
+    "width": 1.247,
+    "kind": "arch"
+   },
+   "hall_corridor/hall_corridor_south@z=11.47": {
+    "coord": 11.467,
+    "span": [
+     5.78,
+     7.333
+    ],
+    "width": 1.553,
+    "kind": "arch"
+   },
+   "main_stair_opening/hall_corridor@x=5.61": {
+    "coord": 5.607,
+    "span": [
+     9.23,
+     11.397
+    ],
+    "width": 2.167,
+    "kind": "rail"
+   },
+   "main_stair_opening/hall_corridor@z=9.20": {
+    "coord": 9.2,
+    "span": [
+     3.868,
+     5.577
+    ],
+    "width": 1.709,
+    "kind": "rail"
+   },
+   "main_stair_opening/hall_corridor@x=3.87": {
+    "coord": 3.868,
+    "span": [
+     7.829,
+     9.17
+    ],
+    "width": 1.341,
+    "kind": "open"
+   }
+  },
+  "windows": 12,
+  "stair": {
+   "rise_m": 0.178,
+   "going_m": 0.295,
+   "risers": 17,
+   "floor_to_floor_m": 3.026
+  }
+ },
+ "ground": {
+  "rooms": {
+   "den": {
+    "x": [
+     2.355,
+     9.266
+    ],
+    "z": [
+     16.21,
+     19.917
+    ],
+    "depth_x": 6.911,
+    "width_z": 3.707,
+    "area": 25.619,
+    "ceiling": 2.438
+   },
+   "living_room": {
+    "x": [
+     1.581,
+     9.954
+    ],
+    "z": [
+     11.57,
+     16.07
+    ],
+    "depth_x": 8.373,
+    "width_z": 4.5,
+    "area": 37.678,
+    "ceiling": 2.438
+   },
+   "foyer": {
+    "x": [
+     1.581,
+     8.948
+    ],
+    "z": [
+     7.778,
+     11.43
+    ],
+    "depth_x": 7.367,
+    "width_z": 3.652,
+    "area": 25.253,
+    "ceiling": 2.82
+   },
+   "back_hall": {
+    "x": [
+     0.008,
+     2.846
+    ],
+    "z": [
+     7.778,
+     11.345
+    ],
+    "depth_x": 2.838,
+    "width_z": 3.567,
+    "area": 6.571,
+    "ceiling": 2.25
+   },
+   "vestibule": {
+    "x": [
+     9.088,
+     10.13
+    ],
+    "z": [
+     7.863,
+     11.43
+    ],
+    "depth_x": 1.042,
+    "width_z": 3.567,
+    "area": 3.717,
+    "ceiling": 2.438
+   },
+   "dining_room": {
+    "x": [
+     4.26,
+     10.13
+    ],
+    "z": [
+     3.004,
+     7.638
+    ],
+    "depth_x": 5.87,
+    "width_z": 4.634,
+    "area": 27.202,
+    "ceiling": 2.438
+   },
+   "sunroom": {
+    "x": [
+     2.456,
+     9.407
+    ],
+    "z": [
+     -0.915,
+     2.864
+    ],
+    "depth_x": 6.951,
+    "width_z": 3.779,
+    "area": 26.268,
+    "ceiling": 2.438
+   },
+   "kitchen": {
+    "x": [
+     -5.192,
+     4.12
+    ],
+    "z": [
+     -0.28,
+     7.638
+    ],
+    "depth_x": 9.312,
+    "width_z": 7.918,
+    "area": 49.147,
+    "ceiling": 2.438
+   },
+   "back_stair": {
+    "x": [
+     -1.505,
+     2.369
+    ],
+    "z": [
+     6.657,
+     7.638
+    ],
+    "depth_x": 3.874,
+    "width_z": 0.981,
+    "area": 3.8,
+    "ceiling": 2.438
+   }
+  },
+  "doors": {
+   "den/living_room@z=16.14": {
+    "coord": 16.14,
+    "span": [
+     6.999,
+     8.507
+    ],
+    "width": 1.508,
+    "kind": "arch"
+   },
+   "living_room/foyer@z=11.50": {
+    "coord": 11.5,
+    "span": [
+     7.091,
+     8.58
+    ],
+    "width": 1.489,
+    "kind": "arch"
+   },
+   "foyer/dining_room@z=7.71": {
+    "coord": 7.708,
+    "span": [
+     6.95,
+     8.663
+    ],
+    "width": 1.713,
+    "kind": "arch"
+   },
+   "foyer/vestibule@x=9.02": {
+    "coord": 9.018,
+    "span": [
+     8.794,
+     10.443
+    ],
+    "width": 1.649,
+    "kind": "arch"
+   },
+   "dining_room/kitchen@x=4.19": {
+    "coord": 4.19,
+    "span": [
+     3.671,
+     4.701
+    ],
+    "width": 1.03,
+    "kind": "door"
+   },
+   "dining_room/sunroom@z=2.93": {
+    "coord": 2.934,
+    "span": [
+     6.811,
+     8.677
+    ],
+    "width": 1.866,
+    "kind": "fake_door"
+   },
+   "back_stair/kitchen@x=2.37": {
+    "coord": 2.369,
+    "span": [
+     6.657,
+     7.638
+    ],
+    "width": 0.982,
+    "kind": "open"
+   },
+   "back_stair/kitchen@z=6.66": {
+    "coord": 6.657,
+    "span": [
+     -1.505,
+     2.369
+    ],
+    "width": 3.874,
+    "kind": "open"
+   },
+   "foyer/kitchen@z=7.71": {
+    "coord": 7.708,
+    "span": [
+     3.043,
+     4.025
+    ],
+    "width": 0.982,
+    "kind": "arch"
+   },
+   "foyer/back_hall@x=1.51": {
+    "coord": 1.512,
+    "span": [
+     8.967,
+     9.887
+    ],
+    "width": 0.921,
+    "kind": "fake_door"
+   }
+  },
+  "windows": 15,
+  "stair": {
+   "rise_m": 0.178,
+   "going_m": 0.242,
+   "risers": 52
+  }
+ }
+}
