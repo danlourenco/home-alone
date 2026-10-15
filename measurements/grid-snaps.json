@@ -1,0 +1,20 @@
+{
+ "note": "Decisions for the wall-grid rebuild (tasks/wall-grid-plan.md). A snap over 0.04 m must be listed here with a reason; over 0.10 m it is refused unless a measurement or a user decision below names it. Rule (user, Oct 15): 'this should be built like a real house, so no weird gaps': two rooms either side of one wall are one 14 cm wall apart, unless the extra thickness is visible inside the house (e.g. a chimney breast).",
+ "decisions": [
+  {
+   "where": "upstairs, parents_bedroom / kevin_jeff_room (the parents' L-notch face at spec x 6.817, z 3.72-5.33)",
+   "found": "wall 9.6 in thick (+4.1 in) over 1.47 m; the parents' face sits 10.4 cm behind the line kevin_jeff_room and hall_end share",
+   "decision": "close it: the parents' bedroom face moves +0.104 m onto the shared wall (the room grows ~4 in); kevin_jeff_room and hall_end (both measured) stay",
+   "by": "user, Oct 15: 'you can grow the parents room'"
+  },
+  {
+   "where": "upstairs, hall_end / girls_a_closet (0.42 m stretch)",
+   "found": "wall 10.8 in thick (+5.2 in)",
+   "decision": "close it: the closet (sealed, unmeasured) grows onto the shared wall; hall_end keeps its measured width (1.22 m, hall-s4)",
+   "by": "user rule, Oct 15 ('no weird gaps'; not visible inside)"
+  }
+ ],
+ "open": [
+  "Cross-floor stacking candidates (wall_grid_preview.py, stacking view): which upstairs walls are the same wall as the one below"
+ ]
+}
