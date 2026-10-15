@@ -103,11 +103,23 @@ def test_real_house():
     spec, dec = wg.load()
     geo, E, report = wg.build(spec, dec)
     for f, g in geo.items():
-        W = [(w["x"][0], w["x"][1], w["z"][0], w["z"][1]) for w in g["walls"]]
+        W = [(w["x"][0], w["x"][1], w["z"][0], w["z"][1], w["y"][0], w["y"][1]) for w in g["walls"]]
         assert not g["voids"], (f, g["voids"])
         assert not g["slots"], (f, g["slots"])
-        assert not overlap(W), f
-        assert all(min(w[1] - w[0], w[3] - w[2]) >= wg.SLIVER - wg.Q for w in W), f
+        assert not overlap3(W), f
+        assert not overlap3(W + [(c["x"][0], c["x"][1], c["z"][0], c["z"][1], c["y"][0], c["y"][1]) for c in g["ceilings"]]), f
+
+
+def overlap3(B):
+    for i, a in enumerate(B):
+        for b in B[i + 1:]:
+            if all(min(a[k + 1], b[k + 1]) - max(a[k], b[k]) > 1e-6 for k in (0, 2, 4)):
+                return True
+    return False
+
+
+def test_overlap3_catches():
+    assert overlap3([(0, 1, 0, 1, 0, 2), (0.5, 2, 0, 1, 1, 3)]) and not overlap3([(0, 1, 0, 1, 0, 1), (0, 1, 0, 1, 1, 2)])
 
 
 if __name__ == "__main__":

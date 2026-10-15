@@ -26,6 +26,11 @@ import wall_grid_preview as wgp  # noqa: E402
 WALL = 0.14          # m: interior wall thickness (user decision Oct 13); exterior walls use it too for now
 Q = 1e-4             # coordinate quantum: everything is rounded to 0.1 mm so equal lines are bit-equal
 SLIVER = 0.02        # m: a wall piece thinner than this is a modelling error
+CASING = 0.07        # m: door/window trim width; an opening keeps this clear of a perpendicular wall (film 10819: casing meets wall)
+ARCH_HEAD = 2.20     # m: arches (SpecGreybox.ArchHead, not measured)
+CEIL_T = 0.15        # m: ceiling slab
+MAX_SLIDE = 0.12     # m: a door slides at most a casing plus a snap to clear its trim; beyond that it is a conflict
+FLOOR_T = 0.20       # m: floor plate
 
 
 def q(v):
@@ -87,6 +92,60 @@ def snapped_rooms(spec, E):
     return out
 
 
+# ---------- 2b. openings ----------
+def face_of(room, axis, c, lo, hi, reach=0.35):
+    """The snapped edge of room on axis nearest coordinate c whose extent overlaps [lo, hi]: (face, out, edge_lo, edge_hi)."""
+    P = room["poly"]; best = None
+    for (x1, z1), (x2, z2) in zip(P, P[1:] + P[:1]):
+        if axis == "x" and abs(x1 - x2) < Q:
+            f, a, b = x1, min(z1, z2), max(z1, z2); probe = (x1 + 0.02, (a + b) / 2)
+        elif axis == "z" and abs(z1 - z2) < Q:
+            f, a, b = z1, min(x1, x2), max(x1, x2); probe = ((a + b) / 2, z1 + 0.02)
+        else:
+            continue
+        if min(b, hi) - max(a, lo) <= 0 or abs(f - c) > reach:
+            continue
+        out = -1 if inside(P, np.array(probe[0]), np.array(probe[1])) else 1
+        if best is None or abs(f - c) < abs(best[0] - c):
+            best = (f, out, a, b)
+    return best
+
+
+def openings(floor_spec, rooms):
+    """Doors, arches, rails, open sides and windows on the snapped walls. Each: axis (the constant coordinate), c (wall
+    centreline), lo/hi along the wall, cuts (y intervals removed from the wall), and what Unity adds (trim, prop, rail, glass)."""
+    by = {r["name"]: r for r in rooms}; out, notes = [], []
+    for d in floor_spec["doors"]:
+        a, b = d["between"]; axis = d["spec_axis"]; c0 = d["wall_coord_spec"]; lo, hi = d["span_spec"]
+        fa = face_of(by[a], axis, c0, lo, hi) if a in by else None
+        fb = face_of(by[b], axis, c0, lo, hi) if b in by else None
+        f = fa or fb
+        if f is None:
+            notes.append(f"door {a}/{b}: no snapped wall near {axis}={c0:.3f}"); continue
+        c = q(f[0] + f[1] * WALL / 2)
+        kind = d["kind"]
+        conflict = None
+        if kind == "door":      # trim clearance: slide (keeping the width) until a casing fits beside each end
+            elo = max(x[2] for x in (fa, fb) if x) + CASING; ehi = min(x[3] for x in (fa, fb) if x) - CASING
+            shift = max(0.0, elo - lo) - max(0.0, hi - ehi)
+            if abs(shift) > MAX_SLIDE:     # more than a casing plus a snap: the door's place and a wall disagree
+                conflict = f"door {a}/{b}: needs {shift / 0.0254:+.1f} in to clear its trim; NOT slid (its position is measured): a decision"
+                notes.append("CONFLICT " + conflict)
+            elif abs(shift) > Q:
+                notes.append(f"door {a}/{b}: slid {shift / 0.0254:+.1f} in so its trim clears the side wall"); lo, hi = lo + shift, hi + shift
+        cuts = {"door": [(0.0, d["height"])], "arch": [(0.0, ARCH_HEAD)], "open": [(0.0, 99.0)], "rail": [(0.0, 99.0)], "fake_door": []}[kind]
+        out.append({"kind": kind, "between": [a, b], "axis": axis, "c": c, "lo": q(lo), "hi": q(hi), "cuts": cuts,
+                    "height": d.get("height"), "faces": [x[1] for x in (fa, fb) if x], "conflict": conflict})
+    for w in floor_spec.get("windows") or []:
+        axis = "z" if w["wall_axis"] == "z" else "x"; lo, hi = w["span_spec"]
+        f = face_of(by[w["room"]], axis, w["wall_coord_spec"], lo, hi) if w["room"] in by else None
+        if f is None:
+            notes.append(f"window {w['room']}/{w.get('name')}: no snapped wall"); continue
+        out.append({"kind": "window", "between": [w["room"]], "axis": axis, "c": q(f[0] + f[1] * WALL / 2), "lo": q(lo), "hi": q(hi),
+                    "cuts": [(w["sill_m"], w["head_m"])], "sill": w["sill_m"], "head": w["head_m"], "faces": [f[1]], "name": w.get("name")})
+    return out, notes
+
+
 # ---------- 3. cells ----------
 def inside(poly, x, z):
     c = np.zeros(np.broadcast(x, z).shape, bool)
@@ -110,13 +169,16 @@ def cheb(poly, x, z):
     return d
 
 
-def cells(rooms, shafts=()):
+def cells(rooms, shafts=(), ops=()):
     """Cell grid for one storey. Returns xs, zs (cell edges), kind[i, j] (0 out, 1 room, 2 wall, 3 shaft), owner[i, j]
     (room index for room cells), top[i, j] (wall top = highest ceiling among the rooms it bounds)."""
     xs = {q(v) for r in rooms for p in r["poly"] for v in (p[0], p[0] - WALL, p[0] + WALL)}
     zs = {q(v) for r in rooms for p in r["poly"] for v in (p[1], p[1] - WALL, p[1] + WALL)}
     for s in shafts:
         xs |= {q(v) for v in s["x"]}; zs |= {q(v) for v in s["z"]}
+    for o in ops:
+        across, along = (xs, zs) if o["axis"] == "x" else (zs, xs)
+        across |= {q(o["c"] - WALL / 2), q(o["c"] + WALL / 2)}; along |= {o["lo"], o["hi"]}
     xs, zs = np.array(sorted(xs)), np.array(sorted(zs))
     cx, cz = np.meshgrid((xs[:-1] + xs[1:]) / 2, (zs[:-1] + zs[1:]) / 2, indexing="ij")
     kind = np.zeros(cx.shape, int); owner = np.full(cx.shape, -1); top = np.zeros(cx.shape)
@@ -221,17 +283,47 @@ def build(spec, dec):
     geo, report = {}, []
     for floor, rs in rooms.items():
         shafts = [d["shaft"] for d in dec if d.get("shaft", {}).get("floor") == floor]
-        xs, zs, kind, owner, top = cells(rs, shafts)
-        walls = merge(kind == 2, xs, zs, key=top)
+        ops, onotes = openings(spec[floor], rs)
+        xs, zs, kind, owner, top = cells(rs, shafts, ops)
         v = voids(kind)
         chase = v & touches(v, kind == 3)   # the pocket around a declared shaft is solid wall (a chase), not a gap
         kind[chase] = 2; top[chase] = max(r["ceil"] for r in rs if r["kind"] != "opening")
-        walls = merge(kind == 2, xs, zs, key=top)
+        # heights: a ceiling slab sits on each room (stopping under the floor above); a wall rises to the highest slab top
+        # of the rooms it bounds, then the openings through it are cut out as y-intervals
+        cap = (spec["upstairs"]["stair"]["floor_to_floor_m"] - FLOOR_T) if floor == "ground" else 99.0
+        ctop = lambda r: min(r["ceil"] + CEIL_T, cap)
+        cx, cz = (xs[:-1] + xs[1:]) / 2, (zs[:-1] + zs[1:]) / 2
+        wtop = np.zeros(kind.shape)
+        for r in rs:
+            near = (kind == 2) & (cheb(r["poly"], cx[:, None], cz[None, :]) <= WALL + Q)
+            wtop[near] = np.maximum(wtop[near], ctop(r))
+        wtop[(kind == 2) & (wtop == 0)] = max(ctop(r) for r in rs if r["kind"] != "opening")   # chase cells
+        keys = np.empty(kind.shape, object)
+        for i in range(kind.shape[0]):
+            for j in range(kind.shape[1]):
+                if kind[i, j] != 2:
+                    continue
+                iv = [(0.0, wtop[i, j])]
+                for o in ops:
+                    x, z = cx[i], cz[j]
+                    along, across = (z, x) if o["axis"] == "x" else (x, z)
+                    if o["lo"] < along < o["hi"] and abs(across - o["c"]) < WALL / 2:
+                        for c0, c1 in o["cuts"]:
+                            iv = [p for a, b in iv for p in ((a, min(b, c0)), (max(a, c1), b)) if p[1] - p[0] > Q]
+                keys[i, j] = tuple((round(a, 4), round(b, 4)) for a, b in iv)
+        walls = [w for w in merge(kind == 2, xs, zs, key=keys) if w[4]]
+        floor_rects = merge(((kind == 1) & ~np.isin(owner, [k for k, r in enumerate(rs) if r.get("opens") == "down"])) | (kind == 2), xs, zs)
+        ceil_rects = merge((kind == 1) & np.isin(owner, [k for k, r in enumerate(rs) if r["kind"] != "opening"]), xs, zs, key=owner)
         v = voids(kind)
         vrects = merge(v, xs, zs)
         slivers = [w for w in walls if min(w[1] - w[0], w[3] - w[2]) < SLIVER - Q]
+        report += [f"   {n}" for n in onotes]
         srects = merge(slots(kind, xs, zs), xs, zs)
-        geo[floor] = {"rooms": rs, "walls": [{"x": [w[0], w[1]], "z": [w[2], w[3]], "top": w[4]} for w in walls],
+        geo[floor] = {"rooms": rs, "floor_y": spec[floor].get("floor_y_m", 0.0), "openings": ops,
+                      "walls": [{"x": [w[0], w[1]], "z": [w[2], w[3]], "y": list(iv)} for w in walls for iv in w[4]],
+                      "floor": [{"x": [r[0], r[1]], "z": [r[2], r[3]], "y": [-FLOOR_T, 0.0]} for r in floor_rects],
+                      "ceilings": [{"room": rs[int(r[4])]["name"], "x": [r[0], r[1]], "z": [r[2], r[3]],
+                                    "y": [rs[int(r[4])]["ceil"], ctop(rs[int(r[4])])]} for r in ceil_rects],
                       "voids": [{"x": [r[0], r[1]], "z": [r[2], r[3]]} for r in vrects], "shafts": shafts,
                       "slots": [{"x": [r[0], r[1]], "z": [r[2], r[3]]} for r in srects]}
         area = lambda R: sum((r[1] - r[0]) * (r[3] - r[2]) for r in R)
