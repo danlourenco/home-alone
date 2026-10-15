@@ -29,6 +29,7 @@ SLIVER = 0.02        # m: a wall piece thinner than this is a modelling error
 CASING = 0.07        # m: door/window trim width; an opening keeps this clear of a perpendicular wall (film 10819: casing meets wall)
 ARCH_HEAD = 2.20     # m: arches without a measured crown (SpecGreybox.ArchHead); a spec door's height is its crown
 CEIL_T = 0.15        # m: ceiling slab
+RAIL_T = 0.06        # m: balustrade band between a hall and a stairwell (reconcile.RAIL_T)
 MAX_SLIDE = 0.12     # m: a door slides at most a casing plus a snap to clear its trim; beyond that it is a conflict
 FLOOR_T = 0.20       # m: floor plate
 
@@ -46,17 +47,29 @@ def load():
 # ---------- 1. grid ----------
 def snap(spec, dec):
     E = wgp.edges("upstairs", spec["upstairs"]) + wgp.edges("ground", spec["ground"])
+    # a rail is not a wall: its two rooms stand RAIL_T apart (the balustrade), so their faces cluster on the
+    # rail's centre and keep that spacing (as a 14 cm wall the gallery's edge moved 4 cm off flight 2's side)
+    for floor, fs in spec.items():
+        for d in fs["doors"]:
+            if d["kind"] != "rail":      # an "open" side shares one edge (no band): leave it
+                continue
+            for e in E:
+                if e["floor"] == floor and e["room"] in d["between"] and e["axis"] == d["spec_axis"] and abs(e["face"] - d["wall_coord_spec"]) < 0.1 \
+                        and min(e["hi"], d["span_spec"][1]) - max(e["lo"], d["span_spec"][0]) > 0.05:
+                    e["centre"] = round(e["face"] + e["out"] * RAIL_T / 2, 4); e["rail"] = True
     wgp.cluster(E)
-    for d in dec:   # pins: a measured face keeps its place; its whole shared line (the other side of the wall too) moves to it
-        p = d.get("pin")
-        if not p:
-            continue
-        hit = [e for e in E if e["floor"] == p["floor"] and e["room"] == p["room"] and e["axis"] == p["axis"] and abs(e["face"] - p["face"]) < 1e-3]
-        assert hit, f"pin not found: {p}"
-        e0 = hit[0]; line = [e for e in E if e["floor"] == e0["floor"] and e["axis"] == e0["axis"] and e.get("line") == e0["line"]]
-        delta = -e0["snap"]
-        for e in line:
-            e["snap"] = round(e["snap"] + delta, 4); e["pinned_by"] = p["room"]
+    # pins: a measured face keeps its place, or ("stack") goes to a given coordinate: the stair hall's upstairs walls stand on
+    # the ground floor's (one two-storey wall, phase 5). Its whole shared line (the other side of the wall too) moves with it
+    for d in dec:
+        for p in (d.get("pin"), *d.get("stack", [])):
+            if not p:
+                continue
+            hit = [e for e in E if e["floor"] == p["floor"] and e["room"] == p["room"] and e["axis"] == p["axis"] and abs(e["face"] - p["face"]) < 1e-3]
+            assert hit, f"pin not found: {p}"
+            e0 = hit[0]; line = [e for e in E if e["floor"] == e0["floor"] and e["axis"] == e0["axis"] and e.get("line") == e0["line"]]
+            delta = p.get("to", p["face"]) - p["face"] - e0["snap"]
+            for e in line:
+                e["snap"] = round(e["snap"] + delta, 4); e["pinned_by"] = p["room"]
     for d in dec:   # close the thick walls the user decided: the moving room's face goes onto the other side's wall
         c = d.get("close")
         if not c:
@@ -191,13 +204,14 @@ def cheb(poly, x, z):
     return d
 
 
-def cells(rooms, shafts=(), ops=()):
+def cells(rooms, shafts=(), ops=(), extra=((), ())):
     """Cell grid for one storey. Returns xs, zs (cell edges), kind[i, j] (0 out, 1 room, 2 wall, 3 shaft), owner[i, j]
     (room index for room cells), top[i, j] (wall top = highest ceiling among the rooms it bounds)."""
     xs = {q(v) for r in rooms for p in r["poly"] for v in (p[0], p[0] - WALL, p[0] + WALL)}
     zs = {q(v) for r in rooms for p in r["poly"] for v in (p[1], p[1] - WALL, p[1] + WALL)}
     for s in shafts:
         xs |= {q(v) for v in s["x"]}; zs |= {q(v) for v in s["z"]}
+    xs |= {q(v) for v in extra[0]}; zs |= {q(v) for v in extra[1]}   # lines from the other storey (the stairwell's edges, the landing)
     for o in ops:
         across, along = (xs, zs) if o["axis"] == "x" else (zs, xs)
         across |= {q(o["c"] - WALL / 2), q(o["c"] + WALL / 2)}; along |= {o["lo"], o["hi"]}
@@ -306,7 +320,12 @@ def build(spec, dec):
     for floor, rs in rooms.items():
         shafts = [d["shaft"] for d in dec if d.get("shaft", {}).get("floor") == floor]
         ops, onotes = openings(spec[floor], rs)
-        xs, zs, kind, owner, top = cells(rs, shafts, ops)
+        extra = ((), ())
+        if floor == "ground":   # cut the ground grid on the stairwell's edges and the landing, so ceilings and walls stop exactly there
+            wells = [r for r in rooms["upstairs"] if r.get("opens") == "down"]
+            L = next(b for b in spec["upstairs"]["stair"]["boxes"] if b["kind"] == "landing")
+            extra = ([p[0] for r in wells for p in r["poly"]] + L["x"], [p[1] for r in wells for p in r["poly"]] + L["z"])
+        xs, zs, kind, owner, top = cells(rs, shafts, ops, extra)
         v = voids(kind)
         chase = v & touches(v, kind == 3)   # the pocket around a declared shaft is solid wall (a chase), not a gap
         kind[chase] = 2; top[chase] = max(r["ceil"] for r in rs if r["kind"] != "opening")
@@ -320,12 +339,43 @@ def build(spec, dec):
             near = (kind == 2) & (cheb(r["poly"], cx[:, None], cz[None, :]) <= WALL + Q)
             wtop[near] = np.maximum(wtop[near], ctop(r))
         wtop[(kind == 2) & (wtop == 0)] = max(ctop(r) for r in rs if r["kind"] != "opening")   # chase cells
+        # the stair hall (phase 5): the landing is a slab inside it. Walls under the landing stop at its underside; walls along
+        # its ends and back bound the stair hall above it, so they rise to the floor above (two storeys: the stairwell's walls
+        # stand on them). Ceilings of the rooms under it stop at its underside; no ground ceiling under the open stairwell.
+        under = np.zeros(kind.shape, bool); hall = np.zeros(kind.shape, bool); l_under = 99.0; ring_rooms = np.zeros(kind.shape, bool)
+        if floor == "ground":
+            F = spec["upstairs"]["stair"]["floor_to_floor_m"]
+            L = next(b for b in spec["upstairs"]["stair"]["boxes"] if b["kind"] == "landing")
+            lx, lz, l_under = L["x"], L["z"], q(L["y"][0] + F)
+            X, Z = cx[:, None], cz[None, :]
+            under = (X > lx[0]) & (X < lx[1]) & (Z > lz[0]) & (Z < lz[1])
+            ring = (kind == 2) & ~under & (X > lx[0] - WALL - Q) & (X < lx[1]) & (Z > lz[0] - WALL - Q) & (Z < lz[1] + WALL + Q)
+            wtop[(kind == 2) & under] = np.minimum(wtop[(kind == 2) & under], l_under)
+            wtop[ring] = cap
+            ring_rooms = (kind == 1) & ~under & (X > lx[0] - WALL - Q) & (X < lx[1]) & (Z > lz[0] - WALL - Q) & (Z < lz[1] + WALL + Q) \
+                & ((X < lx[0]) | (Z < lz[0]) | (Z > lz[1]))
+            for r in rooms["upstairs"]:
+                if r.get("opens") == "down":
+                    hall |= inside(r["poly"], X, Z)
+        # upstairs walls around the stairwell stand down through the floor plate onto the stair hall's walls below (elsewhere the
+        # plate runs under them: a wall there is never seen with the one below it)
+        through = np.zeros(kind.shape, bool)
+        if floor == "upstairs":
+            for r in rs:
+                if r.get("opens") == "down":
+                    through |= (kind == 2) & (cheb(r["poly"], cx[:, None], cz[None, :]) <= WALL + Q)
         keys = np.empty(kind.shape, object)
         for i in range(kind.shape[0]):
             for j in range(kind.shape[1]):
                 if kind[i, j] != 2:
                     continue
-                iv = [(0.0, wtop[i, j])]
+                # upstairs walls stand down through the floor plate onto the walls below (a 20 cm band of plate showed across the
+                # two-storey stair-hall walls); the plate is the rooms' cells only
+                iv = [(-FLOOR_T if through[i, j] else 0.0, wtop[i, j])]
+                corner = [o for o in ops if o["kind"] == "rail" and abs((cx[i] if o["axis"] == "x" else cz[j]) - o["c"]) < WALL / 2
+                          and o["lo"] - WALL < (cz[j] if o["axis"] == "x" else cx[i]) < o["hi"] + WALL]
+                if len({o["axis"] for o in corner}) == 2:   # where two rails meet at a corner: open like the rails (a post stood there)
+                    iv = [p for a, b in iv for p in ((a, min(b, 0.0)), (max(a, corner[0]["cuts"][0][1]), b)) if p[1] - p[0] > Q]
                 for o in ops:
                     x, z = cx[i], cz[j]
                     along, across = (z, x) if o["axis"] == "x" else (x, z)
@@ -334,9 +384,18 @@ def build(spec, dec):
                             iv = [p for a, b in iv for p in ((a, min(b, c0)), (max(a, c1), b)) if p[1] - p[0] > Q]
                 keys[i, j] = tuple((round(a, 4), round(b, 4)) for a, b in iv)
         walls = [w for w in merge(kind == 2, xs, zs, key=keys) if w[4]]
-        floor_rects = merge(((kind == 1) & ~np.isin(owner, [k for k, r in enumerate(rs) if r.get("opens") == "down"])) | (kind == 2), xs, zs)
+        if floor == "ground":   # the stair hall's wall above a room that reaches in beside the landing (above its ceiling slab)
+            rkey = np.empty(kind.shape, object)
+            for i, j in zip(*np.nonzero(ring_rooms)):
+                rkey[i, j] = ((round(ctop(rs[owner[i, j]]), 4), round(cap, 4)),)
+            walls += [w for w in merge(ring_rooms, xs, zs, key=rkey) if w[4]]
+        # the floor plate, split by room so each piece carries its room's finish (a separate finish layer z-fought the plate and,
+        # cut from the ceilings, laid a lid over the stairwell); wall cells are their own pieces (key -1); no floor in a well
+        fmask = ((kind == 1) & ~np.isin(owner, [k for k, r in enumerate(rs) if r.get("opens") == "down"])) | ((kind == 2) & ~through)
+        floor_rects = merge(fmask, xs, zs, key=np.where(kind == 1, owner, -1))
         # every space has a ceiling except an attic stair (it rises through it); a stairwell's is the storey's ceiling over the well
-        ceil_rects = merge((kind == 1) & np.isin(owner, [k for k, r in enumerate(rs) if r.get("opens") != "up"]), xs, zs, key=owner)
+        has_ceil = (kind == 1) & np.isin(owner, [k for k, r in enumerate(rs) if r.get("opens") != "up"]) & ~(hall & ~under)
+        ceil_rects = merge(has_ceil, xs, zs, key=owner * 2 + under)
         v = voids(kind)
         vrects = merge(v, xs, zs)
         slivers = [w for w in walls if min(w[1] - w[0], w[3] - w[2]) < SLIVER - Q]
@@ -344,9 +403,11 @@ def build(spec, dec):
         srects = merge(slots(kind, xs, zs), xs, zs)
         geo[floor] = {"rooms": rs, "floor_y": spec[floor].get("floor_y_m", 0.0), "openings": ops,
                       "walls": [{"x": [w[0], w[1]], "z": [w[2], w[3]], "y": list(iv)} for w in walls for iv in w[4]],
-                      "floor": [{"x": [r[0], r[1]], "z": [r[2], r[3]], "y": [-FLOOR_T, 0.0]} for r in floor_rects],
-                      "ceilings": [{"room": rs[int(r[4])]["name"], "x": [r[0], r[1]], "z": [r[2], r[3]],
-                                    "y": [rs[int(r[4])]["ceil"], ctop(rs[int(r[4])])]} for r in ceil_rects],
+                      "floor": [{"x": [r[0], r[1]], "z": [r[2], r[3]], "y": [-FLOOR_T, 0.0], "room": rs[int(r[4])]["name"] if r[4] >= 0 else None,
+                                 "finish": (rs[int(r[4])]["kind"] if r[4] >= 0 else "wall")} for r in floor_rects],
+                      "ceilings": [{"room": rs[int(r[4]) // 2]["name"], "x": [r[0], r[1]], "z": [r[2], r[3]],
+                                    "y": [rs[int(r[4]) // 2]["ceil"], min(ctop(rs[int(r[4]) // 2]), l_under) if int(r[4]) % 2 else ctop(rs[int(r[4]) // 2])]}
+                                   for r in ceil_rects],
                       "voids": [{"x": [r[0], r[1]], "z": [r[2], r[3]]} for r in vrects], "shafts": shafts,
                       "slots": [{"x": [r[0], r[1]], "z": [r[2], r[3]]} for r in srects]}
         area = lambda R: sum((r[1] - r[0]) * (r[3] - r[2]) for r in R)

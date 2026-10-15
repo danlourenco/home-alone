@@ -608,18 +608,18 @@
    "wall_thickness": 0.14,
    "span": [
     8.151,
-    9.196
+    9.526
    ],
-   "width": 1.045,
+   "width": 1.375,
    "height": 2.17,
    "spring": 1.91,
    "opens": true,
    "placed_from": "measured",
-   "source": "film 2677 + 3888 (tools/house/foyer_cameras.py, Oct 15): a cased segmental arch in the back wall under the landing; clear width 1.02/1.07 m, crown 2.165/2.168 m, springline 1.904/1.918 m (two cameras solved from flight 1's nosings); fills the shared wall (the passage is as wide as the arch). Oct 15: span given (spec z 8.855-9.900, the film's) now that the passage is wider than the arch",
+   "source": "film 2677 + 3888 (tools/house/foyer_cameras.py, Oct 15): a cased segmental arch in the back wall under the landing; clear width 1.02/1.07 m, crown 2.165/2.168 m, springline 1.904/1.918 m (two cameras solved from flight 1's nosings); fills the shared wall (the passage is as wide as the arch). Oct 15: span given (spec z 8.855-9.900, the film's) now that the passage is wider than the arch. Oct 15: the arch's left side runs to the main stair's side (spec z 10.23): Marina 195 s (from the breakfast area) and 1070.5 s (face-on) show it springing straight off the end of the under-stair wall, no pier (references/foyer-film/best-tour-*.jpg); user: no pier. The film's left jamb (9.86-9.93) is hidden by the tree in every shot. Clear width 1.375 m",
    "wall_coord_spec": 2.915,
    "span_spec": [
     8.855,
-    9.9
+    10.23
    ],
    "spec_axis": "x"
   },

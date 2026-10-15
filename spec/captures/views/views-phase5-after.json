@@ -1,0 +1,274 @@
+[
+ {
+  "name": "../phase5/after-2677",
+  "pos": [
+   10.561,
+   -2.194,
+   -9.119
+  ],
+  "look_at": [
+   9.592,
+   -2.194,
+   -9.362
+  ],
+  "vfov": 25.98,
+  "note": "film 2677: level camera solved from flight 1's nosings (tools/house/foyer_cameras.py)",
+  "near": 1.71
+ },
+ {
+  "name": "../phase5/after-3888",
+  "pos": [
+   10.474,
+   -2.004,
+   -8.96
+  ],
+  "look_at": [
+   9.513,
+   -2.004,
+   -9.237
+  ],
+  "vfov": 26.72,
+  "note": "film 3888: level camera solved from flight 1's nosings (tools/house/foyer_cameras.py)",
+  "near": 1.62
+ },
+ {
+  "name": "../phase5/after-1616",
+  "pos": [
+   12.308,
+   -1.974,
+   -9.403
+  ],
+  "look_at": [
+   11.309,
+   -1.974,
+   -9.437
+  ],
+  "vfov": 26.64,
+  "note": "film 1616: level camera solved from flight 1's nosings (tools/house/foyer_cameras.py)",
+  "near": 3.46
+ },
+ {
+  "name": "../phase5/after-inside-foyer",
+  "pos": [
+   6.2,
+   -1.4759999999999998,
+   -9.2
+  ],
+  "look_at": [
+   2.9,
+   -1.7759999999999998,
+   -9.4
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../phase5/after-inside-arch",
+  "pos": [
+   4.2,
+   -1.5259999999999998,
+   -9.38
+  ],
+  "look_at": [
+   1.6,
+   -1.8259999999999998,
+   -9.4
+  ],
+  "vfov": 55
+ },
+ {
+  "name": "../phase5/after-inside-passage",
+  "pos": [
+   2.75,
+   -1.626,
+   -9.38
+  ],
+  "look_at": [
+   1.6,
+   -1.4259999999999997,
+   -9.42
+  ],
+  "vfov": 70
+ },
+ {
+  "name": "../phase5/after-doors-closet",
+  "pos": [
+   6.0,
+   -1.7259999999999998,
+   -8.3
+  ],
+  "look_at": [
+   3.3,
+   -2.226,
+   -10.2
+  ],
+  "vfov": 55
+ },
+ {
+  "name": "../phase5/after-doors-passage",
+  "pos": [
+   2.95,
+   -1.5259999999999998,
+   -9.6
+  ],
+  "look_at": [
+   2.3,
+   -1.9259999999999997,
+   -8.85
+  ],
+  "vfov": 70
+ },
+ {
+  "name": "../phase5/after-posts",
+  "pos": [
+   6.195,
+   1.73,
+   -7.687
+  ],
+  "look_at": [
+   5.688,
+   1.892,
+   -8.534
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../phase5/after-flight2",
+  "pos": [
+   8.076,
+   -1.296,
+   -9.164
+  ],
+  "look_at": [
+   7.087,
+   -1.237,
+   -9.027
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../phase5/after-flight2-close",
+  "pos": [
+   5.2,
+   -1.296,
+   -8.6
+  ],
+  "look_at": [
+   4.297,
+   -0.873,
+   -8.679
+  ],
+  "vfov": 55
+ },
+ {
+  "name": "../phase5/after-alcove",
+  "pos": [
+   4.49,
+   -1.296,
+   -9.228
+  ],
+  "look_at": [
+   3.5448255325344435,
+   -1.4833813145857246,
+   -9.495457415293213
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../phase5/after-landing-north",
+  "pos": [
+   1.972,
+   1.018,
+   -9.253
+  ],
+  "look_at": [
+   2.17,
+   0.566,
+   -8.383
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../phase5/after-landing-south",
+  "pos": [
+   1.972,
+   1.018,
+   -9.6
+  ],
+  "look_at": [
+   2.17,
+   0.566,
+   -10.47
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../phase5/after-passage-flush",
+  "pos": [
+   5.394,
+   -1.296,
+   -9.356
+  ],
+  "look_at": [
+   4.397,
+   -1.326,
+   -9.424
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../phase5/after-passage-inside",
+  "pos": [
+   2.6,
+   -1.296,
+   -9.5
+  ],
+  "look_at": [
+   2.259,
+   -1.383,
+   -10.436
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../phase5/after-stair-foot-up",
+  "pos": [
+   7.4,
+   -1.326,
+   -10.6
+  ],
+  "look_at": [
+   6.494,
+   -0.903,
+   -10.6
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../phase5/after-gallery-down",
+  "pos": [
+   4.6,
+   1.7,
+   -8.3
+  ],
+  "look_at": [
+   4.073,
+   1.126,
+   -8.928
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../phase5/after-landing-up-flight2",
+  "pos": [
+   2.2,
+   0.988,
+   -10.2
+  ],
+  "look_at": [
+   2.821,
+   1.247,
+   -9.46
+  ],
+  "vfov": 60
+ }
+]

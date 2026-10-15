@@ -65,7 +65,7 @@ public static class SpecGreybox
                 a = (string)d["between"][0], b = (string)d["between"][1], kind = (string)d["kind"], alongX = alongX,
                 coord = alongX ? -c : c, lo = alongX ? l : -h, hi = alongX ? h : -l,
                 height = d["height"].Type == JTokenType.Null ? 0f : (float)d["height"],
-                spring = d["spring"] == null ? 0f : (float)d["spring"] };
+                spring = d["spring"] == null || d["spring"].Type == JTokenType.Null ? 0f : (float)d["spring"] };
         }).ToList();
         // windows: wall_axis "x" = the wall x = coord (runs along z), "z" = the wall z = coord; spec z -> world -z
         Windows = (j["windows"] ?? new JArray()).Select(w => {
@@ -284,6 +284,190 @@ public static class SpecGreybox
         File.WriteAllText(Path.Combine(CaptureDir, "walk-test-pilot.txt"), report);
         EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), "Assets/Scenes/Pilot_WallGrid.unity");
         Debug.Log("SpecGreybox.BuildPilot\n" + report);
+    }
+
+    // ---- Wall-grid HOUSE (tasks/wall-grid-plan.md phase 5): both floors from spec/geometry.json, the stair hall one two-storey
+    // space (stacked walls, the landing a slab inside it), the stairs and dressing from the spec. Saved as House_WallGrid; the
+    // old builder's scene (Greybox_Upstairs) is left as it was. Gates: door walks, stair walks, room walks, seams, leaks,
+    // and PEEK (no view from a room you can walk in into a space you cannot: the slots the user found, Oct 15).
+    [MenuItem("HomeAlone/Build Wall-Grid House")]
+    public static void BuildWallGrid()
+    {
+        var geo = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/geometry.json"))));
+        var j = JObject.Parse(File.ReadAllText(SpecPath)); var gj = JObject.Parse(File.ReadAllText(GroundPath));
+        var dp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/foyer.json"));
+        Dress = File.Exists(dp) ? JObject.Parse(File.ReadAllText(dp)) : null;
+        float gy = (float)gj["floor_y_m"];
+        EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        MakeMaterials(); HoleProbes.Clear(); Windows = new List<Win>();
+        Landings = j["stair"]["boxes"].Where(b => (string)b["kind"] == "landing").Select(b => ((float)b["x"][0], (float)b["x"][1],
+            -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0])).ToList();
+        var paper = Dress != null ? Dress["walls"]["spaces"].Select(n => (string)n).ToHashSet() : new HashSet<string>();
+        FloorY = 0f;
+        var root = new GameObject("Upstairs");
+        var (spaces, doors) = Storey(root, (JObject)geo["upstairs"], new HashSet<string> { "main_stair_opening" }, true);
+        FloorY = gy;
+        var groot = new GameObject("Ground");
+        var (gspaces, gdoors) = Storey(groot, (JObject)geo["ground"], paper, false);
+        FloorY = 0f;
+        var stairPath = Stair(root, j["stair"], true, stairOnly: true);
+        var atticPath = Stair(root, j["attic_stair"], false, "AtticStair", dress: false, stairOnly: true);
+        FloorY = gy;
+        if (gj["stair"] != null && gj["stair"].Type != JTokenType.Null) Stair(groot, gj["stair"], false, stairOnly: true);   // service stair
+        Dressing(groot, gy);
+        FloorY = 0f;
+        Lights(root, spaces); FloorY = gy; Lights(groot, gspaces); FloorY = 0f;
+        Volume(root);
+        Daylight(root, gy);
+        Player(spaces.First(s => s.name == "hall_corridor"));
+        var player = GameObject.Find("Player"); player.SetActive(false);
+        Physics.SyncTransforms();
+        string report = "WALL-GRID HOUSE (both floors from spec/geometry.json)\nUPSTAIRS\n" + WalkTest(spaces, doors);
+        FloorY = gy; report += "GROUND\n" + WalkTest(gspaces, gdoors); FloorY = 0f;
+        report += StairWalk(stairPath) + StairWalk(atticPath);
+        var dressing = GameObject.Find("Ground/Dressing"); dressing?.SetActive(false); Physics.SyncTransforms();
+        var walkIn = doors.Concat(gdoors).Where(d => d.kind != "fake_door").SelectMany(d => new[] { d.a, d.b }).ToHashSet();
+        SeamRooms = spaces.Where(sp => walkIn.Contains(sp.name) || sp.kind == "opening").Select(sp => (sp.pts, sp.opens == "down" ? gy : 0f, sp.ceil)).ToList();
+        SeamRooms.AddRange(gspaces.Where(sp => walkIn.Contains(sp.name)).Select(sp => (sp.pts, gy, gy + sp.ceil)));
+        report += SeamCheck(root, groot);
+        report += LeakAndHeadroom(spaces, gspaces, gy);
+        report += Peek(spaces, gspaces, gy, walkIn);
+        report += "UPSTAIRS " + RoomWalk(spaces, doors);
+        FloorY = gy; report += "GROUND " + RoomWalk(gspaces, gdoors); FloorY = 0f;
+        dressing?.SetActive(true); Physics.SyncTransforms();
+        player.SetActive(true);
+        Directory.CreateDirectory(CaptureDir);
+        File.WriteAllText(Path.Combine(CaptureDir, "walk-test-wallgrid.txt"), report);
+        EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), "Assets/Scenes/House_WallGrid.unity");
+        Debug.Log("SpecGreybox.BuildWallGrid\n" + report);
+    }
+
+    // One storey from geometry.json at the current FloorY: walls (papered on the faces of the named rooms, over the wainscot),
+    // floor plate, ceilings, finishes, door/window trim, prop doors, glass, rails, arch tops. Returns the rooms and openings in
+    // the spec's shape for the gates.
+    static (List<Space>, List<Door>) Storey(GameObject root, JObject st, HashSet<string> papered, bool carpetHalls)
+    {
+        var specLike = new JObject {
+            ["spaces"] = new JArray(st["rooms"].Select(r => new JObject { ["name"] = r["name"], ["kind"] = r["kind"], ["opens"] = r["opens"],
+                                                                          ["ceiling_m"] = r["ceil"], ["polygon_xz"] = r["poly"] })),
+            ["doors"] = new JArray(st["openings"].Where(o => (string)o["kind"] != "window").Select(o => new JObject {
+                ["between"] = o["between"], ["kind"] = o["kind"], ["spec_axis"] = o["axis"], ["wall_coord_spec"] = o["c"],
+                ["span_spec"] = new JArray(o["lo"], o["hi"]), ["height"] = o["height"], ["spring"] = o["spring"] })) };
+        var (spaces, doors) = Parse(specLike);
+        var gw = Child(root, "Walls"); var gf = Child(root, "Floor"); var gc = Child(root, "Ceilings"); var go = Child(root, "Openings");
+        var paperRooms = spaces.Where(sp => papered.Contains(sp.name)).ToList();
+        Material wpMat = null, wsMat = null; float ws = 0f;
+        if (Dress != null && paperRooms.Count > 0)
+        {
+            var w = Dress["walls"]; wpMat = w["wallpaper_texture"] != null ? Wallpaper(w) : DressMat(w["wallpaper"]); wsMat = DressMat(w["wainscot"]); ws = (float)w["wainscot_m"];
+        }
+        bool InPaper(float x, float zSpec) => paperRooms.Any(r => Inside(r.pts, new Vector2(x, -zSpec)));
+        void Piece(float x0, float x1, float z0, float z1, float y0, float y1, bool pap)
+        {   // spec z -> world -z; papered: wainscot below, paper above
+            if (!pap || wpMat == null) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, mWall); return; }
+            if (y0 < ws && y1 > ws) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, ws, wsMat); Box(gw, "Wall", x0, x1, -z1, -z0, ws, y1, wpMat); }
+            else Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, y1 <= ws ? wsMat : wpMat);
+        }
+        foreach (var b in st["walls"])
+        {
+            float x0 = (float)b["x"][0], x1 = (float)b["x"][1], z0 = (float)b["z"][0], z1 = (float)b["z"][1], y0 = (float)b["y"][0], y1 = (float)b["y"][1];
+            float ym = (y0 + y1) / 2; const float e = 0.02f;
+            // which faces border a papered room: split a thin wall down its middle so each side takes its own room's finish
+            bool thinX = x1 - x0 <= 0.16f, thinZ = z1 - z0 <= 0.16f;
+            float mx = (x0 + x1) / 2, mz = (z0 + z1) / 2;
+            if (thinX && !thinZ)
+            {
+                bool a = InPaper(x0 - e, mz), c = InPaper(x1 + e, mz);
+                if (a == c) Piece(x0, x1, z0, z1, y0, y1, a); else { Piece(x0, mx, z0, z1, y0, y1, a); Piece(mx, x1, z0, z1, y0, y1, c); }
+            }
+            else if (thinZ && !thinX)
+            {
+                bool a = InPaper(mx, z0 - e), c = InPaper(mx, z1 + e);
+                if (a == c) Piece(x0, x1, z0, z1, y0, y1, a); else { Piece(x0, x1, z0, mz, y0, y1, a); Piece(x0, x1, mz, z1, y0, y1, c); }
+            }
+            else Piece(x0, x1, z0, z1, y0, y1, InPaper(x0 - e, mz) || InPaper(x1 + e, mz) || InPaper(mx, z0 - e) || InPaper(mx, z1 + e));
+        }
+        foreach (var b in st["floor"])   // the plate, one piece per room carrying its finish (halls carpeted), walls' cells plain
+            Box(gf, b["room"] != null && b["room"].Type != JTokenType.Null ? "Floor_" + (string)b["room"] : "FloorPlate", (float)b["x"][0], (float)b["x"][1],
+                -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], (string)b["finish"] == "hall" && carpetHalls ? mHall : mFloor);   // the ground halls (foyer, passage) are wood
+        Box3(gc, "Ceiling", st["ceilings"], mCeil);
+        foreach (var o in st["openings"])
+        {
+            string kind = (string)o["kind"]; bool alongX = (string)o["axis"] == "z";
+            float c = (float)o["c"], lo = (float)o["lo"], hi = (float)o["hi"];
+            float wc = alongX ? -c : c, s0 = alongX ? lo : -hi, s1 = alongX ? hi : -lo;
+            const float h = 0.07f;
+            if (kind == "door")
+                foreach (float side in new[] { -1f, 1f })
+                {
+                    float head = (float)o["height"], f0 = wc + side * h, f1 = f0 + side * CasingProud;
+                    Trim(go, alongX, f0, f1, s0 - CasingW, s0, 0f, head + CasingW);
+                    Trim(go, alongX, f0, f1, s1, s1 + CasingW, 0f, head + CasingW);
+                    Trim(go, alongX, f0, f1, s0 - CasingW, s1 + CasingW, head, head + CasingW);
+                }
+            else if (kind == "arch" && o["spring"] != null && o["spring"].Type != JTokenType.Null)
+            {   // segmental top (stepped slices) and casing legs on both faces
+                float spring = (float)o["spring"], crown = (float)o["height"];
+                ArchTop(go, alongX, wc - h, wc + h, 1f, s0, s1, spring, crown, crown);
+                float f0 = wc - h, f1 = f0 - CasingProud;
+                Trim(go, alongX, f0, f1, s0 - CasingW, s0, 0f, spring); Trim(go, alongX, f0, f1, s1, s1 + CasingW, 0f, spring);
+            }
+            else if (kind == "fake_door")
+                foreach (float side in new[] { -1f, 1f })
+                {
+                    float f0 = wc + side * h, f1 = f0 + side * 0.03f;
+                    if (alongX) Box(go, "PropDoor", s0, s1, Mathf.Min(f0, f1), Mathf.Max(f0, f1), 0f, 2.032f, mProp);
+                    else Box(go, "PropDoor", Mathf.Min(f0, f1), Mathf.Max(f0, f1), s0, s1, 0f, 2.032f, mProp);
+                }
+            else if (kind == "window")
+            {
+                float sill = (float)o["sill"], whead = (float)o["head"], ta = wc - 0.006f, tb = wc + 0.006f;
+                if (alongX) Box(go, "Glass", s0, s1, ta, tb, sill, whead, mGlass); else Box(go, "Glass", ta, tb, s0, s1, sill, whead, mGlass);
+                float ow = (float)o["faces"][0] * (alongX ? -1f : 1f), f0 = wc - ow * h, f1 = f0 - ow * CasingProud;
+                Trim(go, alongX, f0, f1, s0 - CasingW, s0, sill, whead + CasingW);
+                Trim(go, alongX, f0, f1, s1, s1 + CasingW, sill, whead + CasingW);
+                Trim(go, alongX, f0, f1, s0 - CasingW, s1 + CasingW, whead, whead + CasingW);
+                Trim(go, alongX, f0, f0 - ow * StoolProud, s0 - CasingW - 0.025f, s1 + CasingW + 0.025f, sill - StoolT, sill);
+            }
+        }
+        foreach (var d in doors.Where(d => d.kind == "rail")) Rail(go, d);
+        return (spaces, doors);
+    }
+
+    // PEEK (Oct 15): from eye points in every room you can walk in, rays in all directions; a ray whose first hit lies inside a
+    // space you cannot walk into (closed closets, the space under the landing, behind prop doors) looked through a gap.
+    static string Peek(List<Space> up, List<Space> ground, float gy, HashSet<string> walkIn)
+    {
+        var lines = new List<string>(); int n = 0, bad = 0;
+        var closed = up.Select(s => (s, 0f)).Concat(ground.Select(s => (s, gy))).Where(t => !walkIn.Contains(t.s.name) && t.s.kind != "opening").ToList();
+        var dirs = new List<Vector3>();
+        for (int a = -60; a <= 60; a += 20) for (int k = 0; k < 24; k++) dirs.Add(Quaternion.Euler(a, k * 15f, 0) * Vector3.forward);
+        foreach (var (spaces, y0) in new[] { (up, 0f), (ground, gy) })
+            foreach (var s in spaces.Where(s => walkIn.Contains(s.name)))
+            {
+                float x0 = s.pts.Min(p => p.x), x1 = s.pts.Max(p => p.x), z0 = s.pts.Min(p => p.y), z1 = s.pts.Max(p => p.y);
+                for (float x = x0 + 0.2f; x < x1; x += 0.4f)
+                    for (float z = z0 + 0.2f; z < z1; z += 0.4f)
+                        foreach (float eh in new[] { 0.6f, 1.6f })
+                        {
+                            if (!Inside(s.pts, new Vector2(x, z))) continue;
+                            var eye = new Vector3(x, y0 + eh, z);
+                            if (Physics.CheckSphere(eye, 0.05f)) continue;   // inside furniture or a step
+                            foreach (var d in dirs)
+                            {
+                                n++;
+                                if (!Physics.Raycast(eye, d, out var hit, 30f)) continue;
+                                var q = hit.point + d * 0.03f;
+                                var c = closed.FirstOrDefault(t => q.y > t.Item2 + 0.01f && q.y < t.Item2 + t.s.ceil - 0.01f && Inside(t.s.pts, new Vector2(q.x, q.z)));
+                                if (c.s == null) continue;
+                                // the ray stopped on a surface inside a closed space: it passed a gap in that space's walls
+                                bad++;
+                                if (bad <= 40) lines.Add($"PEEK    from {s.name} ({x:F2}, {y0 + eh:F2}, {-z:F2}) into {c.s.name} at ({q.x:F2}, {q.y:F2}, {-q.z:F2}) on {hit.collider.name}");
+                            }
+                        }
+            }
+        lines.Insert(0, $"Peek check: {n} rays from rooms you can walk in, {bad} into closed spaces");
+        return string.Join("\n", lines) + "\n";
     }
 
     static void Box3(GameObject p, string n, JToken boxes, Material m)
@@ -670,13 +854,14 @@ public static class SpecGreybox
     }
 
     // The main stair: solid steps, landing, rails and well walls as spec boxes (spec z -> world -z); returns the walk path.
-    static List<Vector3> Stair(GameObject root, JToken st, bool skipFloorPatch, string child = "MainStair", bool dress = true)
+    static List<Vector3> Stair(GameObject root, JToken st, bool skipFloorPatch, string child = "MainStair", bool dress = true, bool stairOnly = false)
     {
         if (st == null || st.Type == JTokenType.Null) return new List<Vector3>();
         var g = Child(root, child);
         foreach (var b in st["boxes"])
         {
             string kind = (string)b["kind"];
+            if (stairOnly && (kind == "wall" || kind == "ceiling" || kind == "floor")) continue;   // the wall grid builds the stair hall itself
             if (kind == "floor" && skipFloorPatch) continue;   // the ground floor's foyer is built for real
             var m = kind == "rail" ? mRail : kind == "wall" ? mWall : kind == "floor" || (!dress && kind == "step") ? mFloor : kind == "ceiling" ? mCeil : mHall;   // attic treads: bare wood (film)
             string name = (string)b["name"]; var ds = dress ? Dress?["stair"] : null;
@@ -1001,12 +1186,21 @@ public static class SpecGreybox
         var lines = new List<string>(); int bad = 0, n = 0;
         foreach (var d in doors.Where(d => d.kind == "door" || d.kind == "arch"))
         {
-            float c = (d.lo + d.hi) / 2;
-            Vector3 P(float off) => d.alongX ? new Vector3(c, 0.06f + FloorY, d.coord + off) : new Vector3(d.coord + off, 0.06f + FloorY, c);
-            Vector3 a = P(-0.45f), b = P(0.45f), dir = (b - a).normalized; float len = Vector3.Distance(a, b);
-            Vector3 p1 = a + Vector3.up * r, p2 = a + Vector3.up * (h - r);
+            // the centre first; a wide opening may be passed off-centre (the bench beside the widened arch, Oct 15), 10 cm steps
+            var cs = new List<float> { (d.lo + d.hi) / 2 };
+            for (float t = d.lo + r + 0.05f; t <= d.hi - r - 0.05f; t += 0.1f) cs.Add(t);
+            RaycastHit hit = default; bool blocked = true;
+            foreach (float c in cs)
+            {
+                Vector3 P(float off) => d.alongX ? new Vector3(c, 0.06f + FloorY, d.coord + off) : new Vector3(d.coord + off, 0.06f + FloorY, c);
+                Vector3 a = P(-0.45f), b = P(0.45f), dir = (b - a).normalized; float len = Vector3.Distance(a, b);
+                Vector3 p1 = a + Vector3.up * r, p2 = a + Vector3.up * (h - r);
+                RaycastHit hh;
+                if (!Physics.CapsuleCast(p1, p2, r, dir, out hh, len)) { blocked = false; break; }
+                if (c == cs[0]) hit = hh;
+            }
             n++;
-            if (Physics.CapsuleCast(p1, p2, r, dir, out var hit, len))
+            if (blocked)
             { bad++; lines.Add($"BLOCKED {d.a} <-> {d.b} ({d.kind}, {d.hi - d.lo:F2} m) by {hit.collider.transform.parent?.name}/{hit.collider.name} at {hit.distance:F2} m"); }
             else lines.Add($"ok      {d.a} <-> {d.b} ({d.kind}, {d.hi - d.lo:F2} m)");
         }

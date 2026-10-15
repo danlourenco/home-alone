@@ -125,7 +125,10 @@ def main():
     arch = next(d for d in g["doors"] if sorted(d["between"]) == ["foyer", "rear_passage"])
     film = {"right": (a["right_z"], b["right_z"]), "left": (a["left_z"], b["left_z"]), "crown": (a["crown"], b["crown"]), "spring": (a["spring"], b["spring"])}
     built = {"right": arch["span_spec"][0], "left": arch["span_spec"][1], "crown": arch["height"], "spring": arch["spring"]}
+    OVERRIDE = {"left": "Marina 195 s / 1070.5 s and the user: the arch springs off the stair's side, no pier; the film's left jamb is tree-hidden (DEVIATIONS 35)"}
     for k, (u, v) in film.items():
+        if k in OVERRIDE:
+            print(f"V4 checkpoint arch {k}: built {built[k]:.3f}, film {u:.3f}/{v:.3f}: OVERRIDDEN ({OVERRIDE[k]})"); continue
         tol = abs(u - v) / 2 + 0.02
         ok = abs(built[k] - (u + v) / 2) <= tol
         print(f"V4 checkpoint arch {k}: built {built[k]:.3f}, film {u:.3f}/{v:.3f} (tol {tol:.3f}) {'ok' if ok else 'FAIL'}")

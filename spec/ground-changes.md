@@ -92,7 +92,7 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | back_stair / kitchen | open | 5.95-6.93 | 0.98 | full shared wall |
 | back_stair / kitchen | open | -6.08--2.21 | 3.87 | full shared wall |
 | foyer / kitchen | arch | -1.53--0.55 | 0.98 | read in the overhead |
-| foyer / rear_passage | arch | 8.15-9.20 | 1.04 | measured |
+| foyer / rear_passage | arch | 8.15-9.53 | 1.38 | measured |
 | rear_passage / back_hall | fake_door | 8.26-9.18 | 0.92 | read in the overhead |
 | rear_passage / back_hall | fake_door | -2.63--1.87 | 0.76 | measured |
 | rear_passage / under_landing | fake_door | -2.63--1.87 | 0.76 | measured |

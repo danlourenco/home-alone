@@ -1,0 +1,136 @@
+{
+ "change": "Phase 5: the wall-grid house (SpecGreybox.BuildWallGrid -> scene House_WallGrid): both floors from spec/geometry.json with the stair hall as one two-storey space. wall_graph: 'stack' decisions put the stairwell's upstairs walls on the foyer's (DEVIATIONS 37); rails keep a 6 cm band; the landing is a slab (walls under it stop at its underside, walls along its ends and back rise to the floor above, rooms under it ceil just below it, no ground ceiling under the open stairwell); the ground grid is cut on the stairwell's and landing's lines; upstairs walls around the stairwell stand through the floor plate onto the walls below; two rails meeting at a corner open the corner; the floor plate is split per room with its finish. The arch's left side runs to the stair's side (Marina 195 s / 1070.5 s, user). New gate PEEK: no sight line from a walkable room into a closed space. Old builder scene untouched",
+ "target": "House_WallGrid",
+ "premise": "The stair hall is one two-storey space: the walls around the stairwell are single planes from the foyer floor to the upstairs ceiling, and the landing is a slab inside it",
+ "claim": {
+  "value": [
+   7.778,
+   11.43,
+   1.58,
+   2.985
+  ],
+  "data": [
+   "spec:house_spec.ground",
+   "decision:grid-snaps-stack"
+  ],
+  "scale": [
+   "stair-rise:0.178"
+  ],
+  "upstream": [
+   "marina-clip:stairs-a",
+   "marina-frame:203",
+   "marina-frame:312"
+  ],
+  "applies_to": [
+   "foyer",
+   "main_stair_opening",
+   "hall_corridor",
+   "girls_room_a",
+   "girls_room_b",
+   "hall_end",
+   "buzz_room",
+   "hall_corridor_south",
+   "rear_passage",
+   "under_landing",
+   "back_hall"
+  ],
+  "measured_in": [
+   "foyer",
+   "main_stair_opening"
+  ],
+  "assumed": {
+   "hall_corridor": "DEVIATIONS 37",
+   "girls_room_a": "DEVIATIONS 37",
+   "girls_room_b": "DEVIATIONS 37",
+   "hall_end": "DEVIATIONS 37",
+   "buzz_room": "DEVIATIONS 37",
+   "hall_corridor_south": "DEVIATIONS 37",
+   "rear_passage": "DEVIATIONS 36",
+   "under_landing": "DEVIATIONS 22",
+   "back_hall": "DEVIATIONS 22"
+  },
+  "surface": "ceiling-plane"
+ },
+ "history": [
+  {
+   "date": "2026-10-15",
+   "what": "the arch trial and walk-note fixes patched into the old builder: gaps kept appearing (landing ends, posts, ceiling slits, flight 2)",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-15",
+   "what": "wall-grid pilot, upstairs only (user walked it: 'looks very good')",
+   "outcome": "ok"
+  }
+ ],
+ "premise_reviewed": "The failures were all the old builder stacking separately traced floors and patching where they did not meet; this change removes that cause (one shared-wall model, stacked lines, the landing as a slab) instead of patching again. Same inputs (spec) as before; the new gates (peek, seams 0/0/0) test exactly the failure class",
+ "checks": [
+  {
+   "what": "Marina 312 s camera solved from 24 step corners (1.9 px; focal 1419 px, as foyer_length.py and COLMAP found independently): the build's back wall, landing and north wall land on hers in the fade (compare-marina)",
+   "agrees": true,
+   "data": [
+    "marina-frame:312"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  },
+  {
+   "what": "film 2677/3888/1616 cameras (foyer_cameras.py): stair, back wall and arch land on the film's; the right-hand wall still 4-9 in off in 1616 (DEVIATIONS 35)",
+   "agrees": true,
+   "data": [
+    "film:2677",
+    "film:3888",
+    "film:1616"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  },
+  {
+   "what": "build gates: door walks 0 blocked, stair walks 30/0 (incl. the Player's controller, no stall), seams 0 overlaps / 0 ledges / 0 gaps, 0 leaks, peek 0 of 622,104 rays, room walks 0 blocked",
+   "agrees": true,
+   "data": [
+    "build:wallgrid-gates"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/phase5/before-2677.png",
+   "spec/captures/phase5/before-3888.png",
+   "spec/captures/phase5/before-1616.png",
+   "spec/captures/phase5/before-inside-foyer.png",
+   "spec/captures/phase5/before-inside-arch.png",
+   "spec/captures/phase5/before-posts.png",
+   "spec/captures/phase5/before-flight2.png",
+   "spec/captures/phase5/before-landing-north.png",
+   "spec/captures/phase5/before-landing-south.png",
+   "spec/captures/phase5/before-passage-flush.png",
+   "spec/captures/phase5/before-stair-foot-up.png",
+   "spec/captures/phase5/before-gallery-down.png"
+  ],
+  "after": [
+   "spec/captures/phase5/after-2677.png",
+   "spec/captures/phase5/after-3888.png",
+   "spec/captures/phase5/after-1616.png",
+   "spec/captures/phase5/after-inside-foyer.png",
+   "spec/captures/phase5/after-inside-arch.png",
+   "spec/captures/phase5/after-posts.png",
+   "spec/captures/phase5/after-flight2.png",
+   "spec/captures/phase5/after-landing-north.png",
+   "spec/captures/phase5/after-landing-south.png",
+   "spec/captures/phase5/after-passage-flush.png",
+   "spec/captures/phase5/after-stair-foot-up.png",
+   "spec/captures/phase5/after-gallery-down.png"
+  ]
+ },
+ "user_walk": "pending",
+ "sheet": "spec/captures/compare-marina/index.html"
+}

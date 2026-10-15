@@ -109,7 +109,7 @@ def odd_walls(E, t=2 * HALF):
     out = []
     for i, a in enumerate(E):
         for b in E[i + 1:]:
-            if a["floor"] != b["floor"] or a["axis"] != b["axis"] or a["room"] == b["room"] or a["out"] != -b["out"]:
+            if a["floor"] != b["floor"] or a["axis"] != b["axis"] or a["room"] == b["room"] or a["out"] != -b["out"] or (a.get("rail") and b.get("rail")):   # a rail band is not a wall
                 continue
             lo, hi = max(a["lo"], b["lo"]), min(a["hi"], b["hi"])
             fa, fb = a["face"] + a["snap"], b["face"] + b["snap"]

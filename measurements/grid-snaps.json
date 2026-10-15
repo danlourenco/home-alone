@@ -62,6 +62,63 @@
    "found": "film 2677 + 3888 through cameras solved from flight 1 (tools/house/foyer_cameras.py, Oct 15): a cased segmental ARCH in the back wall under the landing's front edge leads to a passage and the rear door; clear z 8.79-8.91 to 9.86-9.93 (1.02/1.07 m), crown 2.164/2.168, springline 1.904/1.917, wallpaper top 2.171/2.178; the passage is as wide as the arch and the door sits within 5 cm of Marina's overhead reading. Marina has an open gap and a shorter solid picture wall. (Read earlier from single frames as 'the stairwell edge comes down on the arch's left side': wrong; the open middle between the flights is in front of the landing, the arch is under it)",
    "decision": "built: back wall x 2.845-2.985 from the north wall to flight 1's side; arch clear z 8.855-9.900 (the two cameras' mean), springline 1.91, crown 2.17; rear_passage behind it; under_landing (closed) left of it; the landing's fascia 0.144 deep (underside 2.17), flight 2 unchanged. DEVIATIONS 20, 22, 35. Change record changes/2026-10-15-foyer-arch.json (TRIAL)",
    "by": "user, Oct 15: 'Yes, there's an arch' (film over Marina, per the Oct 15 source order)"
+  },
+  {
+   "where": "the stair hall (phase 5): the foyer's walls around the stair and the stairwell's walls above them",
+   "found": "snapped per floor, the upstairs stairwell's north wall sat 7.5 cm and its south (photo) wall 3.3 cm off the foyer walls below, and the ground lines moved 1.4-1.7 cm off the stair's (landing, flights) own lines: steps and slots in a wall that is one two-storey wall in the house (user walk notes Oct 15)",
+   "decision": "stack: the ground stair-hall faces stay on the stair's lines (foyer north 7.778, south 11.430, the back wall 2.985, the rear wall 1.580: the stair is generated from them), and the stairwell's upstairs faces go onto them (north 7.829 -> 7.778, south 11.397 -> 11.430, rear 1.583 -> 1.580). Each moves its whole shared line, so the rooms behind follow (girls_room_a and the hall's north line 5 cm north; girls_room_b, the hall and Buzz's north faces 3.3 cm south)",
+   "by": "user, Oct 15: 'yes, start phase 5' (the plan: one two-storey stair hall; snap only walls visibly stacked, the stairwell)",
+   "stack": [
+    {
+     "floor": "ground",
+     "room": "foyer",
+     "axis": "z",
+     "face": 7.778,
+     "to": 7.778
+    },
+    {
+     "floor": "ground",
+     "room": "foyer",
+     "axis": "z",
+     "face": 11.43,
+     "to": 11.43
+    },
+    {
+     "floor": "ground",
+     "room": "foyer",
+     "axis": "x",
+     "face": 2.985,
+     "to": 2.985
+    },
+    {
+     "floor": "ground",
+     "room": "rear_passage",
+     "axis": "x",
+     "face": 1.58,
+     "to": 1.58
+    },
+    {
+     "floor": "upstairs",
+     "room": "main_stair_opening",
+     "axis": "z",
+     "face": 7.829,
+     "to": 7.778
+    },
+    {
+     "floor": "upstairs",
+     "room": "main_stair_opening",
+     "axis": "z",
+     "face": 11.397,
+     "to": 11.43
+    },
+    {
+     "floor": "upstairs",
+     "room": "main_stair_opening",
+     "axis": "x",
+     "face": 1.583,
+     "to": 1.58
+    }
+   ]
   }
  ],
  "open": [
