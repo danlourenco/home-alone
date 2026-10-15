@@ -18,7 +18,8 @@
    "main_stair_flight_2"
   ],
   "measured_in": [
-   "main_stair_flight_1"
+   "main_stair_flight_1",
+   "main_stair_flight_2"
   ]
  },
  "history": [
@@ -67,6 +68,36 @@
    "agrees": true,
    "data": [
     "film-frame:then-foyer"
+   ],
+   "scale": [
+    "count"
+   ]
+  },
+  {
+   "what": "film still IMG_4260 (user, from the gallery past Kate and Kevin on the landing): the user counts 4 risers on flight 2; I read 4 tread ends on the open stringer, a 5th uncertain",
+   "agrees": true,
+   "data": [
+    "film-frame:IMG_4260"
+   ],
+   "scale": [
+    "count"
+   ]
+  },
+  {
+   "what": "main-floor plan drawing the user found earlier: a 2-step flight at the landing's north end",
+   "agrees": false,
+   "data": [
+    "plan-drawing:main-floor"
+   ],
+   "scale": [
+    "count"
+   ]
+  },
+  {
+   "what": "Marina climb clip B: the upper floor ~2 rises past the landing rail (estimate, steps not shown)",
+   "agrees": false,
+   "data": [
+    "marina-clip:stairs-b"
    ],
    "scale": [
     "count"
