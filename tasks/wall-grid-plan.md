@@ -169,7 +169,7 @@ The current builder carries the most special cases here: walls cut under the lan
 | 2 | Walls + geometry in Python | V1 all; V2 all on the real house |
 | 3 | **Pilot in Unity:** upstairs from geometry (Pilot_WallGrid) | DONE Oct 15 (ee5eadc, dcdb923): 0/0/0 seams, 0 leaks, 0 blocked; user approved the renders ('that looked good') and walked it ('looks very good'; one note, the stair-head notch, fixed in ec5761a) |
 | 4 | Foyer/stair geometry decided from the film (V4) | Film checkpoints written and agreeing. Oct 15: back wall + arch + passage built from two film cameras solved on flight 1 (`foyer_cameras.py`, V4 arch checkpoint green; TRIAL `changes/2026-10-15-foyer-arch.json`). Open: the north-wall line (DEVIATIONS 35), the parents' door checkpoint |
-| 5 | **Stair hall** as one two-storey space (see above) | Every stair regression test green; matched renders; user walks it. Oct 15 (e03ab7b): House_WallGrid built, all gates green (seams 0/0/0, peek 0, stair 30/0); Marina/film fade page; awaiting the user's walk |
+| 5 | **Stair hall** as one two-storey space (see above) | Every stair regression test green; matched renders; user walks it. Oct 15 (e03ab7b): House_WallGrid built, all gates green (seams 0/0/0, peek 0, stair 30/0); Marina/film fade page; user walked it: "looks generally good" |
 | 6 | Rest of the house; remove the stopgaps | V5 all, known-seams list empty; V6 renders |
 | 7 | Windows (inventory done) onto the new walls; the chute shaft | Light-tight test with glass |
 | 8 | User walk | User accepts or leaves notes |
