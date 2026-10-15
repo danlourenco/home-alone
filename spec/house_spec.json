@@ -210,22 +210,22 @@
     ],
     [
      8.371,
-     11.401
+     11.396
     ],
     [
      5.637,
-     11.401
+     11.396
     ],
     [
      5.637,
      9.17
     ],
     [
-     2.303,
+     3.868,
      9.17
     ],
     [
-     2.303,
+     3.868,
      7.829
     ],
     [
@@ -233,7 +233,7 @@
      7.829
     ]
    ],
-   "area_m2": 11.79,
+   "area_m2": 9.68,
    "ceiling_m": 2.4
   },
   {
@@ -243,11 +243,11 @@
    "polygon_xz": [
     [
      5.78,
-     11.541
+     11.536
     ],
     [
      7.333,
-     11.541
+     11.536
     ],
     [
      7.333,
@@ -326,11 +326,11 @@
     ],
     [
      11.664,
-     11.401
+     11.396
     ],
     [
      8.415,
-     11.401
+     11.396
     ],
     [
      8.415,
@@ -341,7 +341,7 @@
      8.781
     ]
    ],
-   "area_m2": 10.81,
+   "area_m2": 10.79,
    "ceiling_m": 2.4
   },
   {
@@ -351,11 +351,11 @@
    "polygon_xz": [
     [
      7.473,
-     11.541
+     11.536
     ],
     [
      11.158,
-     11.541
+     11.536
     ],
     [
      11.158,
@@ -366,7 +366,7 @@
      15.998
     ]
    ],
-   "area_m2": 16.43,
+   "area_m2": 16.44,
    "ceiling_m": 2.4
   },
   {
@@ -376,11 +376,11 @@
    "polygon_xz": [
     [
      0.396,
-     11.541
+     11.536
     ],
     [
      5.64,
-     11.541
+     11.536
     ],
     [
      5.64,
@@ -391,7 +391,7 @@
      15.989
     ]
    ],
-   "area_m2": 23.33,
+   "area_m2": 23.35,
    "ceiling_m": 2.4
   },
   {
@@ -401,15 +401,15 @@
    "opens": "down",
    "polygon_xz": [
     [
-     0.0,
+     1.583,
      7.829
     ],
     [
-     2.303,
+     3.868,
      7.829
     ],
     [
-     2.303,
+     3.868,
      9.23
     ],
     [
@@ -418,14 +418,14 @@
     ],
     [
      5.577,
-     11.401
+     11.396
     ],
     [
-     0.0,
-     11.401
+     1.583,
+     11.396
     ]
    ],
-   "area_m2": 15.33,
+   "area_m2": 11.85,
    "ceiling_m": 2.4
   },
   {
@@ -663,7 +663,7 @@
    ],
    "kind": "door",
    "wall_axis": "x",
-   "wall_coord": 10.767,
+   "wall_coord": 10.762,
    "wall_thickness": 0.14,
    "span": [
     3.031,
@@ -674,7 +674,7 @@
    "opens": true,
    "placed_from": "measured, slid -7 cm onto the shared wall",
    "source": "Marina's room-side frames: shelves corner to the door casing's outer edge 1.04 m in Part 2 563 s (twin-mattress scale, tools/house/mattress_ruler.py), door casing to head post 0.46 m in 563 s and in 560 s (door scale). Shifted +0.167 m along the wall from the hall-s1 registration [2.936, 3.698] (frames 148-192), which disagrees by 0.17 m; DEVIATIONS 26",
-   "wall_coord_spec": 11.471,
+   "wall_coord_spec": 11.466,
    "span_spec": [
     7.609,
     8.371
@@ -691,8 +691,8 @@
    "wall_coord": 1.132,
    "wall_thickness": 0.14,
    "span": [
-    11.446,
-    12.208
+    11.444,
+    12.206
    ],
    "width": 0.762,
    "height": 2.032,
@@ -701,8 +701,8 @@
    "source": "overhead: open door leaf visible on the room's right wall; confirmed by hall walk f222-261 (double bed, red/white quilt, door beside the attic door and the stair rail)",
    "wall_coord_spec": 5.71,
    "span_spec": [
-    12.15,
-    12.912
+    12.148,
+    12.91
    ],
    "spec_axis": "x"
   },
@@ -763,7 +763,7 @@
    ],
    "kind": "arch",
    "wall_axis": "x",
-   "wall_coord": 10.767,
+   "wall_coord": 10.762,
    "wall_thickness": 0.14,
    "span": [
     1.202,
@@ -774,7 +774,7 @@
    "opens": true,
    "placed_from": "full shared wall",
    "source": "header band in overhead",
-   "wall_coord_spec": 11.471,
+   "wall_coord_spec": 11.466,
    "span_spec": [
     5.78,
     7.333
@@ -792,9 +792,9 @@
    "wall_thickness": 0.06,
    "span": [
     8.526,
-    10.697
+    10.692
    ],
-   "width": 2.171,
+   "width": 2.166,
    "height": null,
    "opens": true,
    "placed_from": "full shared wall",
@@ -802,7 +802,7 @@
    "wall_coord_spec": 5.607,
    "span_spec": [
     9.23,
-    11.401
+    11.396
    ],
    "spec_axis": "x"
   },
@@ -816,17 +816,17 @@
    "wall_coord": 8.496,
    "wall_thickness": 0.06,
    "span": [
-    -2.275,
+    -0.71,
     0.999
    ],
-   "width": 3.274,
+   "width": 1.709,
    "height": null,
    "opens": true,
    "placed_from": "full shared wall",
    "source": "gallery rail along the north side of the well (Part 2 f258 near rail); measurements/rooms/stairs.json (user decision Oct 13); shifted 0.654 m with the gallery (Oct 14)",
    "wall_coord_spec": 9.2,
    "span_spec": [
-    2.303,
+    3.868,
     5.577
    ],
    "spec_axis": "z"
@@ -838,7 +838,7 @@
    ],
    "kind": "open",
    "wall_axis": "y",
-   "wall_coord": -2.275,
+   "wall_coord": -0.71,
    "wall_thickness": -0.0,
    "span": [
     7.125,
@@ -848,8 +848,8 @@
    "height": null,
    "opens": true,
    "placed_from": "full shared wall",
-   "source": "stair head: flight 2 arrives on the gallery; measurements/rooms/stairs.json (user decisions Oct 13-14; head at -2.275 for flight 2's 3 treads)",
-   "wall_coord_spec": 2.303,
+   "source": "stair head: flight 2 arrives on the gallery; measurements/rooms/stairs.json (user decisions Oct 13-14; head at -2.275 for flight 2's 3 treads); Oct 15: head at -0.710 (landing 1.40 m deep from the corrected rear wall, going 0.295)",
+   "wall_coord_spec": 3.868,
    "span_spec": [
     7.829,
     9.17
@@ -863,208 +863,208 @@
   "floor_to_floor_m": 3.026,
   "risers": 17,
   "rise_m": 0.178,
-  "going_m": 0.241,
+  "going_m": 0.295,
   "measured": "flight 1: 13 risers, rise, going (pitch), tread width; landing height",
-  "authored": "user, Oct 14: 17 risers = 13 + 4 (4 steps above the landing), at Marina's measured rise, so floor-to-floor 17 x 0.169 = 2.873 m. Sources: a summary the user found (13 + 4 = 17), the September model's flight 2 (4 risers, glb section Oct 14), and the exterior's floor height. Flight 2 keeps the measured going (3 treads x 0.241 m), so the stair head moves 0.482 m along the north-side gallery. Was (Oct 13): 15 risers, 2 above the landing. Full-width landing along the rear wall; flight 2 at the landing's north end, rising toward the front onto the gallery. Oct 14 (user: 'yes'): rise 0.178 m (7.0 in), floor-to-floor 17 x 0.178 = 3.026 m, so the front foyer's 2.82 m ceiling sits under the upper floor's 0.2 m slab; pitch becomes 36.4 deg at the plan going 0.241 (measured 35.0, DEVIATIONS 6); landing depth, gallery and flight widths",
+  "authored": "user, Oct 14: 17 risers = 13 + 4 (4 steps above the landing), at Marina's measured rise, so floor-to-floor 17 x 0.169 = 2.873 m. Sources: a summary the user found (13 + 4 = 17), the September model's flight 2 (4 risers, glb section Oct 14), and the exterior's floor height. Flight 2 keeps the measured going (3 treads x 0.241 m), so the stair head moves 0.482 m along the north-side gallery. Was (Oct 13): 15 risers, 2 above the landing. Full-width landing along the rear wall; flight 2 at the landing's north end, rising toward the front onto the gallery. Oct 14 (user: 'yes'): rise 0.178 m (7.0 in), floor-to-floor 17 x 0.178 = 3.026 m, so the front foyer's 2.82 m ceiling sits under the upper floor's 0.2 m slab; pitch becomes 36.4 deg at the plan going 0.241 (measured 35.0, DEVIATIONS 6); Oct 15: going 0.295 m (was 0.241), landing 1.40 m (was 1.58), foyer rear wall flush with the living room's (spec x 1.583, was 0.008); flight 2 keeps 4 risers at the new going; landing depth, gallery and flight widths",
   "boxes": [
    {
     "name": "flight1_step01",
     "kind": "step",
     "x": [
-     4.231,
-     4.472
+     6.228,
+     6.523
     ],
     "y": [
      -3.026,
      -2.848
     ],
     "z": [
-     10.201,
-     11.401
+     10.196,
+     11.396
     ]
    },
    {
     "name": "flight1_step02",
     "kind": "step",
     "x": [
-     3.99,
-     4.231
+     5.933,
+     6.228
     ],
     "y": [
      -3.026,
      -2.67
     ],
     "z": [
-     10.201,
-     11.401
+     10.196,
+     11.396
     ]
    },
    {
     "name": "flight1_step03",
     "kind": "step",
     "x": [
-     3.749,
-     3.99
+     5.638,
+     5.933
     ],
     "y": [
      -3.026,
      -2.492
     ],
     "z": [
-     10.201,
-     11.401
+     10.196,
+     11.396
     ]
    },
    {
     "name": "flight1_step04",
     "kind": "step",
     "x": [
-     3.508,
-     3.749
+     5.343,
+     5.638
     ],
     "y": [
      -3.026,
      -2.314
     ],
     "z": [
-     10.201,
-     11.401
+     10.196,
+     11.396
     ]
    },
    {
     "name": "flight1_step05",
     "kind": "step",
     "x": [
-     3.267,
-     3.508
+     5.048,
+     5.343
     ],
     "y": [
      -3.026,
      -2.136
     ],
     "z": [
-     10.201,
-     11.401
+     10.196,
+     11.396
     ]
    },
    {
     "name": "flight1_step06",
     "kind": "step",
     "x": [
-     3.026,
-     3.267
+     4.753,
+     5.048
     ],
     "y": [
      -3.026,
      -1.958
     ],
     "z": [
-     10.201,
-     11.401
+     10.196,
+     11.396
     ]
    },
    {
     "name": "flight1_step07",
     "kind": "step",
     "x": [
-     2.785,
-     3.026
+     4.458,
+     4.753
     ],
     "y": [
      -3.026,
      -1.78
     ],
     "z": [
-     10.201,
-     11.401
+     10.196,
+     11.396
     ]
    },
    {
     "name": "flight1_step08",
     "kind": "step",
     "x": [
-     2.544,
-     2.785
+     4.163,
+     4.458
     ],
     "y": [
      -3.026,
      -1.602
     ],
     "z": [
-     10.201,
-     11.401
+     10.196,
+     11.396
     ]
    },
    {
     "name": "flight1_step09",
     "kind": "step",
     "x": [
-     2.303,
-     2.544
+     3.868,
+     4.163
     ],
     "y": [
      -3.026,
      -1.424
     ],
     "z": [
-     10.201,
-     11.401
+     10.196,
+     11.396
     ]
    },
    {
     "name": "flight1_step10",
     "kind": "step",
     "x": [
-     2.062,
-     2.303
+     3.573,
+     3.868
     ],
     "y": [
      -3.026,
      -1.246
     ],
     "z": [
-     10.201,
-     11.401
+     10.196,
+     11.396
     ]
    },
    {
     "name": "flight1_step11",
     "kind": "step",
     "x": [
-     1.821,
-     2.062
+     3.278,
+     3.573
     ],
     "y": [
      -3.026,
      -1.068
     ],
     "z": [
-     10.201,
-     11.401
+     10.196,
+     11.396
     ]
    },
    {
     "name": "flight1_step12",
     "kind": "step",
     "x": [
-     1.58,
-     1.821
+     2.983,
+     3.278
     ],
     "y": [
      -3.026,
      -0.89
     ],
     "z": [
-     10.201,
-     11.401
+     10.196,
+     11.396
     ]
    },
    {
     "name": "landing",
     "kind": "landing",
     "x": [
-     0.0,
-     1.58
+     1.583,
+     2.983
     ],
     "y": [
      -0.992,
@@ -1072,15 +1072,15 @@
     ],
     "z": [
      7.829,
-     11.401
+     11.396
     ]
    },
    {
     "name": "flight2_step01",
     "kind": "step",
     "x": [
-     1.58,
-     1.821
+     2.983,
+     3.278
     ],
     "y": [
      -0.992,
@@ -1095,8 +1095,8 @@
     "name": "flight2_step02",
     "kind": "step",
     "x": [
-     1.821,
-     2.062
+     3.278,
+     3.573
     ],
     "y": [
      -0.814,
@@ -1111,8 +1111,8 @@
     "name": "flight2_step03",
     "kind": "step",
     "x": [
-     2.062,
-     2.303
+     3.573,
+     3.868
     ],
     "y": [
      -0.636,
@@ -1127,7 +1127,7 @@
     "name": "foyer_floor_under_well",
     "kind": "floor",
     "x": [
-     0.0,
+     1.583,
      6.577
     ],
     "y": [
@@ -1136,783 +1136,783 @@
     ],
     "z": [
      7.829,
-     11.401
+     11.396
     ]
    },
    {
     "name": "flight1_rail01_cap",
     "kind": "rail",
     "x": [
-     4.231,
-     4.472
+     6.228,
+     6.523
     ],
     "y": [
      -2.008,
      -1.948
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail01_spindle0",
     "kind": "rail",
     "x": [
-     4.251,
-     4.291
+     6.257,
+     6.297
     ],
     "y": [
      -2.848,
      -2.008
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail01_spindle1",
     "kind": "rail",
     "x": [
-     4.332,
-     4.371
+     6.356,
+     6.395
     ],
     "y": [
      -2.848,
      -2.008
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail01_spindle2",
     "kind": "rail",
     "x": [
-     4.412,
-     4.452
+     6.454,
+     6.494
     ],
     "y": [
      -2.848,
      -2.008
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail02_cap",
     "kind": "rail",
     "x": [
-     3.99,
-     4.231
+     5.933,
+     6.228
     ],
     "y": [
      -1.83,
      -1.77
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail02_spindle0",
     "kind": "rail",
     "x": [
-     4.01,
-     4.05
+     5.962,
+     6.002
     ],
     "y": [
      -2.67,
      -1.83
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail02_spindle1",
     "kind": "rail",
     "x": [
-     4.091,
-     4.13
+     6.061,
+     6.1
     ],
     "y": [
      -2.67,
      -1.83
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail02_spindle2",
     "kind": "rail",
     "x": [
-     4.171,
-     4.211
+     6.159,
+     6.199
     ],
     "y": [
      -2.67,
      -1.83
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail03_cap",
     "kind": "rail",
     "x": [
-     3.749,
-     3.99
+     5.638,
+     5.933
     ],
     "y": [
      -1.652,
      -1.592
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail03_spindle0",
     "kind": "rail",
     "x": [
-     3.769,
-     3.809
+     5.667,
+     5.707
     ],
     "y": [
      -2.492,
      -1.652
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail03_spindle1",
     "kind": "rail",
     "x": [
-     3.85,
-     3.89
+     5.766,
+     5.805
     ],
     "y": [
      -2.492,
      -1.652
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail03_spindle2",
     "kind": "rail",
     "x": [
-     3.93,
-     3.97
+     5.864,
+     5.904
     ],
     "y": [
      -2.492,
      -1.652
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail04_cap",
     "kind": "rail",
     "x": [
-     3.508,
-     3.749
+     5.343,
+     5.638
     ],
     "y": [
      -1.474,
      -1.414
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail04_spindle0",
     "kind": "rail",
     "x": [
-     3.528,
-     3.568
+     5.372,
+     5.412
     ],
     "y": [
      -2.314,
      -1.474
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail04_spindle1",
     "kind": "rail",
     "x": [
-     3.608,
-     3.648
+     5.471,
+     5.51
     ],
     "y": [
      -2.314,
      -1.474
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail04_spindle2",
     "kind": "rail",
     "x": [
-     3.689,
-     3.729
+     5.569,
+     5.609
     ],
     "y": [
      -2.314,
      -1.474
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail05_cap",
     "kind": "rail",
     "x": [
-     3.267,
-     3.508
+     5.048,
+     5.343
     ],
     "y": [
      -1.296,
      -1.236
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail05_spindle0",
     "kind": "rail",
     "x": [
-     3.287,
-     3.327
+     5.077,
+     5.117
     ],
     "y": [
      -2.136,
      -1.296
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail05_spindle1",
     "kind": "rail",
     "x": [
-     3.368,
-     3.408
+     5.176,
+     5.215
     ],
     "y": [
      -2.136,
      -1.296
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail05_spindle2",
     "kind": "rail",
     "x": [
-     3.448,
-     3.488
+     5.274,
+     5.314
     ],
     "y": [
      -2.136,
      -1.296
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail06_cap",
     "kind": "rail",
     "x": [
-     3.026,
-     3.267
+     4.753,
+     5.048
     ],
     "y": [
      -1.118,
      -1.058
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail06_spindle0",
     "kind": "rail",
     "x": [
-     3.046,
-     3.086
+     4.782,
+     4.822
     ],
     "y": [
      -1.958,
      -1.118
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail06_spindle1",
     "kind": "rail",
     "x": [
-     3.126,
-     3.166
+     4.881,
+     4.92
     ],
     "y": [
      -1.958,
      -1.118
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail06_spindle2",
     "kind": "rail",
     "x": [
-     3.207,
-     3.247
+     4.979,
+     5.019
     ],
     "y": [
      -1.958,
      -1.118
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail07_cap",
     "kind": "rail",
     "x": [
-     2.785,
-     3.026
+     4.458,
+     4.753
     ],
     "y": [
      -0.94,
      -0.88
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail07_spindle0",
     "kind": "rail",
     "x": [
-     2.805,
-     2.845
+     4.487,
+     4.527
     ],
     "y": [
      -1.78,
      -0.94
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail07_spindle1",
     "kind": "rail",
     "x": [
-     2.885,
-     2.925
+     4.586,
+     4.625
     ],
     "y": [
      -1.78,
      -0.94
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail07_spindle2",
     "kind": "rail",
     "x": [
-     2.966,
-     3.006
+     4.684,
+     4.724
     ],
     "y": [
      -1.78,
      -0.94
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail08_cap",
     "kind": "rail",
     "x": [
-     2.544,
-     2.785
+     4.163,
+     4.458
     ],
     "y": [
      -0.762,
      -0.702
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail08_spindle0",
     "kind": "rail",
     "x": [
-     2.564,
-     2.604
+     4.192,
+     4.232
     ],
     "y": [
      -1.602,
      -0.762
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail08_spindle1",
     "kind": "rail",
     "x": [
-     2.645,
-     2.685
+     4.291,
+     4.33
     ],
     "y": [
      -1.602,
      -0.762
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail08_spindle2",
     "kind": "rail",
     "x": [
-     2.725,
-     2.765
+     4.389,
+     4.429
     ],
     "y": [
      -1.602,
      -0.762
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail09_cap",
     "kind": "rail",
     "x": [
-     2.303,
-     2.544
+     3.868,
+     4.163
     ],
     "y": [
      -0.584,
      -0.524
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail09_spindle0",
     "kind": "rail",
     "x": [
-     2.323,
-     2.363
+     3.897,
+     3.937
     ],
     "y": [
      -1.424,
      -0.584
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail09_spindle1",
     "kind": "rail",
     "x": [
-     2.403,
-     2.443
+     3.996,
+     4.035
     ],
     "y": [
      -1.424,
      -0.584
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail09_spindle2",
     "kind": "rail",
     "x": [
-     2.484,
-     2.524
+     4.094,
+     4.134
     ],
     "y": [
      -1.424,
      -0.584
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail10_cap",
     "kind": "rail",
     "x": [
-     2.062,
-     2.303
+     3.573,
+     3.868
     ],
     "y": [
      -0.406,
      -0.346
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail10_spindle0",
     "kind": "rail",
     "x": [
-     2.082,
-     2.122
+     3.602,
+     3.642
     ],
     "y": [
      -1.246,
      -0.406
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail10_spindle1",
     "kind": "rail",
     "x": [
-     2.163,
-     2.203
+     3.701,
+     3.741
     ],
     "y": [
      -1.246,
      -0.406
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail10_spindle2",
     "kind": "rail",
     "x": [
-     2.243,
-     2.283
+     3.799,
+     3.839
     ],
     "y": [
      -1.246,
      -0.406
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail11_cap",
     "kind": "rail",
     "x": [
-     1.821,
-     2.062
+     3.278,
+     3.573
     ],
     "y": [
      -0.228,
      -0.168
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail11_spindle0",
     "kind": "rail",
     "x": [
-     1.841,
-     1.881
+     3.307,
+     3.347
     ],
     "y": [
      -1.068,
      -0.228
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail11_spindle1",
     "kind": "rail",
     "x": [
-     1.922,
-     1.962
+     3.405,
+     3.446
     ],
     "y": [
      -1.068,
      -0.228
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail11_spindle2",
     "kind": "rail",
     "x": [
-     2.002,
-     2.042
+     3.504,
+     3.544
     ],
     "y": [
      -1.068,
      -0.228
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail12_cap",
     "kind": "rail",
     "x": [
-     1.58,
-     1.821
+     2.983,
+     3.278
     ],
     "y": [
      -0.05,
      0.01
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail12_spindle0",
     "kind": "rail",
     "x": [
-     1.6,
-     1.64
+     3.012,
+     3.052
     ],
     "y": [
      -0.89,
      -0.05
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail12_spindle1",
     "kind": "rail",
     "x": [
-     1.681,
-     1.721
+     3.111,
+     3.151
     ],
     "y": [
      -0.89,
      -0.05
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "flight1_rail12_spindle2",
     "kind": "rail",
     "x": [
-     1.761,
-     1.801
+     3.209,
+     3.249
     ],
     "y": [
      -0.89,
      -0.05
     ],
     "z": [
-     10.141,
-     10.201
+     10.136,
+     10.196
     ]
    },
    {
     "name": "landing_rail_cap",
     "kind": "rail",
     "x": [
-     1.58,
-     1.64
+     2.983,
+     3.043
     ],
     "y": [
      0.128,
@@ -1920,15 +1920,15 @@
     ],
     "z": [
      9.17,
-     10.201
+     10.196
     ]
    },
    {
     "name": "landing_rail_spindle0",
     "kind": "rail",
     "x": [
-     1.58,
-     1.64
+     2.983,
+     3.043
     ],
     "y": [
      -0.712,
@@ -1943,136 +1943,136 @@
     "name": "landing_rail_spindle1",
     "kind": "rail",
     "x": [
-     1.58,
-     1.64
+     2.983,
+     3.043
     ],
     "y": [
      -0.712,
      0.128
     ],
     "z": [
-     9.322,
-     9.362
+     9.321,
+     9.361
     ]
    },
    {
     "name": "landing_rail_spindle2",
     "kind": "rail",
     "x": [
-     1.58,
-     1.64
+     2.983,
+     3.043
     ],
     "y": [
      -0.712,
      0.128
     ],
     "z": [
-     9.436,
-     9.476
+     9.435,
+     9.475
     ]
    },
    {
     "name": "landing_rail_spindle3",
     "kind": "rail",
     "x": [
-     1.58,
-     1.64
+     2.983,
+     3.043
     ],
     "y": [
      -0.712,
      0.128
     ],
     "z": [
-     9.551,
-     9.591
+     9.549,
+     9.589
     ]
    },
    {
     "name": "landing_rail_spindle4",
     "kind": "rail",
     "x": [
-     1.58,
-     1.64
+     2.983,
+     3.043
     ],
     "y": [
      -0.712,
      0.128
     ],
     "z": [
-     9.665,
-     9.705
+     9.663,
+     9.703
     ]
    },
    {
     "name": "landing_rail_spindle5",
     "kind": "rail",
     "x": [
-     1.58,
-     1.64
+     2.983,
+     3.043
     ],
     "y": [
      -0.712,
      0.128
     ],
     "z": [
-     9.78,
-     9.82
+     9.777,
+     9.817
     ]
    },
    {
     "name": "landing_rail_spindle6",
     "kind": "rail",
     "x": [
-     1.58,
-     1.64
+     2.983,
+     3.043
     ],
     "y": [
      -0.712,
      0.128
     ],
     "z": [
-     9.894,
-     9.934
+     9.891,
+     9.931
     ]
    },
    {
     "name": "landing_rail_spindle7",
     "kind": "rail",
     "x": [
-     1.58,
-     1.64
+     2.983,
+     3.043
     ],
     "y": [
      -0.712,
      0.128
     ],
     "z": [
-     10.009,
-     10.049
+     10.005,
+     10.045
     ]
    },
    {
     "name": "landing_rail_spindle8",
     "kind": "rail",
     "x": [
-     1.58,
-     1.64
+     2.983,
+     3.043
     ],
     "y": [
      -0.712,
      0.128
     ],
     "z": [
-     10.123,
-     10.163
+     10.119,
+     10.159
     ]
    },
    {
     "name": "flight2_rail01_cap",
     "kind": "rail",
     "x": [
-     1.58,
-     1.821
+     2.983,
+     3.278
     ],
     "y": [
      0.306,
@@ -2087,8 +2087,8 @@
     "name": "flight2_rail01_spindle0",
     "kind": "rail",
     "x": [
-     1.6,
-     1.64
+     3.012,
+     3.052
     ],
     "y": [
      -0.534,
@@ -2103,8 +2103,8 @@
     "name": "flight2_rail01_spindle1",
     "kind": "rail",
     "x": [
-     1.681,
-     1.721
+     3.111,
+     3.151
     ],
     "y": [
      -0.534,
@@ -2119,8 +2119,8 @@
     "name": "flight2_rail01_spindle2",
     "kind": "rail",
     "x": [
-     1.761,
-     1.801
+     3.209,
+     3.249
     ],
     "y": [
      -0.534,
@@ -2135,8 +2135,8 @@
     "name": "flight2_rail02_cap",
     "kind": "rail",
     "x": [
-     1.821,
-     2.062
+     3.278,
+     3.573
     ],
     "y": [
      0.484,
@@ -2151,8 +2151,8 @@
     "name": "flight2_rail02_spindle0",
     "kind": "rail",
     "x": [
-     1.841,
-     1.881
+     3.307,
+     3.347
     ],
     "y": [
      -0.356,
@@ -2167,8 +2167,8 @@
     "name": "flight2_rail02_spindle1",
     "kind": "rail",
     "x": [
-     1.922,
-     1.962
+     3.406,
+     3.446
     ],
     "y": [
      -0.356,
@@ -2183,8 +2183,8 @@
     "name": "flight2_rail02_spindle2",
     "kind": "rail",
     "x": [
-     2.002,
-     2.042
+     3.504,
+     3.544
     ],
     "y": [
      -0.356,
@@ -2199,8 +2199,8 @@
     "name": "flight2_rail03_cap",
     "kind": "rail",
     "x": [
-     2.062,
-     2.303
+     3.573,
+     3.868
     ],
     "y": [
      0.662,
@@ -2215,8 +2215,8 @@
     "name": "flight2_rail03_spindle0",
     "kind": "rail",
     "x": [
-     2.082,
-     2.122
+     3.602,
+     3.642
     ],
     "y": [
      -0.178,
@@ -2231,8 +2231,8 @@
     "name": "flight2_rail03_spindle1",
     "kind": "rail",
     "x": [
-     2.163,
-     2.203
+     3.701,
+     3.741
     ],
     "y": [
      -0.178,
@@ -2247,8 +2247,8 @@
     "name": "flight2_rail03_spindle2",
     "kind": "rail",
     "x": [
-     2.243,
-     2.283
+     3.799,
+     3.839
     ],
     "y": [
      -0.178,
@@ -2263,7 +2263,7 @@
     "name": "well_wall_south",
     "kind": "wall",
     "x": [
-     -0.07,
+     1.513,
      5.577
     ],
     "y": [
@@ -2271,16 +2271,16 @@
      0.0
     ],
     "z": [
-     11.401,
-     11.471
+     11.396,
+     11.466
     ]
    },
    {
     "name": "well_wall_west",
     "kind": "wall",
     "x": [
-     -0.07,
-     0.0
+     1.513,
+     1.583
     ],
     "y": [
      -3.026,
@@ -2288,14 +2288,14 @@
     ],
     "z": [
      7.759,
-     11.471
+     11.466
     ]
    },
    {
     "name": "well_fascia_north",
     "kind": "wall",
     "x": [
-     0.0,
+     1.583,
      5.577
     ],
     "y": [
@@ -2311,7 +2311,7 @@
     "name": "well_ceiling",
     "kind": "ceiling",
     "x": [
-     -0.07,
+     1.513,
      5.577
     ],
     "y": [
@@ -2320,33 +2320,33 @@
     ],
     "z": [
      7.759,
-     11.471
+     11.466
     ]
    }
   ],
   "walk_path": [
    [
-    5.372,
+    7.423,
     -3.026,
-    10.801
+    10.796
    ],
    [
-    4.772,
+    6.823,
     -3.026,
-    10.801
+    10.796
    ],
    [
-    1.18,
+    2.583,
     -0.712,
-    10.801
+    10.796
    ],
    [
-    1.18,
+    2.583,
     -0.712,
     8.5
    ],
    [
-    2.803,
+    4.368,
     0.0,
     8.5
    ],
@@ -2374,8 +2374,8 @@
    "wall_axis": "x",
    "wall_coord_spec": 11.158,
    "span_spec": [
-    12.482,
-    13.202
+    12.479,
+    13.199
    ],
    "sill_m": 0.81,
    "head_m": 2.15
@@ -2386,8 +2386,8 @@
    "wall_axis": "x",
    "wall_coord_spec": 11.158,
    "span_spec": [
-    14.698,
-    15.418
+    14.697,
+    15.417
    ],
    "sill_m": 0.81,
    "head_m": 2.15

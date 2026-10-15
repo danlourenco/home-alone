@@ -9,7 +9,8 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 |---|---|
 | den | 1.7 |
 | living_room | 10.7 |
-| foyer | 14.3 |
+| foyer | 8.7 |
+| back_hall | 0.0 |
 | vestibule | 1.0 |
 | dining_room | 1.7 |
 | sunroom | 7.3 |
@@ -20,7 +21,9 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 
 | line | walls (space) | before (m) | after (m) | largest move (cm) |
 |---|---|---|---|---|
-| x = 10.64 | foyer, vestibule | 10.65, 10.57 | 10.64 | 6.9 |
+| y = -3.00 | living_room, foyer | -3.00, -3.00 | -3.00 | 0.3 |
+| x = 7.11 | foyer, back_hall | 7.13, 7.06 | 7.11 | 4.9 |
+| x = 10.64 | foyer, back_hall, vestibule | 10.63, 10.72, 10.57 | 10.64 | 8.4 |
 | y = 5.55 | vestibule, dining_room | 5.61, 5.51 | 5.55 | 5.8 |
 | x = 6.90 | dining_room, kitchen, back_stair | 6.92, 6.93, 6.86 | 6.90 | 3.9 |
 | y = -2.21 | kitchen, back_stair | -2.21, -2.21 | -2.21 | 0.0 |
@@ -35,14 +38,16 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 
 | between | thickness (cm) | length (m) | note |
 |---|---|---|---|
-| back_stair / foyer | 17 | 2.35 |  |
+| back_hall / back_stair | 20 | 2.36 |  |
+| back_hall / foyer | 14 | 2.43 |  |
+| back_hall / kitchen | 20 | 0.48 |  |
 | back_stair / kitchen | 15 | 3.88 |  |
 | den / living_room | 23 | 6.90 |  |
-| dining_room / foyer | 17 | 4.48 |  |
+| dining_room / foyer | 20 | 4.48 |  |
 | dining_room / kitchen | 48 | 3.77 |  |
 | dining_room / sunroom | 24 | 4.93 |  |
 | dining_room / vestibule | 37 | 0.94 |  |
-| foyer / kitchen | 17 | 1.57 |  |
+| foyer / kitchen | 20 | 0.95 |  |
 | foyer / living_room | 31 | 7.31 |  |
 | foyer / vestibule | 23 | 3.29 |  |
 | kitchen / sunroom | 22 | 2.93 |  |
@@ -54,12 +59,13 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 |---|---|---|---|---|
 | den | 3.66 x 6.91 | 3.71 x 6.91 | 25.3 → 25.6 | +1.2% |
 | living_room | 4.37 x 8.37 | 4.50 x 8.37 | 36.6 → 37.7 | +3.0% |
-| foyer | 3.56 x 8.90 | 3.67 x 8.94 | 31.7 → 32.8 | +3.4% |
-| vestibule | 3.36 x 1.00 | 3.57 x 1.04 | 3.4 → 3.7 | +10.8% |
-| dining_room | 4.55 x 5.70 | 4.62 x 5.87 | 25.9 → 27.1 | +4.5% |
+| foyer | 3.53 x 7.32 | 3.65 x 7.37 | 24.3 → 25.3 | +4.1% |
+| back_hall | 3.53 x 2.83 | 3.57 x 2.84 | 6.5 → 6.6 | +1.5% |
+| vestibule | 3.37 x 1.00 | 3.57 x 1.04 | 3.4 → 3.7 | +10.8% |
+| dining_room | 4.55 x 5.70 | 4.63 x 5.87 | 25.9 → 27.2 | +4.9% |
 | sunroom | 3.73 x 6.91 | 3.78 x 6.95 | 25.8 → 26.3 | +1.9% |
-| kitchen | 7.89 x 9.14 | 7.90 x 9.31 | 48.0 → 48.9 | +1.9% |
-| back_stair | 0.87 x 3.87 | 0.90 x 3.87 | 3.4 → 3.5 | +2.6% |
+| kitchen | 7.89 x 9.14 | 7.92 x 9.31 | 48.0 → 48.9 | +1.9% |
+| back_stair | 0.87 x 3.87 | 0.91 x 3.87 | 3.4 → 3.5 | +4.5% |
 
 ## 4. Doors and openings
 
@@ -71,18 +77,19 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | foyer / vestibule | arch | 8.09-9.74 | 1.65 | read in the overhead |
 | dining_room / kitchen | door | 5.72-6.73 | 1.01 | read in the overhead |
 | dining_room / sunroom | arch | 2.23-4.10 | 1.87 | read in the overhead |
-| back_stair / kitchen | open | 6.02-6.92 | 0.90 | full shared wall |
-| foyer / kitchen | arch | -1.90--0.92 | 0.98 | read in the overhead |
-| foyer / back_stair | fake_door | -3.10--2.21 | 0.89 | read in the overhead |
+| back_stair / kitchen | open | 6.02-6.93 | 0.91 | full shared wall |
+| foyer / kitchen | arch | -1.53--0.55 | 0.98 | read in the overhead |
+| foyer / back_hall | fake_door | 8.26-9.18 | 0.92 | read in the overhead |
 
 ## 5. Body rules (adult, hard)
 
 | rule | result | value |
 |---|---|---|
 | adult fits door dining_room/kitchen | pass | 1.01 m wide x 2.03 m |
-| adult fits hall foyer | pass | narrowest 3.67 m (min 0.90) |
+| adult fits hall foyer | pass | narrowest 3.65 m (min 0.90) |
+| adult fits hall back_hall | pass | narrowest 2.84 m (min 0.90) |
 | adult fits hall vestibule | pass | narrowest 1.04 m (min 0.90) |
-| adult fits stair back_stair | pass | narrowest 0.90 m (min 0.65) |
+| adult fits stair back_stair | pass | narrowest 0.91 m (min 0.65) |
 
 ## Flags (need a decision or more evidence)
 

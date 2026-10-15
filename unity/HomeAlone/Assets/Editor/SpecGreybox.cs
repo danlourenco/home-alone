@@ -42,6 +42,9 @@ public static class SpecGreybox
         get { var v = Path.GetFullPath(Path.Combine(Application.dataPath, $"../../../spec/house_spec.ground{Tag}.json"));
               return File.Exists(v) ? v : Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/house_spec.ground.json")); }
     }
+    // a little over the 0.178 m rise: at 0.3 the controller's step-up probe lifted an adult head into the slab edge over
+    // flight 1's lower steps (vertical headroom there 2.26 m, Oct 15)
+    const float StepOffset = 0.2f;
     static float FloorY;   // vertical offset of the floor being built (ground floor sits at -floor_to_floor); Box adds it
 
     static (List<Space>, List<Door>) Parse(JObject j)
@@ -125,6 +128,8 @@ public static class SpecGreybox
         {
             (gspaces, gdoors) = Parse(gj);
             FloorY = (float)gj["floor_y_m"];
+            Landings = j["stair"]["boxes"].Where(b => (string)b["kind"] == "landing").Select(b => ((float)b["x"][0], (float)b["x"][1],
+                -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0])).ToList();
             groot = new GameObject("Ground"); gceil = Child(groot, "Ceilings");
             BuildFloor(groot, gceil, gspaces, gdoors, spaces.Where(s => s.opens == "down").ToList());
             FloorY = 0f;
@@ -209,6 +214,23 @@ public static class SpecGreybox
 
     // Each edge gets a wall slab just outside the room (HalfWall thick), from floor to the room's ceiling,
     // with doorways cut out. Two neighbours 14 cm apart therefore meet in one full wall.
+    // Stair landings (world x0, x1, z0, z1, underside y): a room wall standing under one stops at its underside, like the
+    // enclosure under Marina's landing (Oct 15); otherwise the room's ceiling would push it up through the landing.
+    static List<(float x0, float x1, float z0, float z1, float y)> Landings = new();
+
+    static float WallTop(float ceil, bool alongX, float coord, float lo, float hi)
+    {
+        foreach (var L in Landings)
+        {
+            // inclusive: a face flush with the landing's front or rear edge stops under it too (the stairwell's own wall
+            // carries the rear wall above)
+            bool inside = alongX ? coord >= L.z0 - 0.01f && coord <= L.z1 + 0.01f && lo >= L.x0 - 0.1f && hi <= L.x1 + 0.1f
+                                 : coord >= L.x0 - 0.01f && coord <= L.x1 + 0.01f && lo >= L.z0 - 0.1f && hi <= L.z1 + 0.1f;   // span: 10 cm past the landing still counts (the foyer wall runs 5 cm past the well edge)
+            if (inside && FloorY + ceil > L.y) ceil = Mathf.Min(ceil, L.y - FloorY);
+        }
+        return ceil;
+    }
+
     static void Walls(GameObject g, Space s, List<Door> doors)
     {
         for (int i = 0, n = s.pts.Count; i < n; i++)
@@ -222,6 +244,7 @@ public static class SpecGreybox
             var probe = mid + (alongX ? new Vector2(0, 0.02f) : new Vector2(0.02f, 0));
             float sgn = Inside(s.pts, probe) ? -1f : 1f;
             float t0 = coord, t1 = coord + sgn * HalfWall;
+            float ceil = WallTop(s.ceil, alongX, coord, lo, hi);
 
             var cuts = doors.Where(d => (d.a == s.name || d.b == s.name) && d.alongX == alongX
                                         && Mathf.Abs(d.coord - coord) < 0.35f && d.hi > lo && d.lo < hi)
@@ -231,9 +254,9 @@ public static class SpecGreybox
             {
                 if (d.kind == "fake_door") { Prop(g, alongX, t0, t1, sgn, d); continue; }
                 float dl = Mathf.Max(d.lo, lo), dh = Mathf.Min(d.hi, hi);
-                if (dl > cur) Seg(g, "Wall", alongX, t0, t1, cur, dl, 0f, s.ceil);
-                float head = d.kind == "door" ? d.height : d.kind == "arch" ? ArchHead : s.ceil;
-                if (head < s.ceil) Seg(g, d.kind + "_Header", alongX, t0, t1, dl, dh, head, s.ceil);
+                if (dl > cur) Seg(g, "Wall", alongX, t0, t1, cur, dl, 0f, ceil);
+                float head = d.kind == "door" ? d.height : d.kind == "arch" ? ArchHead : ceil;
+                if (head < ceil) Seg(g, d.kind + "_Header", alongX, t0, t1, dl, dh, head, ceil);
                 if (d.kind == "door")
                 {   // casing on this room's face: two legs and a head, proud of the wall toward the room
                     float f0 = t0, f1 = t0 - sgn * CasingProud;
@@ -243,9 +266,9 @@ public static class SpecGreybox
                 }
                 cur = Mathf.Max(cur, dh);
             }
-            if (cur < hi) Seg(g, "Wall", alongX, t0, t1, cur, hi, 0f, s.ceil);
+            if (cur < hi) Seg(g, "Wall", alongX, t0, t1, cur, hi, 0f, ceil);
             foreach (var w in Windows.Where(w => w.room == s.name && w.alongX == alongX && Mathf.Abs(w.coord - coord) < 0.05f))
-                Window(g, alongX, t0, t1, sgn, w, s.ceil);
+                Window(g, alongX, t0, t1, sgn, w, ceil);
         }
     }
 
@@ -388,7 +411,7 @@ public static class SpecGreybox
         foreach (var (name, r, h) in new[] { ("bandit", 0.275f, 1.85f), ("kevin", 0.20f, 1.20f) })
         {
             var go = new GameObject("StairWalker_" + name); var cc = go.AddComponent<CharacterController>();
-            cc.radius = r; cc.height = h; cc.center = new Vector3(0, h / 2, 0); cc.stepOffset = 0.3f; cc.skinWidth = 0.02f;
+            cc.radius = r; cc.height = h; cc.center = new Vector3(0, h / 2, 0); cc.stepOffset = StepOffset; cc.skinWidth = 0.02f;
             foreach (var (route, pts) in new[] { ("up", path), ("down", Enumerable.Reverse(path).ToList()) })
             {
                 go.transform.position = pts[0] + Vector3.up * 0.05f; Physics.SyncTransforms();
@@ -426,11 +449,14 @@ public static class SpecGreybox
         foreach (var (name, r, h) in new[] { ("bandit", 0.275f, 1.85f), ("kevin", 0.20f, 1.20f) })
         {
             var go = new GameObject("RoomWalker_" + name); var cc = go.AddComponent<CharacterController>();
-            cc.radius = r; cc.height = h; cc.center = new Vector3(0, h / 2, 0); cc.stepOffset = 0.3f; cc.skinWidth = 0.02f;
+            cc.radius = r; cc.height = h; cc.center = new Vector3(0, h / 2, 0); cc.stepOffset = StepOffset; cc.skinWidth = 0.02f;
             foreach (var s in spaces.Where(s => s.kind == "room" || s.kind == "hall"))
             {
-                var c = Cells(s.pts).OrderByDescending(q => Mathf.Min(q.Item2 - q.Item1, q.Item4 - q.Item3)).First();
-                var mid = new Vector3((c.Item1 + c.Item2) / 2, FloorY, (c.Item3 + c.Item4) / 2);
+                // target: the centre of the largest cell a body can stand in (an L-shaped foyer's largest cell centres on the stair)
+                Vector3 Mid((float, float, float, float) q) => new Vector3((q.Item1 + q.Item2) / 2, FloorY, (q.Item3 + q.Item4) / 2);
+                var order = Cells(s.pts).OrderByDescending(q => (q.Item2 - q.Item1) * (q.Item4 - q.Item3)).ToList();
+                var c = order.FirstOrDefault(q => !Physics.CheckCapsule(Mid(q) + Vector3.up * (r + 0.06f), Mid(q) + Vector3.up * (h - r), r));
+                var mid = Mid(c == default ? order[0] : c);
                 foreach (var d in doors.Where(d => (d.a == s.name || d.b == s.name) && (d.kind == "door" || d.kind == "arch" || d.kind == "open")))
                 {
                     float m = (d.lo + d.hi) / 2;
@@ -587,7 +613,7 @@ public static class SpecGreybox
         var c = Cells(hall.pts).OrderByDescending(q => Mathf.Min(q.Item2 - q.Item1, q.Item4 - q.Item3)).First();
         var (x, z) = ((c.Item1 + c.Item2) / 2, (c.Item3 + c.Item4) / 2);
         var p = new GameObject("Player"); p.transform.position = new Vector3(x, 0.05f, z);
-        var cc = p.AddComponent<CharacterController>(); cc.radius = 0.275f; cc.height = 1.85f; cc.center = new Vector3(0, 0.925f, 0); cc.stepOffset = 0.3f;
+        var cc = p.AddComponent<CharacterController>(); cc.radius = 0.275f; cc.height = 1.85f; cc.center = new Vector3(0, 0.925f, 0); cc.stepOffset = StepOffset;
         var camGo = new GameObject("Camera"); camGo.transform.parent = p.transform; camGo.transform.localPosition = new Vector3(0, 1.7f, 0);
         var cam = camGo.AddComponent<Camera>(); cam.tag = "MainCamera"; cam.nearClipPlane = 0.05f; camGo.AddComponent<HDAdditionalCameraData>(); camGo.AddComponent<AudioListener>();
         var fc = p.AddComponent<FpsController>(); fc.cam = camGo.transform;

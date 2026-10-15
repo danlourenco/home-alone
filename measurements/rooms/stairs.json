@@ -28,16 +28,17 @@
     35.5
    ],
    "method": "tools/sfm/stair_pitch.py: vanishing points of verticals and the skirting/handrail lines, 3 gated frames (116/118/120); +-10% focal moves it 0.9 deg; self-test reads synthetic 30/35/40 deg within 0.1 and rejects a one-line image",
-   "kind": "measured, depth-free"
+   "kind": "CONFLICT: superseded Oct 15 by the step-spacing fits (going_m); the skirting and the steps are parallel within 1 deg (312 s), so the old read's focal, not the line, is the suspect"
   },
   "going_m": {
-   "value": 0.241,
+   "value": 0.295,
    "range": [
-    0.237,
-    0.247
+    0.272,
+    0.303
    ],
-   "method": "rise / tan(pitch)",
-   "kind": "derived"
+   "method": "Oct 15, tools/house/foyer_length.py: 13 equally spaced riser ends fit at the 0.178 m rise. Part 1 203 s (focal 1308 px from two VPs, checked by the vertical VP 1304): 0.275 free (rms 0.4 px, 4 treads), 0.295 at rms ~2.5. Part 1 312 s (all 13 risers, rms 2.2 px): 0.272/0.303/0.332 at focal 1300/1454/1600; the clip A pan's VP focals 1370-1454 (mean ~1410) put it at ~0.29-0.30. The overhead's along-stretch of the flight (238 px vs 58-60 px/m across) also needs ~0.29. The foyer closes at 0.295: front 2.43 + flight 3.54 + landing 1.40 = 7.37 m, rear flush with the living room. Pitch 31.1 deg",
+   "kind": "measured (step spacing, rise ruler); conflicts with pitch_deg 35.0 (VP read, focal-dependent)",
+   "was": 0.241
   },
   "landing_height_m": {
    "value": 2.314,
@@ -56,6 +57,15 @@
    ],
    "method": "clip B carpet-tread extent across 10 steps (wall-to-rail width a little more)",
    "kind": "measured (lateral to the camera, not affected by the depth stretch)"
+  },
+  "foot_to_front_wall_m": {
+   "value": 2.43,
+   "range": [
+    2.2,
+    2.41
+   ],
+   "method": "foyer_length.py, 203 s: 2.20-2.35 at the rise ruler (camera 1.18-1.21 m), 2.41 with the front door leaf as 36 in (camera 1.28 m); overhead 2.3-2.9 (floor rows, parallax-bounded). Built 2.43 (closing the foyer at the measured going and landing)",
+   "kind": "measured (two ruler kinds)"
   }
  },
  "layout": {
@@ -69,13 +79,13 @@
   "door height from edge pixels (door_scale.py) on this door: 14% short, because the slab is recessed under an arch and the top-edge pixel takes the arch's depth. Re-checked the upstairs doors with the robust method: Kevin +0.8%, parents +0.6% (inside the 78-80 in bracket)."
  ],
  "authored": {
-  "decided": "user, Oct 14: 17 risers = 13 + 4 (4 steps above the landing), at Marina's measured rise, so floor-to-floor 17 x 0.169 = 2.873 m. Sources: a summary the user found (13 + 4 = 17), the September model's flight 2 (4 risers, glb section Oct 14), and the exterior's floor height. Flight 2 keeps the measured going (3 treads x 0.241 m), so the stair head moves 0.482 m along the north-side gallery. Was (Oct 13): 15 risers, 2 above the landing. Full-width landing along the rear wall; flight 2 at the landing's north end, rising toward the front onto the gallery. Oct 14 (user: 'yes'): rise 0.178 m (7.0 in), floor-to-floor 17 x 0.178 = 3.026 m, so the front foyer's 2.82 m ceiling sits under the upper floor's 0.2 m slab; pitch becomes 36.4 deg at the plan going 0.241 (measured 35.0, DEVIATIONS 6)",
+  "decided": "user, Oct 14: 17 risers = 13 + 4 (4 steps above the landing), at Marina's measured rise, so floor-to-floor 17 x 0.169 = 2.873 m. Sources: a summary the user found (13 + 4 = 17), the September model's flight 2 (4 risers, glb section Oct 14), and the exterior's floor height. Flight 2 keeps the measured going (3 treads x 0.241 m), so the stair head moves 0.482 m along the north-side gallery. Was (Oct 13): 15 risers, 2 above the landing. Full-width landing along the rear wall; flight 2 at the landing's north end, rising toward the front onto the gallery. Oct 14 (user: 'yes'): rise 0.178 m (7.0 in), floor-to-floor 17 x 0.178 = 3.026 m, so the front foyer's 2.82 m ceiling sits under the upper floor's 0.2 m slab; pitch becomes 36.4 deg at the plan going 0.241 (measured 35.0, DEVIATIONS 6); Oct 15: going 0.295 m (was 0.241), landing 1.40 m (was 1.58), foyer rear wall flush with the living room's (spec x 1.583, was 0.008); flight 2 keeps 4 risers at the new going",
   "risers_total": 17,
   "floor_to_floor_m": 3.026,
   "flight_1_width_m": 1.2,
   "flight_1_width_note": "tread band 1.125 m measured + stringer/tread ends",
-  "landing_depth_m": 1.58,
-  "landing_depth_note": "clip B top nosing to rear wall, 0.53 units x 4.02 m/unit x 0.742 (depth-stretch correction = true going / 3D going); depth-direction, so +-0.15 m",
+  "landing_depth_m": 1.4,
+  "landing_depth_note": "Oct 15: Marina 312 s, the arched door's plane sits 1.34-1.40 x the flight behind the stair foot at every focal (landing 0.34-0.40 x flight = 1.20-1.42 m at the measured going); overhead landing level 82 px = 1.25-1.37 m. Was 1.58 (clip B, depth-stretched)",
   "gallery_width_m": 1.2,
   "gallery_note": "gallery = flight 2's width, running to the hall (not measured; Marina's upstairs shows the whole well open); stair head moved to plan y -2.275 (was -2.757) for flight 2's 3 treads (Oct 14)",
   "landing_width_note": "Marina's main-floor landing spans the foyer (~4 m in clip B). Oct 14 (user: 'why is the staircase not open in the middle?'): the well, landing, flight 2 and gallery shifted 0.654 m north into the empty strip beside the well, so the landing is 3.57 m (foyer 3.67 m) and the open well between the flights is 1.03 m (was 0.38; September model 1.13). Was: the upstairs well's 2.83 m",

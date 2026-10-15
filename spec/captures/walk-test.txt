@@ -19,40 +19,40 @@ ok      foyer <-> dining_room (arch, 1.71 m)
 ok      foyer <-> vestibule (arch, 1.65 m)
 ok      dining_room <-> kitchen (door, 1.01 m)
 ok      dining_room <-> sunroom (arch, 1.87 m)
-ok      foyer <-> kitchen (arch, 0.97 m)
+ok      foyer <-> kitchen (arch, 0.98 m)
 Stair walk test (both bodies, up and down): 20 legs, 0 blocked
 ok      bandit up leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      bandit up leg 2: ended 0.02 m from waypoint, 0.02 m off its floor height
-ok      bandit up leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
-ok      bandit up leg 4: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 2: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 3: ended 0.05 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 4: ended 0.04 m from waypoint, 0.02 m off its floor height
 ok      bandit up leg 5: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      bandit down leg 1: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 1: ended 0.05 m from waypoint, 0.02 m off its floor height
 ok      bandit down leg 2: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      bandit down leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
-ok      bandit down leg 4: ended 0.02 m from waypoint, 0.02 m off its floor height
-ok      bandit down leg 5: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 3: ended 0.05 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 4: ended 0.05 m from waypoint, 0.03 m off its floor height
+ok      bandit down leg 5: ended 0.05 m from waypoint, 0.02 m off its floor height
 ok      kevin up leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      kevin up leg 2: ended 0.02 m from waypoint, 0.02 m off its floor height
-ok      kevin up leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
-ok      kevin up leg 4: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 2: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 3: ended 0.05 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 4: ended 0.04 m from waypoint, 0.02 m off its floor height
 ok      kevin up leg 5: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      kevin down leg 1: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 1: ended 0.05 m from waypoint, 0.02 m off its floor height
 ok      kevin down leg 2: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      kevin down leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
-ok      kevin down leg 4: ended 0.02 m from waypoint, 0.02 m off its floor height
-ok      kevin down leg 5: ended 0.02 m from waypoint, 0.02 m off its floor height
-Leak and headroom check: 1424 points, 0 leaks, 23 low-headroom points (ground floor, outside flight 1)
-LOW     foyer at (0.3, 11.2): 1.98 m clear under MainStair/landing
-LOW     foyer at (0.3, 10.7): 1.98 m clear under MainStair/landing
-LOW     foyer at (0.3, 10.2): 1.98 m clear under MainStair/landing
-LOW     foyer at (0.3, 9.7): 1.98 m clear under MainStair/landing
-LOW     foyer at (0.3, 9.2): 1.98 m clear under MainStair/landing
-LOW     foyer at (0.3, 8.7): 1.98 m clear under MainStair/landing
-LOW     foyer at (0.3, 8.2): 1.98 m clear under MainStair/landing
-LOW     foyer at (0.8, 11.2): 1.98 m clear under MainStair/landing
-LOW     foyer at (0.8, 10.7): 1.98 m clear under MainStair/landing
-LOW     foyer at (0.8, 10.2): 1.98 m clear under MainStair/landing
-LOW     foyer at (0.8, 9.7): 1.98 m clear under MainStair/landing
-LOW     foyer at (0.8, 9.2): 1.98 m clear under MainStair/landing
+ok      kevin down leg 3: ended 0.05 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 4: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 5: ended 0.04 m from waypoint, 0.02 m off its floor height
+Leak and headroom check: 1403 points, 0 leaks, 42 low-headroom points (ground floor, outside flight 1)
+LOW     foyer at (1.8, 11.2): 1.98 m clear under MainStair/landing
+LOW     foyer at (1.8, 10.7): 1.98 m clear under MainStair/landing
+LOW     foyer at (1.8, 10.2): 1.98 m clear under MainStair/landing
+LOW     foyer at (1.8, 9.7): 1.98 m clear under MainStair/landing
+LOW     foyer at (1.8, 9.2): 1.98 m clear under MainStair/landing
+LOW     foyer at (2.3, 11.2): 1.98 m clear under MainStair/landing
+LOW     foyer at (2.3, 10.7): 1.98 m clear under MainStair/landing
+LOW     foyer at (2.3, 10.2): 1.98 m clear under MainStair/landing
+LOW     foyer at (2.3, 9.7): 1.98 m clear under MainStair/landing
+LOW     foyer at (2.3, 9.2): 1.98 m clear under MainStair/landing
+LOW     foyer at (2.8, 11.2): 1.98 m clear under MainStair/landing
+LOW     foyer at (2.8, 10.7): 1.98 m clear under MainStair/landing
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 84 legs, 0 blocked
 GROUND Room walk test (both bodies, every doorway to room centre and back): 64 legs, 0 blocked

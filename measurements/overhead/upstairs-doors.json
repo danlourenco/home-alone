@@ -128,8 +128,8 @@
    "b": "hall_corridor",
    "kind": "open",
    "wall_axis": "y",
-   "near": -2.275,
-   "source": "stair head: flight 2 arrives on the gallery; measurements/rooms/stairs.json (user decisions Oct 13-14; head at -2.275 for flight 2's 3 treads)"
+   "near": -0.71,
+   "source": "stair head: flight 2 arrives on the gallery; measurements/rooms/stairs.json (user decisions Oct 13-14; head at -2.275 for flight 2's 3 treads); Oct 15: head at -0.710 (landing 1.40 m deep from the corrected rear wall, going 0.295)"
   }
  ],
  "unresolved": []

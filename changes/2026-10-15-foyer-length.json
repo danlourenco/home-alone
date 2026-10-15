@@ -1,0 +1,131 @@
+{
+ "change": "Foyer length and stair placement: foyer rear wall spec x 0.008 -> 1.581 (flush with the living room's; foyer 8.94 -> 7.37 m); stair going 0.241 -> 0.295 m, landing 1.58 -> 1.40 m, so the stair foot moves 4.472 -> 6.523 (2.43 m from the front wall). Upstairs well rear edge and stair head follow (x 0 -> 1.583, head 2.303 -> 3.868). The old strip and the enclosure behind the picture wall become back_hall (closed, unknown); the arched prop door moves to the rear wall, the kitchen opening to just in front of the picture wall. Builder: room walls under a landing stop at its underside; character step offset 0.3 -> 0.2 m",
+ "target": "Greybox_Upstairs",
+ "premise": "Marina's foyer is ~24 ft long, not 29: the plan's foyer rear edge is the top of a two-storey wall, displaced in the overhead; the stair foot sits ~8 ft from the front wall",
+ "claim": {
+  "value": [
+   2.43,
+   0.295,
+   1.4,
+   7.37
+  ],
+  "data": [
+   "marina-frame:203",
+   "marina-frame:312"
+  ],
+  "scale": [
+   "stair-rise:0.178"
+  ],
+  "upstream": [
+   "outlet-plate-4.5in:198",
+   "marina-clip:stairs-a"
+  ],
+  "applies_to": [
+   "foyer",
+   "main_stair",
+   "main_stair_opening",
+   "back_hall"
+  ],
+  "measured_in": [
+   "foyer",
+   "main_stair"
+  ],
+  "assumed": {
+   "main_stair_opening": "DEVIATIONS 5",
+   "back_hall": "DEVIATIONS 22"
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-13",
+   "what": "foyer traced from the overhead's wall tops (8.94 m long, rear edge on the tall wall's top); stair foot 4.47 m from the rear",
+   "outcome": "superseded"
+  },
+  {
+   "date": "2026-10-14",
+   "what": "foyer heights (ceiling 2.82, rise 0.178): kept",
+   "outcome": "ok"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Main-floor overhead, scale-free: the foyer's rear wall face spans y 330-415 (top to the landing at 2.314 m); at the parallax of the living room's rear wall (y 417 top to 470 floor) its floor line is y 456-465, flush with the living room's 470. The traced front wall minus the living room's rear = 7.37 m; the frames' sum is 6.7-7.6 (foyer_length.py)",
+   "agrees": true,
+   "data": [
+    "overhead:994"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ]
+  },
+  {
+   "what": "Overhead: the flight spans 238 px along vs 58-60 px/m across at the floor; with the landing's parallax that needs a going of ~0.29 m, not 0.241",
+   "agrees": true,
+   "data": [
+    "overhead:994"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ]
+  },
+  {
+   "what": "203 s with the front door leaf as 36 in: camera 1.28 m, stair foot -> front wall 2.41 m (rise ruler: 2.20-2.35)",
+   "agrees": true,
+   "data": [
+    "marina-frame:203"
+   ],
+   "scale": [
+    "door-36in:203"
+   ]
+  },
+  {
+   "what": "312 s: the arched door 0.92 m wide (36 in) and the foyer 3.71 m wide at the picture wall (traced 3.67); the newel 1.28 m from the stair wall (flight 1.2 m + newel)",
+   "agrees": true,
+   "data": [
+    "marina-frame:312"
+   ],
+   "scale": [
+    "stair-rise:0.178"
+   ]
+  },
+  {
+   "what": "312 s at every focal 1300-1600: picture wall 0.94-1.00 x the flight behind the foot (= landing front flush with the top riser), arched door 1.34-1.40 x",
+   "agrees": true,
+   "data": [
+    "marina-frame:312"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "stair pitch 35.0 deg, vanishing points in climb frames 116-120 (stair_pitch.py): going 0.254, not 0.295",
+   "agrees": false,
+   "data": [
+    "marina-clip:stairs"
+   ],
+   "scale": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/foyer-length/before-marina-203.png",
+   "spec/captures/foyer-length/before-marina-312.png",
+   "spec/captures/foyer-length/before-front-looking-back.png",
+   "spec/captures/foyer-length/before-back-looking-front.png",
+   "spec/captures/foyer-length/before-up.png"
+  ],
+  "after": [
+   "spec/captures/foyer-length/after-marina-203.png",
+   "spec/captures/foyer-length/after-marina-312.png",
+   "spec/captures/foyer-length/after-front-looking-back.png",
+   "spec/captures/foyer-length/after-back-looking-front.png",
+   "spec/captures/foyer-length/after-up.png"
+  ]
+ },
+ "sheet": "spec/captures/foyer-length/compare.jpg",
+ "user_walk": "pending"
+}

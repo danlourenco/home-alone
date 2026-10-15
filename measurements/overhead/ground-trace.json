@@ -59,11 +59,19 @@
    "px": [
     [
      820,
-     330
+     416
+    ],
+    [
+     965,
+     416
+    ],
+    [
+     966,
+     496
     ],
     [
      1040,
-     330
+     496
     ],
     [
      1043,
@@ -74,7 +82,38 @@
      872
     ]
    ],
-   "notes": "main stair along the left (photo) wall; stair boxes come from the upstairs spec's stair block"
+   "notes": "main stair along the left (photo) wall; stair boxes come from the upstairs spec's stair block | Oct 15 (tools/house/foyer_length.py): the foyer's rear wall is two storeys tall, so its top edge in the overhead sits 87 px above the one-storey walls the plan is traced on; at floor level it is flush with the living room's rear wall (y 456-465 vs 470). Rear edge moved from y 330 to 416. The notch (x 965-1040, y 416-496) is the enclosure whose front face (the picture wall) is flush with the landing front in Marina 312 s (3.44-3.63 m behind the stair foot, across 2.48-3.71 m from the stair wall)"
+  },
+  {
+   "name": "back_hall",
+   "kind": "hall",
+   "notes": "UNKNOWN, closed (DEVIATIONS): behind the foyer's arched door (Marina 312 s: the door sits 1.37 x the flight behind the stair foot, in the rear-wall plane, 0.92 m wide) plus the enclosure behind the picture wall. Footprint = the strip the old foyer trace held (its tall rear wall's top), so the exterior is unchanged; its edges facing the foyer sit one wall (0.14 m, ~8 px) inside the foyer's; given in plan metres: the old foyer's rear strip (x 0.008, z 7.762-11.429 as built before) plus the notch, so the neighbours keep their walls",
+   "m": [
+    [
+     10.725,
+     -4.57
+    ],
+    [
+     7.058,
+     -4.57
+    ],
+    [
+     7.058,
+     -1.735
+    ],
+    [
+     8.106,
+     -1.735
+    ],
+    [
+     8.106,
+     -3.135
+    ],
+    [
+     10.725,
+     -3.135
+    ]
+   ]
   },
   {
    "name": "vestibule",

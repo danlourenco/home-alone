@@ -1,0 +1,32 @@
+[
+ {
+  "name": "../foyer-length/marina-203",
+  "pos": [
+   3.76,
+   -1.82,
+   -8.725
+  ],
+  "look_at": [
+   4.701,
+   -1.952,
+   -9.039
+  ],
+  "vfov": 44.87,
+  "note": "Marina Part 1 203 s (facing the front door), foyer_length.py pose"
+ },
+ {
+  "name": "../foyer-length/marina-312",
+  "pos": [
+   9.524,
+   -2.058,
+   -9.828
+  ],
+  "look_at": [
+   8.529,
+   -2.049,
+   -9.73
+  ],
+  "vfov": 40.76,
+  "note": "Marina Part 1 312 s (facing the rear), foyer_length.py pose"
+ }
+]

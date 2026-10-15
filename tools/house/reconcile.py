@@ -26,6 +26,7 @@ DOORS = ROOT / f"measurements/overhead/{FLOOR}-doors.json"
 ANCHORS = {"parents_bedroom": "measurements/rooms/parents.json", "kevin_jeff_room": "measurements/rooms/kevin.json",
            "buzz_room": "measurements/rooms/buzz.json"} if FLOOR == "upstairs" else {}
 ANCHOR_WEIGHT = 5.0
+ORIGIN = (-0.704, -4.578)   # upstairs plan metres of the spec origin (was the min corner of all spaces)
 ALIGN_TOL = 0.12      # m: walls closer than this (and near each other along the line) become one line
 ALIGN_REACH = 1.0     # m: ...if their extents are within this distance along the line
 MAX_SPREAD = 0.20     # m: a cluster wider than this is a conflict, left unsnapped
@@ -36,7 +37,7 @@ ADULT = {"capsule_diameter": 0.55, "height": 1.85, "min_hall": 0.90}
 # Ceiling heights, measured Oct 13 on door walls (wall height / door height x 80 in, door_scale.py):
 # parents 2.42 m and Kevin 2.30-2.33 m to the crown's lower edge (+~0.08 m crown), hall attic leg 2.29 m to the ceiling.
 CEILINGS = {"default": 2.40, "parents_bedroom": 2.50, "parents_bath": 2.50, "hall_corridor_south": 2.29} if FLOOR == "upstairs" else \
-    {"default": 2.438, "foyer": 2.82}  # foyer Oct 14 (2.82 = the most under the 0.2 m upper-floor slab): front ceiling 2.92 m in the clip A solve, 1.40 x a door in the film
+    {"default": 2.438, "foyer": 2.82, "back_hall": 2.03}  # back_hall Oct 15: under the landing (its underside ~2.03 m), unknown beyond. foyer Oct 14 (2.82 = the most under the 0.2 m upper-floor slab): front ceiling 2.92 m in the clip A solve, 1.40 x a door in the film
                         # (then-foyer.png), 1.51 x the vestibule opening in Marina 205 s (film_ratios.py). Ground: 8 ft standard, inside the measured living 2.44 / dining 2.42 m (tools/house/ground_ceiling.py, Oct 14). Was 2.32, the
                         # landing balustrade's base in the stair clip, misread as the foyer ceiling. Kitchen (beams) unmeasured
 # Which way each stairwell opening leads (sources): the main stair goes DOWN to the foyer (measured, stairs.json); the
@@ -414,8 +415,10 @@ def main():
 
     # spec: x = across (plan y), z = along (plan x), origin at the outline's min corner, y up
     allp = np.vstack(list(final.values()))
-    o = allp.min(0)
-    if FLOOR != "upstairs":   # every floor shares the upstairs spec frame (stack_floor.py registered the plan into it)
+    o = np.array(ORIGIN)      # frozen (Oct 15): the well's rear edge set it until it moved; every spec coordinate depends on it
+    if FLOOR == "upstairs":
+        assert (allp.min(0) >= o - 1e-6).all(), "an upstairs space lies outside the spec frame's origin corner"
+    else:   # every floor shares the upstairs spec frame (stack_floor.py registered the plan into it)
         o = np.array(json.loads((ROOT / "spec/house_spec.json").read_text())["origin_plan_m"])
     to_spec = lambda P: [[round(float(y - o[1]), 3), round(float(x - o[0]), 3)] for x, y in P]
     spec = {

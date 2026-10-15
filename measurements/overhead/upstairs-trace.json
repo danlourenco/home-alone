@@ -144,7 +144,7 @@
   {
    "name": "hall_corridor",
    "kind": "hall",
-   "notes": "hall + end bay; bay north wall where the hall's east wall ends (clip first 3.05, density check), bay east wall at clip second 2.21 holds the bath door | plus the north-side gallery from the stair head (authored, measurements/rooms/stairs.json) (clip hall-s1, registration residual <= 5.1 cm) | gallery and stair head shifted 0.654 m north (Oct 14): the landing widened toward Marina's ~4 m foyer landing",
+   "notes": "hall + end bay; bay north wall where the hall's east wall ends (clip first 3.05, density check), bay east wall at clip second 2.21 holds the bath door | plus the north-side gallery from the stair head (authored, measurements/rooms/stairs.json) (clip hall-s1, registration residual <= 5.1 cm) | gallery and stair head shifted 0.654 m north (Oct 14): the landing widened toward Marina's ~4 m foyer landing | Oct 15: well's rear edge -4.578 -> -2.995 (spec x 1.583: the ground foyer's rear wall, measured flush with the living room's; was assumed at the building edge, DEVIATIONS 5) and stair head -2.275 -> -0.710 (landing 1.40 m + flight 2's 3 treads x 0.295)",
    "m": [
     [
      7.29,
@@ -176,11 +176,11 @@
     ],
     [
      8.376,
-     -2.275
+     -0.71
     ],
     [
      7.176,
-     -2.275
+     -0.71
     ],
     [
      7.176,
@@ -334,19 +334,19 @@
   {
    "name": "main_stair_opening",
    "kind": "opening",
-   "notes": "the well left open above the main stair (measurements/rooms/stairs.json): Marina's overhead hole minus the north-side gallery that flight 2 arrives on (user decision Oct 13). West edge = the squared rear wall. | north edge shifted 0.654 m (Oct 14, wider landing; open middle between the flights)",
+   "notes": "the well left open above the main stair (measurements/rooms/stairs.json): Marina's overhead hole minus the north-side gallery that flight 2 arrives on (user decision Oct 13). West edge = the squared rear wall. | north edge shifted 0.654 m (Oct 14, wider landing; open middle between the flights) | Oct 15: well's rear edge -4.578 -> -2.995 (spec x 1.583: the ground foyer's rear wall, measured flush with the living room's; was assumed at the building edge, DEVIATIONS 5) and stair head -2.275 -> -0.710 (landing 1.40 m + flight 2's 3 treads x 0.295)",
    "m": [
     [
      7.176,
-     -4.578
+     -2.995
     ],
     [
      7.176,
-     -2.275
+     -0.71
     ],
     [
      8.526,
-     -2.275
+     -0.71
     ],
     [
      8.526,
@@ -358,7 +358,7 @@
     ],
     [
      10.665,
-     -4.578
+     -2.995
     ]
    ]
   },

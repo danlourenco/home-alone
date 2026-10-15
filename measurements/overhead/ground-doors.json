@@ -119,31 +119,31 @@
    "kind": "arch",
    "px": [
     [
-     1043,
-     478
+     1039,
+     499
     ],
     [
-     1043,
-     535
+     1041,
+     557
     ]
    ],
-   "source": "Marina's walk 1072-1076 s: from the foyer's rear right, a plain cased opening in the right wall straight into the breakfast room (beams, chandelier, round table); the service stair's balusters are seen beside it"
+   "source": "Marina's walk 1072-1076 s: from the foyer's rear right, a plain cased opening in the right wall straight into the breakfast room (beams, chandelier, round table); the service stair's balusters are seen beside it. Oct 15: just in front of the picture wall (Marina 312 s), was y 478-535 (behind the corrected rear wall line)"
   },
   {
    "a": "foyer",
-   "b": "back_stair",
+   "b": "back_hall",
    "kind": "fake_door",
    "px": [
     [
-     1043,
-     410
+     909,
+     416
     ],
     [
-     1043,
-     460
+     964,
+     416
     ]
    ],
-   "source": "Marina's walk 1068-1071 s and clip A: the white six-panel door under an arch at the foyer's rear right is CLOSED (built as a prop door, like the upstairs closets)"
+   "source": "Marina's walk 1068-1071 s and clip A: the white six-panel door under an arch at the foyer's rear right is CLOSED (built as a prop door, like the upstairs closets). Oct 15: on the rear wall at the end of the passage under the landing (Marina 312 s: 1.55-2.47 m across from the stair wall, foyer_length.py); was read on the right wall at y 410-460, the tall wall's displaced top"
   }
  ],
  "unresolved": [
