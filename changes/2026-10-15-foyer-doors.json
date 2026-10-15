@@ -1,0 +1,71 @@
+{
+ "change": "Two prop doors at the back of the foyer from the film: a short door in the stair's open side under flight 1's top (likely the basement door; dressing understair_basement_door, x 3.01-3.62, 1.55 m tall, knob 0.84-0.88 m) and the closet door on rear_passage's right wall at the arch end (fake_door, spec x 1.95-2.71)",
+ "target": "Greybox_Upstairs",
+ "premise": "The film shows a door under the main stair's top on its open side and a closet door facing it inside the arch's right side",
+ "claim": {
+  "value": [
+   0.86,
+   0.89
+  ],
+  "data": [
+   "film:3888",
+   "film:2677"
+  ],
+  "scale": [
+   "stair-rise:0.178"
+  ],
+  "upstream": [
+   "outlet-plate-4.5in:198",
+   "marina-clip:stairs-a",
+   "marina-frame:203",
+   "marina-frame:312"
+  ],
+  "applies_to": [
+   "foyer",
+   "rear_passage"
+  ],
+  "measured_in": [
+   "foyer",
+   "rear_passage"
+  ],
+  "assumed": {}
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "3175 (not used to place them): inside the arch's right side a white door with a brass knob and two hinges, seen nearly edge-on on the passage's right wall",
+   "agrees": true,
+   "data": [
+    "film:3175"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  },
+  {
+   "what": "user, Oct 15: circled the door under the stair in 3888 ('ostensibly heading down to the basement') and named the one opposite the closet",
+   "agrees": true,
+   "data": [
+    "recollection:user"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/foyer-film-cams/before-inside-foyer.png",
+   "spec/captures/foyer-film-cams/before-3888.png"
+  ],
+  "after": [
+   "spec/captures/foyer-film-cams/after-doors-closet.png",
+   "spec/captures/foyer-film-cams/after-inside-arch.png",
+   "spec/captures/foyer-film-cams/after-3888.png"
+  ]
+ },
+ "user_walk": "pending"
+}

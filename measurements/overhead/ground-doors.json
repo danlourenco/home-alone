@@ -170,6 +170,18 @@
    "source": "Marina's walk 1068-1071 s and clip A: the white six-panel door under an arch at the foyer's rear right is CLOSED (built as a prop door, like the upstairs closets). Oct 15: on the rear wall at the end of the passage under the landing (Marina 312 s: 1.55-2.47 m across from the stair wall, foyer_length.py); was read on the right wall at y 410-460, the tall wall's displaced top. Oct 15: now between rear_passage and back_hall (the passage behind the film's arch); film 2677/3888 place it within 5 cm of this reading",
    "wall_axis": "y",
    "near": -3.07
+  },
+  {
+   "a": "rear_passage",
+   "b": "back_hall",
+   "kind": "fake_door",
+   "wall_axis": "x",
+   "near": 8.081,
+   "span": [
+    -2.628,
+    -1.868
+   ],
+   "source": "film 3175 (knob and both hinges, seen nearly edge-on inside the arch's right side), 2677 and 3888 (knob on the arch's right jamb; the two rays put it at spec z 8.76-8.88, 0.85-0.92 m up): a door on the passage's right (north) wall, opposite the door under the stair: the closet (user, Oct 15). Width 30 in and its place along the wall authored (the wall runs straight away from every camera): at the arch end, as 3175 shows wallpaper between it and the rear door. Closed prop; leads into the closed space behind the picture wall (back_hall)"
   }
  ],
  "unresolved": [

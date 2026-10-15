@@ -229,6 +229,12 @@ def main():
     P.append(box("vestibule_opening_casing_head", [XF - 0.03, XF], [head, head + 0.12], [min(ja[2], jb[2]) - 0.06, max(ja[2], jb[2]) + 0.06], C["white"],
                  note=f"203 s inner jambs x 545/975 at row 150 -> head {head:.2f} m"))
     da, db = c203.on((638, 215), 0, XV), c203.on((810, 215), 0, XV)
+    # Door in the stair's open side under flight 1's top, likely to the basement (film 2677/3888: its knob, 0.84-0.88 m up,
+    # just left of the arch; user, Oct 15, circled it: 'a door underneath the main staircase, ostensibly heading down to the
+    # basement'). Short: the open stringer runs over it (bottom ~1.57 m at its far edge). Closed prop: no basement built.
+    # 24 in wide and its place along the stair authored (the stair side runs straight away from the cameras): from the landing end
+    P.append(box("understair_basement_door", [3.01, 3.62], [0, 1.55], [z1 - 0.03, z1], C["white"], collide=True, note="film 2677/3888 knob; size authored"))
+    P.append(box("understair_basement_knob", [3.53, 3.57], [0.84, 0.88], [z1 - 0.08, z1 - 0.03], C["gilt"], note="film: 0.84-0.88 m"))
     P.append(box("front_door", [XV - 0.05, XV], [0, da[1]], [db[2], da[2]], C["white"], note=f"203 s leaf x 638-810, head row 215 -> {da[1]:.2f} m"))
     for name, (u0, u1) in (("sidelight_left", (550, 618)), ("sidelight_right", (830, 900))):
         sa_, sb_ = c203.on((u0, 230), 0, XV), c203.on((u1, 495), 0, XV)

@@ -647,6 +647,31 @@
     9.887
    ],
    "spec_axis": "x"
+  },
+  {
+   "between": [
+    "rear_passage",
+    "back_hall"
+   ],
+   "kind": "fake_door",
+   "wall_axis": "x",
+   "wall_coord": 8.081,
+   "wall_thickness": 0.14,
+   "span": [
+    -2.628,
+    -1.868
+   ],
+   "width": 0.76,
+   "height": 2.032,
+   "opens": false,
+   "placed_from": "measured",
+   "source": "film 3175 (knob and both hinges, seen nearly edge-on inside the arch's right side), 2677 and 3888 (knob on the arch's right jamb; the two rays put it at spec z 8.76-8.88, 0.85-0.92 m up): a door on the passage's right (north) wall, opposite the door under the stair: the closet (user, Oct 15). Width 30 in and its place along the wall authored (the wall runs straight away from every camera): at the arch end, as 3175 shows wallpaper between it and the rear door. Closed prop; leads into the closed space behind the picture wall (back_hall)",
+   "wall_coord_spec": 8.785,
+   "span_spec": [
+    1.95,
+    2.71
+   ],
+   "spec_axis": "z"
   }
  ],
  "flags": [],
