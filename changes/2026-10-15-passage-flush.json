@@ -1,0 +1,55 @@
+{
+ "change": "rear_passage's left wall (with the basement door) moved out to the main stair's side line, spec z 9.90 -> 10.23 (user walk note: 'the wall with the basement door should be flush along the side of the main staircase'); under_landing behind it from 10.37; the arch keeps the film's span (z 8.855-9.900), now given explicitly, so a 0.33 m pier of back wall stays between the arch and the stair",
+ "target": "Greybox_Upstairs",
+ "premise": "The passage's left wall continues the plane of the main stair's open side",
+ "claim": {
+  "value": [
+   10.23
+  ],
+  "data": [
+   "walk-note:2026-10-15T16:19"
+  ],
+  "scale": [
+   "spec:flight1"
+  ],
+  "upstream": [
+   "marina-clip:stairs-a"
+  ],
+  "applies_to": [
+   "rear_passage",
+   "under_landing"
+  ],
+  "measured_in": [
+   "rear_passage"
+  ],
+  "assumed": {
+   "under_landing": "DEVIATIONS 22"
+  }
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "film 2677/3888: the door's knob rays reach z ~10.17 (a knob 6 cm off a wall at 10.23) at x 1.8-2.0, inside the passage: consistent with this wall line (the rays also pass the back wall 5-13 cm left of the measured arch jamb, unexplained)",
+   "agrees": true,
+   "data": [
+    "film:2677",
+    "film:3888"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/feedback/shots/20261015-161910-Greybox_Upstairs.png"
+  ],
+  "after": [
+   "spec/captures/walk-notes-oct15/passage-flush.png",
+   "spec/captures/walk-notes-oct15/passage-inside.png"
+  ]
+ },
+ "user_walk": "pending"
+}

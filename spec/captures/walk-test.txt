@@ -59,12 +59,12 @@ ok      kevin up leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
 ok      kevin down leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
 ok      player up leg 1: ended 0.04 m from waypoint, 0.00 m off its floor height, 52 frames (clean walk 53)
 ok      player down leg 1: ended 0.02 m from waypoint, 0.03 m off its floor height, 57 frames (clean walk 53)
-Seam check: 546 structural boxes, 0 overlaps (flicker), 4 ledges, 0 gaps
+Seam check: 548 structural boxes, 0 overlaps (flicker), 4 ledges, 0 gaps
 LEDGE   z -7.880 vs -7.829 (5.1 cm): hall_corridor/Wall at (5.65, 1.20, 7.85) | hall_corridor/Wall at (4.75, 1.20, 7.79)
 LEDGE   x 8.441 vs 8.415 (2.6 cm): hall_corridor/door_Header at (8.41, 2.22, 10.61) | hall_bath/Wall at (8.38, 1.20, 9.53)
 LEDGE   y -0.200 vs -0.206 (0.6 cm): hall_corridor/Threshold at (3.83, -0.10, 8.50) | Ceilings/foyer_Ceiling at (4.72, -0.20, 8.55)
 LEDGE   z -7.829 vs -7.880 (5.1 cm): hall_corridor/Wall at (4.75, 1.20, 7.79) | hall_corridor/Wall at (5.67, 1.20, 7.85)
-Leak and headroom check: 1376 points, 0 leaks, 2 low-headroom points (ground floor, outside flight 1)
+Leak and headroom check: 1379 points, 0 leaks, 2 low-headroom points (ground floor, outside flight 1)
 LOW     kitchen at (-3.9, 3.9): 0.74 m clear under Window/Casing
 LOW     kitchen at (-3.4, 3.9): 0.74 m clear under Window/Casing
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 84 legs, 0 blocked

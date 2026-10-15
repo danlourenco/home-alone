@@ -153,7 +153,7 @@
    "polygon_xz": [
     [
      1.58,
-     9.9
+     10.23
     ],
     [
      1.58,
@@ -165,10 +165,10 @@
     ],
     [
      2.845,
-     9.9
+     10.23
     ]
    ],
-   "area_m2": 1.32,
+   "area_m2": 1.74,
    "ceiling_m": 2.155
   },
   {
@@ -182,18 +182,18 @@
     ],
     [
      1.58,
-     10.04
+     10.37
     ],
     [
      2.845,
-     10.04
+     10.37
     ],
     [
      2.845,
      11.43
     ]
    ],
-   "area_m2": 1.76,
+   "area_m2": 1.34,
    "ceiling_m": 2.155
   },
   {
@@ -614,8 +614,8 @@
    "height": 2.17,
    "spring": 1.91,
    "opens": true,
-   "placed_from": "full shared wall",
-   "source": "film 2677 + 3888 (tools/house/foyer_cameras.py, Oct 15): a cased segmental arch in the back wall under the landing; clear width 1.02/1.07 m, crown 2.165/2.168 m, springline 1.904/1.918 m (two cameras solved from flight 1's nosings); fills the shared wall (the passage is as wide as the arch)",
+   "placed_from": "measured",
+   "source": "film 2677 + 3888 (tools/house/foyer_cameras.py, Oct 15): a cased segmental arch in the back wall under the landing; clear width 1.02/1.07 m, crown 2.165/2.168 m, springline 1.904/1.918 m (two cameras solved from flight 1's nosings); fills the shared wall (the passage is as wide as the arch). Oct 15: span given (spec z 8.855-9.900, the film's) now that the passage is wider than the arch",
    "wall_coord_spec": 2.915,
    "span_spec": [
     8.855,
@@ -680,7 +680,7 @@
    ],
    "kind": "fake_door",
    "wall_axis": "x",
-   "wall_coord": 9.266,
+   "wall_coord": 9.596,
    "wall_thickness": 0.14,
    "span": [
     -2.628,
@@ -690,8 +690,8 @@
    "height": 2.032,
    "opens": false,
    "placed_from": "measured",
-   "source": "user, Oct 15 walk note: 'the door should be in the alcove, opposite the door on the right' (the door circled in film 3888, under the main stair, likely to the basement). On the passage's left wall facing the closet; into the closed space under the stair (under_landing). Same 30 in width and place along the wall as the closet (authored). The film's knob (2677/3888, 0.84-0.88 m up) reads just left of the arch's jamb from both cameras; the user's placement is kept and that reading logged (DEVIATIONS 36)",
-   "wall_coord_spec": 9.97,
+   "source": "user, Oct 15 walk note: 'the door should be in the alcove, opposite the door on the right' (the door circled in film 3888, under the main stair, likely to the basement). On the passage's left wall facing the closet; into the closed space under the stair (under_landing). Same 30 in width and place along the wall as the closet (authored). The film's knob (2677/3888, 0.84-0.88 m up) reads just left of the arch's jamb from both cameras; the user's placement is kept and that reading logged (DEVIATIONS 36). Oct 15 (user): its wall is flush with the main stair's side",
+   "wall_coord_spec": 10.3,
    "span_spec": [
     1.95,
     2.71

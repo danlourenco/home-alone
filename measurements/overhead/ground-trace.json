@@ -112,7 +112,7 @@
    "kind": "hall",
    "m": [
     [
-     9.196,
+     9.526,
      -3.004
     ],
     [
@@ -124,11 +124,11 @@
      -1.732
     ],
     [
-     9.196,
+     9.526,
      -1.732
     ]
    ],
-   "notes": "film 2677 + 3888 (tools/house/foyer_cameras.py, Oct 15): the passage under the landing from the foyer's arch to the rear door, as wide as the arch's clear opening (spec z 8.855-9.900); depth = the landing (rear wall unchanged). Plan metres"
+   "notes": "film 2677 + 3888 (tools/house/foyer_cameras.py, Oct 15): the passage under the landing from the foyer's arch to the rear door, as wide as the arch's clear opening (spec z 8.855-9.900); depth = the landing (rear wall unchanged). Plan metres | Oct 15 (user walk note): its left wall is flush with the main stair's side (spec z 10.23), not with the arch's jamb; the arch keeps its measured width, so a short pier of back wall stands between the arch and the stair"
   },
   {
    "name": "under_landing",
@@ -139,11 +139,11 @@
      -3.004
     ],
     [
-     9.336,
+     9.666,
      -3.004
     ],
     [
-     9.336,
+     9.666,
      -1.732
     ],
     [

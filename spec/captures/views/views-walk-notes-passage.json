@@ -1,0 +1,30 @@
+[
+ {
+  "name": "../walk-notes-oct15/passage-flush",
+  "pos": [
+   5.394,
+   -1.296,
+   -9.356
+  ],
+  "look_at": [
+   4.397,
+   -1.326,
+   -9.424
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../walk-notes-oct15/passage-inside",
+  "pos": [
+   2.6,
+   -1.296,
+   -9.5
+  ],
+  "look_at": [
+   2.259,
+   -1.383,
+   -10.436
+  ],
+  "vfov": 60
+ }
+]
