@@ -128,6 +128,20 @@ def test_every_space_has_a_ceiling():
         assert need <= have, (f, need - have)
 
 
+def test_openings_inside_their_walls():
+    # INJECTED in the pilot (Oct 15): the stair head kept its pre-snap span and notched the gallery's north wall
+    spec, dec = wg.load()
+    geo, E, report = wg.build(spec, dec)
+    for f, g in geo.items():
+        by = {r["name"]: r for r in g["rooms"]}
+        for o in g["openings"]:
+            for n in o["between"]:
+                if n not in by:
+                    continue
+                e = wg.face_of(by[n], o["axis"], o["c"], o["lo"], o["hi"], reach=0.1)
+                assert e and e[2] - wg.Q <= o["lo"] and o["hi"] <= e[3] + wg.Q, (f, o["kind"], o["between"], o["lo"], o["hi"], e)
+
+
 def test_overlap3_catches():
     assert overlap3([(0, 1, 0, 1, 0, 2), (0.5, 2, 0, 1, 1, 3)]) and not overlap3([(0, 1, 0, 1, 0, 1), (0, 1, 0, 1, 1, 2)])
 

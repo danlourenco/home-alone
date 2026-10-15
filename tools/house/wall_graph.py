@@ -134,6 +134,16 @@ def openings(floor_spec, rooms):
             notes.append(f"door {a}/{b}: no snapped wall near {axis}={c0:.3f}"); continue
         c = q(f[0] + f[1] * WALL / 2)
         kind = d["kind"]
+        # an opening lives inside the wall its two rooms share, which the grid may have moved: a full-width opening (open side,
+        # rail, arch) follows that wall's snapped ends, and nothing reaches past them (the stair head cut a notch into the
+        # gallery's north wall in the pilot, Oct 15)
+        slo = max(x[2] for x in (fa, fb) if x); shi = min(x[3] for x in (fa, fb) if x)
+        if kind in ("open", "rail", "arch"):
+            if abs(lo - slo) < 0.06: lo = slo
+            if abs(hi - shi) < 0.06: hi = shi
+        if kind != "door" and (lo < slo - Q or hi > shi + Q):     # doors keep their width and slide (below)
+            notes.append(f"{kind} {a}/{b}: span {lo:.3f}-{hi:.3f} clipped to its wall {slo:.3f}-{shi:.3f}")
+            lo, hi = max(lo, slo), min(hi, shi)
         conflict = None
         if kind == "door":      # trim clearance: slide (keeping the width) until a casing fits beside each end
             elo = max(x[2] for x in (fa, fb) if x) + CASING; ehi = min(x[3] for x in (fa, fb) if x) - CASING
