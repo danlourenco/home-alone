@@ -19,6 +19,14 @@ WAINSCOT_MARINA = 0.705          # Marina 312 s, picture wall (foyer_length.py /
 # flat only at eye height), and the wainscot top is at the same y, so wainscot = camera height. The rear door through the
 # arch (80 in, a different depth) gives the camera height from its floor (y 613) and top (y ~280, partly behind the arch):
 DOOR_10673 = {"horizon": 500, "door_floor": 613, "door_top": 280, "door_h": 2.032}
+# 2677 and 3888 (near the dining opening): the arch and the rear door behind it, nearly face-on. In the arch's plane:
+# floor, arch crown, springline, inner jambs, wainscot top, the ceiling line above; the door (80 in) a short passage behind.
+ARCH = {
+    3888: {"floor": 840, "crown": 179, "spring": 250, "left": 1322, "right": 1658, "wainscot": 625, "ceiling": 167,
+           "door_top": 275, "door_floor": 821},
+    2677: {"floor": 787, "crown": 117, "spring": 192, "left": 1283, "right": 1604, "wainscot": 557, "ceiling": 104,
+           "door_top": 215, "door_floor": 738},
+}
 LANDING_FILM_THEN = (2.22, 2.57)  # film still then-foyer.png: landing underside 1.177 x the rear door head (film_ratios.py)
 
 
@@ -47,6 +55,16 @@ def main():
         lo, hi = min(Hs), max(Hs)
         print(f"  {name}: H {lo:.2f}-{hi:.2f} m ({lo / 0.3048:.1f}-{hi / 0.3048:.1f} ft) -> picture wall "
               f"{min(p) * lo:.2f}-{max(p) * hi:.2f} m")
+    print("\nThe arch (2677, 3888), in its own plane (fractions of the ceiling height H over it):")
+    for n, a in ARCH.items():
+        H = a["floor"] - a["ceiling"]
+        print(f"  {n}: crown {(a['floor'] - a['crown']) / H:.2f} H, springline {(a['floor'] - a['spring']) / H:.2f} H, "
+              f"clear width {(a['right'] - a['left']) / H:.2f} H, wainscot {(a['floor'] - a['wainscot']) / H:.2f} H; "
+              f"crown / door head (door a passage behind, so an upper bound on the true ratio) "
+              f"{(a['floor'] - a['crown']) / (a['door_floor'] - a['door_top']):.2f}")
+    print("  CONFLICT: at H ~2.1 m the crown (~2.06 m) barely clears the 2.03 m door, but the frames show ~1 ft of wall between")
+    print("  them; door-vs-arch with a short passage gives a crown of ~2.4-2.6 m. Resolve with a vanishing-point camera solve")
+    print("  of 2677 / 3888 (depth of the door behind the arch), not by choosing")
     return R
 
 
