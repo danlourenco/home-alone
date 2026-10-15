@@ -134,17 +134,45 @@ Each layer has its own check. Every check is first proven to **fail on an inject
 - A comparison sheet per phase. I open every image before reporting.
 - **The user walks it.** Nothing is "done" before they accept it (change-gate TRIAL rule).
 
+## The stair hall: the highest-risk part (user concern, Oct 15: "i don't want many [surprises]")
+
+Today's problems clustered here:
+- the stall between risers 5 and 6;
+- z-fighting on the well walls;
+- the thick landing;
+- the wall and ceiling misaligned under the gallery;
+- the 8.5 in picture-wall / gallery mismatch.
+
+The current builder carries the most special cases here: walls cut under the landing, ceilings stopped at landings, well edges snapped to the foyer's walls, and a soffit and well walls dressed separately. To keep surprises down:
+
+1. **Decide before building.** Settle the open foyer/stair geometry from the film first: the picture-wall corner vs flight 2's edge vs the gallery edge (frames 1616, 3175, 10673, 2090), plus the landing and well edges. The rebuild then reproduces decided numbers and discovers nothing.
+2. **Build it as a real stair hall.** One two-storey space whose walls run from the main floor to the upstairs ceiling. The landing and flights are objects inside it. This replaces "two floors' walls meeting at the well" and removes most special cases instead of re-coding them.
+3. **Every past stair fix becomes a test first,** written before any stair-hall code and kept green throughout:
+   - the Player's own controller climbs and descends with no stall;
+   - landing underside 2.26 m;
+   - 0 overlaps on the well walls;
+   - the wall under the gallery is flush with the ceiling edge;
+   - headroom on every tread;
+   - back_hall closed;
+   - the open middle between the flights;
+   - flight 2's side, the picture-wall corner and the gallery edge on one line (the V4 film checkpoint).
+
+   The existing stair walk tests run unchanged as regression.
+4. **Its own phase,** after the pilot. It is judged against fixed before/after renders: the stair from the foot and the gallery, Marina 203 s / 312 s matched cameras, film frames. The user walks it before anything else moves.
+
 ## Phases (each ends green on its checks, committed, pushed)
 
 | # | Phase | Ends when |
 |---|---|---|
-| 0 | Baseline: `measurements/baseline/pre-grid.json`; V1 test harness; injected-error proofs | Baseline committed; harness runs |
-| 1 | Grid + snap log (`wall_graph.grid`) | V1 grid tests; snap report reviewed; V3 unchanged (grid computed, not yet applied) |
+| 0 | Baseline: `measurements/baseline/pre-grid.json`; V1 test harness; injected-error proofs | DONE Oct 15 (e9aaf37): baseline + `baseline.py --diff`, proven on injected changes |
+| 1 | Grid + snap log (`wall_graph.grid`); decisions in `measurements/grid-snaps.json` | V1 grid tests; snap report reviewed (preview page); V3 unchanged |
 | 2 | Walls + geometry in Python | V1 all; V2 all on the real house |
-| 3 | Unity consumes geometry; remove the stopgaps | V5 all, with the known-seams list empty; V6 renders |
-| 4 | Cross-floor stacks + foyer/hall film checkpoints | V4; stacking report reviewed with the user |
-| 5 | Windows from the inventory onto the new walls | Windows on walls; light-tight test passes with glass |
-| 6 | User walk | User accepts or leaves notes |
+| 3 | **Pilot in Unity:** upstairs hall + parents' bedroom + Kevin/Jeff's room only (both thick walls, a door against a side wall, a multi-room junction) | V5 + V6 on those rooms; user walks the pilot |
+| 4 | Foyer/stair geometry decided from the film (V4) | Film checkpoints written and agreeing |
+| 5 | **Stair hall** as one two-storey space (see above) | Every stair regression test green; matched renders; user walks it |
+| 6 | Rest of the house; remove the stopgaps | V5 all, known-seams list empty; V6 renders |
+| 7 | Windows (inventory done) onto the new walls; the chute shaft | Light-tight test with glass |
+| 8 | User walk | User accepts or leaves notes |
 
 Each geometry phase gets a `changes/<date>-wall-grid-<phase>.json` record (change gate).
 
