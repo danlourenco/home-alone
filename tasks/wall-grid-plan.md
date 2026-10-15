@@ -177,7 +177,7 @@ The current builder carries the most special cases here: walls cut under the lan
 Each geometry phase gets a `changes/<date>-wall-grid-<phase>.json` record (change gate).
 
 ## Walk notes queued (Oct 15, user)
-- **Arch a bit lower** (user, on the Marina 1068 s fade: her arch sits lower than ours). Ours: crown 2.17 m, springline 1.91 (film 2677/3888). To do: read her crown and springline through the solved 1068 s camera (marina_cameras.py) and reconcile; noted, not urgent.
+- **Arch a bit lower** (user, on the Marina 1068 s fade: her arch sits lower than ours). Ours: crown 2.17 m, springline 1.91 (film 2677/3888). Read Oct 15 in Marina 1068 s (level camera, f 1438; camera height 1.10 m and depth from her rear door's 80 in: bottom row 790, top 329): crown row 312 -> ~1.89 m with our 1.40 m passage, ~1.95 m if her passage is 1.0 m deep; i.e. her crown sits below the rear door's head behind it. Film 2677/3888 (stair-scaled): 2.165/2.168. Sources conflict (film first for the foyer); user leans lower. Decide with the user; not urgent.
 - **Service stair is wrong** (walk note 16:26, breakfast area): built as a solid white block with balusters on top. Film and tour stills being gathered; comparison page to follow, then rebuild it (open stringer, dark newel, white balusters, dark rail per Marina 193.5 s).
 - **Kitchen / breakfast area is wrong** (walk note 16:49: a wall block juts into the room, bare walls). Phase 6 area: compare against the film and Marina before rebuilding.
 - **Passage behind the arch**: width on the left and the two side doors are placeholders (user: tweak later; a standard 36 in basement door wanted eventually).
