@@ -169,12 +169,18 @@ The current builder carries the most special cases here: walls cut under the lan
 | 2 | Walls + geometry in Python | V1 all; V2 all on the real house |
 | 3 | **Pilot in Unity:** upstairs from geometry (Pilot_WallGrid) | DONE Oct 15 (ee5eadc, dcdb923): 0/0/0 seams, 0 leaks, 0 blocked; user approved the renders ('that looked good') and walked it ('looks very good'; one note, the stair-head notch, fixed in ec5761a) |
 | 4 | Foyer/stair geometry decided from the film (V4) | Film checkpoints written and agreeing. Oct 15: back wall + arch + passage built from two film cameras solved on flight 1 (`foyer_cameras.py`, V4 arch checkpoint green; TRIAL `changes/2026-10-15-foyer-arch.json`). Open: the north-wall line (DEVIATIONS 35), the parents' door checkpoint |
-| 5 | **Stair hall** as one two-storey space (see above) | Every stair regression test green; matched renders; user walks it |
+| 5 | **Stair hall** as one two-storey space (see above) | Every stair regression test green; matched renders; user walks it. Oct 15 (e03ab7b): House_WallGrid built, all gates green (seams 0/0/0, peek 0, stair 30/0); Marina/film fade page; awaiting the user's walk |
 | 6 | Rest of the house; remove the stopgaps | V5 all, known-seams list empty; V6 renders |
 | 7 | Windows (inventory done) onto the new walls; the chute shaft | Light-tight test with glass |
 | 8 | User walk | User accepts or leaves notes |
 
 Each geometry phase gets a `changes/<date>-wall-grid-<phase>.json` record (change gate).
+
+## Walk notes queued (Oct 15, user)
+- **Arch a bit lower** (user, on the Marina 1068 s fade: her arch sits lower than ours). Ours: crown 2.17 m, springline 1.91 (film 2677/3888). To do: read her crown and springline through the solved 1068 s camera (marina_cameras.py) and reconcile; noted, not urgent.
+- **Service stair is wrong** (walk note 16:26, breakfast area): built as a solid white block with balusters on top. Film and tour stills being gathered; comparison page to follow, then rebuild it (open stringer, dark newel, white balusters, dark rail per Marina 193.5 s).
+- **Kitchen / breakfast area is wrong** (walk note 16:49: a wall block juts into the room, bare walls). Phase 6 area: compare against the film and Marina before rebuilding.
+- **Passage behind the arch**: width on the left and the two side doors are placeholders (user: tweak later; a standard 36 in basement door wanted eventually).
 
 ## Source priority when they disagree (user direction, Oct 15)
 1. **The film.** For anything the film shows: the foyer, the upstairs hall, the parents' door, the exterior. ("reconcile this to a movie still rather than marina's model")
