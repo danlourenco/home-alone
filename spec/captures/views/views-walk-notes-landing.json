@@ -1,0 +1,30 @@
+[
+ {
+  "name": "../walk-notes-oct15/landing-north",
+  "pos": [
+   1.972,
+   1.018,
+   -9.253
+  ],
+  "look_at": [
+   2.17,
+   0.566,
+   -8.383
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../walk-notes-oct15/landing-south",
+  "pos": [
+   1.972,
+   1.018,
+   -9.6
+  ],
+  "look_at": [
+   2.17,
+   0.566,
+   -10.47
+  ],
+  "vfov": 60
+ }
+]

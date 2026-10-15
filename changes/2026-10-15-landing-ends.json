@@ -1,0 +1,62 @@
+{
+ "change": "Landing ends walled: well_wall_landing_north / _south (spec x 1.58-2.915, from 1.5 cm under the landing's underside to the foyer walls' top, 2.82 m). Nothing stood there: walls under the landing stop at its underside and the well's walls above start at 2.82, so a slot above the landing showed the back stair's and kitchen's ceilings (walk note Oct 15 16:17, 'what the fuck is going on here')",
+ "target": "Greybox_Upstairs",
+ "premise": "The landing's north and south ends are solid wall between the floor below and the well above, like the rest of the stair hall",
+ "claim": {
+  "value": [
+   0.0
+  ],
+  "data": [
+   "walk-note:2026-10-15T16:17"
+  ],
+  "scale": [
+   "none"
+  ],
+  "upstream": [],
+  "applies_to": [
+   "main_stair"
+  ],
+  "measured_in": [
+   "main_stair"
+  ],
+  "assumed": {},
+  "surface": "ceiling-plane"
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "renders from the note position and its mirror at the south end: the slot is gone both ends (landing-*-before/after)",
+   "agrees": true,
+   "data": [
+    "render:walk-notes-oct15"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  },
+  {
+   "what": "build gates: 0 overlaps, 0 gaps, 0 leaks, walks 0 blocked",
+   "agrees": true,
+   "data": [
+    "build:seam-check"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/walk-notes-oct15/landing-north-before.png",
+   "spec/captures/walk-notes-oct15/landing-south-before.png"
+  ],
+  "after": [
+   "spec/captures/walk-notes-oct15/landing-north-after.png",
+   "spec/captures/walk-notes-oct15/landing-south-after.png"
+  ]
+ },
+ "user_walk": "pending"
+}

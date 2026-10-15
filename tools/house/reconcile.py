@@ -290,6 +290,10 @@ def stair_spec(final, o):
         rail(f"flight2_rail{k - n1:02d}", xl + (k - n1 - 1) * g2, xl + (k - n1) * g2, -F + k * r, -F + k * r + 0.9, zg, zg + 0.06)
     box("well_wall_south", "wall", xw - 0.07, xe, -F + fc, 0, zs, zs + 0.07)    # the photo wall, above the foyer's own wall
     box("well_wall_west", "wall", xw - 0.07, xw, (-F + n1 * r - SLAB - UNDER) if fy else -F, 0 if fy else 2.4, zn - 0.07, zs + 0.07)   # rear wall, landing underside to the upper floor (the upstairs well's own wall goes on above; seam check)
+    if fy:   # the landing's two ends: wall from under the landing up to where the foyer's walls end (walk note Oct 15: a slot above
+             # the landing at its north end showed the back stair's and kitchen's ceilings; nothing stood between 2.16 and 2.82 m)
+        for nm, z0_, z1_ in (("well_wall_landing_north", zn - 0.07, zn), ("well_wall_landing_south", zs, zs + 0.07)):
+            box(nm, "wall", xw, xl - 0.07, -F + n1 * r - SLAB - UNDER, -F + fc, z0_, z1_)
     # north edge of the well: only the upper floor's edge (fascia). A full-height wall here stood inside the foyer, which is
     # wider than the well (fixed Oct 13)
     box("well_fascia_north", "wall", xw, xe, (-F + fc) if fy else -0.30, 0, zn - 0.07, zn)   # from the foyer's wall top (no overlap)

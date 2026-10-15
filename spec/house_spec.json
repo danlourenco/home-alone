@@ -2600,6 +2600,38 @@
     ]
    },
    {
+    "name": "well_wall_landing_north",
+    "kind": "wall",
+    "x": [
+     1.58,
+     2.915
+    ],
+    "y": [
+     -0.871,
+     -0.206
+    ],
+    "z": [
+     7.708,
+     7.778
+    ]
+   },
+   {
+    "name": "well_wall_landing_south",
+    "kind": "wall",
+    "x": [
+     1.58,
+     2.915
+    ],
+    "y": [
+     -0.871,
+     -0.206
+    ],
+    "z": [
+     11.43,
+     11.5
+    ]
+   },
+   {
     "name": "well_fascia_north",
     "kind": "wall",
     "x": [
