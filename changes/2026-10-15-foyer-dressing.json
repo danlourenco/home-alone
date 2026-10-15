@@ -1,0 +1,106 @@
+{
+ "change": "Foyer dressing, first pass (spec/dressing/foyer.json from tools/house/foyer_dressing.py): Marina's damask wallpaper (one measured repeat, 0.32 x 0.30 m, world-mapped) over a white wainscot to 0.705 m; white stair with red runner over treads and risers, white skirt and open-side stringer, dark handrail, white newels; flight 2 dressed as thin treads/risers over a smooth white soffit (its boxes hidden, colliders kept); landing carpet, window, painting, table; console 0.61 m high between two chairs, mirror over it; bench, tree, runner rug, front rug, flower stands with prints; vestibule opening casing; front door with sidelights. Colours are surface colours (frame patch / the frame's white wainscot x 0.85)",
+ "target": "Greybox_Upstairs",
+ "premise": "Each piece sits where a ray from a solved Marina camera meets the wall or floor it stands on",
+ "claim": {
+  "value": [
+   0.705,
+   5.66,
+   4.82,
+   6.51
+  ],
+  "data": [
+   "marina-frame:203",
+   "marina-frame:312"
+  ],
+  "scale": [
+   "stair-rise:0.178"
+  ],
+  "upstream": [
+   "outlet-plate-4.5in:198",
+   "marina-clip:stairs-a"
+  ],
+  "applies_to": [
+   "foyer",
+   "vestibule",
+   "main_stair"
+  ],
+  "measured_in": [
+   "foyer",
+   "vestibule",
+   "main_stair"
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-10-15",
+   "what": "French door leaves opened 90 deg at every jamb: the front one would hide the left flower stand that Marina shows in 203 s; not built",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-15",
+   "what": "console and mirror placed by ray-plane hits on the north wall: a grazing view; 1.75 m console off-centre from its mirror and chairs; replaced by the chairs' floor feet",
+   "outcome": "failed"
+  }
+ ],
+ "premise_reviewed": "Both failures came from the same premise applied where it is weak: a ray meeting a wall seen almost edge-on (the north wall in 312 s) or a piece whose swing was not seen (French leaves). Along that wall only heights are now taken from the wall plane; positions come from floor contacts (chair feet), which the overhead's floor-level offsets confirm. Unseen swings are not built.",
+ "checks": [
+  {
+   "what": "Main-floor overhead, floor-level offsets from the stair foot (both at floor level, so the tall-wall parallax cancels): chairs ~0.1 and ~1.8 m behind the foot, console centre ~0.95 m; built 0.01, 1.70 and 0.86 m",
+   "agrees": true,
+   "data": [
+    "overhead:994"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ]
+  },
+  {
+   "what": "wainscot top read on three walls in two frames: north 0.671 (312 s), picture wall 0.705 (312 s), front wall 0.727 (203 s)",
+   "agrees": true,
+   "data": [
+    "marina-frame:203",
+    "marina-frame:312"
+   ],
+   "scale": [
+    "stair-rise:0.178"
+   ]
+  },
+  {
+   "what": "wallpaper repeat 0.32 x 0.30 m by autocorrelation at the front wall's 275 px/m (203 s)",
+   "agrees": true,
+   "data": [
+    "marina-frame:203"
+   ],
+   "scale": [
+    "stair-rise:0.178"
+   ]
+  },
+  {
+   "what": "203 s at the door scale (camera 1.28 m) instead: flower stands' feet 0.1 m behind the front wall, wainscot 0.78 m against 0.68-0.71 in 312 s; the rise scale was kept",
+   "agrees": false,
+   "data": [
+    "marina-frame:203"
+   ],
+   "scale": [
+    "door-36in:203"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/foyer-length/after-marina-312.png",
+   "spec/captures/foyer-length/after-marina-203.png",
+   "spec/captures/foyer-length/after-front-looking-back.png",
+   "spec/captures/foyer-length/after-up.png"
+  ],
+  "after": [
+   "spec/captures/foyer-length/dress-marina-312.png",
+   "spec/captures/foyer-length/dress-marina-203.png",
+   "spec/captures/foyer-length/dress-front-looking-back.png",
+   "spec/captures/foyer-length/dress-up.png"
+  ]
+ },
+ "sheet": "spec/captures/foyer-length/dress-compare.jpg",
+ "user_walk": "pending"
+}

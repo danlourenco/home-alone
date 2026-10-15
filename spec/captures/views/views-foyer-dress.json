@@ -1,0 +1,77 @@
+[
+ {
+  "name": "../foyer-length/dress-marina-203",
+  "pos": [
+   3.76,
+   -1.82,
+   -8.725
+  ],
+  "look_at": [
+   4.701,
+   -1.952,
+   -9.039
+  ],
+  "vfov": 44.87,
+  "note": "Marina Part 1 203 s (facing the front door), foyer_length.py pose"
+ },
+ {
+  "name": "../foyer-length/dress-marina-312",
+  "pos": [
+   9.524,
+   -2.058,
+   -9.828
+  ],
+  "look_at": [
+   8.529,
+   -2.049,
+   -9.73
+  ],
+  "vfov": 40.76,
+  "note": "Marina Part 1 312 s (facing the rear), foyer_length.py pose"
+ },
+ {
+  "name": "../foyer-length/dress-front-looking-back",
+  "pos": [
+   8.6,
+   -1.626,
+   -9.6
+  ],
+  "look_at": [
+   0.0,
+   -1.3760000000000001,
+   -9.6
+  ],
+  "vfov": 62,
+  "note": "foyer front (inside the vestibule opening) looking back to the stair and landing, like Marina 1187 s and the film still"
+ },
+ {
+  "name": "../foyer-length/dress-back-looking-front",
+  "pos": [
+   2.3,
+   -1.626,
+   -9.6
+  ],
+  "look_at": [
+   9.0,
+   -1.4760000000000002,
+   -9.6
+  ],
+  "vfov": 62,
+  "note": "the passage under the landing (z 9.6) looking to the front door, like Marina 1067 s"
+ },
+ {
+  "name": "../foyer-length/dress-up",
+  "pos": [
+   7.2,
+   -1.626,
+   -9.6
+  ],
+  "look_at": [
+   3.5,
+   0.9769999999999999,
+   -9.6
+  ],
+  "vfov": 80,
+  "note": "foyer front looking up over the stair to the landing and the open well"
+ }
+]

@@ -83,7 +83,8 @@ public static class SpecGreybox
             if (s.kind != "opening")
             {
                 foreach (var (x0, x1, z0, z1) in Cells(s.pts))
-                    Box(g, "Floor", x0, x1, z0, z1, -0.2f, 0f, s.kind == "hall" && FloorY == 0f ? mHall : mFloor);   // ground halls: wood (Marina's foyer)
+                    Box(g, "Floor", x0, x1, z0, z1, -0.2f, 0f, Dress != null && FloorY != 0f && Dress["walls"]["spaces"].Any(n => (string)n == s.name)
+                        ? DressMat(Dress["walls"]["floor"]) : s.kind == "hall" && FloorY == 0f ? mHall : mFloor);   // ground halls: wood (Marina's foyer)
                 var hx = holes.SelectMany(h => h.pts.Select(p => p.x)); var hz = holes.SelectMany(h => h.pts.Select(p => p.y));
                 foreach (var (x0, x1, z0, z1) in Cells(s.pts, hx, hz))
                     if (!holes.Any(h => Inside(h.pts, new Vector2((x0 + x1) / 2, (z0 + z1) / 2))))
@@ -114,6 +115,8 @@ public static class SpecGreybox
         var j = JObject.Parse(File.ReadAllText(SpecPath));
         var (spaces, doors) = Parse(j);
         var gj = File.Exists(GroundPath) ? JObject.Parse(File.ReadAllText(GroundPath)) : null;
+        var dp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/foyer.json"));
+        Dress = File.Exists(dp) ? JObject.Parse(File.ReadAllText(dp)) : null;
 
         EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         MakeMaterials();
@@ -147,6 +150,7 @@ public static class SpecGreybox
         if (gj != null) { FloorY = (float)gj["floor_y_m"]; report += "GROUND " + RoomWalk(gspaces, gdoors); FloorY = 0f; }
         player.SetActive(true);
         Furniture(root);   // after the gates: placeholder furniture is for feel walks, not geometry checks
+        if (gj != null) Dressing(GameObject.Find("Ground"), (float)gj["floor_y_m"]);
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, $"walk-test{Tag}.txt"), report);
         if (Variant == "")
@@ -161,6 +165,62 @@ public static class SpecGreybox
         }
         EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), $"Assets/Scenes/Greybox_Upstairs{SceneTag}.unity");
         Debug.Log("SpecGreybox: built from " + SpecPath + (gj != null ? " + " + GroundPath : "") + "\n" + report);
+    }
+
+    // spec/dressing/foyer.json (tools/house/foyer_dressing.py): finishes and pieces measured from Marina's frames. Finishes
+    // (wainscot, wallpaper, stair colours) are applied while building; pieces are added after the gates, like furniture.
+    static JObject Dress;
+    static Material DressMat(JToken c)
+    {
+        var col = new Color((float)c[0], (float)c[1], (float)c[2]);
+        return Mat($"Dress_{ColorUtility.ToHtmlStringRGB(col)}", col);
+    }
+    static Material WallMat = null, WainscotMat = null; static float Wainscot = 0f;
+    static void SetFinish(Space s)
+    {   // wall material for this space's walls: the dressing's wallpaper over a wainscot, else the plain grey-box wall
+        var w = Dress?["walls"];
+        bool on = w != null && FloorY != 0f && w["spaces"].Any(n => (string)n == s.name);
+        WallMat = on ? (w["wallpaper_texture"] != null ? Wallpaper(w) : DressMat(w["wallpaper"])) : null; WainscotMat = on ? DressMat(w["wainscot"]) : null;
+        Wainscot = on ? (float)w["wainscot_m"] : 0f;
+    }
+
+    // Marina's damask, one repeat cut from her frame (foyer_dressing.py), mapped in world units (triplanar) so wall boxes of any
+    // size show it at its measured repeat
+    static Material Wallpaper(JToken w)
+    {
+        string src = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../" + (string)w["wallpaper_texture"]));
+        Directory.CreateDirectory("Assets/Textures/Greybox"); string dst = "Assets/Textures/Greybox/wallpaper.png";
+        File.Copy(src, dst, true); AssetDatabase.ImportAsset(dst);
+        var m = Mat("Dress_Wallpaper", Color.white);
+        m.SetTexture("_BaseColorMap", AssetDatabase.LoadAssetAtPath<Texture2D>(dst));
+        float rep = ((float)w["wallpaper_repeat_m"][0] + (float)w["wallpaper_repeat_m"][1]) / 2f;
+        m.SetFloat("_UVBase", 5f); m.SetFloat("_TexWorldScale", 1f / rep);   // 5 = triplanar
+        HDMaterial.ValidateMaterial(m);
+        return m;
+    }
+
+    static void Dressing(GameObject root, float floorY)
+    {
+        if (Dress == null) return;
+        var g = Child(root, "Dressing"); float keep = FloorY; FloorY = floorY;
+        foreach (var p in Dress["pieces"])
+        {
+            var m = DressMat(p["colour"]); string n = (string)p["name"]; int before = g.transform.childCount;
+            if (p["x"] != null)
+                Box(g, n, (float)p["x"][0], (float)p["x"][1], -(float)p["z"][1], -(float)p["z"][0], (float)p["y"][0], (float)p["y"][1], m);
+            else
+            {   // a box along a -> b (sloped stringers, handrail, soffit)
+                var a = new Vector3((float)p["a"][0], (float)p["a"][1] + FloorY, -(float)p["a"][2]);
+                var b = new Vector3((float)p["b"][0], (float)p["b"][1] + FloorY, -(float)p["b"][2]);
+                var c = GameObject.CreatePrimitive(PrimitiveType.Cube); c.name = n; c.transform.parent = g.transform;
+                c.transform.position = (a + b) / 2; c.transform.rotation = Quaternion.LookRotation(b - a, Vector3.up);
+                c.transform.localScale = new Vector3((float)p["w"], (float)p["t"], (b - a).magnitude);
+                c.GetComponent<MeshRenderer>().sharedMaterial = m; c.isStatic = true;
+            }
+            if (!(bool)p["collide"] && g.transform.childCount > before)
+                Object.DestroyImmediate(g.transform.GetChild(g.transform.childCount - 1).GetComponent<Collider>());
+        }
+        FloorY = keep;
     }
 
     // spec/furniture.json: standard-size placeholder boxes placed from Marina's views (sources in the file)
@@ -233,6 +293,7 @@ public static class SpecGreybox
 
     static void Walls(GameObject g, Space s, List<Door> doors)
     {
+        SetFinish(s);
         for (int i = 0, n = s.pts.Count; i < n; i++)
         {
             Vector2 a = s.pts[i], b = s.pts[(i + 1) % n];
@@ -303,7 +364,10 @@ public static class SpecGreybox
     static void Seg(GameObject p, string n, bool alongX, float t0, float t1, float s0, float s1, float y0, float y1)
     {
         float ta = Mathf.Min(t0, t1), tb = Mathf.Max(t0, t1);
-        if (alongX) Box(p, n, s0, s1, ta, tb, y0, y1, mWall); else Box(p, n, ta, tb, s0, s1, y0, y1, mWall);
+        void B(float b0, float b1, Material m) { if (alongX) Box(p, n, s0, s1, ta, tb, b0, b1, m); else Box(p, n, ta, tb, s0, s1, b0, b1, m); }
+        if (WallMat == null) { B(y0, y1, mWall); return; }
+        if (y0 < Wainscot && y1 > Wainscot) { B(y0, Wainscot, WainscotMat); B(Wainscot, y1, WallMat); }
+        else B(y0, y1, y1 <= Wainscot ? WainscotMat : WallMat);
     }
 
     static void Trim(GameObject p, bool alongX, float t0, float t1, float s0, float s1, float y0, float y1)
@@ -397,6 +461,20 @@ public static class SpecGreybox
             string kind = (string)b["kind"];
             if (kind == "floor" && skipFloorPatch) continue;   // the ground floor's foyer is built for real
             var m = kind == "rail" ? mRail : kind == "wall" ? mWall : kind == "floor" ? mFloor : kind == "ceiling" ? mCeil : mHall;
+            string name = (string)b["name"]; var ds = Dress?["stair"];
+            if (ds != null)
+            {
+                if (kind == "step") m = DressMat(ds["step"]);
+                else if (kind == "landing") m = DressMat(ds["landing"]);
+                else if (kind == "wall") m = Dress["walls"]["wallpaper_texture"] != null ? Wallpaper(Dress["walls"]) : DressMat(ds["well_wall"]);
+                else if (kind == "rail" && name.Contains("spindle")) m = DressMat(ds["spindle"]);
+                if (ds["hide"].Any(h => System.Text.RegularExpressions.Regex.IsMatch(name, "^" + ((string)h).Replace("*", ".*") + "$")))
+                {   // hidden: the dressing replaces it, but its collider stays (the walk gates do not change)
+                    Box(g, name, (float)b["x"][0], (float)b["x"][1], -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], m);
+                    Object.DestroyImmediate(g.transform.GetChild(g.transform.childCount - 1).GetComponent<MeshRenderer>());
+                    continue;
+                }
+            }
             Box(g, (string)b["name"], (float)b["x"][0], (float)b["x"][1], -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], m);
         }
         return st["walk_path"].Select(q => new Vector3((float)q[0], (float)q[1], -(float)q[2])).ToList();
