@@ -76,7 +76,8 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | foyer / dining_room | arch | 2.37-4.08 | 1.71 | read in the overhead |
 | foyer / vestibule | arch | 8.09-9.74 | 1.65 | read in the overhead |
 | dining_room / kitchen | door | 5.72-6.73 | 1.01 | read in the overhead |
-| dining_room / sunroom | arch | 2.23-4.10 | 1.87 | read in the overhead |
+| dining_room / kitchen | door | 2.97-4.00 | 1.03 | read in the overhead |
+| dining_room / sunroom | fake_door | 2.23-4.10 | 1.87 | read in the overhead |
 | back_stair / kitchen | open | 5.95-6.93 | 0.98 | full shared wall |
 | back_stair / kitchen | open | -6.08--2.21 | 3.87 | full shared wall |
 | foyer / kitchen | arch | -1.53--0.55 | 0.98 | read in the overhead |
@@ -87,6 +88,7 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | rule | result | value |
 |---|---|---|
 | adult fits door dining_room/kitchen | pass | 1.01 m wide x 2.03 m |
+| adult fits door dining_room/kitchen | pass | 1.03 m wide x 2.03 m |
 | adult fits hall foyer | pass | narrowest 3.65 m (min 0.90) |
 | adult fits hall back_hall | pass | narrowest 2.84 m (min 0.90) |
 | adult fits hall vestibule | pass | narrowest 1.04 m (min 0.90) |
@@ -95,6 +97,5 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 ## Flags (need a decision or more evidence)
 
 - unresolved: sunroom: room or porch, and whether Marina's 2,620 ft2 includes it
-- unresolved: second dining-room door (rear wall, right) leads to the kitchen's lower-right nook: not modelled
 - unresolved: what is behind the arched foyer door (closet or the service stair's foot): built as a closed prop door
 - ceiling 2.438 m in rooms not measured directly (Kevin 2.40 / parents 2.50 / attic leg 2.29 measured)

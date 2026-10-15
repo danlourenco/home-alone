@@ -83,9 +83,25 @@
   },
   {
    "a": "dining_room",
+   "b": "kitchen",
+   "kind": "door",
+   "source": "overhead: second open door leaf on the dining room's rear wall (right), mirroring the left one; the china cabinet sits between them (user walk note Oct 15; Marina 1116 s from the kitchen side: two doorways flanking the built-in cabinet)",
+   "px": [
+    [
+     1232,
+     570
+    ],
+    [
+     1296,
+     570
+    ]
+   ]
+  },
+  {
+   "a": "dining_room",
    "b": "sunroom",
-   "kind": "arch",
-   "source": "overhead: French door on the dining room's right wall",
+   "kind": "fake_door",
+   "source": "overhead: French door on the dining room's right wall; user Oct 15: closed off with a pair of French doors (never seen inside in the film): built as a closed prop, DEVIATIONS 33",
    "px": [
     [
      1340,
@@ -148,7 +164,6 @@
  ],
  "unresolved": [
   "sunroom: room or porch, and whether Marina's 2,620 ft2 includes it",
-  "second dining-room door (rear wall, right) leads to the kitchen's lower-right nook: not modelled",
   "what is behind the arched foyer door (closet or the service stair's foot): built as a closed prop door"
  ]
 }

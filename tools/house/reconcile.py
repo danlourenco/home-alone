@@ -200,6 +200,31 @@ def service_stair_spec(final, o):
             "authored": f"going {g:.3f} m = enclosure length / {n - 1} treads; {len(B)} risers built, closed at the {ceil} m ceiling"}
 
 
+def attic_stair_spec(final, o, ceil):
+    """The attic stair (user, Oct 15: the film shows it through the open attic door, f_00015-24 of sfm-work/attic): a straight
+    flight rising away from the door (the well's z0 edge) across the overhead's well, at the main stair's rise. 15 risers
+    (film: 11+ visible, the bottom ones below frame); treads fill the well. The attic is not built: the well is walled
+    and capped one door height above the attic floor. Count, width and the cap are AUTHORED (DEVIATIONS 21)."""
+    S = json.loads(STAIR.read_text()); r = S["measured"]["rise_m"]["value"]; n = 14
+    P = np.c_[final["attic_stair"][:, 1] - o[1], final["attic_stair"][:, 0] - o[0]]
+    x0, x1, z0, z1 = P[:, 0].min(), P[:, 0].max(), P[:, 1].min(), P[:, 1].max()
+    s0 = z1 - z0 - (n - 1) * r                 # going = rise (45 deg, the controller's slope limit); the rest is a run-in inside the door
+    g, t, cap = (z1 - z0 - s0) / (n - 1), 0.14, n * r + 2.032
+    B = []
+    box = lambda name, kind, xa, xb, ya, yb, za, zb: B.append({"name": name, "kind": kind, "x": [round(float(xa), 3), round(float(xb), 3)],
+                                                             "y": [round(float(ya), 3), round(float(yb), 3)], "z": [round(float(za), 3), round(float(zb), 3)]})
+    for k in range(1, n):
+        box(f"attic_step{k:02d}", "step", x0, x1, 0.0, k * r, z0 + s0 + (k - 1) * g, z0 + s0 + k * g)
+    for name, xa, xb, za, zb in (("attic_wall_w", x0 - t, x0, z0 - t, z1 + t), ("attic_wall_e", x1, x1 + t, z0 - t, z1 + t),
+                                 ("attic_wall_door", x0, x1, z0 - t, z0), ("attic_wall_end", x0, x1, z1, z1 + t)):
+        box(name, "wall", xa, xb, ceil, cap, za, zb)       # above the well's own walls (the builder stops them at its ceiling)
+    box("attic_cap", "ceiling", x0 - t, x1 + t, cap, cap + 0.1, z0 - t, z1 + t)
+    xm = (x0 + x1) / 2
+    path = [[xm, 0.0, z0 - 0.6], [xm, round((n - 1) * r, 3), z1 - 1.5 * g]]   # on the top tread (its body overhangs the edge); a capsule can't reach the top tread's centre past the end wall
+    return {"rise_m": r, "going_m": round(float(g), 3), "risers": n, "boxes": B, "walk_path": [[round(float(v), 3) for v in q] for q in path],
+            "authored": f"{n} risers at the main rise, first riser {s0} m inside the door, going {g:.3f} m = the rest of the well / {n - 1} treads; full well width; capped {cap:.2f} m (attic not built)"}
+
+
 def stair_spec(final, o):
     """The main stair in spec coordinates (x east, z south, y up; upper floor at y = 0), from the measured flight
     (measurements/rooms/stairs.json) and the well/walkway the trace now holds. Steps are solid boxes down to the foyer
@@ -399,7 +424,8 @@ def main():
         if d["kind"] == "wall":   # names a plain wall between two spaces that also share an opening elsewhere
             continue
         key = tuple(sorted((d["a"], d["b"])))
-        on = [q for q in pairs if tuple(sorted((q["a"], q["b"]))) == key and door_on(q, topo["doors"]) is d]
+        hit = lambda e: e is d or (e is not None and "wall_axis" not in d and "wall_axis" not in e)   # several doors on one wall (dining/kitchen)
+        on = [q for q in pairs if tuple(sorted((q["a"], q["b"]))) == key and hit(door_on(q, topo["doors"]))]
         p = max(on, key=lambda q: q["hi"] - q["lo"]) if on else None
         if not p:
             flags.append(f"door {d['a']}/{d['b']}: no shared wall found within {FACE_MAX} m"); continue
@@ -475,6 +501,7 @@ def main():
                    "span_spec": [round(v - o[1 if d["wall_axis"] == "x" else 0], 3) for v in d["span"]],
                    "spec_axis": "z" if d["wall_axis"] == "x" else "x"} for d in doors],
         "flags": flags,
+        "attic_stair": attic_stair_spec(final, o, CEILINGS.get("attic_stair", CEILINGS["default"])) if FLOOR == "upstairs" and "attic_stair" in final else None,
         "stair": stair_spec(final, o) if FLOOR == "upstairs" else (service_stair_spec(final, o) if "back_stair" in final else None),
         "floor_y_m": 0.0 if FLOOR == "upstairs" else -round(json.loads((ROOT / f"spec/house_spec{'.' + VARIANT if VARIANT else ''}.json").read_text())["stair"]["floor_to_floor_m"], 3),
         "sources": {"plan": str(PLAN.relative_to(ROOT)), "doors": str(DOORS.relative_to(ROOT)), "anchors": ANCHORS},

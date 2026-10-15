@@ -1,0 +1,28 @@
+{
+ "change": "Walk notes, Oct 15 late morning: (1) second dining-room doorway into the breakfast area (rear wall, right; reconciler now allows several doors on one wall); (2) sunroom closed off with a pair of prop French doors; (3) attic stair built through the open attic door: 14 risers, going 0.178, first riser 0.42 m inside the door, capped (attic not built); builder: no door casing on a stairwell's face, attic treads bare wood",
+ "target": "Greybox_Upstairs",
+ "premise": "Marina's dining room has two doorways to the breakfast area flanking the china cabinet; the film shows a steep straight attic flight behind the attic door; the sunroom is never seen inside (user)",
+ "claim": {
+  "value": [1.03, 0.178, 14],
+  "data": ["overhead:994", "user-walk:2026-10-15"],
+  "scale": ["overhead-trace:ground", "stair-rise:0.178"],
+  "upstream": ["overhead-trace:upstairs"],
+  "applies_to": ["dining_room", "kitchen", "sunroom", "attic_stair"],
+  "measured_in": ["dining_room"],
+  "assumed": {"attic_stair": "DEVIATIONS 21", "sunroom": "DEVIATIONS 33", "kitchen": "DEVIATIONS 33"}
+ },
+ "history": [
+  {"date": "2026-10-13", "what": "second dining door listed as unresolved (leads to an untraced nook); attic stairwell left open, no flight", "outcome": "superseded"}
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {"what": "Marina Part 1 1116 s, from the breakfast area: two doorways in the dining room's wall with the white built-in china cabinet between them; the tiled floor runs in front of both", "agrees": true, "data": ["marina-frame:1116"], "scale": ["none"], "type": "topological"},
+  {"what": "Film (sfm-work/attic f_00015-24, Part 2 inserts): through the open attic door a straight, steep, enclosed flight of bare treads rises away from the door; 11+ risers visible", "agrees": true, "data": ["film:attic-door"], "scale": ["none"], "type": "topological"}
+ ],
+ "renders": {
+  "before": ["spec/captures/walk-notes-2/before-dining-rear-wall.png", "spec/captures/walk-notes-2/before-sunroom-doors.png", "spec/captures/walk-notes-2/before-attic-door.png", "spec/captures/walk-notes-2/before-attic-stair-up.png"],
+  "after": ["spec/captures/walk-notes-2/after-dining-rear-wall.png", "spec/captures/walk-notes-2/after-sunroom-doors.png", "spec/captures/walk-notes-2/after-attic-door.png", "spec/captures/walk-notes-2/after-attic-stair-up.png"]
+ },
+ "sheet": "spec/captures/walk-notes-2/compare.jpg",
+ "user_walk": "pending"
+}

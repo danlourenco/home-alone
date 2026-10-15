@@ -1,0 +1,6 @@
+[
+ {"name": "../walk-notes-2/before-dining-rear-wall", "pos": [8.384, -1.62, -5.037], "look_at": [4.0, -1.8, -5.3], "vfov": 70},
+ {"name": "../walk-notes-2/before-sunroom-doors", "pos": [8.189, -1.62, -7.334], "look_at": [8.25, -1.8, -1.0], "vfov": 70},
+ {"name": "../walk-notes-2/before-attic-door", "pos": [6.5, 1.5, -11.75], "look_at": [6.5, 2.0, -16.0], "vfov": 70},
+ {"name": "../walk-notes-2/before-attic-stair-up", "pos": [6.5, 1.4, -13.85], "look_at": [6.5, 3.4, -16.3], "vfov": 70}
+]

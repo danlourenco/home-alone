@@ -433,9 +433,34 @@
   {
    "between": [
     "dining_room",
+    "kitchen"
+   ],
+   "kind": "door",
+   "wall_axis": "y",
+   "wall_coord": -0.388,
+   "wall_thickness": 0.14,
+   "span": [
+    2.967,
+    3.997
+   ],
+   "width": 1.03,
+   "height": 2.032,
+   "opens": true,
+   "placed_from": "read in the overhead",
+   "source": "overhead: second open door leaf on the dining room's rear wall (right), mirroring the left one; the china cabinet sits between them (user walk note Oct 15; Marina 1116 s from the kitchen side: two doorways flanking the built-in cabinet)",
+   "wall_coord_spec": 4.19,
+   "span_spec": [
+    3.671,
+    4.701
+   ],
+   "spec_axis": "x"
+  },
+  {
+   "between": [
+    "dining_room",
     "sunroom"
    ],
-   "kind": "arch",
+   "kind": "fake_door",
    "wall_axis": "x",
    "wall_coord": 2.23,
    "wall_thickness": 0.14,
@@ -444,10 +469,10 @@
     4.099
    ],
    "width": 1.866,
-   "height": null,
-   "opens": true,
+   "height": 2.032,
+   "opens": false,
    "placed_from": "read in the overhead",
-   "source": "overhead: French door on the dining room's right wall",
+   "source": "overhead: French door on the dining room's right wall; user Oct 15: closed off with a pair of French doors (never seen inside in the film): built as a closed prop, DEVIATIONS 33",
    "wall_coord_spec": 2.934,
    "span_spec": [
     6.811,
@@ -557,6 +582,7 @@
   }
  ],
  "flags": [],
+ "attic_stair": null,
  "stair": {
   "rise_m": 0.178,
   "going_m": 0.242,

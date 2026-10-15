@@ -141,6 +141,7 @@ public static class SpecGreybox
         var ceilings = Child(root, "Ceilings");
         BuildFloor(root, ceilings, spaces, doors);
         var stairPath = Stair(root, j["stair"], skipFloorPatch: gj != null);
+        var atticPath = Stair(root, j["attic_stair"], false, "AtticStair", dress: false);   // seen through the open attic door (DEVIATIONS 21)
         string report = "";
         List<Space> gspaces = null; List<Door> gdoors = null; GameObject groot = null, gceil = null;
         if (gj != null)
@@ -163,6 +164,7 @@ public static class SpecGreybox
         report += "UPSTAIRS\n" + WalkTest(spaces, doors);
         if (gj != null) { FloorY = (float)gj["floor_y_m"]; report += "GROUND\n" + WalkTest(gspaces, gdoors); FloorY = 0f; }
         report += StairWalk(stairPath);
+        report += StairWalk(atticPath);
         // structure checks: headroom and room reachability are about the building, so the dressing's furniture is off for them
         var dressing = GameObject.Find("Ground/Dressing"); dressing?.SetActive(false); Physics.SyncTransforms();
         float gfy = gj != null ? (float)gj["floor_y_m"] : 0f;
@@ -346,7 +348,7 @@ public static class SpecGreybox
                 if (dl > cur) Seg(g, "Wall", alongX, t0, t1, cur, dl, 0f, ceil);
                 float head = d.kind == "door" ? d.height : d.kind == "arch" ? ArchHead : ceil;
                 if (head < ceil) Seg(g, d.kind + "_Header", alongX, t0, t1, dl, dh, head, ceil);
-                if (d.kind == "door")
+                if (d.kind == "door" && s.kind != "opening")   // a stairwell's face has the flight in it, not trim (attic stair, Oct 15)
                 {   // casing on this room's face: two legs and a head, proud of the wall toward the room
                     float f0 = t0, f1 = t0 - sgn * CasingProud;
                     Trim(g, alongX, f0, f1, dl - CasingW, dl, 0f, head + CasingW);
@@ -410,6 +412,11 @@ public static class SpecGreybox
         float face = t0 - sgn * 0.03f;
         if (alongX) Box(p, "PropDoor", d.lo, d.hi, Mathf.Min(face, t0), Mathf.Max(face, t0), 0f, d.height, mProp);
         else Box(p, "PropDoor", Mathf.Min(face, t0), Mathf.Max(face, t0), d.lo, d.hi, 0f, d.height, mProp);
+        if (d.hi - d.lo < 1.4f) return;
+        // a pair (the sunroom's French doors, user Oct 15): the meeting stiles, a dark line down the middle
+        float m = (d.lo + d.hi) / 2, f2 = t0 - sgn * 0.04f;
+        if (alongX) Box(p, "PropDoor_Meet", m - 0.01f, m + 0.01f, Mathf.Min(f2, t0), Mathf.Max(f2, t0), 0f, d.height, mRail);
+        else Box(p, "PropDoor_Meet", Mathf.Min(f2, t0), Mathf.Max(f2, t0), m - 0.01f, m + 0.01f, 0f, d.height, mRail);
     }
 
     static void Rail(GameObject p, Door d)
@@ -480,16 +487,16 @@ public static class SpecGreybox
     }
 
     // The main stair: solid steps, landing, rails and well walls as spec boxes (spec z -> world -z); returns the walk path.
-    static List<Vector3> Stair(GameObject root, JToken st, bool skipFloorPatch)
+    static List<Vector3> Stair(GameObject root, JToken st, bool skipFloorPatch, string child = "MainStair", bool dress = true)
     {
         if (st == null || st.Type == JTokenType.Null) return new List<Vector3>();
-        var g = Child(root, "MainStair");
+        var g = Child(root, child);
         foreach (var b in st["boxes"])
         {
             string kind = (string)b["kind"];
             if (kind == "floor" && skipFloorPatch) continue;   // the ground floor's foyer is built for real
-            var m = kind == "rail" ? mRail : kind == "wall" ? mWall : kind == "floor" ? mFloor : kind == "ceiling" ? mCeil : mHall;
-            string name = (string)b["name"]; var ds = Dress?["stair"];
+            var m = kind == "rail" ? mRail : kind == "wall" ? mWall : kind == "floor" || (!dress && kind == "step") ? mFloor : kind == "ceiling" ? mCeil : mHall;   // attic treads: bare wood (film)
+            string name = (string)b["name"]; var ds = dress ? Dress?["stair"] : null;
             if (ds != null)
             {
                 if (kind == "step") m = DressMat(ds["step"]);

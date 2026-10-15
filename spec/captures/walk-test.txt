@@ -18,7 +18,7 @@ ok      living_room <-> foyer (arch, 1.49 m)
 ok      foyer <-> dining_room (arch, 1.71 m)
 ok      foyer <-> vestibule (arch, 1.65 m)
 ok      dining_room <-> kitchen (door, 1.01 m)
-ok      dining_room <-> sunroom (arch, 1.87 m)
+ok      dining_room <-> kitchen (door, 1.03 m)
 ok      foyer <-> kitchen (arch, 0.98 m)
 Stair walk test (both bodies, up and down): 30 legs, 0 blocked
 ok      bandit up leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
@@ -51,11 +51,18 @@ ok      player down leg 2: ended 0.01 m from waypoint, 0.03 m off its floor heig
 ok      player down leg 3: ended 0.02 m from waypoint, 0.03 m off its floor height, 40 frames (clean walk 40)
 ok      player down leg 4: ended 0.04 m from waypoint, 0.03 m off its floor height, 78 frames (clean walk 75)
 ok      player down leg 5: ended 0.02 m from waypoint, 0.03 m off its floor height, 8 frames (clean walk 8)
-Seam check: 351 structural boxes, 0 overlaps (flicker), 3 ledges, 0 gaps
+Stair walk test (both bodies, up and down): 6 legs, 0 blocked
+ok      bandit up leg 1: ended 0.05 m from waypoint, 0.01 m off its floor height
+ok      bandit down leg 1: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      player up leg 1: ended 0.04 m from waypoint, 0.00 m off its floor height, 52 frames (clean walk 53)
+ok      player down leg 1: ended 0.02 m from waypoint, 0.03 m off its floor height, 57 frames (clean walk 53)
+Seam check: 368 structural boxes, 0 overlaps (flicker), 3 ledges, 0 gaps
 LEDGE   z -7.880 vs -7.829 (5.1 cm): hall_corridor/Wall at (5.65, 1.20, 7.85) | hall_corridor/Wall at (4.75, 1.20, 7.79)
 LEDGE   x 8.441 vs 8.415 (2.6 cm): hall_corridor/door_Header at (8.41, 2.22, 10.61) | hall_bath/Wall at (8.38, 1.20, 9.53)
 LEDGE   z -7.829 vs -7.880 (5.1 cm): hall_corridor/Wall at (4.75, 1.20, 7.79) | hall_corridor/Wall at (5.67, 1.20, 7.85)
-Leak and headroom check: 1403 points, 0 leaks, 0 low-headroom points (ground floor, outside flight 1)
+Leak and headroom check: 1385 points, 0 leaks, 0 low-headroom points (ground floor, outside flight 1)
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 84 legs, 0 blocked
 GROUND Room walk test (both bodies, every doorway to room centre and back): 64 legs, 0 blocked
 skip    bandit back_stair: no cell to stand in (its floor is a stair)
