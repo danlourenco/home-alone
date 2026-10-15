@@ -47,6 +47,16 @@ def load():
 def snap(spec, dec):
     E = wgp.edges("upstairs", spec["upstairs"]) + wgp.edges("ground", spec["ground"])
     wgp.cluster(E)
+    for d in dec:   # pins: a measured face keeps its place; its whole shared line (the other side of the wall too) moves to it
+        p = d.get("pin")
+        if not p:
+            continue
+        hit = [e for e in E if e["floor"] == p["floor"] and e["room"] == p["room"] and e["axis"] == p["axis"] and abs(e["face"] - p["face"]) < 1e-3]
+        assert hit, f"pin not found: {p}"
+        e0 = hit[0]; line = [e for e in E if e["floor"] == e0["floor"] and e["axis"] == e0["axis"] and e.get("line") == e0["line"]]
+        delta = -e0["snap"]
+        for e in line:
+            e["snap"] = round(e["snap"] + delta, 4); e["pinned_by"] = p["room"]
     for d in dec:   # close the thick walls the user decided: the moving room's face goes onto the other side's wall
         c = d.get("close")
         if not c:

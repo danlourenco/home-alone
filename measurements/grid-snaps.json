@@ -44,6 +44,18 @@
     "hatch_wall": "kitchen x=2.316 face",
     "note": "spec metres, placed by eye from overhead_994 (the green square sits in the pocket's rear corner on the sunroom side, against the breakfast-area wall that carries the hatch, Marina 1116 s); ~0.45 x 0.5 m. APPROXIMATE: to measure from 1116 s and the film"
    }
+  },
+  {
+   "where": "upstairs, the hall bath's west wall (hall_corridor end bay x 8.371 / hall_bath 8.415 / linen_closet 8.275)",
+   "found": "the traced bath wall was 4.4 cm thick against the hall and jogged 9.6 cm between the hall and the linen closet; made one 14 cm wall at the grid's average it pushed the hall's end 6.4 cm into Buzz's door trim (a CONFLICT)",
+   "decision": "pin the hall's face at 8.371 (measured: the end bay's east wall in the hall-s1 SfM clip, registration residual <= 5.1 cm); the bath wall is one straight 14 cm wall behind it: hall_bath face -> 8.511 (bath 3.8 in shallower, -3%), linen_closet (sealed, unmeasured) face -> 8.371. Buzz's door then slides <= 0.07 m to fit its trim, inside DEVIATIONS 26's spread; the hall-s1 registration itself put the door 0.17 m that way",
+   "pin": {
+    "floor": "upstairs",
+    "room": "hall_corridor",
+    "axis": "x",
+    "face": 8.371
+   },
+   "by": "user, Oct 15: 'Measure, then fix'"
   }
  ],
  "open": [
