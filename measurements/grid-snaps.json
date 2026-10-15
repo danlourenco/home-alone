@@ -56,6 +56,12 @@
     "face": 8.371
    },
    "by": "user, Oct 15: 'Measure, then fix'"
+  },
+  {
+   "where": "ground, the back of the foyer (picture wall / passage to the rear door)",
+   "found": "film 1616 and 10673: a cased round-topped ARCH in the picture wall leads to the passage and the rear door; the low ceiling's edge (the stairwell's edge) comes down on the arch's left side. Marina has an open gap and a shorter solid picture wall",
+   "decision": "build the film's layout: picture wall extended to the stairwell-edge line with the arch cut into it; stairwell edge, upper flight's side and the arch's left side on one line. Dimensions from 1616 and 10673 (tools/house/foyer_film.py)",
+   "by": "user, Oct 15: 'Yes, there's an arch' (film over Marina, per the Oct 15 source order)"
   }
  ],
  "open": [
