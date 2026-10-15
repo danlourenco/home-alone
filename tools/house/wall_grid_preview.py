@@ -136,9 +136,13 @@ def main():
              for f, sp in (("upstairs", up), ("ground", gr)) for s in sp["spaces"]]
     stair = [b for b in up["stair"]["boxes"] if b["kind"] in ("step", "landing")]
     shell_b64, shell_n = shell(rooms, gr["floor_y_m"])
+    sys.path.insert(0, str(ROOT / "tools/house")); import wall_graph as wg   # the rebuild as it stands (tasks/wall-grid-plan.md phase 2): snapped rooms, wall boxes, openings
+    geo, _, geo_report = wg.build(*wg.load())
+    after = {f: {"rooms": g["rooms"], "walls": g["walls"], "openings": [{k: o[k] for k in ("kind", "axis", "c", "lo", "hi", "between")} for o in g["openings"]],
+                 "floor_y": g["floor_y"]} for f, g in geo.items()}
     out = ROOT / "spec/captures/wall-grid"; out.mkdir(parents=True, exist_ok=True)
     (out / "preview.json").write_text(json.dumps({"params": {"half_wall": HALF, "snap_tol": SNAP_TOL, "reach": REACH, "max_spread": MAX_SPREAD},
-                                                  "rooms": rooms, "edges": E, "lines": lines, "stacks": stacks, "odd": odd, "shell": shell_b64, "shell_fit": "tools/house/shell_fit.py: ground-floor fit, IoU 0.77 ground / 0.65 upstairs", "doors": doors, "stair": stair}, indent=0))
+                                                  "rooms": rooms, "edges": E, "lines": lines, "stacks": stacks, "odd": odd, "after": after, "after_report": geo_report, "shell": shell_b64, "shell_fit": "tools/house/shell_fit.py: ground-floor fit, IoU 0.77 ground / 0.65 upstairs", "doors": doors, "stair": stair}, indent=0))
     html = (ROOT / "tools/house/wall_grid_preview.template.html").read_text()
     (out / "preview.html").write_text(html.replace("__DATA__", (out / "preview.json").read_text().replace("</", "<\\/")))
     moved = sorted((e for e in E if abs(e["snap"]) > 0.0005), key=lambda e: -abs(e["snap"]))

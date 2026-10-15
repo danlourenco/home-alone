@@ -69,6 +69,10 @@ ol.moves .dot { width: 8px; height: 8px; border-radius: 50%; }
         <button id="v-plan" data-view="plan">Plan</button>
         <button id="v-iso" data-view="iso">3D</button>
       </span>
+      <span class="seg" role="group" aria-label="Before or after">
+        <button id="m-before" data-mode="before">Today</button>
+        <button id="m-after" data-mode="after">After rebuild</button>
+      </span>
       <span class="lab" id="floorlab">Floor</span>
       <span class="seg" role="group" aria-label="Floor">
         <button id="f-ground" data-floor="ground">Main floor</button>
@@ -131,7 +135,7 @@ ol.moves .dot { width: 8px; height: 8px; border-radius: 50%; }
 const D = JSON.parse(document.getElementById('data').textContent);
 const svg = document.getElementById('plan'), tip = document.getElementById('tip');
 const NS = 'http://www.w3.org/2000/svg';
-let floor = 'ground', sel = null;
+let floor = 'ground', sel = null, mode = 'after';
 try { floor = localStorage.getItem('wg-floor2') || floor; } catch (e) {}
 
 // spec (x front +, z) -> sheet (X right, Y down): street at the bottom, the garage side (large z) on the left as seen from the street
@@ -158,9 +162,29 @@ function seg(e, c, attrs, g) { // a wall-face line at coordinate c along the edg
 const floors = () => floor === 'both' ? ['ground', 'upstairs'] : [floor];
 const stackView = () => floor === 'both';
 
+function drawAfter() {
+  const fl = floor === 'both' ? ['ground', 'upstairs'] : [floor];
+  for (const f of fl) {
+    const A = D.after[f], g = el('g', {});
+    for (const r of A.rooms) {
+      el('polygon', { points: r.poly.map(p => P(p[0], p[1]).join(',')).join(' '), fill: 'var(--room)' }, g);
+      const cx = r.poly.reduce((s, p) => s + p[0], 0) / r.poly.length, cz = r.poly.reduce((s, p) => s + p[1], 0) / r.poly.length;
+      const [tx, ty] = P(cx, cz); const t = el('text', { x: tx, y: ty, 'font-size': .32, 'text-anchor': 'middle', fill: 'var(--muted)', 'font-family': 'Barlow Condensed, sans-serif' }, g); t.textContent = nice(r.name);
+    }
+    // wall pieces standing on the floor are solid; pieces that start higher (door headers) show as a light band = an opening
+    for (const w of A.walls.filter(w => w.y[0] > 0.01)) rectXZ(w.x[0], w.x[1], w.z[0], w.z[1], { fill: 'var(--door)', opacity: .45 }, g);
+    for (const w of A.walls.filter(w => w.y[0] <= 0.01)) rectXZ(w.x[0], w.x[1], w.z[0], w.z[1], { fill: 'var(--poche)' }, g);
+    for (const o of A.openings.filter(o => o.kind === 'window')) {
+      const e = { axis: o.axis, lo: o.lo, hi: o.hi }; seg(e, o.c, { stroke: 'var(--up)', 'stroke-width': .06 }, g);
+    }
+  }
+  for (const b of D.stair) rectXZ(b.x[0], b.x[1], b.z[0], b.z[1], { fill: 'none', stroke: 'var(--muted)', 'stroke-width': .012 });
+}
+
 function draw() {
   svg.replaceChildren();
   svg.setAttribute('viewBox', vb.join(' '));
+  if (mode === 'after') { drawAfter(); return; }
   const fl = floors();
   for (const f of fl) {
     const ghost = floor === 'both' && f === 'upstairs';
@@ -240,6 +264,11 @@ function pick(e) {
 }
 
 function list() {
+  if (mode === 'after') {
+    document.getElementById('sumh').textContent = 'After rebuild';
+    document.getElementById('tally').innerHTML = '';
+    document.getElementById('sumnote').innerHTML = 'Walls drawn as built by the rebuild: one solid outline per floor, every shared wall exactly 5½ in, openings as light bands (door and arch headers) and blue lines (windows). The checks: ' + D.after_report.map(l => l.replace(/</g, '&lt;')).join('<br>');
+  }
   const fl = floors(), mv = D.edges.filter(e => fl.includes(e.floor) && Math.abs(e.snap) > 0.0005).sort((a, b) => Math.abs(b.snap) - Math.abs(a.snap));
   const n = { ok: 0, warn: 0, bad: 0 }; mv.forEach(e => n[sev(e.snap)]++);
   document.getElementById('tally').innerHTML = [['ok', 'up to 1½ in'], ['warn', '1½–4 in'], ['bad', 'over 4 in']].map(([k, t]) => `<div style="border-color:var(--${k})"><b>${n[k]}</b><span>${t}</span></div>`).join('');
@@ -271,6 +300,8 @@ function list() {
   }
 }
 
+function setMode(m) { mode = m; document.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === m)); draw(); list(); }
+document.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
 function setFloor(f) { floor = f; try { localStorage.setItem('wg-floor2', f); } catch (e) {} document.querySelectorAll('[data-floor]').forEach(b => b.setAttribute('aria-pressed', b.dataset.floor === f)); draw(); list(); }
 document.querySelectorAll('[data-floor]').forEach(b => b.addEventListener('click', () => setFloor(b.dataset.floor)));
 
@@ -284,7 +315,7 @@ svg.addEventListener('pointerdown', ev => { if (ev.target.getAttribute('stroke')
 svg.addEventListener('pointermove', ev => { if (!drag) return; const s = toPlan(ev)[2]; vb = [drag.vb[0] - (ev.clientX - drag.x) * s, drag.vb[1] - (ev.clientY - drag.y) * s, vb[2], vb[3]]; draw(); });
 svg.addEventListener('pointerup', () => { drag = null; svg.classList.remove('drag'); });
 
-setFloor(floor);
+setFloor(floor); setMode(mode);
 
 // ---- 3D view: walls raised to each room's ceiling, floors at their real heights (ceilings left off: a cutaway) ----
 let view = 'plan', iso = null;
