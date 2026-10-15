@@ -1,0 +1,194 @@
+{
+ "change": "Back of the foyer from the film: a back wall under the landing's front edge (spec x 2.845-2.985) from the north wall to flight 1's side, with a cased segmental arch (clear z 8.855-9.900, springline 1.91 m, crown 2.17 m); behind it rear_passage (to the rear door, which stays where Marina's overhead put it) and under_landing (closed); the foyer loses its notch under the landing. The landing's fascia 0.05 -> 0.144 m deep (underside 2.264 -> 2.17); flight 2 unchanged. back_hall's unseen face beside the passage moves 0.095 m. Builder: arches take a measured crown and springline (segmental top as stepped slices, casing legs); views take a near clip; the rear well wall starts 1.5 cm under the landing to meet the rooms below",
+ "target": "Greybox_Upstairs",
+ "premise": "The film's foyer has a cased arch in the back wall under the landing, centred on the rear door, as wide as the passage behind it, its crown just under the landing's fascia",
+ "claim": {
+  "value": [
+   8.855,
+   9.9,
+   1.91,
+   2.17,
+   0.144
+  ],
+  "data": [
+   "film:2677",
+   "film:3888"
+  ],
+  "scale": [
+   "stair-rise:0.178"
+  ],
+  "upstream": [
+   "outlet-plate-4.5in:198",
+   "marina-clip:stairs-a",
+   "marina-frame:203",
+   "marina-frame:312"
+  ],
+  "applies_to": [
+   "foyer",
+   "rear_passage",
+   "under_landing",
+   "back_hall",
+   "landing"
+  ],
+  "measured_in": [
+   "foyer",
+   "rear_passage",
+   "landing"
+  ],
+  "assumed": {
+   "under_landing": "DEVIATIONS 22",
+   "back_hall": "DEVIATIONS 22"
+  },
+  "risks": [
+   "registration",
+   "scale"
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-10-14",
+   "what": "landing 0.28 deep, underside ~2.03 m (clip A 'underside 1.94-2.07' read)",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-15",
+   "what": "landing 0.05 deep, underside 2.26 m (Marina 312 s, picture wall papered to 2.26; the soffit had dropped below the kitchen opening's head)",
+   "outcome": "ok"
+  },
+  {
+   "date": "2026-10-15",
+   "what": "film-only COLMAP SfM of the foyer, all shots: the damask folded the front wall onto the picture wall",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-15",
+   "what": "film-only COLMAP SfM, back-facing shots: two camera setups merged, two rear-door rulers 28% apart",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-15",
+   "what": "single-frame scale-free ratios (foyer_film.py): proportions agreed across frames, rulers for H disagreed 1.90-2.57 m",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "Census of the failed attempts: both film SfM runs rested on automatic feature matching across frames, which the repeating damask defeats (it matched the wrong wall); the 2.03 m landing rested on reading an edge in one Marina clip as the underside. This attempt shares neither: no feature matching (hand-read structural edges, +-4 px on gridded crops), one camera per frame solved only from flight 1's nosings, whose rise, going and position were measured separately (stairs.json, foyer_length.py). The premise survives because two separately solved cameras (2677, 3888) agree on the arch to 5 cm and 0.4 cm on its crown, and the cameras reproduce the rear door where Marina's overhead put it. The single-frame ratio rulers disagreed because each borrowed a depth or a height; the solved cameras need neither. The landing's underside moves against the Oct 15 2.26 m only where it does not reach the kitchen opening (flight 2 keeps 2.26)",
+ "checks": [
+  {
+   "what": "Rear door, held out of the solves: through the 2677 / 3888 cameras it lands at spec z 9.01-9.93 / 8.91-9.88 at the rear wall; Marina's overhead (px 909-964) put it at 8.97-9.89: centres within 5 cm both ways. Tests where the cameras put things across the back of the foyer",
+   "agrees": true,
+   "data": [
+    "overhead:994"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ],
+   "tests": [
+    "registration"
+   ]
+  },
+  {
+   "what": "Film 10673 (not used by the claim), the rear door as 80 in: the console top on the horizon gives camera height 0.69 m = the wainscot top, so the wallpaper top over the picture wall H = 2.09 m (foyer_film.py) vs the claim's 2.17 (-3.7%). The horizon read +-5 px is +-4.5% on H, so 2.17 sits at the edge of its band: agrees within its error, reads lower. Its picture wall 0.88-0.93 m backs DEVIATIONS 35's residual",
+   "agrees": true,
+   "data": [
+    "film:10673"
+   ],
+   "scale": [
+    "door-80in:10673"
+   ],
+   "tests": [
+    "scale"
+   ]
+  },
+  {
+   "what": "Rear door height through the same cameras (80 in = 2.03 m): 2.00 (2677) / 2.12 m (3888), -1.4% / +4.5%; the door's own 80 in puts its face at x 1.46 / 1.96 (built 1.58): depth is weak at this focal",
+   "agrees": true,
+   "data": [
+    "film:2677",
+    "film:3888"
+   ],
+   "scale": [
+    "door-80in:film"
+   ],
+   "tests": [
+    "scale"
+   ]
+  },
+  {
+   "what": "Camera height from the rear door alone (foyer_film.py method, horizon at the image centre): 0.81 / 1.09 m vs the stair-solved 0.83 / 1.02 m",
+   "agrees": true,
+   "data": [
+    "film:2677",
+    "film:3888"
+   ],
+   "scale": [
+    "door-80in:film"
+   ],
+   "tests": [
+    "scale"
+   ]
+  },
+  {
+   "what": "Wainscot top through the cameras 0.744 / 0.718 m vs Marina 312 s 0.705 (+5% / +2%)",
+   "agrees": true,
+   "data": [
+    "marina-frame:312"
+   ],
+   "scale": [
+    "stair-rise:0.178"
+   ],
+   "tests": [
+    "scale"
+   ]
+  },
+  {
+   "what": "Open-side nosing ends (z 10.23, not in the solve) land on the balusters in the 2677/3888/1616 overlays (lines-*.jpg)",
+   "agrees": true,
+   "data": [
+    "film:2677",
+    "film:3888",
+    "film:1616"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological",
+   "tests": [
+    "registration"
+   ]
+  },
+  {
+   "what": "1616 (third camera, 3.4 m outside the front door): arch casing at z 8.89 (2677: 8.83); the picture wall's corner at z 8.02 vs the north wall built at 7.778 (picture wall 0.87 m vs ~1.0 built)",
+   "agrees": false,
+   "data": [
+    "film:1616"
+   ],
+   "scale": [
+    "stair-rise:0.178"
+   ],
+   "tests": [
+    "registration"
+   ],
+   "disposition": "Not part of this claim (the north wall line is Marina's overhead, unchanged here); logged as DEVIATIONS 35's residual with how to settle it (solve 10673/3175, which see the north wall). The arch itself agrees with 2677 to 5 cm"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/foyer-film-cams/before-2677.png",
+   "spec/captures/foyer-film-cams/before-3888.png",
+   "spec/captures/foyer-film-cams/before-1616.png",
+   "spec/captures/foyer-film-cams/before-inside-foyer.png",
+   "spec/captures/foyer-film-cams/before-inside-arch.png",
+   "spec/captures/foyer-film-cams/before-inside-passage.png"
+  ],
+  "after": [
+   "spec/captures/foyer-film-cams/after-2677.png",
+   "spec/captures/foyer-film-cams/after-3888.png",
+   "spec/captures/foyer-film-cams/after-1616.png",
+   "spec/captures/foyer-film-cams/after-inside-foyer.png",
+   "spec/captures/foyer-film-cams/after-inside-arch.png",
+   "spec/captures/foyer-film-cams/after-inside-passage.png"
+  ]
+ },
+ "user_walk": "pending",
+ "sheet": "spec/captures/foyer-film-cams/compare.jpg"
+}

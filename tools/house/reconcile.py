@@ -37,7 +37,8 @@ ADULT = {"capsule_diameter": 0.55, "height": 1.85, "min_hall": 0.90}
 # Ceiling heights, measured Oct 13 on door walls (wall height / door height x 80 in, door_scale.py):
 # parents 2.42 m and Kevin 2.30-2.33 m to the crown's lower edge (+~0.08 m crown), hall attic leg 2.29 m to the ceiling.
 CEILINGS = {"default": 2.40, "parents_bedroom": 2.50, "parents_bath": 2.50, "hall_corridor_south": 2.29} if FLOOR == "upstairs" else \
-    {"default": 2.438, "foyer": 2.82, "back_hall": 2.25}  # back_hall Oct 15: just under the landing (underside 2.264 m; a coplanar ceiling flickered, seam check), unknown beyond. foyer Oct 14 (2.82 = the most under the 0.2 m upper-floor slab): front ceiling 2.92 m in the clip A solve, 1.40 x a door in the film
+    {"default": 2.438, "foyer": 2.82, "back_hall": 2.155, "rear_passage": 2.155, "under_landing": 2.155}  # under the landing: 1.5 cm below its underside (2.17, film; coplanar flickered). Was back_hall 2.25 under Marina's 2.264
+                         # back_hall Oct 15: just under the landing (underside 2.264 m; a coplanar ceiling flickered, seam check), unknown beyond. foyer Oct 14 (2.82 = the most under the 0.2 m upper-floor slab): front ceiling 2.92 m in the clip A solve, 1.40 x a door in the film
                         # (then-foyer.png), 1.51 x the vestibule opening in Marina 205 s (film_ratios.py). Ground: 8 ft standard, inside the measured living 2.44 / dining 2.42 m (tools/house/ground_ceiling.py, Oct 14). Was 2.32, the
                         # landing balustrade's base in the stair clip, misread as the foyer ceiling. Kitchen (beams) unmeasured
 # Which way each stairwell opening leads (sources): the main stair goes DOWN to the foyer (measured, stairs.json); the
@@ -248,7 +249,9 @@ def stair_spec(final, o):
     if G.exists():
         gs = json.loads(G.read_text()); fy = next((s for s in gs["spaces"] if s["name"] == "foyer"), None)
     if fy:
-        P_ = np.array(fy["polygon_xz"]); xw, zn, zs = P_[:, 0].min(), P_[:, 1].min(), P_[:, 1].max()
+        P_ = np.array(fy["polygon_xz"]); zn, zs = P_[:, 1].min(), P_[:, 1].max()
+        # the rear wall: the foyer's notch under the landing became rear_passage + under_landing (film arch, Oct 15)
+        xw = min(min(p[0] for p in s["polygon_xz"]) for s in gs["spaces"] if s["name"] in ("foyer", "rear_passage", "under_landing"))
     fc = fy["ceiling_m"] if fy else 0.0                                   # the foyer's walls end here
     W1, DL = a["flight_1_width_m"], a["landing_depth_m"]
     z1 = zs - W1                                                          # flight 1's north (open) side
@@ -271,11 +274,13 @@ def stair_spec(final, o):
             else: box(f"{name}_spindle{i}", "rail", x0, x1, y0, y1 - 0.06, c - 0.02, c + 0.02)
     for k in range(1, n1):                                                # flight 1 treads (the n1-th riser lands on the landing)
         box(f"flight1_step{k:02d}", "step", xl + (n1 - 1 - k) * g, xl + (n1 - k) * g, -F, -F + k * r, z1, zs)
-    SLAB = 0.05   # landing / flight-2 construction depth. Oct 15 (user: the soffit began below the kitchen opening head): Marina 312 s shows the picture wall papered to 2.26-2.28 m, where flight 2's white soffit starts, and a thin landing edge over the passage (foyer_length.py); was 0.28 from a clip A "underside 1.94-2.07" read. Marina's walk 1068-1072 s passes UNDER the landing to
+    SLAB = 0.144  # landing / flight-2 construction depth. Oct 15 (film 2677/3888, tools/house/foyer_cameras.py): the wallpaper over the arch ends at 2.171/2.178 m, the arch crown just under it at 2.165/2.168; landing top 2.314 - 2.17. Was 0.05: Oct 15 (user: the soffit began below the kitchen opening head): Marina 312 s shows the picture wall papered to 2.26-2.28 m, where flight 2's white soffit starts, and a thin landing edge over the passage (foyer_length.py); was 0.28 from a clip A "underside 1.94-2.07" read. Marina's walk 1068-1072 s passes UNDER the landing to
                   # the arched door and the kitchen opening, so these are raised slabs, not solid blocks (fixed Oct 13)
+    SLAB2 = 0.05  # flight 2 keeps the thin soffit (2.26 m at its foot): it runs over the kitchen opening (head 2.20), which the user had it clear (changes/2026-10-15-landing-soffit.json); only the landing takes the film's 0.144
+    UNDER = 0.015   # the rooms under the landing have their ceilings this far below its underside (ground CEILINGS): the rear wall above starts there (seam check: 1.5 cm gap)
     box("landing", "landing", xw, xl, -F + n1 * r - SLAB, -F + n1 * r, zn, zs)          # full width along the rear wall
     for k in range(n1 + 1, n):                                            # flight 2: rises east from the landing's north end
-        box(f"flight2_step{k - n1:02d}", "step", xl + (k - n1 - 1) * g2, xl + (k - n1) * g2, -F + k * r - r - SLAB, -F + k * r, zn, zg)
+        box(f"flight2_step{k - n1:02d}", "step", xl + (k - n1 - 1) * g2, xl + (k - n1) * g2, -F + k * r - r - SLAB2, -F + k * r, zn, zg)
     x0 = xl + (n1 - 1) * g                                                # foot of flight 1
     box("foyer_floor_under_well", "floor", xw, xe + 1.0, -F - 0.2, -F, zn, zs)
     for k in range(1, n1):                                                # flight 1 open-side balustrade, stepped with the treads
@@ -284,7 +289,7 @@ def stair_spec(final, o):
     for k in range(n1 + 1, n):
         rail(f"flight2_rail{k - n1:02d}", xl + (k - n1 - 1) * g2, xl + (k - n1) * g2, -F + k * r, -F + k * r + 0.9, zg, zg + 0.06)
     box("well_wall_south", "wall", xw - 0.07, xe, -F + fc, 0, zs, zs + 0.07)    # the photo wall, above the foyer's own wall
-    box("well_wall_west", "wall", xw - 0.07, xw, (-F + n1 * r - SLAB) if fy else -F, 0 if fy else 2.4, zn - 0.07, zs + 0.07)   # rear wall, landing underside to the upper floor (the upstairs well's own wall goes on above; seam check)
+    box("well_wall_west", "wall", xw - 0.07, xw, (-F + n1 * r - SLAB - UNDER) if fy else -F, 0 if fy else 2.4, zn - 0.07, zs + 0.07)   # rear wall, landing underside to the upper floor (the upstairs well's own wall goes on above; seam check)
     # north edge of the well: only the upper floor's edge (fascia). A full-height wall here stood inside the foyer, which is
     # wider than the well (fixed Oct 13)
     box("well_fascia_north", "wall", xw, xe, (-F + fc) if fy else -0.30, 0, zn - 0.07, zn)   # from the foyer's wall top (no overlap)
@@ -459,7 +464,7 @@ def main():
             flags.append(f"door {d['a']}/{d['b']}: {w:.2f} m door on only {p['hi'] - p['lo']:.2f} m of shared wall")
         doors.append({"between": [d["a"], d["b"]], "kind": d["kind"], "wall_axis": "x" if p["axis"] == 0 else "y",
                       "wall_coord": round(wall_c, 3), "wall_thickness": round(p["gap"], 3), "span": [round(lo, 3), round(hi, 3)],
-                      "width": round(w, 3), "height": DOOR_H if d["kind"] in ("door", "fake_door") else None, "opens": d["kind"] != "fake_door", "placed_from": src, "source": d["source"]})
+                      "width": round(w, 3), "height": DOOR_H if d["kind"] in ("door", "fake_door") else d.get("crown"), **({"spring": d["spring"]} if "spring" in d else {}), "opens": d["kind"] != "fake_door", "placed_from": src, "source": d["source"]})
         log.append(f"| {d['a']} / {d['b']} | {d['kind']} | {lo:.2f}-{hi:.2f} | {w:.2f} | {src} |")
         if d["kind"] == "door":  # fake_door: a prop slab on the wall, no opening, no body rule
             rules.append((f"adult fits door {d['a']}/{d['b']}", w >= ADULT["capsule_diameter"] + 0.1 and DOOR_H >= ADULT["height"] + 0.1,

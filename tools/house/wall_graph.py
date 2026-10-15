@@ -27,7 +27,7 @@ WALL = 0.14          # m: interior wall thickness (user decision Oct 13); exteri
 Q = 1e-4             # coordinate quantum: everything is rounded to 0.1 mm so equal lines are bit-equal
 SLIVER = 0.02        # m: a wall piece thinner than this is a modelling error
 CASING = 0.07        # m: door/window trim width; an opening keeps this clear of a perpendicular wall (film 10819: casing meets wall)
-ARCH_HEAD = 2.20     # m: arches (SpecGreybox.ArchHead, not measured)
+ARCH_HEAD = 2.20     # m: arches without a measured crown (SpecGreybox.ArchHead); a spec door's height is its crown
 CEIL_T = 0.15        # m: ceiling slab
 MAX_SLIDE = 0.12     # m: a door slides at most a casing plus a snap to clear its trim; beyond that it is a conflict
 FLOOR_T = 0.20       # m: floor plate
@@ -155,9 +155,9 @@ def openings(floor_spec, rooms):
                 notes.append(f"door {a}/{b}: slid {shift / 0.0254:+.1f} in so its trim clears the side wall"); lo, hi = lo + shift, hi + shift
         # an open side or a rail is open only up to the ceiling: above it the ceiling runs on (a slit there showed the sky)
         top = min([by[n]["ceil"] for n in (a, b) if n in by] or [99.0])
-        cuts = {"door": [(0.0, d["height"])], "arch": [(0.0, ARCH_HEAD)], "open": [(0.0, top)], "rail": [(0.0, top)], "fake_door": []}[kind]
+        cuts = {"door": [(0.0, d["height"])], "arch": [(0.0, d.get("height") or ARCH_HEAD)], "open": [(0.0, top)], "rail": [(0.0, top)], "fake_door": []}[kind]
         out.append({"kind": kind, "between": [a, b], "axis": axis, "c": c, "lo": q(lo), "hi": q(hi), "cuts": cuts,
-                    "height": d.get("height"), "faces": [x[1] for x in (fa, fb) if x], "conflict": conflict})
+                    "height": d.get("height"), "spring": d.get("spring"), "faces": [x[1] for x in (fa, fb) if x], "conflict": conflict})
     for w in floor_spec.get("windows") or []:
         axis = "z" if w["wall_axis"] == "z" else "x"; lo, hi = w["span_spec"]
         f = face_of(by[w["room"]], axis, w["wall_coord_spec"], lo, hi) if w["room"] in by else None

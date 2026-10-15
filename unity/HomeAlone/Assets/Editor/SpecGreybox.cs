@@ -32,7 +32,7 @@ public static class SpecGreybox
     static string SpecPath => Path.GetFullPath(Path.Combine(Application.dataPath, $"../../../spec/house_spec{Tag}.json"));
     static string CaptureDir => Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/captures"));
 
-    class Door { public string a, b, kind; public bool alongX; public float coord, lo, hi, height; }
+    class Door { public string a, b, kind; public bool alongX; public float coord, lo, hi, height, spring; }
     class Win { public string room; public bool alongX; public float coord, lo, hi, sill, head; }
     static List<Win> Windows = new List<Win>();
     class Space { public string name, kind, opens; public float ceil; public List<Vector2> pts; }
@@ -64,7 +64,8 @@ public static class SpecGreybox
             return new Door {
                 a = (string)d["between"][0], b = (string)d["between"][1], kind = (string)d["kind"], alongX = alongX,
                 coord = alongX ? -c : c, lo = alongX ? l : -h, hi = alongX ? h : -l,
-                height = d["height"].Type == JTokenType.Null ? 0f : (float)d["height"] };
+                height = d["height"].Type == JTokenType.Null ? 0f : (float)d["height"],
+                spring = d["spring"] == null ? 0f : (float)d["spring"] };
         }).ToList();
         // windows: wall_axis "x" = the wall x = coord (runs along z), "z" = the wall z = coord; spec z -> world -z
         Windows = (j["windows"] ?? new JArray()).Select(w => {
@@ -467,8 +468,9 @@ public static class SpecGreybox
                     HoleProbes.Add((tp, $"threshold {s.name}/{d.a}-{d.b}"));
                 }
                 if (dl > cur) Seg(g, "Wall", alongX, t0, t1, cur, dl, 0f, ceil);
-                float head = d.kind == "door" ? d.height : d.kind == "arch" ? ArchHead : ceil;
+                float head = d.kind == "door" ? d.height : d.kind == "arch" ? (d.height > 0 ? d.height : ArchHead) : ceil;
                 if (head < ceil) Seg(g, d.kind + "_Header", alongX, t0, t1, dl, dh, head, ceil);
+                if (d.kind == "arch" && d.spring > 0 && d.spring < head) ArchTop(g, alongX, t0, t1, sgn, dl, dh, d.spring, head, ceil);
                 if (d.kind == "door" && s.kind != "opening")   // a stairwell's face has the flight in it, not trim (attic stair, Oct 15)
                 {   // casing on this room's face: two legs and a head, proud of the wall toward the room
                     float f0 = t0, f1 = t0 - sgn * CasingProud;
@@ -510,6 +512,26 @@ public static class SpecGreybox
         Trim(wg, alongX, f0, f1, w.lo - CasingW, w.hi + CasingW, w.head, w.head + CasingW);
         Trim(wg, alongX, t1, t0 - sgn * StoolProud, w.lo - CasingW - 0.025f, w.hi + CasingW + 0.025f, w.sill - StoolT, w.sill);   // stool
         Trim(wg, alongX, f0, f1, w.lo - CasingW, w.hi + CasingW, w.sill - StoolT - 0.09f, w.sill - StoolT);                      // apron
+    }
+
+    // A segmental arch (film 2677/3888, Oct 15): the opening's top between the springline and the crown is a circular
+    // segment; the corners outside it are wall, built as thin horizontal slices (grey-box), with casing legs to the
+    // springline on this room's face.
+    static void ArchTop(GameObject g, bool alongX, float t0, float t1, float sgn, float dl, float dh, float spring, float crown, float top)
+    {
+        float half = (dh - dl) / 2, mid = (dl + dh) / 2, rise = crown - spring, R = (half * half + rise * rise) / (2 * rise), yc = crown - R;
+        const int N = 12;
+        for (int i = 0; i < N; i++)
+        {
+            float y0 = spring + rise * i / N, y1 = Mathf.Min(spring + rise * (i + 1) / N, top), ym = (y0 + y1) / 2;   // same curve both faces; clipped at this side's wall top
+            if (y1 <= y0) break;
+            float w = Mathf.Sqrt(Mathf.Max(0f, R * R - (ym - yc) * (ym - yc)));   // half-width of the opening at ym
+            Seg(g, "Arch_Spandrel", alongX, t0, t1, dl, mid - w, y0, y1);
+            Seg(g, "Arch_Spandrel", alongX, t0, t1, mid + w, dh, y0, y1);
+        }
+        float f0 = t0, f1 = t0 - sgn * CasingProud;
+        Trim(g, alongX, f0, f1, dl - CasingW, dl, 0f, spring);
+        Trim(g, alongX, f0, f1, dh, dh + CasingW, 0f, spring);
     }
 
     static void Seg(GameObject p, string n, bool alongX, float t0, float t1, float s0, float s1, float y0, float y1)
@@ -766,7 +788,7 @@ public static class SpecGreybox
     {
         // only surfaces seen from inside a room count: the point just in front of a face must be in a room's open volume
         bool Seen(Vector3 q) => SeamRooms.Any(r => q.y > r.y0 + 0.002f && q.y < r.y1 - 0.002f && Inside(r.pts, new Vector2(q.x, q.z)));
-        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors" };
+        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors", "Arch_Spandrel" };   // an arch's curve is stepped on purpose (grey-box)
         var boxes = roots.Where(r => r != null).SelectMany(r => r.GetComponentsInChildren<MeshRenderer>())
             .Where(m => !skip.Any(k => m.name.Contains(k) || (m.transform.parent != null && m.transform.parent.name.Contains(k)) ||
                                         (m.transform.parent?.parent != null && m.transform.parent.parent.name.Contains(k))))
@@ -904,7 +926,7 @@ public static class SpecGreybox
         RenderTexture.active = null; Object.DestroyImmediate(go); rt.Release();
     }
 
-    // Named one-off views (spec/captures/views/views.json: [{name, pos, look_at, vfov}], Unity world coordinates).
+    // Named one-off views (spec/captures/views/views.json: [{name, pos, look_at, vfov, near?, hide?}], Unity world coordinates).
     // Run: Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.RenderViews -quit -logFile - [-scene IntactHouseReference] [-views views-buzz-old.json]
     public static void RenderViews()
     {
@@ -934,6 +956,7 @@ public static class SpecGreybox
             var hidden = (v["hide"] ?? new JArray()).Select(h => GameObject.Find((string)h)).Where(o => o).ToList();
             hidden.ForEach(o => o.SetActive(false));
             go.transform.position = V(v["pos"]); go.transform.LookAt(V(v["look_at"])); cam.fieldOfView = (float)v["vfov"];
+            cam.nearClipPlane = v["near"] != null ? (float)v["near"] : 0.05f;   // film cameras stood outside the front door (long lens)
             if (fi >= 0 || ei >= 0) cam.Render();   // warm-up frame: HDRP's first frame has no sky ambient yet (came out all brown)
             Shot(cam, rt, Path.Combine("views", (string)v["name"]));
             hidden.ForEach(o => o.SetActive(true));

@@ -11,6 +11,8 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | living_room | 10.7 |
 | foyer | 8.7 |
 | back_hall | 0.0 |
+| rear_passage | 0.0 |
+| under_landing | 0.0 |
 | vestibule | 1.0 |
 | dining_room | 1.7 |
 | sunroom | 7.3 |
@@ -21,9 +23,10 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 
 | line | walls (space) | before (m) | after (m) | largest move (cm) |
 |---|---|---|---|---|
-| y = -3.00 | living_room, foyer | -3.00, -3.00 | -3.00 | 0.3 |
+| y = -3.00 | living_room, rear_passage, under_landing | -3.00, -3.00, -3.00 | -3.00 | 0.6 |
 | x = 7.11 | foyer, back_hall | 7.13, 7.06 | 7.11 | 4.9 |
-| x = 10.64 | foyer, back_hall, vestibule | 10.63, 10.72, 10.57 | 10.64 | 8.4 |
+| x = 10.64 | foyer, back_hall, under_landing, vestibule | 10.62, 10.72, 10.67, 10.57 | 10.64 | 8.5 |
+| y = -1.73 | back_hall, rear_passage, under_landing | -1.74, -1.73, -1.73 | -1.73 | 0.2 |
 | y = 5.55 | vestibule, dining_room | 5.61, 5.51 | 5.55 | 5.8 |
 | x = 6.90 | dining_room, kitchen, back_stair | 6.92, 6.93, 6.86 | 6.90 | 3.9 |
 | y = -2.21 | kitchen, back_stair | -2.21, -2.21 | -2.21 | 0.0 |
@@ -39,8 +42,10 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | between | thickness (cm) | length (m) | note |
 |---|---|---|---|
 | back_hall / back_stair | 20 | 2.36 |  |
-| back_hall / foyer | 14 | 2.43 |  |
+| back_hall / foyer | 14 | 0.95 |  |
 | back_hall / kitchen | 20 | 0.48 |  |
+| back_hall / rear_passage | 14 | 1.27 |  |
+| back_hall / under_landing | 14 | 1.34 |  |
 | back_stair / kitchen | 15 | 3.88 | open (no wall: stair head) |
 | den / living_room | 23 | 6.90 |  |
 | dining_room / foyer | 20 | 4.48 |  |
@@ -48,10 +53,14 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | dining_room / sunroom | 24 | 4.93 |  |
 | dining_room / vestibule | 37 | 0.94 |  |
 | foyer / kitchen | 20 | 0.95 |  |
-| foyer / living_room | 31 | 7.31 |  |
+| foyer / living_room | 31 | 5.92 |  |
+| foyer / rear_passage | 14 | 1.04 |  |
+| foyer / under_landing | 14 | 1.32 |  |
 | foyer / vestibule | 23 | 3.29 |  |
 | kitchen / sunroom | 22 | 2.93 |  |
+| living_room / under_landing | 31 | 1.26 |  |
 | living_room / vestibule | 31 | 0.83 |  |
+| rear_passage / under_landing | 14 | 1.27 |  |
 
 ## 3b. Interior walls thinned to 14 cm (centrelines kept; rooms take the space)
 
@@ -59,9 +68,11 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 |---|---|---|---|---|
 | den | 3.66 x 6.91 | 3.71 x 6.91 | 25.3 → 25.6 | +1.2% |
 | living_room | 4.37 x 8.37 | 4.50 x 8.37 | 36.6 → 37.7 | +3.0% |
-| foyer | 3.53 x 7.32 | 3.65 x 7.37 | 24.3 → 25.3 | +4.1% |
-| back_hall | 3.53 x 2.83 | 3.57 x 2.84 | 6.5 → 6.6 | +1.5% |
-| vestibule | 3.37 x 1.00 | 3.57 x 1.04 | 3.4 → 3.7 | +10.8% |
+| foyer | 3.53 x 5.92 | 3.65 x 5.96 | 20.9 → 21.8 | +4.1% |
+| back_hall | 3.53 x 2.84 | 3.57 x 2.84 | 6.3 → 6.4 | +1.5% |
+| rear_passage | 1.04 x 1.27 | 1.04 x 1.27 | 1.3 → 1.3 | +0.0% |
+| under_landing | 1.30 x 1.27 | 1.39 x 1.27 | 1.6 → 1.8 | +6.6% |
+| vestibule | 3.36 x 1.00 | 3.57 x 1.04 | 3.4 → 3.7 | +10.8% |
 | dining_room | 4.55 x 5.70 | 4.63 x 5.87 | 25.9 → 27.2 | +4.9% |
 | sunroom | 3.73 x 6.91 | 3.78 x 6.95 | 25.8 → 26.3 | +1.9% |
 | kitchen | 7.89 x 9.14 | 7.92 x 9.31 | 48.0 → 49.2 | +2.5% |
@@ -81,7 +92,8 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | back_stair / kitchen | open | 5.95-6.93 | 0.98 | full shared wall |
 | back_stair / kitchen | open | -6.08--2.21 | 3.87 | full shared wall |
 | foyer / kitchen | arch | -1.53--0.55 | 0.98 | read in the overhead |
-| foyer / back_hall | fake_door | 8.26-9.18 | 0.92 | read in the overhead |
+| foyer / rear_passage | arch | 8.15-9.20 | 1.04 | full shared wall |
+| rear_passage / back_hall | fake_door | 8.26-9.18 | 0.92 | read in the overhead |
 
 ## 5. Body rules (adult, hard)
 
@@ -91,6 +103,7 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | adult fits door dining_room/kitchen | pass | 1.03 m wide x 2.03 m |
 | adult fits hall foyer | pass | narrowest 3.65 m (min 0.90) |
 | adult fits hall back_hall | pass | narrowest 2.84 m (min 0.90) |
+| adult fits hall rear_passage | pass | narrowest 1.04 m (min 0.90) |
 | adult fits hall vestibule | pass | narrowest 1.04 m (min 0.90) |
 | adult fits stair back_stair | pass | narrowest 0.98 m (min 0.65) |
 

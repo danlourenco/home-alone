@@ -69,11 +69,11 @@
    "anchor": false,
    "polygon_xz": [
     [
-     1.581,
+     1.58,
      16.07
     ],
     [
-     1.581,
+     1.58,
      11.57
     ],
     [
@@ -85,7 +85,7 @@
      16.07
     ]
    ],
-   "area_m2": 37.67,
+   "area_m2": 37.69,
    "ceiling_m": 2.438
   },
   {
@@ -94,19 +94,11 @@
    "anchor": false,
    "polygon_xz": [
     [
-     1.581,
+     2.985,
      11.43
     ],
     [
-     1.581,
-     8.953
-    ],
-    [
-     2.986,
-     8.953
-    ],
-    [
-     2.986,
+     2.985,
      7.778
     ],
     [
@@ -118,7 +110,7 @@
      11.43
     ]
    ],
-   "area_m2": 25.26,
+   "area_m2": 21.77,
    "ceiling_m": 2.82
   },
   {
@@ -128,31 +120,81 @@
    "polygon_xz": [
     [
      0.008,
-     11.345
+     11.344
     ],
     [
      0.008,
      7.778
     ],
     [
-     2.846,
+     2.845,
      7.778
     ],
     [
-     2.846,
-     8.813
+     2.845,
+     8.715
     ],
     [
      1.443,
-     8.813
+     8.715
     ],
     [
      1.443,
-     11.345
+     11.344
     ]
    ],
-   "area_m2": 6.57,
-   "ceiling_m": 2.25
+   "area_m2": 6.43,
+   "ceiling_m": 2.155
+  },
+  {
+   "name": "rear_passage",
+   "kind": "hall",
+   "anchor": false,
+   "polygon_xz": [
+    [
+     1.58,
+     9.9
+    ],
+    [
+     1.58,
+     8.855
+    ],
+    [
+     2.845,
+     8.855
+    ],
+    [
+     2.845,
+     9.9
+    ]
+   ],
+   "area_m2": 1.32,
+   "ceiling_m": 2.155
+  },
+  {
+   "name": "under_landing",
+   "kind": "closet",
+   "anchor": false,
+   "polygon_xz": [
+    [
+     1.58,
+     11.43
+    ],
+    [
+     1.58,
+     10.04
+    ],
+    [
+     2.845,
+     10.04
+    ],
+    [
+     2.845,
+     11.43
+    ]
+   ],
+   "area_m2": 1.76,
+   "ceiling_m": 2.155
   },
   {
    "name": "vestibule",
@@ -558,12 +600,38 @@
   {
    "between": [
     "foyer",
+    "rear_passage"
+   ],
+   "kind": "arch",
+   "wall_axis": "y",
+   "wall_coord": -1.663,
+   "wall_thickness": 0.14,
+   "span": [
+    8.151,
+    9.196
+   ],
+   "width": 1.045,
+   "height": 2.17,
+   "spring": 1.91,
+   "opens": true,
+   "placed_from": "full shared wall",
+   "source": "film 2677 + 3888 (tools/house/foyer_cameras.py, Oct 15): a cased segmental arch in the back wall under the landing; clear width 1.02/1.07 m, crown 2.165/2.168 m, springline 1.904/1.918 m (two cameras solved from flight 1's nosings); fills the shared wall (the passage is as wide as the arch)",
+   "wall_coord_spec": 2.915,
+   "span_spec": [
+    8.855,
+    9.9
+   ],
+   "spec_axis": "x"
+  },
+  {
+   "between": [
+    "rear_passage",
     "back_hall"
    ],
    "kind": "fake_door",
    "wall_axis": "y",
-   "wall_coord": -3.066,
-   "wall_thickness": 0.138,
+   "wall_coord": -3.067,
+   "wall_thickness": 0.137,
    "span": [
     8.263,
     9.183
@@ -572,8 +640,8 @@
    "height": 2.032,
    "opens": false,
    "placed_from": "read in the overhead",
-   "source": "Marina's walk 1068-1071 s and clip A: the white six-panel door under an arch at the foyer's rear right is CLOSED (built as a prop door, like the upstairs closets). Oct 15: on the rear wall at the end of the passage under the landing (Marina 312 s: 1.55-2.47 m across from the stair wall, foyer_length.py); was read on the right wall at y 410-460, the tall wall's displaced top",
-   "wall_coord_spec": 1.512,
+   "source": "Marina's walk 1068-1071 s and clip A: the white six-panel door under an arch at the foyer's rear right is CLOSED (built as a prop door, like the upstairs closets). Oct 15: on the rear wall at the end of the passage under the landing (Marina 312 s: 1.55-2.47 m across from the stair wall, foyer_length.py); was read on the right wall at y 410-460, the tall wall's displaced top. Oct 15: now between rear_passage and back_hall (the passage behind the film's arch); film 2677/3888 place it within 5 cm of this reading",
+   "wall_coord_spec": 1.511,
    "span_spec": [
     8.967,
     9.887
@@ -1459,7 +1527,7 @@
    "room": "living_room",
    "name": "rear_den_side",
    "wall_axis": "x",
-   "wall_coord_spec": 1.581,
+   "wall_coord_spec": 1.58,
    "span_spec": [
     15.229,
     15.749
@@ -1471,7 +1539,7 @@
    "room": "living_room",
    "name": "rear_foyer_side",
    "wall_axis": "x",
-   "wall_coord_spec": 1.581,
+   "wall_coord_spec": 1.58,
    "span_spec": [
     11.99,
     12.51

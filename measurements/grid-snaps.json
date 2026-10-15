@@ -59,8 +59,8 @@
   },
   {
    "where": "ground, the back of the foyer (picture wall / passage to the rear door)",
-   "found": "film 1616 and 10673: a cased round-topped ARCH in the picture wall leads to the passage and the rear door; the low ceiling's edge (the stairwell's edge) comes down on the arch's left side. Marina has an open gap and a shorter solid picture wall",
-   "decision": "build the film's layout: picture wall extended to the stairwell-edge line with the arch cut into it; stairwell edge, upper flight's side and the arch's left side on one line. Dimensions from 1616 and 10673 (tools/house/foyer_film.py)",
+   "found": "film 2677 + 3888 through cameras solved from flight 1 (tools/house/foyer_cameras.py, Oct 15): a cased segmental ARCH in the back wall under the landing's front edge leads to a passage and the rear door; clear z 8.79-8.91 to 9.86-9.93 (1.02/1.07 m), crown 2.164/2.168, springline 1.904/1.917, wallpaper top 2.171/2.178; the passage is as wide as the arch and the door sits within 5 cm of Marina's overhead reading. Marina has an open gap and a shorter solid picture wall. (Read earlier from single frames as 'the stairwell edge comes down on the arch's left side': wrong; the open middle between the flights is in front of the landing, the arch is under it)",
+   "decision": "built: back wall x 2.845-2.985 from the north wall to flight 1's side; arch clear z 8.855-9.900 (the two cameras' mean), springline 1.91, crown 2.17; rear_passage behind it; under_landing (closed) left of it; the landing's fascia 0.144 deep (underside 2.17), flight 2 unchanged. DEVIATIONS 20, 22, 35. Change record changes/2026-10-15-foyer-arch.json (TRIAL)",
    "by": "user, Oct 15: 'Yes, there's an arch' (film over Marina, per the Oct 15 source order)"
   }
  ],

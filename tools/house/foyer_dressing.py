@@ -92,11 +92,12 @@ def main():
     g = json.loads((ROOT / "spec/house_spec.ground.json").read_text())
     foyer = np.array(next(s["polygon_xz"] for s in g["spaces"] if s["name"] == "foyer"))
     vest = np.array(next(s["polygon_xz"] for s in g["spaces"] if s["name"] == "vestibule"))
-    XR, XF = foyer[:, 0].min(), foyer[:, 0].max()           # rear wall, front wall (foyer/vestibule partition)
+    XF = foyer[:, 0].max()                                   # front wall (foyer/vestibule partition)
     ZN, ZS = foyer[:, 1].min(), foyer[:, 1].max()           # north (dining side) wall, south (stair) wall
     XV = vest[:, 0].max()                                    # vestibule front (the front door's wall)
     B = {b["name"]: b for b in st["boxes"]}
     land = B["landing"]; XL = land["x"][1]; ZN2 = land["z"][0]
+    XR = land["x"][0]                                        # rear wall (the foyer itself now ends at the back wall under the landing, Oct 15)
     s1 = B["flight1_step01"]; X1 = s1["x"][1]; z1, zs = s1["z"]
     r, g1 = st["rise_m"], st["going_m"]
     LT = land["y"][1] + F                                    # landing top above the foyer floor
@@ -242,7 +243,7 @@ def main():
     Image.fromarray(tile).resize((528, 498), Image.LANCZOS).save(TILE)
     walls = {"wallpaper_texture": str(TILE.relative_to(ROOT)), "wallpaper_repeat_m": list(REPEAT_M), "wainscot_m": round(float(np.median([wn, wp, wf])), 3), "reads": {"north wall 312 s": round(float(wn), 3), "picture wall 312 s": round(float(wp), 3),
              "front wall 203 s": round(float(wf), 3)}, "wainscot": C["white"], "wallpaper": C["wallpaper"], "floor": C["floor"],
-             "spaces": ["foyer", "vestibule"]}
+             "spaces": ["foyer", "vestibule", "rear_passage"]}   # rear_passage: film 2677, the damask runs on inside the arch
     out = {"note": __doc__.split("\n\n")[0], "colours": C, "walls": walls,
            "stair": {"step": C["white"], "spindle": C["white"], "landing": C["white"], "well_wall": C["wallpaper"], "hide": ["flight1_rail*_cap", "flight2_step*"]},
            "pieces": P}

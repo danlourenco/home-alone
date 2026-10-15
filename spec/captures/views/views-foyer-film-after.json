@@ -1,0 +1,92 @@
+[
+ {
+  "name": "../foyer-film-cams/after-2677",
+  "pos": [
+   10.561,
+   -2.194,
+   -9.119
+  ],
+  "look_at": [
+   9.592,
+   -2.194,
+   -9.362
+  ],
+  "vfov": 25.98,
+  "note": "film 2677: level camera solved from flight 1's nosings (tools/house/foyer_cameras.py)",
+  "near": 1.71
+ },
+ {
+  "name": "../foyer-film-cams/after-3888",
+  "pos": [
+   10.474,
+   -2.004,
+   -8.96
+  ],
+  "look_at": [
+   9.513,
+   -2.004,
+   -9.237
+  ],
+  "vfov": 26.72,
+  "note": "film 3888: level camera solved from flight 1's nosings (tools/house/foyer_cameras.py)",
+  "near": 1.62
+ },
+ {
+  "name": "../foyer-film-cams/after-1616",
+  "pos": [
+   12.308,
+   -1.974,
+   -9.403
+  ],
+  "look_at": [
+   11.309,
+   -1.974,
+   -9.437
+  ],
+  "vfov": 26.64,
+  "note": "film 1616: level camera solved from flight 1's nosings (tools/house/foyer_cameras.py)",
+  "near": 3.46
+ },
+ {
+  "name": "../foyer-film-cams/after-inside-foyer",
+  "pos": [
+   6.2,
+   -1.4759999999999998,
+   -9.2
+  ],
+  "look_at": [
+   2.9,
+   -1.7759999999999998,
+   -9.4
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "../foyer-film-cams/after-inside-arch",
+  "pos": [
+   4.2,
+   -1.5259999999999998,
+   -9.38
+  ],
+  "look_at": [
+   1.6,
+   -1.8259999999999998,
+   -9.4
+  ],
+  "vfov": 55
+ },
+ {
+  "name": "../foyer-film-cams/after-inside-passage",
+  "pos": [
+   2.75,
+   -1.626,
+   -9.38
+  ],
+  "look_at": [
+   1.6,
+   -1.4259999999999997,
+   -9.42
+  ],
+  "vfov": 70
+ }
+]
