@@ -1,0 +1,30 @@
+[
+ {
+  "name": "../kitchen-compare/marina-916",
+  "pos": [
+   1.68,
+   -1.806,
+   -0.94
+  ],
+  "look_at": [
+   1.68,
+   -1.806,
+   -1.94
+  ],
+  "vfov": 41.4
+ },
+ {
+  "name": "../kitchen-compare/marina-933-approx",
+  "pos": [
+   1.6,
+   -1.806,
+   -3.4
+  ],
+  "look_at": [
+   1.9,
+   -1.806,
+   -4.4
+  ],
+  "vfov": 41.4
+ }
+]
