@@ -27,6 +27,7 @@ ARCH = {
     2677: {"floor": 787, "crown": 117, "spring": 192, "left": 1283, "right": 1604, "wainscot": 557, "ceiling": 104,
            "door_top": 215, "door_floor": 738},
 }
+DOOR_PX = {3888: (1362, 1617), 2677: (1321, 1567)}   # the rear doorway (leaf + casing) between the passage walls, x px
 LANDING_FILM_THEN = (2.22, 2.57)  # film still then-foyer.png: landing underside 1.177 x the rear door head (film_ratios.py)
 
 
@@ -62,6 +63,18 @@ def main():
               f"clear width {(a['right'] - a['left']) / H:.2f} H, wainscot {(a['floor'] - a['wainscot']) / H:.2f} H; "
               f"crown / door head (door a passage behind, so an upper bound on the true ratio) "
               f"{(a['floor'] - a['crown']) / (a['door_floor'] - a['door_top']):.2f}")
+    # Film-only depth and scale: the passage's side walls (seen inside the arch) run from the arch's jambs back to the rear
+    # door's casing, so the door end of the passage is as wide as the arch's clear opening. Its px width at the door / at the
+    # arch = 1 / depth ratio (no focal needed), and that doorway (36 in leaf + 2 x 2.75 in casing = 1.05 m) is the ruler.
+    DOORWAY = 0.914 + 2 * 0.07
+    print("\nFilm-only scale (passage width ratio; doorway 36 in + casing as the ruler):")
+    for n, a in ARCH.items():
+        door_px = DOOR_PX[n][1] - DOOR_PX[n][0]; arch_px = a["right"] - a["left"]
+        r = arch_px / door_px; A = arch_px / DOORWAY
+        H, crown = (a["floor"] - a["ceiling"]) / A, (a["floor"] - a["crown"]) / A
+        print(f"  {n}: door {r:.2f}x deeper than the arch; ceiling over the back wall {H:.2f} m, arch crown {crown:.2f} m, "
+              f"springline {(a['floor'] - a['spring']) / A:.2f} m, wainscot {(a['floor'] - a['wainscot']) / A:.2f} m, "
+              f"picture wall {min(p) * H:.2f}-{max(p) * H:.2f} m; door head check {(a['door_floor'] - a['door_top']) * r / A:.2f} m (2.03)")
     # The door stands a passage behind the arch, so its px height understates it: true crown/door = px ratio / depth ratio.
     # With the passage = the landing depth (1.40 m, current build: Marina; the camera ~4.5-5 m from the arch), depth ratio
     # ~1.25-1.3 -> crown ~2.0-2.1 m, H ~2.1 m: consistent with the wainscot (0.70 = Marina's) and the 10673 door. The passage
