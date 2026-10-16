@@ -143,7 +143,14 @@
      557
     ]
    ],
-   "source": "Marina's walk 1072-1076 s: from the foyer's rear right, a plain cased opening in the right wall straight into the breakfast room (beams, chandelier, round table); the service stair's balusters are seen beside it. Oct 15: just in front of the picture wall (Marina 312 s), was y 478-535 (behind the corrected rear wall line)"
+   "source": "Marina's walk 1072-1076 s: from the foyer's rear right, a plain cased opening in the right wall straight into the breakfast room (beams, chandelier, round table); the service stair's balusters are seen beside it. Oct 15: just in front of the picture wall (Marina 312 s), was y 478-535 (behind the corrected rear wall line). Oct 15 night: size from Marina's tracked cameras (joint_fit.py track, wall-plane labels in 924/929 s, agree within 5 cm): x 3.131-3.835 (0.70 m), head 1.96-2.02 -> 2.03 (80 in); cased (user: 'foyer doorway should have casing'). Was 0.98 x 2.20 from the overhead px and the film-solved foyer. Revised (user: 'should be wider, revert to previous size and nudge to make room for casing'): 0.98 x 2.20 (the film-solved size) slid +2.7 cm so its kitchen-side casing meets the hutch-wall corner (x 4.12); Marina's tracked 0.70 x 2.03 logged in DEVIATIONS",
+   "span_spec": [
+    3.07,
+    4.05
+   ],
+   "span_spec_axis": "x",
+   "crown": 2.2,
+   "cased": true
   },
   {
    "a": "foyer",

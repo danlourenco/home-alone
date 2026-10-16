@@ -508,10 +508,13 @@ def main():
         if not p:
             flags.append(f"door {d['a']}/{d['b']}: no shared wall found within {FACE_MAX} m"); continue
         wall_c = (p["coord_a"] + p["coord_b"]) / 2
+        if "span_spec" in d:   # measured directly in spec metres (e.g. from tracked Marina cameras): convert to plan metres
+            O = np.array(json.loads((ROOT / "spec/house_spec.json").read_text())["origin_plan_m"]) if FLOOR != "upstairs" else np.array(ORIGIN)
+            d = {**d, "span": [v + (O[1] if d["span_spec_axis"] == "x" else O[0]) for v in d["span_spec"]]}
         if d["kind"] in ("rail", "open") or (d["kind"] == "arch" and not ({"span", "px", "width"} & set(d))):
             lo, hi, src = p["lo"], p["hi"], "full shared wall"
         elif "span" in d or "px" in d:
-            if "px" in d:   # doorway ends read in the overhead, mapped through the trace's calibration
+            if "px" in d and "span_spec" not in d:   # doorway ends read in the overhead, mapped through the trace's calibration
                 sys.path.insert(0, str(ROOT / "tools/sfm")); from calib import mapper
                 P = mapper(json.loads(TRACE.read_text()))[0](d["px"])
                 lo, hi = sorted(P[:, 1 - p["axis"]]); src = "read in the overhead"
@@ -531,7 +534,7 @@ def main():
             flags.append(f"door {d['a']}/{d['b']}: {w:.2f} m door on only {p['hi'] - p['lo']:.2f} m of shared wall")
         doors.append({"between": [d["a"], d["b"]], "kind": d["kind"], "wall_axis": "x" if p["axis"] == 0 else "y",
                       "wall_coord": round(wall_c, 3), "wall_thickness": round(p["gap"], 3), "span": [round(lo, 3), round(hi, 3)],
-                      "width": round(w, 3), "height": DOOR_H if d["kind"] in ("door", "fake_door") else d.get("crown"), **({"spring": d["spring"]} if "spring" in d else {}), "opens": d["kind"] != "fake_door", "placed_from": src, "source": d["source"]})
+                      "width": round(w, 3), "height": DOOR_H if d["kind"] in ("door", "fake_door") else d.get("crown"), **({"spring": d["spring"]} if "spring" in d else {}), **({"cased": True} if d.get("cased") else {}), "opens": d["kind"] != "fake_door", "placed_from": src, "source": d["source"]})
         log.append(f"| {d['a']} / {d['b']} | {d['kind']} | {lo:.2f}-{hi:.2f} | {w:.2f} | {src} |")
         if d["kind"] == "door":  # fake_door: a prop slab on the wall, no opening, no body rule
             rules.append((f"adult fits door {d['a']}/{d['b']}", w >= ADULT["capsule_diameter"] + 0.1 and DOOR_H >= ADULT["height"] + 0.1,

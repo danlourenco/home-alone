@@ -1,0 +1,106 @@
+{
+ "gate": 7,
+ "change": "Foyer-kitchen doorway: 0.98 x 2.20 (previous, film-solved size) slid +2.7 cm to x 3.07-4.05 so it can be cased on both faces (was bare)",
+ "target": "House_WallGrid",
+ "premise": "The breakfast-room doorway from the foyer is a cased opening; its width follows the film (user's choice), nudged only to fit its casing",
+ "claim": {
+  "value": [
+   3.07,
+   4.05,
+   2.2
+  ],
+  "data": [
+   "film:2677",
+   "user:2026-10-15-doorway"
+  ],
+  "scale": [
+   "foyer-film-cameras"
+  ],
+  "upstream": [
+   "film:foyer-nosings"
+  ],
+  "applies_to": [
+   "kitchen",
+   "foyer"
+  ],
+  "measured_in": [
+   "kitchen",
+   "foyer"
+  ],
+  "assumed": {},
+  "alternatives": [
+   "bare 0.98 x 2.20 (before)",
+   "Marina 0.70 x 2.03 cased (tried; user: 'should be wider')",
+   "0.98 x 2.20 cased, nudged (this)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "cased opening",
+     "observed_in": [
+      "marina-frame:p1-1073.5",
+      "marina-frame:p1-1074.5"
+     ],
+     "extrapolated": false
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-15",
+   "what": "0.98 x 2.20 bare opening (overhead px + film-solved foyer); user walk: 'the wall around the doorway is weird'",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-15",
+   "what": "Marina's 0.70 x 2.03 cased: user 'the door does seem like it should be wider'",
+   "outcome": "failed"
+  }
+ ],
+ "premise_reviewed": "Both failed attempts disagreed on presentation, not on the opening's place: the bare one lacked trim (user: should have casing), Marina's 0.70 felt narrow in the walk. The user picked the film width with casing; only the slide needed to fit trim is new.",
+ "checks": [
+  {
+   "what": "Marina 1072-1076 s from the foyer: a plain cased opening, balusters beside it",
+   "agrees": true,
+   "data": [
+    "marina-frame:p1-1073.5"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
+  },
+  {
+   "what": "jambs from wall-plane labels in 924 s and 929 s agree within 5 cm",
+   "agrees": false,
+   "data": [
+    "colmap:backstair-914-945"
+   ],
+   "scale": [
+    "rig-height:0.639-door"
+   ],
+   "disposition": "Marina reads 0.70 x 2.03; the user chose the wider film size. Logged in DEVIATIONS (interior departs from Marina here)"
+  },
+  {
+   "what": "film-solved foyer gives 0.98 x 2.20",
+   "agrees": true,
+   "data": [
+    "film:2677"
+   ],
+   "scale": [
+    "foyer-film-cameras"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/backstair-measured/after-m929.jpg"
+  ],
+  "after": [
+   "spec/captures/views/doorway/kitchen-side.png",
+   "spec/captures/views/doorway/foyer-side.png"
+  ]
+ },
+ "user_walk": "pending"
+}

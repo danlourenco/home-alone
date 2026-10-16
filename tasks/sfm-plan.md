@@ -428,3 +428,9 @@ Clips from Part 1 at 1080p (the 640x360 original is deleted; use the `copy.mp4`)
   2.40-2.55 m wall strip above the rail's cut (inside the ceiling's thickness); Unity papered it, so its underside showed as an L of
   wallpaper in the ceiling. wall_graph now emits such strips as ceiling pieces ("band": true). Every walk note is now re-rendered from
   its own recorded position/yaw/pitch (`tools/house/note_views.py` -> views/notes/), and a fix counts only when that view is clean.
+- **Light seeping along the kitchen's wall/ceiling joint (user note 23:06)**: geometry closed (walls to 2.588, slab flush); a low sun
+  (21 deg, 100 klx) leaked through with HDRP's default normal bias. Fixed: sun normalBias 0.1, 4096 shadow map, every house renderer
+  casts two-sided shadows. (A shadows-only lid over each ceiling, tried first, did not fix it; kept, harmless.) Checked from the note's
+  own view at fixed exposure (an unfixed exposure blew the first check out).
+- **Foyer-kitchen doorway**: Marina's 0.70 x 2.03 cased was too narrow in the walk (user); now the film's 0.98 x 2.20, slid +2.7 cm to
+  x 3.07-4.05 and cased both faces (DEVIATIONS 39). Cased plain openings: `"cased": true` in ground-doors.json flows to Unity trim.

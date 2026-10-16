@@ -170,7 +170,7 @@ def openings(floor_spec, rooms):
         top = min([by[n]["ceil"] for n in (a, b) if n in by] or [99.0])
         cuts = {"door": [(0.0, d["height"])], "arch": [(0.0, d.get("height") or ARCH_HEAD)], "open": [(0.0, top)], "rail": [(0.0, top)], "fake_door": []}[kind]
         out.append({"kind": kind, "between": [a, b], "axis": axis, "c": c, "lo": q(lo), "hi": q(hi), "cuts": cuts,
-                    "height": d.get("height"), "spring": d.get("spring"), "faces": [x[1] for x in (fa, fb) if x], "conflict": conflict})
+                    "height": d.get("height"), "spring": d.get("spring"), "cased": d.get("cased", False), "faces": [x[1] for x in (fa, fb) if x], "conflict": conflict})
     for w in floor_spec.get("windows") or []:
         axis = "z" if w["wall_axis"] == "z" else "x"; lo, hi = w["span_spec"]
         f = face_of(by[w["room"]], axis, w["wall_coord_spec"], lo, hi) if w["room"] in by else None

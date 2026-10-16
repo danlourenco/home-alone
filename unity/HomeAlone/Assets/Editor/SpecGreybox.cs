@@ -406,13 +406,14 @@ public static class SpecGreybox
                 b["room"] != null && b["room"].Type != JTokenType.Null && KitchenRooms.Contains((string)b["room"]) ? Mat("Tile_Quarry", new Color(0.50f, 0.24f, 0.14f))
                 : (string)b["finish"] == "hall" && carpetHalls ? mHall : mFloor);   // the ground halls (foyer, passage) are wood
         Box3(gc, "Ceiling", st["ceilings"], mCeil);
+        ShadowCaps(go, st["ceilings"]);
         foreach (var o in st["openings"])
         {
             string kind = (string)o["kind"]; bool alongX = (string)o["axis"] == "z";
             float c = (float)o["c"], lo = (float)o["lo"], hi = (float)o["hi"];
             float wc = alongX ? -c : c, s0 = alongX ? lo : -hi, s1 = alongX ? hi : -lo;
             const float h = 0.07f;
-            if (kind == "door")
+            if (kind == "door" || (kind == "arch" && o["cased"] != null && (bool)o["cased"]))   // a cased opening is trimmed like a door
                 foreach (float side in new[] { -1f, 1f })
                 {
                     float head = (float)o["height"], f0 = wc + side * h, f1 = f0 + side * CasingProud;
@@ -483,6 +484,22 @@ public static class SpecGreybox
             }
         lines.Insert(0, $"Peek check: {n} rays from rooms you can walk in, {bad} into closed spaces");
         return string.Join("\n", lines) + "\n";
+    }
+
+    // Sunlight leaked through the seam where a ceiling slab only touches the walls (user note Oct 15 23:06: "light seeping in through
+    // the ceiling in the corner"). Each ceiling gets an invisible shadows-only lid on top, 0.15 m wider on every side (past a 0.14 m
+    // wall), with no collider, so the gates and the walk are unchanged.
+    static void ShadowCaps(GameObject p, JToken ceilings)
+    {
+        var g = Child(p, "ShadowCaps");
+        foreach (var c in ceilings)
+        {
+            float y1 = (float)c["y"][1];
+            Box(g, "ShadowCap", (float)c["x"][0] - 0.15f, (float)c["x"][1] + 0.15f, -(float)c["z"][1] - 0.15f, -(float)c["z"][0] + 0.15f, y1, y1 + 0.05f, mCeil);
+            var t = g.transform.GetChild(g.transform.childCount - 1).gameObject;
+            Object.DestroyImmediate(t.GetComponent<Collider>());
+            t.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.ShadowsOnly;
+        }
     }
 
     static void Box3(GameObject p, string n, JToken boxes, Material m)
@@ -885,8 +902,12 @@ public static class SpecGreybox
         var toSun = new Vector3(Mathf.Cos(rel) * Mathf.Cos(el), Mathf.Sin(el), -Mathf.Sin(rel) * Mathf.Cos(el));   // spec +z (right, from inside facing front) -> world -z
         var sun = new GameObject("Sun").AddComponent<Light>(); sun.transform.parent = day.transform;
         sun.type = LightType.Directional; sun.transform.rotation = Quaternion.LookRotation(-toSun);
-        sun.gameObject.AddComponent<HDAdditionalLightData>();   // first: adding it resets the light's intensity
+        var sunHd = sun.gameObject.AddComponent<HDAdditionalLightData>();   // first: adding it resets the light's intensity
         sun.intensity = 100000f; sun.color = Color.white; sun.shadows = LightShadows.Soft;   // the sky model reddens a low sun; white keeps the snow white
+        // light leaking along wall/ceiling joints (user note Oct 15 23:06): a low sun with the default normal bias reads through 14 cm walls
+        sunHd.normalBias = 0.1f; sunHd.SetShadowResolution(4096);
+        foreach (var r in root.GetComponentsInChildren<MeshRenderer>(true))   // both faces cast: a lit back face never leaks
+            if (r.shadowCastingMode == ShadowCastingMode.On) r.shadowCastingMode = ShadowCastingMode.TwoSided;
         var snow = GameObject.CreatePrimitive(PrimitiveType.Cube); snow.name = "Outdoors_Snow"; snow.transform.parent = day.transform;
         Object.DestroyImmediate(snow.GetComponent<Collider>());
         snow.transform.position = new Vector3(6f, groundY - 0.12f, -8f); snow.transform.localScale = new Vector3(200f, 0.2f, 200f);   // top 2 cm under the ground floor (hidden by its floor boxes)
@@ -1086,7 +1107,7 @@ public static class SpecGreybox
     {
         // only surfaces seen from inside a room count: the point just in front of a face must be in a room's open volume
         bool Seen(Vector3 q) => SeamRooms.Any(r => q.y > r.y0 + 0.002f && q.y < r.y1 - 0.002f && Inside(r.pts, new Vector2(q.x, q.z)));
-        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors", "Arch_Spandrel", "_tread", "_riser", "stringer", "newel" };   // an arch's curve is stepped on purpose (grey-box)
+        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors", "Arch_Spandrel", "ShadowCap", "_tread", "_riser", "stringer", "newel" };   // an arch's curve is stepped on purpose (grey-box)
         var boxes = roots.Where(r => r != null).SelectMany(r => r.GetComponentsInChildren<MeshRenderer>())
             .Where(m => !skip.Any(k => m.name.Contains(k) || (m.transform.parent != null && m.transform.parent.name.Contains(k)) ||
                                         (m.transform.parent?.parent != null && m.transform.parent.parent.name.Contains(k))))

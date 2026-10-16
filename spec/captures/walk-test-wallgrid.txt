@@ -20,7 +20,7 @@ ok      foyer <-> dining_room (arch, 1.71 m)
 ok      foyer <-> vestibule (arch, 1.65 m)
 ok      dining_room <-> kitchen (door, 1.01 m)
 ok      dining_room <-> kitchen (door, 1.03 m)
-ok      foyer <-> kitchen (arch, 1.04 m)
+ok      foyer <-> kitchen (arch, 0.98 m)
 ok      foyer <-> rear_passage (arch, 1.38 m)
 Stair walk test (both bodies, up and down): 30 legs, 0 blocked
 ok      bandit up leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
