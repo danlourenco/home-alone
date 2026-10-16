@@ -1,6 +1,6 @@
 ---
 name: zfight-check
-description: Prevent and verify z-fighting (flickering surfaces) in the Unity house. Use before handing over ANY build that adds or moves a visible surface (models, trim, wallpaper, dressing, fixtures, finish boxes), and whenever the user reports flicker, a ragged edge or "z fighting".
+description: Prevent and verify surface faults in the Unity house: z-fighting (flicker), clashes (one part passing through another) and stale generated models. Use before handing over ANY build that adds or moves a visible surface (models, trim, wallpaper, dressing, fixtures, finish boxes), and whenever the user reports flicker, a ragged edge, "z fighting" or parts running through each other.
 ---
 
 # zfight-check: no two visible surfaces share a plane
@@ -24,8 +24,24 @@ float depth is good, but exactly coplanar faces fight at any distance, and a 4 m
 5. **No large hidden overlaps either:** two boxes occupying the same volume (a tread inside its step) put their side faces in
    one plane where the edge shows.
 
-## Verification (all three before handover)
-1. **Build gate:** `SpecGreybox.BuildWallGrid` appends `Z-fight check: ... N coplanar pairs seen from rooms` to
+## Clashes (one part through another)
+The build appends `Clash check: ... N parts passing through another`. A part whose surface within 6 cm of a crossing reaches
+more than 2 cm past both sides of the other part (its face and, by a ray, its far side), at a point seen from a room and not
+inside another solid, is a clash: a baluster through a wainscot panel, a rail out the far side of a newel. A part that ends
+inside another (a baluster on its tread, a rail into its newel) is a joint. Joints that do pass through by construction are
+listed, with their reason, in `ClashAllowed` (`SpecGreybox.Checks.cs`); add to it only with a reason. **Must read 0.**
+Proven Oct 16: the stair before the 08:40 fix reports balusters through the wainscot, the bullnose cutting the panel and a
+baluster inside the bottom newel; after, 0.
+
+## Generated models are never stale
+`python3 tools/house/build_models.py` rebuilds every model whose script, `hifi_lib.py` or data changed (stamps in
+`Assets/Models/Foyer/stamps.json`, orientation-checked); the pre-commit hook runs `--check` and refuses a commit with a stale
+or hand-edited model. Add every new generator to its `BUILDS` table. To test a check against an older model, take it from git
+through LFS (`git show REV:path | git lfs smudge`): a bare `git show` gives the LFS pointer, which fails to import.
+
+## Verification (all before handover)
+0. **Models current:** `python3 tools/house/build_models.py` (prints "up to date").
+1. **Build gates:** `Z-fight check` and `Clash check` both 0. `SpecGreybox.BuildWallGrid` appends `Z-fight check: ... N coplanar pairs seen from rooms` to
    `spec/captures/walk-test-wallgrid.txt`. It tests every triangle of every visible mesh in the house (grey-box, dressing,
    models, fixtures): different materials, same facing, within 1 cm, overlapping > 50 cm2, the point in front lying in a
    walkable room and not inside a solid. **Must read 0.** Each `ZFIGHT` line names both surfaces, the gap and a spec point.

@@ -342,6 +342,7 @@ public static partial class SpecGreybox
         FloorY = gy; report += "GROUND " + RoomWalk(gspaces, gdoors); FloorY = 0f;
         dressing?.SetActive(true); Physics.SyncTransforms();
         report += ZFightCheck(root, groot);
+        report += ClashCheck(root, groot);
         player.SetActive(true);
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, "walk-test-wallgrid.txt"), report);

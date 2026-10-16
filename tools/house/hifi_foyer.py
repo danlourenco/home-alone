@@ -127,68 +127,41 @@ runner.box(lx0 + 0.15, lx1 - 0.15, ly1, ly1 + CARPET, lz0 + 0.15, lz1 - 0.15)
 # wall-side skirt board along flight 1 (Marina 193.5 s, film 2677: a white board following the pitch on the wall): through the
 # nosings, 0.30 m tall, 2 cm proud of the wall (z 11.43)
 WALL_FACE = 11.43   # the stair wall's visible face (probe: a wall layer z 11.43-11.50 runs up beside the flight)
-nos = [(b["x"][1] + NOSE, b["y"][1], WALL_FACE - 0.011) for b in f1]
-nos = [(nos[0][0] + (nos[0][0] - nos[1][0]), nos[0][1] - (nos[1][1] - nos[0][1]), nos[0][2])] + nos
-white.sweep(nos, [(-0.011, -0.10), (0.011, -0.10), (0.011, 0.20), (-0.011, 0.20)])
+# one trim line on the stair wall (user note Oct 16 08:41: the raking wainscot stopped short at both ends): from floor level at
+# the foot, up every nosing, then flat across the landing to its back wall; skirt board, raking panel and chair rail follow it,
+# so they meet the foyer's flat wainscot at the bottom and continue as the landing's wainscot at the top
+LN = B["landing"]
+line = sorted(((b["x"][1] + NOSE, b["y"][1]) for b in f1), reverse=True)              # bottom step first
+line = [(line[0][0] + (line[0][0] - line[1][0]), line[0][1] - (line[1][1] - line[0][1]))] + line   # floor level
+line += [(LN["x"][1] + NOSE, LN["y"][1]), (LN["x"][0] + 0.02, LN["y"][1])]            # landing nosing, landing back wall
+white.sweep([(x, y, WALL_FACE - 0.011) for x, y in line[:-1]], [(-0.011, -0.10), (0.011, -0.10), (0.011, 0.20), (-0.011, 0.20)])   # to the landing nosing
+white.box(line[-1][0], line[-2][0], LN["y"][1], LN["y"][1] + 0.20, WALL_FACE - 0.022, WALL_FACE)   # on the landing: sits on it (a dip went through the ceiling below)
 
 # the wall under flight 1's open side (Marina 193.5 s): wallpaper between the stringer's bottom edge and a white wainscot
 # (0.705 m, foyer.json) with a cap; one plane 1 cm proud of the open side, over the flight only (the landing has its wall)
 spand, wains = Part("Spandrel", "Stair_Spandrel"), Part("Wainscot", "Stair_White")
 WAIN = json.loads((ROOT / "spec/dressing/foyer.json").read_text())["walls"]["wainscot_m"]
 zf, y_floor = 10.21 - 0.012, B["flight1_step01"]["y"][0]
-xa1, xb1 = B["flight1_step12"]["x"][0], B["flight1_step01"]["x"][1]
-wains.face([(xa1, y_floor, zf), (xa1, y_floor + WAIN, zf), (xb1, y_floor + WAIN, zf), (xb1, y_floor, zf)], (0, 0, -1))   # seen from the foyer
+xa1, xb1 = B["flight1_step12"]["x"][0], B["flight1_step01"]["x"][0]   # stops behind the bullnose first step, which rounds out in front of it
 xs_ = [xa1 + (xb1 - xa1) * k / 40 for k in range(41)]
+# the panel stops at the stringer's underside where the stair is lower than the wainscot (user note 08:40: it rose above the
+# bottom treads and the balusters passed through it)
+wtop = [(x, min(y_floor + WAIN, bot1(x))) for x in xs_]
+wains.face([(xa1, y_floor, zf)] + [(x, y, zf) for x, y in wtop] + [(xb1, y_floor, zf)], (0, 0, -1))   # seen from the foyer
 ptop = [(x, bot1(x)) for x in xs_ if bot1(x) > y_floor + WAIN + 0.005]
 if ptop:
     poly = [(ptop[0][0], y_floor + WAIN)] + ptop + [(ptop[-1][0], y_floor + WAIN)]
     spand.face([(x, y, zf) for x, y in poly], (0, 0, -1))
-wains.box(xa1, xb1, y_floor + WAIN - 0.01, y_floor + WAIN + 0.03, zf - 0.02, zf)   # wainscot cap
+xcap = max((x for x in xs_ if bot1(x) >= y_floor + WAIN + 0.03), default=xa1)        # the cap runs only under the stringer's clear part
+wains.box(xa1, xcap, y_floor + WAIN - 0.01, y_floor + WAIN + 0.03, zf - 0.02, zf)   # wainscot cap
 # the stair wall (z 11.43): a raking white wainscot from the skirt board up to a chair rail 0.705 m above the nosing line
 # (film 2677, Marina 1070.5 s)
-noseL = sorted([(b["x"][1] + NOSE, b["y"][1]) for b in f1])
 zw = WALL_FACE - 0.015   # 1.5 cm proud: at 4 mm it z-fought the wallpaper face (user note Oct 16 07:11)
-for (xa, ya), (xb, yb) in zip(noseL, noseL[1:]):
+for (xa, ya), (xb, yb) in zip(line, line[1:]):
     wains.face([(xa, ya + 0.20, zw), (xa, ya + WAIN, zw), (xb, yb + WAIN, zw), (xb, yb + 0.20, zw)], (0, 0, -1))   # seen from the foyer
-rk = [(x, y + WAIN + 0.015, WALL_FACE - 0.03) for x, y in noseL]
+rk = [(x, y + WAIN + 0.015, WALL_FACE - 0.03) for x, y in line]
 white.sweep(rk, [(-0.015, -0.02), (0.015, -0.02), (0.015, 0.02), (-0.015, 0.02)])
 
-
-# handrail: through the cap tops' midpoints, one continuous run per flight, plus the landing's run
-def cap_line(prefix):
-    caps = sorted((b for n, b in B.items() if n.startswith(prefix) and n.endswith("_cap")), key=lambda b: b["name"])
-    return [((b["x"][0] + b["x"][1]) / 2, (b["y"][0] + b["y"][1]) / 2, (b["z"][0] + b["z"][1]) / 2) for b in caps]
-
-p1 = cap_line("flight1_rail"); p2 = cap_line("flight2_rail")
-step_x = abs(p1[1][0] - p1[0][0]); dy = p1[1][1] - p1[0][1]
-p1 = p1 + [(p1[-1][0] - step_x / 2, p1[-1][1] + dy / 2, p1[-1][2])]   # from the bullnose newel (over the first cap) into the landing newel
-rail.sweep(p1, RAIL_PROF)
-lc = B["landing_rail_cap"]; ly = (lc["y"][0] + lc["y"][1]) / 2; lx = (lc["x"][0] + lc["x"][1]) / 2
-rail.sweep([(lx, ly, lc["z"][1]), (lx, ly, lc["z"][0])], RAIL_PROF)
-dy2 = p2[1][1] - p2[0][1]; sx2 = abs(p2[1][0] - p2[0][0])
-p2 = [(p2[0][0] - sx2, p2[0][1] - dy2, p2[0][2])] + p2
-rail.sweep(p2, RAIL_PROF)
-
-# balusters: every grey-box spindle position, each ending at the handrail's underside where it stands (the rail slopes: the
-# grey-box caps were flat per tread, and baluster tops stuck up through the rail; user note Oct 15 23:18)
-def rail_y(line, x):
-    pts = sorted(line, key=lambda q: q[0])
-    for (xa, ya, _), (xb, yb, _) in zip(pts, pts[1:]):
-        if xa <= x <= xb:
-            return ya + (yb - ya) * (x - xa) / (xb - xa)
-    return pts[0][1] if x < pts[0][0] else pts[-1][1]
-
-RAIL_BOTTOM = 0.035
-for n, b in B.items():
-    if b["kind"] == "rail" and "spindle" in n:
-        cx, cz = (b["x"][0] + b["x"][1]) / 2, (b["z"][0] + b["z"][1]) / 2
-        if n.startswith("flight1"):
-            top = rail_y(p1, cx) - RAIL_BOTTOM
-        elif n.startswith("flight2"):
-            top = rail_y(p2, cx) - RAIL_BOTTOM
-        else:
-            top = ly - RAIL_BOTTOM
-        baluster(cx, cz, b["y"][0], top - b["y"][0])
 
 # the bottom step's bullnose (film 2677, Marina 193.5 s: the first step rounds out past the open side under the newel), replacing
 # the dressing's square box (user note 23:26: "the first riser extends awkwardly")
@@ -204,11 +177,61 @@ for (xa, za), (xb, zb) in zip(cap, cap[1:]):                              # trea
     tread.face([(xa, by1 - TREAD_T, za), (xa, by1, za), (xb, by1, zb), (xb, by1 - TREAD_T, zb)], ((xa + xb) / 2 - BN_C[0], 0, (za + zb) / 2 - BN_C[1]))
 NEWEL1 = (BN_C[0], bz0 - BN_R * 0.45)
 
-# newels: the foot of flight 1, the landing corner, the foot of flight 2 (grey-box rail ends)
-y_floor = B["flight1_step01"]["y"][0]
+
+# handrail: through the cap tops' midpoints, one continuous run per flight, plus the landing's run
+def cap_line(prefix):
+    caps = sorted((b for n, b in B.items() if n.startswith(prefix) and n.endswith("_cap")), key=lambda b: b["name"])
+    return [((b["x"][0] + b["x"][1]) / 2, (b["y"][0] + b["y"][1]) / 2, (b["z"][0] + b["z"][1]) / 2) for b in caps]
+
+p1 = cap_line("flight1_rail"); p2 = cap_line("flight2_rail")
+step_x = abs(p1[1][0] - p1[0][0]); dy = p1[1][1] - p1[0][1]
+p1 = p1 + [(p1[-1][0] - step_x / 2, p1[-1][1] + dy / 2, p1[-1][2])]   # from the bullnose newel (over the first cap) into the landing newel
+lc = B["landing_rail_cap"]; ly = (lc["y"][0] + lc["y"][1]) / 2; lx = (lc["x"][0] + lc["x"][1]) / 2
+NEWELS = [NEWEL1, (lx, 10.20), (lx, 9.20)]   # the foot of flight 1, the landing corner, the foot of flight 2 (grey-box rail ends)
+# every rail run ends at a newel's centre: inside the post, never through it and out the far side (clash gate, Oct 16)
+p1[-1] = (lx, p1[-1][1], p1[-1][2])
+rail.sweep(p1, RAIL_PROF)
+rail.sweep([(lx, ly, 10.20), (lx, ly, 9.20)], RAIL_PROF)
+dy2 = p2[1][1] - p2[0][1]; sx2 = abs(p2[1][0] - p2[0][0])
+p2 = [(lx, p2[0][1] - dy2 * (p2[0][0] - lx) / sx2, p2[0][2])] + p2
+rail.sweep(p2, RAIL_PROF)
+
+# balusters: every grey-box spindle position, each ending at the handrail's underside where it stands (the rail slopes: the
+# grey-box caps were flat per tread, and baluster tops stuck up through the rail; user note Oct 15 23:18)
+def rail_y(line, x):
+    pts = sorted(line, key=lambda q: q[0])
+    for (xa, ya, _), (xb, yb, _) in zip(pts, pts[1:]):
+        if xa <= x <= xb:
+            return ya + (yb - ya) * (x - xa) / (xb - xa)
+    return pts[0][1] if x < pts[0][0] else pts[-1][1]
+
+RAIL_BOTTOM = 0.035
+BAL_S, NEWEL_S = 0.0225, 0.045   # half-widths of the baluster block and the newel base
+STEPS = {"flight1": (f1, +1), "flight2": (f2, -1)}
+for n, b in B.items():
+    if b["kind"] == "rail" and "spindle" in n:
+        cx, cz = (b["x"][0] + b["x"][1]) / 2, (b["z"][0] + b["z"][1]) / 2
+        if any(abs(cx - nx) < BAL_S + NEWEL_S + 0.01 and abs(cz - nz) < BAL_S + NEWEL_S + 0.01 for nx, nz in NEWELS):
+            continue   # a newel stands here
+        fl = STEPS.get(n[:7])
+        st = next((q for q in fl[0] if q["x"][0] <= cx <= q["x"][1]), None) if fl else None
+        y0 = b["y"][0]
+        if st:   # clear of the next tread's nosing (it overhangs this tread at the riser behind), standing on the tread
+            cx = max(cx, st["x"][0] + NOSE + BAL_S + 0.005) if fl[1] > 0 else min(cx, st["x"][1] - NOSE - BAL_S - 0.005)
+            y0 = st["y"][1]
+        if n.startswith("flight1"):
+            top = rail_y(p1, cx) - RAIL_BOTTOM
+        elif n.startswith("flight2"):
+            top = rail_y(p2, cx) - RAIL_BOTTOM
+        else:
+            top = ly - RAIL_BOTTOM
+        baluster(cx, cz, y0, top - y0)
+
+
+# newels (NEWELS above)
 newel_post(NEWEL1[0], NEWEL1[1], by1, p1[0][1] - by1 + 0.20)
 newel_post(lx, 10.20, ly1, ly - ly1 + 0.20)
-newel_post(lx, 9.20, ly1 - 0.0, p2[0][1] - ly1 + 0.20)
+newel_post(lx, 9.20, ly1, p2[0][1] - ly1 + 0.20)
 
 # ---------------------------------------------------------------- write
 bpy.ops.wm.read_factory_settings(use_empty=True)

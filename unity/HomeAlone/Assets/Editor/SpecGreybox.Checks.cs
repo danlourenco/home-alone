@@ -182,4 +182,97 @@ public static partial class SpecGreybox
     // A ray that hits nothing within 40 m escaped the house (a hole to the sky or outside). Window glass has a collider,
     // so every escape is a defect. Headroom: on the ground floor, any grid point with < 2.0 m clear above the floor is
     // reported with the object above it; only the main stair's flight 1 (steps, rails) may stand there.
+
+    // Clashes (user, Oct 16 08:40: "the wainscotting clashes with the balusters ... how do we detect these sorts of things"):
+    // one part passing THROUGH another, i.e. crossing a surface and coming out more than 2 cm on both sides of it near the
+    // crossing. A part that ends inside another (a baluster planted in a tread, a rail into a newel) is a joint, not a clash.
+    // Joints that do pass through by construction are listed in ClashAllowed as "piercer|pierced" renderer names.
+    static readonly string[] ClashAllowed = {
+        "Newels|Treads", "Newels|Runner", "Newels|RisersStringers",   // posts stand through the steps they carry
+        "Treads|Newels",                                              // a newel stands on its tread
+        "Newels|Rail", "Rail|Newels",                                 // a handrail dies into its newel (runs end at the post's centre)
+        "Balusters|RisersStringers", "RisersStringers|Treads",        // balusters into the cut stringer; treads housed in the skirt board
+        "Arch_Spandrel|Arch_Spandrel" };                              // the grey-box arch is stepped slices on purpose
+    static string ClashCheck(params GameObject[] roots)
+    {
+        var rs = roots.Where(o => o != null).SelectMany(o => o.GetComponentsInChildren<MeshRenderer>())
+            .Where(r => r.enabled && r.shadowCastingMode != ShadowCastingMode.ShadowsOnly && r.GetComponent<MeshFilter>()?.sharedMesh is Mesh m && m.isReadable).ToList();
+        var verts = rs.Select(r => { var v = r.GetComponent<MeshFilter>().sharedMesh.vertices; var M = r.transform.localToWorldMatrix; for (int i = 0; i < v.Length; i++) v[i] = M.MultiplyPoint3x4(v[i]); return v; }).ToList();
+        var tris = new List<(int r, Vector3 a, Vector3 b, Vector3 c)>();
+        for (int k = 0; k < rs.Count; k++) { var t = rs[k].GetComponent<MeshFilter>().sharedMesh.triangles; var v = verts[k]; for (int i = 0; i < t.Length; i += 3) tris.Add((k, v[t[i]], v[t[i + 1]], v[t[i + 2]])); }
+        const float cell = 0.1f; var grid = new Dictionary<(int, int, int), List<int>>();
+        for (int i = 0; i < tris.Count; i++)
+        {
+            var t = tris[i]; var lo = Vector3.Min(t.a, Vector3.Min(t.b, t.c)); var hi = Vector3.Max(t.a, Vector3.Max(t.b, t.c));
+            if ((hi - lo).magnitude > 4f) continue;   // big planes (whole walls, floors) are pierced only by structure, which the seam check covers
+            for (int x = Mathf.FloorToInt(lo.x / cell); x <= Mathf.FloorToInt(hi.x / cell); x++)
+                for (int y = Mathf.FloorToInt(lo.y / cell); y <= Mathf.FloorToInt(hi.y / cell); y++)
+                    for (int z = Mathf.FloorToInt(lo.z / cell); z <= Mathf.FloorToInt(hi.z / cell); z++)
+                    { if (!grid.TryGetValue((x, y, z), out var l)) grid[(x, y, z)] = l = new List<int>(); l.Add(i); }
+        }
+        bool SegTri(Vector3 p, Vector3 q, Vector3 a, Vector3 b, Vector3 c, out Vector3 hit)
+        {   // Moller-Trumbore on the segment p-q
+            hit = default; var d = q - p; var e1 = b - a; var e2 = c - a; var h = Vector3.Cross(d, e2); float det = Vector3.Dot(e1, h);
+            if (Mathf.Abs(det) < 1e-9f) return false;
+            const float m = 1e-3f;   // a hit on the face's border is contact, not a crossing
+            float f = 1 / det; var s0 = p - a; float u = f * Vector3.Dot(s0, h); if (u < m || u > 1 - m) return false;
+            var qv = Vector3.Cross(s0, e1); float w = f * Vector3.Dot(d, qv); if (w < m || u + w > 1 - m) return false;
+            float t = f * Vector3.Dot(e2, qv); if (t <= 1e-4f || t >= 1 - 1e-4f) return false;
+            hit = p + d * t; return true;
+        }
+        // the pierced part's thickness at the crossing: the distance to its own far side, behind the crossed face (0 for a panel)
+        var temp = new List<Collider>();
+        foreach (var r in rs) if (r.GetComponent<Collider>() == null) { var mc = r.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = r.GetComponent<MeshFilter>().sharedMesh; temp.Add(mc); }
+        Physics.SyncTransforms(); bool back = Physics.queriesHitBackfaces; Physics.queriesHitBackfaces = true;
+        float Thick(int pierced, Vector3 at, Vector3 n)
+        {
+            var col = rs[pierced].GetComponent<Collider>(); var ray = new Ray(at - n * 0.001f, -n);
+            return col.Raycast(ray, out var h, 1f) ? h.distance : 0f;
+        }
+        bool Through(int piercer, int pierced, Vector3 at, Vector3 n)
+        {   // does the piercer's surface within 6 cm of the crossing reach more than 2 cm past both sides of the pierced part (its
+            // face and its far side)? Vertices, not the crossing edge: one long edge spans any thin part. 6 cm keeps a merged
+            // mesh's neighbouring pieces (the next tread up) out of the test.
+            float mn = 0, mx = 0;
+            foreach (var v in verts[piercer]) { if ((v - at).sqrMagnitude > 0.06f * 0.06f) continue; float sd = Vector3.Dot(v - at, n); mn = Mathf.Min(mn, sd); mx = Mathf.Max(mx, sd); }
+            return mx > 0.02f && mn < -(Thick(pierced, at, n) + 0.02f);
+        }
+        bool Visible(int piercer, Vector3 at, Vector3 n)
+        {   // the crossing shows when the point just off the pierced face is in a walkable room and inside no other solid
+            var q = at + n * 0.005f; var own = rs[piercer].GetComponent<Collider>();
+            if (!SeamRooms.Any(r => q.y > r.y0 + 0.002f && q.y < r.y1 - 0.002f && Inside(r.pts, new Vector2(q.x, q.z)))) return false;
+            if (Physics.OverlapSphere(q, 0.001f, ~0, QueryTriggerInteraction.Ignore).Any(c => c != own)) return false;
+            var hit = Physics.RaycastAll(q, n, 3f, ~0, QueryTriggerInteraction.Ignore).Where(h => h.collider != own).OrderBy(h => h.distance).FirstOrDefault();
+            return hit.collider == null || Vector3.Dot(hit.normal, n) <= 0.5f;
+        }
+        bool Allowed(MeshRenderer a, MeshRenderer b) =>
+            ClashAllowed.Contains(a.name + "|" + b.name) || a.name.Contains("leaves") || b.name.Contains("leaves")      // foliage rests against things
+            || (a.name.Contains("newel") && b.name.StartsWith("service_") && !b.name.Contains("spindle"))               // a post stands through the steps it carries
+            || (a.transform.parent != null && a.transform.parent == b.transform.parent && a.transform.parent.name != "MainStair_HiFi"
+                && a.transform.parent.parent?.name == "FoyerFixtures");                                                     // a fixture's own parts (candles in their cups)
+        var seen = new HashSet<(int, int)>(); var found = new Dictionary<(int, int), (int n, Vector3 at)>();
+        foreach (var l in grid.Values)
+            for (int i = 0; i < l.Count; i++)
+                for (int j = i + 1; j < l.Count; j++)
+                {
+                    int ti = l[i], tj = l[j]; var A = tris[ti]; var Bt = tris[tj];
+                    if (A.r == Bt.r || !seen.Add(ti < tj ? (ti, tj) : (tj, ti))) continue;
+                    foreach (var (E, F, R, pr) in new[] { (A, Bt, Bt.r, A.r), (Bt, A, A.r, Bt.r) })   // edges of E through face of F
+                    {
+                        var n = Vector3.Cross(F.b - F.a, F.c - F.a).normalized;
+                        foreach (var (e0, e1) in new[] { (E.a, E.b), (E.b, E.c), (E.c, E.a) })
+                            if (SegTri(e0, e1, F.a, F.b, F.c, out var hit) && Through(pr, R, hit, n) && Visible(pr, hit, n))
+                            {
+                                var key = (pr, R); found.TryGetValue(key, out var acc); found[key] = (acc.n + 1, acc.n == 0 ? hit : acc.at); break;
+                            }
+                    }
+                }
+        Physics.queriesHitBackfaces = back; foreach (var c in temp) Object.DestroyImmediate(c); Physics.SyncTransforms();
+        var bad = found.Where(f => !Allowed(rs[f.Key.Item1], rs[f.Key.Item2])).OrderByDescending(f => f.Value.n).ToList();
+        string P(MeshRenderer r) { var t = r.transform; string s = t.name; for (int q = 0; q < 2 && t.parent; q++) { t = t.parent; s = t.name + "/" + s; } return s; }
+        var o = new System.Text.StringBuilder($"Clash check: {tris.Count} triangles, {bad.Count} parts passing through another ({found.Count - bad.Count} allowed joints)\n");
+        foreach (var f in bad.Take(40))
+            o.AppendLine($"CLASH   {P(rs[f.Key.Item1])} through {P(rs[f.Key.Item2])}: {f.Value.n} crossings, first at spec ({f.Value.at.x:F2}, {f.Value.at.y:F2}, {-f.Value.at.z:F2})");
+        return o.ToString();
+    }
 }

@@ -1,0 +1,14 @@
+{
+ "tools/house/hifi_foyer.py": {
+  "models": "b897e75dbe5be3b4",
+  "sources": "524d7df57523771f"
+ },
+ "tools/house/hifi_lights.py": {
+  "models": "e560238213f9ff16",
+  "sources": "f1ca7c71b801e7c8"
+ },
+ "tools/house/hifi_props.py": {
+  "models": "7e1090fca9cf172e",
+  "sources": "a274cef93a802ba5"
+ }
+}
