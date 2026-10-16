@@ -321,6 +321,7 @@ public static class SpecGreybox
         FloorY = 0f;
         Lights(root, spaces); FloorY = gy; Lights(groot, gspaces); FloorY = 0f;
         Volume(root);
+        HiFiStair(root);
         Daylight(root, gy);
         Player(spaces.First(s => s.name == "hall_corridor"));
         var player = GameObject.Find("Player"); player.SetActive(false);
@@ -527,6 +528,42 @@ public static class SpecGreybox
 
     // Marina's damask, one repeat cut from her frame (foyer_dressing.py), mapped in world units (triplanar) so wall boxes of any
     // size show it at its measured repeat
+    // The foyer's main stair as a detailed model (tools/house/hifi_foyer.py, Blender, from the same spec boxes). The grey-box stair
+    // stays as the walking/collision layer: its step, landing and rail renderers are switched off, their colliders kept, so every
+    // walk gate is unchanged. Materials are remapped by name to project materials (the spandrel takes the foyer wallpaper).
+    static void HiFiStair(GameObject root)
+    {
+        var asset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Models/Foyer/MainStair.glb");
+        if (asset == null) { Debug.LogWarning("HiFiStair: Assets/Models/Foyer/MainStair.glb not imported"); return; }
+        var go = (GameObject)Object.Instantiate(asset, root.transform); go.name = "MainStair_HiFi";
+        go.transform.localPosition = Vector3.zero; go.transform.localRotation = Quaternion.identity;
+        var cols = new Dictionary<string, Color> { ["Stair_TreadWood"] = new Color(0.25f, 0.14f, 0.08f), ["Stair_RailWood"] = new Color(0.25f, 0.14f, 0.08f),
+            ["Stair_White"] = new Color(0.86f, 0.86f, 0.84f), ["Stair_Runner"] = new Color(0.276f, 0.11f, 0.086f) };
+        foreach (var r in go.GetComponentsInChildren<MeshRenderer>())
+        {
+            var mats = r.sharedMaterials;
+            for (int i = 0; i < mats.Length; i++)
+            {
+                string n = mats[i] != null ? mats[i].name.Split(' ')[0] : "";
+                if (n.StartsWith("Stair_Spandrel")) mats[i] = Dress != null ? Wallpaper(Dress["walls"]) : mWall;
+                else foreach (var kv in cols) if (n.StartsWith(kv.Key)) mats[i] = Mat("HiFi_" + kv.Key, kv.Value);
+            }
+            r.sharedMaterials = mats; r.gameObject.isStatic = true;
+            foreach (var c in r.GetComponents<Collider>()) Object.DestroyImmediate(c);   // the grey-box carries collision
+        }
+        var gb = root.transform.Find("MainStair");
+        Bounds Bo(Transform t, System.Func<MeshRenderer, bool> f) { var rs = t.GetComponentsInChildren<MeshRenderer>().Where(f).ToArray(); var b = rs[0].bounds; foreach (var q in rs) b.Encapsulate(q.bounds); return b; }
+        if (gb != null)
+            Debug.Log($"HiFiStair bounds: model {Bo(go.transform, r => true)} | grey-box {Bo(gb, r => r.name.StartsWith("flight"))}");
+        // hide the grey-box stair and the foyer dressing's stair pieces (runner, handrail, newels), wherever they were built
+        string[] pre = { "flight1_", "flight2_", "landing", "newel" };
+        int hidden = 0;
+        foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
+            if (!r.transform.IsChildOf(go.transform) && r.transform.parent != null && (r.transform.parent.name == "MainStair" || r.transform.parent.name == "Dressing")
+                && pre.Any(p => r.name.StartsWith(p))) { r.enabled = false; hidden++; }
+        Debug.Log($"HiFiStair: hid {hidden} grey-box/dressing stair renderers");
+    }
+
     static Material Wallpaper(JToken w)
     {
         string src = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../" + (string)w["wallpaper_texture"]));
