@@ -996,7 +996,10 @@ public static class SpecGreybox
             var (x, z) = (s.pts.Average(p => p.x), s.pts.Average(p => p.y));
             var l = new GameObject("Light_" + s.name).AddComponent<Light>(); l.transform.parent = lights.transform;
             l.transform.position = new Vector3(x, s.ceil - 0.3f + FloorY, z); l.type = LightType.Point; l.range = 8f;
-            l.intensity = 900f; l.color = new Color(1f, 0.95f, 0.88f); l.gameObject.AddComponent<HDAdditionalLightData>();
+            var hd = l.gameObject.AddComponent<HDAdditionalLightData>();   // first: adding it resets the light's intensity
+            l.intensity = 900f; l.color = new Color(1f, 0.95f, 0.88f);
+            // shadowed (user, Oct 16, night "daylight streaming from outside"): unshadowed lamps lit the snow outside and the next rooms through walls
+            l.shadows = LightShadows.Soft; hd.normalBias = 0.1f; hd.SetShadowResolution(512);
         }
     }
 
@@ -1010,7 +1013,8 @@ public static class SpecGreybox
         var day = Child(root, "Daylight");
         float rel = (SunAzimuth - FrontAzimuth) * Mathf.Deg2Rad, el = SunElevation * Mathf.Deg2Rad;
         var toSun = new Vector3(Mathf.Cos(rel) * Mathf.Cos(el), Mathf.Sin(el), -Mathf.Sin(rel) * Mathf.Cos(el));   // spec +z (right, from inside facing front) -> world -z
-        var sun = new GameObject("Sun").AddComponent<Light>(); sun.transform.parent = day.transform;
+        var dayLayer = Child(day, "DayLayer");   // switched off at night (N) with the sun in it
+        var sun = new GameObject("Sun").AddComponent<Light>(); sun.transform.parent = dayLayer.transform;
         sun.type = LightType.Directional; sun.transform.rotation = Quaternion.LookRotation(-toSun);
         var sunHd = sun.gameObject.AddComponent<HDAdditionalLightData>();   // first: adding it resets the light's intensity
         sun.intensity = 100000f; sun.color = Color.white; sun.shadows = LightShadows.Soft;   // the sky model reddens a low sun; white keeps the snow white
@@ -1018,14 +1022,50 @@ public static class SpecGreybox
         sunHd.normalBias = 0.1f; sunHd.SetShadowResolution(4096);
         foreach (var r in root.GetComponentsInChildren<MeshRenderer>(true))   // both faces cast: a lit back face never leaks
             if (r.shadowCastingMode == ShadowCastingMode.On) r.shadowCastingMode = ShadowCastingMode.TwoSided;
-        var snow = GameObject.CreatePrimitive(PrimitiveType.Cube); snow.name = "Outdoors_Snow"; snow.transform.parent = day.transform;
-        Object.DestroyImmediate(snow.GetComponent<Collider>());
-        snow.transform.position = new Vector3(6f, groundY - 0.12f, -8f); snow.transform.localScale = new Vector3(200f, 0.2f, 200f);   // top 2 cm under the ground floor (hidden by its floor boxes)
-        snow.GetComponent<Renderer>().sharedMaterial = Mat("Snow", new Color(0.92f, 0.94f, 0.97f));
+        Exterior(groundY);   // the old reference scene's yard and street replace the flat snow plane (user, Oct 16: "weird artifacts")
         var lamps = root.transform.Cast<Transform>().SelectMany(t => t.GetComponentsInChildren<Transform>(true)).FirstOrDefault(t => t.name == "Lights");
+        var groundLamps = GameObject.Find("Ground/Lights");   // one night layer: the ground floor's lamps were left on by day
+        if (lamps != null && groundLamps != null) foreach (var t in groundLamps.transform.Cast<Transform>().ToList()) t.SetParent(lamps, true);
         var mode = new GameObject("Day and night - press N").AddComponent<HouseNightMode>(); mode.transform.parent = day.transform;
-        mode.nightLayer = lamps != null ? lamps.gameObject : null; mode.interiorLights = new Light[0]; mode.daytimeEnabled = new bool[0];
-        if (lamps != null) lamps.gameObject.SetActive(false);
+        mode.nightLayer = lamps != null ? lamps.gameObject : null; mode.dayLayer = dayLayer; mode.interiorLights = new Light[0]; mode.daytimeEnabled = new bool[0];
+        if (lamps != null)   // night sky (user, Oct 16: "when it's nighttime i still see the daylight streaming from outside")
+        {
+            string np = "Assets/Settings/NightSky.asset"; AssetDatabase.DeleteAsset(np);
+            var prof = ScriptableObject.CreateInstance<VolumeProfile>(); AssetDatabase.CreateAsset(prof, np);
+            var env = prof.Add<VisualEnvironment>(true); env.skyType.value = (int)SkyType.Gradient; AssetDatabase.AddObjectToAsset(env, prof);
+            var g = prof.Add<GradientSky>(true); AssetDatabase.AddObjectToAsset(g, prof);
+            g.top.value = new Color(0.004f, 0.006f, 0.015f); g.middle.value = new Color(0.012f, 0.014f, 0.025f); g.bottom.value = new Color(0.02f, 0.02f, 0.025f);   // a dark winter night, faint snow glow at the horizon
+            var nv = new GameObject("NightSky").AddComponent<Volume>(); nv.transform.parent = lamps; nv.isGlobal = true; nv.priority = 10f; nv.sharedProfile = prof;
+            lamps.gameObject.SetActive(false);
+        }
+    }
+
+    // Outside (user, Oct 16: "use the previous models outside snow and background"): the yard, walks and stoop of the downloaded
+    // HOME ALONE FINAL.glb and the WinterNeighborhood (street, lots, houses, trees, wires) from IntactHouseReference, without the
+    // GLB's house shell (it does not fit the measured rooms). That scene's front door axis is x 1.9, its facade z -2.6, its
+    // floor y 1.31, the house facing -z; ours faces +x with the front wall's outer face at x 10.27, door axis spec z 9.716.
+    // The GLB is unlicensed (memory exterior-shell-from-downloaded-glb) and not checked against the film: background only.
+    static void Exterior(float gy)
+    {
+        var here = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        var src = EditorSceneManager.OpenScene("Assets/Scenes/IntactHouseReference.unity", OpenSceneMode.Additive);
+        var ext = new GameObject("Exterior");
+        ext.transform.SetPositionAndRotation(new Vector3(10.27f - 2.6f, gy - 1.31f, -9.716f - 1.9f), Quaternion.Euler(0, -90f, 0));
+        var site = new GameObject("Site"); site.transform.SetParent(ext.transform, false);
+        var glb = src.GetRootGameObjects().First(g => g.name == "IntactGLB");
+        if (PrefabUtility.IsPartOfPrefabInstance(glb)) PrefabUtility.UnpackPrefabInstance(glb, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+        var house = new Bounds(new Vector3(2.7f, 0, 8.2f), new Vector3(28.7f, 100f, 21.9f));   // the GLB house's footprint (its window assemblies' extent)
+        int kept = 0;
+        foreach (var r in glb.GetComponentsInChildren<MeshRenderer>().ToList())
+        {
+            if (!r.enabled || r.bounds.max.y > 1.35f || house.Contains(new Vector3(r.bounds.center.x, 0, r.bounds.center.z))) continue;   // ground-level site only
+            r.transform.SetParent(null, true); UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(r.gameObject, here);
+            r.transform.SetParent(site.transform, false); kept++;
+        }
+        var hood = src.GetRootGameObjects().First(g => g.name == "WinterNeighborhood");
+        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(hood, here); hood.transform.SetParent(ext.transform, false);
+        EditorSceneManager.CloseScene(src, true);
+        Debug.Log($"Exterior: {kept} site meshes from the GLB, {hood.GetComponentsInChildren<Renderer>().Length} neighborhood renderers");
     }
 
     static void Volume(GameObject root)
@@ -1366,6 +1406,8 @@ public static class SpecGreybox
         // Render-only fill, never saved (the scene is not saved): "-fill <intensity>" hangs a shadowless point light on the
         // camera; "-ev <EV100>" fixes exposure through a temporary top-priority global volume (scene assets untouched).
         int fi = System.Array.IndexOf(a, "-fill"), ei = System.Array.IndexOf(a, "-ev");
+        if (System.Array.IndexOf(a, "-night") >= 0)   // "-night": as after pressing N; one frame first so the baked probes are loaded
+        { cam.Render(); Object.FindFirstObjectByType<HouseNightMode>()?.SetNight(true); }
         if (fi >= 0)
         {
             var l = new GameObject("FillLight").AddComponent<Light>(); l.transform.SetParent(go.transform, false);

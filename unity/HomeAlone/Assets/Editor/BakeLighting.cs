@@ -7,7 +7,8 @@ using UnityEngine.Rendering.HighDefinition;
 
 // Baked bounce light for House_WallGrid (Oct 16): HDRP ray tracing is DirectX 12 only, so on the Mac the light that bounces off
 // floors and walls is traced once here and stored in an Adaptive Probe Volume (no lightmap UVs needed). Direct light and
-// shadows stay real time (lights become Mixed, Baked Indirect). Day only: the night lamps are off when it bakes.
+// shadows stay real time (lights become Mixed, Baked Indirect). Two scenarios: "Default" (day: sun on, room lamps off) and
+// "Night" (sun off, room lamps on); HouseNightMode (N) switches between them.
 //   Unity -batchmode -projectPath ... -executeMethod BakeLighting.Bake -quit
 public static class BakeLighting
 {
@@ -16,7 +17,7 @@ public static class BakeLighting
     public static void Bake()
     {
         var scene = EditorSceneManager.OpenScene(ScenePath);
-        var outdoors = GameObject.Find("Outdoors_Snow");
+        var outdoors = GameObject.Find("Exterior");
         var house = new Bounds();
         bool first = true;
         foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
@@ -47,9 +48,28 @@ public static class BakeLighting
         Lightmapping.lightingSettings = ls;
 
         Debug.Log($"BakeLighting: probe volume {house.center} size {pv.size}");
-        var t = System.Diagnostics.Stopwatch.StartNew();
-        bool ok = Lightmapping.Bake();
-        Debug.Log($"BakeLighting: {(ok ? "done" : "FAILED")} in {t.Elapsed.TotalSeconds:F0} s");
+        var mode = Object.FindFirstObjectByType<HouseNightMode>();
+        void Use(string scenario)   // the first bake creates the set; the active scenario field is internal
+        {
+            var set = AssetDatabase.FindAssets("t:ProbeVolumeBakingSet", new[] { "Assets/Scenes/House_WallGrid" })
+                .Select(g => AssetDatabase.LoadAssetAtPath<ProbeVolumeBakingSet>(AssetDatabase.GUIDToAssetPath(g))).FirstOrDefault();
+            if (set == null) return;
+            set.TryAddScenario(scenario);
+            typeof(ProbeVolumeBakingSet).GetField("lightingScenario", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(set, scenario);
+            EditorUtility.SetDirty(set);
+        }
+        void Run(string scenario, bool night)
+        {
+            mode.nightLayer.SetActive(night); mode.dayLayer.SetActive(!night);
+            Use(scenario);
+            var t = System.Diagnostics.Stopwatch.StartNew();
+            bool ok = Lightmapping.Bake();
+            Debug.Log($"BakeLighting {scenario}: {(ok ? "done" : "FAILED")} in {t.Elapsed.TotalSeconds:F0} s");
+        }
+        Run("Default", false);
+        Run("Night", true);
+        Use("Default"); mode.nightLayer.SetActive(false); mode.dayLayer.SetActive(true);   // the scene opens in day
+        AssetDatabase.SaveAssets();
         EditorSceneManager.SaveScene(scene);
     }
 }
