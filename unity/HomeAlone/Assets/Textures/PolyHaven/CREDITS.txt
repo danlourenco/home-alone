@@ -1,0 +1,4 @@
+Poly Haven textures (CC0, https://polyhaven.com/license), downloaded Oct 15 2026 with the user's OK:
+- dark_wooden_planks
+- dirty_carpet
+- wood_floor

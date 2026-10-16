@@ -321,7 +321,7 @@ public static class SpecGreybox
         FloorY = 0f;
         Lights(root, spaces); FloorY = gy; Lights(groot, gspaces); FloorY = 0f;
         Volume(root);
-        HiFiStair(root);
+        HiFiStair(root, gy);
         Daylight(root, gy);
         Player(spaces.First(s => s.name == "hall_corridor"));
         var player = GameObject.Find("Player"); player.SetActive(false);
@@ -531,14 +531,31 @@ public static class SpecGreybox
     // The foyer's main stair as a detailed model (tools/house/hifi_foyer.py, Blender, from the same spec boxes). The grey-box stair
     // stays as the walking/collision layer: its step, landing and rail renderers are switched off, their colliders kept, so every
     // walk gate is unchanged. Materials are remapped by name to project materials (the spandrel takes the foyer wallpaper).
-    static void HiFiStair(GameObject root)
+    // A textured HDRP/Lit material (Poly Haven, CC0; Assets/Textures/PolyHaven/<id>/albedo|normal.jpg) projected TRIPLANAR in world
+    // space at "tile" metres per repeat, so neither the generated meshes nor the grey-box boxes need UVs. Tint multiplies the albedo.
+    static Material TexMat(string n, string id, Color tint, float tile, float smooth)
+    {
+        string dir = $"Assets/Textures/PolyHaven/{id}";
+        var nrmPath = dir + "/normal.jpg"; var ti = AssetImporter.GetAtPath(nrmPath) as TextureImporter;
+        if (ti != null && ti.textureType != TextureImporterType.NormalMap) { ti.textureType = TextureImporterType.NormalMap; ti.SaveAndReimport(); }
+        var m = Mat(n, tint);
+        m.SetTexture("_BaseColorMap", AssetDatabase.LoadAssetAtPath<Texture2D>(dir + "/albedo.jpg"));
+        m.SetTexture("_NormalMap", AssetDatabase.LoadAssetAtPath<Texture2D>(nrmPath)); m.SetFloat("_NormalScale", 1f);
+        m.SetFloat("_UVBase", 5f); m.SetFloat("_TexWorldScale", 1f / tile); m.SetFloat("_Smoothness", smooth);
+        UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(m);
+        EditorUtility.SetDirty(m); return m;
+    }
+
+    static void HiFiStair(GameObject root, float gy)
     {
         var asset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Models/Foyer/MainStair.glb");
         if (asset == null) { Debug.LogWarning("HiFiStair: Assets/Models/Foyer/MainStair.glb not imported"); return; }
         var go = (GameObject)Object.Instantiate(asset, root.transform); go.name = "MainStair_HiFi";
         go.transform.localPosition = Vector3.zero; go.transform.localRotation = Quaternion.identity;
-        var cols = new Dictionary<string, Color> { ["Stair_TreadWood"] = new Color(0.25f, 0.14f, 0.08f), ["Stair_RailWood"] = new Color(0.25f, 0.14f, 0.08f),
-            ["Stair_White"] = new Color(0.86f, 0.86f, 0.84f), ["Stair_Runner"] = new Color(0.276f, 0.11f, 0.086f) };
+        var wood = TexMat("HiFi_Wood", "wood_floor", new Color(0.62f, 0.5f, 0.46f), 1.6f, 0.25f);
+        var runnerM = TexMat("HiFi_Runner", "dirty_carpet", new Color(0.62f, 0.2f, 0.17f), 0.6f, 0.05f);
+        var tex = new Dictionary<string, Material> { ["Stair_TreadWood"] = wood, ["Stair_RailWood"] = wood, ["Stair_Runner"] = runnerM };
+        var cols = new Dictionary<string, Color> { ["Stair_White"] = new Color(0.86f, 0.86f, 0.84f) };
         foreach (var r in go.GetComponentsInChildren<MeshRenderer>())
         {
             var mats = r.sharedMaterials;
@@ -546,7 +563,8 @@ public static class SpecGreybox
             {
                 string n = mats[i] != null ? mats[i].name.Split(' ')[0] : "";
                 if (n.StartsWith("Stair_Spandrel")) mats[i] = Dress != null ? Wallpaper(Dress["walls"]) : mWall;
-                else foreach (var kv in cols) if (n.StartsWith(kv.Key)) mats[i] = Mat("HiFi_" + kv.Key, kv.Value);
+                else if (tex.Keys.FirstOrDefault(k => n.StartsWith(k)) is string tk) mats[i] = tex[tk];
+                else foreach (var kv in cols) if (n.StartsWith(kv.Key)) { var w = Mat("HiFi_" + kv.Key, kv.Value); w.SetFloat("_Smoothness", 0.55f); mats[i] = w; }
             }
             r.sharedMaterials = mats; r.gameObject.isStatic = true;
             foreach (var c in r.GetComponents<Collider>()) Object.DestroyImmediate(c);   // the grey-box carries collision
@@ -556,7 +574,17 @@ public static class SpecGreybox
         if (gb != null)
             Debug.Log($"HiFiStair bounds: model {Bo(go.transform, r => true)} | grey-box {Bo(gb, r => r.name.StartsWith("flight"))}");
         // hide the grey-box stair and the foyer dressing's stair pieces (runner, handrail, newels), wherever they were built
-        string[] pre = { "flight1_", "flight2_", "landing", "newel" };
+        // the foyer's floors: the same dark wood (Marina's foyer and passage are dark hardwood)
+        foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
+            if (r.name == "Floor_foyer" || r.name == "Floor_vestibule" || r.name == "Floor_rear_passage") r.sharedMaterial = wood;
+        // the potted tree (tools/house/hifi_props.py, Poly Haven), on the ground floor; its dressing boxes are hidden
+        var tree = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Models/Foyer/Tree.glb");
+        if (tree != null)
+        {
+            var t = (GameObject)Object.Instantiate(tree, root.transform); t.name = "Tree_HiFi"; t.transform.localPosition = new Vector3(0, gy, 0);
+            foreach (var c in t.GetComponentsInChildren<Collider>()) Object.DestroyImmediate(c);
+        }
+        string[] pre = { "flight1_", "flight2_", "landing", "newel", "tree_crown", "tree_trunk", "tree_pot" };
         int hidden = 0;
         foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
             if (!r.transform.IsChildOf(go.transform) && r.transform.parent != null && (r.transform.parent.name == "MainStair" || r.transform.parent.name == "Dressing")

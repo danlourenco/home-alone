@@ -195,12 +195,6 @@ for b in f1 + [B["landing"]]:
         spand.quad((x0, y_floor + WAIN, zf), (x0, top, zf), (x1, top, zf), (x1, y_floor + WAIN, zf))
 wains.box(2.985, B["flight1_step01"]["x"][1], y_floor + WAIN - 0.01, y_floor + WAIN + 0.03, zf - 0.02, zf)   # wainscot cap
 
-# balusters: every grey-box spindle position; heights from the grey-box (its top meets the rail cap's underside)
-for n, b in B.items():
-    if b["kind"] == "rail" and "spindle" in n:
-        cx, cz = (b["x"][0] + b["x"][1]) / 2, (b["z"][0] + b["z"][1]) / 2
-        baluster(cx, cz, b["y"][0], b["y"][1] - b["y"][0])
-
 # handrail: through the cap tops' midpoints, one continuous run per flight, plus the landing's run
 def cap_line(prefix):
     caps = sorted((b for n, b in B.items() if n.startswith(prefix) and n.endswith("_cap")), key=lambda b: b["name"])
@@ -215,6 +209,27 @@ rail.sweep([(lx, ly, lc["z"][1]), (lx, ly, lc["z"][0])], RAIL_PROF)
 dy2 = p2[1][1] - p2[0][1]; sx2 = abs(p2[1][0] - p2[0][0])
 p2 = [(p2[0][0] - sx2, p2[0][1] - dy2, p2[0][2])] + p2
 rail.sweep(p2, RAIL_PROF)
+
+# balusters: every grey-box spindle position, each ending at the handrail's underside where it stands (the rail slopes: the
+# grey-box caps were flat per tread, and baluster tops stuck up through the rail; user note Oct 15 23:18)
+def rail_y(line, x):
+    pts = sorted(line, key=lambda q: q[0])
+    for (xa, ya, _), (xb, yb, _) in zip(pts, pts[1:]):
+        if xa <= x <= xb:
+            return ya + (yb - ya) * (x - xa) / (xb - xa)
+    return pts[0][1] if x < pts[0][0] else pts[-1][1]
+
+RAIL_BOTTOM = 0.035
+for n, b in B.items():
+    if b["kind"] == "rail" and "spindle" in n:
+        cx, cz = (b["x"][0] + b["x"][1]) / 2, (b["z"][0] + b["z"][1]) / 2
+        if n.startswith("flight1"):
+            top = rail_y(p1, cx) - RAIL_BOTTOM
+        elif n.startswith("flight2"):
+            top = rail_y(p2, cx) - RAIL_BOTTOM
+        else:
+            top = ly - RAIL_BOTTOM
+        baluster(cx, cz, b["y"][0], top - b["y"][0])
 
 # newels: the foot of flight 1, the landing corner, the foot of flight 2 (grey-box rail ends)
 y_floor = B["flight1_step01"]["y"][0]
