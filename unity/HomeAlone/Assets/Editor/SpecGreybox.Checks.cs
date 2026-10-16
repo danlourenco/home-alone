@@ -126,7 +126,7 @@ public static partial class SpecGreybox
     {
         // only surfaces seen from inside a room count: the point just in front of a face must be in a room's open volume
         bool Seen(Vector3 q) => SeamRooms.Any(r => q.y > r.y0 + 0.002f && q.y < r.y1 - 0.002f && Inside(r.pts, new Vector2(q.x, q.z)));
-        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors", "Arch_Spandrel", "ShadowCap", "_tread", "_riser", "stringer", "newel" };   // an arch's curve is stepped on purpose (grey-box)
+        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors", "Arch_Spandrel", "ShadowCap", "_tread", "_riser", "stringer", "newel", "_HiFi", "Fixtures", "Trim" };   // generated models and fixtures: the z-fight and clash checks cover them   // an arch's curve is stepped on purpose (grey-box)
         var boxes = roots.Where(r => r != null).SelectMany(r => r.GetComponentsInChildren<MeshRenderer>())
             .Where(m => !skip.Any(k => m.name.Contains(k) || (m.transform.parent != null && m.transform.parent.name.Contains(k)) ||
                                         (m.transform.parent?.parent != null && m.transform.parent.parent.name.Contains(k))))
@@ -245,8 +245,9 @@ public static partial class SpecGreybox
             var hit = Physics.RaycastAll(q, n, 3f, ~0, QueryTriggerInteraction.Ignore).Where(h => h.collider != own).OrderBy(h => h.distance).FirstOrDefault();
             return hit.collider == null || Vector3.Dot(hit.normal, n) <= 0.5f;
         }
+        bool Foliage(MeshRenderer r) => new[] { "leaves", "bract" }.Any(w => r.name.ToLower().Contains(w));
         bool Allowed(MeshRenderer a, MeshRenderer b) =>
-            ClashAllowed.Contains(a.name + "|" + b.name) || a.name.Contains("leaves") || b.name.Contains("leaves")      // foliage rests against things
+            ClashAllowed.Contains(a.name + "|" + b.name) || Foliage(a) || Foliage(b)                                // foliage rests against and grows through things
             || (a.name.Contains("newel") && b.name.StartsWith("service_") && !b.name.Contains("spindle"))               // a post stands through the steps it carries
             || (a.transform.parent != null && a.transform.parent == b.transform.parent && a.transform.parent.name != "MainStair_HiFi"
                 && a.transform.parent.parent?.name == "FoyerFixtures");                                                     // a fixture's own parts (candles in their cups)

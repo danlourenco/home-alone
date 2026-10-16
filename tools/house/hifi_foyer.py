@@ -213,6 +213,8 @@ for n, b in B.items():
         cx, cz = (b["x"][0] + b["x"][1]) / 2, (b["z"][0] + b["z"][1]) / 2
         if any(abs(cx - nx) < BAL_S + NEWEL_S + 0.01 and abs(cz - nz) < BAL_S + NEWEL_S + 0.01 for nx, nz in NEWELS):
             continue   # a newel stands here
+        if n.startswith("flight1") and cx > NEWEL1[0]:
+            continue   # in front of the bottom newel there is no rail to carry it (user note 09:06: "a random baluster")
         fl = STEPS.get(n[:7])
         st = next((q for q in fl[0] if q["x"][0] <= cx <= q["x"][1]), None) if fl else None
         y0 = b["y"][0]

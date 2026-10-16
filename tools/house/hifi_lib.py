@@ -10,7 +10,7 @@ import bpy
 # ---------------------------------------------------------------- mesh building in spec coordinates
 class Part:
     def __init__(self, name, mat):
-        self.name, self.mat, self.v, self.f = name, mat, [], []
+        self.name, self.mat, self.v, self.f, self.uv = name, mat, [], [], {}
 
     def quad(self, a, b, c, d):            # counter-clockwise seen from outside (spec space)
         i = len(self.v); self.v += [a, b, c, d]; self.f.append((i, i + 1, i + 2, i + 3))
@@ -18,12 +18,18 @@ class Part:
     def poly(self, pts):
         i = len(self.v); self.v += list(pts); self.f.append(tuple(range(i, i + len(pts))))
 
-    def face(self, pts, toward):
-        """A flat face oriented to look along 'toward' (spec space): no hand winding."""
+    def face(self, pts, toward, uvs=None):
+        """A flat face oriented to look along 'toward' (spec space): no hand winding. Optional per-corner uvs follow the corners."""
         n = [0.0, 0.0, 0.0]
         for (ax, ay, az), (bx, by, bz) in zip(pts, pts[1:] + pts[:1]):   # Newell normal
             n[0] += (ay - by) * (az + bz); n[1] += (az - bz) * (ax + bx); n[2] += (ax - bx) * (ay + by)
-        self.poly(pts if sum(a * b for a, b in zip(n, toward)) >= 0 else list(reversed(pts)))
+        keep = sum(a * b for a, b in zip(n, toward)) >= 0
+        self.poly(pts if keep else list(reversed(pts)))
+        if uvs:
+            self.uv[len(self.f) - 1] = list(uvs) if keep else list(reversed(uvs))
+
+    def face_uv(self, pts, uvs, toward):
+        self.face(pts, toward, uvs)
 
     def box(self, x0, x1, y0, y1, z0, z1):
         P = lambda x, y, z: (x, y, z)
@@ -51,7 +57,8 @@ class Part:
         for i, p in enumerate(path):
             a, b = path[max(i - 1, 0)], path[min(i + 1, len(path) - 1)]
             t = [b[0] - a[0], b[1] - a[1], b[2] - a[2]]; L = math.sqrt(sum(c * c for c in t)); t = [c / L for c in t]
-            side = [-t[2], 0.0, t[0]]; Ls = math.hypot(side[0], side[2]); side = [side[0] / Ls, 0, side[2] / Ls]
+            side = [-t[2], 0.0, t[0]]; Ls = math.hypot(side[0], side[2])
+            side = [side[0] / Ls, 0, side[2] / Ls] if Ls > 1e-9 else [-1.0, 0.0, 0.0]   # a vertical path: any horizontal side
             up = [t[1] * side[2] - t[2] * side[1], t[2] * side[0] - t[0] * side[2], t[0] * side[1] - t[1] * side[0]]
             rings.append([tuple(p[j] + u * side[j] + w * up[j] for j in range(3)) for u, w in prof])
         n = len(prof)
@@ -66,6 +73,11 @@ class Part:
         to_b = lambda p: (-p[0], p[2], p[1])                    # spec -> Blender (see module doc)
         me = bpy.data.meshes.new(self.name)
         me.from_pydata([to_b(p) for p in self.v], [], self.f)
+        if self.uv:   # texture coordinates where given (a print's paper), zero elsewhere
+            layer = me.uv_layers.new(name="UVMap")
+            for fi, uvs in self.uv.items():
+                for li, loop in enumerate(me.polygons[fi].loop_indices):
+                    layer.data[loop].uv = uvs[li]
         me.update(); me.validate()
         ob = bpy.data.objects.new(self.name, me); coll.objects.link(ob)
         ob.data.materials.append(mats[self.mat])

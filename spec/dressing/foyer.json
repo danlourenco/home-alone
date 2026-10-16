@@ -108,7 +108,11 @@
    "foyer",
    "vestibule",
    "rear_passage"
-  ]
+  ],
+  "wainscot_by_space": {
+   "vestibule": 0.14
+  },
+  "wainscot_by_space_note": "film 10248 (camera solved, tools/house/film_solve_10248.py): the vestibule's walls are papered to a ~0.14 m baseboard, no 0.7 m wainscot"
  },
  "stair": {
   "step": [

@@ -299,7 +299,7 @@ public static partial class SpecGreybox
         Dress = File.Exists(dp) ? JObject.Parse(File.ReadAllText(dp)) : null;
         float gy = (float)gj["floor_y_m"];
         EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-        MakeMaterials(); HoleProbes.Clear(); Windows = new List<Win>();
+        MakeMaterials(); HoleProbes.Clear(); TrimRuns.Clear(); Windows = new List<Win>();
         Landings = j["stair"]["boxes"].Where(b => (string)b["kind"] == "landing").Select(b => ((float)b["x"][0], (float)b["x"][1],
             -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0])).ToList();
         var paper = Dress != null ? Dress["walls"]["spaces"].Select(n => (string)n).ToHashSet() : new HashSet<string>();
@@ -325,6 +325,7 @@ public static partial class SpecGreybox
         Volume(root);
         HiFiStair(root, gy);
         HiFiLights(root, gy);
+        LayTrim(groot);
         Daylight(root, gy);
         Player(spaces.First(s => s.name == "hall_corridor"));
         var player = GameObject.Find("Player"); player.SetActive(false);
@@ -358,6 +359,51 @@ public static partial class SpecGreybox
     static readonly HashSet<string> KitchenRooms = new HashSet<string> { "kitchen", "back_stair" };
     static readonly Color KitchenWall = new Color(0.88f, 0.84f, 0.72f);
 
+    // Trim (baseboard, wainscot cap) runs along papered faces, world boxes; laid last so they stop at everything on the wall
+    static List<(Vector3 lo, Vector3 hi, Material m)> TrimRuns = new();
+    static void LayTrim(GameObject parent)
+    {   // sampled every 2 cm against the actual surfaces of what is mounted on the wall (doors, casings, the stair's skirt):
+        // bounding boxes would cut whole walls (the stair model's box covers most of the hall)
+        var g = Child(parent, "Trim");
+        string[] blockers = { "PropDoor", "Casing", "FrontDoor_HiFi", "MainStair_HiFi" };
+        bool IsBlocker(Transform t) => blockers.Any(b => t.name.Contains(b) || (t.parent != null && t.parent.name.Contains(b)));
+        var temp = new List<Collider>();
+        foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
+            if (r.enabled && IsBlocker(r.transform) && r.GetComponent<Collider>() == null && r.GetComponent<MeshFilter>()?.sharedMesh is Mesh mesh)
+            { var mc = r.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = mesh; temp.Add(mc); }
+        Physics.SyncTransforms();
+        int laid = 0; const float step = 0.02f;
+        foreach (var (lo, hi, m) in TrimRuns)
+        {
+            bool alongX = hi.x - lo.x > hi.z - lo.z;
+            float a = alongX ? lo.x : lo.z, end = alongX ? hi.x : hi.z;
+            bool Blocked(float t)
+            {
+                var c = (lo + hi) / 2; if (alongX) c.x = t; else c.z = t;
+                var half = new Vector3(alongX ? step / 2 : (hi.x - lo.x) / 2, (hi.y - lo.y) / 2, alongX ? (hi.z - lo.z) / 2 : step / 2) - Vector3.one * 0.002f;
+                return Physics.OverlapBox(c, Vector3.Max(half, Vector3.one * 0.001f), Quaternion.identity, ~0, QueryTriggerInteraction.Ignore).Any(col => IsBlocker(col.transform));
+            }
+            void Lay(float s0, float s1)
+            {
+                if (s1 - s0 < 0.02f) return; laid++;
+                if (alongX) Box(g, "Trim", s0, s1, lo.z, hi.z, lo.y, hi.y, m); else Box(g, "Trim", lo.x, hi.x, s0, s1, lo.y, hi.y, m);
+                g.transform.GetChild(g.transform.childCount - 1).position -= new Vector3(0, FloorY, 0);   // Box adds FloorY; runs are world already
+            }
+            float start = a; bool open = false;
+            for (float t = a + step / 2; t < end; t += step)
+            {
+                bool free = !Blocked(t);
+                if (free && !open) { start = t - step / 2; open = true; }
+                if (!free && open) { Lay(start, t - step / 2); open = false; }
+            }
+            if (open) Lay(start, end);
+        }
+        foreach (var c in temp) Object.DestroyImmediate(c);
+        Physics.SyncTransforms();
+        Debug.Log($"LayTrim: {TrimRuns.Count} runs -> {laid} pieces");
+        TrimRuns.Clear();
+    }
+
     static (List<Space>, List<Door>) Storey(GameObject root, JObject st, HashSet<string> papered, bool carpetHalls)
     {
         var specLike = new JObject {
@@ -378,14 +424,39 @@ public static partial class SpecGreybox
         var creamRooms = spaces.Where(sp => KitchenRooms.Contains(sp.name)).ToList();
         var creamMat = Mat("Paper_Kitchen", KitchenWall);
         bool InCream(float x, float zSpec) => creamRooms.Any(r => Inside(r.pts, new Vector2(x, -zSpec)));
-        bool InPaper(float x, float zSpec) => paperRooms.Any(r => Inside(r.pts, new Vector2(x, -zSpec))) || InCream(x, zSpec);
-        void Piece(float x0, float x1, float z0, float z1, float y0, float y1, bool pap)
-        {   // spec z -> world -z; papered: wainscot below, paper above (cream rooms: one colour)
-            if (pap && InCream((x0 + x1) / 2 + (x1 - x0), (z0 + z1) / 2) | InCream((x0 + x1) / 2 - (x1 - x0), (z0 + z1) / 2) | InCream((x0 + x1) / 2, (z0 + z1) / 2 + (z1 - z0)) | InCream((x0 + x1) / 2, (z0 + z1) / 2 - (z1 - z0)))
-            { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, creamMat); return; }
-            if (!pap || wpMat == null) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, mWall); return; }
-            if (y0 < ws && y1 > ws) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, ws, wsMat); Box(gw, "Wall", x0, x1, -z1, -z0, ws, y1, wpMat); }
-            else Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, y1 <= ws ? wsMat : wpMat);
+        // a wall face's finish from the room beside it: PLAIN, CREAM, or papered over a wainscot of the room's height (foyer.json
+        // wainscot_by_space overrides the house value: the vestibule has a low baseboard, film 10248)
+        const float PLAIN = -1f, CREAM = -2f;
+        var byRoom = Dress?["walls"]?["wainscot_by_space"] as JObject;
+        float Fin(float x, float zSpec)
+        {
+            var r = paperRooms.FirstOrDefault(q => Inside(q.pts, new Vector2(x, -zSpec)));
+            if (r != null) return byRoom?[r.name] != null ? (float)byRoom[r.name] : ws;
+            return InCream(x, zSpec) ? CREAM : PLAIN;
+        }
+        // trim on a papered face (film 3225, 10248): a baseboard 0.14 m tall 1.2 cm proud and, over a full wainscot, a cap rail 3 cm proud
+        void TrimOn(float x0, float x1, float z0, float z1, float y0, float y1, float fin, int face)
+        {   // face: -1/+1 the -x/+x face, -2/+2 the -z/+z face (spec); runs are laid by LayTrim once everything on the walls exists
+            void Run(float ya, float yb, float d)
+            {
+                float fy = FloorY;
+                if (face == -1) TrimRuns.Add((new Vector3(x0 - d, ya + fy, -z1), new Vector3(x0, yb + fy, -z0), wsMat));
+                else if (face == 1) TrimRuns.Add((new Vector3(x1, ya + fy, -z1), new Vector3(x1 + d, yb + fy, -z0), wsMat));
+                else if (face == -2) TrimRuns.Add((new Vector3(x0, ya + fy, -z0), new Vector3(x1, yb + fy, -z0 + d), wsMat));
+                else TrimRuns.Add((new Vector3(x0, ya + fy, -z1 - d), new Vector3(x1, yb + fy, -z1), wsMat));
+            }
+            if (y0 <= 0.001f) Run(0f, 0.14f, 0.012f);   // 1 cm shallower than the stair's skirt board, which it meets
+            if (fin > 0.3f && y0 < fin && y1 > fin + 0.03f) Run(fin - 0.01f, fin + 0.03f, 0.03f);
+        }
+        void Piece(float x0, float x1, float z0, float z1, float y0, float y1, float fin, int face = 0)
+        {   // spec z -> world -z; papered: wainscot below, paper above (cream rooms: one colour); face: the room side to trim
+            if (fin == CREAM) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, creamMat); return; }
+            if (fin == PLAIN || wpMat == null) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, mWall); return; }
+            if (y0 < fin && y1 > fin) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, fin, wsMat); Box(gw, "Wall", x0, x1, -z1, -z0, fin, y1, wpMat); }
+            else Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, y1 <= fin ? wsMat : wpMat);
+            if (face == 3) { TrimOn(x0, x1, z0, z1, y0, y1, fin, -1); TrimOn(x0, x1, z0, z1, y0, y1, fin, 1); }
+            else if (face == 4) { TrimOn(x0, x1, z0, z1, y0, y1, fin, -2); TrimOn(x0, x1, z0, z1, y0, y1, fin, 2); }
+            else if (face != 0) TrimOn(x0, x1, z0, z1, y0, y1, fin, face);
         }
         foreach (var b in st["walls"])
         {
@@ -396,7 +467,7 @@ public static partial class SpecGreybox
             float mx = (x0 + x1) / 2, mz = (z0 + z1) / 2;
             // along its length, a thin wall is cut where its sides' rooms change: the stretch running into another wall's
             // thickness borders no room, and papering it showed a paper strip on the next room's face (user note Oct 16 08:11)
-            void Runs(float t0, float t1, System.Func<float, (bool, bool)> sides, System.Action<float, float, bool, bool> piece)
+            void Runs(float t0, float t1, System.Func<float, (float, float)> sides, System.Action<float, float, float, float> piece)
             {
                 const float step = 0.01f; float r0 = t0; var cur = sides(t0 + step / 2);
                 for (float t = t0 + step; t < t1 - step / 2; t += step)
@@ -407,12 +478,16 @@ public static partial class SpecGreybox
                 piece(r0, t1, cur.Item1, cur.Item2);
             }
             if (thinX && !thinZ)
-                Runs(z0, z1, z => (InPaper(x0 - e, z), InPaper(x1 + e, z)), (za, zb, a, c) =>
-                { if (a == c) Piece(x0, x1, za, zb, y0, y1, a); else { Piece(x0, mx, za, zb, y0, y1, a); Piece(mx, x1, za, zb, y0, y1, c); } });
+                Runs(z0, z1, z => (Fin(x0 - e, z), Fin(x1 + e, z)), (za, zb, a, c) =>
+                { if (a == c) Piece(x0, x1, za, zb, y0, y1, a, 3); else { Piece(x0, mx, za, zb, y0, y1, a, -1); Piece(mx, x1, za, zb, y0, y1, c, 1); } });
             else if (thinZ && !thinX)
-                Runs(x0, x1, x => (InPaper(x, z0 - e), InPaper(x, z1 + e)), (xa, xb, a, c) =>
-                { if (a == c) Piece(xa, xb, z0, z1, y0, y1, a); else { Piece(xa, xb, z0, mz, y0, y1, a); Piece(xa, xb, mz, z1, y0, y1, c); } });
-            else Piece(x0, x1, z0, z1, y0, y1, InPaper(x0 - e, mz) || InPaper(x1 + e, mz) || InPaper(mx, z0 - e) || InPaper(mx, z1 + e));
+                Runs(x0, x1, x => (Fin(x, z0 - e), Fin(x, z1 + e)), (xa, xb, a, c) =>
+                { if (a == c) Piece(xa, xb, z0, z1, y0, y1, a, 4); else { Piece(xa, xb, z0, mz, y0, y1, a, -2); Piece(xa, xb, mz, z1, y0, y1, c, 2); } });
+            else
+            {   // a thick piece: cream if any face is in a cream room, else the highest papered finish beside it
+                var f = new[] { Fin(x0 - e, mz), Fin(x1 + e, mz), Fin(mx, z0 - e), Fin(mx, z1 + e) };
+                Piece(x0, x1, z0, z1, y0, y1, f.Contains(CREAM) ? CREAM : f.Max());
+            }
         }
         foreach (var b in st["floor"])   // the plate, one piece per room carrying its finish (halls carpeted), walls' cells plain
             Box(gf, b["room"] != null && b["room"].Type != JTokenType.Null ? "Floor_" + (string)b["room"] : "FloorPlate", (float)b["x"][0], (float)b["x"][1],
@@ -588,10 +663,45 @@ public static partial class SpecGreybox
     // 3220-3229, landing 25), two-arm sconces on the vestibule's front wall either side of the door's sidelights (776-784; the
     // foyer wall beside the inner opening carries only the prints, 3223) and either side of
     // the oval mirror (Marina 1070.5 s). Spec metres above the ground floor; Unity z = -spec z.
+    // A generated model (Assets/Models/Foyer/<asset>.glb, spec coordinates above the ground floor) under the ground floor's height;
+    // its colliders stripped (the grey-box keeps the walking), materials remapped by name prefix
+    static GameObject PlaceHiFi(GameObject root, float gy, string asset, Dictionary<string, Material> remap)
+    {
+        var a = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Models/Foyer/{asset}.glb");
+        if (a == null) { Debug.LogWarning("PlaceHiFi: missing " + asset); return null; }
+        var g = (GameObject)Object.Instantiate(a, root.transform); g.name = asset + "_HiFi"; g.transform.localPosition = new Vector3(0, gy, 0);
+        foreach (var c in g.GetComponentsInChildren<Collider>()) Object.DestroyImmediate(c);
+        if (remap != null)
+            foreach (var r in g.GetComponentsInChildren<MeshRenderer>())
+                foreach (var kv in remap) if (r.sharedMaterial != null && r.sharedMaterial.name.StartsWith(kv.Key)) r.sharedMaterial = kv.Value;
+        return g;
+    }
+
+    // a material showing an image from the repo (spec/...), on the mesh's own UVs
+    static Material SpecTexMat(string name, string specPath)
+    {
+        string src = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../" + specPath));
+        Directory.CreateDirectory("Assets/Textures/Greybox"); string dst = $"Assets/Textures/Greybox/{Path.GetFileName(specPath)}";
+        File.Copy(src, dst, true); AssetDatabase.ImportAsset(dst);
+        var m = Mat(name, Color.white); m.SetTexture("_BaseColorMap", AssetDatabase.LoadAssetAtPath<Texture2D>(dst)); m.SetFloat("_Smoothness", 0.15f);
+        HDMaterial.ValidateMaterial(m); return m;
+    }
+
+    static Material FoilMat()
+    {   // the poinsettias' gold foil: brighter and glossier than brass (film 3225, 10248)
+        var m = Mat("HiFi_Foil", new Color(0.92f, 0.76f, 0.38f)); m.SetFloat("_Metallic", 0.75f); m.SetFloat("_Smoothness", 0.7f); return m;
+    }
+
+    static Material BrassMat()
+    {
+        // part metallic: full metal only shows its surroundings, and the vestibule is dim, so the film's gold (lamp-lit) read black
+        var m = Mat("HiFi_Brass", new Color(0.80f, 0.60f, 0.28f)); m.SetFloat("_Metallic", 0.65f); m.SetFloat("_Smoothness", 0.55f); return m;
+    }
+
     static void HiFiLights(GameObject root, float gy)
     {
         var g = Child(root, "FoyerFixtures");
-        var brass = Mat("HiFi_Brass", new Color(0.62f, 0.45f, 0.2f)); brass.SetFloat("_Metallic", 1f); brass.SetFloat("_Smoothness", 0.6f);
+        var brass = BrassMat();
         var candle = Mat("HiFi_Candle", new Color(0.95f, 0.94f, 0.9f)); candle.SetFloat("_Smoothness", 0.35f);
         var bulb = Mat("HiFi_Bulb", new Color(1f, 0.9f, 0.7f));
         var shade = Mat("HiFi_Shade", new Color(0.95f, 0.92f, 0.86f)); shade.SetFloat("_Smoothness", 0.8f);   // lit glass chimney / opal bowl
@@ -621,7 +731,7 @@ public static partial class SpecGreybox
         // in the foyer just inside the vestibule opening (x 8.948), on the opening's centre line; film 3225 (chain above the
         // opening head) and the 1616 ray from outside the door; hangs from the 2.82 m foyer ceiling to a 1.85 m bottom
         Place("Lantern", new Vector3(8.50f, 2.82f, 9.62f), 0f, 700f, new Vector3(0, -0.8f, 0));
-        foreach (float z in new[] { 8.73f, 10.70f }) Place("Sconce", new Vector3(10.13f, 1.62f, z), 180f, 350f, new Vector3(0.15f, 0.25f, 0));   // the vestibule's front wall, just past each sidelight (film 778, 9358, 10248)
+        foreach (float z in new[] { 8.56f, 10.99f }) Place("Sconce", new Vector3(10.13f, 1.57f, z), 180f, 350f, new Vector3(0.15f, 0.25f, 0));   // the vestibule's front wall beside the door surround: back-projected on film 10248 (tools/house/film_solve_10248.py)
         foreach (float x in new[] { 5.15f, 6.18f }) Place("Hurricane", new Vector3(x, 1.62f, 7.778f), 90f, 250f, new Vector3(0.13f, 0.12f, 0));   // glass-chimney pair beside the tall mirror (film 1616, 1689, 10673)
         Place("Dome", new Vector3(2.21f, 2.155f, 9.54f), 0f, 600f, new Vector3(0, -0.15f, 0));   // opal ceiling light centred in the rear passage behind the arch (film 21, 10673, IMG_3843)
     }
@@ -658,13 +768,15 @@ public static partial class SpecGreybox
         foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
             if (r.name == "Floor_foyer" || r.name == "Floor_vestibule" || r.name == "Floor_rear_passage") r.sharedMaterial = wood;
         // the potted tree (tools/house/hifi_props.py, Poly Haven), on the ground floor; its dressing boxes are hidden
-        var tree = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Models/Foyer/Tree.glb");
-        if (tree != null)
-        {
-            var t = (GameObject)Object.Instantiate(tree, root.transform); t.name = "Tree_HiFi"; t.transform.localPosition = new Vector3(0, gy, 0);
-            foreach (var c in t.GetComponentsInChildren<Collider>()) Object.DestroyImmediate(c);
-        }
-        string[] pre = { "flight1_", "flight2_", "landing", "newel", "tree_crown", "tree_trunk", "tree_pot", "bottom_step" };
+        PlaceHiFi(root, gy, "Tree", null);
+        var sheer = Mat("HiFi_Sheer", new Color(0.97f, 0.96f, 0.93f, 0.8f)); sheer.SetFloat("_SurfaceType", 1f); sheer.SetFloat("_DoubleSidedEnable", 1f); HDMaterial.ValidateMaterial(sheer);
+        PlaceHiFi(root, gy, "FrontDoor", new Dictionary<string, Material> { ["Door_Brass"] = BrassMat(), ["Door_Sheer"] = sheer });   // tools/house/hifi_door.py (film 10248)
+        PlaceHiFi(root, gy, "FoyerDressing", new Dictionary<string, Material> {   // tools/house/hifi_dressing.py: stands, poinsettias, prints (film)
+            ["Door_Brass"] = BrassMat(), ["Dress_Foil"] = FoilMat(),
+            ["Print_Left"] = SpecTexMat("HiFi_PrintLeft", "spec/dressing/prints/print_left.png"),
+            ["Print_Right"] = SpecTexMat("HiFi_PrintRight", "spec/dressing/prints/print_right.png") });
+        string[] pre = { "flight1_", "flight2_", "landing", "newel", "tree_crown", "tree_trunk", "tree_pot", "bottom_step", "front_door", "sidelight_",
+                         "flower_stand_", "flowers_", "print_" };
         int hidden = 0;
         foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
             if (!r.transform.IsChildOf(go.transform) && r.transform.parent != null && (r.transform.parent.name == "MainStair" || r.transform.parent.name == "Dressing")

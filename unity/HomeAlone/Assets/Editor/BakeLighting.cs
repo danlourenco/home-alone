@@ -36,6 +36,17 @@ public static class BakeLighting
         var pv = new GameObject("HouseProbeVolume").AddComponent<ProbeVolume>();
         pv.mode = ProbeVolume.Mode.Local; pv.transform.position = house.center; pv.size = house.size + Vector3.one;
 
+        // baked reflection probes over the foyer and vestibule (brass, gloss and glass read black with nothing to reflect)
+        foreach (var o in Object.FindObjectsByType<ReflectionProbe>(FindObjectsSortMode.None)) if (o.name.StartsWith("Probe_")) Object.DestroyImmediate(o.gameObject);
+        foreach (var (name, c, size) in new[] { ("Probe_Foyer", new Vector3(6.0f, -1.6f, -9.6f), new Vector3(6.2f, 2.9f, 3.8f)),
+                                                ("Probe_Vestibule", new Vector3(9.6f, -1.8f, -9.6f), new Vector3(1.1f, 2.5f, 3.7f)) })
+        {
+            var rp = new GameObject(name).AddComponent<ReflectionProbe>(); rp.transform.position = c;
+            var hd = rp.gameObject.AddComponent<HDAdditionalReflectionData>();
+            rp.mode = UnityEngine.Rendering.ReflectionProbeMode.Baked; hd.mode = ProbeSettings.Mode.Baked;
+            hd.influenceVolume.shape = InfluenceShape.Box; hd.influenceVolume.boxSize = size; hd.influenceVolume.boxBlendDistancePositive = Vector3.one * 0.3f; hd.influenceVolume.boxBlendDistanceNegative = Vector3.one * 0.3f;
+        }
+
         // the sky lights the bake through the windows
         var vol = Object.FindObjectsByType<Volume>(FindObjectsSortMode.None).First(v => v.isGlobal);
         var sls = vol.GetComponent<StaticLightingSky>(); if (sls == null) sls = vol.gameObject.AddComponent<StaticLightingSky>();

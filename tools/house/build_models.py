@@ -24,6 +24,8 @@ BUILDS = {
     "tools/house/hifi_foyer.py": (["MainStair.glb"], [LIB, "spec/house_spec.json", "spec/dressing/foyer.json"]),
     "tools/house/hifi_lights.py": (["Lantern.glb", "Sconce.glb", "Hurricane.glb", "Dome.glb"], [LIB]),
     "tools/house/hifi_props.py": (["Tree.glb"], ["spec/dressing/foyer.json"]),
+    "tools/house/hifi_door.py": (["FrontDoor.glb"], [LIB]),
+    "tools/house/hifi_dressing.py": (["FoyerDressing.glb"], [LIB, "spec/dressing/foyer.json"]),
 }
 
 
@@ -51,7 +53,10 @@ if "--check" in sys.argv:
     sys.exit(1 if todo else 0)
 for s in todo:
     print("building", s)
-    subprocess.run([BLENDER, "-b", "--factory-startup", "-P", str(ROOT / s)], check=True, capture_output=True)
+    before = {o: (MODELS / o).stat().st_mtime if (MODELS / o).exists() else 0 for o in BUILDS[s][0]}
+    run = subprocess.run([BLENDER, "-b", "--factory-startup", "-P", str(ROOT / s)], capture_output=True, text=True)
+    if any(not (MODELS / o).exists() or (MODELS / o).stat().st_mtime == before[o] for o in BUILDS[s][0]):   # Blender exits 0 on a script error
+        sys.exit(f"{s} did not write its models:\n" + "\n".join((run.stdout + run.stderr).splitlines()[-15:]))
     if s != "tools/house/hifi_props.py":   # Poly Haven models are not ours to orient
         subprocess.run(["uv", "run", "-q", "--with", "trimesh", "--with", "numpy", "--with", "scipy", "--with", "networkx",
                         "python", "-I", str(ROOT / "tools/house/glb_orientation.py")] + [str(MODELS / o) for o in BUILDS[s][0]], check=True)
