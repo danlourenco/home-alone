@@ -347,3 +347,16 @@ Clips from Part 1 at 1080p (the 640x360 original is deleted; use the `copy.mp4`)
     the stair pitch). Kept as a record. The "-12..-14% lead" on the hall/hall bath from the posed stills is the same artefact: dropped.
   - Net: no room measured by pixels is off by more than the ruler's own spread (~±3% labels, 2.5% rig). All three read 2-5% UNDER the
     build; with n=3 that is not a finding, but a 78 in door would push them further under, so keep it in view.
+- **Joint fit, synthetic rehearsal (Oct 15, late)** (`tools/house/joint_fit.py rehearse`, PASS, ~1.5 min): the back stair as 8 parameters
+  (newel x, open-side z, going, rise, basement door jambs and head, ceiling) plus a camera per frame (yaw, pitch, position, f),
+  robust soft-L1 on labelled pixels, fixed anchors (foyer doorway jambs, back-right corner, side window, hutch corner), Marina's
+  camera height 0.639 x 80 in as a prior; Marina and film fitted as separate sets.
+  - 6 Marina frames, 1.5 px labels, 30% occluded, one 30 px mislabel a frame: every parameter within 0.3 cm, error bars calibrated
+    (median |z| 0.67), 120/120 mislabels flagged, 0 false; held-out frame 1.6 px; newel +15 cm -> 21 px on the held-out frame.
+  - Canon split: film newel 40 cm from Marina's -> flagged in 5/5 trials and nothing else. **Lesson:** the Jacobian error bar alone
+    is sometimes too optimistic (a film fit put the basement door 10 cm off at "3 sigma" with no mislabel on it: a mislabel elsewhere
+    moved a camera). Error bars are now max(Jacobian, leave-one-frame-out).
+  - Anchors each off N(0, 5 cm): house error median 1.2 cm, max 2.3. A nosing labelled one step out: 81 px residual, flagged.
+  - Budget: 3+ frames at <= 2 px labels keep every parameter within ~1 cm (2 frames: up to 3.7 cm). The real error will be
+    dominated by what the rehearsal cannot contain: the parametric shape being wrong (step count, newel offsets) and labelling
+    the wrong physical feature. The held-out frame and the overlay are the checks for those.
