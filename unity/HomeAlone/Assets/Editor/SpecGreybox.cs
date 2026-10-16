@@ -313,8 +313,10 @@ public static class SpecGreybox
         var stairPath = Stair(root, j["stair"], true, stairOnly: true);
         var atticPath = Stair(root, j["attic_stair"], false, "AtticStair", dress: false, stairOnly: true);
         FloorY = gy;
+        var servicePath = new List<Vector3>();
         if (gj["stair"] != null && gj["stair"].Type != JTokenType.Null)   // service stair: its solid steps read as the papered wall under it
-            Stair(groot, gj["stair"], false, "ServiceStair", dress: false, stairOnly: true, stepMat: Mat("Paper_Kitchen", KitchenWall));
+            servicePath = Stair(groot, gj["stair"], false, "ServiceStair", dress: false, stairOnly: true, stepMat: Mat("Paper_Kitchen", KitchenWall))
+                .Select(q => q + Vector3.up * gy).ToList();
         Dressing(groot, gy);
         FloorY = 0f;
         Lights(root, spaces); FloorY = gy; Lights(groot, gspaces); FloorY = 0f;
@@ -325,7 +327,8 @@ public static class SpecGreybox
         Physics.SyncTransforms();
         string report = "WALL-GRID HOUSE (both floors from spec/geometry.json)\nUPSTAIRS\n" + WalkTest(spaces, doors);
         FloorY = gy; report += "GROUND\n" + WalkTest(gspaces, gdoors); FloorY = 0f;
-        report += StairWalk(stairPath) + StairWalk(atticPath);
+        report += StairWalk(stairPath) + StairWalk(atticPath) + StairWalk(servicePath);
+        report += RenderCheck(groot.transform.Find("ServiceStair"));
         var dressing = GameObject.Find("Ground/Dressing"); dressing?.SetActive(false); Physics.SyncTransforms();
         var walkIn = doors.Concat(gdoors).Where(d => d.kind != "fake_door").SelectMany(d => new[] { d.a, d.b }).ToHashSet();
         SeamRooms = spaces.Where(sp => walkIn.Contains(sp.name) || sp.kind == "opening").Select(sp => (sp.pts, sp.opens == "down" ? gy : 0f, sp.ceil)).ToList();
@@ -827,12 +830,16 @@ public static class SpecGreybox
             int j = v.Count; v.AddRange(new[] { pts[0] + Vector3.up * y1, pts[i + 1] + Vector3.up * y1, pts[i] + Vector3.up * y1 }); t.AddRange(new[] { j, j + 1, j + 2 });
             j = v.Count; v.AddRange(new[] { pts[0] + Vector3.up * y0, pts[i] + Vector3.up * y0, pts[i + 1] + Vector3.up * y0 }); t.AddRange(new[] { j, j + 1, j + 2 });
         }
+        // both windings: a face is visible whichever way the plan polygon was listed (Oct 15: one-sided winders rendered inside-out = missing)
+        var hull = new Mesh { name = n + "_col" }; hull.SetVertices(v); hull.SetTriangles(new List<int>(t), 0); hull.RecalculateBounds();   // collider: one winding (a doubled mesh fails convex cooking: bodies walked through, Oct 15)
+        int nt = t.Count; for (int i = 0; i < nt; i += 3) { t.Add(t[i]); t.Add(t[i + 2]); t.Add(t[i + 1]); }
         var mesh = new Mesh { name = n }; mesh.SetVertices(v); mesh.SetTriangles(t, 0); mesh.RecalculateNormals(); mesh.RecalculateBounds();
         var go = new GameObject(n); go.transform.parent = p.transform; go.transform.position = new Vector3(0, FloorY, 0);
         go.AddComponent<MeshFilter>().sharedMesh = mesh; go.AddComponent<MeshRenderer>().sharedMaterial = m;
-        var mc = go.AddComponent<MeshCollider>(); mc.sharedMesh = mesh; mc.convex = true; go.isStatic = true;
         if (!AssetDatabase.IsValidFolder("Assets/Materials/Greybox/Meshes")) AssetDatabase.CreateFolder("Assets/Materials/Greybox", "Meshes");
         AssetDatabase.CreateAsset(mesh, $"Assets/Materials/Greybox/Meshes/{n}.asset");
+        AssetDatabase.CreateAsset(hull, $"Assets/Materials/Greybox/Meshes/{n}_col.asset");
+        var mc = go.AddComponent<MeshCollider>(); mc.convex = true; mc.sharedMesh = hull; go.isStatic = true;
     }
 
     static GameObject Child(GameObject p, string n) { var c = new GameObject(n); c.transform.parent = p.transform; return c; }
@@ -947,6 +954,29 @@ public static class SpecGreybox
 
     // Both bodies walk the stair path up and back down with a real CharacterController (gravity, 0.3 m step offset).
     // A leg passes when the body ends within 0.15 m of the waypoint (horizontally) and 0.1 m of its floor height.
+    // Every built part must be visible from outside: for each renderer, rays from 6 directions at its bounds must hit it from its own
+    // outside (a one-sided mesh wound inside-out passes the walk tests but renders as missing; Oct 15 winders).
+    static string RenderCheck(Transform t)
+    {
+        if (t == null) return "";
+        var bad = new List<string>(); int n = 0;
+        foreach (var r in t.GetComponentsInChildren<MeshRenderer>())
+        {
+            var mf = r.GetComponent<MeshFilter>(); if (mf == null || mf.sharedMesh == null) continue; n++;
+            var m = mf.sharedMesh; var tr = r.transform; int front = 0, faces = 0;
+            var tris = m.triangles; var vs = m.vertices;
+            var c = r.bounds.center;
+            for (int i = 0; i < tris.Length; i += 3)
+            {
+                var a = tr.TransformPoint(vs[tris[i]]); var b = tr.TransformPoint(vs[tris[i + 1]]); var d = tr.TransformPoint(vs[tris[i + 2]]);
+                var nrm = Vector3.Cross(b - a, d - a); if (nrm.sqrMagnitude < 1e-10f) continue; faces++;
+                if (Vector3.Dot(nrm, (a + b + d) / 3 - c) > 0) front++;   // Unity front faces are clockwise: the normal (left-handed) points out
+            }
+            if (faces > 0 && front * 2 + 4 < faces) bad.Add(r.name);   // double-sided parts sit at half (minus faces through the centre)
+        }
+        return $"Render check (outward faces, ServiceStair): {n} parts, {bad.Count} inside-out\n" + string.Concat(bad.Select(b => $"INSIDE-OUT {b}\n"));
+    }
+
     static string StairWalk(List<Vector3> path)
     {
         if (path.Count < 2) return "";

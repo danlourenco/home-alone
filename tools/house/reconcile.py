@@ -258,7 +258,9 @@ def service_stair_spec(final, o):
     for i in range(1, 5):
         c = ZN + i * (z1 - 0.1 - ZN) / 5; hc = hn + (hw - hn) * (c - ZN) / (z1 - 0.1 - ZN)
         box(f"service_winder_spindle{i}", "spindle", XN - 0.05, XN - 0.01, hn, hc + 0.84, c - 0.02, c + 0.02)
-    return {"rise_m": r, "going_m": g, "risers": NS + NW + k, "boxes": B, "walk_path": [],
+    w1 = np.mean([piv, edge(ang[0]), edge(ang[1])], axis=0)   # walk test: up the straight steps onto the first winder (above it an
+    path = [[(XL + XN) / 2, 0.0, z0 - NS * g - 0.7], [w1[0], (NS + 1) * r, w1[1]]]   # adult meets the 2.44 m ceiling from winder 2 on)
+    return {"rise_m": r, "going_m": g, "risers": NS + NW + k, "boxes": B, "walk_path": [[rd(v) for v in q] for q in path],
             "authored": f"measured: {NS} straight steps + {NW} winders around the tall post (x {XL}), {k} flight steps (going {g}, rise {r}) to x {xt:.2f}; straight steps' fronts square (film: rounded)"}
 
 

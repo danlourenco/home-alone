@@ -106,6 +106,11 @@
    "date": "2026-10-15",
    "what": "landing + 2 straight foot steps, rails as per-step caps, spandrel to the ceiling at the high end (3cfb02c)",
    "outcome": "failed"
+  },
+  {
+   "date": "2026-10-15",
+   "what": "winders built but invisible (inside-out) and not solid (collider cooking) in f18d7e9; user note 22:57",
+   "outcome": "failed"
   }
  ],
  "premise_reviewed": "Census of the three failed attempts: all placed parts by eye or from cameras solved against the build, never from measurements independent of it. The turned-foot layout itself was right in d4b1605 (user, Oct 15 night: 'her includes the turned foot'); what failed was position and size. This change keeps that layout and moves every part to positions measured with tracked cameras scaled by Marina's camera height, each seen in 2+ frames (R7). Third pass: the user's walk showed the turn must be gradual (winders: 933 s wedges, 812 s diagonals) and the high-end wall blocked the balustrade; both fixed. Checked against Marina by matched Unity renders faded on her frames before handing over (916 s: door, window, posts, flight treads on hers).",
@@ -189,6 +194,17 @@
     "rig-height:0.639-door"
    ],
    "disposition": "Room shape, not the stair: logged as a lead in tasks/sfm-plan.md; to be measured from a pass that faces that wall before any change"
+  },
+  {
+   "what": "render from the user's 22:57 note position shows the 3 winders turning round the tall post; ServiceStair render check 0 inside-out; walk path onto winder 1: bandit and Kevin pass",
+   "agrees": true,
+   "data": [
+    "render:backstair-note"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological"
   }
  ],
  "renders": {
@@ -203,7 +219,8 @@
    "spec/captures/views/backstair-fade/m924.png",
    "spec/captures/views/backstair-fade/m929.png",
    "spec/captures/views/backstair-fade/m933.png",
-   "spec/captures/views/backstair-fade/m935.png"
+   "spec/captures/views/backstair-fade/m935.png",
+   "spec/captures/views/backstair-fade/usernote-2257.png"
   ]
  },
  "user_walk": "pending"

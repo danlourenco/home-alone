@@ -2199,7 +2199,18 @@
     ]
    }
   ],
-  "walk_path": [],
+  "walk_path": [
+   [
+    2.06,
+    0.0,
+    5.357
+   ],
+   [
+    2.253,
+    0.549,
+    6.88
+   ]
+  ],
   "authored": "measured: 2 straight steps + 3 winders around the tall post (x 1.48), 8 flight steps (going 0.3, rise 0.183) to x -0.92; straight steps' fronts square (film: rounded)"
  },
  "floor_y_m": -3.026,

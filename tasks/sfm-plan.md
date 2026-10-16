@@ -418,3 +418,9 @@ Clips from Part 1 at 1080p (the 640x360 original is deleted; use the `copy.mp4`)
     (the chute pocket's wall) -> her breakfast area is >= 0.75 m deeper. Lead; measure from a pass facing that wall.
   - Foyer doorway: the film size (0.98) leaves a ~0.1 m pier to the corner beside an open hole in the hutch wall; Marina's 0.70 m with
     a casing leaves ~0.25 m. Decision for the user.
+- **Winders were invisible and not solid (Oct 15, night; user note 22:57 "now you're just deleting stairs")**: the prism meshes rendered
+  inside-out and their convex colliders failed to cook, so bodies walked through them. Nothing caught it: the back stair had no walk
+  path and the matched views hid the turn behind chairs. Fixed (double-sided render mesh, separate one-sided collider mesh) and now
+  guarded: a back-stair walk path (floor onto winder 1; bandit + Kevin pass; the Player arrives within 5 cm but is flagged STALLED
+  nudging winder 2's edge, open) and a ServiceStair render check (outward faces). The user's note view is a standing render
+  (spec/captures/views/backstair-note.json). Adults' heads reach the 2.44 m ceiling from winder 2 (stair closed at the ceiling, D30).
