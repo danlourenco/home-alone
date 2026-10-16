@@ -331,6 +331,7 @@ public static partial class SpecGreybox
         SwingDoors(groot, gy, geo["ground"]);
         LayTrim(groot);
         Envelope(root, geo, j["attic_stair"]["boxes"], gj["wall_openings"], gj["stair"]?["ceiling_openings"], gy);
+        FilmFront(root, geo, gj["wall_openings"], gy);
         Daylight(root, gy);
         FilmFill(GameObject.Find("Upstairs/Daylight/DayLayer"), geo, j["attic_stair"]["boxes"], gy);
         var (spawn, spawnYaw) = FrontDoorSpawn(geo["ground"], j["stair"], gy);
@@ -1288,6 +1289,11 @@ public static partial class SpecGreybox
         sun.intensity = 100000f; sun.color = Color.white; sun.shadows = LightShadows.Soft;   // the sky model reddens a low sun; white keeps the snow white
         // light leaking along wall/ceiling joints (user note Oct 15 23:06): a low sun with the default normal bias reads through 14 cm walls
         sunHd.normalBias = 0.1f; sunHd.SetShadowResolution(4096);
+        // its shadows come from the storey the player is on (the overhang stop-gap, SpecGreybox.FilmFront): light reaches every layer
+        sunHd.linkShadowLayers = false; sunHd.lightlayersMask = UnityEngine.Rendering.HighDefinition.RenderingLayerMask.Everything;
+        sun.renderingLayerMask = (int)(LayerHouse | LayerFilmFront);
+        var ss = sun.gameObject.AddComponent<StoreyShadows>(); ss.groundMask = LayerHouse | LayerFilmFront; ss.upperMask = LayerHouse | LayerOverhang;
+        ss.switchY = groundY + 2.326f + 0.9f;   // the eye 0.9 m above the main stair's landing: past it, the upstairs' own shadows
         foreach (var r in root.GetComponentsInChildren<MeshRenderer>(true))   // both faces cast: a lit back face never leaks
             if (r.shadowCastingMode == ShadowCastingMode.On) r.shadowCastingMode = ShadowCastingMode.TwoSided;
         Exterior(groundY);   // the old reference scene's yard and street replace the flat snow plane (user, Oct 16: "weird artifacts")

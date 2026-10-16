@@ -85,4 +85,4 @@ Z-fight check: 69027 triangles, 1010 surfaces, 0 coplanar pairs seen from rooms
 Clash check: 69820 triangles, 0 parts passing through another (12 allowed joints)
 Casing check: 0 casings placed apart from their opening
 Trim check: 4 finished rooms, 4952 samples, 0 gaps in the baseboard or cap rail
-Envelope check: 2265 points at room joints, 0 see the sky through < 0.3 m of shadow caster
+Envelope check: 2252 points at room joints, 0 see the sky through < 0.3 m of shadow caster

@@ -15,15 +15,15 @@ using UnityEngine.Rendering.HighDefinition;
 // "Night" (sun off, room lamps on); HouseNightMode (N) switches between them.
 //   Unity -projectPath ... -executeMethod BakeLighting.Bake       (no -batchmode, no -quit: it exits when done)
 // Windowed, because HDRP renders the static lighting sky only in a render loop: a batch bake (or one run straight from
-// -executeMethod) has no sky in it (Oct 16: the day bake came out identical with the sky on or off). Each scenario waits
-// SkyFrames editor frames, repainting, after its sky is set.
+// -executeMethod) has no sky in it (Oct 16: the day bake came out identical with the sky on or off). Each scenario renders a camera
+// SkyFrames times after its sky is set.
 public static class BakeLighting
 {
     const string ScenePath = "Assets/Scenes/House_WallGrid.unity";
 
-    const int SkyFrames = 120;
+    const int SkyFrames = 30;
 
-    // Frame-driven: each scenario waits SkyFrames editor frames for HDRP to render its sky, then bakes. Refuses batch mode (no render
+    // Each scenario renders a camera SkyFrames times so HDRP renders its sky, then bakes. Refuses batch mode (no render
     // loop, so no sky: the day bake came out identical with the sky on or off, Oct 16). Launched by -executeMethod it exits when done.
     [MenuItem("HomeAlone/Bake Lighting")]
     public static void Bake()
@@ -54,8 +54,10 @@ public static class BakeLighting
             if (r.GetComponentInParent<SwingDoor>() != null) continue;   // moving parts are not static scenery
             // glass passes light: as a GI contributor the lightmapper treats it as opaque and no sky or sun entered the house in the bake
             bool clear = r.sharedMaterials.Any(m => m != null && m.HasProperty("_SurfaceType") && m.GetFloat("_SurfaceType") > 0.5f);
+            // the upstairs overhang strip does not shade the ground floor in the bake; the film's flush front does (SpecGreybox.FilmFront)
+            bool overhang = r.renderingLayerMask == SpecGreybox.LayerOverhang;
             var flags = GameObjectUtility.GetStaticEditorFlags(r.gameObject);
-            GameObjectUtility.SetStaticEditorFlags(r.gameObject, clear ? flags & ~StaticEditorFlags.ContributeGI : flags | StaticEditorFlags.ContributeGI);
+            GameObjectUtility.SetStaticEditorFlags(r.gameObject, clear || overhang ? flags & ~StaticEditorFlags.ContributeGI : flags | StaticEditorFlags.ContributeGI);
             r.receiveGI = ReceiveGI.LightProbes;
             if (isOut || !r.enabled) continue;
             if (first) { house = r.bounds; first = false; } else house.Encapsulate(r.bounds);
@@ -144,7 +146,13 @@ public static class BakeLighting
                 foreach (var q in row) if (!runs.ContainsKey(q)) runs[q] = k;
             }
         }
-        Debug.Log($"BakeLighting: {boxes} probe invalidation boxes outside the rooms");
+        foreach (var ob in SpecGreybox.OverhangVolumes(geo, (float)geo["ground"]["floor_y"]))
+        {   // the overhang strip upstairs: baked without its own walls, so its probes borrow from deeper in their rooms
+            var g = new GameObject("Invalidate_Overhang"); g.transform.SetParent(adj.transform); g.transform.position = ob.center;
+            var v = g.AddComponent<ProbeAdjustmentVolume>(); v.shape = ProbeAdjustmentVolume.Shape.Box; v.mode = ProbeAdjustmentVolume.Mode.InvalidateProbes; v.size = ob.size;
+            boxes++;
+        }
+        Debug.Log($"BakeLighting: {boxes} probe invalidation boxes outside the rooms and over the overhang");
 
         var ls = new LightingSettings { bakedGI = true, realtimeGI = false, lightmapper = LightingSettings.Lightmapper.ProgressiveGPU,
             mixedBakeMode = MixedLightingMode.IndirectOnly, maxBounces = 4, directSampleCount = 32, indirectSampleCount = 256 };
@@ -169,7 +177,13 @@ public static class BakeLighting
             staticSky.profile = night ? nightSky : daySky;
             staticSky.staticLightingSkyUniqueID = (int)(night ? SkyType.Gradient : SkyType.PhysicallyBased);
             Use(scenario);
-            for (int f = 0; f < SkyFrames; f++) yield return null;   // let HDRP render the static sky
+            // let HDRP render the static sky: a camera rendered on the spot (a background editor ticks every few seconds, and waiting on
+            // its frames took 13 minutes, Oct 16), then one editor frame
+            var skyCam = new GameObject("SkyCam").AddComponent<Camera>(); skyCam.gameObject.AddComponent<HDAdditionalCameraData>();
+            skyCam.transform.position = house.center + Vector3.up * 20f;
+            for (int f = 0; f < SkyFrames; f++) skyCam.Render();
+            Object.DestroyImmediate(skyCam.gameObject);
+            yield return null;
             var t = System.Diagnostics.Stopwatch.StartNew();
             bool ok = Lightmapping.Bake();
             Debug.Log($"BakeLighting {scenario}: {(ok ? "done" : "FAILED")} in {t.Elapsed.TotalSeconds:F0} s");

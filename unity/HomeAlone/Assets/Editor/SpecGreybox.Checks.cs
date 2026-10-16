@@ -126,7 +126,7 @@ public static partial class SpecGreybox
     {
         // only surfaces seen from inside a room count: the point just in front of a face must be in a room's open volume
         bool Seen(Vector3 q) => SeamRooms.Any(r => q.y > r.y0 + 0.002f && q.y < r.y1 - 0.002f && Inside(r.pts, new Vector2(q.x, q.z)));
-        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors", "Arch_Spandrel", "ShadowCap", "Envelope", "_tread", "_riser", "stringer", "newel", "_HiFi", "Fixtures", "Trim" };   // generated models and fixtures: the z-fight and clash checks cover them   // an arch's curve is stepped on purpose (grey-box)
+        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors", "Arch_Spandrel", "ShadowCap", "Envelope", "FilmFront", "_tread", "_riser", "stringer", "newel", "_HiFi", "Fixtures", "Trim" };   // generated models and fixtures: the z-fight and clash checks cover them   // an arch's curve is stepped on purpose (grey-box)
         var boxes = roots.Where(r => r != null).SelectMany(r => r.GetComponentsInChildren<MeshRenderer>())
             .Where(m => !skip.Any(k => m.name.Contains(k) || (m.transform.parent != null && m.transform.parent.name.Contains(k)) ||
                                         (m.transform.parent?.parent != null && m.transform.parent.parent.name.Contains(k))))

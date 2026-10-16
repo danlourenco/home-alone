@@ -106,7 +106,12 @@ public static partial class SpecGreybox
         // every joint round it (the back stair's recess is lined with 2 cm boards only). A carpenter's floor is joists, solid: filled
         // under every upstairs floor plate down to the lowest ground ceiling, then clipped out of the rooms like everything else
         float band0 = gy + geo["ground"]["rooms"].Min(r => (float)r["ceil"]);
-        foreach (var f in upFloor) lids.Add(new Slab(new Vector3(f.lo.x, band0, f.lo.z), new Vector3(f.hi.x, f.lo.y, f.hi.z)));
+        foreach (var f in upFloor)   // over the ground floor only: past its front the upstairs overhangs the film's flush front (DEVIATIONS 1)
+            foreach (var gf in GroundFootprint(geo, gy))
+            {
+                float x0 = Mathf.Max(f.lo.x, gf.lo.x), x1 = Mathf.Min(f.hi.x, gf.hi.x), z0 = Mathf.Max(f.lo.z, gf.lo.z), z1 = Mathf.Min(f.hi.z, gf.hi.z);
+                if (x1 - x0 > 1e-3f && z1 - z0 > 1e-3f) lids.Add(new Slab(new Vector3(x0, band0, z0), new Vector3(x1, f.lo.y, z1)));
+            }
         // openings cut back out of the skins: through the wall line, 0.45 m either side (wall half-thickness + skin + margin)
         var holes = new List<Slab>();
         foreach (var (st, fy) in storeys)
@@ -278,5 +283,94 @@ public static partial class SpecGreybox
             }
         }
         Debug.Log($"FilmFill: {n} ceiling fills at {FillNits} nits, {FillKelvin} K");
+    }
+
+    // the ground floor's footprint (its floor plate, walls included), world rectangles
+    static List<Slab> GroundFootprint(JObject geo, float gy) => geo["ground"]["floor"].Select(b => SpecSlab(b, gy)).ToList();
+
+    static bool OverFootprint(List<Slab> fp, float x, float z, float grow) => fp.Any(f => x > f.lo.x - grow && x < f.hi.x + grow && z > f.lo.z - grow && z < f.hi.z + grow);
+
+    // Stop-gap for the upstairs overhang (user, Oct 16: the lighting now, the split later; tasks/wall-grid-plan.md). Marina's upstairs
+    // front rooms stick out 1.2-1.5 m past the film's flush front and shaded the ground floor's front windows (893 of 2210 sun points).
+    // Light only, no geometry moves and nothing is hidden:
+    //  - FilmFront: a shadows-only shell standing in for the film's flush upper storey. The ground floor's outer faces are carried up to
+    //    the roof (0.25 m, corners turned), with a roof over the footprint and every opening of either storey cut out. Rendering layer 2.
+    //  - every upstairs piece reaching past the footprint (more than the skin) is moved to rendering layer 1.
+    //  - the sun's shadows (StoreyShadows) come from layers 0 + 2 while the player is on the ground floor, and 0 + 1 from the stair up.
+    //  - the bake takes the ground floor's version; the upstairs strip's probes are invalidated (BakeLighting).
+    public const uint LayerHouse = 1, LayerOverhang = 2, LayerFilmFront = 4;
+
+    static void FilmFront(GameObject root, JObject geo, JToken wallOpenings, float gy)
+    {
+        var fp = GroundFootprint(geo, gy);
+        var gWalls = geo["ground"]["walls"].Select(b => SpecSlab(b, gy)).ToList();
+        float top = geo["upstairs"]["ceilings"].Max(c => (float)c["y"][1]) + LidT;
+        var skins = new List<Slab>();
+        foreach (var w in gWalls)
+            foreach (int ax in new[] { 0, 2 })
+                foreach (int sd in new[] { -1, 1 })
+                {
+                    int al = 2 - ax; float face = sd < 0 ? w.lo[ax] : w.hi[ax], a0 = w.lo[al], a1 = w.hi[al];
+                    Vector3 At(float a, float off, float y) { var v = new Vector3(0, y, 0); v[ax] = face + sd * off; v[al] = a; return v; }
+                    bool Out(float a) { var q = At(a, 0.03f, 0f); return !OverFootprint(fp, q.x, q.z, 0f); }
+                    float r0 = a0; bool on = Out(a0 + 0.005f);
+                    void Lay(float s0, float s1)
+                    {
+                        if (s1 - s0 < 0.005f) return;
+                        skins.Add(new Slab(At(s0 - SkinT, 0f, gy + 2.0f), At(s1 + SkinT, SkinT, top)));
+                    }
+                    for (float a = a0 + 0.01f; a < a1; a += 0.01f) { bool x = Out(Mathf.Min(a + 0.005f, a1 - 0.001f)); if (x != on) { if (on) Lay(r0, a); r0 = a; on = x; } }
+                    if (on) Lay(r0, a1);
+                }
+        foreach (var f in fp) skins.Add(new Slab(new Vector3(f.lo.x - LidOver, top - LidT, f.lo.z - LidOver), new Vector3(f.hi.x + LidOver, top, f.hi.z + LidOver)));
+        // every opening of both storeys (and the landing window) cut back out, through 0.45 m either side of its wall line
+        foreach (var (st, fy) in new[] { ((JObject)geo["upstairs"], 0f), ((JObject)geo["ground"], gy) })
+            foreach (var o in st["openings"])
+            {
+                bool alongX = (string)o["axis"] == "z"; float c = (float)o["c"], lo = (float)o["lo"], hi = (float)o["hi"];
+                foreach (var cut in o["cuts"])
+                {
+                    float y0 = (float)cut[0] + fy, y1 = (float)cut[1] + fy;
+                    var h = alongX ? new Slab(new Vector3(lo, y0, -c - 0.45f), new Vector3(hi, y1, -c + 0.45f)) : new Slab(new Vector3(c - 0.45f, y0, -hi), new Vector3(c + 0.45f, y1, -lo));
+                    skins = skins.SelectMany(q => Minus(q, h)).ToList();
+                }
+            }
+        if (wallOpenings != null)
+            foreach (var o in wallOpenings) { var w = SpecSlab(o, gy); var h = new Slab(w.lo - new Vector3(0.45f, 0, 0), w.hi + new Vector3(0.45f, 0, 0)); skins = skins.SelectMany(q => Minus(q, h)).ToList(); }
+        var g = Child(root, "FilmFront"); float fySave = FloorY; FloorY = 0f;
+        foreach (var q in skins)
+        {
+            int before = g.transform.childCount;
+            Box(g, "FilmFront", q.lo.x, q.hi.x, q.lo.z, q.hi.z, q.lo.y, q.hi.y, mCeil);
+            if (g.transform.childCount == before) continue;
+            var t = g.transform.GetChild(before).gameObject; Object.DestroyImmediate(t.GetComponent<Collider>());
+            var r = t.GetComponent<MeshRenderer>(); r.shadowCastingMode = ShadowCastingMode.ShadowsOnly; r.renderingLayerMask = LayerFilmFront;
+        }
+        FloorY = fySave;
+        // the overhang: upstairs pieces reaching past the footprint by more than the skin
+        int tagged = 0;
+        foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
+        {
+            if (r.transform.root.name == "Ground" || r.name == "FilmFront" || r.transform.root.name == "Exterior") continue;
+            var b = r.bounds; if (b.min.y < gy + 2.75f) continue;   // the ground storey's own skins, lids and fill sit lower
+            bool past = false;
+            for (int i = 0; i <= 4 && !past; i++) for (int k = 0; k <= 4 && !past; k++)
+            {
+                float x = Mathf.Lerp(b.min.x, b.max.x, i / 4f), z = Mathf.Lerp(b.min.z, b.max.z, k / 4f);
+                past = !OverFootprint(fp, x, z, SkinT + 0.05f);
+            }
+            if (past) { r.renderingLayerMask = LayerOverhang; tagged++; }
+        }
+        Debug.Log($"FilmFront: {skins.Count} shell pieces; {tagged} upstairs pieces tagged as the overhang");
+    }
+
+    // the upstairs volume past the ground footprint (the overhang strip), world boxes: its probes are invalidated in the bake
+    internal static List<Bounds> OverhangVolumes(JObject geo, float gy)
+    {
+        var fp = GroundFootprint(geo, gy).Select(f => new Slab(new Vector3(f.lo.x, -100f, f.lo.z), new Vector3(f.hi.x, 100f, f.hi.z))).ToList();
+        float top = geo["upstairs"]["ceilings"].Max(c => (float)c["y"][1]);
+        IEnumerable<Slab> rest = geo["upstairs"]["floor"].Select(b => SpecSlab(b, 0f)).Select(f => new Slab(new Vector3(f.lo.x, 0f, f.lo.z), new Vector3(f.hi.x, top, f.hi.z))).ToList();
+        foreach (var f in fp) rest = rest.SelectMany(q => Minus(q, f)).ToList();
+        return rest.Select(q => new Bounds((q.lo + q.hi) / 2, q.hi - q.lo)).ToList();
     }
 }
