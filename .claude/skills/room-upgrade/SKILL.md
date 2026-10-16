@@ -19,7 +19,7 @@ layer of models generated from the same spec, plus real textures, props and ligh
    dressing renderers it replaces (keep their colliders).
 4. **Textures:** Poly Haven (CC0, user OK Oct 15) via `TexMat(name, id, tint, tile_m, smoothness)`: world-space triplanar, no UVs.
 5. **Props:** Poly Haven models sized and placed by the dressing piece's measured footprint and height (`hifi_props.py`).
-6. **Lighting** from the stills: every fixture placed where the frames show it (`tools/house/hifi_lights.py` models, `SpecGreybox.HiFiLights` places them with 2700 K point lights), checked from the frame's own view.
+6. **Lighting** from the stills, then `-executeMethod BakeLighting.Bake` (bounce light): every fixture placed where the frames show it (`tools/house/hifi_lights.py` models, `SpecGreybox.HiFiLights` places them with 2700 K point lights), checked from the frame's own view.
 
 ## Traps hit in the foyer (each cost the user a walk)
 | Trap | Fix |
@@ -37,6 +37,8 @@ layer of models generated from the same spec, plus real textures, props and ligh
 | A missing piece the reference has (bullnose first step, raking wainscot) | Walk the reference sheet element by element before handing over |
 | Wallpaper: Marina's paper is a different colourway from the film's | Use the film's (user, Oct 15): `tools/house/film_wallpaper.py` cuts one repeat from a frontal daylight still by 2-D autocorrelation (mask fixtures or cut the tile above them, never patch: patches show as blocks), flattens the light, and the loader tiles it at its own width and height (a square triplanar scale stretched it 9%) |
 | Fixture placed from a misread frame (sconces first put on the foyer face beside the inner opening; the film has them on the vestibule's front wall by the sidelights) | Place each fixture from the frame where its wall's other features (door, sidelight, print) are all in view, and check that frame's view after building |
+| Hanging fixture put in the wrong room (lantern in the vestibule; the film's chain shows against the foyer wall ABOVE the opening's head, so it hangs on the foyer side) | Read depth from occlusion: what passes in front of an opening's head is on the near side. Film shots "from inside the door" may be from outside it (film-1616 camera x 12.3): check a calibrated camera before inferring a second fixture; look for frames where the supposed fixture should show and does not (384, 3175, IMG_3843 ruled out a stair-well chandelier) |
+| Flat, washed-out interior (no bounce light; HDRP ray tracing is DirectX 12 only, not on the Mac) | `BakeLighting.Bake` after each build: Adaptive Probe Volume over the house, lights Mixed (Baked Indirect), sky through the windows; ~20 s on the M3 |
 | An editor command times out (the open editor is blocked by a dialog) | Copy the build into the project and commit anyway; ask the user to dismiss the dialog, then load |
 
 ## Gate before the user sees it

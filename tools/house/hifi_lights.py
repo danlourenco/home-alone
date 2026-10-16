@@ -1,10 +1,18 @@
 """hifi_lights: the foyer's light fixtures as models (Blender), each built at its own origin and placed by SpecGreybox.HiFiLights.
 
 Why (user, Oct 15: "place accurate lighting in the foyer according to stills ... the chandelier in the foyer by the vestibule ...
-same with sconces"). From the film: a tall brass cage LANTERN with glass and candle bulbs hangs on a chain in the vestibule
-(sled POV 3220-3229, landing 25); brass two-arm candle SCONCES with an oval backplate and ball body flank the vestibule
-opening on the front wall (776-784). Marina 1070.5 s adds a pair beside the oval mirror. Sizes are standard (authored):
-lantern body 0.28 m across x 0.50 m, sconce 0.36 m across the arms. Brass from the film crops.
+same with sconces"; Oct 16: "the chandalier fixture i believe is not in the vestibute itself but just beyond it").
+From the film:
+- LANTERN: brass hexagonal cage with glass and candle bulbs on a long chain, hanging in the FOYER just inside the vestibule
+  opening (3225: its chain shows against the foyer wall above the opening's head, so it is not in the vestibule). Seen from
+  outside the front door it is the fixture at the top of 21, 1616 and 1689 (there is no second fixture over the stair well:
+  384, 3175 and the user's IMG_3843 show the well empty).
+- SCONCE: brass two-arm candle sconces on the vestibule's front wall beside the sidelights (778, 9358, 10248).
+- HURRICANE: single brass candle sconces with tall glass chimneys either side of the tall mirror (1616, 1689, 10673;
+  Marina 1070.5 s places the pair).
+- DOME: a shallow opal ceiling light just behind the rear arch (21, 10673, IMG_3843).
+Sizes are standard (authored): lantern body 0.28 m across x 0.50 m, sconce 0.36 m across the arms, chimney 0.22 m tall,
+dome 0.30 m across. Brass from the film crops.
 
   /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup -P tools/house/hifi_lights.py
   -> unity/HomeAlone/Assets/Models/Foyer/Lantern.glb (origin = ceiling point it hangs from), Sconce.glb (origin = wall point
@@ -40,9 +48,10 @@ MATS = {"Light_Brass": BRASS, "Light_Glass": ((0.9, 0.92, 0.9), 0.05), "Light_Ca
 
 # ---------------------------------------------------------------- lantern: hangs from (0, 0, 0) down -y
 brass, glass, candle, bulb = Part("Brass", "Light_Brass"), Part("Glass", "Light_Glass"), Part("Candles", "Light_Candle"), Part("Bulbs", "Light_Bulb")
-R, TOP, BOT = 0.14, -0.19, -0.69                      # body radius, body top and bottom below the ceiling
+R, TOP, BOT = 0.14, -0.47, -0.97                      # body radius, body top and bottom below the ceiling (2.82 foyer ceiling:
+                                                      # top 2.35, bottom 1.85, from the 1616 ray and the opening head in 3225)
 brass.lathe(0, 0, -0.03, [(0, 0.07), (0.02, 0.07), (0.03, 0.02)], n=20)                     # ceiling canopy
-for k in range(6):                                                                        # chain links, alternating
+for k in range(int((-0.03 - (TOP - 0.06)) / 0.025)):                                      # chain links to the crown, alternating
     y = -0.03 - 0.025 * (k + 1)
     if k % 2:
         brass.box(-0.008, 0.008, y - 0.022, y, -0.003, 0.003)
@@ -87,3 +96,24 @@ for side in (-1, 1):
     candle.lathe(cx, cz, 0.10, [(0, 0.011), (0.12, 0.011)], n=10)                         # white candle sleeve
     bulb.lathe(cx, cz, 0.22, [(0, 0.008), (0.015, 0.014), (0.035, 0.008), (0.05, 0.0)], n=10)
 export([brass, candle, bulb], MATS, "Sconce")
+
+# ---------------------------------------------------------------- hurricane sconce: backplate on x = 0, one candle in a glass chimney
+brass, candle, bulb, shade = Part("Brass", "Light_Brass"), Part("Candles", "Light_Candle"), Part("Bulbs", "Light_Bulb"), Part("Shade", "Light_Shade")
+plate = [(0.045 * math.cos(2 * math.pi * k / 20), 0.09 * math.sin(2 * math.pi * k / 20)) for k in range(20)]
+brass.poly([(0.012, y, z) for z, y in plate])
+brass.poly([(0.0, y, z) for z, y in reversed(plate)])
+for (za, ya), (zb, yb) in zip(plate, plate[1:] + plate[:1]):
+    brass.quad((0.0, ya, za), (0.0, yb, zb), (0.012, yb, zb), (0.012, ya, za))
+pts = [(0.012, -0.05, 0.0), (0.06, -0.08, 0.0), (0.11, -0.06, 0.0), (0.13, -0.02, 0.0)]   # S-arm out from the plate's foot
+brass.sweep(pts, [(-0.006, -0.006), (0.006, -0.006), (0.006, 0.006), (-0.006, 0.006)])
+brass.lathe(0.13, 0.0, -0.02, [(0, 0.012), (0.015, 0.045), (0.025, 0.045)], n=16)         # cup holding the chimney
+candle.lathe(0.13, 0.0, 0.0, [(0, 0.011), (0.10, 0.011)], n=10)
+bulb.lathe(0.13, 0.0, 0.10, [(0, 0.008), (0.015, 0.014), (0.035, 0.008), (0.05, 0.0)], n=10)
+shade.lathe(0.13, 0.0, 0.005, [(0, 0.035), (0.05, 0.05), (0.12, 0.045), (0.2, 0.032), (0.22, 0.034)], n=20)   # tall chimney
+export([brass, candle, bulb, shade], dict(MATS, Light_Shade=((0.95, 0.93, 0.88), 0.1)), "Hurricane")
+
+# ---------------------------------------------------------------- dome: flush opal ceiling light, origin on the ceiling, hangs -y
+brass, shade = Part("Brass", "Light_Brass"), Part("Shade", "Light_Shade")
+brass.lathe(0, 0, -0.02, [(0, 0.16), (0.02, 0.16)], n=28)                                  # ring
+shade.lathe(0, 0, -0.10, [(0, 0.0), (0.02, 0.09), (0.05, 0.135), (0.08, 0.15)], n=28)      # opal bowl, apex down
+export([brass, shade], dict(MATS, Light_Shade=((0.95, 0.93, 0.88), 0.1)), "Dome")

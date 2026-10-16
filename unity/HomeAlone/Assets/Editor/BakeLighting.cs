@@ -1,0 +1,55 @@
+using System.Linq;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition;
+
+// Baked bounce light for House_WallGrid (Oct 16): HDRP ray tracing is DirectX 12 only, so on the Mac the light that bounces off
+// floors and walls is traced once here and stored in an Adaptive Probe Volume (no lightmap UVs needed). Direct light and
+// shadows stay real time (lights become Mixed, Baked Indirect). Day only: the night lamps are off when it bakes.
+//   Unity -batchmode -projectPath ... -executeMethod BakeLighting.Bake -quit
+public static class BakeLighting
+{
+    const string ScenePath = "Assets/Scenes/House_WallGrid.unity";
+
+    public static void Bake()
+    {
+        var scene = EditorSceneManager.OpenScene(ScenePath);
+        var outdoors = GameObject.Find("Outdoors_Snow");
+        var house = new Bounds();
+        bool first = true;
+        foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
+        {
+            bool isOut = outdoors != null && r.transform.IsChildOf(outdoors.transform);
+            GameObjectUtility.SetStaticEditorFlags(r.gameObject, GameObjectUtility.GetStaticEditorFlags(r.gameObject) | StaticEditorFlags.ContributeGI);
+            r.receiveGI = ReceiveGI.LightProbes;
+            if (isOut || !r.enabled) continue;
+            if (first) { house = r.bounds; first = false; } else house.Encapsulate(r.bounds);
+        }
+        foreach (var l in Object.FindObjectsByType<Light>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+            l.lightmapBakeType = LightmapBakeType.Mixed;
+
+        // probes cover the house only (a global volume would stretch over the 200 m snow plane)
+        var old = GameObject.Find("HouseProbeVolume"); if (old) Object.DestroyImmediate(old);
+        var pv = new GameObject("HouseProbeVolume").AddComponent<ProbeVolume>();
+        pv.mode = ProbeVolume.Mode.Local; pv.transform.position = house.center; pv.size = house.size + Vector3.one;
+
+        // the sky lights the bake through the windows
+        var vol = Object.FindObjectsByType<Volume>(FindObjectsSortMode.None).First(v => v.isGlobal);
+        var sls = vol.GetComponent<StaticLightingSky>(); if (sls == null) sls = vol.gameObject.AddComponent<StaticLightingSky>();
+        sls.profile = vol.sharedProfile; sls.staticLightingSkyUniqueID = (int)SkyType.PhysicallyBased;
+
+        var ls = new LightingSettings { bakedGI = true, realtimeGI = false, lightmapper = LightingSettings.Lightmapper.ProgressiveGPU,
+            mixedBakeMode = MixedLightingMode.IndirectOnly, maxBounces = 4, directSampleCount = 32, indirectSampleCount = 256 };
+        AssetDatabase.DeleteAsset("Assets/Settings/HouseLighting.lighting");
+        AssetDatabase.CreateAsset(ls, "Assets/Settings/HouseLighting.lighting");
+        Lightmapping.lightingSettings = ls;
+
+        Debug.Log($"BakeLighting: probe volume {house.center} size {pv.size}");
+        var t = System.Diagnostics.Stopwatch.StartNew();
+        bool ok = Lightmapping.Bake();
+        Debug.Log($"BakeLighting: {(ok ? "done" : "FAILED")} in {t.Elapsed.TotalSeconds:F0} s");
+        EditorSceneManager.SaveScene(scene);
+    }
+}

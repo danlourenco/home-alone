@@ -558,6 +558,8 @@ public static class SpecGreybox
         var brass = Mat("HiFi_Brass", new Color(0.62f, 0.45f, 0.2f)); brass.SetFloat("_Metallic", 1f); brass.SetFloat("_Smoothness", 0.6f);
         var candle = Mat("HiFi_Candle", new Color(0.95f, 0.94f, 0.9f)); candle.SetFloat("_Smoothness", 0.35f);
         var bulb = Mat("HiFi_Bulb", new Color(1f, 0.9f, 0.7f));
+        var shade = Mat("HiFi_Shade", new Color(0.95f, 0.92f, 0.86f)); shade.SetFloat("_Smoothness", 0.8f);   // lit glass chimney / opal bowl
+        shade.SetColor("_EmissiveColor", new Color(1f, 0.8f, 0.55f) * 300f); UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(shade);
         bulb.SetColor("_EmissiveColor", new Color(1f, 0.72f, 0.42f) * 2000f); UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(bulb);
         void Place(string asset, Vector3 specPos, float yRot, float lumens, Vector3 lightOffset)
         {
@@ -569,7 +571,7 @@ public static class SpecGreybox
             {
                 string n = r.sharedMaterial != null ? r.sharedMaterial.name : "";
                 if (n.StartsWith("Light_Glass")) { r.enabled = false; continue; }   // clear glass: the cage reads without it
-                r.sharedMaterial = n.StartsWith("Light_Brass") ? brass : n.StartsWith("Light_Candle") ? candle : n.StartsWith("Light_Bulb") ? bulb : r.sharedMaterial;
+                r.sharedMaterial = n.StartsWith("Light_Brass") ? brass : n.StartsWith("Light_Candle") ? candle : n.StartsWith("Light_Bulb") ? bulb : n.StartsWith("Light_Shade") ? shade : r.sharedMaterial;
                 r.shadowCastingMode = ShadowCastingMode.Off;
                 foreach (var c in r.GetComponents<Collider>()) Object.DestroyImmediate(c);
             }
@@ -580,9 +582,12 @@ public static class SpecGreybox
             l.gameObject.AddComponent<HDAdditionalLightData>();
             l.lightUnit = LightUnit.Lumen; l.intensity = lumens; l.useColorTemperature = true; l.colorTemperature = 2700f; l.shadows = LightShadows.Soft;
         }
-        Place("Lantern", new Vector3(9.61f, 2.438f, 9.716f), 0f, 700f, new Vector3(0, -0.5f, 0));
-        foreach (float z in new[] { 8.73f, 10.70f }) Place("Sconce", new Vector3(10.13f, 1.62f, z), 180f, 350f, new Vector3(0.15f, 0.25f, 0));   // the vestibule's front wall, just past each sidelight (film 776-784: door, sidelight, sconce, print)
-        foreach (float x in new[] { 5.15f, 6.18f }) Place("Sconce", new Vector3(x, 1.62f, 7.778f), 90f, 350f, new Vector3(0.15f, 0.25f, 0));
+        // in the foyer just inside the vestibule opening (x 8.948), on the opening's centre line; film 3225 (chain above the
+        // opening head) and the 1616 ray from outside the door; hangs from the 2.82 m foyer ceiling to a 1.85 m bottom
+        Place("Lantern", new Vector3(8.50f, 2.82f, 9.62f), 0f, 700f, new Vector3(0, -0.8f, 0));
+        foreach (float z in new[] { 8.73f, 10.70f }) Place("Sconce", new Vector3(10.13f, 1.62f, z), 180f, 350f, new Vector3(0.15f, 0.25f, 0));   // the vestibule's front wall, just past each sidelight (film 778, 9358, 10248)
+        foreach (float x in new[] { 5.15f, 6.18f }) Place("Hurricane", new Vector3(x, 1.62f, 7.778f), 90f, 250f, new Vector3(0.13f, 0.12f, 0));   // glass-chimney pair beside the tall mirror (film 1616, 1689, 10673)
+        Place("Dome", new Vector3(2.21f, 2.155f, 9.54f), 0f, 600f, new Vector3(0, -0.15f, 0));   // opal ceiling light centred in the rear passage behind the arch (film 21, 10673, IMG_3843)
     }
 
     static void HiFiStair(GameObject root, float gy)
