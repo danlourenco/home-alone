@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "anatomy": {
+      "source": "wheresryan22/anatomy",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "76838f81aaec2589fabe05c6b004dc9150f7e33a61e948f111bc7941b678514d"
+    },
+    "anatomy-reveal": {
+      "source": "annnguyentt/anatomy-reveal-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "f6ae0508bca7a844784ec515fa4763801b9a1a193559f9571e294b5c9e88ad68"
+    }
+  }
+}
