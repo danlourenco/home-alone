@@ -44,6 +44,8 @@ layer of models generated from the same spec, plus real textures, props and ligh
 | Full-metal brass read black (nothing bright to reflect) | Part-metallic brass (`BrassMat`) plus baked reflection probes (`BakeLighting`) |
 | A casing placed in the dressing from one source while the wall was cut from another: a gap above it showed into the next room | Never place casing: mark the opening `cased` with its measured crown in the doors file; casing is generated from the cut, and the build's `Casing check` fails any casing in dressing or models |
 | "Fixed" after a glance at a small render; up close the joint was still broken (user: "can you always verify please?") | Render the note's own pose (note_views.py) in the note's lighting (day or night), crop the flagged spot at full resolution next to the user's shot, and look before saying fixed |
+| Lighting judged from batch renders (SpecGreybox.RenderViews): they don't apply the baked room reflection probes, so surfaces reflected the raw sky (a blue or grey wash that play mode doesn't have); four lighting "fixes" chased it (Oct 16) | Judge lighting in the live editor: clone the player camera (`Instantiate(Camera.main.gameObject)`), move the clone, render ~20 frames, `unity command capture_game_view --camera TmpCam`; never move the player (the user may be walking). Batch renders now switch the sky fallback off, so their colours are fair for geometry and finishes |
+| A "fix" for something the user's own screenshot doesn't show | Check the user's screenshots and a live capture before changing lighting |
 | An editor command times out (the open editor is blocked by a dialog) | Copy the build into the project and commit anyway; ask the user to dismiss the dialog, then load |
 
 ## Gate before the user sees it

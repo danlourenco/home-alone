@@ -64,10 +64,10 @@ public static class BakeLighting
         }
         Debug.Log($"BakeLighting: {probes} room reflection probes");
 
-        // the sky lights the bake through the windows
-        var vol = Object.FindObjectsByType<Volume>(FindObjectsSortMode.None).First(v => v.isGlobal);
-        var sls = vol.GetComponent<StaticLightingSky>(); if (sls == null) sls = vol.gameObject.AddComponent<StaticLightingSky>();
-        sls.profile = vol.sharedProfile; sls.staticLightingSkyUniqueID = (int)SkyType.PhysicallyBased;
+        // no sky in the bake, by design: the bounce light is the sun's and the lamps' only. With the blue sky baked in, rooms lit through
+        // windows turned blue (Oct 16); the sun-only bounce is the look the user rated right. (HDRP left the sky out by accident before,
+        // "Static Lighting Sky is not ready"; now it is explicit)
+        foreach (var sky in Object.FindObjectsByType<StaticLightingSky>(FindObjectsSortMode.None)) Object.DestroyImmediate(sky);
 
         var ls = new LightingSettings { bakedGI = true, realtimeGI = false, lightmapper = LightingSettings.Lightmapper.ProgressiveGPU,
             mixedBakeMode = MixedLightingMode.IndirectOnly, maxBounces = 4, directSampleCount = 32, indirectSampleCount = 256 };

@@ -543,12 +543,33 @@ public static partial class SpecGreybox
                 }
                 piece(r0, t1, cur.Item1, cur.Item2);
             }
+            // a stretch whose long faces border no room (it runs into the next wall's thickness) may still show its end to a room: it
+            // takes that room's finish (user note Oct 16 10:48: a plain white strip in the dining room)
+            (Material, float) EndFinish((Material, float) f, Vector2 endA, Vector2 endB)
+            {
+                if (f.Item1 != null) return f;
+                var a = Fin(endA.x, endA.y); return a.Item1 != null ? a : Fin(endB.x, endB.y);
+            }
             if (thinX && !thinZ)
                 Runs(z0, z1, z => (Fin(x0 - e, z), Fin(x1 + e, z)), (za, zb, a, c) =>
-                { if (a == c) Piece(x0, x1, za, zb, y0, y1, a, 3); else { Piece(x0, mx, za, zb, y0, y1, a, -1); Piece(mx, x1, za, zb, y0, y1, c, 1); } });
+                {
+                    if (a.Item1 == null && c.Item1 == null)
+                    {   // end-on: finished, but no trim along faces that are hidden in the walls
+                        var f = EndFinish(a, new Vector2(mx, za - e), new Vector2(mx, zb + e));
+                        if (f.Item1 != null) { Piece(x0, x1, za, zb, y0, y1, f, 0); return; }
+                    }
+                    if (a == c) Piece(x0, x1, za, zb, y0, y1, a, 3); else { Piece(x0, mx, za, zb, y0, y1, a, -1); Piece(mx, x1, za, zb, y0, y1, c, 1); }
+                });
             else if (thinZ && !thinX)
                 Runs(x0, x1, x => (Fin(x, z0 - e), Fin(x, z1 + e)), (xa, xb, a, c) =>
-                { if (a == c) Piece(xa, xb, z0, z1, y0, y1, a, 4); else { Piece(xa, xb, z0, mz, y0, y1, a, -2); Piece(xa, xb, mz, z1, y0, y1, c, 2); } });
+                {
+                    if (a.Item1 == null && c.Item1 == null)
+                    {   // end-on: finished, but no trim along faces that are hidden in the walls
+                        var f = EndFinish(a, new Vector2(xa - e, mz), new Vector2(xb + e, mz));
+                        if (f.Item1 != null) { Piece(xa, xb, z0, z1, y0, y1, f, 0); return; }
+                    }
+                    if (a == c) Piece(xa, xb, z0, z1, y0, y1, a, 4); else { Piece(xa, xb, z0, mz, y0, y1, a, -2); Piece(xa, xb, mz, z1, y0, y1, c, 2); }
+                });
             else
             {   // a thick piece (a pier, a wall end): the finish beside it with the tallest wainscot, plain if none
                 var f = new[] { Fin(x0 - e, mz), Fin(x1 + e, mz), Fin(mx, z0 - e), Fin(mx, z1 + e) }.Where(q => q.upper != null).ToList();
@@ -745,6 +766,17 @@ public static partial class SpecGreybox
     }
 
     // a material showing an image from the repo (spec/...), on the mesh's own UVs
+    // rooms with the dark hardwood floor: the foyer's (Marina 312 s) and any painted room whose finishes.json entry says "floor": "wood"
+    static HashSet<string> WoodFloors()
+    {
+        var set = new HashSet<string> { "foyer", "vestibule", "rear_passage" };
+        var fp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/finishes.json"));
+        if (File.Exists(fp))
+            foreach (var kv in (JObject)JObject.Parse(File.ReadAllText(fp))["rooms"])
+                if ((string)kv.Value["floor"] == "wood") set.Add(kv.Key);
+        return set;
+    }
+
     static Material SpecTexMat(string name, string specPath)
     {
         string src = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../" + specPath));
@@ -833,7 +865,7 @@ public static partial class SpecGreybox
         // hide the grey-box stair and the foyer dressing's stair pieces (runner, handrail, newels), wherever they were built
         // the foyer's floors: the same dark wood (Marina's foyer and passage are dark hardwood)
         foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
-            if (r.name == "Floor_foyer" || r.name == "Floor_vestibule" || r.name == "Floor_rear_passage") r.sharedMaterial = wood;
+            if (r.name.StartsWith("Floor_") && WoodFloors().Contains(r.name.Substring(6))) r.sharedMaterial = wood;
         // the potted tree (tools/house/hifi_props.py, Poly Haven), on the ground floor; its dressing boxes are hidden
         PlaceHiFi(root, gy, "Tree", null);
         PlaceHiFi(root, gy, "LandingWindow", new Dictionary<string, Material> {   // tools/house/hifi_landing_window.py (film 11966, 12133)
@@ -1584,6 +1616,13 @@ public static partial class SpecGreybox
             l.type = LightType.Point; l.range = 25f; l.intensity = float.Parse(a[fi + 1]); l.shadows = LightShadows.None;
             l.gameObject.AddComponent<HDAdditionalLightData>();
         }
+        {   // batch renders do not apply the baked room reflection probes, so every surface reflected the raw sky (a blue or grey wash by
+            // day that play mode does not have, Oct 16). The sky fallback is off here; judge final lighting from the live play view
+            // (unity command capture_game_view --source screen), which has the probes
+            var prof = ScriptableObject.CreateInstance<VolumeProfile>(); var ilc = prof.Add<IndirectLightingController>(true);
+            ilc.reflectionLightingMultiplier.value = 0f;
+            var vol = new GameObject("NoSkyReflect").AddComponent<Volume>(); vol.isGlobal = true; vol.priority = 10001f; vol.sharedProfile = prof;
+        }
         if (ei >= 0)
         {
             var prof = ScriptableObject.CreateInstance<VolumeProfile>(); var ex = prof.Add<Exposure>(true);
@@ -1598,7 +1637,7 @@ public static partial class SpecGreybox
             hidden.ForEach(o => o.SetActive(false));
             go.transform.position = V(v["pos"]); go.transform.LookAt(V(v["look_at"])); cam.fieldOfView = (float)v["vfov"];
             cam.nearClipPlane = v["near"] != null ? (float)v["near"] : 0.05f;   // film cameras stood outside the front door (long lens)
-            if (fi >= 0 || ei >= 0) cam.Render();   // warm-up frame: HDRP's first frame has no sky ambient yet (came out all brown)
+            cam.Render(); cam.Render();   // warm-up frames, always: HDRP's first frame has no sky ambient yet
             Shot(cam, rt, Path.Combine("views", (string)v["name"]));
             hidden.ForEach(o => o.SetActive(true));
         }
