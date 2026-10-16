@@ -42,6 +42,8 @@ layer of models generated from the same spec, plus real textures, props and ligh
 | A wall's fittings judged by eye from a still ("sconces should be outside the vestibule") | Solve the film camera from known corners (`tools/house/film_solve_10248.py`: door leaf, sidelights, jamb edges), draw our outlines over the still, back-project the film's fittings, then render ours from that camera beside the still |
 | Trim laid per wall ran behind doors, casings and the stair's skirt | Record trim runs while building walls and lay them last (`SpecGreybox.LayTrim`), sampled every 2 cm against the surfaces of what is on the wall; a baseboard 1 cm shallower than the skirt it meets |
 | Full-metal brass read black (nothing bright to reflect) | Part-metallic brass (`BrassMat`) plus baked reflection probes (`BakeLighting`) |
+| A casing placed in the dressing from one source while the wall was cut from another: a gap above it showed into the next room | Never place casing: mark the opening `cased` with its measured crown in the doors file; casing is generated from the cut, and the build's `Casing check` fails any casing in dressing or models |
+| "Fixed" after a glance at a small render; up close the joint was still broken (user: "can you always verify please?") | Render the note's own pose (note_views.py) in the note's lighting (day or night), crop the flagged spot at full resolution next to the user's shot, and look before saying fixed |
 | An editor command times out (the open editor is blocked by a dialog) | Copy the build into the project and commit anyway; ask the user to dismiss the dialog, then load |
 
 ## Gate before the user sees it
