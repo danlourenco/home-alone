@@ -246,7 +246,9 @@ def main():
     x0, y0, x1, y1 = TILE_PX
     tile = np.clip(c203.img[y0:y1, x0:x1] / c203.white * WHITE * 255, 0, 255).astype(np.uint8)
     Image.fromarray(tile).resize((528, 498), Image.LANCZOS).save(TILE)
-    walls = {"wallpaper_texture": str(TILE.relative_to(ROOT)), "wallpaper_repeat_m": list(REPEAT_M), "wainscot_m": round(float(np.median([wn, wp, wf])), 3), "reads": {"north wall 312 s": round(float(wn), 3), "picture wall 312 s": round(float(wp), 3),
+    film = ROOT / "spec/dressing/wallpaper_film.png"   # the film's red damask (tools/house/film_wallpaper.py) wins when present (user, Oct 15)
+    tex, rep = (film, json.loads(film.with_suffix(".json").read_text())["repeat_m"]) if film.exists() else (TILE, list(REPEAT_M))
+    walls = {"wallpaper_texture": str(tex.relative_to(ROOT)), "wallpaper_repeat_m": rep, "wainscot_m": round(float(np.median([wn, wp, wf])), 3), "reads": {"north wall 312 s": round(float(wn), 3), "picture wall 312 s": round(float(wp), 3),
              "front wall 203 s": round(float(wf), 3)}, "wainscot": C["white"], "wallpaper": C["wallpaper"], "floor": C["floor"],
              "spaces": ["foyer", "vestibule", "rear_passage"]}   # rear_passage: film 2677, the damask runs on inside the arch
     out = {"note": __doc__.split("\n\n")[0], "colours": C, "walls": walls,

@@ -638,8 +638,9 @@ public static class SpecGreybox
         File.Copy(src, dst, true); AssetDatabase.ImportAsset(dst);
         var m = Mat("Dress_Wallpaper", Color.white);
         m.SetTexture("_BaseColorMap", AssetDatabase.LoadAssetAtPath<Texture2D>(dst));
-        float rep = ((float)w["wallpaper_repeat_m"][0] + (float)w["wallpaper_repeat_m"][1]) / 2f;
-        m.SetFloat("_UVBase", 5f); m.SetFloat("_TexWorldScale", 1f / rep);   // 5 = triplanar
+        float rw = (float)w["wallpaper_repeat_m"][0], rh = (float)w["wallpaper_repeat_m"][1];
+        m.SetFloat("_UVBase", 5f); m.SetFloat("_TexWorldScale", 1f);         // 5 = triplanar, 1 m per UV unit
+        m.SetTextureScale("_BaseColorMap", new Vector2(1f / rw, 1f / rh));      // the repeat's own width and height (not squared)
         HDMaterial.ValidateMaterial(m);
         return m;
     }

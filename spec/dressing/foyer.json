@@ -78,10 +78,10 @@
   ]
  },
  "walls": {
-  "wallpaper_texture": "spec/dressing/wallpaper.png",
+  "wallpaper_texture": "spec/dressing/wallpaper_film.png",
   "wallpaper_repeat_m": [
-   0.32,
-   0.3
+   0.446,
+   0.533
   ],
   "wainscot_m": 0.705,
   "reads": {
