@@ -256,6 +256,7 @@ public static partial class SpecGreybox
             {
                 float sill = (float)o["sill"], whead = (float)o["head"], ta = wc - 0.006f, tb = wc + 0.006f;
                 if (alongX) Box(go, "Glass", s0, s1, ta, tb, sill, whead, mGlass); else Box(go, "Glass", ta, tb, s0, s1, sill, whead, mGlass);
+                if (o["bare"] != null) continue;   // the frame belongs to a model (the door's sidelights): glass only
                 float ow = (float)o["faces"][0] * (alongX ? -1f : 1f);           // spec outward -> world (z flips)
                 float f0 = wc - ow * h, f1 = f0 - ow * CasingProud;              // the room's face, trim proud into the room
                 Trim(go, alongX, f0, f1, s0 - CasingW, s0, sill, whead + CasingW);
@@ -346,6 +347,7 @@ public static partial class SpecGreybox
         dressing?.SetActive(true); Physics.SyncTransforms();
         report += ZFightCheck(root, groot);
         report += ClashCheck(root, groot);
+        report += CasingCheck(root, groot);
         player.SetActive(true);
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, "walk-test-wallgrid.txt"), report);
@@ -528,6 +530,7 @@ public static partial class SpecGreybox
             {
                 float sill = (float)o["sill"], whead = (float)o["head"], ta = wc - 0.006f, tb = wc + 0.006f;
                 if (alongX) Box(go, "Glass", s0, s1, ta, tb, sill, whead, mGlass); else Box(go, "Glass", ta, tb, s0, s1, sill, whead, mGlass);
+                if (o["bare"] != null) continue;   // the frame belongs to a model (the door's sidelights): glass only
                 float ow = (float)o["faces"][0] * (alongX ? -1f : 1f), f0 = wc - ow * h, f1 = f0 - ow * CasingProud;
                 Trim(go, alongX, f0, f1, s0 - CasingW, s0, sill, whead + CasingW);
                 Trim(go, alongX, f0, f1, s1, s1 + CasingW, sill, whead + CasingW);
@@ -769,8 +772,7 @@ public static partial class SpecGreybox
             if (r.name == "Floor_foyer" || r.name == "Floor_vestibule" || r.name == "Floor_rear_passage") r.sharedMaterial = wood;
         // the potted tree (tools/house/hifi_props.py, Poly Haven), on the ground floor; its dressing boxes are hidden
         PlaceHiFi(root, gy, "Tree", null);
-        var sheer = Mat("HiFi_Sheer", new Color(0.97f, 0.96f, 0.93f, 0.8f)); sheer.SetFloat("_SurfaceType", 1f); sheer.SetFloat("_DoubleSidedEnable", 1f); HDMaterial.ValidateMaterial(sheer);
-        PlaceHiFi(root, gy, "FrontDoor", new Dictionary<string, Material> { ["Door_Brass"] = BrassMat(), ["Door_Sheer"] = sheer });   // tools/house/hifi_door.py (film 10248)
+        PlaceHiFi(root, gy, "FrontDoor", new Dictionary<string, Material> { ["Door_Brass"] = BrassMat() });   // tools/house/hifi_door.py (film 10248)
         PlaceHiFi(root, gy, "FoyerDressing", new Dictionary<string, Material> {   // tools/house/hifi_dressing.py: stands, poinsettias, prints (film)
             ["Door_Brass"] = BrassMat(), ["Dress_Foil"] = FoilMat(),
             ["Print_Left"] = SpecTexMat("HiFi_PrintLeft", "spec/dressing/prints/print_left.png"),
@@ -1168,6 +1170,14 @@ public static partial class SpecGreybox
         float rel = (SunAzimuth - FrontAzimuth) * Mathf.Deg2Rad, el = SunElevation * Mathf.Deg2Rad;
         var toSun = new Vector3(Mathf.Cos(rel) * Mathf.Cos(el), Mathf.Sin(el), -Mathf.Sin(rel) * Mathf.Cos(el));   // spec +z (right, from inside facing front) -> world -z
         var dayLayer = Child(day, "DayLayer");   // switched off at night (N) with the sun in it
+        {   // day grade (user note 09:33, "the color look flat"): the sky's blue bounce made the floor blue and the paper grey; the
+            // film's day interiors read warm. White balance and a little saturation, in the day layer only
+            string dp = "Assets/Settings/DayGrade.asset"; AssetDatabase.DeleteAsset(dp);
+            var prof = ScriptableObject.CreateInstance<VolumeProfile>(); AssetDatabase.CreateAsset(prof, dp);
+            var wb = prof.Add<WhiteBalance>(true); wb.temperature.value = 12f; AssetDatabase.AddObjectToAsset(wb, prof);
+            var ca = prof.Add<ColorAdjustments>(true); ca.saturation.value = 12f; AssetDatabase.AddObjectToAsset(ca, prof);
+            var dv = new GameObject("DayGrade").AddComponent<Volume>(); dv.transform.parent = dayLayer.transform; dv.isGlobal = true; dv.priority = 5f; dv.sharedProfile = prof;
+        }
         var sun = new GameObject("Sun").AddComponent<Light>(); sun.transform.parent = dayLayer.transform;
         sun.type = LightType.Directional; sun.transform.rotation = Quaternion.LookRotation(-toSun);
         var sunHd = sun.gameObject.AddComponent<HDAdditionalLightData>();   // first: adding it resets the light's intensity

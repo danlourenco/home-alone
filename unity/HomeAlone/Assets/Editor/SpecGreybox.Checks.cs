@@ -276,4 +276,15 @@ public static partial class SpecGreybox
             o.AppendLine($"CLASH   {P(rs[f.Key.Item1])} through {P(rs[f.Key.Item2])}: {f.Value.n} crossings, first at spec ({f.Value.at.x:F2}, {f.Value.at.y:F2}, {-f.Value.at.z:F2})");
         return o.ToString();
     }
+
+    // Casings come from the same numbers as their opening (user note Oct 16 09:41: a casing placed by hand in the dressing stopped
+    // short of the cut and showed into the vestibule): generated around a cut (Openings) or with its door in the spec (the basement
+    // door, the back stair's well). A casing in the dressing or a model is a FAIL: make the opening cased instead.
+    static string CasingCheck(params GameObject[] roots)
+    {
+        bool Placed(Transform t) { for (; t != null; t = t.parent) if (t.name == "Dressing" || t.name.EndsWith("_HiFi")) return true; return false; }
+        var bad = roots.Where(o => o != null).SelectMany(o => o.GetComponentsInChildren<MeshRenderer>(true))
+            .Where(r => r.name.ToLower().Contains("casing") && Placed(r.transform)).Select(r => r.transform.parent.name + "/" + r.name).ToList();
+        return $"Casing check: {bad.Count} casings placed apart from their opening" + (bad.Count > 0 ? " (" + string.Join(", ", bad.Take(8)) + ")" : "") + "\n";
+    }
 }
