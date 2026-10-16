@@ -409,3 +409,12 @@ Clips from Part 1 at 1080p (the 640x360 original is deleted; use the `copy.mp4`)
     its doorway-side edge, foot toward the table. Built: landing x 1.48-2.64 at 0.60 m, 2-step foot, flight going 0.30 / rise 0.20,
     newel x 2.64, tall post x 1.48, wall post x 2.50, basement door x -1.284..-0.445 in a wall 0.30 m proud. Gates: walks 0 blocked,
     seams 0/0/0 (the door wall's return is one going deep so its faces meet the step edges), leaks 0, peek 0.
+- **Back stair, second pass (Oct 15, night; TRIAL)**: winders. User walk of 3cfb02c: "honestly not great" (no gradual turn; a strip of
+  wall where the balustrade should be; the wall around the foyer doorway odd). Now 2 straight steps + 3 winders around the tall post
+  (933 s wedges, 812 s two diagonals), rise 0.183 (tracked nosings at risers 6-8), one raking handrail, spandrel only under the flight.
+  SpecGreybox: `poly` prisms (wedge treads) and `rise_x`/`rise_z` tilted boxes (raking rails). Checked by matched Unity renders from her
+  tracked cameras faded on her frames BEFORE handing over (spec/captures/views/backstair-fade).
+  - Found by that check: her cameras at 924-935 s stand ~4.45 m from the stair wall; the build's breakfast area is 3.99 m deep there
+    (the chute pocket's wall) -> her breakfast area is >= 0.75 m deeper. Lead; measure from a pass facing that wall.
+  - Foyer doorway: the film size (0.98) leaves a ~0.1 m pier to the corner beside an open hole in the hutch wall; Marina's 0.70 m with
+    a casing leaves ~0.25 m. Decision for the user.

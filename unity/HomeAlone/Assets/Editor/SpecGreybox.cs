@@ -798,6 +798,43 @@ public static class SpecGreybox
         b.GetComponent<MeshRenderer>().sharedMaterial = m; b.isStatic = true;
     }
 
+    // A raking rail: the last box built is turned about its centre. "rise_x": metres it climbs from its +x end to its -x end (spec);
+    // "rise_z": from its low-z end to its high-z end (spec z; Unity -z).
+    static void Tilt(GameObject g, JToken b)
+    {
+        if (b["rise_x"] == null && b["rise_z"] == null) return;
+        var t = g.transform.GetChild(g.transform.childCount - 1); var sc = t.localScale;
+        if (b["rise_x"] != null) { float rx = (float)b["rise_x"]; t.rotation = Quaternion.Euler(0, 0, -Mathf.Atan2(rx, sc.x) * Mathf.Rad2Deg); t.localScale = new Vector3(Mathf.Sqrt(sc.x * sc.x + rx * rx), sc.y, sc.z); }
+        if (b["rise_z"] != null) { float rz = (float)b["rise_z"]; t.rotation = Quaternion.Euler(Mathf.Atan2(rz, sc.z) * Mathf.Rad2Deg, 0, 0); t.localScale = new Vector3(sc.x, sc.y, Mathf.Sqrt(sc.z * sc.z + rz * rz)); }
+    }
+
+    // A vertical prism over a convex spec-plan polygon [[x, z], ...] from y0 to y1 (winder treads, Oct 15 night). Unity z = -spec z.
+    static void Prism(GameObject p, string n, JToken poly, float y0, float y1, Material m)
+    {
+        var pts = poly.Select(q => new Vector3((float)q[0], 0f, -(float)q[1])).ToList(); int k = pts.Count;
+        var c = Vector3.zero; foreach (var q in pts) c += q; c /= k;
+        var v = new List<Vector3>(); var t = new List<int>();
+        void Quad(Vector3 a, Vector3 b, Vector3 cc, Vector3 d) { int i = v.Count; v.AddRange(new[] { a, b, cc, d }); t.AddRange(new[] { i, i + 1, i + 2, i, i + 2, i + 3 }); }
+        float s0 = 0; for (int i = 0; i < k; i++) { var a = pts[i]; var b = pts[(i + 1) % k]; s0 += (b.x - a.x) * (b.z + a.z); }
+        if (s0 > 0) pts.Reverse();                                   // one winding for every prism
+        for (int i = 0; i < k; i++)
+        {
+            var a = pts[i]; var b = pts[(i + 1) % k];
+            Quad(a + Vector3.up * y0, a + Vector3.up * y1, b + Vector3.up * y1, b + Vector3.up * y0);
+        }
+        for (int i = 1; i < k - 1; i++)
+        {
+            int j = v.Count; v.AddRange(new[] { pts[0] + Vector3.up * y1, pts[i + 1] + Vector3.up * y1, pts[i] + Vector3.up * y1 }); t.AddRange(new[] { j, j + 1, j + 2 });
+            j = v.Count; v.AddRange(new[] { pts[0] + Vector3.up * y0, pts[i] + Vector3.up * y0, pts[i + 1] + Vector3.up * y0 }); t.AddRange(new[] { j, j + 1, j + 2 });
+        }
+        var mesh = new Mesh { name = n }; mesh.SetVertices(v); mesh.SetTriangles(t, 0); mesh.RecalculateNormals(); mesh.RecalculateBounds();
+        var go = new GameObject(n); go.transform.parent = p.transform; go.transform.position = new Vector3(0, FloorY, 0);
+        go.AddComponent<MeshFilter>().sharedMesh = mesh; go.AddComponent<MeshRenderer>().sharedMaterial = m;
+        var mc = go.AddComponent<MeshCollider>(); mc.sharedMesh = mesh; mc.convex = true; go.isStatic = true;
+        if (!AssetDatabase.IsValidFolder("Assets/Materials/Greybox/Meshes")) AssetDatabase.CreateFolder("Assets/Materials/Greybox", "Meshes");
+        AssetDatabase.CreateAsset(mesh, $"Assets/Materials/Greybox/Meshes/{n}.asset");
+    }
+
     static GameObject Child(GameObject p, string n) { var c = new GameObject(n); c.transform.parent = p.transform; return c; }
 
     static void MakeMaterials()
@@ -879,12 +916,15 @@ public static class SpecGreybox
                 // wall under its high end with the basement door in it
                 var pm = kind == "tread" || kind == "newel" ? Mat("Wood_StairDark", new Color(0.24f, 0.12f, 0.07f))
                        : kind == "spandrel" ? (stepMat ?? mWall) : kind == "door_prop" ? mProp : Mat("Paint_StairWhite", new Color(0.9f, 0.9f, 0.87f));
+                if (b["poly"] != null) { Prism(g, (string)b["name"], b["poly"], (float)b["y"][0], (float)b["y"][1], pm); continue; }
                 Box(g, (string)b["name"], (float)b["x"][0], (float)b["x"][1], -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], pm);
+                Tilt(g, b);
                 continue;
             }
             if (kind == "floor" && skipFloorPatch) continue;   // the ground floor's foyer is built for real
             var m = kind == "rail" ? mRail : kind == "wall" ? mWall : kind == "floor" || (!dress && kind == "step") ? mFloor : kind == "ceiling" ? mCeil : mHall;   // attic treads: bare wood (film)
             if (stepMat != null && kind == "step") m = stepMat;
+            if (b["poly"] != null) { Prism(g, (string)b["name"], b["poly"], (float)b["y"][0], (float)b["y"][1], m); continue; }
             string name = (string)b["name"]; var ds = dress ? Dress?["stair"] : null;
             if (ds != null)
             {
@@ -900,6 +940,7 @@ public static class SpecGreybox
                 }
             }
             Box(g, (string)b["name"], (float)b["x"][0], (float)b["x"][1], -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], m);
+            Tilt(g, b);
         }
         return st["walk_path"].Select(q => new Vector3((float)q[0], (float)q[1], -(float)q[2])).ToList();
     }

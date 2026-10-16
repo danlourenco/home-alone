@@ -60,11 +60,11 @@ ok      kevin up leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
 ok      kevin down leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
 ok      player up leg 1: ended 0.04 m from waypoint, 0.00 m off its floor height, 52 frames (clean walk 53)
 ok      player down leg 1: ended 0.01 m from waypoint, 0.03 m off its floor height, 59 frames (clean walk 53)
-Seam check: 465 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
+Seam check: 468 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
 Leak and headroom check: 1368 points, 0 leaks, 2 low-headroom points (ground floor, outside flight 1)
 LOW     kitchen at (-3.9, 3.9): 0.74 m clear under Openings/Casing
 LOW     kitchen at (-3.4, 3.9): 0.74 m clear under Openings/Casing
-Peek check: 621264 rays from rooms you can walk in, 0 into closed spaces
+Peek check: 622104 rays from rooms you can walk in, 0 into closed spaces
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 84 legs, 0 blocked
 GROUND Room walk test (both bodies, every doorway to room centre and back): 64 legs, 0 blocked
 skip    bandit kitchen via back_stair/kitchen: the other side is all stair

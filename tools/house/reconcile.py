@@ -175,73 +175,91 @@ def door_on(p, doors):
 
 
 def service_stair_spec(final, o):
-    """The service (back) stair, measured (Oct 15 night, changes/2026-10-15-back-stair-measured.json; tools/house/joint_fit.py track on
-    Marina 914-945 s, COLMAP cameras scaled by her fixed camera height; labels/backstair-marina.json): a landing at the foyer-doorway
-    end (x 1.48-2.64, 3 risers up) with a short newel at its front corner and a balustrade from it to the wall along its doorway-side
-    edge (Marina 1073.5/1074.5 s, through the foyer doorway); a 2-step foot from the landing down toward the breakfast table (812 s
-    overhead; landing height / rise); the flight from the landing up along the wall toward the rear (going 0.30, rise 0.20 from tracked
-    tread corners, 916 s) to the ceiling. The tall post stands at the flight's foot on the open side (x 1.48). Kevin's basement door
-    (x -1.284 to -0.445, 0.84 m leaf, 2.032 m head) sits in a short wall 0.3 m proud of the stair's open side, from the corner to just
-    past its casing (916 s floor contacts; the spandrel's plane reads 0.19 m behind the door's). Foot width = the landing's; the foot's
-    rounded fronts (film 912) are AUTHORED square (DEVIATIONS 30)."""
+    """The service (back) stair, measured (Oct 15 night; changes/2026-10-15-back-stair-measured.json, -winders.json; joint_fit.py track on
+    Marina 914-945 s, COLMAP cameras scaled by her fixed camera height; labels/backstair-marina.json). From the breakfast area: 2 straight
+    steps rising toward the wall, 3 winders turning 90 deg around the tall post (x 1.48, on the open side), then the flight up along the
+    wall toward the rear (going 0.30, rise 0.183: the tracked nosings sit at risers 6-8) to the ceiling. The short newel stands on the
+    winders' doorway-side edge (x 2.64) with a raking balustrade from it to a post at the wall (Marina 1073.5/1074.5 s); the winders
+    are the wedges by the tall post in 933 s and the two diagonals in the 812 s overhead. One raking handrail from the tall post up the
+    flight, 2 balusters a tread. Under the flight the papered spandrel runs down to the floor; above the treads the balustrade runs to
+    the ceiling. Kevin's basement door (x -1.284..-0.445, 0.84 m, 2.032 m) sits in a short wall 0.30 m proud of the open side.
+    AUTHORED (DEVIATIONS 30): the straight steps' square fronts (film 912: rounded, flared) and their count (812 s + film; behind the
+    table in every eye-level frame); winder count from the overhead's two diagonals."""
     P = np.c_[final["back_stair"][:, 1] - o[1], final["back_stair"][:, 0] - o[0]]
     x0, z0, z1 = P[:, 0].min(), P[:, 1].min(), P[:, 1].max()
-    r, g, nb = 0.20, 0.30, 2                                # measured rise / going; 2 foot steps (landing at 3 risers, 0.60 m)
-    XL, XN = 1.48, 2.64                                     # landing: the tall post's x to the short newel's x (measured)
+    r, g, NS, NW = 0.183, 0.30, 2, 3
+    XL, XN = 1.48, 2.64                                     # the tall post (pivot, inner corner) and the short newel's x (measured)
     ceil = CEILINGS.get("back_stair", CEILINGS["default"])
     B = []
-    box = lambda name, kind, xa, xb, ya, yb, za, zb: B.append({"name": name, "kind": kind, "x": [round(float(min(xa, xb)), 3), round(float(max(xa, xb)), 3)],
-                                                             "y": [round(float(ya), 3), round(float(yb), 3)], "z": [round(float(min(za, zb)), 3), round(float(max(za, zb)), 3)]})
-    def tread(name, xa, xb, za, zb, h, front):             # solid step, dark tread on top (nosing), white riser on its front face
-        box(name, "step", xa, xb, 0.0, h, za, zb)
-        box(name + "_tread", "tread", xa, xb, h - 0.025, h + 0.005, za, zb)
-        fa, fb = front
-        box(name + "_riser", "riser", *fa, h - r, h - 0.025, *fb)
-    for k in range(1, nb + 1):                              # the foot: from the room up toward the landing (+z)
-        za, zb = z0 - (nb - k + 1) * g, z0 - (nb - k) * g
-        tread(f"service_foot{k:02d}", XL, XN, za, zb, k * r, ((XL, XN), (za - 0.01, za)))
-    h = (nb + 1) * r
-    box("service_landing", "step", XL, XN, 0.0, h, z0, z1); box("service_landing_tread", "tread", XL, XN, h - 0.025, h + 0.005, z0, z1)
-    box("service_landing_riser", "riser", XL, XN, h - r, h - 0.025, z0 - 0.01, z0)
+    rd = lambda v: round(float(v), 3)
+    box = lambda name, kind, xa, xb, ya, yb, za, zb, **kw: B.append({"name": name, "kind": kind, "x": [rd(min(xa, xb)), rd(max(xa, xb))],
+                                                                   "y": [rd(ya), rd(yb)], "z": [rd(min(za, zb)), rd(max(za, zb))], **kw})
+    def prism(name, kind, poly, ya, yb):
+        xs, zs = [q[0] for q in poly], [q[1] for q in poly]
+        B.append({"name": name, "kind": kind, "x": [rd(min(xs)), rd(max(xs))], "y": [rd(ya), rd(yb)], "z": [rd(min(zs)), rd(max(zs))],
+                  "poly": [[rd(q[0]), rd(q[1])] for q in poly]})
+    for k in range(1, NS + 1):                              # straight steps in the breakfast area, rising +z toward the winders
+        za, zb, h = z0 - (NS - k + 1) * g, z0 - (NS - k) * g, k * r
+        box(f"service_foot{k:02d}", "step", XL, XN, 0.0, h, za, zb)
+        box(f"service_foot{k:02d}_tread", "tread", XL, XN, h - 0.025, h + 0.005, za, zb)
+        box(f"service_foot{k:02d}_riser", "riser", XL, XN, h - r, h - 0.025, za - 0.01, za)
+    piv = np.array([XL, z0]); corner = np.degrees(np.arctan2(z1 - z0, XN - XL))
+    def edge(th):                                           # pivot ray at th (0 = +x along the open side, 90 = +z) to the square's far side
+        d = np.array([np.cos(np.radians(th)), np.sin(np.radians(th))])
+        t = min((XN - XL) / d[0] if d[0] > 1e-9 else 1e9, (z1 - z0) / d[1] if d[1] > 1e-9 else 1e9)
+        return piv + t * d
+    ang = np.linspace(0, 90, NW + 1)
+    for i in range(NW):                                     # winders: wedges around the tall post
+        h = (NS + 1 + i) * r
+        poly = [piv, edge(ang[i])] + ([np.array([XN, z1])] if ang[i] < corner < ang[i + 1] else []) + [edge(ang[i + 1])]
+        prism(f"service_winder{i + 1}", "step", poly, 0.0, h)
+        prism(f"service_winder{i + 1}_tread", "tread", poly, h - 0.025, h + 0.005)
+        e = edge(ang[i]); n = np.array([np.sin(np.radians(ang[i])), -np.cos(np.radians(ang[i]))]) * 0.01   # riser on its front edge
+        prism(f"service_winder{i + 1}_riser", "riser", [piv, e, e + n, piv + n], h - r, h - 0.025)
+    hf = lambda x: (NS + NW + 1) * r + (XL - x) / g * r     # flight nosing line
     k = 0
-    while (nb + 2 + k) * r <= ceil - 0.05 and XL - (k + 1) * g >= x0 - 1e-6:   # the flight: rising -x along the wall
-        k += 1; xa, xb = XL - k * g, XL - (k - 1) * g; hk = (nb + 1 + k) * r
-        tread(f"service_step{k:02d}", xa, xb, z0, z1, hk, ((xb, xb + 0.01), (z0, z1)))
-        box(f"service_rail{k:02d}_cap", "rail", xa, xb, hk + 0.84, hk + 0.9, z0, z0 + 0.06)
-        for i in (0.25, 0.75):
-            c = xa + i * g
-            box(f"service_rail{k:02d}_spindle{i}", "spindle", c - 0.02, c + 0.02, hk, hk + 0.84, z0 + 0.01, z0 + 0.05)
+    while (NS + NW + 1 + k) * r <= ceil - 0.05 and XL - (k + 1) * g >= x0 - 1e-6:   # the flight: rising -x along the wall
+        k += 1; xa, xb = XL - k * g, XL - (k - 1) * g; hk = (NS + NW + k) * r
+        box(f"service_step{k:02d}", "step", xa, xb, 0.0, hk, z0, z1)
+        box(f"service_step{k:02d}_tread", "tread", xa, xb, hk - 0.025, hk + 0.005, z0, z1)
+        box(f"service_step{k:02d}_riser", "riser", xb, xb + 0.01, hk - r, hk - 0.025, z0, z1)
+        for f in (0.25, 0.75):                              # 2 white balusters a tread, up to the raking rail
+            c = xa + f * g
+            box(f"service_step{k:02d}_spindle{f}", "spindle", c - 0.02, c + 0.02, hk, hf(c) + 0.84, z0 + 0.01, z0 + 0.05)
     xt = XL - k * g
-    # Kevin's basement door in a short wall 0.3 m proud of the open side (measured), from the corner to past its casing
+    rail_lo = hf(XL) + 0.84                                 # one raking handrail from the tall post to the top of the flight
+    box("service_handrail", "newel", xt, XL, (hf(XL) + hf(xt)) / 2 + 0.84, (hf(XL) + hf(xt)) / 2 + 0.90, z0, z0 + 0.06, rise_x=rd(hf(xt) - hf(XL)))
+    # Kevin's basement door in a short wall 0.30 m proud of the open side (measured), from the corner to past its casing
     DX0, DX1, DZ = -1.284, -0.445, z0 - 0.30
     for b in B:
         if b["kind"] == "step" and b["name"].startswith("service_step") and b["x"][0] < DX1 + 0.2:
-            b["y"][0] = round(b["y"][1] - 0.22, 3)          # over the door: the flight is a slab (headroom under it)
-    xs = max([b["x"][1] for b in B if b["kind"] == "step" and b["name"].startswith("service_step") and b["y"][0] > 0] or [xt])
-    box("service_spandrel_end", "spandrel", x0, xs, 0.0, ceil, z0, z0 + 0.03)
-    WX1 = XL - round((XL - (DX1 + 0.15)) / g) * g          # the door's wall ends past its right casing, on a step edge (no ledge), then returns
+            b["y"][0] = rd(b["y"][1] - 0.22)                # over the door: the flight is a slab (headroom under it)
+    for b in [b for b in B if b["kind"] == "step" and b["name"].startswith("service_step") and b["y"][0] > 0]:
+        box(b["name"] + "_spandrel", "spandrel", b["x"][0], b["x"][1], 0.0, b["y"][0], z0, z0 + 0.03)   # papered, floor to the slab only
+    WX1 = XL - round((XL - (DX1 + 0.15)) / g) * g           # the door's wall ends on a step edge past its casing, then returns
     box("basement_wall_front_l", "spandrel", x0, DX0 - 0.07, 0.0, ceil, DZ - 0.03, DZ)
     box("basement_wall_front_r", "spandrel", DX1 + 0.07, WX1, 0.0, ceil, DZ - 0.03, DZ)
     box("basement_wall_head", "spandrel", DX0 - 0.07, DX1 + 0.07, 2.10, ceil, DZ - 0.03, DZ)
-    box("basement_wall_return", "spandrel", WX1 - g, WX1, 0.0, ceil, DZ, z0)   # one going deep: its faces on the step edges above it (no ledge)
+    box("basement_wall_return", "spandrel", WX1 - g, WX1, 0.0, ceil, DZ, z0)   # one going deep: its faces on the step edges (no ledge)
     box("basement_PropDoor", "door_prop", DX0, DX1, 0.0, 2.032, DZ - 0.035, DZ)
     for nm, xa, xb in (("basement_Casing_l", DX0 - 0.07, DX0), ("basement_Casing_r", DX1, DX1 + 0.07)):
         box(nm, "casing", xa, xb, 0.0, 2.10, DZ - 0.05, DZ - 0.03)
     box("basement_Casing_head", "casing", DX0 - 0.07, DX1 + 0.07, 2.032, 2.10, DZ - 0.05, DZ - 0.03)
     box("basement_PropDoor_knob", "newel", DX1 - 0.09, DX1 - 0.05, 0.92, 0.96, DZ - 0.075, DZ - 0.035)
     for j in range(1, k + 1):                               # white cut stringer along the open side
-        xa, xb = XL - j * g, XL - (j - 1) * g; hj = (nb + 1 + j) * r
+        xa, xb = XL - j * g, XL - (j - 1) * g; hj = (NS + NW + j) * r
         box(f"service_stringer{j:02d}", "stringer", xa, xb, hj - r - 0.12, hj - 0.025, z0 - 0.02, z0)
-    # posts (measured): the short newel at the landing's front doorway-side corner, the tall post at the flight's foot, a post at the wall
-    box("service_newel", "newel", XN - 0.05, XN + 0.05, 0.0, h + 1.0, 6.83, 6.93)
-    box("service_newel_post", "newel", XL - 0.05, XL + 0.05, 0.0, h + 1.35, z0, z0 + 0.1)
-    box("service_wall_post", "newel", 2.45, 2.55, 0.0, h + 1.05, z1 - 0.1, z1)
-    box("service_landing_rail", "rail", XN - 0.06, XN, h + 0.84, h + 0.9, 6.88, z1)          # newel to the wall, on the doorway side
+    # posts (measured x): short newel on the winders' doorway-side edge, tall post at the pivot, a post at the wall; raking rail between
+    ZN = 6.88; hn, hw = (NS + 1) * r, (NS + 2) * r
+    box("service_newel", "newel", XN - 0.05, XN + 0.05, 0.0, hn + 0.95, ZN - 0.05, ZN + 0.05)
+    box("service_newel_post", "newel", XL - 0.05, XL + 0.05, 0.0, hf(XL) + 1.05, z0, z0 + 0.1)
+    box("service_wall_post", "newel", 2.45, 2.55, 0.0, hw + 1.0, z1 - 0.1, z1)
+    box("service_winder_rail", "newel", XN - 0.06, XN, (hn + hw) / 2 + 0.84, (hn + hw) / 2 + 0.90, ZN, z1 - 0.1, rise_z=rd(hw - hn))
     for i in range(1, 5):
-        c = 6.88 + i * (z1 - 6.88) / 5
-        box(f"service_landing_spindle{i}", "spindle", XN - 0.05, XN - 0.01, h, h + 0.84, c - 0.02, c + 0.02)
-    return {"rise_m": r, "going_m": g, "risers": nb + 1 + k, "boxes": B, "walk_path": [],
-            "authored": f"measured: landing x {XL}-{XN} at {h:.2f} m, {nb} foot steps toward the room, {k} flight steps (going {g}, rise {r}) to x {xt:.2f}; foot fronts square (film: rounded)"}
+        c = ZN + i * (z1 - 0.1 - ZN) / 5; hc = hn + (hw - hn) * (c - ZN) / (z1 - 0.1 - ZN)
+        box(f"service_winder_spindle{i}", "spindle", XN - 0.05, XN - 0.01, hn, hc + 0.84, c - 0.02, c + 0.02)
+    return {"rise_m": r, "going_m": g, "risers": NS + NW + k, "boxes": B, "walk_path": [],
+            "authored": f"measured: {NS} straight steps + {NW} winders around the tall post (x {XL}), {k} flight steps (going {g}, rise {r}) to x {xt:.2f}; straight steps' fronts square (film: rounded)"}
 
 
 def attic_stair_spec(final, o, ceil):
