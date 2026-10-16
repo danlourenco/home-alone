@@ -230,17 +230,21 @@ def service_stair_spec(final, o):
         prism(f"service_winder{i + 1}_riser", "riser", [piv, e, e + n, piv + n], h - r, h - 0.025)
     hf = lambda x: (NS + NW + 1) * r + (XL - x) / g * r     # flight nosing line
     k = 0
-    while (NS + NW + 1 + k) * r <= ceil - 0.05 and XL - (k + 1) * g >= x0 - 1e-6:   # the flight: rising -x along the wall
+    FTF = json.loads((ROOT / "spec/house_spec.json").read_text())["stair"]["floor_to_floor_m"]
+    TOP = round(FTF - 0.20 - 0.015, 3)                      # the recess over the flight: 1.5 cm under the upstairs floor plate
+    while (NS + NW + 1 + k) * r <= TOP - 0.15 and XL - (k + 1) * g >= x0 - 1e-6:   # the flight: rising -x along the wall, into the recess
         k += 1; xa, xb = XL - k * g, XL - (k - 1) * g; hk = (NS + NW + k) * r
         box(f"service_step{k:02d}", "step", xa, xb, 0.0, hk, z0, z1)
         box(f"service_step{k:02d}_tread", "tread", xa - NOSE, xb + NOSE, hk - 0.025, hk + 0.005, z0 - NOSE, z1 + NOSE)
         box(f"service_step{k:02d}_riser", "riser", xb, xb + 0.01, hk - r, hk - 0.025, z0, z1)
         for f in (0.25, 0.75):                              # 2 white balusters a tread, up to the raking rail
             c = xa + f * g
-            box(f"service_step{k:02d}_spindle{f}", "spindle", c - 0.02, c + 0.02, hk, hf(c) + 0.84, z0 + 0.01, z0 + 0.05)
+            if hk < TOP - 0.10:                             # ending in the recess's top where the rail would rise past it
+                box(f"service_step{k:02d}_spindle{f}", "spindle", c - 0.02, c + 0.02, hk, min(hf(c) + 0.84, TOP - 0.005), z0 + 0.01, z0 + 0.05)
     xt = XL - k * g
-    rail_lo = hf(XL) + 0.84                                 # one raking handrail from the tall post to the top of the flight
-    box("service_handrail", "newel", xt, XL, (hf(XL) + hf(xt)) / 2 + 0.84, (hf(XL) + hf(xt)) / 2 + 0.90, z0, z0 + 0.06, rise_x=rd(hf(xt) - hf(XL)))
+    rail_lo = hf(XL) + 0.84                                 # one raking handrail from the tall post up into the recess's top
+    xr = max(xt, XL - (TOP - 0.005 - 0.90 - hf(XL)) / r * g)
+    box("service_handrail", "newel", xr, XL, (hf(XL) + hf(xr)) / 2 + 0.84, (hf(XL) + hf(xr)) / 2 + 0.90, z0, z0 + 0.06, rise_x=rd(hf(xr) - hf(XL)))
     # Kevin's basement door in a short wall 0.30 m proud of the open side (measured), from the corner to past its casing
     DX0, DX1, DZ = -1.284, -0.445, z0 - 0.30
     for b in B:
@@ -272,9 +276,23 @@ def service_stair_spec(final, o):
     for i in range(1, 5):
         c = ZN + i * (z1 - 0.1 - ZN) / 5; hc = hn + (hw - hn) * (c - ZN) / (z1 - 0.1 - ZN)
         box(f"service_winder_spindle{i}", "spindle", XN - 0.05, XN - 0.01, hn, hc + 0.83, c - 0.02, c + 0.02)   # ends under the rail (clash gate)
+    # the flight rises through an opening in the ceiling (Marina 918/930 s) into a recess lined in the kitchen paper, its top just
+    # under the upstairs floor: it reads as going up and touches no upstairs room (user, Oct 16: "close it off neatly"; DEVIATIONS 40)
+    OZ0 = z0 - 0.05                                         # the opening clears the balustrade on the open side
+    OPEN = {"x": [rd(x0), rd(XL)], "z": [rd(OZ0), rd(z1)], "top": TOP}
+    box("service_well_open_side", "spandrel", x0, XL, ceil, TOP, OZ0, OZ0 + 0.02)   # linings stand inside the opening
+    box("service_well_wall_side", "spandrel", x0, XL, ceil, TOP, z1 - 0.02, z1)
+    box("service_well_low_end", "spandrel", XL - 0.02, XL, ceil, TOP, OZ0 + 0.02, z1 - 0.02)
+    box("service_well_high_end", "spandrel", x0, x0 + 0.02, ceil, TOP, OZ0 + 0.02, z1 - 0.02)
+    box("service_well_top", "spandrel", x0 + 0.02, XL - 0.02, TOP - 0.01, TOP, OZ0 + 0.02, z1 - 0.02)
+    box("service_well_Casing_side", "casing", x0, XL + 0.05, ceil - 0.02, ceil, OZ0 - 0.05, OZ0 + 0.02)   # casing on the ceiling
+    box("service_well_Casing_end", "casing", XL - 0.02, XL + 0.05, ceil - 0.02, ceil, OZ0 + 0.02, z1)
+    ks = next(j for j in range(1, k + 1) if (NS + NW + j) * r + 1.20 > TOP)   # the first step Kevin (1.20 m) can't stand on
+    xs_ = XL - (ks - 1) * g                                 # its front edge: an invisible stop across the flight
+    box("service_stop", "stop", xs_ - 0.02, xs_, (NS + NW + ks - 1) * r, TOP, OZ0, z1)
     w1 = np.mean([piv, edge(ang[0]), edge(ang[1])], axis=0)   # walk test: up the straight steps onto the first winder (above it an
     path = [[(XL + XN) / 2, 0.0, z0 - NS * g - 0.7], [w1[0], (NS + 1) * r, w1[1]]]   # adult meets the 2.44 m ceiling from winder 2 on)
-    return {"rise_m": r, "going_m": g, "risers": NS + NW + k, "boxes": B, "walk_path": [[rd(v) for v in q] for q in path],
+    return {"rise_m": r, "going_m": g, "risers": NS + NW + k, "boxes": B, "walk_path": [[rd(v) for v in q] for q in path], "ceiling_openings": [OPEN],
             "authored": f"measured: {NS} straight steps + {NW} winders around the tall post (x {XL}), {k} flight steps (going {g}, rise {r}) to x {xt:.2f}; straight steps' fronts square (film: rounded)"}
 
 

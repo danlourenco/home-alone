@@ -308,6 +308,8 @@ public static partial class SpecGreybox
         var (spaces, doors) = Storey(root, (JObject)geo["upstairs"], new HashSet<string> { "main_stair_opening" }, true);
         FloorY = gy;
         var groot = new GameObject("Ground");
+        if (gj["stair"]?["ceiling_openings"] is JArray holes)   // the back stair rises through its ceiling (spec ceiling_openings)
+            geo["ground"]["ceilings"] = CutHoles((JArray)geo["ground"]["ceilings"], holes);
         var (gspaces, gdoors) = Storey(groot, (JObject)geo["ground"], paper, false);
         FloorY = 0f;
         var stairPath = Stair(root, j["stair"], true, stairOnly: true);
@@ -512,6 +514,30 @@ public static partial class SpecGreybox
             Object.DestroyImmediate(t.GetComponent<Collider>());
             t.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.ShadowsOnly;
         }
+    }
+
+    // ceiling boxes minus rectangular openings ({x, z}): each box a hole overlaps is replaced by the pieces around the hole
+    static JArray CutHoles(JArray boxes, JArray holes)
+    {
+        var cur = boxes.Cast<JObject>().ToList();
+        foreach (var h in holes)
+        {
+            float hx0 = (float)h["x"][0], hx1 = (float)h["x"][1], hz0 = (float)h["z"][0], hz1 = (float)h["z"][1];
+            var next = new List<JObject>();
+            foreach (var b in cur)
+            {
+                float x0 = (float)b["x"][0], x1 = (float)b["x"][1], z0 = (float)b["z"][0], z1 = (float)b["z"][1];
+                if (hx0 >= x1 || hx1 <= x0 || hz0 >= z1 || hz1 <= z0) { next.Add(b); continue; }
+                JObject Piece(float a0, float a1, float c0, float c1) { var q = (JObject)b.DeepClone(); q["x"] = new JArray(a0, a1); q["z"] = new JArray(c0, c1); return q; }
+                if (hx0 > x0) next.Add(Piece(x0, hx0, z0, z1));
+                if (hx1 < x1) next.Add(Piece(hx1, x1, z0, z1));
+                float mx0 = Mathf.Max(x0, hx0), mx1 = Mathf.Min(x1, hx1);
+                if (hz0 > z0) next.Add(Piece(mx0, mx1, z0, hz0));
+                if (hz1 < z1) next.Add(Piece(mx0, mx1, hz1, z1));
+            }
+            cur = next;
+        }
+        return new JArray(cur);
     }
 
     static void Box3(GameObject p, string n, JToken boxes, Material m)
@@ -1105,6 +1131,12 @@ public static partial class SpecGreybox
         {
             string kind = (string)b["kind"];
             if (stairOnly && (kind == "wall" || kind == "ceiling" || kind == "floor")) continue;   // the wall grid builds the stair hall itself
+            if (kind == "stop")
+            {   // an invisible stop: a collider only (where the head room ends)
+                Box(g, (string)b["name"], (float)b["x"][0], (float)b["x"][1], -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], mWall);
+                Object.DestroyImmediate(g.transform.GetChild(g.transform.childCount - 1).GetComponent<MeshRenderer>());
+                continue;
+            }
             if (kind == "tread" || kind == "newel" || kind == "riser" || kind == "stringer" || kind == "spindle" || kind == "spandrel" || kind == "door_prop" || kind == "casing")
             {   // the back stair (film 912/928/1044): dark wood treads and posts, white risers, stringer and balusters; the papered
                 // wall under its high end with the basement door in it

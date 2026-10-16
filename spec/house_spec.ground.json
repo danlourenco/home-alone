@@ -705,7 +705,7 @@
  "stair": {
   "rise_m": 0.183,
   "going_m": 0.3,
-  "risers": 13,
+  "risers": 14,
   "boxes": [
    {
     "name": "service_foot01",
@@ -1470,7 +1470,7 @@
     ],
     "y": [
      1.83,
-     2.807
+     2.806
     ],
     "z": [
      6.667,
@@ -1550,7 +1550,7 @@
     ],
     "y": [
      2.013,
-     2.99
+     2.806
     ],
     "z": [
      6.667,
@@ -1566,7 +1566,7 @@
     ],
     "y": [
      2.013,
-     2.899
+     2.806
     ],
     "z": [
      6.667,
@@ -1630,7 +1630,7 @@
     ],
     "y": [
      2.196,
-     3.173
+     2.806
     ],
     "z": [
      6.667,
@@ -1646,7 +1646,7 @@
     ],
     "y": [
      2.196,
-     3.082
+     2.806
     ],
     "z": [
      6.667,
@@ -1710,7 +1710,7 @@
     ],
     "y": [
      2.379,
-     3.356
+     2.806
     ],
     "z": [
      6.667,
@@ -1726,7 +1726,87 @@
     ],
     "y": [
      2.379,
-     3.265
+     2.806
+    ],
+    "z": [
+     6.667,
+     6.707
+    ]
+   },
+   {
+    "name": "service_step09",
+    "kind": "step",
+    "x": [
+     -1.22,
+     -0.92
+    ],
+    "y": [
+     2.342,
+     2.562
+    ],
+    "z": [
+     6.657,
+     7.638
+    ]
+   },
+   {
+    "name": "service_step09_tread",
+    "kind": "tread",
+    "x": [
+     -1.24,
+     -0.9
+    ],
+    "y": [
+     2.537,
+     2.567
+    ],
+    "z": [
+     6.637,
+     7.658
+    ]
+   },
+   {
+    "name": "service_step09_riser",
+    "kind": "riser",
+    "x": [
+     -0.92,
+     -0.91
+    ],
+    "y": [
+     2.379,
+     2.537
+    ],
+    "z": [
+     6.657,
+     7.638
+    ]
+   },
+   {
+    "name": "service_step09_spindle0.25",
+    "kind": "spindle",
+    "x": [
+     -1.165,
+     -1.125
+    ],
+    "y": [
+     2.562,
+     2.806
+    ],
+    "z": [
+     6.667,
+     6.707
+    ]
+   },
+   {
+    "name": "service_step09_spindle0.75",
+    "kind": "spindle",
+    "x": [
+     -1.015,
+     -0.975
+    ],
+    "y": [
+     2.562,
+     2.806
     ],
     "z": [
      6.667,
@@ -1737,18 +1817,18 @@
     "name": "service_handrail",
     "kind": "newel",
     "x": [
-     -0.92,
+     0.155,
      1.48
     ],
     "y": [
-     2.67,
-     2.73
+     2.342,
+     2.402
     ],
     "z": [
      6.657,
      6.716
     ],
-    "rise_x": 1.464
+    "rise_x": 0.808
    },
    {
     "name": "service_step06_spandrel",
@@ -1792,6 +1872,22 @@
     "y": [
      0.0,
      2.159
+    ],
+    "z": [
+     6.657,
+     6.687
+    ]
+   },
+   {
+    "name": "service_step09_spandrel",
+    "kind": "spandrel",
+    "x": [
+     -1.22,
+     -0.92
+    ],
+    "y": [
+     0.0,
+     2.342
     ],
     "z": [
      6.657,
@@ -2055,6 +2151,22 @@
     ]
    },
    {
+    "name": "service_stringer09",
+    "kind": "stringer",
+    "x": [
+     -1.22,
+     -0.92
+    ],
+    "y": [
+     2.259,
+     2.537
+    ],
+    "z": [
+     6.637,
+     6.657
+    ]
+   },
+   {
     "name": "service_newel",
     "kind": "newel",
     "x": [
@@ -2182,6 +2294,134 @@
      7.387,
      7.427
     ]
+   },
+   {
+    "name": "service_well_open_side",
+    "kind": "spandrel",
+    "x": [
+     -1.505,
+     1.48
+    ],
+    "y": [
+     2.438,
+     2.811
+    ],
+    "z": [
+     6.607,
+     6.627
+    ]
+   },
+   {
+    "name": "service_well_wall_side",
+    "kind": "spandrel",
+    "x": [
+     -1.505,
+     1.48
+    ],
+    "y": [
+     2.438,
+     2.811
+    ],
+    "z": [
+     7.618,
+     7.638
+    ]
+   },
+   {
+    "name": "service_well_low_end",
+    "kind": "spandrel",
+    "x": [
+     1.46,
+     1.48
+    ],
+    "y": [
+     2.438,
+     2.811
+    ],
+    "z": [
+     6.627,
+     7.618
+    ]
+   },
+   {
+    "name": "service_well_high_end",
+    "kind": "spandrel",
+    "x": [
+     -1.505,
+     -1.485
+    ],
+    "y": [
+     2.438,
+     2.811
+    ],
+    "z": [
+     6.627,
+     7.618
+    ]
+   },
+   {
+    "name": "service_well_top",
+    "kind": "spandrel",
+    "x": [
+     -1.485,
+     1.46
+    ],
+    "y": [
+     2.801,
+     2.811
+    ],
+    "z": [
+     6.627,
+     7.618
+    ]
+   },
+   {
+    "name": "service_well_Casing_side",
+    "kind": "casing",
+    "x": [
+     -1.505,
+     1.53
+    ],
+    "y": [
+     2.418,
+     2.438
+    ],
+    "z": [
+     6.557,
+     6.627
+    ]
+   },
+   {
+    "name": "service_well_Casing_end",
+    "kind": "casing",
+    "x": [
+     1.46,
+     1.53
+    ],
+    "y": [
+     2.418,
+     2.438
+    ],
+    "z": [
+     6.627,
+     7.638
+    ]
+   },
+   {
+    "name": "service_stop",
+    "kind": "stop",
+    "x": [
+     0.56,
+     0.58
+    ],
+    "y": [
+     1.464,
+     2.811
+    ],
+    "z": [
+     6.607,
+     7.638
+    ]
    }
   ],
   "walk_path": [
@@ -2196,7 +2436,20 @@
     6.88
    ]
   ],
-  "authored": "measured: 2 straight steps + 3 winders around the tall post (x 1.48), 8 flight steps (going 0.3, rise 0.183) to x -0.92; straight steps' fronts square (film: rounded)"
+  "ceiling_openings": [
+   {
+    "x": [
+     -1.505,
+     1.48
+    ],
+    "z": [
+     6.607,
+     7.638
+    ],
+    "top": 2.811
+   }
+  ],
+  "authored": "measured: 2 straight steps + 3 winders around the tall post (x 1.48), 9 flight steps (going 0.3, rise 0.183) to x -1.22; straight steps' fronts square (film: rounded)"
  },
  "floor_y_m": -3.026,
  "sources": {

@@ -1,0 +1,55 @@
+{
+ "gate": 7,
+ "change": "Back stair: the flight continues 2 steps through an opening in the ceiling over the straight flight into a paper-lined recess under the upstairs floor (cased on the ceiling), with an invisible stop where Kevin's head meets the recess; balustrade and handrail end in the recess top. No upstairs room changes (DEVIATIONS 40)",
+ "target": "House_WallGrid",
+ "premise": "The back stair's upper flight passes up through the ceiling plane (it does not end against it)",
+ "claim": {
+  "value": [2.811, 9],
+  "data": ["marina-frame:p1-918", "marina-frame:p1-930"],
+  "scale": ["none"],
+  "upstream": ["none"],
+  "applies_to": ["back_stair"],
+  "measured_in": ["back_stair"],
+  "assumed": {"back_stair": "DEVIATIONS 40"},
+  "surface": "ceiling-plane",
+  "surface_note": "No ceiling height is set: the back stair's ceiling stays 2.438 m; an opening is cut in it and the recess top follows the upstairs floor plate",
+  "alternatives": [
+   "current: the flight stops under the 2.438 m ceiling (7 flight steps); a climber meets the ceiling",
+   "flight through a ceiling opening into a closed recess (this change)",
+   "connected upstairs: girls' room A loses a ~1.1 x 1.0 m corner, rise 18.9 cm, arrival over the kitchen wing (declined by the user, Oct 16)",
+   "door across the stair at the winders, flight boxed behind it (declined: hides the open flight Marina and the film show)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "the upper flight and its balustrade pass up through the ceiling plane",
+     "observed_in": ["marina-frame:p1-918", "marina-frame:p1-930"],
+     "extrapolated": false
+    }
+   ]
+  }
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Marina Part 2 441-443 s: the back stair's arrival drawn as a dashed box outside her upstairs plan (it goes up; where is unmodelled)",
+   "agrees": true,
+   "type": "topological",
+   "data": ["marina-frame:p2-443"],
+   "scale": ["none"]
+  },
+  {
+   "what": "build gates: seam 0, z-fight 0, clash 0, peek 0 into closed spaces; walk unchanged",
+   "agrees": true,
+   "type": "topological",
+   "data": ["unity:build"],
+   "scale": ["none"]
+  }
+ ],
+ "renders": {
+  "before": ["spec/captures/views/svc/before-flight.png", "spec/captures/views/svc/before-up-into.png"],
+  "after": ["spec/captures/views/svc/after-flight.png", "spec/captures/views/svc/after-up-into.png"]
+ },
+ "user_walk": "pending"
+}
