@@ -26,13 +26,14 @@ BUILDS = {
     "tools/house/hifi_props.py": (["Tree.glb"], ["spec/dressing/foyer.json"]),
     "tools/house/hifi_door.py": (["FrontDoor.glb"], [LIB]),
     "tools/house/hifi_dressing.py": (["FoyerDressing.glb"], [LIB, "spec/dressing/foyer.json"]),
+    "tools/house/hifi_landing_window.py": (["LandingWindow.glb"], [LIB, "spec/house_spec.ground.json"]),
 }
 
 
 def digest(paths):
     h = hashlib.sha256()
     for p in paths:
-        h.update(p.encode()); h.update((ROOT / p).read_bytes())
+        h.update(p.encode()); h.update((ROOT / p).read_bytes() if (ROOT / p).exists() else b"missing")   # a new model is stale until built
     return h.hexdigest()[:16]
 
 

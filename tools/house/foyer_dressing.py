@@ -158,12 +158,8 @@ def main():
     P.append(box("bottom_step_bullnose_runner", [X1, X1 + 0.13], [r, r + 0.012], [zc - RW / 2, zc + RW / 2], C["runner"]))
 
     # --- landing rear wall (x = XR): window, painting and half-round table (Marina 312 s; 346-350 s)
-    wl, wr = c312.on((735, 235), 0, XR), c312.on((965, 235), 0, XR)
-    P.append(box("landing_window_glass", [XR + 0.005, XR + 0.03], [wl[1], wl[1] + 1.83], [wl[2], wr[2]], C["glass"],
-                 note=f"312 s: glass x 735-965, bottom row 235 -> sill {wl[1]:.2f} m; head not in frame: 72 in sash height assumed (DEVIATIONS 29)"))
-    for zz in np.linspace(wl[2], wr[2], 4)[1:-1]:
-        P.append(box("landing_window_mullion", [XR + 0.03, XR + 0.05], [wl[1], wl[1] + 1.83], [zz - 0.025, zz + 0.025], C["white"]))
-    P.append(box("landing_window_casing", [XR + 0.03, XR + 0.05], [wl[1] - 0.08, wl[1]], [wl[2] - 0.08, wr[2] + 0.08], C["white"]))
+    # the landing window is a real opening: measured in measurements/windows/ground.json (wall_openings; sill 2.69 from this frame,
+    # 312 s glass x 735-965 at row 235), cut by SpecGreybox.CutWallOpenings and built by tools/house/hifi_landing_window.py
     pa, pb = c312.on((560, 20), 0, XR), c312.on((668, 140), 0, XR)
     P.append(box("landing_painting", [XR + 0.01, XR + 0.04], [pb[1], pa[1]], [pa[2], pb[2]], [0.62, 0.36, 0.30], note="312 s, frame x 560-668 y 20-140"))
     ta, tb = c312.on((540, 180), 0, XR), c312.on((680, 180), 0, XR)
@@ -248,7 +244,8 @@ def main():
     walls = {"wallpaper_texture": str(tex.relative_to(ROOT)), "wallpaper_repeat_m": rep, "wainscot_m": round(float(np.median([wn, wp, wf])), 3), "reads": {"north wall 312 s": round(float(wn), 3), "picture wall 312 s": round(float(wp), 3),
              "front wall 203 s": round(float(wf), 3)}, "wainscot": C["white"], "wallpaper": C["wallpaper"], "floor": C["floor"],
              "spaces": ["foyer", "vestibule", "rear_passage"],   # rear_passage: film 2677, the damask runs on inside the arch
-             "wainscot_by_space": {"vestibule": 0.14},
+             "wainscot_by_space": {"vestibule": 0.14, "main_stair_opening": 0.0},   # the stair well's walls: papered, no floor at the
+                                                                                   # upstairs level, so no wainscot or trim (film 384, 11966)
              "wainscot_by_space_note": "film 10248 (camera solved, tools/house/film_solve_10248.py): the vestibule's walls are papered to a ~0.14 m baseboard, no 0.7 m wainscot"}
     out = {"note": __doc__.split("\n\n")[0], "colours": C, "walls": walls,
            "stair": {"step": C["white"], "spindle": C["white"], "landing": C["white"], "well_wall": C["wallpaper"], "hide": ["flight1_rail*_cap", "flight2_step*"]},

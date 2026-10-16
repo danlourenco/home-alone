@@ -1,15 +1,19 @@
 {
  "tools/house/hifi_door.py": {
-  "models": "77b731b5afda1427",
-  "sources": "be41f34139e3f252"
+  "models": "5374361b33a19de4",
+  "sources": "e98eee3ccf1e4fd7"
  },
  "tools/house/hifi_dressing.py": {
   "models": "13b0f21ecc1ecdb7",
-  "sources": "e8f6f3e347190750"
+  "sources": "e681c3a1e0a39304"
  },
  "tools/house/hifi_foyer.py": {
   "models": "28a103dfbbd34d3d",
-  "sources": "9416701a9348c4c8"
+  "sources": "e3cea731deb3b3b6"
+ },
+ "tools/house/hifi_landing_window.py": {
+  "models": "ddf776f8d8830d95",
+  "sources": "e7477f3cf9e7294d"
  },
  "tools/house/hifi_lights.py": {
   "models": "039d900b97254c67",
@@ -17,6 +21,6 @@
  },
  "tools/house/hifi_props.py": {
   "models": "7e1090fca9cf172e",
-  "sources": "ee341950942b97e2"
+  "sources": "4a3300f33ed75356"
  }
 }

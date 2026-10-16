@@ -2665,5 +2665,40 @@
    "head_m": 1.844,
    "bare": true
   }
+ ],
+ "wall_openings": [
+  {
+   "name": "landing_window",
+   "wall": "x",
+   "x": [
+    1.44,
+    1.58
+   ],
+   "face": 1.58,
+   "z_centre": 9.6745,
+   "width_m": 1.25,
+   "sill_m": 2.69,
+   "sash_m": 0.9,
+   "transom_m": 0.085,
+   "fan_rise_m": 0.125,
+   "post_m": 0.13,
+   "casing_m": 0.09,
+   "panes": [
+    3,
+    2
+   ],
+   "y": [
+    2.69,
+    3.8
+   ],
+   "z": [
+    9.0495,
+    10.2995
+   ],
+   "source": "film 11966 and 12133 (frontal, agree within 1%): inner opening 775-780 px wide; per inner width: sashes 0.72 tall, transom 0.068, fan rise 0.10, centre post 0.104, casing 0.077; two 6-over-6 sashes; elliptical fanlight with radial muntins round a half-oval hub. Width 1.25 m and sill 2.69 m (0.36 above the landing) from Marina 312 s (was tools/house/foyer_dressing.py); width checked against the landing table (0.74 m) in 12133: 1.32 m (+5%); sill checked in 12133 against the table top: ~0.40 above the landing",
+   "confidence": "medium",
+   "landing_y": 2.326,
+   "landing_y_source": "spec/dressing/foyer.json landing_carpet top (the landing at 2.314 + carpet)"
+  }
  ]
 }

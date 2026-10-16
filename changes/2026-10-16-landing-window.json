@@ -1,0 +1,82 @@
+{
+ "change": "The landing window is a real opening through the back wall of both storeys (z 9.0495-10.2995, 2.69-3.80 m), cut from measurements/windows/ground.json wall_openings, with a model of the film's window built from the same numbers (tools/house/hifi_landing_window.py): two 6-over-6 sashes, centre post, transom bar, elliptical fanlight with radial muntins, arched casing, stool, apron, white panelling below the sill. The painted-on dressing window is gone",
+ "target": "House_WallGrid",
+ "premise": "The landing's back wall holds a glazed window to the outside of the film's design, sill 0.36 m above the landing",
+ "claim": {
+  "value": [
+   1.25,
+   2.69,
+   0.9,
+   0.125
+  ],
+  "data": [
+   "film-frame:11966",
+   "film-frame:12133"
+  ],
+  "scale": [
+   "marina-frame:312"
+  ],
+  "upstream": [
+   "door-80in:312"
+  ],
+  "applies_to": [
+   "main_stair_opening"
+  ],
+  "measured_in": [
+   "main_stair_opening"
+  ]
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "width against the landing table (0.74 m, foyer.json) in film 12133: 1.32 m (+5%)",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "film-frame:12133"
+   ],
+   "scale": [
+    "object:landing-table"
+   ],
+   "upstream": [
+    "marina-frame:312"
+   ]
+  },
+  {
+   "what": "film 11966 and 12133 (two cameras): the same proportions within 1% (inner width 775/780 px; sash, transom, fan, post and casing ratios)",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "film-frame:11966",
+    "film-frame:12133"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "film 384 and 10706: the window over the landing, behind the landing newel, table to its left; daylight and trees through it",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film-frame:384",
+    "film-frame:10706"
+   ],
+   "scale": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/notes/2026-10-16T090646.png"
+  ],
+  "after": [
+   "spec/captures/views/lw/front.png",
+   "spec/captures/views/lw/landing-edge.png"
+  ],
+  "before_note": "committed render of note 09:06 (the painted-on window at the top of flight 1)"
+ },
+ "user_walk": "pending"
+}

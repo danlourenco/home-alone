@@ -110,7 +110,8 @@
    "rear_passage"
   ],
   "wainscot_by_space": {
-   "vestibule": 0.14
+   "vestibule": 0.14,
+   "main_stair_opening": 0.0
   },
   "wainscot_by_space_note": "film 10248 (camera solved, tools/house/film_solve_10248.py): the vestibule's walls are papered to a ~0.14 m baseboard, no 0.7 m wainscot"
  },
@@ -1193,94 +1194,6 @@
     0.276,
     0.11,
     0.086
-   ],
-   "collide": false,
-   "note": ""
-  },
-  {
-   "name": "landing_window_glass",
-   "x": [
-    1.585,
-    1.61
-   ],
-   "y": [
-    2.689,
-    4.519
-   ],
-   "z": [
-    9.048,
-    10.301
-   ],
-   "colour": [
-    1.0,
-    1.0,
-    1.0
-   ],
-   "collide": false,
-   "note": "312 s: glass x 735-965, bottom row 235 -> sill 2.69 m; head not in frame: 72 in sash height assumed (DEVIATIONS 29)"
-  },
-  {
-   "name": "landing_window_mullion",
-   "x": [
-    1.61,
-    1.63
-   ],
-   "y": [
-    2.689,
-    4.519
-   ],
-   "z": [
-    9.858,
-    9.908
-   ],
-   "colour": [
-    0.85,
-    0.85,
-    0.85
-   ],
-   "collide": false,
-   "note": ""
-  },
-  {
-   "name": "landing_window_mullion",
-   "x": [
-    1.61,
-    1.63
-   ],
-   "y": [
-    2.689,
-    4.519
-   ],
-   "z": [
-    9.44,
-    9.49
-   ],
-   "colour": [
-    0.85,
-    0.85,
-    0.85
-   ],
-   "collide": false,
-   "note": ""
-  },
-  {
-   "name": "landing_window_casing",
-   "x": [
-    1.61,
-    1.63
-   ],
-   "y": [
-    2.609,
-    2.689
-   ],
-   "z": [
-    9.128,
-    10.221
-   ],
-   "colour": [
-    0.85,
-    0.85,
-    0.85
    ],
    "collide": false,
    "note": ""

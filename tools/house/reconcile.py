@@ -620,6 +620,8 @@ def main():
         "sources": {"plan": str(PLAN.relative_to(ROOT)), "doors": str(DOORS.relative_to(ROOT)), "anchors": ANCHORS},
     }
     spec["windows"] = windows_spec(spec["spaces"])
+    wf = ROOT / f"measurements/windows/{FLOOR}.json"   # openings cut through walls of both storeys (the landing window), placed in spec metres
+    spec["wall_openings"] = json.loads(wf.read_text()).get("wall_openings", []) if wf.exists() else []
     (ROOT / "spec").mkdir(exist_ok=True)
     tag =(".measured" if MEASURED else "") if FLOOR == "upstairs" else ("." + FLOOR + (".measured" if MEASURED else ""))
     if VARIANT:

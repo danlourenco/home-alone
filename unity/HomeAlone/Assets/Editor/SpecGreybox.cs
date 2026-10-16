@@ -324,6 +324,7 @@ public static partial class SpecGreybox
         FloorY = 0f;
         Lights(root, spaces); FloorY = gy; Lights(groot, gspaces); FloorY = 0f;
         Volume(root);
+        CutWallOpenings(gj["wall_openings"], gy);
         HiFiStair(root, gy);
         HiFiLights(root, gy);
         LayTrim(groot);
@@ -363,6 +364,39 @@ public static partial class SpecGreybox
 
     // Trim (baseboard, wainscot cap) runs along papered faces, world boxes; laid last so they stop at everything on the wall
     static List<(Vector3 lo, Vector3 hi, Material m)> TrimRuns = new();
+    // Openings through the walls of both storeys (spec wall_openings, ground-floor metres): every wall box the opening passes through
+    // is replaced by the pieces around it (copies keep their material and collider). The window model reads the same numbers.
+    static void CutWallOpenings(JToken openings, float gy)
+    {
+        if (openings == null) return;
+        foreach (var o in openings)
+        {
+            var lo = new Vector3((float)o["x"][0], (float)o["y"][0] + gy, -(float)o["z"][1]);
+            var hi = new Vector3((float)o["x"][1], (float)o["y"][1] + gy, -(float)o["z"][0]);
+            var hole = new Bounds((lo + hi) / 2, hi - lo);
+            int cut = 0;
+            foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None).Where(r => r.name == "Wall").ToList())
+            {
+                var b = r.bounds;
+                if (b.min.x >= hi.x - 1e-4f || b.max.x <= lo.x + 1e-4f || b.min.y >= hi.y - 1e-4f || b.max.y <= lo.y + 1e-4f || b.min.z >= hi.z - 1e-4f || b.max.z <= lo.z + 1e-4f) continue;
+                void Piece(Vector3 a, Vector3 c)
+                {
+                    if (c.x - a.x < 1e-3f || c.y - a.y < 1e-3f || c.z - a.z < 1e-3f) return;
+                    var g = Object.Instantiate(r.gameObject, r.transform.parent); g.name = "Wall";
+                    g.transform.position = (a + c) / 2; g.transform.localScale = c - a;
+                }
+                // the opening runs through the wall's thickness (x); pieces below, above, and either side (z) of it
+                Piece(b.min, new Vector3(b.max.x, lo.y, b.max.z));
+                Piece(new Vector3(b.min.x, hi.y, b.min.z), b.max);
+                Piece(new Vector3(b.min.x, Mathf.Max(b.min.y, lo.y), b.min.z), new Vector3(b.max.x, Mathf.Min(b.max.y, hi.y), lo.z));
+                Piece(new Vector3(b.min.x, Mathf.Max(b.min.y, lo.y), hi.z), new Vector3(b.max.x, Mathf.Min(b.max.y, hi.y), b.max.z));
+                Object.DestroyImmediate(r.gameObject); cut++;
+            }
+            Debug.Log($"CutWallOpenings {(string)o["name"]}: {cut} wall boxes cut");
+        }
+        Physics.SyncTransforms();
+    }
+
     static void LayTrim(GameObject parent)
     {   // sampled every 2 cm against the actual surfaces of what is mounted on the wall (doors, casings, the stair's skirt):
         // bounding boxes would cut whole walls (the stair model's box covers most of the hall)
@@ -439,6 +473,7 @@ public static partial class SpecGreybox
         // trim on a papered face (film 3225, 10248): a baseboard 0.14 m tall 1.2 cm proud and, over a full wainscot, a cap rail 3 cm proud
         void TrimOn(float x0, float x1, float z0, float z1, float y0, float y1, float fin, int face)
         {   // face: -1/+1 the -x/+x face, -2/+2 the -z/+z face (spec); runs are laid by LayTrim once everything on the walls exists
+            if (fin <= 0f) return;   // a wall with no wainscot height (the stair well) has no floor to trim against
             void Run(float ya, float yb, float d)
             {
                 float fy = FloorY;
@@ -454,6 +489,7 @@ public static partial class SpecGreybox
         {   // spec z -> world -z; papered: wainscot below, paper above (cream rooms: one colour); face: the room side to trim
             if (fin == CREAM) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, creamMat); return; }
             if (fin == PLAIN || wpMat == null) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, mWall); return; }
+            if (fin <= 0f) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, wpMat); return; }   // no wainscot: paper to the bottom (the stair well)
             if (y0 < fin && y1 > fin) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, fin, wsMat); Box(gw, "Wall", x0, x1, -z1, -z0, fin, y1, wpMat); }
             else Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, y1 <= fin ? wsMat : wpMat);
             if (face == 3) { TrimOn(x0, x1, z0, z1, y0, y1, fin, -1); TrimOn(x0, x1, z0, z1, y0, y1, fin, 1); }
@@ -772,6 +808,8 @@ public static partial class SpecGreybox
             if (r.name == "Floor_foyer" || r.name == "Floor_vestibule" || r.name == "Floor_rear_passage") r.sharedMaterial = wood;
         // the potted tree (tools/house/hifi_props.py, Poly Haven), on the ground floor; its dressing boxes are hidden
         PlaceHiFi(root, gy, "Tree", null);
+        PlaceHiFi(root, gy, "LandingWindow", new Dictionary<string, Material> {   // tools/house/hifi_landing_window.py (film 11966, 12133)
+            ["LW_Brass"] = BrassMat(), ["LW_Glass"] = mGlass, ["LW_Paper"] = Dress != null ? Wallpaper(Dress["walls"]) : mWall });
         PlaceHiFi(root, gy, "FrontDoor", new Dictionary<string, Material> { ["Door_Brass"] = BrassMat() });   // tools/house/hifi_door.py (film 10248)
         PlaceHiFi(root, gy, "FoyerDressing", new Dictionary<string, Material> {   // tools/house/hifi_dressing.py: stands, poinsettias, prints (film)
             ["Door_Brass"] = BrassMat(), ["Dress_Foil"] = FoilMat(),

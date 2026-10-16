@@ -98,8 +98,8 @@ paint.box(WF - 0.05, WF, DH, TB, PZ0 + PW, PZ1 - PW)
 A, B = (PZ1 - PZ0) / 2, APEX - TB                         # semi-axes
 def ell(t, a=A, b=B):
     return ZC - a * math.cos(t), TB + b * math.sin(t)
-arc = [ell(math.radians(d)) for d in range(4, 177, 4)]
-paint.sweep([(WF - 0.03, y, z) for z, y in arc], [(0.0, 0.0), (0.03, 0.0), (0.03, 0.03), (0.0, 0.03)])   # outer molding: back on the wall, 3 cm over the arc
+paint.sweep([(WF - 0.015, y, z) for z, y in [ell(math.radians(d), A + 0.015, B + 0.015) for d in range(4, 177, 4)]],
+            [(-0.015, -0.015), (0.015, -0.015), (0.015, 0.015), (-0.015, 0.015)])   # outer molding, 3 x 3 cm over the arc (symmetric profile)
 ai, bi = A - PW, B - 0.035                                 # the fanlight opening inside the molding
 fan = [ell(math.radians(d), ai, bi) for d in range(0, 181, 6)]
 glass.face([(WF - 0.008, y, z) for z, y in fan], (-1, 0, 0))
