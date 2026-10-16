@@ -13,10 +13,13 @@ Cameras: yaw, pitch, position (x, h, z), focal; roll 0; principal point at the f
                                        parameter recovery vs error bars, outlier caught, held-out frame, canon split, budget sweep
 """
 import argparse
+import sys
+from pathlib import Path
 
 import numpy as np
 from scipy.optimize import least_squares
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 RIG_H, RIG_SD = 0.639 * 80 * 0.0254, 0.03     # Marina camera height prior (2.5% spread)
 W, H = 1920, 1080
 
@@ -25,23 +28,26 @@ W, H = 1920, 1080
 FREE = {"newel_x": 2.37,        # x1: the foot's newel side (the enclosure's doorway end)
         "open_z": 6.66,         # z0: the stair's open side toward the room
         "going": 0.262, "rise": 0.188,
-        "door_x0": -1.43, "door_x1": -0.72, "door_head": 2.032,   # basement door in the open-side plane
-        "ceiling": 2.438}
+        "door_x0": -1.43, "door_x1": -0.72, "door_head": 2.032,   # basement door leaf edges and head
+        "door_z": 6.66,         # the basement door's wall plane (built in the open-side plane; Marina 916 shows it flush with the wall to the corner)
+        "newel_h": 1.19, "post_h": 1.99,   # newel and tall-post top heights (authored in the build)
+        "doorway_z": 7.638, "doorway_head": 2.20,   # the foyer doorway's plane and head: Marina 916 puts it ~9.5 m from the camera
+        "ceiling": 2.438}                           # against ~5.8 m for the stair if it were 0.98 x 2.20 on the stair wall: fitted, not anchored
 WALL_Z, END_X, NB = 7.638, -1.505, 4    # anchored: the foyer-side wall face, the kitchen's back-right corner, 4 foot steps
 
 # Anchors: established geometry that fixes frame and scale (foyer doorway from the film-solved foyer; corner and window from the trace)
-ANCHORS = {"doorway L foot": (3.043, 0, WALL_Z), "doorway L head": (3.043, 2.20, WALL_Z),
-           "doorway R foot": (4.025, 0, WALL_Z), "doorway R head": (4.025, 2.20, WALL_Z),
-           "corner foot": (END_X, 0, WALL_Z), "window sill near": (END_X, 0.82, 4.99), "window sill far": (END_X, 0.82, 5.79),
-           "window head near": (END_X, 2.15, 4.99), "window head far": (END_X, 2.15, 5.79), "hutch corner foot": (4.12, 0, 6.0)}
+ANCHORS = {"window sill near": (END_X, 0.82, 4.99), "window sill far": (END_X, 0.82, 5.79),
+           "window head near": (END_X, 2.15, 4.99), "window head far": (END_X, 2.15, 5.79)}
 
 
 def features(p):
     """Every labelled point as a function of the parameters (dict name -> xyz with y = height above the floor)."""
     x1, z0, g, r = p["newel_x"], p["open_z"], p["going"], p["rise"]
     w = WALL_Z - z0; xl = x1 - w; F = dict(ANCHORS)
-    F["newel foot"] = (x1 - 0.05, 0, z0 - NB * g + 0.05); F["newel top"] = (x1 - 0.05, r + 1.0, z0 - NB * g + 0.05)
-    F["post foot"] = (xl + 0.05, 0, z0 - 0.05); F["post top"] = (xl + 0.05, (NB + 1) * r + 1.05, z0 - 0.05)
+    F["newel foot"] = (x1 - 0.05, 0, z0 - NB * g + 0.05); F["newel top"] = (x1 - 0.05, p["newel_h"], z0 - NB * g + 0.05)
+    F["post foot"] = (xl + 0.05, 0, z0 - 0.05); F["post top"] = (xl + 0.05, p["post_h"], z0 - 0.05)
+    for k, x in (("L", 3.043), ("R", 4.025)):      # foyer doorway jambs (x from the film-solved foyer)
+        F[f"doorway {k} foot"] = (x, 0, p["doorway_z"]); F[f"doorway {k} head"] = (x, p["doorway_head"], p["doorway_z"])
     for k in range(1, NB + 1):                     # the foot's nosings, both ends
         F[f"foot{k} nosing room end"] = (xl, k * r, z0 - (NB - k + 1) * g)
         F[f"foot{k} nosing newel end"] = (x1, k * r, z0 - (NB - k + 1) * g)
@@ -49,8 +55,10 @@ def features(p):
         F[f"flight{k} nosing"] = (xl - (k - 1) * g, (NB + 1 + k) * r, z0)   # synth() keeps only those under the ceiling)
     F["flight meets ceiling"] = (xl - (p["ceiling"] / r - NB - 2) * g, p["ceiling"], z0)   # the nosing line at ceiling height
     F["ceiling corner"] = (END_X, p["ceiling"], WALL_Z)
-    F["door L foot"] = (p["door_x0"], 0, z0); F["door R foot"] = (p["door_x1"], 0, z0)
-    F["door L head"] = (p["door_x0"], p["door_head"], z0); F["door R head"] = (p["door_x1"], p["door_head"], z0)
+    dz = p["door_z"]
+    F["door L foot"] = (p["door_x0"], 0, dz); F["door R foot"] = (p["door_x1"], 0, dz)
+    F["door L head"] = (p["door_x0"], p["door_head"], dz); F["door R head"] = (p["door_x1"], p["door_head"], dz)
+    F["door-wall corner foot"] = (END_X, 0, dz); F["door-wall ceiling corner"] = (END_X, p["ceiling"], dz)
     return F
 
 
@@ -160,7 +168,7 @@ def one(p_true, n, film, noise, rng, jack=False):
 
 def cmd_rehearse(a):
     rng = np.random.default_rng(a.seed); ok = True
-    truth = {k: v + (rng.normal(0, 0.25) if k not in ("going", "rise", "door_head", "ceiling") else rng.normal(0, 0.015)) for k, v in FREE.items()}
+    truth = {k: v + (rng.normal(0, 0.25) if k not in ("going", "rise", "door_head", "ceiling", "doorway_head") else rng.normal(0, 0.015)) for k, v in FREE.items()}
     truth["door_x1"] = truth["door_x0"] + 0.711 + rng.normal(0, 0.05)
     print("1. Recovery, 6 Marina frames, 1.5 px labels, 30% occluded, one 30 px mislabel a frame (20 trials)")
     R = [one(truth, 6, False, 1.5, rng) for _ in range(20)]
@@ -225,7 +233,215 @@ def cmd_rehearse(a):
     raise SystemExit(0 if ok else 1)
 
 
+# ---------------------------------------------------------------- labelling
+def frame_path(name):
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[2]
+    if name.startswith("film-"):
+        return root / f"0-homealone/full/homealone-movie-screencaps.com-{name[5:]}.jpg"
+    return root / f"sfm-work/refcam/frames/{name}.jpg"
+
+
+def frame_segments(name):
+    """Detected line segments of a frame (Canny + probabilistic Hough, as rig_check.py), deterministic, numbered."""
+    import rig_check
+    S = rig_check.segments(frame_path(name), min_len=25)
+    return S[np.argsort(-np.hypot(S[:, 2] - S[:, 0], S[:, 3] - S[:, 1]), kind="stable")]
+
+
+def cmd_segs(a):
+    """Numbered segments over a crop (2x), to pick features by segment id instead of reading pixels by eye."""
+    from pathlib import Path
+    from PIL import Image, ImageDraw
+    x0, y0, x1, y1 = a.roi; S = frame_segments(a.frame); k = 2
+    im = Image.open(frame_path(a.frame)).convert("RGB").crop((x0, y0, x1, y1)); im = im.resize((im.width * k, im.height * k)); d = ImageDraw.Draw(im)
+    for i, s in enumerate(S):
+        if not (x0 <= (s[0] + s[2]) / 2 <= x1 and y0 <= (s[1] + s[3]) / 2 <= y1):
+            continue
+        col = [(255, 40, 40), (40, 220, 40), (40, 120, 255), (255, 160, 0), (220, 40, 220)][i % 5]
+        d.line([((s[0] - x0) * k, (s[1] - y0) * k), ((s[2] - x0) * k, (s[3] - y0) * k)], fill=col, width=2)
+        d.text((((s[0] + s[2]) / 2 - x0) * k + 3, ((s[1] + s[3]) / 2 - y0) * k - 12), str(i), fill=col)
+    out = Path(__file__).resolve().parents[2] / f"sfm-work/joint/{a.frame}-segs-{x0}-{y0}.png"; out.parent.mkdir(parents=True, exist_ok=True); im.save(out); print(out)
+
+
+def label_uv(frame, spec, S):
+    """A label: [u, v] (by eye), {"x": [i, j]} (intersection of segments i and j), or {"on": i, "near": [u, v]} (foot of the
+    perpendicular from an eye point onto segment i: an endpoint read along a clean edge)."""
+    import rig_check
+    if isinstance(spec, list):
+        return np.array(spec, float)
+    if "x" in spec:
+        i, j = spec["x"]; P = np.cross(np.cross(rig_check.hom(S[i][:2]), rig_check.hom(S[i][2:])), np.cross(rig_check.hom(S[j][:2]), rig_check.hom(S[j][2:])))
+        return P[:2] / P[2]
+    a, b = S[spec["on"]][:2], S[spec["on"]][2:]; d = (b - a) / np.linalg.norm(b - a); q = np.array(spec["near"], float)
+    return a + ((q - a) @ d) * d
+
+
+# ---------------------------------------------------------------- hybrid: free points + one parametric flight (the pilot)
+# Marina's overhead (812 s) and 929 s show a foot/turn the 8-parameter model doesn't describe, so the pilot locates the irregular
+# parts as free 3D points (triangulated by the cameras) and keeps only the long straight flight parametric: nosing k at
+# (fx0 - k*g, fh0 + k*r, z0). Labels name nosings "nosing@k" with the frame's own count; each frame's count may be shifted by
+# up to 2 steps, and the shift with the least misfit is kept and reported. Anchors (the side window, ANCHORS) are fixed;
+# Marina's camera height is a prior. Points seen in one frame only get a weak 0.5 m prior to their start, and are flagged.
+FLIGHT0 = {"fx0": 1.6, "fh0": 1.2, "g": 0.262, "r": 0.188, "z0": 6.66}
+
+
+def points_fit(frames, X0, fl0, C0, shifts, rig=True, fix=False):
+    """frames: [{name: uv}]; X0: {name: xyz} free points; fl0: flight dict; C0: cameras. Returns X, fl, C, per-label residuals, sd."""
+    names = sorted(X0); fk = list(FLIGHT0); nP = 3 * len(names) + len(fk)
+    seen = {n: sum(n in f for f in frames) for n in names}
+    def unpack(q):
+        if fix:
+            return X0, fl0, q.reshape(-1, 6)
+        X = {n: q[3 * i:3 * i + 3] for i, n in enumerate(names)}; fl = dict(zip(fk, q[3 * len(names):nP]))
+        return X, fl, q[nP:].reshape(-1, 6)
+    def where(name, X, fl, sh):
+        if name.startswith("nosing@"):
+            kk = int(name[7:]) + sh; return np.array([fl["fx0"] - kk * fl["g"], fl["fh0"] + kk * fl["r"], fl["z0"]])
+        return np.asarray(ANCHORS[name] if name in ANCHORS else X[name], float)
+    def res(q):
+        X, fl, C = unpack(q); r = []
+        for f, c, sh in zip(frames, C, shifts):
+            keys = list(f); P = np.array([where(n, X, fl, sh) for n in keys])
+            uv, z = project(c, P); r.append(((uv - np.array([f[n] for n in keys])) * (z[:, None] > 0.1) + (z[:, None] <= 0.1) * 500).ravel())
+            if rig:   # Marina's fixed rig: one height (rig_check.py) and one field of view (f 1428 from the foyer solves, ~1%)
+                r.append([(c[3] - RIG_H) / RIG_SD * 2.0, (c[5] - 1428.0) / 15.0 * 2.0])
+        if not fix:
+            for n in names:   # one-frame points: 0.5 m prior to their start; every point: a loose 3 m one (keeps the gauge)
+                r.append((X[n] - X0[n]) / (0.5 if seen[n] < 2 else 3.0) * 2.0)
+        return np.concatenate(r)
+    q0 = np.r_[[] if fix else np.r_[np.concatenate([X0[n] for n in names]) if names else [], [fl0[k] for k in fk]], np.ravel(C0)]
+    s = least_squares(res, q0, loss="soft_l1", f_scale=3.0, x_scale="jac", max_nfev=4000)
+    X, fl, C = unpack(s.x)
+    r = s.fun; inl = np.abs(r) < 9; sig = np.sqrt(np.mean(r[inl] ** 2)) if inl.any() else 1.0
+    sd = np.sqrt(np.clip(np.diag(np.linalg.pinv(s.jac.T @ s.jac)), 0, None)) * sig
+    per = []
+    for i, (f, c, sh) in enumerate(zip(frames, C, shifts)):
+        for n, uv in f.items():
+            per.append((i, n, float(np.linalg.norm(project(c, where(n, X, fl, sh)[None])[0][0] - uv))))
+    sdX = {} if fix else {n: sd[3 * i:3 * i + 3] for i, n in enumerate(names)}
+    sdF = {} if fix else dict(zip(fk, sd[3 * len(names):nP]))
+    return X, fl, C, per, sdX, sdF, s.cost, seen
+
+
+def init_camera(f, X0, fl0, rig):
+    """Multi-start: yaw every 30 deg, a few positions in the breakfast area; the house held at its start values."""
+    best = None
+    for yaw in np.radians(np.arange(-180, 180, 30)):
+        for x, z in ((1.0, 1.5), (0.0, 3.0), (2.5, 2.5), (-0.5, 0.5)):
+            c0 = np.array([[yaw, 0.0, x, RIG_H, z, 1428.0]])
+            try:
+                out = points_fit([f], X0, fl0, c0, [0], rig, fix=True)
+            except Exception:
+                continue
+            if best is None or out[6] < best[6]:
+                best = out
+    return best[2][0]
+
+
+def cmd_points(a):
+    import json
+    L = json.loads(Path(a.labels).read_text())
+    fit_fr = [fr for fr in L if not fr.get("held_out")]; held = [fr for fr in L if fr.get("held_out")]
+    F0 = features(FREE)
+    names = sorted({n for fr in L for n in fr["pts"] if n not in ANCHORS and not n.startswith("nosing@")})
+    X0 = {n: np.array(fr0) for n, fr0 in ((n, F0.get(n, (0.0, 1.0, 7.0))) for n in names)}
+    for n, v in a_starts(L).items():
+        X0[n] = np.array(v, float)
+    fl0 = dict(FLIGHT0)
+    frames = [{n: np.array(v, float) for n, v in fr["pts"].items()} for fr in fit_fr]
+    C0 = np.array([init_camera(f, X0, fl0, True) for f in frames])
+    best = None
+    for shifts in __import__("itertools").product(*[range(-2, 3) if any(k.startswith("nosing@") for k in f) else [0] for f in frames]):
+        out = points_fit(frames, X0, fl0, C0, list(shifts))
+        if best is None or out[6] < best[0][6]:
+            best = (out, shifts)
+    (X, fl, C, per, sdX, sdF, cost, seen), shifts = best
+    print(f"fit frames {[fr['frame'] for fr in fit_fr]}; nosing shifts {list(shifts)}")
+    for i, fr in enumerate(fit_fr):
+        c = C[i]; print(f"  {fr['frame']:12s} camera x {c[2]:+.2f} z {c[4]:+.2f} h {c[3]:.2f} yaw {np.degrees(c[0]):+.0f} pitch {np.degrees(c[1]):+.1f} f {c[5]:.0f}")
+    print("flight: " + "  ".join(f"{k} {fl[k]:.3f}±{sdF[k]:.3f}" for k in fl))
+    print("points (x, h, z) ± sd, frames seen:")
+    for n in sorted(X):
+        print(f"  {n:28s} {X[n][0]:+.3f} {X[n][1]:+.3f} {X[n][2]:+.3f}  ± {sdX[n][0]:.3f} {sdX[n][1]:.3f} {sdX[n][2]:.3f}  {seen[n]}{'  <-- one frame: weak' if seen[n] < 2 else ''}")
+    bad = [(fit_fr[i]["frame"], n, e) for i, n, e in per if e > 8]
+    print(f"label residuals: median {np.median([e for *_, e in per]):.1f} px, max {max(e for *_, e in per):.1f}; over 8 px: {bad}")
+    for fr in held:
+        f = {n: np.array(v, float) for n, v in fr["pts"].items() if n in ANCHORS or n.startswith("nosing@") or n in X}
+        c0 = init_camera(f, X, fl, True)
+        hb = min((points_fit([f], X, fl, np.array([c0]), [sh], True, fix=True) for sh in range(-2, 3)), key=lambda o: o[6])
+        e = [x for *_, x in hb[3]]
+        print(f"HELD-OUT {fr['frame']}: median {np.median(e):.1f} px, max {max(e):.1f} px over {len(e)} labels")
+    out = {"frames": [fr["frame"] for fr in fit_fr], "shifts": list(shifts), "flight": fl, "flight_sd": sdF,
+           "points": {n: X[n].tolist() for n in X}, "points_sd": {n: sdX[n].tolist() for n in X}, "seen": seen,
+           "cameras": {fr["frame"]: C[i].tolist() for i, fr in enumerate(fit_fr)}, "residuals": [(fit_fr[i]["frame"], n, round(e, 2)) for i, n, e in per]}
+    Path(a.labels).with_suffix(".result.json").write_text(json.dumps(out, indent=1, default=float))
+    if a.overlay:
+        from PIL import Image, ImageDraw
+        for i, fr in enumerate(fit_fr):
+            im = Image.open(frame_path(fr["frame"])).convert("RGB"); d = ImageDraw.Draw(im)
+            for n, uv in fr["pts"].items():
+                if n.startswith("nosing@"):
+                    kk = int(n[7:]) + shifts[i]; P3 = [fl["fx0"] - kk * fl["g"], fl["fh0"] + kk * fl["r"], fl["z0"]]
+                else:
+                    P3 = ANCHORS.get(n, X.get(n))
+                q = project(C[i], np.array([P3]))[0][0]
+                d.ellipse([uv[0] - 5, uv[1] - 5, uv[0] + 5, uv[1] + 5], outline=(0, 220, 0), width=2)
+                d.line([tuple(uv), tuple(q)], fill=(255, 0, 0), width=2); d.text((uv[0] + 7, uv[1] - 14), n, fill=(255, 255, 0))
+            for kk in range(-6, 16):     # the fitted flight's nosing line
+                q = project(C[i], np.array([[fl["fx0"] - kk * fl["g"], fl["fh0"] + kk * fl["r"], fl["z0"]]]))[0][0]
+                d.ellipse([q[0] - 3, q[1] - 3, q[0] + 3, q[1] + 3], outline=(255, 0, 255))
+            o = Path(__file__).resolve().parents[2] / f"sfm-work/joint/{fr['frame']}-fit.jpg"; o.parent.mkdir(parents=True, exist_ok=True); im.save(o, quality=88)
+        print("overlays: sfm-work/joint/*-fit.jpg")
+
+
+def a_starts(L):
+    """Optional start values for free points, given in the labels file as {"start": {name: [x, h, z]}}."""
+    out = {}
+    for fr in L:
+        out.update(fr.get("start", {}))
+    return out
+
+
+def cmd_points_selftest(a):
+    """Synthetic: build features from a known truth, 4 Marina-like cameras, 1.5 px noise; free points must come back within 3 cm."""
+    rng = np.random.default_rng(2); ok = True
+    F = features(FREE); fl = dict(FLIGHT0, fx0=0.9, fh0=1.30)
+    names = ["newel top", "newel foot", "post top", "door L head", "door R head", "door L foot", "door R foot", "doorway R head", "doorway L head"]
+    truth = {n: np.array(F[n]) + rng.normal(0, 0.2, 3) for n in names}
+    C = views(rng, 5, False); frames = []
+    for c in C:
+        f = {}
+        for n in names + list(ANCHORS):
+            P3 = truth[n] if n in truth else np.array(ANCHORS[n]); uv, z = project(c, P3[None])
+            if z[0] > 0.3 and 0 <= uv[0][0] < W and 0 <= uv[0][1] < H:
+                f[n] = uv[0] + rng.normal(0, 1.5, 2)
+        for kk in range(0, 6):
+            P3 = np.array([fl["fx0"] - kk * fl["g"], fl["fh0"] + kk * fl["r"], fl["z0"]]); uv, z = project(c, P3[None])
+            if z[0] > 0.3 and 0 <= uv[0][0] < W and 0 <= uv[0][1] < H:
+                f[f"nosing@{kk + 1}"] = uv[0] + rng.normal(0, 1.5, 2)    # labelled one step out: the shift search must find -1
+        frames.append(f)
+    X0 = {n: np.array(F[n], float) for n in names}
+    C0 = np.array([init_camera(f, X0, FLIGHT0, True) for f in frames])
+    best = min((points_fit(frames, X0, dict(FLIGHT0), C0, [sh] * len(frames)) + (sh,) for sh in range(-2, 3)), key=lambda o: o[6])
+    X, flf, sdX, sh = best[0], best[1], best[4], best[-1]
+    # a shift common to every frame is the same as moving the flight one step, so compare nosing POSITIONS, not the shift
+    nose = lambda f, k: np.array([f["fx0"] - k * f["g"], f["fh0"] + k * f["r"], f["z0"]])
+    nerr = max(np.linalg.norm(nose(flf, k + sh) - nose(fl, k - 1)) for k in range(1, 6))
+    z = {n: np.linalg.norm(X[n] - truth[n]) / max(np.linalg.norm(sdX[n]), 1e-6) for n in names if best[7][n] >= 2}
+    for n in names:
+        if best[7][n] >= 2:
+            print(f"   {n:16s} error {100 * np.linalg.norm(X[n] - truth[n]):5.1f} cm  sd {100 * np.linalg.norm(sdX[n]):5.1f} cm  seen {best[7][n]}")
+    good = nerr < 0.02 and max(z.values()) < 4 and abs(flf["g"] - fl["g"]) < 0.01; ok &= good
+    print(f"nosings within {100 * nerr:.1f} cm; every point inside 4 sd of the truth (worst {max(z.values()):.1f}); going {flf['g']:.3f}  {'ok' if good else 'FAIL'}")
+    print("POINTS SELFTEST", "PASS" if ok else "FAIL")
+    raise SystemExit(0 if ok else 1)
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); sp = ap.add_subparsers(dest="cmd", required=True)
     s = sp.add_parser("rehearse"); s.add_argument("--seed", type=int, default=0); s.set_defaults(fn=cmd_rehearse)
+    s = sp.add_parser("points"); s.add_argument("labels"); s.add_argument("--overlay", action="store_true"); s.set_defaults(fn=cmd_points)
+    s = sp.add_parser("points-selftest"); s.set_defaults(fn=cmd_points_selftest)
+    s = sp.add_parser("segs"); s.add_argument("frame"); s.add_argument("roi", type=int, nargs=4); s.set_defaults(fn=cmd_segs)
     a = ap.parse_args(); a.fn(a)

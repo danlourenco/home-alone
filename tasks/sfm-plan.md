@@ -360,3 +360,27 @@ Clips from Part 1 at 1080p (the 640x360 original is deleted; use the `copy.mp4`)
   - Budget: 3+ frames at <= 2 px labels keep every parameter within ~1 cm (2 frames: up to 3.7 cm). The real error will be
     dominated by what the rehearsal cannot contain: the parametric shape being wrong (step count, newel offsets) and labelling
     the wrong physical feature. The held-out frame and the overlay are the checks for those.
+- **Back-stair pilot, labelling started (Oct 15, late)**:
+  - Marina 916 s: the flight's tread profiles (going ~65 px, rise ~44 px, ratio 0.68) and the basement door put the stair ~5.8 m
+    from her camera (camera height 1.30 m, horizon ~503). The foyer doorway, IF 0.98 x 2.20 m, would be ~9.5 m away; on the stair's
+    plane it would be only ~0.57 m wide with a ~1.85 m head. So either her doorway is smaller and lower, or it sits well behind the
+    stair's plane (end of a passage?). Lead only, by hand arithmetic; the fit decides.
+  - Model revised: the doorway's plane and head, the basement door's plane (916 shows it flush with the wall to the corner), and the
+    newel and post heights (authored in the build) are now fitted. Anchors left: the side window and the doorway's x.
+  - Rehearsal still PASS (13 parameters), but the budget is stricter: ~6 Marina frames at <= 2 px for 1-2 cm; 2 frames can diverge.
+  - `joint_fit.py segs FRAME x0 y0 x1 y1`: numbered Hough segments for labelling by segment id/intersection. Hough misses most of
+    Marina's soft CG edges (door jambs), so labels are read on refcam grids; snapping where edges are clean.
+  - Frames chosen from the 908-944 s sheet: 915, 917 (frontal, flight + door), 921, 924 (hutch wall, foyer doorway, newel),
+    927, 929 (newel at the doorway), 933, 935 (close stair, door, window); held out: one of 917/929.
+- **Back-stair pilot, first real fit: underdetermined (Oct 15, night)** (`joint_fit.py points labels/backstair-marina.json`):
+  - The 8-parameter model's layout is wrong for Marina's stair (overhead 812 s: straight flight in an enclosure with winders at the
+    bottom and a short foot out into the room; 929 s: the tall post stands nearer the room than the short newel). So the pilot
+    switched to a hybrid: free 3D points for the irregular parts, one parametric nosing line for the flight, per-frame nosing-count
+    shift search. Self-test PASS (nosings 0.9 cm; every point within 2.7 sd; a common shift is the same as moving the flight one
+    step, so positions are compared, not shift numbers).
+  - On 3 hand-labelled frames (916, 933, 935): first a telephoto collapse (cameras 100 m away, f ~37,000) with only the side window
+    anchored; with Marina's fixed f 1428 as a prior it converges to nonsense (going 6 cm, rise 3.6 cm, door heads 3-4 m off).
+    Labels by eye on soft CG edges + 2-3 frames from one side of the room + one anchor do not pin the cameras.
+  - **Conclusion:** the cameras must come from automatic tracking (hundreds of correspondences per frame), not from a dozen hand
+    labels. Labels then only triangulate the named points. Next: COLMAP sequential on every frame of Marina's 905-945 s walk
+    (1080p), scale and gravity from her fixed rig (height 0.639 door, f 1428), then triangulate the labelled stair points.
