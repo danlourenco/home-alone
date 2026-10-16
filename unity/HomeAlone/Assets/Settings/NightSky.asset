@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1279730899365738765
+--- !u!114 &-6370484833482484491
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   fogType:
     m_OverrideState: 1
     m_Value: 0
---- !u!114 &-445756511532810158
+--- !u!114 &-2367711510307721145
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,5 +112,5 @@ MonoBehaviour:
   m_Name: NightSky
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.VolumeProfile
   components:
-  - {fileID: -1279730899365738765}
-  - {fileID: -445756511532810158}
+  - {fileID: -6370484833482484491}
+  - {fileID: -2367711510307721145}

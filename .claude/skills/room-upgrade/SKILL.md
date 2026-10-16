@@ -19,7 +19,7 @@ layer of models generated from the same spec, plus real textures, props and ligh
    dressing renderers it replaces (keep their colliders).
 4. **Textures:** Poly Haven (CC0, user OK Oct 15) via `TexMat(name, id, tint, tile_m, smoothness)`: world-space triplanar, no UVs.
 5. **Props:** Poly Haven models sized and placed by the dressing piece's measured footprint and height (`hifi_props.py`).
-6. **Lighting** from the stills, then `-executeMethod BakeLighting.Bake` (bounce light): every fixture placed where the frames show it (`tools/house/hifi_lights.py` models, `SpecGreybox.HiFiLights` places them with 2700 K point lights), checked from the frame's own view.
+6. **Lighting** from the stills, then `Unity -projectPath <p> -executeMethod BakeLighting.Bake` WITHOUT `-batchmode` (bounce light; batch mode has no render loop, so no sky in the bake, and it refuses): every fixture placed where the frames show it (`tools/house/hifi_lights.py` models, `SpecGreybox.HiFiLights` places them with 2700 K point lights), checked from the frame's own view.
 
 ## Traps hit in the foyer (each cost the user a walk)
 | Trap | Fix |
@@ -46,6 +46,8 @@ layer of models generated from the same spec, plus real textures, props and ligh
 | "Fixed" after a glance at a small render; up close the joint was still broken (user: "can you always verify please?") | Render the note's own pose (note_views.py) in the note's lighting (day or night), crop the flagged spot at full resolution next to the user's shot, and look before saying fixed |
 | Lighting judged from batch renders (SpecGreybox.RenderViews): they don't apply the baked room reflection probes, so surfaces reflected the raw sky (a blue or grey wash that play mode doesn't have); four lighting "fixes" chased it (Oct 16) | Judge lighting in the live editor: clone the player camera (`Instantiate(Camera.main.gameObject)`), move the clone, render ~20 frames, `unity command capture_game_view --camera TmpCam`; never move the player (the user may be walking). Batch renders now switch the sky fallback off, so their colours are fair for geometry and finishes |
 | A "fix" for something the user's own screenshot doesn't show | Check the user's screenshots and a live capture before changing lighting |
+| Day rooms grey-blue, textures invisible (Oct 16): the day bake had no sky (batch mode) and the sun entered no window; leaks through the thin shell had been faking the fill | Bake windowed (it waits for the sky); prove a lighting input is in the bake by baking with it on and off and diffing the scenario's CellData; measure where sunlight lands with live raycasts toward the sun |
+| A bright band along every ceiling: probes 1 m apart, a layer above each ceiling in sunlit air | BakeLighting invalidates every probe outside the room volumes (ProbeAdjustmentVolumes from the rooms); the envelope (SpecGreybox.Envelope) keeps the sun out of every joint, and the Envelope check proves it |
 | An editor command times out (the open editor is blocked by a dialog) | Copy the build into the project and commit anyway; ask the user to dismiss the dialog, then load |
 
 ## Gate before the user sees it

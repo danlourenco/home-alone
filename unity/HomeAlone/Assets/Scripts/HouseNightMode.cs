@@ -9,6 +9,15 @@ public class HouseNightMode : MonoBehaviour
     public Light[] interiorLights;
     public bool[] daytimeEnabled;
     public bool night;
+    // each room's baked reflection probe and its image per scenario (BakeLighting)
+    public UnityEngine.Rendering.HighDefinition.HDAdditionalReflectionData[] reflectionProbes = new UnityEngine.Rendering.HighDefinition.HDAdditionalReflectionData[0];
+    public Texture[] dayReflections = new Texture[0], nightReflections = new Texture[0];
+    public void ApplyReflections(bool atNight)
+    {
+        var set = atNight ? nightReflections : dayReflections;
+        for (int i = 0; i < reflectionProbes.Length && i < set.Length; i++)
+            if (reflectionProbes[i] && set[i]) reflectionProbes[i].bakedTexture = set[i];
+    }
     void Update(){if(Input.GetKeyDown(KeyCode.N))SetNight(!night);}
     public void SetNight(bool enabled)
     {
@@ -18,5 +27,6 @@ public class HouseNightMode : MonoBehaviour
         // baked bounce light: BakeLighting.Bake stores a "Night" scenario beside the day one ("Default")
         var apv=UnityEngine.Rendering.ProbeReferenceVolume.instance;
         if(apv.currentBakingSet!=null&&apv.currentBakingSet.lightingScenarios.Contains("Night"))apv.lightingScenario=enabled?"Night":"Default";
+        ApplyReflections(enabled);
     }
 }

@@ -126,7 +126,7 @@ public static partial class SpecGreybox
     {
         // only surfaces seen from inside a room count: the point just in front of a face must be in a room's open volume
         bool Seen(Vector3 q) => SeamRooms.Any(r => q.y > r.y0 + 0.002f && q.y < r.y1 - 0.002f && Inside(r.pts, new Vector2(q.x, q.z)));
-        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors", "Arch_Spandrel", "ShadowCap", "_tread", "_riser", "stringer", "newel", "_HiFi", "Fixtures", "Trim" };   // generated models and fixtures: the z-fight and clash checks cover them   // an arch's curve is stepped on purpose (grey-box)
+        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors", "Arch_Spandrel", "ShadowCap", "Envelope", "_tread", "_riser", "stringer", "newel", "_HiFi", "Fixtures", "Trim" };   // generated models and fixtures: the z-fight and clash checks cover them   // an arch's curve is stepped on purpose (grey-box)
         var boxes = roots.Where(r => r != null).SelectMany(r => r.GetComponentsInChildren<MeshRenderer>())
             .Where(m => !skip.Any(k => m.name.Contains(k) || (m.transform.parent != null && m.transform.parent.name.Contains(k)) ||
                                         (m.transform.parent?.parent != null && m.transform.parent.parent.name.Contains(k))))
@@ -286,5 +286,50 @@ public static partial class SpecGreybox
         var bad = roots.Where(o => o != null).SelectMany(o => o.GetComponentsInChildren<MeshRenderer>(true))
             .Where(r => r.name.ToLower().Contains("casing") && Placed(r.transform)).Select(r => r.transform.parent.name + "/" + r.name).ToList();
         return $"Casing check: {bad.Count} casings placed apart from their opening" + (bad.Count > 0 ? " (" + string.Join(", ", bad.Take(8)) + ")" : "") + "\n";
+    }
+
+    // Trim (user note Oct 16 11:13: a gap in the moulding): along every finished room's outline, every 2 cm at the baseboard's and the
+    // cap rail's height, a ray from 10 cm inside the room toward the wall must meet trim or something mounted on the wall (a casing,
+    // a door, the stair) before bare wall; points inside something solid are skipped. Bare wall over 3 cm long is a GAP. Reads the built scene, not the trim's own runs.
+    static List<(List<Vector2> pts, float floorY, float h)> TrimRooms = new();
+
+    static string TrimCheck()
+    {
+        var temp = new List<Collider>();
+        foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
+            if (r.enabled && r.GetComponent<Collider>() == null && r.GetComponent<MeshFilter>()?.sharedMesh is Mesh mesh)
+            { var mc = r.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = mesh; temp.Add(mc); }
+        Physics.SyncTransforms();
+        var gaps = new List<string>(); int samples = 0;
+        foreach (var (p, fy, h) in TrimRooms)
+        {
+            int n = p.Count; float area = 0f;
+            for (int i = 0; i < n; i++) area += p[i].x * p[(i + 1) % n].y - p[(i + 1) % n].x * p[i].y;
+            float sg = Mathf.Sign(area);
+            var heights = h > 0.3f ? new[] { 0.07f, h + 0.01f } : new[] { 0.07f };
+            for (int i = 0; i < n; i++)
+            {
+                Vector2 a = p[i], b = p[(i + 1) % n]; float L = Vector2.Distance(a, b); if (L < 0.1f) continue;
+                Vector2 t = (b - a) / L, nOut = new Vector2(sg * t.y, -sg * t.x);
+                foreach (float y in heights)
+                {
+                    float g0 = -1f;
+                    void Close(float s) { if (g0 >= 0f && s - g0 > 0.03f) { var m = a + t * (g0 + s) / 2; gaps.Add($"GAP     {s - g0:F2} m of bare wall at y {y:F2} by spec ({m.x:F2}, {fy:F2}, {-m.y:F2})"); } g0 = -1f; }
+                    for (float s = 0.03f; s < L - 0.03f; s += 0.02f)
+                    {
+                        samples++;
+                        var q = a + t * s; var o = new Vector3(q.x - nOut.x * 0.10f, fy + y, q.y - nOut.y * 0.10f);
+                        // a sample point inside something solid (the stair's steps: their grey-box colliders stay) is not seen from the room
+                        bool bare = !Physics.CheckSphere(o, 0.005f, ~0, QueryTriggerInteraction.Ignore) && Physics.Raycast(o, new Vector3(nOut.x, 0f, nOut.y), out var hit, 0.14f, ~0, QueryTriggerInteraction.Ignore)
+                                    && hit.collider.name == "Wall" && hit.distance > 0.09f;
+                        if (bare && g0 < 0f) g0 = s; else if (!bare) Close(s);
+                    }
+                    Close(L - 0.03f);
+                }
+            }
+        }
+        foreach (var c in temp) Object.DestroyImmediate(c);
+        Physics.SyncTransforms();
+        return $"Trim check: {TrimRooms.Count} finished rooms, {samples} samples, {gaps.Count} gaps in the baseboard or cap rail\n" + string.Concat(gaps.Take(30).Select(g => g + "\n"));
     }
 }

@@ -314,7 +314,8 @@ public static partial class SpecGreybox
         var (gspaces, gdoors) = Storey(groot, (JObject)geo["ground"], paper, false);
         FloorY = 0f;
         var stairPath = Stair(root, j["stair"], true, stairOnly: true);
-        var atticPath = Stair(root, j["attic_stair"], false, "AtticStair", dress: false, stairOnly: true);
+        // its shaft and cap close it from above (user, Oct 16: sunlight down the void)
+        var atticPath = Stair(root, j["attic_stair"], false, "AtticStair", dress: false, stairOnly: true, keepAbove: 2.4f);
         FloorY = gy;
         var servicePath = new List<Vector3>();
         if (gj["stair"] != null && gj["stair"].Type != JTokenType.Null)   // service stair: its solid steps read as the papered wall under it
@@ -329,8 +330,10 @@ public static partial class SpecGreybox
         HiFiLights(root, gy);
         SwingDoors(groot, gy, geo["ground"]);
         LayTrim(groot);
+        Envelope(root, geo, j["attic_stair"]["boxes"], gj["wall_openings"], gj["stair"]?["ceiling_openings"], gy);
         Daylight(root, gy);
-        Player(spaces.First(s => s.name == "hall_corridor"));
+        var (spawn, spawnYaw) = FrontDoorSpawn(geo["ground"], j["stair"], gy);
+        Player(spawn, spawnYaw);
         var player = GameObject.Find("Player"); player.SetActive(false);
         Physics.SyncTransforms();
         string report = "WALL-GRID HOUSE (both floors from spec/geometry.json)\nUPSTAIRS\n" + WalkTest(spaces, doors);
@@ -350,6 +353,8 @@ public static partial class SpecGreybox
         report += ZFightCheck(root, groot);
         report += ClashCheck(root, groot);
         report += CasingCheck(root, groot);
+        report += TrimCheck(); TrimRooms.Clear();
+        report += EnvelopeCheck(geo, j["attic_stair"]["boxes"], gj["wall_openings"], gy);
         player.SetActive(true);
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, "walk-test-wallgrid.txt"), report);
@@ -419,7 +424,7 @@ public static partial class SpecGreybox
     }
 
     static void LayTrim(GameObject parent)
-    {   // sampled every 2 cm against the actual surfaces of what is mounted on the wall (doors, casings, the stair's skirt):
+    {   // sampled every 5 mm against the actual surfaces of what is mounted on the wall (doors, casings, the stair's skirt):
         // bounding boxes would cut whole walls (the stair model's box covers most of the hall)
         var g = Child(parent, "Trim");
         string[] blockers = { "PropDoor", "Casing", "FrontDoor_HiFi", "MainStair_HiFi" };
@@ -429,7 +434,7 @@ public static partial class SpecGreybox
             if (r.enabled && IsBlocker(r.transform) && r.GetComponent<Collider>() == null && r.GetComponent<MeshFilter>()?.sharedMesh is Mesh mesh)
             { var mc = r.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = mesh; temp.Add(mc); }
         Physics.SyncTransforms();
-        int laid = 0; const float step = 0.02f;
+        int laid = 0; const float step = 0.005f;
         foreach (var (lo, hi, m) in TrimRuns)
         {
             bool alongX = hi.x - lo.x > hi.z - lo.z;
@@ -437,7 +442,11 @@ public static partial class SpecGreybox
             bool Blocked(float t)
             {
                 var c = (lo + hi) / 2; if (alongX) c.x = t; else c.z = t;
-                var half = new Vector3(alongX ? step / 2 : (hi.x - lo.x) / 2, (hi.y - lo.y) / 2, alongX ? (hi.z - lo.z) / 2 : step / 2) - Vector3.one * 0.002f;
+                // the cell's full length along the run (a blocker 1 mm into it ends the run there); across, 2 cm either side of the trim:
+                // anything mounted on the wall in front of it stops it, not only what it touches (the front door's sidelight frames stand
+                // 1.5 cm off the wall, and a baseboard ran on behind them). The wall side holds no blockers.
+                const float reach = 0.02f;
+                var half = new Vector3(alongX ? step / 2 - 2e-4f : (hi.x - lo.x) / 2 + reach, (hi.y - lo.y) / 2 - 0.002f, alongX ? (hi.z - lo.z) / 2 + reach : step / 2 - 2e-4f);
                 return Physics.OverlapBox(c, Vector3.Max(half, Vector3.one * 0.001f), Quaternion.identity, ~0, QueryTriggerInteraction.Ignore).Any(col => IsBlocker(col.transform));
             }
             void Lay(float s0, float s1)
@@ -498,31 +507,51 @@ public static partial class SpecGreybox
             var r = spaces.FirstOrDefault(q => finishOf.ContainsKey(q.name) && Inside(q.pts, new Vector2(x, -zSpec)));
             return r != null ? finishOf[r.name] : Plain;
         }
-        // trim on a finished face (film 3225, 10248; Marina 228): a baseboard 0.14 m tall 1.2 cm proud and, over a full wainscot, a cap
-        // rail 3 cm proud
-        void TrimOn(float x0, float x1, float z0, float z1, float y0, float y1, float fin, int face)
-        {   // face: -1/+1 the -x/+x face, -2/+2 the -z/+z face (spec); runs are laid by LayTrim once everything on the walls exists
-            if (fin <= 0f) return;   // no wainscot (the stair well, the kitchen): no floor-level trim from here
-            void Run(float ya, float yb, float d)
+        // trim (film 3225, 10248; Marina 228): a baseboard 0.14 m tall 1.2 cm proud and, over a full wainscot, a cap rail 3 cm proud, laid
+        // along each finished room's outline (its polygon is the walls' room faces) wherever a wall stands behind it at the trim's height,
+        // so it runs on unbroken across every wall box and end-on stretch (user note Oct 16 11:13: a gap where per-box trim stopped short)
+        bool WallAt(float x, float z, float y) => st["walls"].Any(w => (float)w["x"][0] <= x && x <= (float)w["x"][1] && (float)w["z"][0] <= z
+                                                                   && z <= (float)w["z"][1] && (float)w["y"][0] <= y && y <= (float)w["y"][1]);
+        foreach (var rm in st["rooms"])
+        {
+            if (!finishOf.TryGetValue((string)rm["name"], out var rf) || rf.h <= 0f) continue;   // no wainscot: no trim (stair well, kitchen)
+            var p = rm["poly"].Select(q => new Vector2((float)q[0], (float)q[1])).ToList(); int n = p.Count;
+            TrimRooms.Add((p.Select(v => new Vector2(v.x, -v.y)).ToList(), FloorY, rf.h));
+            float area = 0f; for (int i = 0; i < n; i++) area += p[i].x * p[(i + 1) % n].y - p[(i + 1) % n].x * p[i].y;
+            float sg = Mathf.Sign(area);
+            Vector2 Dir(int i) => (p[(i + 1) % n] - p[i]).normalized;
+            float Turn(int i) { var a = Dir((i - 1 + n) % n); var b = Dir(i); return sg * (a.x * b.y - a.y * b.x); }   // at vertex i: > 0 convex
+            for (int i = 0; i < n; i++)
             {
-                float fy = FloorY;
-                if (face == -1) TrimRuns.Add((new Vector3(x0 - d, ya + fy, -z1), new Vector3(x0, yb + fy, -z0), wsMat));
-                else if (face == 1) TrimRuns.Add((new Vector3(x1, ya + fy, -z1), new Vector3(x1 + d, yb + fy, -z0), wsMat));
-                else if (face == -2) TrimRuns.Add((new Vector3(x0, ya + fy, -z0), new Vector3(x1, yb + fy, -z0 + d), wsMat));
-                else TrimRuns.Add((new Vector3(x0, ya + fy, -z1 - d), new Vector3(x1, yb + fy, -z1), wsMat));
+                Vector2 a = p[i], t = Dir(i), nOut = new Vector2(sg * t.y, -sg * t.x); float L = Vector2.Distance(a, p[(i + 1) % n]);
+                if (L < 1e-4f) continue;
+                if (Mathf.Abs(t.x) > 1e-4f && Mathf.Abs(t.y) > 1e-4f) { Debug.LogWarning($"Trim: {(string)rm["name"]} edge {i} not axis-aligned"); continue; }
+                float turn = Turn(i);
+                void Lay(float ya, float yb, float d)
+                {   // corners: a convex corner starts this run past the previous run's depth, a reflex one reaches back to close the wrap
+                    float s0 = turn > 1e-3f ? d : turn < -1e-3f ? -d : 0f; const float st1 = 0.01f;
+                    bool Wall(float s) { s = Mathf.Clamp(s, 0.005f, L - 0.005f); var q = a + t * s + nOut * 0.004f; return WallAt(q.x, q.y, (ya + yb) / 2); }
+                    void Add(float u0, float u1)
+                    {
+                        if (u1 - u0 < 0.02f) return;
+                        Vector2 c0 = a + t * u0, c1 = a + t * u1 - nOut * d;   // from the face into the room
+                        TrimRuns.Add((new Vector3(Mathf.Min(c0.x, c1.x), ya + FloorY, -Mathf.Max(c0.y, c1.y)),
+                                      new Vector3(Mathf.Max(c0.x, c1.x), yb + FloorY, -Mathf.Min(c0.y, c1.y)), wsMat));
+                    }
+                    float r0 = s0; bool on = Wall(s0);
+                    for (float s = s0 + st1; s < L; s += st1) { bool w = Wall(s); if (w != on) { if (on) Add(r0, s); r0 = s; on = w; } }
+                    if (on) Add(r0, L);
+                }
+                Lay(0f, 0.14f, 0.012f);   // 1 cm shallower than the stair's skirt board, which it meets
+                if (rf.h > 0.3f) Lay(rf.h - 0.01f, rf.h + 0.03f, 0.03f);
             }
-            if (y0 <= 0.001f) Run(0f, 0.14f, 0.012f);   // 1 cm shallower than the stair's skirt board, which it meets
-            if (fin > 0.3f && y0 < fin && y1 > fin + 0.03f) Run(fin - 0.01f, fin + 0.03f, 0.03f);
         }
-        void Piece(float x0, float x1, float z0, float z1, float y0, float y1, (Material upper, float h) fin, int face = 0)
-        {   // spec z -> world -z; the finish's wainscot below its height, its upper material above; face: the room side to trim
+        void Piece(float x0, float x1, float z0, float z1, float y0, float y1, (Material upper, float h) fin)
+        {   // spec z -> world -z; the finish's wainscot below its height, its upper material above
             if (fin.upper == null) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, mWall); return; }
             if (fin.h <= 0f) Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, fin.upper);
             else if (y0 < fin.h && y1 > fin.h) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, fin.h, wsMat); Box(gw, "Wall", x0, x1, -z1, -z0, fin.h, y1, fin.upper); }
             else Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, y1 <= fin.h ? wsMat : fin.upper);
-            if (face == 3) { TrimOn(x0, x1, z0, z1, y0, y1, fin.h, -1); TrimOn(x0, x1, z0, z1, y0, y1, fin.h, 1); }
-            else if (face == 4) { TrimOn(x0, x1, z0, z1, y0, y1, fin.h, -2); TrimOn(x0, x1, z0, z1, y0, y1, fin.h, 2); }
-            else if (face != 0) TrimOn(x0, x1, z0, z1, y0, y1, fin.h, face);
         }
         foreach (var b in st["walls"])
         {
@@ -553,22 +582,14 @@ public static partial class SpecGreybox
             if (thinX && !thinZ)
                 Runs(z0, z1, z => (Fin(x0 - e, z), Fin(x1 + e, z)), (za, zb, a, c) =>
                 {
-                    if (a.Item1 == null && c.Item1 == null)
-                    {   // end-on: finished, but no trim along faces that are hidden in the walls
-                        var f = EndFinish(a, new Vector2(mx, za - e), new Vector2(mx, zb + e));
-                        if (f.Item1 != null) { Piece(x0, x1, za, zb, y0, y1, f, 0); return; }
-                    }
-                    if (a == c) Piece(x0, x1, za, zb, y0, y1, a, 3); else { Piece(x0, mx, za, zb, y0, y1, a, -1); Piece(mx, x1, za, zb, y0, y1, c, 1); }
+                    if (a.Item1 == null && c.Item1 == null) { Piece(x0, x1, za, zb, y0, y1, EndFinish(a, new Vector2(mx, za - e), new Vector2(mx, zb + e))); return; }
+                    if (a == c) Piece(x0, x1, za, zb, y0, y1, a); else { Piece(x0, mx, za, zb, y0, y1, a); Piece(mx, x1, za, zb, y0, y1, c); }
                 });
             else if (thinZ && !thinX)
                 Runs(x0, x1, x => (Fin(x, z0 - e), Fin(x, z1 + e)), (xa, xb, a, c) =>
                 {
-                    if (a.Item1 == null && c.Item1 == null)
-                    {   // end-on: finished, but no trim along faces that are hidden in the walls
-                        var f = EndFinish(a, new Vector2(xa - e, mz), new Vector2(xb + e, mz));
-                        if (f.Item1 != null) { Piece(xa, xb, z0, z1, y0, y1, f, 0); return; }
-                    }
-                    if (a == c) Piece(xa, xb, z0, z1, y0, y1, a, 4); else { Piece(xa, xb, z0, mz, y0, y1, a, -2); Piece(xa, xb, mz, z1, y0, y1, c, 2); }
+                    if (a.Item1 == null && c.Item1 == null) { Piece(xa, xb, z0, z1, y0, y1, EndFinish(a, new Vector2(xa - e, mz), new Vector2(xb + e, mz))); return; }
+                    if (a == c) Piece(xa, xb, z0, z1, y0, y1, a); else { Piece(xa, xb, z0, mz, y0, y1, a); Piece(xa, xb, mz, z1, y0, y1, c); }
                 });
             else
             {   // a thick piece (a pier, a wall end): the finish beside it with the tallest wainscot, plain if none
@@ -582,7 +603,6 @@ public static partial class SpecGreybox
                 b["room"] != null && b["room"].Type != JTokenType.Null && KitchenRooms.Contains((string)b["room"]) ? Mat("Tile_Quarry", new Color(0.50f, 0.24f, 0.14f))
                 : (string)b["finish"] == "hall" && carpetHalls ? mHall : mFloor);   // the ground halls (foyer, passage) are wood
         Box3(gc, "Ceiling", st["ceilings"], mCeil);
-        ShadowCaps(go, st["ceilings"]);
         foreach (var o in st["openings"])
         {
             string kind = (string)o["kind"]; bool alongX = (string)o["axis"] == "z";
@@ -661,22 +681,6 @@ public static partial class SpecGreybox
             }
         lines.Insert(0, $"Peek check: {n} rays from rooms you can walk in, {bad} into closed spaces");
         return string.Join("\n", lines) + "\n";
-    }
-
-    // Sunlight leaked through the seam where a ceiling slab only touches the walls (user note Oct 15 23:06: "light seeping in through
-    // the ceiling in the corner"). Each ceiling gets an invisible shadows-only lid on top, 0.15 m wider on every side (past a 0.14 m
-    // wall), with no collider, so the gates and the walk are unchanged.
-    static void ShadowCaps(GameObject p, JToken ceilings)
-    {
-        var g = Child(p, "ShadowCaps");
-        foreach (var c in ceilings)
-        {
-            float y1 = (float)c["y"][1];
-            Box(g, "ShadowCap", (float)c["x"][0] - 0.15f, (float)c["x"][1] + 0.15f, -(float)c["z"][1] - 0.15f, -(float)c["z"][0] + 0.15f, y1, y1 + 0.05f, mCeil);
-            var t = g.transform.GetChild(g.transform.childCount - 1).gameObject;
-            Object.DestroyImmediate(t.GetComponent<Collider>());
-            t.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.ShadowsOnly;
-        }
     }
 
     // ceiling boxes minus rectangular openings ({x, z}): each box a hole overlaps is replaced by the pieces around the hole
@@ -964,7 +968,7 @@ public static partial class SpecGreybox
                     yield return (xs[i], xs[i + 1], zs[k], zs[k + 1]);
     }
 
-    static bool Inside(List<Vector2> poly, Vector2 p)
+    internal static bool Inside(List<Vector2> poly, Vector2 p)
     {
         bool c = false;
         for (int i = 0, n = poly.Count; i < n; i++)
@@ -1346,14 +1350,15 @@ public static partial class SpecGreybox
     }
 
     // The main stair: solid steps, landing, rails and well walls as spec boxes (spec z -> world -z); returns the walk path.
-    static List<Vector3> Stair(GameObject root, JToken st, bool skipFloorPatch, string child = "MainStair", bool dress = true, bool stairOnly = false, Material stepMat = null)
+    static List<Vector3> Stair(GameObject root, JToken st, bool skipFloorPatch, string child = "MainStair", bool dress = true, bool stairOnly = false, Material stepMat = null, float keepAbove = float.MaxValue)
     {
         if (st == null || st.Type == JTokenType.Null) return new List<Vector3>();
         var g = Child(root, child);
         foreach (var b in st["boxes"])
         {
             string kind = (string)b["kind"];
-            if (stairOnly && (kind == "wall" || kind == "ceiling" || kind == "floor")) continue;   // the wall grid builds the stair hall itself
+            // the wall grid builds the stair hall itself, up to its storey's ceiling; a shaft above that (the attic stair's) is the stair's own
+            if (stairOnly && (kind == "wall" || kind == "ceiling" || kind == "floor") && (float)b["y"][0] < keepAbove - 1e-3f) continue;
             if (kind == "stop")
             {   // an invisible stop: a collider only (where the head room ends)
                 Box(g, (string)b["name"], (float)b["x"][0], (float)b["x"][1], -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0], (float)b["y"][1], mWall);
@@ -1644,12 +1649,25 @@ public static partial class SpecGreybox
         RenderTexture.active = null; Object.DestroyImmediate(go); rt.Release();
     }
 
-    static void Player(Space hall)
-    {
-        // spawn on the hall's widest floor cell (its vertex average can sit over the stairwell; the gallery is long but narrow)
+    static void Player(Space hall) => Player(HallSpawn(hall), 0f);
+    static Vector3 HallSpawn(Space hall)
+    {   // the hall's widest floor cell (its vertex average can sit over the stairwell; the gallery is long but narrow)
         var c = Cells(hall.pts).OrderByDescending(q => Mathf.Min(q.Item2 - q.Item1, q.Item4 - q.Item3)).First();
-        var (x, z) = ((c.Item1 + c.Item2) / 2, (c.Item3 + c.Item4) / 2);
-        var p = new GameObject("Player"); p.transform.position = new Vector3(x, 0.05f, z);
+        return new Vector3((c.Item1 + c.Item2) / 2, 0.05f, (c.Item3 + c.Item4) / 2);
+    }
+    // the house's start (user, Oct 16: "start me in the foyer looking at the staircase as if i've come through the front door"): 0.6 m
+    // into the foyer through the vestibule's opening, facing the main stair's first step
+    static (Vector3 at, float yaw) FrontDoorSpawn(JToken ground, JToken stair, float gy)
+    {
+        var o = ground["openings"].First(q => q["between"].Select(t => (string)t).OrderBy(t => t).SequenceEqual(new[] { "foyer", "vestibule" }));
+        var at = new Vector3((float)o["c"] - 0.6f, gy + 0.05f, -((float)o["lo"] + (float)o["hi"]) / 2);
+        var b = stair["boxes"].First(q => (string)q["name"] == "flight1_step01");
+        var foot = new Vector3(((float)b["x"][0] + (float)b["x"][1]) / 2, at.y, -((float)b["z"][0] + (float)b["z"][1]) / 2);
+        return (at, Quaternion.LookRotation(foot - at).eulerAngles.y);
+    }
+    static void Player(Vector3 at, float yaw)
+    {
+        var p = new GameObject("Player"); p.transform.SetPositionAndRotation(at, Quaternion.Euler(0f, yaw, 0f));
         var cc = p.AddComponent<CharacterController>(); cc.radius = 0.275f; cc.height = 1.85f; cc.center = new Vector3(0, 0.925f, 0); cc.stepOffset = StepOffset; cc.skinWidth = PlayerSkin;
         var camGo = new GameObject("Camera"); camGo.transform.parent = p.transform; camGo.transform.localPosition = new Vector3(0, 1.7f, 0);
         var cam = camGo.AddComponent<Camera>(); cam.tag = "MainCamera"; cam.nearClipPlane = 0.05f; camGo.AddComponent<HDAdditionalCameraData>(); camGo.AddComponent<AudioListener>();
