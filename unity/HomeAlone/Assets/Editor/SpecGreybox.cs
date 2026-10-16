@@ -584,7 +584,7 @@ public static class SpecGreybox
             var t = (GameObject)Object.Instantiate(tree, root.transform); t.name = "Tree_HiFi"; t.transform.localPosition = new Vector3(0, gy, 0);
             foreach (var c in t.GetComponentsInChildren<Collider>()) Object.DestroyImmediate(c);
         }
-        string[] pre = { "flight1_", "flight2_", "landing", "newel", "tree_crown", "tree_trunk", "tree_pot" };
+        string[] pre = { "flight1_", "flight2_", "landing", "newel", "tree_crown", "tree_trunk", "tree_pot", "bottom_step" };
         int hidden = 0;
         foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
             if (!r.transform.IsChildOf(go.transform) && r.transform.parent != null && (r.transform.parent.name == "MainStair" || r.transform.parent.name == "Dressing")

@@ -128,14 +128,26 @@ def flight(prefix, dirx, open_z, runner_inset=0.15):
     return steps
 
 
-def stringer(steps, dirx, z_face, outward):
-    """White cut stringer on the open side: a band following the steps' profile (sawtooth top, sloped bottom 0.22 below the nosings)."""
-    zf, zb = z_face, z_face + outward * 0.03
-    for b in steps:
+def stringer(steps, dirx, z_face, outward, depth=0.25):
+    """White cut stringer on the open side: one board, stepped top (risers and treads), a straight bottom edge parallel to the
+    pitch 'depth' below the nosing line, clipped at the floor; a front face at z_face and a back face 2 cm in (user note 23:26:
+    per-step boxes stepped its bottom edge)."""
+    st = sorted(steps, key=lambda b: b["y"][1])                     # bottom step first
+    top = []
+    for b in st:
         (x0, x1), (_, y1) = b["x"], b["y"]
-        lo = y1 - RISE - 0.22
-        for zz in (zf,):
-            white.box(min(x0, x1), max(x0, x1), lo, y1 - TREAD_T, min(zf, zb), max(zf, zb))
+        front, back = (x1, x0) if dirx > 0 else (x0, x1)
+        top += [(front, y1 - RISE), (front, y1 - TREAD_T), (back, y1 - TREAD_T)]
+    yf = st[0]["y"][0]
+    slope = RISE / abs(st[0]["x"][1] - st[0]["x"][0])
+    xs = [q[0] for q in top]; x_lo, x_hi = (xs[0], xs[-1])
+    bot = lambda x: max(yf, (st[0]["y"][1] - depth) + slope * (x - top[0][0]) * (-dirx))
+    poly = top + [(x_hi, bot(x_hi))] + [(x_lo, max(bot(x_lo), yf))]
+    poly = [(x, max(y, yf)) for x, y in poly]
+    zb = z_face - outward * 0.02
+    white.poly([(x, y, z_face) for x, y in poly] if dirx * outward > 0 else [(x, y, z_face) for x, y in reversed(poly)])
+    white.poly([(x, y, zb) for x, y in reversed(poly)] if dirx * outward > 0 else [(x, y, zb) for x, y in poly])
+    return bot
 
 
 def baluster(cx, cz, y0, h):
@@ -163,10 +175,10 @@ RAIL_PROF = [(-0.03, -0.035), (0.03, -0.035), (0.035, -0.01), (0.03, 0.01), (0.0
 
 # flight 1: rises toward -x, open side at z 10.23 (rail band 10.17-10.23), wall at 11.43
 f1 = flight("flight1_step", +1, 10.23)
-stringer(f1, +1, 10.20, +1)
+bot1 = stringer(f1, +1, 10.21, -1)
 # flight 2: rises toward +x, open side at z 9.17 (rail band 9.17-9.23)
 f2 = flight("flight2_step", -1, 9.17)
-stringer(f2, -1, 9.20, -1)
+stringer(f2, -1, 9.16, -1)
 for b in f2:   # flight 2 sits on the landing as slabs: their bodies under the treads are white (seen from the foyer below)
     (x0, x1), (y0, y1), (z0, z1) = b["x"], b["y"], b["z"]
     white.box(x0, x1, y0, y1 - TREAD_T, z0, z1)
@@ -177,23 +189,34 @@ runner.box(lx0 + 0.15, lx1 - 0.15, ly1, ly1 + 0.006, lz0 + 0.15, lz1 - 0.15)
 
 # wall-side skirt board along flight 1 (Marina 193.5 s, film 2677: a white board following the pitch on the wall): through the
 # nosings, 0.30 m tall, 2 cm proud of the wall (z 11.43)
-nos = [(b["x"][1] + NOSE, b["y"][1], 11.43 - 0.011) for b in f1]
+WALL_FACE = 11.43   # the stair wall's visible face (probe: a wall layer z 11.43-11.50 runs up beside the flight)
+nos = [(b["x"][1] + NOSE, b["y"][1], WALL_FACE - 0.011) for b in f1]
 nos = [(nos[0][0] + (nos[0][0] - nos[1][0]), nos[0][1] - (nos[1][1] - nos[0][1]), nos[0][2])] + nos
 white.sweep(nos, [(-0.011, -0.10), (0.011, -0.10), (0.011, 0.20), (-0.011, 0.20)])
 
-# the wall under flight 1's open side (Marina 193.5 s): wallpaper over a white wainscot (0.705 m, foyer.json) with a cap
+# the wall under flight 1's open side (Marina 193.5 s): wallpaper between the stringer's bottom edge and a white wainscot
+# (0.705 m, foyer.json) with a cap; one plane 1 cm proud of the open side, over the flight only (the landing has its wall)
 spand, wains = Part("Spandrel", "Stair_Spandrel"), Part("Wainscot", "Stair_White")
 WAIN = json.loads((ROOT / "spec/dressing/foyer.json").read_text())["walls"]["wainscot_m"]
-zf, y_floor = 10.23 - 0.002, B["flight1_step01"]["y"][0]
-for b in f1 + [B["landing"]]:
-    (x0, x1), (y0, y1) = b["x"], b["y"]
-    top = (y1 - RISE - 0.22) if b["kind"] == "step" else y1 - 0.15     # under the stringer (flight) or the landing's fascia
-    yw = min(y_floor + WAIN, max(top, y_floor))
-    if yw > y_floor:
-        wains.quad((x0, y_floor, zf), (x0, yw, zf), (x1, yw, zf), (x1, y_floor, zf))
-    if top > y_floor + WAIN:
-        spand.quad((x0, y_floor + WAIN, zf), (x0, top, zf), (x1, top, zf), (x1, y_floor + WAIN, zf))
-wains.box(2.985, B["flight1_step01"]["x"][1], y_floor + WAIN - 0.01, y_floor + WAIN + 0.03, zf - 0.02, zf)   # wainscot cap
+zf, y_floor = 10.21 - 0.012, B["flight1_step01"]["y"][0]
+xa1, xb1 = B["flight1_step12"]["x"][0], B["flight1_step01"]["x"][1]
+wains.quad((xa1, y_floor, zf), (xa1, y_floor + WAIN, zf), (xb1, y_floor + WAIN, zf), (xb1, y_floor, zf))
+xs_ = [xa1 + (xb1 - xa1) * k / 40 for k in range(41)]
+ptop = [(x, bot1(x)) for x in xs_ if bot1(x) > y_floor + WAIN + 0.005]
+if ptop:
+    poly = [(ptop[0][0], y_floor + WAIN)] + ptop + [(ptop[-1][0], y_floor + WAIN)]
+    spand.poly([(x, y, zf) for x, y in poly])
+wains.box(xa1, xb1, y_floor + WAIN - 0.01, y_floor + WAIN + 0.03, zf - 0.02, zf)   # wainscot cap
+# the stair wall (z 11.43): a raking white wainscot from the skirt board up to a chair rail 0.705 m above the nosing line
+# (film 2677, Marina 1070.5 s)
+noseL = sorted([(b["x"][1] + NOSE, b["y"][1]) for b in f1])
+zw = WALL_FACE - 0.004
+for (xa, ya), (xb, yb) in zip(noseL, noseL[1:]):
+    wains.quad((xa, ya + 0.20, zw), (xa, ya + WAIN, zw), (xb, yb + WAIN, zw), (xb, yb + 0.20, zw))
+    wains.quad((xa, ya + 0.20, zw), (xb, yb + 0.20, zw), (xb, yb + WAIN, zw), (xa, ya + WAIN, zw))   # both faces (winding-proof)
+rk = [(x, y + WAIN + 0.015, WALL_FACE - 0.015) for x, y in noseL]
+white.sweep(rk, [(-0.015, -0.02), (0.015, -0.02), (0.015, 0.02), (-0.015, 0.02)])
+
 
 # handrail: through the cap tops' midpoints, one continuous run per flight, plus the landing's run
 def cap_line(prefix):
@@ -202,7 +225,7 @@ def cap_line(prefix):
 
 p1 = cap_line("flight1_rail"); p2 = cap_line("flight2_rail")
 step_x = abs(p1[1][0] - p1[0][0]); dy = p1[1][1] - p1[0][1]
-p1 = [(p1[0][0] + step_x, p1[0][1] - dy, p1[0][2])] + p1 + [(p1[-1][0] - step_x / 2, p1[-1][1] + dy / 2, p1[-1][2])]   # into both newels
+p1 = p1 + [(p1[-1][0] - step_x / 2, p1[-1][1] + dy / 2, p1[-1][2])]   # from the bullnose newel (over the first cap) into the landing newel
 rail.sweep(p1, RAIL_PROF)
 lc = B["landing_rail_cap"]; ly = (lc["y"][0] + lc["y"][1]) / 2; lx = (lc["x"][0] + lc["x"][1]) / 2
 rail.sweep([(lx, ly, lc["z"][1]), (lx, ly, lc["z"][0])], RAIL_PROF)
@@ -231,9 +254,23 @@ for n, b in B.items():
             top = ly - RAIL_BOTTOM
         baluster(cx, cz, b["y"][0], top - b["y"][0])
 
+# the bottom step's bullnose (film 2677, Marina 193.5 s: the first step rounds out past the open side under the newel), replacing
+# the dressing's square box (user note 23:26: "the first riser extends awkwardly")
+b1 = B["flight1_step01"]; (bx0, bx1), (by0, by1), (bz0, bz1) = b1["x"], b1["y"], b1["z"]
+BN_C, BN_R = ((bx0 + bx1) / 2, bz0), (bx1 - bx0) / 2
+arc = [(BN_C[0] + BN_R * math.cos(math.pi * k / 16), BN_C[1] - BN_R * math.sin(math.pi * k / 16)) for k in range(17)]   # front -> back via -z
+for (xa, za), (xb, zb) in zip(arc, arc[1:]):
+    white.quad((xa, by0, za), (xa, by1 - TREAD_T, za), (xb, by1 - TREAD_T, zb), (xb, by0, zb))
+cap = [(x, z) for x, z in arc]
+tread.poly([(x, by1, z) for x, z in reversed(cap)])                       # top, facing up
+tread.poly([(x, by1 - TREAD_T, z) for x, z in cap])                       # underside
+for (xa, za), (xb, zb) in zip(cap, cap[1:]):                              # tread edge round the arc
+    tread.quad((xa, by1 - TREAD_T, za), (xa, by1, za), (xb, by1, zb), (xb, by1 - TREAD_T, zb))
+NEWEL1 = (BN_C[0], bz0 - BN_R * 0.45)
+
 # newels: the foot of flight 1, the landing corner, the foot of flight 2 (grey-box rail ends)
 y_floor = B["flight1_step01"]["y"][0]
-newel_post(B["flight1_step01"]["x"][1] - 0.05, 10.20, y_floor, p1[0][1] - y_floor + 0.20)
+newel_post(NEWEL1[0], NEWEL1[1], by1, p1[0][1] - by1 + 0.20)
 newel_post(lx, 10.20, ly1, ly - ly1 + 0.20)
 newel_post(lx, 9.20, ly1 - 0.0, p2[0][1] - ly1 + 0.20)
 
