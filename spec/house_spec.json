@@ -2852,5 +2852,6 @@
    "sill_m": 0.81,
    "head_m": 2.15
   }
- ]
+ ],
+ "wall_openings": []
 }
