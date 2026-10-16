@@ -1,5 +1,91 @@
 # Current status — start here
 
+## RESUME HERE (Oct 16, 2026, afternoon): systems pass done; day lighting matches the film's set; walk notes queued
+
+**Read this section first. Then read `tasks/wall-grid-plan.md` ("Walk notes queued", including the deferred overhang split) and
+`docs/DEVIATIONS.md` 1, 34 and 40-45.** The Oct 15 section below is history except where this one points to it.
+
+### How to build, bake, load and look (one script: `tools/house/unity_pipeline.sh`)
+- `setup`, once per machine: makes the scratch build copy at `~/.cache/home-alone/ucopy/HomeAlone`, plus a `spec` link. It exists now,
+  Library imported. Never build in the user's open editor.
+- `build`: copies Editor, Scripts, Models and `HDRP.asset` into scratch and builds `House_WallGrid` in batch (~30 s). Gates go to
+  `spec/captures/walk-test-wallgrid.txt`:
+  - Seam, Z-fight, Clash, Casing, **Trim**, **Envelope** must all be 0.
+  - The walks pass except the pre-existing back-stair stall at winder 2.
+- `bake`: day and night, ~60 s. It runs WINDOWED on purpose: batch mode has no render loop, so no sky, and `BakeLighting.Bake` refuses
+  batch mode. It renders a camera for the sky; it does not wait on editor frames (a background editor ticks only every few seconds).
+- `load`: copies the scene and bake into the project, waits until the editor is neither compiling nor importing, opens the scene and
+  enters Play. Entering Play mid-import crashed Unity natively on Oct 16.
+- `all`: build, bake, load. Spec or reconciler edits still go through `verify_plan.py` and the change gate first, as before.
+- `shot NAME x y z yaw pitch [day|night]` (player pose; feet, eye +1.28) and `cam NAME px py pz lx ly lz vfov near [day|night]` take
+  live captures in the user's running editor, with a clone of the player camera. They never move the player. They land in
+  `~/.cache/home-alone/captures/`.
+  - **Judge lighting only from live captures**; batch renders lie about it.
+  - Walk-note poses are in `spec/feedback/feel-notes.jsonl` (pos = feet, yaw, pitch).
+  - Film camera poses solved earlier are in `spec/captures/views/views-foyer-film-after.json` and `film10248.json`.
+- New script in `Assets/Scripts`: create it in the repo project FIRST. Each project gives a new `.cs` its own `.meta` GUID, and a
+  scene built in scratch then points to a missing script. `load` warns when they differ.
+- Discriminator technique for "why does it look wrong":
+  - Capture the same view with one HDRP frame setting off (SkyReflection, ReflectionProbe, SSR) and compare region means. That found
+    the reflection-probe box bug in minutes.
+  - For "is X in the bake", bake with X on and off and diff the scenario's `CellData.bytes`. The sky changes ~8% of it.
+
+### The lighting model now (Oct 16), so nobody re-litigates it
+- **The house is light-tight** (DEVIATIONS 43). `SpecGreybox.Envelope` generates invisible shadow-only skins, lids, floor framing and
+  recess framing from the spec, clipped out of every room. The Envelope check (rays to the sky from every room joint must cross
+  >= 0.3 m of structure) is 0.
+- **Trim is laid along room outlines**, so joints close by construction. The Trim check ray-tests the built scene.
+- **The bake** (`Editor/BakeLighting.cs`):
+  - Probes outside the room volumes are invalidated: the ceiling band, note 11:16.
+  - Glass doesn't block the bake.
+  - Reflection probes come from the room volumes (`SpecGreybox.EnvelopeRooms`, which runs the stair well down to the ground) and
+    reach 7 cm past every surface with a 5 cm fade. A short box let the sky fill in: grey-blue rooms by day.
+  - Day and night each have their own reflection images, swapped by `HouseNightMode`.
+- **Day look = the film's set lighting** (user choice, DEVIATIONS 44). `SpecGreybox.FilmFill` puts baked-only ceiling fills in every
+  room: 300 nits, 5200 K, solved against film 2677 and 10248 by `tools/house/film_light_match.py`.
+- **The foyer fixtures** are lit at night only; by day the bulbs and shades are dark too.
+- **Orientation:** the front faces 227.6 deg (SW), measured (`tools/house/house_bearing.py`, OpenStreetMap). The film was shot here,
+  so this is not a deviation. The sun's TIME is still a placeholder (DEVIATIONS 34).
+- **Overhang stop-gap** (DEVIATIONS 45). `SpecGreybox.FilmFront` is a shadow-only flush "film front". The upstairs pieces past the
+  ground footprint go on rendering layer 1. `StoreyShadows` switches the one sun's shadow casters per storey (HDRP allows a single
+  shadowed directional light). The proper split is deferred (tasks/wall-grid-plan.md).
+- Mac: Unity HDRP has no ray tracing on Metal (measured: `SystemInfo.supportsRayTracing` False; Unity 6000.6 reports macOS RT
+  features None). Bounce light is baked.
+
+### NEXT (in order)
+1. **Read the user's walk notes on the TRIALs** (commits 4168e17, 09dd918, e30aa30, 0e3b560): the last lines of
+   `spec/feedback/feel-notes.jsonl`. Answer each from its own pose, captured live.
+2. **Note 11:26 "this window feels a bit low, can you confirm?"** (pos 3.993, 0.03, -8.677; yaw 251, pitch 22.6: upstairs, looking at
+   the landing window). Its numbers are in `measurements/windows/ground.json` `wall_openings.landing_window`: sill y 2.69 ground
+   metres, from film 11966 / 12133 and Marina 312 s. Check them with refcam from a solved film camera before changing anything.
+3. **Note 11:47:** is the foyer-living opening sized like the living-den opening? (the den one looks smaller). Case both. Measure both
+   from frames; the casing comes from the cut automatically (`kind: arch` + `cased: true`).
+4. **Note 10:48:** the dining front windows faithful to the film and Marina. They're French windows to the floor now; check against
+   the film's front (frame 4382 shows them) and Marina.
+5. **The rest of the day look:**
+   - Our wallpaper texture is deeper red than the film's pink-cream (2677 wallpaper 0.6x relative).
+   - The foyer floor reads grey-brown, not the film's dark wood with a red rug.
+   - Solve film 11966's camera and add it to `film_light_match.py`, then re-solve FillNits/FillKelvin.
+   - The dining and living rooms aren't compared with film frames yet.
+6. **Time of day** (DEVIATIONS 34): solve the sun from film 4382 (portico and branch shadows on the facade).
+7. **Exterior shutters** (WinterNeighborhood) stand inside Kevin's room (the upper ones, x 10.43) and hang over our front windows (the
+   ground ones). This is split and exterior work.
+8. Carried over from Oct 16 morning:
+   - The back-stair foot: Marina 321 / 1072.5 s show ONE foot step vs our 2. Solve those frames first.
+   - The back-stair stall at winder 2.
+   - The rest of the dining dressing (hutch, table, chairs, paintings, French doors).
+   - Mirror boxes, bench, the picture under the landing.
+   - Real sheers (DEVIATIONS 41).
+9. Deferred by the user: **the upstairs split** (overhang exists only from the stair up; tasks/wall-grid-plan.md).
+
+### Working rules learned Oct 16 (also in memory)
+- Joints that should meet must meet by construction; prove it with a scene check (walls-touch, pstack memories).
+- After two failed fixes on one symptom, write the shared premise down and test it directly (e.g. bake with X on and off). Research
+  online instead of spinning.
+- Never claim a look is fixed without a live capture from the user's view. Commit messages say TRIAL and claim only what was checked.
+
+---
+
 ## RESUME HERE (Oct 15, 2026, evening): phase 5 done, back stair in progress
 
 **Read this section, then `tasks/wall-grid-plan.md` (phases + "Walk notes queued"), then `docs/DEVIATIONS.md` 20-22 and 30-38.**
