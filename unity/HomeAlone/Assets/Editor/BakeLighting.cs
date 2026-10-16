@@ -1,4 +1,6 @@
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -23,6 +25,7 @@ public static class BakeLighting
         foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
         {
             bool isOut = outdoors != null && r.transform.IsChildOf(outdoors.transform);
+            if (r.GetComponentInParent<SwingDoor>() != null) continue;   // moving parts are not static scenery
             GameObjectUtility.SetStaticEditorFlags(r.gameObject, GameObjectUtility.GetStaticEditorFlags(r.gameObject) | StaticEditorFlags.ContributeGI);
             r.receiveGI = ReceiveGI.LightProbes;
             if (isOut || !r.enabled) continue;
@@ -36,16 +39,30 @@ public static class BakeLighting
         var pv = new GameObject("HouseProbeVolume").AddComponent<ProbeVolume>();
         pv.mode = ProbeVolume.Mode.Local; pv.transform.position = house.center; pv.size = house.size + Vector3.one;
 
-        // baked reflection probes over the foyer and vestibule (brass, gloss and glass read black with nothing to reflect)
+        // a baked reflection probe in every room, sized to it (spec/geometry.json): with none, glossy surfaces reflect the default sky
+        // (a swing door in the dining room read as sky, Oct 16; blue floors before).
         foreach (var o in Object.FindObjectsByType<ReflectionProbe>(FindObjectsSortMode.None)) if (o.name.StartsWith("Probe_")) Object.DestroyImmediate(o.gameObject);
-        foreach (var (name, c, size) in new[] { ("Probe_Foyer", new Vector3(6.0f, -1.6f, -9.6f), new Vector3(6.2f, 2.9f, 3.8f)),
-                                                ("Probe_Vestibule", new Vector3(9.6f, -1.8f, -9.6f), new Vector3(1.1f, 2.5f, 3.7f)) })
+        var geo = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/geometry.json"))));
+        int probes = 0;
+        foreach (var storey in new[] { "ground", "upstairs" })
         {
-            var rp = new GameObject(name).AddComponent<ReflectionProbe>(); rp.transform.position = c;
-            var hd = rp.gameObject.AddComponent<HDAdditionalReflectionData>();
-            rp.mode = UnityEngine.Rendering.ReflectionProbeMode.Baked; hd.mode = ProbeSettings.Mode.Baked;
-            hd.influenceVolume.shape = InfluenceShape.Box; hd.influenceVolume.boxSize = size; hd.influenceVolume.boxBlendDistancePositive = Vector3.one * 0.3f; hd.influenceVolume.boxBlendDistanceNegative = Vector3.one * 0.3f;
+            float fy = (float)geo[storey]["floor_y"];
+            foreach (var r in geo[storey]["rooms"].Where(r => (string)r["kind"] != "opening"))
+            {
+                var xs = r["poly"].Select(q => (float)q[0]).ToList(); var zs = r["poly"].Select(q => -(float)q[1]).ToList();
+                float ceil = (float)r["ceil"];
+                var size = new Vector3(xs.Max() - xs.Min() + 0.14f, ceil, zs.Max() - zs.Min() + 0.14f);   // to the middle of its walls: a door leaf there is inside
+                var centre = new Vector3((xs.Min() + xs.Max()) / 2, fy + ceil / 2, (zs.Min() + zs.Max()) / 2);
+                var rp = new GameObject("Probe_" + (string)r["name"]).AddComponent<ReflectionProbe>();
+                rp.transform.position = centre;
+                var hd = rp.gameObject.AddComponent<HDAdditionalReflectionData>();
+                rp.mode = UnityEngine.Rendering.ReflectionProbeMode.Baked; hd.mode = ProbeSettings.Mode.Baked;
+                hd.influenceVolume.shape = InfluenceShape.Box; hd.influenceVolume.boxSize = size;
+                hd.influenceVolume.boxBlendDistancePositive = Vector3.one * 0.15f; hd.influenceVolume.boxBlendDistanceNegative = Vector3.one * 0.15f;
+                probes++;
+            }
         }
+        Debug.Log($"BakeLighting: {probes} room reflection probes");
 
         // the sky lights the bake through the windows
         var vol = Object.FindObjectsByType<Volume>(FindObjectsSortMode.None).First(v => v.isGlobal);

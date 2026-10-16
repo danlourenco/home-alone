@@ -82,7 +82,13 @@
      1125,
      570
     ]
-   ]
+   ],
+   "span_spec": [
+    6.529,
+    7.239
+   ],
+   "span_spec_axis": "z",
+   "span_source": "Marina 228 s (and 226 s): along the dining room's rear wall, the vertical scale of the door casings (2.10 m) and the wainscot cap is linear across the image (228: 376/344/330 px/m at u 850/1520/1810, fit within 1 px/m; the cap reads 0.705 m = the house's measured wainscot); positions follow from s = K/V + c (tools/house/wall_scale.py): doors 0.71 m, wall between them 2.10 m (226: 0.66 / 2.07). As measured the pattern starts 0.555 m from the sunroom-side corner and closes on the room's 4.634 m within 1 mm; it is built 0.16 m toward the foyer so the right door keeps its near jamb at the kitchen's corner (z 3.649 + casing): DEVIATIONS 42"
   },
   {
    "a": "dining_room",
@@ -98,7 +104,13 @@
      1296,
      570
     ]
-   ]
+   ],
+   "span_spec": [
+    3.719,
+    4.429
+   ],
+   "span_spec_axis": "z",
+   "span_source": "Marina 228 s (and 226 s): along the dining room's rear wall, the vertical scale of the door casings (2.10 m) and the wainscot cap is linear across the image (228: 376/344/330 px/m at u 850/1520/1810, fit within 1 px/m; the cap reads 0.705 m = the house's measured wainscot); positions follow from s = K/V + c (tools/house/wall_scale.py): doors 0.71 m, wall between them 2.10 m (226: 0.66 / 2.07). As measured the pattern starts 0.555 m from the sunroom-side corner and closes on the room's 4.634 m within 1 mm; it is built 0.16 m toward the foyer so the right door keeps its near jamb at the kitchen's corner (z 3.649 + casing): DEVIATIONS 42"
   },
   {
    "a": "dining_room",

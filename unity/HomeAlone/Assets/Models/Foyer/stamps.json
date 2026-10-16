@@ -13,7 +13,7 @@
  },
  "tools/house/hifi_landing_window.py": {
   "models": "ddf776f8d8830d95",
-  "sources": "e7477f3cf9e7294d"
+  "sources": "221f3589e3deabdf"
  },
  "tools/house/hifi_lights.py": {
   "models": "039d900b97254c67",
@@ -22,5 +22,9 @@
  "tools/house/hifi_props.py": {
   "models": "7e1090fca9cf172e",
   "sources": "4a3300f33ed75356"
+ },
+ "tools/house/hifi_swing_door.py": {
+  "models": "f7e1a4cdfc07a73c",
+  "sources": "d072179a38108c04"
  }
 }

@@ -327,6 +327,7 @@ public static partial class SpecGreybox
         CutWallOpenings(gj["wall_openings"], gy);
         HiFiStair(root, gy);
         HiFiLights(root, gy);
+        SwingDoors(groot, gy, geo["ground"]);
         LayTrim(groot);
         Daylight(root, gy);
         Player(spaces.First(s => s.name == "hall_corridor"));
@@ -395,6 +396,26 @@ public static partial class SpecGreybox
             Debug.Log($"CutWallOpenings {(string)o["name"]}: {cut} wall boxes cut");
         }
         Physics.SyncTransforms();
+    }
+
+    // The dining room's swing door (tools/house/hifi_swing_door.py, Marina 228 s) in the dining-kitchen door nearest the foyer, hinged
+    // on its foyer-side jamb, turned by SwingDoor.cs; no collider (the opening stays walkable, the gates do not change)
+    static void SwingDoors(GameObject root, float gy, JToken ground)
+    {
+        var o = ground["openings"].Where(q => q["between"].Select(t => (string)t).SequenceEqual(new[] { "dining_room", "kitchen" }))
+            .OrderByDescending(q => (float)q["hi"]).FirstOrDefault();
+        var a = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Models/Foyer/SwingDoor.glb");
+        if (o == null || a == null) { Debug.LogWarning("SwingDoors: no opening or model"); return; }
+        var hinge = new GameObject("DiningSwingDoor"); hinge.transform.SetParent(root.transform, false);
+        hinge.transform.position = new Vector3((float)o["c"], gy, -((float)o["hi"] - 0.005f));
+        var leaf = (GameObject)Object.Instantiate(a, hinge.transform); leaf.name = "Leaf"; leaf.transform.localPosition = Vector3.zero;
+        foreach (var c in leaf.GetComponentsInChildren<Collider>()) Object.DestroyImmediate(c);
+        foreach (var r in leaf.GetComponentsInChildren<MeshRenderer>())
+        {
+            if (r.sharedMaterial != null && r.sharedMaterial.name.StartsWith("SD_Brass")) r.sharedMaterial = BrassMat();
+            else if (r.sharedMaterial != null && r.sharedMaterial.name.StartsWith("SD_Paint")) r.sharedMaterial = mProp;   // the house's door paint (HDRP/Lit)
+        }
+        var sd = hinge.AddComponent<SwingDoor>(); sd.leaf = leaf.transform; sd.width = (float)o["hi"] - (float)o["lo"] - 0.01f;
     }
 
     static void LayTrim(GameObject parent)
@@ -1279,6 +1300,9 @@ public static partial class SpecGreybox
         var env = profile.Add<VisualEnvironment>(true); env.skyType.value = (int)SkyType.PhysicallyBased; AssetDatabase.AddObjectToAsset(env, profile);
         var sky = profile.Add<PhysicallyBasedSky>(true); AssetDatabase.AddObjectToAsset(sky, profile);
         var exp = profile.Add<Exposure>(true); exp.mode.value = ExposureMode.Automatic; exp.limitMin.value = 4f; exp.limitMax.value = 12f; AssetDatabase.AddObjectToAsset(exp, profile);
+        // baked bounce light (APV) is looked up 0.25 m out along each surface's normal: a door leaf set in a 14 cm wall read its light
+        // from inside the wall (invalid, black) and showed only reflections (Oct 16)
+        var pvo = profile.Add<ProbeVolumesOptions>(true); pvo.normalBias.value = 0.25f; AssetDatabase.AddObjectToAsset(pvo, profile);
         var vol = new GameObject("GlobalVolume").AddComponent<Volume>(); vol.transform.parent = root.transform; vol.isGlobal = true; vol.sharedProfile = profile;
     }
 

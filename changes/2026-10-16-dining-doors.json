@@ -1,0 +1,86 @@
+{
+ "change": "Dining room's two kitchen doors: 0.71 m wide (were 1.03 / 1.01) with 2.10 m of wall between them (was 1.68), at z 3.719-4.429 and 6.529-7.239; the one by the foyer gets a double-acting swing door (tools/house/hifi_swing_door.py, SwingDoor.cs, no collider)",
+ "target": "House_WallGrid",
+ "premise": "The rear wall's doors are standard-width doors; the overhead's open leaves over-read their width",
+ "claim": {
+  "value": [
+   0.71,
+   2.1
+  ],
+  "data": [
+   "marina-frame:228",
+   "marina-frame:226"
+  ],
+  "scale": [
+   "door-80in:228"
+  ],
+  "upstream": [
+   "door-80in:228"
+  ],
+  "applies_to": [
+   "dining_room",
+   "kitchen"
+  ],
+  "measured_in": [
+   "dining_room"
+  ],
+  "assumed": {
+   "kitchen": "DEVIATIONS 42"
+  }
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "closure on the room's length: corner gap + door + wall + door + corner gap = 0.555 + 0.71 + 2.10 + 0.71 + 0.555 = 4.63 m vs the room's 4.634 m from the ground overhead trace (not used in the frame measurement)",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "overhead-trace:ground"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ],
+   "upstream": [
+    "overhead-trace:ground"
+   ]
+  },
+  {
+   "what": "the scale's own check: the wainscot cap solves to 0.704 m in 228 (the house's wainscot measured in the foyer from Marina 312/203 s: 0.705)",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "marina-frame:312"
+   ],
+   "scale": [
+    "object:wainscot"
+   ],
+   "upstream": [
+    "marina-frame:203"
+   ]
+  },
+  {
+   "what": "Marina's ground overhead (994 s) door leaves read 1.03 m and the wall between 1.68 m (the old build)",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "overhead-trace:ground"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ],
+   "disposition": "the overhead is a perspective view from above: open door leaves are tall and lean toward the camera, so they read long; the perspective frames measure the openings in their own wall plane"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/dining/marina-228-ref.png"
+  ],
+  "after": [
+   "spec/captures/views/dining/rear-wall.png",
+   "spec/captures/views/dining/marina-228.png"
+  ],
+  "before_note": "no render of the dining room's rear wall was made before the change; the reference is Marina 228 s, which the after renders are compared with (dining/marina-228.png from about her camera)"
+ },
+ "user_walk": "pending"
+}

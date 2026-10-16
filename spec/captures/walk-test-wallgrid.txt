@@ -18,8 +18,8 @@ ok      den <-> living_room (arch, 1.51 m)
 ok      living_room <-> foyer (arch, 1.49 m)
 ok      foyer <-> dining_room (arch, 1.71 m)
 ok      foyer <-> vestibule (arch, 1.65 m)
-ok      dining_room <-> kitchen (door, 1.01 m)
-ok      dining_room <-> kitchen (door, 1.03 m)
+ok      dining_room <-> kitchen (door, 0.71 m)
+ok      dining_room <-> kitchen (door, 0.71 m)
 ok      foyer <-> kitchen (arch, 0.98 m)
 ok      foyer <-> rear_passage (arch, 1.38 m)
 Stair walk test (both bodies, up and down): 30 legs, 0 blocked
@@ -62,13 +62,13 @@ ok      player up leg 1: ended 0.04 m from waypoint, 0.00 m off its floor height
 ok      player down leg 1: ended 0.01 m from waypoint, 0.03 m off its floor height, 59 frames (clean walk 53)
 Stair walk test (both bodies, up and down): 6 legs, 1 blocked
 ok      bandit up leg 1: ended 0.09 m from waypoint, 0.02 m off its floor height
-ok      bandit down leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
 ok      kevin up leg 1: ended 0.02 m from waypoint, 0.08 m off its floor height
 ok      kevin down leg 1: ended 0.02 m from waypoint, 0.02 m off its floor height
 BLOCKED player up leg 1: ended 0.08 m from waypoint, 0.06 m off its floor height by ServiceStair/service_winder2_tread at (2.28, -2.42, 6.81) spec x,y,z, 1500 frames (clean walk 26) STALLED
 ok      player down leg 1: ended 0.02 m from waypoint, 0.03 m off its floor height, 25 frames (clean walk 26)
 Render check (outward faces, ServiceStair): 97 parts, 0 inside-out
-Seam check: 526 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
+Seam check: 528 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
 Leak and headroom check: 1368 points, 0 leaks, 2 low-headroom points (ground floor, outside flight 1)
 LOW     kitchen at (-3.9, 3.9): 0.74 m clear under Openings/Casing
 LOW     kitchen at (-3.4, 3.9): 0.74 m clear under Openings/Casing
@@ -81,6 +81,6 @@ skip    bandit back_stair: no cell to stand in (its floor is a stair)
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin back_stair: no cell to stand in (its floor is a stair)
-Z-fight check: 68259 triangles, 959 surfaces, 0 coplanar pairs seen from rooms
-Clash check: 69052 triangles, 0 parts passing through another (12 allowed joints)
+Z-fight check: 68439 triangles, 961 surfaces, 0 coplanar pairs seen from rooms
+Clash check: 69232 triangles, 0 parts passing through another (12 allowed joints)
 Casing check: 0 casings placed apart from their opening

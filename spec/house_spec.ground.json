@@ -458,18 +458,18 @@
    "wall_coord": -0.388,
    "wall_thickness": 0.14,
    "span": [
-    5.72,
-    6.734
+    5.825,
+    6.535
    ],
-   "width": 1.015,
+   "width": 0.71,
    "height": 2.032,
    "opens": true,
-   "placed_from": "read in the overhead",
+   "placed_from": "measured",
    "source": "overhead: open door leaf, dining room's rear wall (left)",
    "wall_coord_spec": 4.19,
    "span_spec": [
-    6.424,
-    7.438
+    6.529,
+    7.239
    ],
    "spec_axis": "x"
   },
@@ -483,18 +483,18 @@
    "wall_coord": -0.388,
    "wall_thickness": 0.14,
    "span": [
-    2.967,
-    3.997
+    3.015,
+    3.725
    ],
-   "width": 1.03,
+   "width": 0.71,
    "height": 2.032,
    "opens": true,
-   "placed_from": "read in the overhead",
+   "placed_from": "measured",
    "source": "overhead: second open door leaf on the dining room's rear wall (right), mirroring the left one; the china cabinet sits between them (user walk note Oct 15; Marina 1116 s from the kitchen side: two doorways flanking the built-in cabinet)",
    "wall_coord_spec": 4.19,
    "span_spec": [
-    3.671,
-    4.701
+    3.719,
+    4.429
    ],
    "spec_axis": "x"
   },

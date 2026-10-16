@@ -27,6 +27,7 @@ BUILDS = {
     "tools/house/hifi_door.py": (["FrontDoor.glb"], [LIB]),
     "tools/house/hifi_dressing.py": (["FoyerDressing.glb"], [LIB, "spec/dressing/foyer.json"]),
     "tools/house/hifi_landing_window.py": (["LandingWindow.glb"], [LIB, "spec/house_spec.ground.json"]),
+    "tools/house/hifi_swing_door.py": (["SwingDoor.glb"], [LIB, "spec/geometry.json"]),
 }
 
 
