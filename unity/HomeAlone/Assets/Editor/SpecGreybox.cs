@@ -322,6 +322,7 @@ public static class SpecGreybox
         Lights(root, spaces); FloorY = gy; Lights(groot, gspaces); FloorY = 0f;
         Volume(root);
         HiFiStair(root, gy);
+        HiFiLights(root, gy);
         Daylight(root, gy);
         Player(spaces.First(s => s.name == "hall_corridor"));
         var player = GameObject.Find("Player"); player.SetActive(false);
@@ -544,6 +545,44 @@ public static class SpecGreybox
         m.SetFloat("_UVBase", 5f); m.SetFloat("_TexWorldScale", 1f / tile); m.SetFloat("_Smoothness", smooth);
         UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(m);
         EditorUtility.SetDirty(m); return m;
+    }
+
+    // The foyer's fixtures (tools/house/hifi_lights.py) placed from the stills, each with a warm light that stays on (the film's
+    // foyer has them lit in daytime): the brass cage lantern on a chain in the vestibule on the front door's axis (sled POV
+    // 3220-3229, landing 25), two-arm sconces on the vestibule's front wall either side of the door's sidelights (776-784; the
+    // foyer wall beside the inner opening carries only the prints, 3223) and either side of
+    // the oval mirror (Marina 1070.5 s). Spec metres above the ground floor; Unity z = -spec z.
+    static void HiFiLights(GameObject root, float gy)
+    {
+        var g = Child(root, "FoyerFixtures");
+        var brass = Mat("HiFi_Brass", new Color(0.62f, 0.45f, 0.2f)); brass.SetFloat("_Metallic", 1f); brass.SetFloat("_Smoothness", 0.6f);
+        var candle = Mat("HiFi_Candle", new Color(0.95f, 0.94f, 0.9f)); candle.SetFloat("_Smoothness", 0.35f);
+        var bulb = Mat("HiFi_Bulb", new Color(1f, 0.9f, 0.7f));
+        bulb.SetColor("_EmissiveColor", new Color(1f, 0.72f, 0.42f) * 2000f); UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(bulb);
+        void Place(string asset, Vector3 specPos, float yRot, float lumens, Vector3 lightOffset)
+        {
+            var a = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Models/Foyer/{asset}.glb");
+            if (a == null) { Debug.LogWarning("HiFiLights: missing " + asset); return; }
+            var go = (GameObject)Object.Instantiate(a, g.transform); go.name = asset;
+            go.transform.position = new Vector3(specPos.x, specPos.y + gy, -specPos.z); go.transform.rotation = Quaternion.Euler(0, yRot, 0);
+            foreach (var r in go.GetComponentsInChildren<MeshRenderer>())
+            {
+                string n = r.sharedMaterial != null ? r.sharedMaterial.name : "";
+                if (n.StartsWith("Light_Glass")) { r.enabled = false; continue; }   // clear glass: the cage reads without it
+                r.sharedMaterial = n.StartsWith("Light_Brass") ? brass : n.StartsWith("Light_Candle") ? candle : n.StartsWith("Light_Bulb") ? bulb : r.sharedMaterial;
+                r.shadowCastingMode = ShadowCastingMode.Off;
+                foreach (var c in r.GetComponents<Collider>()) Object.DestroyImmediate(c);
+            }
+            var rs = go.GetComponentsInChildren<MeshRenderer>().Where(r => r.enabled).ToArray();
+            Debug.Log($"HiFiLights {asset} at {go.transform.position}: {rs.Length} renderers" + (rs.Length > 0 ? $", bounds {rs.Aggregate(rs[0].bounds, (b, r) => { b.Encapsulate(r.bounds); return b; })}" : ""));
+            var l = new GameObject(asset + "_Light").AddComponent<Light>(); l.transform.parent = go.transform;
+            l.transform.localPosition = lightOffset; l.type = LightType.Point; l.range = 7f;
+            l.gameObject.AddComponent<HDAdditionalLightData>();
+            l.lightUnit = LightUnit.Lumen; l.intensity = lumens; l.useColorTemperature = true; l.colorTemperature = 2700f; l.shadows = LightShadows.Soft;
+        }
+        Place("Lantern", new Vector3(9.61f, 2.438f, 9.716f), 0f, 700f, new Vector3(0, -0.5f, 0));
+        foreach (float z in new[] { 8.73f, 10.70f }) Place("Sconce", new Vector3(10.13f, 1.62f, z), 180f, 350f, new Vector3(0.15f, 0.25f, 0));   // the vestibule's front wall, just past each sidelight (film 776-784: door, sidelight, sconce, print)
+        foreach (float x in new[] { 5.15f, 6.18f }) Place("Sconce", new Vector3(x, 1.62f, 7.778f), 90f, 350f, new Vector3(0.15f, 0.25f, 0));
     }
 
     static void HiFiStair(GameObject root, float gy)
