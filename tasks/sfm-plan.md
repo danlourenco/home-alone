@@ -384,3 +384,18 @@ Clips from Part 1 at 1080p (the 640x360 original is deleted; use the `copy.mp4`)
   - **Conclusion:** the cameras must come from automatic tracking (hundreds of correspondences per frame), not from a dozen hand
     labels. Labels then only triangulate the named points. Next: COLMAP sequential on every frame of Marina's 905-945 s walk
     (1080p), scale and gravity from her fixed rig (height 0.639 door, f 1428), then triangulate the labelled stair points.
+- **Back-stair pilot with tracked cameras (Oct 15, night)** (`joint_fit.py track sfm-work/rooms/backstair labels/backstair-marina.json`;
+  COLMAP sequential on Marina 914-945 s at 5 fps: 123/155 frames, 0.51 px, f 1324):
+  - Gravity from roll 0 (up is perpendicular to every camera's x axis; agrees with the camera-centre plane to 0.4 deg); scale from
+    her camera height over the floor band: 0.2686 m/unit. Self-test (`track-selftest`) PASS.
+  - Bugs found on the way: the model pick (by file count, not frames); the floor taken as the densest low band, which was the
+    patterned chair seats (1,522 points over 5x5 units vs the dark tiles' 140 over 16x12): every height 55% too large. The floor is
+    now the lowest band that stands out 2x and spreads as far as the camera travels.
+  - f fixed at 1428 (the refcam foyer value) fits worse (0.81 px) and distorts the walk: the data want ~1324. Revisit the 1428 prior.
+  - Hand labels by eye do not mark the same corner across frames (6-31 px). Labels are now: a tracked point id (`kp`), a floor
+    contact (ray meets the floor plane, one frame), or a pixel (triangulated: fallback, not trusted).
+  - **First numbers (916 s, snapped/floor labels):** basement door leaf x -1.28 .. -0.45 (0.84 m; build -1.43 .. -0.72, 0.71 m),
+    0.22 m of wall between leaf and corner (build 0.075); flight nosings x +1.19/+0.88/+0.58 at h 1.10/1.27/1.50 (going ~0.30,
+    rise ~0.20; build 0.262/0.188), their open side 0.31-0.37 m in front of the door's wall (build: same plane). Flight line
+    extrapolates to the floor near x 2.9 (the by-eye newel read). Newel, posts, doorway: triangulated from eye labels, not yet
+    trustworthy. LEAD only; one frame; needs the held-out frame and more tracked-point labels before any build change.

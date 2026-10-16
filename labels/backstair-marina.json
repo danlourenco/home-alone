@@ -1,13 +1,208 @@
 [
- {"frame": "marina-916", "source": "marina", "note": "Marina Part 1 916 s; read on refcam grids (2x/3x)",
-  "pts": {"door R head": [1388, 325], "door L head": [1592, 325], "door R foot": [1388, 821], "door L foot": [1592, 821],
-          "door-wall corner foot": [1648, 822], "door-wall ceiling corner": [1648, 228], "window sill far": [1758, 543],
-          "doorway R head": [481, 368], "doorway L head": [622, 368], "newel top": [676, 503], "post2 top": [735, 418],
-          "nosing@1": [1000, 542], "nosing@2": [1062, 502], "nosing@3": [1127, 458], "nosing@4": [1192, 414], "nosing@5": [1260, 369]}},
- {"frame": "marina-933", "source": "marina", "note": "Marina Part 1 933 s",
-  "pts": {"door R head": [1340, 208], "door L head": [1535, 210], "newel top": [265, 440], "post2 top": [300, 316], "post top": [742, 197],
-          "nosing@1": [800, 500], "nosing@2": [905, 440], "nosing@3": [1010, 380], "nosing@4": [1100, 320]}},
- {"frame": "marina-935", "source": "marina", "note": "Marina Part 1 935 s",
-  "pts": {"door R head": [900, 207], "door L head": [1095, 205], "window sill far": [1336, 456], "window sill near": [1603, 462],
-          "post top": [271, 152], "nosing@1": [540, 589], "nosing@2": [706, 462], "nosing@3": [900, 340]}}
+ {
+  "frame": "marina-916",
+  "source": "marina",
+  "note": "Marina Part 1 916 s; read on refcam grids (2x/3x)",
+  "pts": {
+   "door R head": [
+    1388,
+    325
+   ],
+   "door L head": [
+    1592,
+    325
+   ],
+   "door R foot": {
+    "floor": [
+     1388,
+     821
+    ]
+   },
+   "door L foot": {
+    "floor": [
+     1592,
+     821
+    ]
+   },
+   "door-wall corner foot": {
+    "floor": [
+     1648,
+     822
+    ]
+   },
+   "door-wall ceiling corner": [
+    1648,
+    228
+   ],
+   "window sill far": [
+    1758,
+    543
+   ],
+   "doorway R head": [
+    481,
+    368
+   ],
+   "doorway L head": [
+    622,
+    368
+   ],
+   "newel top": [
+    676,
+    503
+   ],
+   "post2 top": [
+    735,
+    418
+   ],
+   "nosing@1": {
+    "p3d": 58183
+   },
+   "nosing@2": {
+    "p3d": 60734
+   },
+   "nosing@3": {
+    "p3d": 60631
+   },
+   "nosing@4": [
+    1192,
+    414
+   ],
+   "nosing@5": [
+    1260,
+    369
+   ]
+  }
+ },
+ {
+  "frame": "marina-933",
+  "source": "marina",
+  "note": "Marina Part 1 933 s",
+  "pts": {
+   "door R head": [
+    1340,
+    208
+   ],
+   "door L head": [
+    1535,
+    210
+   ],
+   "newel top": [
+    265,
+    440
+   ],
+   "post2 top": [
+    300,
+    316
+   ],
+   "post top": [
+    742,
+    197
+   ],
+   "nosing@1": [
+    800,
+    500
+   ],
+   "nosing@2": [
+    905,
+    440
+   ],
+   "nosing@3": [
+    1010,
+    380
+   ],
+   "nosing@4": [
+    1100,
+    320
+   ]
+  }
+ },
+ {
+  "frame": "marina-935",
+  "source": "marina",
+  "note": "Marina Part 1 935 s",
+  "pts": {
+   "door R head": [
+    900,
+    207
+   ],
+   "door L head": [
+    1095,
+    205
+   ],
+   "window sill far": [
+    1336,
+    456
+   ],
+   "window sill near": [
+    1603,
+    462
+   ],
+   "post top": [
+    271,
+    152
+   ],
+   "nosing@1": [
+    540,
+    589
+   ],
+   "nosing@2": [
+    706,
+    462
+   ],
+   "nosing@3": [
+    900,
+    340
+   ]
+  }
+ },
+ {
+  "frame": "marina-924",
+  "source": "marina",
+  "note": "Marina Part 1 924 s; hutch wall, foyer doorway, newel",
+  "pts": {
+   "doorway R head": [
+    1385,
+    281
+   ],
+   "doorway L head": [
+    1592,
+    281
+   ],
+   "post2 top": [
+    1822,
+    343
+   ],
+   "newel top": [
+    1730,
+    470
+   ]
+  }
+ },
+ {
+  "frame": "marina-929",
+  "source": "marina",
+  "note": "Marina Part 1 929 s",
+  "pts": {
+   "doorway R head": [
+    822,
+    283
+   ],
+   "doorway L head": [
+    1013,
+    283
+   ],
+   "post2 top": [
+    1197,
+    362
+   ],
+   "newel top": [
+    1160,
+    482
+   ],
+   "post top": [
+    1655,
+    197
+   ]
+  }
+ }
 ]

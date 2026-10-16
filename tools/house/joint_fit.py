@@ -438,10 +438,190 @@ def cmd_points_selftest(a):
     raise SystemExit(0 if ok else 1)
 
 
+# ---------------------------------------------------------------- tracked cameras (COLMAP) + triangulated labels
+# The hand-label-only fit was underdetermined (sfm-plan, Oct 15 night). Here the cameras come from COLMAP's sequential tracking of
+# Marina's walk (hundreds of matches a frame), metric and level from her fixed rig: her camera centres lie on one horizontal plane
+# (its normal is up), and their height above the floor (the densest low band of tracked points) is 0.639 x 80 in. Labels then only
+# triangulate the named points. Output distances and heights do not depend on the plan's origin.
+def read_colmap(model):
+    """cameras.txt/images.txt of a TXT model -> {image name: (K, k1, R, t)} (x_cam = R X + t)."""
+    cams = {}
+    for l in (model / "cameras.txt").read_text().splitlines():
+        if l and not l.startswith("#"):
+            f = l.split(); cams[int(f[0])] = (f[1], list(map(float, f[4:])))
+    out = {}; lines = [l for l in (model / "images.txt").read_text().splitlines() if l and not l.startswith("#")]
+    for l in lines[::2]:
+        f = l.split(); qw, qx, qy, qz = map(float, f[1:5]); t = np.array(list(map(float, f[5:8])))
+        R = np.array([[1 - 2 * (qy * qy + qz * qz), 2 * (qx * qy - qz * qw), 2 * (qx * qz + qy * qw)],
+                      [2 * (qx * qy + qz * qw), 1 - 2 * (qx * qx + qz * qz), 2 * (qy * qz - qx * qw)],
+                      [2 * (qx * qz - qy * qw), 2 * (qy * qz + qx * qw), 1 - 2 * (qx * qx + qy * qy)]])
+        model_, par = cams[int(f[8])]; fx, cx, cy, k1 = par[0], par[1], par[2], (par[3] if len(par) > 3 else 0.0)
+        out[f[9]] = (np.array([[fx, 0, cx], [0, fx, cy], [0, 0, 1]]), k1, R, t)
+    P3 = {int(l.split()[0]): np.array(list(map(float, l.split()[1:4]))) for l in (model / "points3D.txt").read_text().splitlines() if l and not l.startswith("#")}
+    for head, kp in zip(lines[::2], lines[1::2]):   # each image's keypoints that belong to a track: [(u, v, point id)]
+        v = np.array(kp.split(), float).reshape(-1, 3); out[head.split()[9]] += (v[v[:, 2] >= 0],)
+    return out, np.array(list(P3.values())), P3
+
+
+def undistort(uv, K, k1):
+    x = np.linalg.solve(K, [uv[0], uv[1], 1.0])[:2]; y = x.copy()
+    for _ in range(10):
+        y = x / (1 + k1 * (y @ y))
+    return y
+
+
+def triangulate(obs):
+    """obs: [(R, t, xn)] normalised image points -> X minimising the algebraic error (DLT), and per-view reprojection (normalised)."""
+    A = []
+    for R, t, xn in obs:
+        Pm = np.c_[R, t]; A += [xn[0] * Pm[2] - Pm[0], xn[1] * Pm[2] - Pm[1]]
+    X = np.linalg.svd(np.array(A))[2][-1]; X = X[:3] / X[3]
+    err = [np.linalg.norm(((R @ X + t)[:2] / (R @ X + t)[2]) - xn) for R, t, xn in obs]
+    return X, err
+
+
+def metric_frame(C, pts, down=None, rights=None):
+    """Up = normal of the camera-centre plane (her camera height is fixed), signed against the cameras' own image-down axis
+    (a tracked-point majority is not safe: beams and wallpaper put most points above the eye); floor = lowest dense band of
+    points; scale from 1.298 m."""
+    c0 = C.mean(0); sv = np.linalg.svd(C - c0)[1]; up = np.linalg.svd(C - c0)[2][-1]
+    if rights is not None:   # roll 0 (CG camera, level horizons): up is perpendicular to every camera's x axis. A near-straight
+        up = np.linalg.svd(np.asarray(rights))[2][-1]   # walk leaves the centre-plane normal free to tilt about the path
+    if down is not None and up @ down > 0:
+        up = -up
+    print(f"  path singular values {sv[0]:.2f} {sv[1]:.2f} {sv[2]:.3f} (a small middle one = near-straight walk); "
+          f"up vs centre-plane normal {np.degrees(np.arccos(min(1, abs(up @ np.linalg.svd(C - c0)[2][-1])))):.1f} deg")
+    h = (pts - c0) @ up
+    # The floor is the LOWEST band that stands out (>= 2x both neighbours) and spreads at least as far as the camera travels.
+    # Not the densest band: on Marina's breakfast walk the patterned chair seats (1,522 points over 5 x 5 units) outnumber the
+    # dark floor tiles (140 points over 16 x 12) ten to one, and taking them made every height 55% too large (Oct 15 night).
+    e1 = np.linalg.svd(C - c0)[2][0]; e2 = np.cross(up, e1); reach = max(np.ptp((C - c0) @ e1), 1e-9)
+    lo = h[h < 0]; step = 0.03 * float(-np.percentile(lo, 0.2))
+    edges = np.arange(lo.min() - step, 0, step); cnt = np.histogram(lo, edges)[0]; floor = None
+    for i in range(1, len(cnt) - 1):
+        m = (h >= edges[i]) & (h < edges[i + 1]); P = pts[m] - c0
+        if cnt[i] < 30 or cnt[i] < 2 * max(cnt[i - 1], cnt[i + 1]):
+            continue
+        if np.percentile(P @ e1, 95) - np.percentile(P @ e1, 5) >= reach and np.percentile(P @ e2, 95) - np.percentile(P @ e2, 5) >= 0.5 * reach:
+            floor = float(np.median(h[m])); break
+    if floor is None:
+        raise SystemExit("no floor band found: label floor contacts instead")
+    cam_h = -floor                                  # camera plane height above the floor, model units
+    return up, c0, RIG_H / cam_h, cam_h, float(np.std((C - c0) @ up) / cam_h)
+
+
+def cmd_track(a):
+    import json, subprocess
+    ws = Path(a.workspace); model = max((ws / "sparse").glob("*/"), key=lambda m: (m / "images.bin").stat().st_size)   # most registered frames
+    txt = ws / "txt"; txt.mkdir(exist_ok=True)
+    subprocess.run(["colmap", "model_converter", "--input_path", str(model), "--output_path", str(txt), "--output_type", "TXT"], check=True, capture_output=True)
+    V, pts, P3 = read_colmap(txt)
+    C = np.array([-R.T @ t for K, k1, R, t, _ in V.values()])
+    down = np.mean([R.T @ [0, 1, 0] for K, k1, R, t, _ in V.values()], axis=0)    # image +v is down in the world
+    up, c0, s, cam_h, flat = metric_frame(C, pts, down, [R.T @ [1, 0, 0] for K, k1, R, t, _ in V.values()])
+    print(f"{len(V)} cameras registered; camera-centre plane flat to {100 * flat:.1f}% of eye height; scale {s:.4f} m/unit; f {list(V.values())[0][0][0, 0]:.0f} px")
+    L = json.loads(Path(a.labels).read_text())
+    name_of = lambda fr: f"f_{int(round((float(fr['frame'].split('-')[1]) - a.start) * a.fps)) + 1:05d}.jpg"
+    obs = {}; snaps = {}
+    for fr in L:
+        im = name_of(fr)
+        if im not in V:
+            print(f"  {fr['frame']} -> {im}: not registered"); continue
+        K, k1, R, t, kp = V[im]
+        for n, uv in fr["pts"].items():
+            if isinstance(uv, dict) and "p3d" in uv:          # a tracked point picked by id (joint_fit.py kp)
+                snaps.setdefault(n, []).append((fr["frame"], P3[int(uv["p3d"])], 0.0)); continue
+            if isinstance(uv, dict) and "floor" in uv:        # a floor contact: the pixel's ray meets the floor plane
+                Cc = -R.T @ t; dvec = R.T @ np.r_[undistort(uv["floor"], K, k1), 1.0]
+                hc = (Cc - c0) @ up * s + RIG_H; lam = -hc / ((dvec @ up) * s)
+                snaps.setdefault(n, []).append((fr["frame"], Cc + lam * dvec, 0.0)); continue
+            obs.setdefault(n, []).append((R, t, undistort(uv, K, k1), fr["frame"], K[0, 0]))
+            d = np.hypot(kp[:, 0] - uv[0], kp[:, 1] - uv[1]); j = int(np.argmin(d)) if len(d) else -1
+            if j >= 0 and d[j] <= a.snap:     # a tracked feature under the label: its 3D point, from this frame alone
+                snaps.setdefault(n, []).append((fr["frame"], P3[int(kp[j, 2])], float(d[j])))
+    out = {}
+    for n, o in sorted(obs.items()):
+        if len(o) < 2:
+            continue
+        X, err = triangulate([(R, t, xn) for R, t, xn, *_ in o])
+        px = [e * f for e, (*_, f) in zip(err, o)]
+        hgt = ((X - c0) @ up) * s + RIG_H
+        out[n] = {"X": X.tolist(), "h_m": round(float(hgt), 3), "px": [round(p, 1) for p in px], "frames": [fr for *_, fr, f in o]}
+        print(f"  {n:28s} height {hgt:6.3f} m   reprojection {', '.join(f'{p:.1f}' for p in px)} px   ({len(o)} frames)")
+    print(f"snapped to tracked features (within {a.snap} px), per frame: height m, and spread between frames (cm)")
+    for n, sn in sorted(snaps.items()):
+        Xs = np.array([X for _, X, _ in sn]); hs = ((Xs - c0) @ up) * s + RIG_H
+        spread = 100 * np.max(np.linalg.norm(Xs - Xs.mean(0), axis=1)) * s if len(sn) > 1 else float("nan")
+        print(f"  {n:28s} " + "  ".join(f"{fr[-3:]}: {h:.3f} ({d:.1f}px)" for (fr, _, d), h in zip(sn, hs)) + f"   spread {spread:.0f} cm")
+        out.setdefault(n, {})["S"] = Xs.mean(0).tolist()
+        out[n]["snapped"] = [{"frame": fr, "X": X.tolist(), "h_m": round(float(h), 3), "px": round(d, 1)} for (fr, X, d), h in zip(sn, hs)]
+    names = sorted(out)
+    print("horizontal distances (m):")
+    for i, a_ in enumerate(names):
+        for b_ in names[i + 1:]:
+            pa, pb = (out[a_].get("S", out[a_].get("X")), out[b_].get("S", out[b_].get("X")))   # snapped/floor points first
+            if pa is None or pb is None:
+                continue
+            d = (np.array(pa) - np.array(pb)) * s; d -= (d @ up) * up
+            if a.pairs and f"{a_}|{b_}" not in a.pairs and f"{b_}|{a_}" not in a.pairs:
+                continue
+            print(f"  {a_:22s} - {b_:22s} {np.linalg.norm(d):6.3f}")
+    Path(a.labels).with_suffix(".track.json").write_text(json.dumps({"workspace": str(ws), "scale_m_per_unit": s, "up": up.tolist(),
+        "camera_plane_flatness": flat, "points": out}, indent=1))
+
+
+def cmd_track_selftest(a):
+    """Synthetic: cameras on a level plane at 1.298 m (arbitrary similarity transform applied), floor points; recover heights and a distance."""
+    rng = np.random.default_rng(4); ok = True
+    Rw = np.linalg.qr(rng.normal(size=(3, 3)))[0]; Rw *= np.sign(np.linalg.det(Rw)); sc, tw = 0.37, rng.normal(size=3)
+    to_model = lambda X: (Rw @ (np.asarray(X) / 1.0)) * sc + tw          # world metres (y up) -> model units
+    cams = []
+    for i in range(8):
+        cw = np.array([rng.uniform(0, 3), RIG_H, rng.uniform(0, 2)]); yaw = rng.uniform(-0.5, 0.5)
+        Rc = rot(yaw - np.pi / 2, rng.uniform(-0.05, 0.05))                # world -> camera
+        Rm = Rc @ Rw.T; cm = to_model(cw); cams.append((Rm, -Rm @ cm, Rc, cw))
+    floor = [to_model([x, rng.normal(0, 0.003), z]) for x in np.linspace(-1, 4, 20) for z in np.linspace(2, 8, 20)]
+    floor += [to_model([rng.uniform(-1, 4), rng.uniform(0.2, 2.4), rng.uniform(2, 8)]) for _ in range(150)]   # furniture, walls
+    target = {"A": np.array([1.0, 2.0, 6.0]), "B": np.array([2.5, 0.9, 7.0])}
+    C = np.array([-R.T @ t for R, t, *_ in cams]); up, c0, s, cam_h, flat = metric_frame(C, np.array(floor), np.mean([R.T @ [0, 1, 0] for R, t, *_ in cams], axis=0), [R.T @ [1, 0, 0] for R, t, *_ in cams])
+    est = {}
+    for n, Xw in target.items():
+        obs = []
+        for R, t, Rc, cw in cams:
+            xc = R @ to_model(Xw) + t
+            if xc[2] > 0.2:
+                obs.append((R, t, xc[:2] / xc[2] + rng.normal(0, 1.5 / 1428, 2)))
+        X, _ = triangulate(obs); est[n] = X
+    hA = ((est["A"] - c0) @ up) * s + RIG_H; dAB = np.linalg.norm(est["A"] - est["B"]) * s
+    good = abs(hA - 2.0) < 0.02 and abs(dAB - np.linalg.norm(target["A"] - target["B"])) < 0.02; ok &= good
+    print(f"height A {hA:.3f} (2.000), |AB| {dAB:.3f} ({np.linalg.norm(target['A'] - target['B']):.3f})  {'ok' if good else 'FAIL'}")
+    print("TRACK SELFTEST", "PASS" if ok else "FAIL")
+    raise SystemExit(0 if ok else 1)
+
+
+def cmd_kp(a):
+    """Tracked features (with their COLMAP point ids) over a crop of one frame, 2x, for labelling by point id."""
+    from PIL import Image, ImageDraw
+    ws = Path(a.workspace); V, _, _ = read_colmap(ws / "txt")
+    im_name = f"f_{int(round((a.t - a.start) * a.fps)) + 1:05d}.jpg"; kp = V[im_name][4]
+    x0, y0, x1, y1 = a.roi; k = 2
+    im = Image.open(ws / "images" / im_name).convert("RGB").crop((x0, y0, x1, y1)); im = im.resize((im.width * k, im.height * k)); d = ImageDraw.Draw(im)
+    for u, v, pid in kp:
+        if x0 <= u < x1 and y0 <= v < y1:
+            q = ((u - x0) * k, (v - y0) * k); d.ellipse([q[0] - 3, q[1] - 3, q[0] + 3, q[1] + 3], outline=(255, 40, 40), width=2)
+            d.text((q[0] + 4, q[1] - 11), str(int(pid)), fill=(255, 255, 0))
+    out = ws / f"kp-{a.t:g}-{x0}-{y0}.png"; im.save(out); print(out, f"({im_name})")
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); sp = ap.add_subparsers(dest="cmd", required=True)
     s = sp.add_parser("rehearse"); s.add_argument("--seed", type=int, default=0); s.set_defaults(fn=cmd_rehearse)
     s = sp.add_parser("points"); s.add_argument("labels"); s.add_argument("--overlay", action="store_true"); s.set_defaults(fn=cmd_points)
+    s = sp.add_parser("track"); s.add_argument("workspace"); s.add_argument("labels"); s.add_argument("--start", type=float, default=914.0)
+    s.add_argument("--fps", type=float, default=5.0); s.add_argument("--pairs", nargs="*"); s.add_argument("--snap", type=float, default=4.0); s.set_defaults(fn=cmd_track)
+    s = sp.add_parser("kp"); s.add_argument("workspace"); s.add_argument("t", type=float); s.add_argument("roi", type=int, nargs=4)
+    s.add_argument("--start", type=float, default=914.0); s.add_argument("--fps", type=float, default=5.0); s.set_defaults(fn=cmd_kp)
+    s = sp.add_parser("track-selftest"); s.set_defaults(fn=cmd_track_selftest)
     s = sp.add_parser("points-selftest"); s.set_defaults(fn=cmd_points_selftest)
     s = sp.add_parser("segs"); s.add_argument("frame"); s.add_argument("roi", type=int, nargs=4); s.set_defaults(fn=cmd_segs)
     a = ap.parse_args(); a.fn(a)
