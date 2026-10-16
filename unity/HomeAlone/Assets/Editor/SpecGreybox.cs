@@ -1263,8 +1263,9 @@ public static partial class SpecGreybox
 
     // Winter daylight (user, Oct 15: natural light through the windows for daytime scenes): a low December sun, a snow
     // ground outside the windows, and the room lamps on N (HouseNightMode: day = lamps off). The house's compass bearing is
-    // NOT measured yet: FrontAzimuth is a placeholder until the film's daytime exterior shadows (frames 4382, 11908) set it.
-    const float FrontAzimuth = 90f;                       // compass bearing the front (+spec x) faces; placeholder, DEVIATIONS 34
+    // the front faces 227.6 deg (SW): OpenStreetMap's building and Lincoln Avenue (tools/house/house_bearing.py), with the photographers'
+    // positions and the film's sunlit front (frame 4382) agreeing; the film was shot here, so this is its orientation. The sun's time is a placeholder (DEVIATIONS 34)
+    const float FrontAzimuth = 227.6f;                    // compass bearing the front (+spec x) faces
     const float SunAzimuth = 155f, SunElevation = 21f;    // Chicago, Dec 21, ~10:30 am
     static void Daylight(GameObject root, float groundY)
     {
