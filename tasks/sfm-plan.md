@@ -315,3 +315,35 @@ Clips from Part 1 at 1080p (the 640x360 original is deleted; use the `copy.mp4`)
   - The last fix removes the hidden door "slides". The parents' hall door now reads 15 cm from the far-end clip (was 7 cm only because the slide moved it), so the two hall clips disagree by ~15 cm on that door.
 - Unity: stair boxes, a stair walk test for both bodies (20/20), and an injected missing step (8 legs blocked).
 - check_walls: hall-s1 5 walls / kevin 4 walls, 0 flagged. Parents: a 0.63 m bath stub at -9 cm, identical at the previous commit (pre-existing).
+
+## Independent rulers, steps 1-2 (Oct 15, evening; method page https://claude.ai/artifact/XXuuXaREgFsR35eZ8QWYpR)
+- **Marina's camera height is fixed: h = 0.639 x door height, spread 2.5%** (`tools/house/rig_check.py`, labels `measurements/rig/labels.json`):
+  single-view metrology (cross ratio of door foot/top, horizon, vertical VP), no SfM, no scale. 6 doors, 4 rooms, both videos
+  (kitchen 916 basement door 0.637 / pantry 0.627; Kevin 376/378 same door 0.641/0.642; parents 194 0.642; hall 578 0.630). = 1.30 m at 80 in.
+  Self-test: exact on synthetic frames, 1 px label noise 0.8%, injected 10% door flagged.
+  - Lesson: the horizon from the vertical VP + assumed f is ill-conditioned for a near-level camera (V tens of thousands of px away;
+    gave 1.13-1.26 m and a 5% same-door mismatch). Horizon from the VP of receding level edges (beams, crown, floor lines) is primary;
+    overlays `sfm-work/rig/*-overlay.jpg` show the edges used.
+  - The VGGT review-still poses (spec/captures/sheet-matched/poses.json) put the eye at 1.27-1.40 in door-scaled rooms but 1.09-1.19 in the
+    hall (passage-width scale) and hall bath (overhead scale): a -12..-14% lead on those rooms' scale, NOT yet a finding (pose noise ~±5%).
+  - Use: in any Marina frame, horizon + floor contact gives depth h*f/(v-vh), and floor width at one depth W = h*du/(v-vh) (f cancels).
+    First try, hall 615 s end wall: 0.98 m between the casings' outer edges at 80 in (door opening ~0.76 m). Not yet matched to a plan
+    element; don't act on it.
+- **Brick ruler** (`tools/house/brick_ruler.py`, outputs sfm-work/brick/): kitchen-wing rear wall from film 4575 + 7068, common bond,
+  stretcher/course 3.02 (modular, same-lens assumption). Sink window trim ~0.94 w x 0.88 h m (build 0.75 x 0.98: wider, shorter); window-door
+  centre spacing 1.81-1.93 m vs build 1.88; back-door trim-top 1.98 m modular (6'4" opening) mildly favours a 2.75 in course (~3% open).
+  Front facade not resolved (1830 piers too narrow, 3237 oblique).
+- **Rig ruler, room by room (Oct 15, late)**:
+  - `rig_check.py floor` (self-test: a 3.40 m width and a 2.00 m point pair recovered exactly under pitch/yaw) gives floor distances
+    from one frame: horizon (auto, or hand `h_lines`) + camera height 0.639 x 80 in. Labels `measurements/rig/floor.json`.
+    - hall 615 s, far passage between the side walls' bases at the end wall: **1.16 m** vs 1.22 (hall-s4, door-scaled) / 1.23 built: -5%.
+    - dining 1123 s, French-door wall from its left corner to the near jamb that hides the right corner: **>= 4.52 m** vs 4.63 built: consistent.
+    - den 1161 s, green wall between the window corner and the bookshelf corner: **3.65 m** vs the den's 3.71 m side (-1.6%). I first
+      paired it with the 6.91 m wall; the number says it is the short side. Which wall is which in `still_pose.ROOMS["den"]` is unchecked.
+    - Hall bath: no frame in 440-488 s shows two floor corners (camera level, floor at the frame edge). Not measured by this ruler.
+  - **Rejected: scaling the SfM clips by her camera height** (`still_pose.py rig` -> `measurements/rig/rooms.json`). It agrees in the
+    door-scaled rooms (parents -2.5%, Kevin -2.1%, Buzz +0.9%) and the living room (-0.3%), but says hall +17%, dining +23%, den +22%,
+    hall bath +11%, and the pixels above contradict the hall and dining. VGGT's height-vs-width ratio is not stable enough (same lesson as
+    the stair pitch). Kept as a record. The "-12..-14% lead" on the hall/hall bath from the posed stills is the same artefact: dropped.
+  - Net: no room measured by pixels is off by more than the ruler's own spread (~±3% labels, 2.5% rig). All three read 2-5% UNDER the
+    build; with n=3 that is not a finding, but a 78 in door would push them further under, so keep it in view.

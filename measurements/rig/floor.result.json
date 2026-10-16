@@ -1,0 +1,41 @@
+[
+ {
+  "frame": "marina2-615",
+  "room": "hall_corridor",
+  "pair": "far-left corner - far-right corner",
+  "m": 1.155,
+  "lo": 1.147,
+  "hi": 1.163,
+  "parallel_deg": 0.0,
+  "horizon_row": 483.5,
+  "n_level": 23,
+  "plan": 1.22,
+  "diff_pct": -5.4
+ },
+ {
+  "frame": "marina-1123",
+  "room": "dining_room",
+  "pair": "French-door wall, left corner - French-door wall, last visible point (near jamb occludes)",
+  "m": 4.523,
+  "lo": 4.477,
+  "hi": 4.57,
+  "parallel_deg": 0.0,
+  "horizon_row": 454.4,
+  "n_level": 7,
+  "plan": 4.63,
+  "diff_pct": -2.3
+ },
+ {
+  "frame": "marina-1161",
+  "room": "den",
+  "pair": "green wall, window corner - green wall, bookshelf corner",
+  "m": 3.645,
+  "lo": 3.484,
+  "hi": 3.816,
+  "parallel_deg": 0.0,
+  "horizon_row": 478.6,
+  "n_level": -2,
+  "plan": 6.91,
+  "diff_pct": -47.2
+ }
+]

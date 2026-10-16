@@ -241,7 +241,8 @@ def fit_room(room, plot=None):
     res = dict(room=room, job=cfg["job"], frames_in_fit=len(sel), gravity_tilt_deg=round(float(np.degrees(np.arccos(np.clip(up @ up0, -1, 1)))), 2),
                walls_u=[None if w is None else round(w, 4) for w in walls], m_per_unit=round(scale, 4),
                scale_axes=[round(s, 4) for s in scales], scale_spread_pct=round(100 * (max(scales) - min(scales)) / scale, 1) if len(scales) > 1 else None,
-               size_src=cfg["size_src"], ceiling_m=round((ceil - floor) * scale, 2), stills={})
+               size_src=cfg["size_src"], ceiling_m=round((ceil - floor) * scale, 2), stills={},
+               cam_h_u=[float(x) for x in centres @ up - floor], ceil_u=float(ceil - floor))
     idx = {n: i for i, n in enumerate(names)}
     for t in cfg["stills"]:
         n = f"s_{t:04d}.jpg"; R0, t0, focal = poses[n]
@@ -429,6 +430,30 @@ NOTES = {
 
 
 # ---------------------------------------------------------------- outputs
+def rig():
+    """Each room's scale from Marina's fixed camera height (tools/house/rig_check.py: 0.639 x an 80 in door = 1.298 m),
+    read as the median height of every solved camera above the room's floor plane. Shares no data with the room's
+    adopted scale (doors via SfM, passage width, or the overhead trace); its unit is still the 80 in door."""
+    H = 0.639 * 80 * 0.0254
+    geo = json.loads((ROOT / "spec/geometry.json").read_text())
+    built = {r["name"]: r["poly"] for fl in geo.values() for r in fl["rooms"]}
+    rows = []
+    for room, cfg in ROOMS.items():
+        r = fit_room(room); h = np.array(r["cam_h_u"]); med = float(np.median(h)); p10, p90 = np.percentile(h, [10, 90])
+        rig_s = H / med; k = rig_s / r["m_per_unit"]
+        sep = [None if r["walls_u"][2 * a] is None or r["walls_u"][2 * a + 1] is None else (r["walls_u"][2 * a + 1] - r["walls_u"][2 * a]) * rig_s for a in (0, 1)]
+        poly = np.array(built.get(room, [[0, 0]])); bb = np.ptp(poly, axis=0)
+        rows.append(dict(room=room, cams=len(h), cam_h_u_p10_p90=[round(p10 / med, 3), round(p90 / med, 3)], adopted_m_per_u=r["m_per_unit"],
+                         rig_m_per_u=round(rig_s, 4), rig_over_adopted=round(k, 3), adopted_from=r["size_src"],
+                         marina_m_by_rig=[None if x is None else round(x, 2) for x in sep], adopted_size_m=list(cfg["size_m"]),
+                         built_bbox_m=[round(float(x), 2) for x in bb] if room in built else None, ceiling_m_by_rig=round(r["ceil_u"] * rig_s, 2),
+                         ceiling_m_adopted=r["ceiling_m"]))
+        x = rows[-1]
+        print(f"{room:16s} n={x['cams']:3d} cam-height spread p10/p90 {x['cam_h_u_p10_p90']}  rig/adopted {k:.3f}  "
+              f"Marina by rig {x['marina_m_by_rig']} (adopted {x['adopted_size_m']}, built bbox {x['built_bbox_m']})  ceiling {x['ceiling_m_by_rig']} (adopted {x['ceiling_m_adopted']})")
+    out = ROOT / "measurements/rig/rooms.json"; out.write_text(json.dumps(rows, indent=1) + "\n"); print(out)
+
+
 def still_name(t):
     return f"p{1 if t in sum((JOBS[j][1] for j in JOBS if JOBS[j][0] == P1), []) else 2}-{t}"
 
@@ -492,3 +517,5 @@ if __name__ == "__main__":
         poses()
     elif cmd == "triples":
         triples()
+    elif cmd == "rig":
+        rig()

@@ -1,0 +1,98 @@
+[
+ {
+  "frame": "marina-916",
+  "room": "kitchen",
+  "objects": [
+   {
+    "name": "basement door leaf",
+    "b": [
+     1420,
+     822
+    ],
+    "t": [
+     1420,
+     322
+    ]
+   },
+   {
+    "name": "pantry doorway",
+    "b": [
+     330,
+     767
+    ],
+    "t": [
+     330,
+     350
+    ]
+   }
+  ]
+ },
+ {
+  "frame": "marina2-376",
+  "room": "kevin",
+  "objects": [
+   {
+    "name": "kevin door leaf",
+    "b": [
+     300,
+     932
+    ],
+    "t": [
+     300,
+     153
+    ]
+   }
+  ]
+ },
+ {
+  "frame": "marina2-194",
+  "room": "parents",
+  "objects": [
+   {
+    "name": "parents hall door leaf",
+    "b": [
+     760,
+     922
+    ],
+    "t": [
+     760,
+     302
+    ]
+   }
+  ]
+ },
+ {
+  "frame": "marina2-378",
+  "room": "kevin",
+  "objects": [
+   {
+    "name": "kevin closet door leaf",
+    "b": [
+     600,
+     884
+    ],
+    "t": [
+     600,
+     192
+    ]
+   }
+  ]
+ },
+ {
+  "frame": "marina2-578",
+  "room": "hall",
+  "objects": [
+   {
+    "name": "hall end door leaf (top faint)",
+    "b": [
+     1100,
+     885
+    ],
+    "t": [
+     1100,
+     277
+    ]
+   }
+  ]
+ }
+]

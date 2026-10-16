@@ -1,0 +1,285 @@
+[
+ {
+  "room": "parents_bedroom",
+  "cams": 43,
+  "cam_h_u_p10_p90": [
+   0.957,
+   1.028
+  ],
+  "adopted_m_per_u": 3.3768,
+  "rig_m_per_u": 3.292,
+  "rig_over_adopted": 0.975,
+  "adopted_from": "measurements/rooms/parents.json polygon x 3.465 m/u (80 in hall door)",
+  "marina_m_by_rig": [
+   5.11,
+   5.08
+  ],
+  "adopted_size_m": [
+   5.23,
+   5.23
+  ],
+  "built_bbox_m": [
+   5.28,
+   5.32
+  ],
+  "ceiling_m_by_rig": 2.43,
+  "ceiling_m_adopted": 2.49
+ },
+ {
+  "room": "parents_bath",
+  "cams": 18,
+  "cam_h_u_p10_p90": [
+   0.945,
+   1.117
+  ],
+  "adopted_m_per_u": 3.6308,
+  "rig_m_per_u": 3.4808,
+  "rig_over_adopted": 0.959,
+  "adopted_from": "measurements/rooms/parents.json bath polygon x 3.465 m/u",
+  "marina_m_by_rig": [
+   2.99,
+   2.64
+  ],
+  "adopted_size_m": [
+   3.26,
+   2.63
+  ],
+  "built_bbox_m": [
+   2.73,
+   3.56
+  ],
+  "ceiling_m_by_rig": 2.03,
+  "ceiling_m_adopted": 2.12
+ },
+ {
+  "room": "kevin_jeff_room",
+  "cams": 58,
+  "cam_h_u_p10_p90": [
+   0.955,
+   1.117
+  ],
+  "adopted_m_per_u": 2.9441,
+  "rig_m_per_u": 2.8831,
+  "rig_over_adopted": 0.979,
+  "adopted_from": "measurements/rooms/kevin.json polygon x 2.914 m/u (80 in doors)",
+  "marina_m_by_rig": [
+   4.47,
+   3.53
+  ],
+  "adopted_size_m": [
+   4.575,
+   3.6
+  ],
+  "built_bbox_m": [
+   4.6,
+   3.78
+  ],
+  "ceiling_m_by_rig": 2.26,
+  "ceiling_m_adopted": 2.31
+ },
+ {
+  "room": "hall_bath",
+  "cams": 58,
+  "cam_h_u_p10_p90": [
+   0.946,
+   1.052
+  ],
+  "adopted_m_per_u": 2.2144,
+  "rig_m_per_u": 2.4576,
+  "rig_over_adopted": 1.11,
+  "adopted_from": "spec/house_spec.measured.json hall_bath (overhead trace; no door scale)",
+  "marina_m_by_rig": [
+   3.68,
+   3.53
+  ],
+  "adopted_size_m": [
+   3.16,
+   3.33
+  ],
+  "built_bbox_m": [
+   3.15,
+   3.65
+  ],
+  "ceiling_m_by_rig": 2.23,
+  "ceiling_m_adopted": 2.01
+ },
+ {
+  "room": "buzz_room",
+  "cams": 48,
+  "cam_h_u_p10_p90": [
+   0.956,
+   1.099
+  ],
+  "adopted_m_per_u": 2.058,
+  "rig_m_per_u": 2.077,
+  "rig_over_adopted": 1.009,
+  "adopted_from": "measurements/rooms/buzz.json (80 in door)",
+  "marina_m_by_rig": [
+   3.51,
+   4.41
+  ],
+  "adopted_size_m": [
+   3.49,
+   4.35
+  ],
+  "built_bbox_m": [
+   3.69,
+   4.43
+  ],
+  "ceiling_m_by_rig": 2.21,
+  "ceiling_m_adopted": 2.19
+ },
+ {
+  "room": "hall_corridor",
+  "cams": 61,
+  "cam_h_u_p10_p90": [
+   0.98,
+   1.024
+  ],
+  "adopted_m_per_u": 4.4909,
+  "rig_m_per_u": 5.2565,
+  "rig_over_adopted": 1.17,
+  "adopted_from": "measurements/rooms/hall.json far-end passage 1.22 m (hall-s4, 80 in door)",
+  "marina_m_by_rig": [
+   null,
+   1.43
+  ],
+  "adopted_size_m": [
+   null,
+   1.22
+  ],
+  "built_bbox_m": [
+   4.5,
+   3.65
+  ],
+  "ceiling_m_by_rig": 2.3,
+  "ceiling_m_adopted": 1.97
+ },
+ {
+  "room": "attic",
+  "cams": 58,
+  "cam_h_u_p10_p90": [
+   0.83,
+   1.094
+  ],
+  "adopted_m_per_u": 3.5616,
+  "rig_m_per_u": 2.3597,
+  "rig_over_adopted": 0.663,
+  "adopted_from": "Marina's 476 ft2 attic label split by the clip's 1.464:2.453 aspect (no door in the attic); eave/gable assignment unverified",
+  "marina_m_by_rig": [
+   3.35,
+   5.79
+  ],
+  "adopted_size_m": [
+   5.14,
+   8.61
+  ],
+  "built_bbox_m": null,
+  "ceiling_m_by_rig": 2.3,
+  "ceiling_m_adopted": 3.46
+ },
+ {
+  "room": "kitchen",
+  "cams": 59,
+  "cam_h_u_p10_p90": [
+   0.825,
+   1.056
+  ],
+  "adopted_m_per_u": 9.1456,
+  "rig_m_per_u": 8.4621,
+  "rig_over_adopted": 0.925,
+  "adopted_from": "spec/house_spec.ground.json kitchen extents (overhead trace; the built kitchen is 590 ft2 vs Marina's 477)",
+  "marina_m_by_rig": [
+   7.48,
+   8.62
+  ],
+  "adopted_size_m": [
+   9.31,
+   7.9
+  ],
+  "built_bbox_m": [
+   9.31,
+   7.92
+  ],
+  "ceiling_m_by_rig": 2.21,
+  "ceiling_m_adopted": 2.39
+ },
+ {
+  "room": "dining_room",
+  "cams": 58,
+  "cam_h_u_p10_p90": [
+   0.932,
+   1.063
+  ],
+  "adopted_m_per_u": 7.4468,
+  "rig_m_per_u": 9.1729,
+  "rig_over_adopted": 1.232,
+  "adopted_from": "spec/house_spec.ground.json dining width 4.62 (overhead trace); depth not used: the clip reads ~4.1 m kitchen door to French doors vs 5.87 built",
+  "marina_m_by_rig": [
+   5.69,
+   5.34
+  ],
+  "adopted_size_m": [
+   4.62,
+   null
+  ],
+  "built_bbox_m": [
+   5.87,
+   4.63
+  ],
+  "ceiling_m_by_rig": 2.5,
+  "ceiling_m_adopted": 2.03
+ },
+ {
+  "room": "living_room",
+  "cams": 42,
+  "cam_h_u_p10_p90": [
+   0.914,
+   1.061
+  ],
+  "adopted_m_per_u": 10.0029,
+  "rig_m_per_u": 9.9769,
+  "rig_over_adopted": 0.997,
+  "adopted_from": "spec/house_spec.ground.json living room (overhead trace)",
+  "marina_m_by_rig": [
+   8.38,
+   4.47
+  ],
+  "adopted_size_m": [
+   8.37,
+   4.5
+  ],
+  "built_bbox_m": [
+   8.37,
+   4.5
+  ],
+  "ceiling_m_by_rig": 2.55,
+  "ceiling_m_adopted": 2.56
+ },
+ {
+  "room": "den",
+  "cams": 19,
+  "cam_h_u_p10_p90": [
+   0.967,
+   1.017
+  ],
+  "adopted_m_per_u": 8.2343,
+  "rig_m_per_u": 10.0075,
+  "rig_over_adopted": 1.215,
+  "adopted_from": "spec/house_spec.ground.json den (overhead trace; den clip registration)",
+  "marina_m_by_rig": [
+   7.7,
+   4.96
+  ],
+  "adopted_size_m": [
+   6.91,
+   3.71
+  ],
+  "built_bbox_m": [
+   6.91,
+   3.71
+  ],
+  "ceiling_m_by_rig": 2.68,
+  "ceiling_m_adopted": 2.2
+ }
+]

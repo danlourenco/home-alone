@@ -1,0 +1,108 @@
+[
+ {
+  "frame": "marina2-615",
+  "room": "hall_corridor",
+  "floor": {
+   "far-left corner": [
+    [
+     826,
+     917
+    ]
+   ],
+   "far-right corner": [
+    [
+     1210,
+     915
+    ]
+   ]
+  },
+  "pairs": [
+   [
+    "far-left corner",
+    "far-right corner"
+   ]
+  ],
+  "plan": {
+   "far-left corner - far-right corner": 1.22
+  },
+  "note": "parents'-door end of the passage; side-wall bases meet the end wall. plan = hall-s4 door-scaled passage width (thinned build 1.23)"
+ },
+ {
+  "frame": "marina-1123",
+  "room": "dining_room",
+  "floor": {
+   "French-door wall, left corner": [
+    [
+     683,
+     745
+    ]
+   ],
+   "French-door wall, last visible point (near jamb occludes)": [
+    [
+     1688,
+     745
+    ]
+   ]
+  },
+  "pairs": [
+   [
+    "French-door wall, left corner",
+    "French-door wall, last visible point (near jamb occludes)"
+   ]
+  ],
+  "plan": {
+   "French-door wall, left corner - French-door wall, last visible point (near jamb occludes)": 4.63
+  },
+  "note": "from the kitchen doorway, frontal on the French-door wall; far-wall base at v 745 (left corner read on the grid); the right corner is hidden behind the near jamb, so this is a LOWER BOUND on the wall's length. plan = built z 3.00-7.64"
+ },
+ {
+  "frame": "marina-1161",
+  "room": "den",
+  "floor": {
+   "green wall, window corner": [
+    [
+     568,
+     830
+    ]
+   ],
+   "green wall, bookshelf corner": [
+    [
+     1188,
+     719
+    ]
+   ]
+  },
+  "pairs": [
+   [
+    "green wall, window corner",
+    "green wall, bookshelf corner"
+   ]
+  ],
+  "plan": {
+   "green wall, window corner - green wall, bookshelf corner": 6.91
+  },
+  "note": "green wall between the window wall (left) and the bookshelf wall (right). Its base read on the grid at (930,765)-(1120,731) and extended to the two vertical corners (u 568, 1188; the floor there is hidden by the sofa/plant). plan = built den far-end wall x 2.355-9.266, IF that assignment is right (window wall parallel to bookshelf wall). Auto horizon found 4 edges (row 143, wrong): horizon from the green wall's base and ceiling lines",
+  "h_lines": [
+   [
+    [
+     930,
+     765
+    ],
+    [
+     1120,
+     731
+    ]
+   ],
+   [
+    [
+     700,
+     15
+    ],
+    [
+     1185,
+     140
+    ]
+   ]
+  ]
+ }
+]
