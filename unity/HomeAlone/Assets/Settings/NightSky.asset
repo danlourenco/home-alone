@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: NightSky
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.VolumeProfile
   components:
-  - {fileID: 8769516701102771762}
-  - {fileID: 6717441291701840888}
---- !u!114 &6717441291701840888
+  - {fileID: 8846304493446163493}
+  - {fileID: 1438777568176701971}
+--- !u!114 &1438777568176701971
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,7 +70,7 @@ MonoBehaviour:
   gradientDiffusion:
     m_OverrideState: 1
     m_Value: 1
---- !u!114 &8769516701102771762
+--- !u!114 &8846304493446163493
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
