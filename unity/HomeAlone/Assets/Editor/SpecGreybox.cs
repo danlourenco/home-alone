@@ -223,7 +223,7 @@ public static class SpecGreybox
         Box3(gw, "Wall", up["walls"], mWall);
         Box3(gf, "FloorPlate", up["floor"], mFloor);
         Box3(gc, "Ceiling", up["ceilings"], mCeil);
-        foreach (var c in up["ceilings"])   // each room's floor finish: carpet in the halls, wood elsewhere (3 mm on the plate)
+        foreach (var c in up["ceilings"].Where(c => c["band"] == null))   // each room's floor finish (not under a rail band's ceiling strip)
         {
             var room = spaces.First(r => r.name == (string)c["room"]);
             Box(gf, "Finish_" + room.name, (float)c["x"][0], (float)c["x"][1], -(float)c["z"][1], -(float)c["z"][0], 0f, 0.003f, room.kind == "hall" ? mHall : mFloor);

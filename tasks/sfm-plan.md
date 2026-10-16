@@ -424,3 +424,7 @@ Clips from Part 1 at 1080p (the 640x360 original is deleted; use the `copy.mp4`)
   guarded: a back-stair walk path (floor onto winder 1; bandit + Kevin pass; the Player arrives within 5 cm but is flagged STALLED
   nudging winder 2's edge, open) and a ServiceStair render check (outward faces). The user's note view is a standing render
   (spec/captures/views/backstair-note.json). Adults' heads reach the 2.44 m ceiling from winder 2 (stair closed at the ceiling, D30).
+- **Upstairs hall ceiling slit (user notes 16:54, 23:01, the second time)**: the rail band where the stair opening meets the hall kept a
+  2.40-2.55 m wall strip above the rail's cut (inside the ceiling's thickness); Unity papered it, so its underside showed as an L of
+  wallpaper in the ceiling. wall_graph now emits such strips as ceiling pieces ("band": true). Every walk note is now re-rendered from
+  its own recorded position/yaw/pitch (`tools/house/note_views.py` -> views/notes/), and a fix counts only when that view is clean.

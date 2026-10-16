@@ -384,6 +384,21 @@ def build(spec, dec):
                             iv = [p for a, b in iv for p in ((a, min(b, c0)), (max(a, c1), b)) if p[1] - p[0] > Q]
                 keys[i, j] = tuple((round(a, 4), round(b, 4)) for a, b in iv)
         walls = [w for w in merge(kind == 2, xs, zs, key=keys) if w[4]]
+        # a wall strip left above a rail's cut lies in the ceiling's thickness: it is ceiling, not wall (it showed as a wallpaper
+        # slit across the upstairs hall ceiling, user notes Oct 15 16:54 and 23:01)
+        rail_tops = {round(o["cuts"][0][1], 4): o for o in ops if o["kind"] == "rail" and o["cuts"]}
+        band_ceils = []
+        walls = [list(w) for w in walls]
+        for w in walls:
+            keep = []
+            for a, b in w[4]:
+                o = rail_tops.get(round(a, 4))
+                if o is not None and b - a <= CEIL_T + Q:
+                    band_ceils.append({"room": o["between"][0], "x": [w[0], w[1]], "z": [w[2], w[3]], "y": [a, b], "band": True})
+                else:
+                    keep.append((a, b))
+            w[4] = tuple(keep)
+        walls = [w for w in walls if w[4]]
         if floor == "ground":   # the stair hall's wall above a room that reaches in beside the landing (above its ceiling slab)
             rkey = np.empty(kind.shape, object)
             for i, j in zip(*np.nonzero(ring_rooms)):
@@ -407,7 +422,7 @@ def build(spec, dec):
                                  "finish": (rs[int(r[4])]["kind"] if r[4] >= 0 else "wall")} for r in floor_rects],
                       "ceilings": [{"room": rs[int(r[4]) // 2]["name"], "x": [r[0], r[1]], "z": [r[2], r[3]],
                                     "y": [rs[int(r[4]) // 2]["ceil"], min(ctop(rs[int(r[4]) // 2]), l_under) if int(r[4]) % 2 else ctop(rs[int(r[4]) // 2])]}
-                                   for r in ceil_rects],
+                                   for r in ceil_rects] + band_ceils,
                       "voids": [{"x": [r[0], r[1]], "z": [r[2], r[3]]} for r in vrects], "shafts": shafts,
                       "slots": [{"x": [r[0], r[1]], "z": [r[2], r[3]]} for r in srects]}
         area = lambda R: sum((r[1] - r[0]) * (r[3] - r[2]) for r in R)
