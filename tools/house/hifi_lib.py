@@ -1,5 +1,8 @@
 """Shared mesh building for the hifi_* Blender scripts (run inside Blender): parts written in spec coordinates (x, y up, z),
-mapped to Blender (-x, z, y) with faces reversed (the map is a reflection), so glTF + glTFast land them at Unity (x, y, -z)."""
+mapped to Blender (-x, z, y), so glTF + glTFast land them at Unity (x, y, -z). The map is a rotation (determinant +1), so
+faces keep their winding: counter-clockwise from outside in spec space stays outward. (Until Oct 16 the faces were reversed
+here on the belief that the map was a reflection; every closed part rendered inside-out and its far faces z-fought.)
+Check: tools/house/glb_orientation.py."""
 import math
 
 import bpy
@@ -14,6 +17,13 @@ class Part:
 
     def poly(self, pts):
         i = len(self.v); self.v += list(pts); self.f.append(tuple(range(i, i + len(pts))))
+
+    def face(self, pts, toward):
+        """A flat face oriented to look along 'toward' (spec space): no hand winding."""
+        n = [0.0, 0.0, 0.0]
+        for (ax, ay, az), (bx, by, bz) in zip(pts, pts[1:] + pts[:1]):   # Newell normal
+            n[0] += (ay - by) * (az + bz); n[1] += (az - bz) * (ax + bx); n[2] += (ax - bx) * (ay + by)
+        self.poly(pts if sum(a * b for a, b in zip(n, toward)) >= 0 else list(reversed(pts)))
 
     def box(self, x0, x1, y0, y1, z0, z1):
         P = lambda x, y, z: (x, y, z)
@@ -33,7 +43,7 @@ class Part:
             for k in range(n):
                 k2 = (k + 1) % n
                 self.quad(a[k], b[k], b[k2], a[k2])
-        self.poly(list(reversed(rings[0]))); self.poly(rings[-1])
+        self.face(rings[0], (0, -1, 0)); self.face(rings[-1], (0, 1, 0))
 
     def sweep(self, path, prof):
         """A profile [(across, up)] swept along a 3D polyline (handrail); 'across' is horizontal, perpendicular to the path."""
@@ -49,12 +59,13 @@ class Part:
             for k in range(n):
                 k2 = (k + 1) % n
                 self.quad(a[k], a[k2], b[k2], b[k])
-        self.poly(list(reversed(rings[0]))); self.poly(rings[-1])
+        back = [path[0][j] - path[1][j] for j in range(3)]; fwd = [path[-1][j] - path[-2][j] for j in range(3)]
+        self.face(rings[0], back); self.face(rings[-1], fwd)
 
     def build(self, coll, mats):
         to_b = lambda p: (-p[0], p[2], p[1])                    # spec -> Blender (see module doc)
         me = bpy.data.meshes.new(self.name)
-        me.from_pydata([to_b(p) for p in self.v], [], [tuple(reversed(f)) for f in self.f])
+        me.from_pydata([to_b(p) for p in self.v], [], self.f)
         me.update(); me.validate()
         ob = bpy.data.objects.new(self.name, me); coll.objects.link(ob)
         ob.data.materials.append(mats[self.mat])

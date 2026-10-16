@@ -1,0 +1,37 @@
+{
+ "change": "Service stair finish only: every tread overhangs its step by 2 cm on every side (winder treads are their wedge grown 2 cm), the newel post stands 1 cm proud of the stringer face, and the stringer stops at the basement return wall. Steps, risers and walking heights unchanged",
+ "target": "House_WallGrid",
+ "premise": "A tread that is flush with its step body shares faces with it and flickers (z-fight gate, Oct 16); real treads overhang with a nosing",
+ "claim": {
+  "value": [0.02],
+  "data": ["unity:build"],
+  "scale": ["none"],
+  "upstream": ["none"],
+  "applies_to": ["back_stair"],
+  "measured_in": ["back_stair"],
+  "assumed": {"back_stair": "standard nosing, authored (finish, no geometry measured)"}
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "film 912/928 (back stair): dark wood treads with nosings proud of the white risers and stringer",
+   "agrees": true,
+   "type": "topological",
+   "data": ["film-frame:928"],
+   "scale": ["none"]
+  },
+  {
+   "what": "z-fight gate in the same build: 15 service-stair coplanar pairs before, 0 after; walk gates unchanged (the back-stair player stall at winder 2 is the open one from Oct 15)",
+   "agrees": true,
+   "type": "topological",
+   "data": ["unity:build"],
+   "scale": ["none"]
+  }
+ ],
+ "renders": {
+  "before": ["spec/captures/views/svc/before-open-side.png", "spec/captures/views/svc/before-winders.png"],
+  "after": ["spec/captures/views/svc/after-open-side.png", "spec/captures/views/svc/after-winders.png"]
+ },
+ "user_walk": "pending"
+}

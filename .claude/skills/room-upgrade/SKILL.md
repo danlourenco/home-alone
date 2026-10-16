@@ -26,8 +26,8 @@ layer of models generated from the same spec, plus real textures, props and ligh
 |---|---|
 | Old pieces still drawn over the new model (grey-box `MainStair/*` AND `Dressing/*`: runner, handrail, newels, `bottom_step_bullnose`, tree boxes) | Hide by name across the whole scene (`FindObjectsByType`), list both parents; log what is hidden; probe the area for remaining renderers |
 | Placed a wall panel at the plan's wall face; the visible face was 7 cm proud (a wall layer z 11.43-11.50 beside the flight) | Probe the renderers at the spot (`r.bounds.Intersects`) and use the face actually drawn; never assume the plan face |
-| Z-fighting: a panel coplanar with an existing wall (under the landing) | Never overlay where a wall already exists; offset new faces >= 1 cm from any existing face |
-| Single-sided panels wound wrong (spec -> Blender is a reflection: faces reversed on build) = invisible | Thin panels get both windings; then check them in a render |
+| Z-fighting: a panel coplanar with an existing wall (under the landing); a raking wainscot 4 mm off the paper; the whole stair inside-out | Follow `.claude/skills/zfight-check`: overlays >= 1 cm proud, faces via `Part.face`, the build's z-fight gate at 0 and `glb_orientation.py` passing |
+| Single-sided panels wound wrong = invisible (the spec -> Blender map is a rotation, not a reflection; `hifi_lib` reversed every face until Oct 16) | `Part.face(points, toward)` orients every flat face; never wind by hand |
 | Per-step boxes for a stringer gave a stepped bottom edge ("this wall is a mess") | Build boards as one polygon: stepped top, straight edge parallel to the pitch |
 | Baluster tops poked through the handrail (they ended at the grey-box's flat per-tread caps) | Derive dependent parts from the NEW geometry (top = rail line at that x minus the rail's half-depth) |
 | A sweep path with a duplicate point (ZeroDivision) | Dedupe path points before sweeping |
@@ -42,7 +42,7 @@ layer of models generated from the same spec, plus real textures, props and ligh
 | An editor command times out (the open editor is blocked by a dialog) | Copy the build into the project and commit anyway; ask the user to dismiss the dialog, then load |
 
 ## Gate before the user sees it
-1. Walk/seam/leak/peek gates unchanged (`spec/captures/walk-test-wallgrid.txt`).
+1. Walk/seam/leak/peek gates unchanged and the z-fight gate at 0 (`spec/captures/walk-test-wallgrid.txt`); `glb_orientation.py` exits 0.
 2. Every walk note in the room re-rendered from its own pose (note_views.py) and looked at next to the user's screenshot.
 3. A render of each changed element from a camera in the open room, and a matched Marina/film view, looked at.
 4. Load into the user's editor (memory load-scene-for-walk) and say what changed and what is still authored.

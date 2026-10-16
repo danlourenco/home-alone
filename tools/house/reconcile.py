@@ -188,6 +188,18 @@ def service_stair_spec(final, o):
     P = np.c_[final["back_stair"][:, 1] - o[1], final["back_stair"][:, 0] - o[0]]
     x0, z0, z1 = P[:, 0].min(), P[:, 1].min(), P[:, 1].max()
     r, g, NS, NW = 0.183, 0.30, 2, 3
+    NOSE = 0.02                                             # a tread overhangs its step by 2 cm on every side (finish; a flush tread
+                                                            # shares faces with its step and flickers: z-fight gate, Oct 16)
+    def grow(poly, d):                                      # convex outline offset outward by d (mitred corners)
+        P = [np.asarray(q, float) for q in poly]; A2 = sum(P[i][0] * P[i - 1][1] - P[i - 1][0] * P[i][1] for i in range(len(P)))
+        L = []
+        for a, b in zip(P, P[1:] + P[:1]):
+            t = (b - a) / np.linalg.norm(b - a); nrm = np.array([t[1], -t[0]]) * (1 if A2 < 0 else -1)
+            L.append((a + nrm * d, t))
+        out = []
+        for (p1, t1), (p2, t2) in zip(L[-1:] + L[:-1], L):
+            s_ = np.linalg.solve(np.array([t1, -t2]).T, p2 - p1); out.append(p1 + t1 * s_[0])
+        return out
     XL, XN = 1.48, 2.64                                     # the tall post (pivot, inner corner) and the short newel's x (measured)
     ceil = CEILINGS.get("back_stair", CEILINGS["default"])
     B = []
@@ -201,7 +213,7 @@ def service_stair_spec(final, o):
     for k in range(1, NS + 1):                              # straight steps in the breakfast area, rising +z toward the winders
         za, zb, h = z0 - (NS - k + 1) * g, z0 - (NS - k) * g, k * r
         box(f"service_foot{k:02d}", "step", XL, XN, 0.0, h, za, zb)
-        box(f"service_foot{k:02d}_tread", "tread", XL, XN, h - 0.025, h + 0.005, za, zb)
+        box(f"service_foot{k:02d}_tread", "tread", XL - NOSE, XN + NOSE, h - 0.025, h + 0.005, za - NOSE, zb + NOSE)
         box(f"service_foot{k:02d}_riser", "riser", XL, XN, h - r, h - 0.025, za - 0.01, za)
     piv = np.array([XL, z0]); corner = np.degrees(np.arctan2(z1 - z0, XN - XL))
     def edge(th):                                           # pivot ray at th (0 = +x along the open side, 90 = +z) to the square's far side
@@ -213,15 +225,15 @@ def service_stair_spec(final, o):
         h = (NS + 1 + i) * r
         poly = [piv, edge(ang[i])] + ([np.array([XN, z1])] if ang[i] < corner < ang[i + 1] else []) + [edge(ang[i + 1])]
         prism(f"service_winder{i + 1}", "step", poly, 0.0, h)
-        prism(f"service_winder{i + 1}_tread", "tread", poly, h - 0.025, h + 0.005)
         e = edge(ang[i]); n = np.array([np.sin(np.radians(ang[i])), -np.cos(np.radians(ang[i]))]) * 0.01   # riser on its front edge
+        prism(f"service_winder{i + 1}_tread", "tread", grow(poly, NOSE), h - 0.025, h + 0.005)
         prism(f"service_winder{i + 1}_riser", "riser", [piv, e, e + n, piv + n], h - r, h - 0.025)
     hf = lambda x: (NS + NW + 1) * r + (XL - x) / g * r     # flight nosing line
     k = 0
     while (NS + NW + 1 + k) * r <= ceil - 0.05 and XL - (k + 1) * g >= x0 - 1e-6:   # the flight: rising -x along the wall
         k += 1; xa, xb = XL - k * g, XL - (k - 1) * g; hk = (NS + NW + k) * r
         box(f"service_step{k:02d}", "step", xa, xb, 0.0, hk, z0, z1)
-        box(f"service_step{k:02d}_tread", "tread", xa, xb, hk - 0.025, hk + 0.005, z0, z1)
+        box(f"service_step{k:02d}_tread", "tread", xa - NOSE, xb + NOSE, hk - 0.025, hk + 0.005, z0 - NOSE, z1 + NOSE)
         box(f"service_step{k:02d}_riser", "riser", xb, xb + 0.01, hk - r, hk - 0.025, z0, z1)
         for f in (0.25, 0.75):                              # 2 white balusters a tread, up to the raking rail
             c = xa + f * g
@@ -246,13 +258,15 @@ def service_stair_spec(final, o):
         box(nm, "casing", xa, xb, 0.0, 2.10, DZ - 0.05, DZ - 0.03)
     box("basement_Casing_head", "casing", DX0 - 0.07, DX1 + 0.07, 2.032, 2.10, DZ - 0.05, DZ - 0.03)
     box("basement_PropDoor_knob", "newel", DX1 - 0.09, DX1 - 0.05, 0.92, 0.96, DZ - 0.075, DZ - 0.035)
-    for j in range(1, k + 1):                               # white cut stringer along the open side
+    for j in range(1, k + 1):                               # white cut stringer along the open side, not inside the return wall
         xa, xb = XL - j * g, XL - (j - 1) * g; hj = (NS + NW + j) * r
+        if xa >= WX1 - g - 1e-6 and xb <= WX1 + 1e-6:
+            continue
         box(f"service_stringer{j:02d}", "stringer", xa, xb, hj - r - 0.12, hj - 0.025, z0 - 0.02, z0)
     # posts (measured x): short newel on the winders' doorway-side edge, tall post at the pivot, a post at the wall; raking rail between
     ZN = 6.88; hn, hw = (NS + 1) * r, (NS + 2) * r
     box("service_newel", "newel", XN - 0.05, XN + 0.05, 0.0, hn + 0.95, ZN - 0.05, ZN + 0.05)
-    box("service_newel_post", "newel", XL - 0.05, XL + 0.05, 0.0, hf(XL) + 1.05, z0, z0 + 0.1)
+    box("service_newel_post", "newel", XL - 0.05, XL + 0.05, 0.0, hf(XL) + 1.05, z0 - NOSE - 0.01, z0 + 0.09 - NOSE)   # 1 cm proud of the stringer face
     box("service_wall_post", "newel", 2.45, 2.55, 0.0, hw + 1.0, z1 - 0.1, z1)
     box("service_winder_rail", "newel", XN - 0.06, XN, (hn + hw) / 2 + 0.84, (hn + hw) / 2 + 0.90, ZN, z1 - 0.1, rise_z=rd(hw - hn))
     for i in range(1, 5):

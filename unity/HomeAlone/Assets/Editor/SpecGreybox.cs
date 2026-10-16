@@ -13,7 +13,7 @@ using UnityEngine.Rendering.HighDefinition;
 /// openings, stair rails, prop doors, an adult-capsule walk test through every door, and checking captures.
 /// No geometry constants live here; change the spec, not this file.
 /// Run: Unity -batchmode -projectPath unity/HomeAlone -executeMethod SpecGreybox.Build -quit -logFile -
-public static class SpecGreybox
+public static partial class SpecGreybox
 {
     const float HalfWall = 0.07f;      // each space builds half of the spec's 14 cm interior wall, outward
     const float ArchHead = 2.20f;      // arches: header height (not measured yet)
@@ -341,6 +341,7 @@ public static class SpecGreybox
         report += "UPSTAIRS " + RoomWalk(spaces, doors);
         FloorY = gy; report += "GROUND " + RoomWalk(gspaces, gdoors); FloorY = 0f;
         dressing?.SetActive(true); Physics.SyncTransforms();
+        report += ZFightCheck(root, groot);
         player.SetActive(true);
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, "walk-test-wallgrid.txt"), report);
@@ -390,16 +391,24 @@ public static class SpecGreybox
             // which faces border a papered room: split a thin wall down its middle so each side takes its own room's finish
             bool thinX = x1 - x0 <= 0.16f, thinZ = z1 - z0 <= 0.16f;
             float mx = (x0 + x1) / 2, mz = (z0 + z1) / 2;
+            // along its length, a thin wall is cut where its sides' rooms change: the stretch running into another wall's
+            // thickness borders no room, and papering it showed a paper strip on the next room's face (user note Oct 16 08:11)
+            void Runs(float t0, float t1, System.Func<float, (bool, bool)> sides, System.Action<float, float, bool, bool> piece)
+            {
+                const float step = 0.01f; float r0 = t0; var cur = sides(t0 + step / 2);
+                for (float t = t0 + step; t < t1 - step / 2; t += step)
+                {
+                    var nx = sides(t + step / 2);
+                    if (nx != cur) { piece(r0, t, cur.Item1, cur.Item2); r0 = t; cur = nx; }
+                }
+                piece(r0, t1, cur.Item1, cur.Item2);
+            }
             if (thinX && !thinZ)
-            {
-                bool a = InPaper(x0 - e, mz), c = InPaper(x1 + e, mz);
-                if (a == c) Piece(x0, x1, z0, z1, y0, y1, a); else { Piece(x0, mx, z0, z1, y0, y1, a); Piece(mx, x1, z0, z1, y0, y1, c); }
-            }
+                Runs(z0, z1, z => (InPaper(x0 - e, z), InPaper(x1 + e, z)), (za, zb, a, c) =>
+                { if (a == c) Piece(x0, x1, za, zb, y0, y1, a); else { Piece(x0, mx, za, zb, y0, y1, a); Piece(mx, x1, za, zb, y0, y1, c); } });
             else if (thinZ && !thinX)
-            {
-                bool a = InPaper(mx, z0 - e), c = InPaper(mx, z1 + e);
-                if (a == c) Piece(x0, x1, z0, z1, y0, y1, a); else { Piece(x0, x1, z0, mz, y0, y1, a); Piece(x0, x1, mz, z1, y0, y1, c); }
-            }
+                Runs(x0, x1, x => (InPaper(x, z0 - e), InPaper(x, z1 + e)), (xa, xb, a, c) =>
+                { if (a == c) Piece(xa, xb, z0, z1, y0, y1, a); else { Piece(xa, xb, z0, mz, y0, y1, a); Piece(xa, xb, mz, z1, y0, y1, c); } });
             else Piece(x0, x1, z0, z1, y0, y1, InPaper(x0 - e, mz) || InPaper(x1 + e, mz) || InPaper(mx, z0 - e) || InPaper(mx, z1 + e));
         }
         foreach (var b in st["floor"])   // the plate, one piece per room carrying its finish (halls carpeted), walls' cells plain
@@ -888,6 +897,12 @@ public static class SpecGreybox
     static void Trim(GameObject p, bool alongX, float t0, float t1, float s0, float s1, float y0, float y1)
     {
         float ta = Mathf.Min(t0, t1), tb = Mathf.Max(t0, t1);
+        // trim never runs into a wall or floor: its faces would lie in theirs and flicker (z-fight gate, Oct 16). This drops the
+        // stool and apron of floor-level windows and casing legs where the next room is no wider than the opening.
+        var lo = alongX ? new Vector3(s0, y0 + FloorY, ta) : new Vector3(ta, y0 + FloorY, s0);
+        var hi = alongX ? new Vector3(s1, y1 + FloorY, tb) : new Vector3(tb, y1 + FloorY, s1);
+        Physics.SyncTransforms();
+        if (Physics.OverlapBox((lo + hi) / 2, (hi - lo) / 2 - Vector3.one * 0.002f).Any(c => c.name == "Wall" || c.name.StartsWith("Floor"))) return;
         if (alongX) Box(p, "Casing", s0, s1, ta, tb, y0, y1, mProp); else Box(p, "Casing", ta, tb, s0, s1, y0, y1, mProp);
     }
 
@@ -1244,75 +1259,6 @@ public static class SpecGreybox
         return string.Join("\n", lines) + "\n";
     }
 
-    // Seams (Oct 15, user: "walls and ceilings must line up"): every exposed face of the structural boxes (walls, headers,
-    // floors, ceilings, stair structure; not trim, rails, props or dressing) against every other one facing the same way.
-    //   OVERLAP: coplanar within 1 cm, overlapping, different materials (flicker / z-fighting)
-    //   LEDGE:   the same surface continued 0.5-6 cm off its plane, stacked or end to end (a visible step)
-    //   GAP:     coplanar but 0.5-10 cm short of meeting along the surface (a slit)
-    // A face covered by a touching box (back-to-back walls) is internal and skipped.
-    // Rooms as volumes for the seam check: (polygon, floor y, top y). Stairwells span from the floor below to their ceiling.
-    static List<(List<Vector2> pts, float y0, float y1)> SeamRooms = new();
-
-    static string SeamCheck(params GameObject[] roots)
-    {
-        // only surfaces seen from inside a room count: the point just in front of a face must be in a room's open volume
-        bool Seen(Vector3 q) => SeamRooms.Any(r => q.y > r.y0 + 0.002f && q.y < r.y1 - 0.002f && Inside(r.pts, new Vector2(q.x, q.z)));
-        string[] skip = { "Dressing", "Furniture", "Rail", "Spindle", "spindle", "_cap", "Casing", "PropDoor", "Window", "Glass", "Stool", "Apron", "Light", "Walker", "Outdoors", "Arch_Spandrel", "ShadowCap", "_tread", "_riser", "stringer", "newel" };   // an arch's curve is stepped on purpose (grey-box)
-        var boxes = roots.Where(r => r != null).SelectMany(r => r.GetComponentsInChildren<MeshRenderer>())
-            .Where(m => !skip.Any(k => m.name.Contains(k) || (m.transform.parent != null && m.transform.parent.name.Contains(k)) ||
-                                        (m.transform.parent?.parent != null && m.transform.parent.parent.name.Contains(k))))
-            .Where(m => Quaternion.Angle(m.transform.rotation, Quaternion.identity) < 0.1f)
-            .Select(m => (m, b: m.bounds)).ToList();
-        var faces = new List<(int box, int ax, float c, int n, Vector2 lo, Vector2 hi)>();
-        for (int i = 0; i < boxes.Count; i++)
-            for (int ax = 0; ax < 3; ax++)
-            {
-                var b = boxes[i].b; int u = (ax + 1) % 3, v = (ax + 2) % 3;
-                var lo = new Vector2(b.min[u], b.min[v]); var hi = new Vector2(b.max[u], b.max[v]);
-                faces.Add((i, ax, b.min[ax], -1, lo, hi)); faces.Add((i, ax, b.max[ax], 1, lo, hi));
-            }
-        float Ov(float a0, float a1, float b0, float b1) => Mathf.Min(a1, b1) - Mathf.Max(a0, b0);
-        Vector3 P(int ax, float c, float a, float b) { var q = Vector3.zero; q[ax] = c; q[(ax + 1) % 3] = a; q[(ax + 2) % 3] = b; return q; }
-        bool Solid(Vector3 q, int not = -1) { for (int k = 0; k < boxes.Count; k++) if (k != not && boxes[k].b.Contains(q)) return true; return false; }
-        // internal: the point just outside the face's centre is inside another box (back-to-back walls, a ceiling's edge in a wall)
-        var exposed = faces.Where(f => { var q = P(f.ax, f.c + f.n * 0.003f, (f.lo.x + f.hi.x) / 2, (f.lo.y + f.hi.y) / 2); return !Solid(q, f.box) && Seen(q); }).ToList();
-        var lines = new List<string>(); int over = 0, ledge = 0, gap = 0;
-        string Where(int i) { var c = boxes[i].b.center; return $"{boxes[i].m.transform.parent?.name}/{boxes[i].m.name} at ({c.x:F2}, {c.y:F2}, {-c.z:F2})"; }
-        string[] axn = { "x", "y", "z" };
-        for (int i = 0; i < exposed.Count; i++)
-            for (int j = i + 1; j < exposed.Count; j++)
-            {
-                var f = exposed[i]; var g = exposed[j];
-                if (f.box == g.box || f.ax != g.ax || f.n != g.n) continue;
-                float d = Mathf.Abs(f.c - g.c);
-                if (d > 0.06f) continue;
-                float ou = Ov(f.lo.x, f.hi.x, g.lo.x, g.hi.x), ov = Ov(f.lo.y, f.hi.y, g.lo.y, g.hi.y);
-                if (d < 0.01f && ou > 0.05f && ov > 0.05f)
-                {
-                    if (boxes[f.box].m.sharedMaterial != boxes[g.box].m.sharedMaterial)
-                    { over++; if (over <= 40) lines.Add($"OVERLAP {axn[f.ax]}={f.c:F3}/{g.c:F3}: {Where(f.box)} | {Where(g.box)}"); }
-                }
-                else if (d >= 0.005f && ((ou > 0.05f && Mathf.Abs(ov) < 0.02f && ov <= 0.02f) || (ov > 0.05f && Mathf.Abs(ou) < 0.02f && ou <= 0.02f)))
-                { ledge++; if (ledge <= 200) lines.Add($"LEDGE   {axn[f.ax]} {f.c:F3} vs {g.c:F3} ({d * 100:F1} cm): {Where(f.box)} | {Where(g.box)}"); }
-                else if (d < 0.005f && ((ou > 0.05f && ov < -0.005f && ov > -0.10f) || (ov > 0.05f && ou < -0.005f && ou > -0.10f)))
-                {   // a slit only if it is empty just behind the surface (a wall or slab filling it is a joint, not a gap)
-                    bool alongU = ov < 0;
-                    float a = alongU ? (Mathf.Max(f.lo.x, g.lo.x) + Mathf.Min(f.hi.x, g.hi.x)) / 2 : (Mathf.Min(f.hi.x, g.hi.x) + Mathf.Max(f.lo.x, g.lo.x)) / 2;
-                    float b = alongU ? (Mathf.Min(f.hi.y, g.hi.y) + Mathf.Max(f.lo.y, g.lo.y)) / 2 : (Mathf.Max(f.lo.y, g.lo.y) + Mathf.Min(f.hi.y, g.hi.y)) / 2;
-                    if (Solid(P(f.ax, f.c - f.n * 0.01f, a, b)) || !Seen(P(f.ax, f.c + f.n * 0.01f, a, b))) continue;
-                    gap++; if (gap <= 200) lines.Add($"GAP     {axn[f.ax]}={f.c:F3} ({-Mathf.Min(ou, ov) * 100:F1} cm): {Where(f.box)} | {Where(g.box)}");
-                }
-            }
-        foreach (var (hp, what) in HoleProbes)   // thresholds and outside corners must be solid (a hole there sees the outdoors)
-            if (!Solid(hp)) { gap++; if (gap <= 200) lines.Add($"GAP     hole at {what}: ({hp.x:F2}, {hp.y:F2}, {-hp.z:F2}) is empty"); }
-        lines.Insert(0, $"Seam check: {boxes.Count} structural boxes, {over} overlaps (flicker), {ledge} ledges, {gap} gaps");
-        return string.Join("\n", lines) + "\n";
-    }
-
-    // Leaks: from a 0.5 m grid at eye height in every space (both floors), rays go up and in 16 horizontal directions.
-    // A ray that hits nothing within 40 m escaped the house (a hole to the sky or outside). Window glass has a collider,
-    // so every escape is a defect. Headroom: on the ground floor, any grid point with < 2.0 m clear above the floor is
-    // reported with the object above it; only the main stair's flight 1 (steps, rails) may stand there.
     static string LeakAndHeadroom(List<Space> up, List<Space> ground, float gy)
     {
         var lines = new List<string>(); int leaks = 0, low = 0, pts = 0;

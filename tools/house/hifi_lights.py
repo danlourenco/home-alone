@@ -74,10 +74,10 @@ export([brass, glass, candle, bulb], MATS, "Lantern")
 brass, candle, bulb = Part("Brass", "Light_Brass"), Part("Candles", "Light_Candle"), Part("Bulbs", "Light_Bulb")
 # oval backplate 0.10 x 0.20, 1.5 cm thick
 plate = [(0.05 * math.cos(2 * math.pi * k / 20), 0.10 * math.sin(2 * math.pi * k / 20)) for k in range(20)]
-brass.poly([(0.015, y, z) for z, y in plate])                                             # front face (+x)
-brass.poly([(0.0, y, z) for z, y in reversed(plate)])                                    # back face
+brass.face([(0.015, y, z) for z, y in plate], (1, 0, 0))                                             # front face (+x)
+brass.face([(0.0, y, z) for z, y in plate], (-1, 0, 0))                                    # back face
 for (za, ya), (zb, yb) in zip(plate, plate[1:] + plate[:1]):
-    brass.quad((0.0, ya, za), (0.0, yb, zb), (0.015, yb, zb), (0.015, ya, za))
+    brass.face([(0.0, ya, za), (0.0, yb, zb), (0.015, yb, zb), (0.015, ya, za)], (0, ya + yb, za + zb))   # rim, outward
 # ball body on a short stem
 brass.box(0.015, 0.06, -0.012, 0.012, -0.012, 0.012)
 n = 14
@@ -100,10 +100,10 @@ export([brass, candle, bulb], MATS, "Sconce")
 # ---------------------------------------------------------------- hurricane sconce: backplate on x = 0, one candle in a glass chimney
 brass, candle, bulb, shade = Part("Brass", "Light_Brass"), Part("Candles", "Light_Candle"), Part("Bulbs", "Light_Bulb"), Part("Shade", "Light_Shade")
 plate = [(0.045 * math.cos(2 * math.pi * k / 20), 0.09 * math.sin(2 * math.pi * k / 20)) for k in range(20)]
-brass.poly([(0.012, y, z) for z, y in plate])
-brass.poly([(0.0, y, z) for z, y in reversed(plate)])
+brass.face([(0.012, y, z) for z, y in plate], (1, 0, 0))
+brass.face([(0.0, y, z) for z, y in plate], (-1, 0, 0))
 for (za, ya), (zb, yb) in zip(plate, plate[1:] + plate[:1]):
-    brass.quad((0.0, ya, za), (0.0, yb, zb), (0.012, yb, zb), (0.012, ya, za))
+    brass.face([(0.0, ya, za), (0.0, yb, zb), (0.012, yb, zb), (0.012, ya, za)], (0, ya + yb, za + zb))   # rim, outward
 pts = [(0.012, -0.05, 0.0), (0.06, -0.08, 0.0), (0.11, -0.06, 0.0), (0.13, -0.02, 0.0)]   # S-arm out from the plate's foot
 brass.sweep(pts, [(-0.006, -0.006), (0.006, -0.006), (0.006, 0.006), (-0.006, 0.006)])
 brass.lathe(0.13, 0.0, -0.02, [(0, 0.012), (0.015, 0.045), (0.025, 0.045)], n=16)         # cup holding the chimney
