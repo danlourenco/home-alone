@@ -1,0 +1,10 @@
+{
+ "note": "Painted rooms' wall finishes, read by SpecGreybox (Storey): upper paint colour (sRGB albedo) over a white wainscot of the given height, with a baseboard and a cap rail. Papered rooms are in foyer.json.",
+ "rooms": {
+  "dining_room": {
+   "upper": [0.46, 0.12, 0.08],
+   "wainscot_m": 0.704,
+   "source": "Marina 226 and 228 s: deep red paint over a white panelled wainscot with a cap rail; colour from the ratio of the red wall to the white wainscot in the same light (226: red (76,17,8), wainscot (160,155,141) sRGB, wainscot albedo 0.85 assumed); wainscot cap height solved in 228 by tools/house/wall_scale.py (0.704; the house's foyer wainscot is 0.705); film 184/190 (Kevin's dinner) shows the same red room"
+  }
+ }
+}

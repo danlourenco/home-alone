@@ -477,24 +477,32 @@ public static partial class SpecGreybox
         {
             var w = Dress["walls"]; wpMat = w["wallpaper_texture"] != null ? Wallpaper(w) : DressMat(w["wallpaper"]); wsMat = DressMat(w["wainscot"]); ws = (float)w["wainscot_m"];
         }
-        // the kitchen and breakfast area: cream small-floral paper (a colour for now), no wainscot; quarry-tile floor (Oct 15 references)
-        var creamRooms = spaces.Where(sp => KitchenRooms.Contains(sp.name)).ToList();
-        var creamMat = Mat("Paper_Kitchen", KitchenWall);
-        bool InCream(float x, float zSpec) => creamRooms.Any(r => Inside(r.pts, new Vector2(x, -zSpec)));
-        // a wall face's finish from the room beside it: PLAIN, CREAM, or papered over a wainscot of the room's height (foyer.json
-        // wainscot_by_space overrides the house value: the vestibule has a low baseboard, film 10248)
-        const float PLAIN = -1f, CREAM = -2f;
+        // each room's wall finish: (upper material, wainscot height). Papered rooms (foyer.json walls.spaces) take the foyer paper over a
+        // wainscot (wainscot_by_space overrides the house height: the vestibule's low baseboard, the stair well's none); painted rooms
+        // come from spec/dressing/finishes.json (the dining room's red over a white wainscot); the kitchen and breakfast area are cream
+        // paper with no wainscot; anything else is the plain grey-box wall (upper null). Height 0: the upper finish to the floor, no trim.
         var byRoom = Dress?["walls"]?["wainscot_by_space"] as JObject;
-        float Fin(float x, float zSpec)
+        var fp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/finishes.json"));
+        var painted = File.Exists(fp) ? (JObject)JObject.Parse(File.ReadAllText(fp))["rooms"] : new JObject();
+        var finishOf = new Dictionary<string, (Material upper, float h)>();
+        foreach (var sp in spaces)
         {
-            var r = paperRooms.FirstOrDefault(q => Inside(q.pts, new Vector2(x, -zSpec)));
-            if (r != null) return byRoom?[r.name] != null ? (float)byRoom[r.name] : ws;
-            return InCream(x, zSpec) ? CREAM : PLAIN;
+            if (paperRooms.Contains(sp)) finishOf[sp.name] = (wpMat, byRoom?[sp.name] != null ? (float)byRoom[sp.name] : ws);
+            else if (painted[sp.name] is JObject pr) finishOf[sp.name] = (DressMat(pr["upper"], "Paint_" + sp.name), (float)pr["wainscot_m"]);
+            else if (KitchenRooms.Contains(sp.name)) finishOf[sp.name] = (Mat("Paper_Kitchen", KitchenWall), 0f);
         }
-        // trim on a papered face (film 3225, 10248): a baseboard 0.14 m tall 1.2 cm proud and, over a full wainscot, a cap rail 3 cm proud
+        if (wsMat == null) wsMat = Mat("Wainscot_White", new Color(0.85f, 0.85f, 0.85f));
+        (Material upper, float h) Plain = (null, 0f);
+        (Material upper, float h) Fin(float x, float zSpec)
+        {
+            var r = spaces.FirstOrDefault(q => finishOf.ContainsKey(q.name) && Inside(q.pts, new Vector2(x, -zSpec)));
+            return r != null ? finishOf[r.name] : Plain;
+        }
+        // trim on a finished face (film 3225, 10248; Marina 228): a baseboard 0.14 m tall 1.2 cm proud and, over a full wainscot, a cap
+        // rail 3 cm proud
         void TrimOn(float x0, float x1, float z0, float z1, float y0, float y1, float fin, int face)
         {   // face: -1/+1 the -x/+x face, -2/+2 the -z/+z face (spec); runs are laid by LayTrim once everything on the walls exists
-            if (fin <= 0f) return;   // a wall with no wainscot height (the stair well) has no floor to trim against
+            if (fin <= 0f) return;   // no wainscot (the stair well, the kitchen): no floor-level trim from here
             void Run(float ya, float yb, float d)
             {
                 float fy = FloorY;
@@ -506,16 +514,15 @@ public static partial class SpecGreybox
             if (y0 <= 0.001f) Run(0f, 0.14f, 0.012f);   // 1 cm shallower than the stair's skirt board, which it meets
             if (fin > 0.3f && y0 < fin && y1 > fin + 0.03f) Run(fin - 0.01f, fin + 0.03f, 0.03f);
         }
-        void Piece(float x0, float x1, float z0, float z1, float y0, float y1, float fin, int face = 0)
-        {   // spec z -> world -z; papered: wainscot below, paper above (cream rooms: one colour); face: the room side to trim
-            if (fin == CREAM) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, creamMat); return; }
-            if (fin == PLAIN || wpMat == null) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, mWall); return; }
-            if (fin <= 0f) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, wpMat); return; }   // no wainscot: paper to the bottom (the stair well)
-            if (y0 < fin && y1 > fin) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, fin, wsMat); Box(gw, "Wall", x0, x1, -z1, -z0, fin, y1, wpMat); }
-            else Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, y1 <= fin ? wsMat : wpMat);
-            if (face == 3) { TrimOn(x0, x1, z0, z1, y0, y1, fin, -1); TrimOn(x0, x1, z0, z1, y0, y1, fin, 1); }
-            else if (face == 4) { TrimOn(x0, x1, z0, z1, y0, y1, fin, -2); TrimOn(x0, x1, z0, z1, y0, y1, fin, 2); }
-            else if (face != 0) TrimOn(x0, x1, z0, z1, y0, y1, fin, face);
+        void Piece(float x0, float x1, float z0, float z1, float y0, float y1, (Material upper, float h) fin, int face = 0)
+        {   // spec z -> world -z; the finish's wainscot below its height, its upper material above; face: the room side to trim
+            if (fin.upper == null) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, mWall); return; }
+            if (fin.h <= 0f) Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, fin.upper);
+            else if (y0 < fin.h && y1 > fin.h) { Box(gw, "Wall", x0, x1, -z1, -z0, y0, fin.h, wsMat); Box(gw, "Wall", x0, x1, -z1, -z0, fin.h, y1, fin.upper); }
+            else Box(gw, "Wall", x0, x1, -z1, -z0, y0, y1, y1 <= fin.h ? wsMat : fin.upper);
+            if (face == 3) { TrimOn(x0, x1, z0, z1, y0, y1, fin.h, -1); TrimOn(x0, x1, z0, z1, y0, y1, fin.h, 1); }
+            else if (face == 4) { TrimOn(x0, x1, z0, z1, y0, y1, fin.h, -2); TrimOn(x0, x1, z0, z1, y0, y1, fin.h, 2); }
+            else if (face != 0) TrimOn(x0, x1, z0, z1, y0, y1, fin.h, face);
         }
         foreach (var b in st["walls"])
         {
@@ -526,7 +533,7 @@ public static partial class SpecGreybox
             float mx = (x0 + x1) / 2, mz = (z0 + z1) / 2;
             // along its length, a thin wall is cut where its sides' rooms change: the stretch running into another wall's
             // thickness borders no room, and papering it showed a paper strip on the next room's face (user note Oct 16 08:11)
-            void Runs(float t0, float t1, System.Func<float, (float, float)> sides, System.Action<float, float, float, float> piece)
+            void Runs(float t0, float t1, System.Func<float, ((Material, float), (Material, float))> sides, System.Action<float, float, (Material, float), (Material, float)> piece)
             {
                 const float step = 0.01f; float r0 = t0; var cur = sides(t0 + step / 2);
                 for (float t = t0 + step; t < t1 - step / 2; t += step)
@@ -543,9 +550,9 @@ public static partial class SpecGreybox
                 Runs(x0, x1, x => (Fin(x, z0 - e), Fin(x, z1 + e)), (xa, xb, a, c) =>
                 { if (a == c) Piece(xa, xb, z0, z1, y0, y1, a, 4); else { Piece(xa, xb, z0, mz, y0, y1, a, -2); Piece(xa, xb, mz, z1, y0, y1, c, 2); } });
             else
-            {   // a thick piece: cream if any face is in a cream room, else the highest papered finish beside it
-                var f = new[] { Fin(x0 - e, mz), Fin(x1 + e, mz), Fin(mx, z0 - e), Fin(mx, z1 + e) };
-                Piece(x0, x1, z0, z1, y0, y1, f.Contains(CREAM) ? CREAM : f.Max());
+            {   // a thick piece (a pier, a wall end): the finish beside it with the tallest wainscot, plain if none
+                var f = new[] { Fin(x0 - e, mz), Fin(x1 + e, mz), Fin(mx, z0 - e), Fin(mx, z1 + e) }.Where(q => q.upper != null).ToList();
+                Piece(x0, x1, z0, z1, y0, y1, f.Count > 0 ? f.OrderByDescending(q => q.h).First() : Plain);
             }
         }
         foreach (var b in st["floor"])   // the plate, one piece per room carrying its finish (halls carpeted), walls' cells plain
@@ -684,10 +691,10 @@ public static partial class SpecGreybox
     // spec/dressing/foyer.json (tools/house/foyer_dressing.py): finishes and pieces measured from Marina's frames. Finishes
     // (wainscot, wallpaper, stair colours) are applied while building; pieces are added after the gates, like furniture.
     static JObject Dress;
-    static Material DressMat(JToken c)
+    static Material DressMat(JToken c, string name = null)
     {
         var col = new Color((float)c[0], (float)c[1], (float)c[2]);
-        return Mat($"Dress_{ColorUtility.ToHtmlStringRGB(col)}", col);
+        return Mat(name ?? $"Dress_{ColorUtility.ToHtmlStringRGB(col)}", col);
     }
     static Material WallMat = null, WainscotMat = null; static float Wainscot = 0f;
     static void SetFinish(Space s)
