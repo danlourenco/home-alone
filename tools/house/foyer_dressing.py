@@ -227,12 +227,9 @@ def main():
     # it; how her leaves swing is unmeasured (DEVIATIONS 29)
 
     # --- front: casing around the foyer/vestibule opening (203 s) and the vestibule's front door with sidelights
-    ja, jb = c203.on((545, 150), 0, XF), c203.on((975, 150), 0, XF)
-    head = ja[1]
-    for zz in (ja[2], jb[2]):
-        P.append(box("vestibule_opening_casing_leg", [XF - 0.03, XF], [0, head + 0.1], [zz - 0.06, zz + 0.06], C["white"]))
-    P.append(box("vestibule_opening_casing_head", [XF - 0.03, XF], [head, head + 0.12], [min(ja[2], jb[2]) - 0.06, max(ja[2], jb[2]) + 0.06], C["white"],
-                 note=f"203 s inner jambs x 545/975 at row 150 -> head {head:.2f} m"))
+    # the opening's casing is NOT placed here: casing is generated from the opening's cut (SpecGreybox, cased openings), so the two
+    # cannot disagree (user note Oct 16 09:41: a gap above a placed casing showed into the vestibule). Its head, 1.99 m from these
+    # inner jambs (203 s x 545/975 at row 150), is the opening's crown in measurements/overhead/ground-doors.json
     da, db = c203.on((638, 215), 0, XV), c203.on((810, 215), 0, XV)
     P.append(box("front_door", [XV - 0.05, XV], [0, da[1]], [db[2], da[2]], C["white"], note=f"203 s leaf x 638-810, head row 215 -> {da[1]:.2f} m"))
     for name, (u0, u1) in (("sidelight_left", (550, 618)), ("sidelight_right", (830, 900))):
@@ -250,7 +247,9 @@ def main():
     tex, rep = (film, json.loads(film.with_suffix(".json").read_text())["repeat_m"]) if film.exists() else (TILE, list(REPEAT_M))
     walls = {"wallpaper_texture": str(tex.relative_to(ROOT)), "wallpaper_repeat_m": rep, "wainscot_m": round(float(np.median([wn, wp, wf])), 3), "reads": {"north wall 312 s": round(float(wn), 3), "picture wall 312 s": round(float(wp), 3),
              "front wall 203 s": round(float(wf), 3)}, "wainscot": C["white"], "wallpaper": C["wallpaper"], "floor": C["floor"],
-             "spaces": ["foyer", "vestibule", "rear_passage"]}   # rear_passage: film 2677, the damask runs on inside the arch
+             "spaces": ["foyer", "vestibule", "rear_passage"],   # rear_passage: film 2677, the damask runs on inside the arch
+             "wainscot_by_space": {"vestibule": 0.14},
+             "wainscot_by_space_note": "film 10248 (camera solved, tools/house/film_solve_10248.py): the vestibule's walls are papered to a ~0.14 m baseboard, no 0.7 m wainscot"}
     out = {"note": __doc__.split("\n\n")[0], "colours": C, "walls": walls,
            "stair": {"step": C["white"], "spindle": C["white"], "landing": C["white"], "well_wall": C["wallpaper"], "hide": ["flight1_rail*_cap", "flight2_step*"]},
            "pieces": P}

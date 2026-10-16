@@ -63,7 +63,10 @@
      985,
      880
     ]
-   ]
+   ],
+   "crown": 1.99,
+   "cased": true,
+   "crown_source": "Marina 203 s: the opening's inner jambs (x 545/975) and head at row 150 -> 1.99 m (tools/house/foyer_dressing.py's camera); casing generated from the cut (user note Oct 16 09:41)"
   },
   {
    "a": "dining_room",

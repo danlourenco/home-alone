@@ -177,7 +177,8 @@ def openings(floor_spec, rooms):
         if f is None:
             notes.append(f"window {w['room']}/{w.get('name')}: no snapped wall"); continue
         out.append({"kind": "window", "between": [w["room"]], "axis": axis, "c": q(f[0] + f[1] * WALL / 2), "lo": q(lo), "hi": q(hi),
-                    "cuts": [(w["sill_m"], w["head_m"])], "sill": w["sill_m"], "head": w["head_m"], "faces": [f[1]], "name": w.get("name")})
+                    "cuts": [(w["sill_m"], w["head_m"])], "sill": w["sill_m"], "head": w["head_m"], "faces": [f[1]], "name": w.get("name"),
+                    **({"bare": True} if w.get("bare") else {})})   # bare: glass only, the frame belongs to a model (sidelights)
     return out, notes
 
 

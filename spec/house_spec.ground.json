@@ -436,7 +436,8 @@
     9.739
    ],
    "width": 1.649,
-   "height": null,
+   "height": 1.99,
+   "cased": true,
    "opens": true,
    "placed_from": "read in the overhead",
    "source": "foyer/vestibule opening (stairs-a and 4:30 vestibule frames)",
@@ -2637,6 +2638,32 @@
    ],
    "sill_m": 0.82,
    "head_m": 2.15
+  },
+  {
+   "room": "vestibule",
+   "name": "vestibule_sidelight_left",
+   "wall_axis": "x",
+   "wall_coord_spec": 10.13,
+   "span_spec": [
+    8.968,
+    9.255
+   ],
+   "sill_m": 0.412,
+   "head_m": 1.844,
+   "bare": true
+  },
+  {
+   "room": "vestibule",
+   "name": "vestibule_sidelight_right",
+   "wall_axis": "x",
+   "wall_coord_spec": 10.13,
+   "span_spec": [
+    10.176,
+    10.463
+   ],
+   "sill_m": 0.412,
+   "head_m": 1.844,
+   "bare": true
   }
  ]
 }

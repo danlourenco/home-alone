@@ -6,7 +6,8 @@ Measured on film 10248 with the camera solved by tools/house/film_solve_10248.py
 - leaf z 9.31-10.121: six raised panels (short top pair, tall middle pair, lower pair), lock rail between middle and lower pairs
   with a brass mail slot; brass deadbolt (1.24 m) and tall handle plate (0.77-1.03 m) on the right; three brass hinges on the
   left; a Christmas wreath centred at 1.47 m
-- sidelights either side: glass with white sheers gathered on brass rods (0.41 and 1.84 m), a raised panel below
+- sidelights either side: openings in the front wall (glass 0.412-1.844 m, z 8.968-9.255 / 10.176-10.463); white sheers gathered
+  on brass rods (0.41 and 1.84 m) in the film (NOT built: DEVIATIONS 41), a raised panel below
 - plain pilasters 9 cm wide, outer edges z 8.848 and 10.583; transom bar 1.898-1.93; an elliptical arch over door and
   sidelights, apex 2.118 m, with a radial-muntin fanlight
 Every face stands >= 1 cm off the one behind it (zfight-check).
@@ -31,8 +32,8 @@ PZ0, PZ1, PW = 8.848, 10.583, 0.09          # pilaster outer edges, width
 ZC = (PZ0 + PZ1) / 2                        # 9.7155: the assembly's centre (the door's centre agrees within 1 mm)
 TB, APEX = 1.93, 2.118                      # transom bar top, arch apex
 
-paint, brass, glass, sheer, leaf, berry = (Part("Paint", "Door_Paint"), Part("Brass", "Door_Brass"), Part("Glass", "Door_Glass"),
-                                           Part("Sheer", "Door_Sheer"), Part("Leaves", "Door_Wreath"), Part("Berries", "Door_Berry"))
+paint, brass, glass, leaf, berry = (Part("Paint", "Door_Paint"), Part("Brass", "Door_Brass"), Part("Glass", "Door_Glass"),
+                                    Part("Leaves", "Door_Wreath"), Part("Berries", "Door_Berry"))
 
 
 def raised_panel(z0, z1, y0, y1, x_field):
@@ -58,8 +59,10 @@ def framed(z0, z1, y0, y1, stile, rails, panels_z, x_front):
 st = 0.115; mz = (DZ0 + DZ1) / 2
 cols = [(DZ0 + st, mz - 0.05), (mz + 0.05, DZ1 - st)]
 rails = [(0.0, 0.20), (0.72, 0.87), (1.53, 1.63), (1.80, DH)]
-framed(DZ0, DZ1, 0.0, DH, st, rails, cols, WF - 0.045)
-xd = WF - 0.045                                           # the leaf's front (room side)
+framed(DZ0, DZ1, 0.0, DH, st, rails, cols, WF - 0.048)
+xd = WF - 0.048                                           # the leaf's front (room side)
+paint.box(WF - 0.011, WF - 0.005, 0.0, DH, DZ0, DZ1)      # backing: the joints between stiles, rails and panels show paint, not lit
+                                                          # wall (user note 09:33: "tiny gaps"); >= 1 cm from the wall and the panels
 brass.box(xd - 0.008, xd, 0.78, 0.81, mz - 0.13, mz + 0.13)            # mail slot plate on the lock rail
 brass.box(xd - 0.02, xd - 0.008, 0.80, 0.81, mz - 0.11, mz + 0.11)     # its lip, 1.2 cm proud
 brass.box(xd - 0.008, xd, 0.77, 1.03, DZ1 - 0.085, DZ1 - 0.045)       # tall handle plate
@@ -69,7 +72,11 @@ brass.box(xd - 0.07, xd - 0.03, 0.86, 0.90, DZ1 - 0.09, DZ1 - 0.04)    # the gri
 for y in (0.25, 0.95, 1.65):                                            # hinges on the left edge
     brass.box(xd - 0.006, xd, y, y + 0.10, DZ0, DZ0 + 0.015)
 
-# ---- sidelights: stiles 0.03 / 0.025, a raised panel 0.025-0.377, glass 0.412-1.844 with sheers on rods
+# ---- mullions between the leaf and the sidelights (film 10248: ~5.6 cm; user note 09:33 "tiny gaps" was the open strip here)
+for z0, z1 in ((DZ0 - 0.025, DZ0), (DZ1, DZ1 + 0.025)):
+    paint.box(WF - 0.05, WF, 0.0, DH, z0, z1)
+
+# ---- sidelights: stiles 0.03 / 0.025, a raised panel 0.025-0.377, glass 0.412-1.844 (the film's sheers and their rods: not built)
 for z0, z1 in ((PZ0 + PW, DZ0 - 0.025), (DZ1 + 0.025, PZ1 - PW)):
     xs = WF - 0.04
     paint.box(xs, xs + 0.025, 0.0, DH, z0, z0 + 0.03); paint.box(xs, xs + 0.025, 0.0, DH, z1 - 0.03, z1)
@@ -77,15 +84,8 @@ for z0, z1 in ((PZ0 + PW, DZ0 - 0.025), (DZ1 + 0.025, PZ1 - PW)):
     paint.box(xs, xs + 0.025, 0.377, 0.412, z0 + 0.03, z1 - 0.03)        # rail under the glass
     paint.box(xs, xs + 0.025, 1.844, DH, z0 + 0.03, z1 - 0.03)           # top rail
     raised_panel(z0 + 0.03, z1 - 0.03, 0.025, 0.377, xs + 0.025)
-    glass.box(WF - 0.008, WF - 0.002, 0.412, 1.844, z0 + 0.03, z1 - 0.03)
-    for y in (0.43, 1.82):                                              # curtain rods
-        brass.sweep([(xs + 0.012, y, z0 + 0.03), (xs + 0.012, y, z1 - 0.03)], [(-0.005, -0.005), (0.005, -0.005), (0.005, 0.005), (-0.005, 0.005)])
-    n, amp = 22, 0.012                                                  # gathered sheer between the rods: many narrow folds (film 10248)
-    zs = [z0 + 0.03 + (z1 - z0 - 0.06) * k / (2 * n) for k in range(2 * n + 1)]
-    for (za, zb) in zip(zs, zs[1:]):
-        xa = xs + 0.02 + amp * math.sin(math.pi * (za - zs[0]) / (zs[2] - zs[0]) * 2)
-        xb = xs + 0.02 + amp * math.sin(math.pi * (zb - zs[0]) / (zs[2] - zs[0]) * 2)
-        sheer.face([(xa, 0.44, za), (xa, 1.81, za), (xb, 1.81, zb), (xb, 0.44, zb)], (-1, 0, 0))
+    # no pane here: the sidelights are real openings in the front wall with clear glass (measurements/windows/ground.json)
+    # sheers and rods: NOT built (user, Oct 16: "figure out how to do it properly and realistically or don't do it at all"); DEVIATIONS 41
 
 # ---- pilasters with plinth and cap blocks; transom bar
 for z0 in (PZ0, PZ1 - PW):
@@ -131,11 +131,11 @@ for k in range(18):
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 M = {"Door_Paint": material("Door_Paint", (0.88, 0.87, 0.83), 0.35), "Door_Brass": material("Door_Brass", (0.75, 0.56, 0.25), 0.3),
-     "Door_Glass": material("Door_Glass", (0.1, 0.12, 0.13), 0.05), "Door_Sheer": material("Door_Sheer", (0.95, 0.95, 0.93), 0.8),
+     "Door_Glass": material("Door_Glass", (0.1, 0.12, 0.13), 0.05), 
      "Door_Wreath": material("Door_Wreath", (0.05, 0.09, 0.05), 0.6), "Door_Berry": material("Door_Berry", (0.55, 0.05, 0.05), 0.4)}
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("FrontDoor_HiFi", None); coll.objects.link(root)
-parts = (paint, brass, glass, sheer, leaf, berry)
+parts = (paint, brass, glass, leaf, berry)
 for p in parts:
     if p.f:
         p.build(coll, M).parent = root

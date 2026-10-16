@@ -1,0 +1,65 @@
+{
+ "change": "The foyer-vestibule opening is cased and its crown is the measured 1.99 m (was the 2.2 m default); its casing is generated from the cut on both faces, and the hand-placed dressing casing is gone (user note 09:41: a gap above the casing showed into the vestibule)",
+ "target": "House_WallGrid",
+ "premise": "The opening's head is where Marina's inner jambs end (203 s), and casing follows the cut",
+ "claim": {
+  "value": [
+   1.99
+  ],
+  "data": [
+   "marina-frame:203"
+  ],
+  "scale": [
+   "door-80in:203"
+  ],
+  "upstream": [
+   "door-80in:203"
+  ],
+  "applies_to": [
+   "foyer",
+   "vestibule"
+  ],
+  "measured_in": [
+   "foyer",
+   "vestibule"
+  ],
+  "surface": "ceiling-plane",
+  "surface_note": "not a ceiling: the opening's head (crown) only",
+  "measured_note": "one opening shared by both rooms; 203 s looks through it from the foyer into the vestibule"
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "film 3225 (from the landing): the opening's head sits below the vestibule's 2.438 m ceiling with wallpaper above it, a cased opening with a deep jamb; the lantern's chain passes its head on the foyer side",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film-frame:3225"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "build gates: seam 0, z-fight 0, clash 0; casing check lists only the landing window (dressing, next)",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "unity:build"
+   ],
+   "scale": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/feedback/shots/20261016-094028-House_WallGrid.png"
+  ],
+  "after": [
+   "spec/captures/views/notes/2026-10-16T094130.png"
+  ]
+ },
+ "user_walk": "pending"
+}

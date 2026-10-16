@@ -1,0 +1,44 @@
+{
+ "change": "Two bare windows in the vestibule's front wall where the door's sidelights are (glass z 8.968-9.255 and 10.176-10.463, 0.412-1.844 m), so the sidelights are see-through (user note 09:33); the door model (tools/house/hifi_door.py) frames them, so no casing, stool or apron",
+ "target": "House_WallGrid",
+ "premise": "The front door has full-height glazed sidelights either side, through which the yard shows",
+ "claim": {
+  "value": [0.287, 0.412, 1.844],
+  "data": ["film-frame:10248"],
+  "scale": ["door-leaf:marina-203"],
+  "upstream": ["marina-frame:203"],
+  "applies_to": ["vestibule"],
+  "measured_in": ["vestibule"]
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "film 9358 and 778: glazed sidelights with sheers flank the door, full door height above a raised panel",
+   "agrees": true,
+   "type": "topological",
+   "data": ["film-frame:9358", "film-frame:778"],
+   "scale": ["none"]
+  },
+  {
+   "what": "film 1551: inside the front door looking out, a sidelight curtain against daylight (the sidelights are glazed to the outside)",
+   "agrees": true,
+   "type": "topological",
+   "data": ["film-frame:1551"],
+   "scale": ["none"]
+  },
+  {
+   "what": "Marina 203 s (foyer.json sidelight_left/right): sidelights 0.26 / 0.35 m wide either side of the door; the film solve gives 0.287 each. The film is followed for the look (user, Oct 15-16: the film's foyer)",
+   "agrees": false,
+   "type": "metric",
+   "data": ["marina-frame:203"],
+   "scale": ["door-leaf:marina-203"],
+   "disposition": "within 3-6 cm per side; the film's symmetric pair is built (the house is dressed to the film); Marina's asymmetry may be her model's"
+  }
+ ],
+ "renders": {
+  "before": ["spec/feedback/shots/20261016-093249-House_WallGrid.png"],
+  "after": ["spec/captures/views/notes/2026-10-16T093333.png"]
+ },
+ "user_walk": "pending"
+}

@@ -208,6 +208,34 @@
    "width_source": "ASSUMED = Buzz window",
    "source": "overhead sfm-work/ground/overhead_994.jpg (Part 1 16:34): white window on the EXTERIOR face of the kitchen's upper side wall (x 1190-1210, y ~120-180 px) between face ends ~70/250. Not checked in a tour frame",
    "confidence": "low"
+  },
+  {
+   "room": "vestibule",
+   "name": "vestibule_sidelight_left",
+   "side": "x_max",
+   "centre_frac": 0.35,
+   "width_m": 0.287,
+   "sill_m": 0.412,
+   "head_m": 1.844,
+   "kind": "window",
+   "bare": true,
+   "width_source": "film 10248 with its camera solved (tools/house/film_solve_10248.py, 9.7 px) at our door leaf's scale: sidelight glass z 8.968-9.255 / 10.176-10.463",
+   "source": "film 10248 (night, inner foyer facing the door): two full-height sidelights flank the door, sheers on rods at 0.41 and 1.84 m; 9358 and 778 agree. bare: the frame is the door model's (tools/house/hifi_door.py), so no casing, stool or apron",
+   "confidence": "medium"
+  },
+  {
+   "room": "vestibule",
+   "name": "vestibule_sidelight_right",
+   "side": "x_max",
+   "centre_frac": 0.6886,
+   "width_m": 0.287,
+   "sill_m": 0.412,
+   "head_m": 1.844,
+   "kind": "window",
+   "bare": true,
+   "width_source": "film 10248 with its camera solved (tools/house/film_solve_10248.py, 9.7 px) at our door leaf's scale: sidelight glass z 8.968-9.255 / 10.176-10.463",
+   "source": "film 10248 (night, inner foyer facing the door): two full-height sidelights flank the door, sheers on rods at 0.41 and 1.84 m; 9358 and 778 agree. bare: the frame is the door model's (tools/house/hifi_door.py), so no casing, stool or apron",
+   "confidence": "medium"
   }
  ]
 }

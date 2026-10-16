@@ -131,8 +131,11 @@ WALL_FACE = 11.43   # the stair wall's visible face (probe: a wall layer z 11.43
 # the foot, up every nosing, then flat across the landing to its back wall; skirt board, raking panel and chair rail follow it,
 # so they meet the foyer's flat wainscot at the bottom and continue as the landing's wainscot at the top
 LN = B["landing"]
+STAIR_WALL_END = 7.091   # the stair wall (z 11.43) ends at the living-room opening (spec/geometry.json); the flat cap and the
+                         # raking rail are one piece from there, so they cannot meet short or at different heights
 line = sorted(((b["x"][1] + NOSE, b["y"][1]) for b in f1), reverse=True)              # bottom step first
 line = [(line[0][0] + (line[0][0] - line[1][0]), line[0][1] - (line[1][1] - line[0][1]))] + line   # floor level
+line = [(STAIR_WALL_END, line[0][1])] + line                                          # flat along the floor to the wall's end (user note 09:34)
 line += [(LN["x"][1] + NOSE, LN["y"][1]), (LN["x"][0] + 0.02, LN["y"][1])]            # landing nosing, landing back wall
 white.sweep([(x, y, WALL_FACE - 0.011) for x, y in line[:-1]], [(-0.011, -0.10), (0.011, -0.10), (0.011, 0.20), (-0.011, 0.20)])   # to the landing nosing
 white.box(line[-1][0], line[-2][0], LN["y"][1], LN["y"][1] + 0.20, WALL_FACE - 0.022, WALL_FACE)   # on the landing: sits on it (a dip went through the ceiling below)

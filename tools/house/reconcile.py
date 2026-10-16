@@ -424,7 +424,7 @@ def windows_spec(spaces):
         assert lo <= c - w["width_m"] / 2 and c + w["width_m"] / 2 <= hi, f"{w['room']}/{w['name']}: window runs past its wall"
         out.append({"room": w["room"], "name": w["name"], "wall_axis": "x" if ax == 0 else "z", "wall_coord_spec": round(float(coord), 3),
                     "span_spec": [round(float(c - w["width_m"] / 2), 3), round(float(c + w["width_m"] / 2), 3)],
-                    "sill_m": w["sill_m"], "head_m": w["head_m"]})
+                    "sill_m": w["sill_m"], "head_m": w["head_m"], **({"bare": True} if w.get("bare") else {})})
     return out
 
 
