@@ -22,6 +22,14 @@ Rules (exit 1 on any FAIL):
      landing or soffit edge. (Oct 14: the landing's front was read as the foyer ceiling twice.)
   R6 every DISAGREEING check that is evidence needs a "disposition": why the claim stands against it, or what was done
      (Oct 15 review: a contradicting independent survey left R1 green; contradictions were never adjudicated).
+  R7 a LAYOUT claim (a stair's or room's shape: which way it runs, turns, where its parts are; triggered by "layout" in the
+     claim, a topological check, or stair/layout/turn/straight in the change or premise) must list "alternatives" (every competing
+     layout, the current build included) and, under "layout": {"decides": [{"part", "observed_in": [frames], "extrapolated"}]},
+     every part where the alternatives differ, each seen directly (unoccluded) in 2+ frames and not extrapolated. Records
+     written from Oct 15 night on carry "gate": 7 (earlier records predate the rule and are not re-judged by it).
+     (Oct 15: the back stair was called "one straight flight" from an upper-flight nosing line extended to the floor; the foot,
+     where the options differ, was behind chairs in every frame used. The overhead, the film, the built TRIAL and the tool's
+     own newel-to-wall-post line all showed the turned foot. The user: "marina doesn't have a straight flight".)
 Check "type": metric (default) | angular | ratio | topological. Only a metric check needs a ruler; an angle, ratio or
 topology read with scale "none" is evidence, not a lead (Oct 15 review: the 35 deg pitch printed as a lead).
 Independence is per failure mode: a claim may list "risks" (e.g. extraction, scale, registration, model-fidelity) and
@@ -95,6 +103,14 @@ def gate(rec):
     if "ceiling" in (rec["change"] + rec["premise"]).lower():
         r5 = claim.get("surface") == "ceiling-plane"
         out.append(("ok" if r5 else "FAIL", f"R5 ceiling read surface: {claim.get('surface', 'not stated')}"))
+    text = (rec["change"] + " " + rec["premise"]).lower()
+    if rec.get("gate", 0) >= 7 and (claim.get("layout") or any(c.get("type") == "topological" for c in rec["checks"]) or any(w in text for w in ("stair", "layout", " turn", "straight"))):
+        lay = claim.get("layout", {}); dec = lay.get("decides", [])
+        weak = [d["part"] for d in dec if len(d.get("observed_in", [])) < 2 or d.get("extrapolated")]
+        r7 = bool(claim.get("alternatives")) and bool(dec) and not weak
+        out.append(("ok" if r7 else "FAIL", "R7 layout: " + ("no alternatives listed" if not claim.get("alternatives") else
+                    "no deciding parts listed" if not dec else f"parts not seen directly in 2+ frames (or extrapolated): {weak}" if weak else
+                    f"{len(dec)} deciding parts each seen in 2+ frames against {len(claim['alternatives'])} alternatives")))
     walk = rec.get("user_walk", "pending")
     out.append(("info", f"user walk: {walk}" + ("  (TRIAL: say so; not done until the user accepts it)" if walk == "pending" else "")))
     return out
@@ -139,6 +155,13 @@ def selftest():
     rec["claim"]["risks"] = ["extraction", "scale"]
     rec["checks"][0]["tests"] = ["extraction"]
     assert {m.split()[0]: lvl for lvl, m in gate(rec) if lvl != "info"}["R1"] == "FAIL", "an uncovered risk passed"
+    st = {"gate": 7, "change": "back stair as one straight flight", "premise": "Marina's back stair is straight", "history": [], "checks": [],
+          "claim": {"data": ["colmap:backstair"], "scale": ["rig-height"], "alternatives": ["straight", "turned foot (build)"],
+                    "layout": {"decides": [{"part": "foot", "observed_in": ["marina-frame:916"], "extrapolated": True}]}}}
+    assert {m.split()[0]: lvl for lvl, m in gate(st) if lvl != "info"}["R7"] == "FAIL", "an extrapolated, once-seen foot decided a layout"
+    st["claim"]["layout"]["decides"] = [{"part": "foot", "observed_in": ["marina-frame:926", "marina-frame:927.4"]}]
+    assert {m.split()[0]: lvl for lvl, m in gate(st) if lvl != "info"}["R7"] == "ok"
+    print("selftest PASS: a layout decided by an extrapolated, once-seen part fails R7")
     print("selftest PASS: an undisposed contradiction fails R6; an angle with no ruler is evidence; an uncovered listed risk fails R1")
     print("selftest PASS: the circular Buzz record fails R1/R2; adding an independent check and a review passes them;"
           " the Oct 14 8 ft record fails R1 (one door ruler + a standard), R4 (foyer unmeasured); a landing-face read fails R5")

@@ -522,7 +522,7 @@ def cmd_track(a):
     print(f"{len(V)} cameras registered; camera-centre plane flat to {100 * flat:.1f}% of eye height; scale {s:.4f} m/unit; f {list(V.values())[0][0][0, 0]:.0f} px")
     L = json.loads(Path(a.labels).read_text())
     name_of = lambda fr: f"f_{int(round((float(fr['frame'].split('-')[1]) - a.start) * a.fps)) + 1:05d}.jpg"
-    obs = {}; snaps = {}
+    obs = {}; snaps = {}; later = []
     for fr in L:
         im = name_of(fr)
         if im not in V:
@@ -535,10 +535,36 @@ def cmd_track(a):
                 Cc = -R.T @ t; dvec = R.T @ np.r_[undistort(uv["floor"], K, k1), 1.0]
                 hc = (Cc - c0) @ up * s + RIG_H; lam = -hc / ((dvec @ up) * s)
                 snaps.setdefault(n, []).append((fr["frame"], Cc + lam * dvec, 0.0)); continue
+            if isinstance(uv, dict) and ("vplane" in uv or "wall" in uv):
+                later.append((n, uv, K, k1, R, t, kp, fr["frame"])); continue
             obs.setdefault(n, []).append((R, t, undistort(uv, K, k1), fr["frame"], K[0, 0]))
             d = np.hypot(kp[:, 0] - uv[0], kp[:, 1] - uv[1]); j = int(np.argmin(d)) if len(d) else -1
             if j >= 0 and d[j] <= a.snap:     # a tracked feature under the label: its 3D point, from this frame alone
                 snaps.setdefault(n, []).append((fr["frame"], P3[int(kp[j, 2])], float(d[j])))
+    # plane labels, after the points they lean on: a pixel on the vertical plane through two found points ("vplane"), or on the
+    # wall plane fitted (RANSAC) to the tracked features inside a box of that frame ("wall": [x0, y0, x1, y1])
+    for n, uv, K, k1, R, t, kp, frn in later:
+        Cc = -R.T @ t; dvec = R.T @ np.r_[undistort(uv["uv"], K, k1), 1.0]
+        if "vplane" in uv:
+            A, B = (np.mean([X for _, X, _ in snaps[m]], 0) for m in uv["vplane"]); nrm = np.cross(B - A, up); q0 = A
+        else:
+            x0, y0, x1, y1 = uv["wall"]; inside = kp[(kp[:, 0] >= x0) & (kp[:, 0] < x1) & (kp[:, 1] >= y0) & (kp[:, 1] < y1)]
+            Q = np.array([P3[int(i)] for i in inside[:, 2]]); best = None; rng = np.random.default_rng(0)
+            if len(Q) < 6:
+                print(f"  {n}: only {len(Q)} tracked features in its box in {frn}: skipped"); continue
+            for _ in range(300):
+                a3 = Q[rng.choice(len(Q), 3, replace=False)]; nn = np.cross(a3[1] - a3[0], a3[2] - a3[0])
+                if np.linalg.norm(nn) < 1e-12 or abs(nn @ up) / np.linalg.norm(nn) > 0.1:   # walls are vertical
+                    continue
+                nn /= np.linalg.norm(nn); inl = np.abs((Q - a3[0]) @ nn) * s < 0.02
+                if best is None or inl.sum() > best[0].sum():
+                    best = (inl, nn, a3[0])
+            if best is None:
+                print(f"  {n}: no vertical plane in {frn}: skipped"); continue
+            inl = best[0]; c = Q[inl].mean(0); nrm = np.linalg.svd(Q[inl] - c)[2][-1]; q0 = c
+            print(f"  {n}: wall plane from {inl.sum()}/{len(Q)} tracked features in {frn}")
+        lam = ((q0 - Cc) @ nrm) / (dvec @ nrm)
+        snaps.setdefault(n, []).append((frn, Cc + lam * dvec, 0.0))
     out = {}
     for n, o in sorted(obs.items()):
         if len(o) < 2:

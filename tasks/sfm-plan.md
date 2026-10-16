@@ -399,3 +399,13 @@ Clips from Part 1 at 1080p (the 640x360 original is deleted; use the `copy.mp4`)
     rise ~0.20; build 0.262/0.188), their open side 0.31-0.37 m in front of the door's wall (build: same plane). Flight line
     extrapolates to the floor near x 2.9 (the by-eye newel read). Newel, posts, doorway: triangulated from eye labels, not yet
     trustworthy. LEAD only; one frame; needs the held-out frame and more tracked-point labels before any build change.
+- **Back stair rebuilt from measurements (Oct 15, night; TRIAL)**: `changes/2026-10-15-back-stair-measured.json` (gate 0 FAIL incl. new R7).
+  - Mistake on the way, logged: I called her stair "one straight flight" from the upper flight's nosing line extended to the floor;
+    the foot is behind the table/chairs in every eye-level frame of 914-945 s and 1104-1116 s, and in 926-927 s a chair-back top was
+    nearly read as the floor (caught by projecting the tracked newel point: its floor lies 170 px lower). The user: "marina doesn't
+    have a straight flight, her includes the turned foot". Guard: change_gate.py R7 (layout claims list alternatives incl. the build;
+    every deciding part seen directly in 2+ frames, never extrapolated) + memory layout-claims-need-direct-view.
+  - Deciding view: Marina 1073.5/1074.5 s through the foyer doorway: newel at the corner of a doorway-end landing, balustrade across
+    its doorway-side edge, foot toward the table. Built: landing x 1.48-2.64 at 0.60 m, 2-step foot, flight going 0.30 / rise 0.20,
+    newel x 2.64, tall post x 1.48, wall post x 2.50, basement door x -1.284..-0.445 in a wall 0.30 m proud. Gates: walks 0 blocked,
+    seams 0/0/0 (the door wall's return is one going deep so its faces meet the step edges), leaks 0, peek 0.

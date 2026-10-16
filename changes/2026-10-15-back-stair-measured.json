@@ -1,0 +1,46 @@
+{
+ "gate": 7,
+ "change": "Back stair rebuilt from measurements (reconcile.service_stair_spec): landing at the foyer-doorway end x 1.48-2.64 at 0.60 m with the short newel at its front corner and a balustrade from it to the wall on its doorway side; 2-step foot from the landing down toward the table; flight along the wall going 0.30 / rise 0.20 to the ceiling; tall post at the flight's foot (x 1.48); Kevin's basement door x -1.284..-0.445 (0.84 m leaf, 2.032 m head) in a short wall 0.30 m proud of the stair's open side",
+ "target": "House_WallGrid",
+ "premise": "Marina's back stair keeps the turned foot (a landing at the doorway end, a short foot toward the room, the flight along the wall); its parts sit where her tracked cameras place them",
+ "claim": {
+  "value": [0.30, 0.20, 1.48, 2.64, 0.60],
+  "data": ["colmap:backstair-914-945", "labels:backstair-marina"],
+  "scale": ["rig-height:0.639-door"],
+  "upstream": ["door-80in:rig-6-doors"],
+  "applies_to": ["back_stair", "kitchen"],
+  "measured_in": ["back_stair"],
+  "assumed": {"kitchen": "DEVIATIONS 38"},
+  "surface": "ceiling-plane",
+  "alternatives": [
+   "current TRIAL (d4b1605): 4-step foot projecting 1.05 m into the room, quarter landing x 1.39-2.37, going 0.262 / rise 0.188, door in the open-side plane at x -1.43..-0.72",
+   "straight flight from the doorway end, no turn (proposed and withdrawn Oct 15 night: the foot was behind chairs and the line was extrapolated)",
+   "turned foot at measured positions (this change)"
+  ],
+  "layout": {"decides": [
+   {"part": "turned foot: landing at the doorway end with a balustrade across its doorway-side edge, foot leaving toward the room", "observed_in": ["marina-frame:p1-1073.5", "marina-frame:p1-1074.5", "marina-overhead:p1-812"], "extrapolated": false},
+   {"part": "landing height 0.60 m (3 risers)", "observed_in": ["marina-frame:p1-929", "marina-frame:p1-933"], "extrapolated": false},
+   {"part": "flight going/rise and nosing line", "observed_in": ["marina-frame:p1-916", "marina-frame:p1-933"], "extrapolated": false},
+   {"part": "posts: short newel x 2.64, tall post x 1.48, wall post x 2.50", "observed_in": ["marina-frame:p1-929", "marina-frame:p1-933"], "extrapolated": false},
+   {"part": "basement door position, size and plane", "observed_in": ["marina-frame:p1-916", "marina-frame:p1-933", "marina-frame:p1-935"], "extrapolated": false}
+  ]}
+ },
+ "history": [
+  {"date": "2026-10-15", "what": "straight solid flight from the doorway end (old service stair)", "outcome": "failed"},
+  {"date": "2026-10-15", "what": "basement door on the breakfast area's rear wall; 3 foot steps", "outcome": "failed"},
+  {"date": "2026-10-15", "what": "turned foot, 4 steps, positions by eye (d4b1605): user walk 'still kind of messed up'", "outcome": "failed"}
+ ],
+ "premise_reviewed": "Census of the three failed attempts: all placed parts by eye or from cameras solved against the build, never from measurements independent of it. The turned-foot layout itself was right in d4b1605 (user, Oct 15 night: 'her includes the turned foot'); what failed was position and size. This change keeps that layout and moves every part to positions measured with tracked cameras scaled by Marina's camera height, each seen in 2+ frames (R7).",
+ "checks": [
+  {"what": "film 912/928/2528: newel by the foyer doorway, bottom steps toward the table, flight rising along the wall to the basement door's end", "agrees": true, "data": ["film:912", "film:928", "film:2528"], "scale": ["none"], "type": "topological"},
+  {"what": "Marina 1073.5/1074.5 s through the foyer doorway (not in the tracked clip): newel at the landing's corner, balustrade across the doorway-side edge, foot beyond it", "agrees": true, "data": ["marina-frame:p1-1073.5", "marina-frame:p1-1074.5"], "scale": ["none"], "type": "topological"},
+  {"what": "new spec drawn through the tracked cameras (916/929/933/935): door, posts and flight treads land on hers", "agrees": true, "data": ["colmap:backstair-914-945"], "scale": ["rig-height:0.639-door"], "type": "topological"},
+  {"what": "door head 2.032 m from floor contacts + vertical plane (916): this door is one of the rig ruler's doors, so partly circular", "agrees": true, "data": ["colmap:backstair-914-945"], "scale": ["rig-height:0.639-door"]},
+  {"what": "film step count: the film's foot shows several rounded steps (912); built as 2 square steps from Marina's landing height", "agrees": false, "data": ["film:912"], "scale": ["none"], "type": "topological", "disposition": "Film and Marina are separate canon sets (never averaged); this build follows Marina (interior default). Rounded fronts logged as authored-square in DEVIATIONS 30"}
+ ],
+ "renders": {
+  "before": ["spec/captures/backstair-measured/before-m916.jpg", "spec/captures/backstair-measured/before-m929.jpg", "spec/captures/backstair-measured/before-m933.jpg", "spec/captures/backstair-measured/before-m935.jpg"],
+  "after": ["spec/captures/backstair-measured/after-m916.jpg", "spec/captures/backstair-measured/after-m929.jpg", "spec/captures/backstair-measured/after-m933.jpg", "spec/captures/backstair-measured/after-m935.jpg"]
+ },
+ "user_walk": "pending"
+}

@@ -4,14 +4,26 @@
   "source": "marina",
   "note": "Marina Part 1 916 s; read on refcam grids (2x/3x)",
   "pts": {
-   "door R head": [
-    1388,
-    325
-   ],
-   "door L head": [
-    1592,
-    325
-   ],
+   "door R head": {
+    "vplane": [
+     "door L foot",
+     "door R foot"
+    ],
+    "uv": [
+     1388,
+     325
+    ]
+   },
+   "door L head": {
+    "vplane": [
+     "door L foot",
+     "door R foot"
+    ],
+    "uv": [
+     1592,
+     325
+    ]
+   },
    "door R foot": {
     "floor": [
      1388,
@@ -38,22 +50,6 @@
     1758,
     543
    ],
-   "doorway R head": [
-    481,
-    368
-   ],
-   "doorway L head": [
-    622,
-    368
-   ],
-   "newel top": [
-    676,
-    503
-   ],
-   "post2 top": [
-    735,
-    418
-   ],
    "nosing@1": {
     "p3d": 58183
    },
@@ -70,7 +66,55 @@
    "nosing@5": [
     1260,
     369
-   ]
+   ],
+   "spandrel probe": {
+    "wall": [
+     1150,
+     470,
+     1380,
+     760
+    ],
+    "uv": [
+     1300,
+     650
+    ]
+   },
+   "wall right of door probe": {
+    "wall": [
+     1600,
+     300,
+     1660,
+     800
+    ],
+    "uv": [
+     1630,
+     600
+    ]
+   },
+   "stair wall probe": {
+    "wall": [
+     740,
+     290,
+     1100,
+     420
+    ],
+    "uv": [
+     900,
+     330
+    ]
+   },
+   "stair wall probe low": {
+    "wall": [
+     1100,
+     470,
+     1330,
+     600
+    ],
+    "uv": [
+     1200,
+     560
+    ]
+   }
   }
  },
  {
@@ -78,26 +122,6 @@
   "source": "marina",
   "note": "Marina Part 1 933 s",
   "pts": {
-   "door R head": [
-    1340,
-    208
-   ],
-   "door L head": [
-    1535,
-    210
-   ],
-   "newel top": [
-    265,
-    440
-   ],
-   "post2 top": [
-    300,
-    316
-   ],
-   "post top": [
-    742,
-    197
-   ],
    "nosing@1": [
     800,
     500
@@ -113,7 +137,16 @@
    "nosing@4": [
     1100,
     320
-   ]
+   ],
+   "newel shaft": {
+    "p3d": 44490
+   },
+   "post2 ball": {
+    "p3d": 45623
+   },
+   "tall post shaft": {
+    "p3d": 60271
+   }
   }
  },
  {
@@ -121,14 +154,6 @@
   "source": "marina",
   "note": "Marina Part 1 935 s",
   "pts": {
-   "door R head": [
-    900,
-    207
-   ],
-   "door L head": [
-    1095,
-    205
-   ],
    "window sill far": [
     1336,
     456
@@ -136,10 +161,6 @@
    "window sill near": [
     1603,
     462
-   ],
-   "post top": [
-    271,
-    152
    ],
    "nosing@1": [
     540,
@@ -160,22 +181,30 @@
   "source": "marina",
   "note": "Marina Part 1 924 s; hutch wall, foyer doorway, newel",
   "pts": {
-   "doorway R head": [
-    1385,
-    281
-   ],
-   "doorway L head": [
-    1592,
-    281
-   ],
-   "post2 top": [
-    1822,
-    343
-   ],
-   "newel top": [
-    1730,
-    470
-   ]
+   "doorway R head": {
+    "wall": [
+     1600,
+     150,
+     1700,
+     700
+    ],
+    "uv": [
+     1385,
+     281
+    ]
+   },
+   "doorway L head": {
+    "wall": [
+     1600,
+     150,
+     1700,
+     700
+    ],
+    "uv": [
+     1592,
+     281
+    ]
+   }
   }
  },
  {
@@ -183,26 +212,122 @@
   "source": "marina",
   "note": "Marina Part 1 929 s",
   "pts": {
-   "doorway R head": [
-    822,
-    283
-   ],
-   "doorway L head": [
-    1013,
-    283
-   ],
-   "post2 top": [
-    1197,
-    362
-   ],
-   "newel top": [
-    1160,
-    482
-   ],
-   "post top": [
-    1655,
-    197
-   ]
+   "doorway R head": {
+    "wall": [
+     1020,
+     150,
+     1130,
+     700
+    ],
+    "uv": [
+     822,
+     283
+    ]
+   },
+   "doorway L head": {
+    "wall": [
+     1020,
+     150,
+     1130,
+     700
+    ],
+    "uv": [
+     1013,
+     283
+    ]
+   },
+   "newel shaft": {
+    "p3d": 44490
+   },
+   "post2 ball": {
+    "p3d": 45623
+   },
+   "tall post shaft": {
+    "p3d": 60271
+   },
+   "foot tread 45016": {
+    "p3d": 45016
+   },
+   "foot tread 46745": {
+    "p3d": 46745
+   },
+   "foot tread 46822": {
+    "p3d": 46822
+   },
+   "foot tread 46468": {
+    "p3d": 46468
+   },
+   "foot tread 52673": {
+    "p3d": 52673
+   },
+   "foot tread 53358": {
+    "p3d": 53358
+   },
+   "foot tread 62135": {
+    "p3d": 62135
+   },
+   "foot tread 46020": {
+    "p3d": 46020
+   },
+   "foot tread 47435": {
+    "p3d": 47435
+   },
+   "foot tread 45600": {
+    "p3d": 45600
+   },
+   "foot tread 46053": {
+    "p3d": 46053
+   }
+  }
+ },
+ {
+  "frame": "marina-927.4",
+  "source": "marina",
+  "note": "bottom step of the foot, its riser meeting the floor (f_00068)",
+  "pts": {
+   "bottom riser floor a": {
+    "floor": [
+     1612,
+     830
+    ]
+   },
+   "bottom riser floor b": {
+    "floor": [
+     1790,
+     858
+    ]
+   },
+   "newel floor": {
+    "floor": [
+     1572,
+     840
+    ]
+   }
+  }
+ },
+ {
+  "frame": "marina-926.6",
+  "source": "marina",
+  "note": "bottom step, other view (f_00064)",
+  "pts": {
+   "bottom riser floor c": {
+    "floor": [
+     1805,
+     862
+    ]
+   },
+   "bottom riser floor d": {
+    "floor": [
+     1900,
+     879
+    ]
+   },
+   "newel floor 2": {
+    "floor": [
+     1770,
+     868
+    ]
+   }
   }
  }
 ]

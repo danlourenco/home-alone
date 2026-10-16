@@ -36,6 +36,7 @@ Why this exists (Oct 13): Buzz's room was resized to the SfM size 4.35 m. The "p
 | R4 | The claim doesn't list `applies_to` and `measured_in`, or it is built into an item it wasn't measured in without an `assumed` DEVIATIONS row |
 | R5 | A ceiling claim's `surface` is not `ceiling-plane` (crown, beam, landing or soffit edges are not ceilings) |
 | R6 | A disagreeing check that is evidence has no `disposition` (why the claim stands, or what was done about it) |
+| R7 | (records with `"gate": 7`) A layout claim (which way a stair runs or turns, where its parts are) lacks `alternatives` (the current build included), or a part where the alternatives differ is not seen directly in 2+ unoccluded frames, or is extrapolated (`claim.layout.decides`) |
 
 Each check may give a `type`: `metric` (default), `angular`, `ratio` or `topological`. Only a metric check needs a ruler; an angle or ratio with scale `none` is evidence. If the claim lists `risks` (e.g. `extraction`, `scale`, `registration`, `model-fidelity`), R1 needs an independent agreeing check whose `tests` covers each one: two Marina clips can test extraction but not her model's film accuracy, and two frames on one assumed door can't test the door.
 
