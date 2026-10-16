@@ -52,7 +52,8 @@ class Part:
         self.face(rings[0], (0, -1, 0)); self.face(rings[-1], (0, 1, 0))
 
     def sweep(self, path, prof):
-        """A profile [(across, up)] swept along a 3D polyline (handrail); 'across' is horizontal, perpendicular to the path."""
+        """A profile [(across, up)] swept along a 3D polyline (handrail); 'across' is horizontal, perpendicular to the path, and 'up' is
+        perpendicular to both and always points upward (for a path in a vertical plane across x: away from the arc's centre)."""
         rings = []
         for i, p in enumerate(path):
             a, b = path[max(i - 1, 0)], path[min(i + 1, len(path) - 1)]
@@ -60,6 +61,8 @@ class Part:
             side = [-t[2], 0.0, t[0]]; Ls = math.hypot(side[0], side[2])
             side = [side[0] / Ls, 0, side[2] / Ls] if Ls > 1e-9 else [-1.0, 0.0, 0.0]   # a vertical path: any horizontal side
             up = [t[1] * side[2] - t[2] * side[1], t[2] * side[0] - t[0] * side[2], t[0] * side[1] - t[1] * side[0]]
+            if up[1] < 0 or (abs(up[1]) < 1e-9 and up[0] + up[2] < 0):   # 'up' always points up (it flipped on paths running toward -x:
+                side, up = [-c for c in side], [-c for c in up]          # a skirt board hung below its line; user note 09:48); both turn, so faces keep their winding
             rings.append([tuple(p[j] + u * side[j] + w * up[j] for j in range(3)) for u, w in prof])
         n = len(prof)
         for a, b in zip(rings, rings[1:]):

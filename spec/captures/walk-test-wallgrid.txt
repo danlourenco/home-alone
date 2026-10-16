@@ -81,6 +81,6 @@ skip    bandit back_stair: no cell to stand in (its floor is a stair)
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin back_stair: no cell to stand in (its floor is a stair)
-Z-fight check: 66676 triangles, 960 surfaces, 0 coplanar pairs seen from rooms
-Clash check: 67469 triangles, 0 parts passing through another (12 allowed joints)
+Z-fight check: 66664 triangles, 959 surfaces, 0 coplanar pairs seen from rooms
+Clash check: 67457 triangles, 0 parts passing through another (12 allowed joints)
 Casing check: 1 casings placed apart from their opening (Dressing/landing_window_casing)
