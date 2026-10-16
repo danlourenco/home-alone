@@ -19,7 +19,7 @@ layer of models generated from the same spec, plus real textures, props and ligh
    dressing renderers it replaces (keep their colliders).
 4. **Textures:** Poly Haven (CC0, user OK Oct 15) via `TexMat(name, id, tint, tile_m, smoothness)`: world-space triplanar, no UVs.
 5. **Props:** Poly Haven models sized and placed by the dressing piece's measured footprint and height (`hifi_props.py`).
-6. **Lighting** from the stills: every fixture placed where the frames show it, warm, with fixed exposure (next for the foyer).
+6. **Lighting** from the stills: every fixture placed where the frames show it (`tools/house/hifi_lights.py` models, `SpecGreybox.HiFiLights` places them with 2700 K point lights), checked from the frame's own view.
 
 ## Traps hit in the foyer (each cost the user a walk)
 | Trap | Fix |
@@ -35,6 +35,9 @@ layer of models generated from the same spec, plus real textures, props and ligh
 | Wood looked grey: texture picked by name | Pick by measured mean albedo vs the colour sampled from Marina's frames, then look at it |
 | A "fixed" view checked from a guessed camera; a camera inside geometry | `tools/house/note_views.py` renders each walk note from its own pose; close-up cameras stand in the open room |
 | A missing piece the reference has (bullnose first step, raking wainscot) | Walk the reference sheet element by element before handing over |
+| Wallpaper: Marina's paper is a different colourway from the film's | Use the film's (user, Oct 15): `tools/house/film_wallpaper.py` cuts one repeat from a frontal daylight still by 2-D autocorrelation (mask fixtures or cut the tile above them, never patch: patches show as blocks), flattens the light, and the loader tiles it at its own width and height (a square triplanar scale stretched it 9%) |
+| Fixture placed from a misread frame (sconces first put on the foyer face beside the inner opening; the film has them on the vestibule's front wall by the sidelights) | Place each fixture from the frame where its wall's other features (door, sidelight, print) are all in view, and check that frame's view after building |
+| An editor command times out (the open editor is blocked by a dialog) | Copy the build into the project and commit anyway; ask the user to dismiss the dialog, then load |
 
 ## Gate before the user sees it
 1. Walk/seam/leak/peek gates unchanged (`spec/captures/walk-test-wallgrid.txt`).
