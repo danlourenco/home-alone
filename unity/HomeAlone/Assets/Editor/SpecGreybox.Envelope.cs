@@ -3,6 +3,7 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition;
 
 // The house's light-tight envelope (user, Oct 16: "the whole point of this rebuild was ... tight seals"). The grey-box walls are 14 cm
 // and the ceilings 15 cm with no roof; a low sun read through them at every joint (shadow-map bias). A real brick house's outer wall is
@@ -154,14 +155,14 @@ public static partial class SpecGreybox
 
     // rooms as volumes (world): each storey's polygons to their ceilings; the attic stair's room runs on up its shaft to the cap, a
     // stair well down to the floor below
-    internal static List<(List<Vector2> pts, float y0, float y1)> EnvelopeRooms(JObject geo, JToken atticBoxes, float gy)
+    internal static List<(string name, List<Vector2> pts, float y0, float y1)> EnvelopeRooms(JObject geo, JToken atticBoxes, float gy)
     {
         var cap = atticBoxes.Where(b => (string)b["kind"] == "ceiling").Select(b => SpecSlab(b, 0f)).ToList();
         return new[] { ((JObject)geo["upstairs"], 0f), ((JObject)geo["ground"], gy) }.SelectMany(s => s.Item1["rooms"].Select(r =>
         {
             var pts = r["poly"].Select(q => new Vector2((float)q[0], -(float)q[1])).ToList(); float y1 = s.Item2 + (float)r["ceil"];
             foreach (var c in cap) if (s.Item2 == 0f && Inside(pts, new Vector2((c.lo.x + c.hi.x) / 2, (c.lo.z + c.hi.z) / 2))) y1 = Mathf.Max(y1, c.lo.y);
-            return (pts, y0: (string)r["opens"] == "down" ? gy : s.Item2, y1);   // a stair well is one space from the floor below (as SeamRooms)
+            return ((string)r["name"], pts, y0: (string)r["opens"] == "down" ? gy : s.Item2, y1);   // a stair well is one space from the floor below (as SeamRooms)
         })).ToList();
     }
 
@@ -248,5 +249,34 @@ public static partial class SpecGreybox
         foreach (var c in temp) Object.DestroyImmediate(c);
         Physics.SyncTransforms();
         return $"Envelope check: {pts} points at room joints, {thin.Count} see the sky through < 0.3 m of shadow caster\n" + string.Concat(thin.Take(30).Select(x => x + "\n"));
+    }
+
+    // The film's day light (user, Oct 16: chose "the film's set lighting" over physical window light). The interiors were a lit set: soft,
+    // even, warm-neutral light from above, walls as bright as the frame's mean, windows blown out. Each room gets ceiling-wide rectangle
+    // lights, one per rectangular cell of its outline, in the day layer and BAKED only (into the day's probes: no runtime cost, dark at
+    // night). FillNits and FillKelvin are solved against matched film frames by tools/house/film_light_match.py. DEVIATIONS 44.
+    const float FillNits = 300f, FillKelvin = 5200f;
+
+    static void FilmFill(GameObject dayLayer, JObject geo, JToken atticBoxes, float gy)
+    {
+        var g = Child(dayLayer, "FilmFill"); int n = 0;
+        foreach (var r in EnvelopeRooms(geo, atticBoxes, gy))
+        {
+            var xs = r.pts.Select(v => v.x).Distinct().OrderBy(v => v).ToList(); var zs = r.pts.Select(v => v.y).Distinct().OrderBy(v => v).ToList();
+            for (int i = 0; i + 1 < xs.Count; i++) for (int k = 0; k + 1 < zs.Count; k++)
+            {
+                float x0 = xs[i], x1 = xs[i + 1], z0 = zs[k], z1 = zs[k + 1];
+                if (!Inside(r.pts, new Vector2((x0 + x1) / 2, (z0 + z1) / 2))) continue;
+                var l = new GameObject("FilmFill_" + r.name).AddComponent<Light>(); l.transform.SetParent(g.transform, false);
+                l.transform.position = new Vector3((x0 + x1) / 2, r.y1 - 0.02f, (z0 + z1) / 2);
+                l.transform.rotation = Quaternion.Euler(90f, 0f, 0f);   // facing down
+                l.gameObject.AddComponent<HDAdditionalLightData>();      // first: adding it resets the light
+                l.type = LightType.Rectangle; l.areaSize = new Vector2(Mathf.Max(x1 - x0 - 0.1f, 0.1f), Mathf.Max(z1 - z0 - 0.1f, 0.1f));
+                l.lightmapBakeType = LightmapBakeType.Baked; l.lightUnit = LightUnit.Nits; l.intensity = FillNits;
+                l.useColorTemperature = true; l.colorTemperature = FillKelvin; l.color = Color.white; l.shadows = LightShadows.Soft;
+                n++;
+            }
+        }
+        Debug.Log($"FilmFill: {n} ceiling fills at {FillNits} nits, {FillKelvin} K");
     }
 }

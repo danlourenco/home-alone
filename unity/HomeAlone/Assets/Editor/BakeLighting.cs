@@ -61,7 +61,7 @@ public static class BakeLighting
             if (first) { house = r.bounds; first = false; } else house.Encapsulate(r.bounds);
         }
         foreach (var l in Object.FindObjectsByType<Light>(FindObjectsInactive.Include, FindObjectsSortMode.None))
-            l.lightmapBakeType = LightmapBakeType.Mixed;
+            if (!l.name.StartsWith("FilmFill")) l.lightmapBakeType = LightmapBakeType.Mixed;   // the film's fill is baked only
 
         // probes cover the house only (a global volume would stretch over the 200 m snow plane)
         var old = GameObject.Find("HouseProbeVolume"); if (old) Object.DestroyImmediate(old);
@@ -72,27 +72,26 @@ public static class BakeLighting
         // (a swing door in the dining room read as sky, Oct 16; blue floors before).
         foreach (var o in Object.FindObjectsByType<ReflectionProbe>(FindObjectsSortMode.None)) if (o.name.StartsWith("Probe_")) Object.DestroyImmediate(o.gameObject);
         var geo = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/geometry.json"))));
+        // every room as a volume (SpecGreybox.EnvelopeRooms): the stair well runs down to the ground floor and the attic stair up its shaft.
+        // The well was skipped as an "opening", and above the foyer's 2.82 m ceiling the two-storey hall reflected the blue sky (Oct 16:
+        // measured live, sky reflection off -> the landing's paper came back)
+        var hs = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/house_spec.json"))));
+        var rooms = SpecGreybox.EnvelopeRooms(geo, hs["attic_stair"]["boxes"], (float)geo["ground"]["floor_y"]);
         int probes = 0;
-        foreach (var storey in new[] { "ground", "upstairs" })
+        foreach (var r in rooms)
         {
-            float fy = (float)geo[storey]["floor_y"];
-            foreach (var r in geo[storey]["rooms"].Where(r => (string)r["kind"] != "opening"))
-            {
-                var xs = r["poly"].Select(q => (float)q[0]).ToList(); var zs = r["poly"].Select(q => -(float)q[1]).ToList();
-                float ceil = (float)r["ceil"];
-                // to the middle of its walls (a door leaf there is inside) and 7 cm past its floor and ceiling, fading over 5 cm: every room
-                // surface at full weight. With a 15 cm fade inside a 7 cm margin the walls had half weight and the floor none, and HDRP filled
-                // the rest from the sky: grey-blue rooms by day (user note 11:43; measured live: sky reflection off -> red walls, wood floor)
-                var size = new Vector3(xs.Max() - xs.Min() + 0.14f, ceil + 0.14f, zs.Max() - zs.Min() + 0.14f);
-                var centre = new Vector3((xs.Min() + xs.Max()) / 2, fy + ceil / 2, (zs.Min() + zs.Max()) / 2);
-                var rp = new GameObject("Probe_" + (string)r["name"]).AddComponent<ReflectionProbe>();
-                rp.transform.position = centre;
-                var hd = rp.gameObject.AddComponent<HDAdditionalReflectionData>();
-                rp.mode = UnityEngine.Rendering.ReflectionProbeMode.Baked; hd.mode = ProbeSettings.Mode.Baked;
-                hd.influenceVolume.shape = InfluenceShape.Box; hd.influenceVolume.boxSize = size;
-                hd.influenceVolume.boxBlendDistancePositive = Vector3.one * 0.05f; hd.influenceVolume.boxBlendDistanceNegative = Vector3.one * 0.05f;
-                probes++;
-            }
+            float x0 = r.pts.Min(v => v.x), x1 = r.pts.Max(v => v.x), z0 = r.pts.Min(v => v.y), z1 = r.pts.Max(v => v.y);
+            // to the middle of its walls (a door leaf there is inside) and 7 cm past its floor and ceiling, fading over 5 cm: every room
+            // surface at full weight. With a 15 cm fade inside a 7 cm margin the walls had half weight and the floor none, and HDRP filled
+            // the rest from the sky: grey-blue rooms by day (user note 11:43; measured live: sky reflection off -> red walls, wood floor)
+            var size = new Vector3(x1 - x0 + 0.14f, r.y1 - r.y0 + 0.14f, z1 - z0 + 0.14f);
+            var rp = new GameObject("Probe_" + r.name).AddComponent<ReflectionProbe>();
+            rp.transform.position = new Vector3((x0 + x1) / 2, (r.y0 + r.y1) / 2, (z0 + z1) / 2);
+            var hd = rp.gameObject.AddComponent<HDAdditionalReflectionData>();
+            rp.mode = UnityEngine.Rendering.ReflectionProbeMode.Baked; hd.mode = ProbeSettings.Mode.Baked;
+            hd.influenceVolume.shape = InfluenceShape.Box; hd.influenceVolume.boxSize = size;
+            hd.influenceVolume.boxBlendDistancePositive = Vector3.one * 0.05f; hd.influenceVolume.boxBlendDistanceNegative = Vector3.one * 0.05f;
+            probes++;
         }
         Debug.Log($"BakeLighting: {probes} room reflection probes");
 
@@ -109,8 +108,6 @@ public static class BakeLighting
         // toward it (user note 11:16: a bright band along the ceilings). The invalid region is the probe volume less the rooms
         // (SpecGreybox.EnvelopeRooms), on the grid of the rooms' own corners, merged into boxes.
         foreach (var o in Object.FindObjectsByType<ProbeAdjustmentVolume>(FindObjectsSortMode.None)) Object.DestroyImmediate(o.gameObject);
-        var hs = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/house_spec.json"))));
-        var rooms = SpecGreybox.EnvelopeRooms(geo, hs["attic_stair"]["boxes"], (float)geo["ground"]["floor_y"]);
         var vb = new Bounds(pv.transform.position, pv.size);
         var gx = rooms.SelectMany(r => r.pts.Select(v => v.x)).Append(vb.min.x).Append(vb.max.x).Distinct().OrderBy(v => v).ToList();
         var gz = rooms.SelectMany(r => r.pts.Select(v => v.y)).Append(vb.min.z).Append(vb.max.z).Distinct().OrderBy(v => v).ToList();

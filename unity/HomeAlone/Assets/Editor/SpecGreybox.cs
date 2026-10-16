@@ -332,6 +332,7 @@ public static partial class SpecGreybox
         LayTrim(groot);
         Envelope(root, geo, j["attic_stair"]["boxes"], gj["wall_openings"], gj["stair"]?["ceiling_openings"], gy);
         Daylight(root, gy);
+        FilmFill(GameObject.Find("Upstairs/Daylight/DayLayer"), geo, j["attic_stair"]["boxes"], gy);
         var (spawn, spawnYaw) = FrontDoorSpawn(geo["ground"], j["stair"], gy);
         Player(spawn, spawnYaw);
         var player = GameObject.Find("Player"); player.SetActive(false);
@@ -1293,7 +1294,16 @@ public static partial class SpecGreybox
         var lamps = root.transform.Cast<Transform>().SelectMany(t => t.GetComponentsInChildren<Transform>(true)).FirstOrDefault(t => t.name == "Lights");
         var groundLamps = GameObject.Find("Ground/Lights");   // one night layer: the ground floor's lamps were left on by day
         if (lamps != null && groundLamps != null) foreach (var t in groundLamps.transform.Cast<Transform>().ToList()) t.SetParent(lamps, true);
-        var mode = new GameObject("Day and night - press N").AddComponent<HouseNightMode>(); mode.transform.parent = day.transform;
+        // the foyer's fixtures are lamps too: their lights join the night layer and their bulbs and shades go dark by day (user, Oct 16: "shut
+        // off the sconces and foyer lighting during the day so i can get a read on it"; they were lit by day and in the day bake)
+        var fixtures = GameObject.Find("Upstairs/FoyerFixtures");
+        Renderer[] glow = new Renderer[0];
+        if (lamps != null && fixtures != null)
+        {
+            foreach (var l in fixtures.GetComponentsInChildren<Light>(true)) l.transform.SetParent(lamps, true);
+            glow = fixtures.GetComponentsInChildren<MeshRenderer>(true).Where(r => r.sharedMaterial != null && (r.sharedMaterial.name.StartsWith("HiFi_Bulb") || r.sharedMaterial.name.StartsWith("HiFi_Shade"))).ToArray();
+        }
+        var mode = new GameObject("Day and night - press N").AddComponent<HouseNightMode>(); mode.transform.parent = day.transform; mode.glowRenderers = glow;
         mode.nightLayer = lamps != null ? lamps.gameObject : null; mode.dayLayer = dayLayer; mode.interiorLights = new Light[0]; mode.daytimeEnabled = new bool[0];
         if (lamps != null)   // night sky (user, Oct 16: "when it's nighttime i still see the daylight streaming from outside")
         {

@@ -9,6 +9,9 @@ public class HouseNightMode : MonoBehaviour
     public Light[] interiorLights;
     public bool[] daytimeEnabled;
     public bool night;
+    // lamp bulbs and shades: their own emission at night, dark by day (a property block, so the shared material never changes)
+    public Renderer[] glowRenderers = new Renderer[0];
+    void Start(){SetNight(night);}
     // each room's baked reflection probe and its image per scenario (BakeLighting)
     public UnityEngine.Rendering.HighDefinition.HDAdditionalReflectionData[] reflectionProbes = new UnityEngine.Rendering.HighDefinition.HDAdditionalReflectionData[0];
     public Texture[] dayReflections = new Texture[0], nightReflections = new Texture[0];
@@ -28,5 +31,7 @@ public class HouseNightMode : MonoBehaviour
         var apv=UnityEngine.Rendering.ProbeReferenceVolume.instance;
         if(apv.currentBakingSet!=null&&apv.currentBakingSet.lightingScenarios.Contains("Night"))apv.lightingScenario=enabled?"Night":"Default";
         ApplyReflections(enabled);
+        var block=new MaterialPropertyBlock();
+        foreach(var r in glowRenderers){ if(!r) continue; if(enabled) r.SetPropertyBlock(null); else { r.GetPropertyBlock(block); block.SetColor("_EmissiveColor",Color.black); r.SetPropertyBlock(block); } }
     }
 }
