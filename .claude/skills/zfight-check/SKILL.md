@@ -16,7 +16,9 @@ float depth is good, but exactly coplanar faces fight at any distance, and a 4 m
 2. **Overlays stand >= 1 cm proud** of what they cover (raking wainscot 1.5 cm, chair rail 3 cm, carpet runner 1 cm). If
    real life is thinner, remove the covered face instead.
 3. **Finish pieces never share faces with the solid they dress.** A tread overhangs its step on every side (2 cm nosing); a
-   newel stands 1 cm proud of the stringer; trim never runs into a wall or floor (`SpecGreybox.Trim` skips such pieces).
+   newel stands 1 cm proud of the stringer; trim never runs into a wall or floor (`SpecGreybox.Trim` skips such pieces). A window
+   stool rests ON the wall: the wall is cut to the rough opening under it (`tools/house/openings.py` "rough"), never to the stool's
+   top (the landing window's stool top was flush with its cut and fought the wall top, walk note 2026-10-17T13:32:54).
 4. **Faces point outward, and are never wound by hand.** An inside-out part draws its far faces, which then fight whatever
    they touch (the whole foyer stair was inside-out until Oct 16: `hifi_lib` reversed faces for a "reflection" that was a
    rotation). In the Blender scripts use `Part.box/lathe/sweep` and `Part.face(points, toward)`, never `poly`/`quad` with

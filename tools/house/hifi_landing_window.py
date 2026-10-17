@@ -3,8 +3,8 @@ like the movie, it's iconic"). Read from spec/house_spec.ground.json wall_openin
 Marina 312 s; measurements/windows/ground.json); the same numbers cut the wall (SpecGreybox.CutWallOpenings), so the two agree.
 
 Film: two 6-over-6 double-hung sashes either side of a wide post, a transom bar, and one elliptical fanlight over both with radial
-muntins round a half-oval hub; a 9 cm white casing up the legs and round the arch; a deep stool and an apron; the landing's back
-wall white (panelled) from the landing up to the stool. Room side is +x (spec); the wall's room face is 'face'.
+muntins round a half-oval hub; a 9 cm white casing up the legs and round the arch; a deep stool and an apron. The landing's back
+wall's wainscot is the face trim's (tools/house/trim_faces.py, HOUSE-KERNEL step 2); before step 2 this model panelled it to the stool. Room side is +x (spec); the wall's room face is 'face'.
 
   /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup -P tools/house/hifi_landing_window.py
   -> unity/HomeAlone/Assets/Models/Foyer/LandingWindow.glb (placed like Tree.glb)
@@ -23,6 +23,14 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "unity/HomeAlone/Assets/Models/Foyer/LandingWindow.glb"
 SPEC = json.loads((ROOT / "spec/house_spec.ground.json").read_text())
 W = next(o for o in SPEC["wall_openings"] if o["name"] == "landing_window")
+# HOUSE-KERNEL step 2: the window's casing legs, stool and apron come from its opening record (tools/house/openings.py ->
+# spec/openings.json), the same boxes the face trim is cut at; with own_trim the landing's wainscot is the face trim's (one height
+# round the landing, STATUS 8t-3) and the stool rests on the wall under the rough opening (its top was flush with the cut: 8t-2 z-fight)
+OPN = json.loads((ROOT / "spec/openings.json").read_text())
+REC = next(r for r in OPN["openings"] if r["id"] == "ground:wall_opening:landing_window")
+OWN = OPN["own_trim"]
+PIECE = {pc["part"]: pc["box"] for pc in REC["pieces"]}   # spec x, spec z, world y
+GY = json.loads((ROOT / "spec/geometry.json").read_text())["ground"]["floor_y"]
 
 FACE, XB = W["face"], W["x"][0]                       # room face, back face of the wall
 ZC, HW = W["z_centre"], W["width_m"] / 2
@@ -90,24 +98,34 @@ for d in range(0, 180, 3):
 
 # ---- casing: legs from the stool to the spring line, an elliptical band round the arch; 2 cm proud of the wall
 cx0, cx1 = FACE, FACE + 0.02
-paint.box(cx0, cx1, SILL, SPRING, Z0 - CAS, Z0); paint.box(cx0, cx1, SILL, SPRING, Z1, Z1 + CAS)
+
+
+def piece(part):   # the opening record's box in this model's frame (ground-floor metres)
+    b = PIECE[part]; paint.box(b[0], b[1], b[4] - GY, b[5] - GY, b[2], b[3])
+
+
+piece("leg_lo"); piece("leg_hi")
 band = [ell(math.radians(d), HW + CAS / 2, FAN + CAS / 2) for d in range(0, 181, 4)]
 # a sweep's 'across' is horizontal and perpendicular to the path: for an arc in the wall's plane that is the depth (x); 'up' is the
 # band's width in the plane. Both symmetric, so the profile cannot land on the wrong side of its path
 paint.sweep([(cx0 + 0.01, y, z) for z, y in band], [(-0.01, -CAS / 2), (0.01, -CAS / 2), (0.01, CAS / 2), (-0.01, CAS / 2)])
 # stool (deep sill) and apron
-paint.box(XB + 0.01, FACE, SILL - 0.035, SILL, Z0 + 0.02, Z1 - 0.02)                        # in the opening, between the jamb liners
-paint.box(FACE, FACE + 0.07, SILL - 0.035, SILL, Z0 - CAS - 0.03, Z1 + CAS + 0.03)            # the stool's nose, with ears
-paint.box(FACE, FACE + 0.02, SILL - 0.13, SILL - 0.035, Z0 - CAS, Z1 + CAS)
+if OWN:   # the stool board fills the rough opening through the wall, resting on its top (no face flush with the cut)
+    paint.box(XB, FACE, REC["rough"]["y"][0], SILL, Z0 + 0.02, Z1 - 0.02)
+else:
+    paint.box(XB + 0.01, FACE, SILL - 0.035, SILL, Z0 + 0.02, Z1 - 0.02)                    # in the opening, between the jamb liners
+piece("stool")                                                                             # the stool's nose, with ears
+piece("apron")
 
 # ---- the landing's back wall below the stool: white panelling across the landing (film 11966, 12133), 1.2 cm proud
 LY = W["landing_y"]                                   # the landing's finished floor (carpet top), ground-floor metres
-WZ0, WZ1 = 7.778, 11.43
-paint.box(FACE, FACE + 0.012, LY, SILL - 0.035, WZ0, Z0 - CAS - 0.03)
-paint.box(FACE, FACE + 0.012, LY, SILL - 0.13, Z0 - CAS - 0.03, Z1 + CAS + 0.03)
-paint.box(FACE, FACE + 0.012, LY, SILL - 0.035, Z1 + CAS + 0.03, WZ1)
-paint.box(FACE + 0.012, FACE + 0.03, SILL - 0.06, SILL - 0.035, WZ0, Z0 - CAS - 0.03)     # cap rail level with the stool
-paint.box(FACE + 0.012, FACE + 0.03, SILL - 0.06, SILL - 0.035, Z1 + CAS + 0.03, WZ1)
+WZ0, WZ1 = 7.778, 11.43   # with OWN the face trim panels this wall instead (skirt, panel, rail at the landing's one wainscot height)
+if not OWN:   # step 1 (old path): the model panels the wall to its stool
+    paint.box(FACE, FACE + 0.012, LY, SILL - 0.035, WZ0, Z0 - CAS - 0.03)
+    paint.box(FACE, FACE + 0.012, LY, SILL - 0.13, Z0 - CAS - 0.03, Z1 + CAS + 0.03)
+    paint.box(FACE, FACE + 0.012, LY, SILL - 0.035, Z1 + CAS + 0.03, WZ1)
+    paint.box(FACE + 0.012, FACE + 0.03, SILL - 0.06, SILL - 0.035, WZ0, Z0 - CAS - 0.03)     # cap rail level with the stool
+    paint.box(FACE + 0.012, FACE + 0.03, SILL - 0.06, SILL - 0.035, Z1 + CAS + 0.03, WZ1)
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 M = {"LW_Paint": material("LW_Paint", (0.88, 0.87, 0.83), 0.35), "LW_Glass": material("LW_Glass", (0.1, 0.12, 0.13), 0.05),

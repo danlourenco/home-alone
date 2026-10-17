@@ -35,7 +35,7 @@ Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.m
 5. Ficus crown wider; den wall saturation (ask the user); night white balance (agents measured nights 3-10x warmer than the film:
    ask the user about a house-wide night grade); sheers too bright at night (shared voile material).
 6. Z-fight reported 2 pairs in some builds: trace and fix.
-7a. [ORDER, user Oct 17: rugs (PAUSED) -> HOUSE KERNEL step 1 (trim from faces) ACCEPTED Oct 17 -> FAST CHECKS (ZFight/Clash broad phase + per-mesh cache + per-gate timing + time budget + import triangle budget; equivalence proof old vs new; update zfight-check skill; user: "if you can find improvements to the algorithm, do them") -> FILL-LIGHT FIX (7a) ACCEPTED Oct 17 -> 8p process fixes DONE -> kernel step 2 -> 8z BUZZ (as kernel step 5: furniture against faces) -> night shadows (8n) -> kernel steps 3, 4, 6 -> 8a furniture -> 8b compare page. REORDERED user Oct 17: "Right after step 2" (anxious to start Buzz)]
+7a. [ORDER, user Oct 17: rugs (PAUSED) -> HOUSE KERNEL step 1 (trim from faces) ACCEPTED Oct 17 -> FAST CHECKS (ZFight/Clash broad phase + per-mesh cache + per-gate timing + time budget + import triangle budget; equivalence proof old vs new; update zfight-check skill; user: "if you can find improvements to the algorithm, do them") -> FILL-LIGHT FIX (7a) ACCEPTED Oct 17 -> 8p process fixes DONE -> kernel step 2 ACCEPTED Oct 17 -> 8z BUZZ (as kernel step 5: furniture against faces) -> night shadows (8n) -> kernel steps 3, 4, 6 -> 8a furniture -> 8b compare page. REORDERED user Oct 17: "Right after step 2" (anxious to start Buzz)]
    FLICKER TEST RESULTS (Oct 17, live Play, foyer pose 8.4,-2.996,-9.4 yaw 268, still camera, day, AA off; tool Scripts/FlickerProbe.cs:
    FlickerProbe.Run(name,180) -> spec/captures/flicker/<name>.json/-first.png/-heat.png; needs Application.runInBackground=true when the
    editor is unfocused). Baseline maxLightsPerClusterCell 8: 4714 / 3902 / 4413 pop pixels (76/85/69 of 179 frames). 24: 1311, 5648,
@@ -109,6 +109,18 @@ Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.m
    the landing window reads low; film suggests a higher sill): if the film's sill sits on the wainscot cap, measuring the sill fixes
    both. This is kernel step 2 territory (openings own their trim): the window must take its panelling from the face trim.
     (4) walk note Oct 17 15:39 (7.33,-3.00,-9.59 yaw 297): the smooth underside under flight 2 is gone, the treads show from the hall. Cause found: the grey-box Dressing/Ground/flight2_soffit and flight2_stringer_open still exist but their renderers are off (the detailed stair replaced the grey-box look, and its model has no flight-2 soffit). Fix: give the detailed stair model a soffit, or re-enable those two renderers. (5) the foyer mirror reads low-res/blurry (reflection resolution or a better mirror asset): finishing pass.
+    (6) walk note Oct 17 16:23 (1.967,-0.682,-8.378 yaw 328 pitch 35, kid eye): "you can tell in the corner here that the join isn't perfect": at the landing inside corner one cap rail's end pokes past the other's face (a nub). Construction rule for trim_faces.py: at an inside corner one run ends ON the other run's profile face (coped), the other runs into the corner; no end passes the other's front face; add it to trim_faces --check as an invariant over every inside corner. Do with 8w (sill re-measure) and the landing table 5 mm nudge (store_props x 1.596).
+8u. KERNEL STEP 2 (TRIAL, Oct 17, not committed; changes/2026-10-17-openings-own-trim.json, DEVIATIONS 67): openings own their casing, header
+   and limits. tools/house/openings.py -> spec/openings.json (54 openings, 182 casing pieces laid by SpecGreybox, 17 recorded drops, 151 limits:
+   head under header, sill on wall, under ceiling, spring under crown, swing clear to 90 deg; a breach refuses the file, selftest plants the
+   Oct 16 arch, a head off its header and a swing into a wall). Editor/SpecGreybox.Openings.cs lays it; switch openings.py OWN_TRIM (one line:
+   also read by trim_faces.py and hifi_landing_window.py). Old vs new: 182/182 casings identical within 1 mm (old scene had 2 duplicate hall-arch-C
+   legs); trim strips 93 identical, 14 moved (girls A/B + attic baseboard/cap +21.6/22.7 mm to the pack frames; vestibule baseboard cut at the
+   front door plinths in data), 10 added (landing window wall: skirt, panel scribed under the apron/stool ears, rail to the casing legs). 8t-2
+   z-fight fixed (wall cut to the rough opening under the stool: Z-fight 2 -> 0), 8t-3 fixed (one 0.705 wainscot round the landing; the panel
+   stands 0.33 m above the stool beside the window until 8w re-measures the sill). Found, not changed: Props check landing_table back -0.5 cm into
+   the new 1.5 cm landing panel (table at x 1.59; furniture out of scope: move to 1.596 if the user agrees). Preflight: HA_CHANGE=<record> lets
+   only that record's missing AFTER renders wait for its `build -views`. Hall arches detail map fixed (preflight was red).
 8p. PROCESS FIXES (full review: docs/reviews/2026-10-17-codex-process.md, 15 findings; its top three = this week's first work) (Codex review, Oct 17; do before Buzz): (a) unity_pipeline.sh build/bake swallow failures (`|| true` on the Unity
    build, the quality gate): stop build->bake->load on any failure; (b) change_gate R1 accepts model_quality alone as independent proof:
    topological gates must not count as the independent ruler; (c) pre-commit hook watches old paths, misses spec/geometry.json,

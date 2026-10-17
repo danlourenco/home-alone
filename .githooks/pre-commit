@@ -5,8 +5,9 @@
 # commit with --no-verify and say so.
 # Generated models (Oct 16): a model must be rebuilt from its current sources; the stamp records what built it
 python3 tools/house/build_models.py --check || exit 1
+python3 tools/house/openings.py --check || exit 1     # every opening's casing/limits (spec/openings.json) current; a broken limit refuses
 python3 tools/house/trim_faces.py --check || exit 1   # the trim face model (spec/trim_faces.json) is current and its runs all terminate
-geo=$(git diff --cached --name-only | grep -E '^(measurements/|spec/house_spec|spec/furniture\.json|spec/geometry\.json|spec/trim_faces\.json|spec/dressing/|tools/house/reconcile\.py|tools/house/hifi_[^/]*\.py|unity/HomeAlone/Assets/Scenes/(IntactHouseReference|Greybox_Upstairs|House_WallGrid)\.unity)')
+geo=$(git diff --cached --name-only | grep -E '^(measurements/|spec/house_spec|spec/furniture\.json|spec/geometry\.json|spec/trim_faces\.json|spec/openings\.json|tools/house/openings\.py|spec/dressing/|tools/house/reconcile\.py|tools/house/hifi_[^/]*\.py|unity/HomeAlone/Assets/Scenes/(IntactHouseReference|Greybox_Upstairs|House_WallGrid)\.unity)')
 [ -z "$geo" ] && exit 0
 recs=$(git diff --cached --name-only --diff-filter=AM | grep -E '^changes/.*\.json$')
 if [ -z "$recs" ]; then

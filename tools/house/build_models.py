@@ -26,7 +26,7 @@ BUILDS = {
     "tools/house/hifi_props.py": (["Tree.glb"], ["spec/dressing/foyer.json"]),
     "tools/house/hifi_door.py": (["FrontDoor.glb"], [LIB]),
     "tools/house/hifi_dressing.py": (["FoyerDressing.glb"], [LIB, "spec/dressing/foyer.json"]),
-    "tools/house/hifi_landing_window.py": (["LandingWindow.glb"], [LIB, "spec/house_spec.ground.json"]),
+    "tools/house/hifi_landing_window.py": (["LandingWindow.glb"], [LIB, "spec/house_spec.ground.json", "spec/openings.json"]),
     "tools/house/hifi_swing_door.py": (["SwingDoor.glb"], [LIB, "spec/geometry.json"]),
     "tools/house/hifi_back_door.py": (["BackDoor.glb"], [LIB, "spec/house_spec.ground.json"]),
     "tools/house/hifi_kitchen.py": (["KitchenCabinets.glb"], [LIB, "spec/dressing/kitchen.json"]),

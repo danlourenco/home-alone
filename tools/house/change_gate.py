@@ -44,6 +44,7 @@ usage: uv run python tools/house/change_gate.py [changes/<file>.json ...]   (def
        uv run python tools/house/change_gate.py --selftest
 """
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -138,6 +139,13 @@ def main(paths):
         rec = json.loads(Path(p).read_text())
         print(f"\n{Path(p).name}: {rec['change']}\n  premise: {rec['premise']}")
         for level, msg in gate(rec):
+            # unity_pipeline.sh preflight for the build that renders a record's AFTER views (HA_CHANGE=<record>, `build -views`): only
+            # those missing after-renders wait for the build; every other rule, and the before renders, still fail here. Re-run after.
+            r = rec.get("renders", {})
+            if level == "FAIL" and msg.startswith("R3") and os.environ.get("HA_PREBUILD") == "1" and os.environ.get("HA_CHANGE") and \
+                    Path(os.environ["HA_CHANGE"]).resolve() == Path(p).resolve() and r.get("before") and r.get("after") and \
+                    all((ROOT / q).exists() for q in r["before"]):
+                level, msg = "pend", msg + " (pending: this build renders them; re-run change_gate after it)"
             bad += level == "FAIL"
             print(f"  {level:<4} {msg}")
     print(f"\n{bad} FAIL")

@@ -2,8 +2,9 @@
 # unity_pipeline.sh: build, bake, load and capture House_WallGrid without touching the user's open editor until the load.
 #
 #   tools/house/unity_pipeline.sh setup      # (once) make the scratch build copy: ~/.cache/home-alone/ucopy/HomeAlone (+ spec link)
-#   tools/house/unity_pipeline.sh preflight  # the cheap Python gates (verify_plan, change_gate, build_models/trim_faces --check, model_quality);
-#                                            # build runs it first and refuses to launch Unity on a FAIL (HA_NO_PREFLIGHT=1 skips it)
+#   tools/house/unity_pipeline.sh preflight  # the cheap Python gates (verify_plan, change_gate, build_models/openings/trim_faces --check, model_quality);
+#                                            # build runs it first and refuses to launch Unity on a FAIL (HA_NO_PREFLIGHT=1 skips it);
+#                                            # HA_CHANGE=<changes/x.json>: that record's missing AFTER renders wait for this build (`build -views`)
 #   tools/house/unity_pipeline.sh build [unity args]   # copy Editor/Scripts/Models/HDRP.asset in, build the scene (batch); gates -> spec/captures/walk-test-wallgrid.txt
 #                                            # extra args go to Unity (e.g. -views trim-after.json: renders in the same session);
 #                                            # HA_OVERLAY=<dir>: drafts (dir/Editor, dir/Models ...) copied over Assets/ after the repo's, so
@@ -50,15 +51,16 @@ setup)
   echo "scratch copy at $S (first open imports the Library: minutes)";;
 preflight)   # cheap gates before any Unity launch (STATUS 8p f); runs them all, then fails if any failed
   cd "$REPO"; bad=0
-  for g in "python3 tools/house/build_models.py --check" "python3 tools/house/trim_faces.py --check" \
+  for g in "python3 tools/house/build_models.py --check" "python3 tools/house/openings.py --check" "python3 tools/house/trim_faces.py --check" \
            "uv run -q --with numpy --with matplotlib --with pillow python -I tools/house/verify_plan.py" \
            "uv run -q --with numpy --with pillow python -I tools/house/model_quality.py --report" \
-           "uv run -q python -I tools/house/change_gate.py $(grep -L '"user_walk": "rejected"' changes/*.json | tr '\n' ' ')"; do
+           "env HA_PREBUILD=1 uv run -q python -I tools/house/change_gate.py $(grep -L '"user_walk": "rejected"' changes/*.json | tr '\n' ' ')"; do
     n=$(echo "$g" | grep -oE '[a-z_]+\.py( --[a-z]+)?')
     if out=$($g 2>&1); then echo "ok   $n"; else echo "FAIL $n"; echo "$out" | grep -E '^[^ ].*\.json:|^ *FAIL|Error' | grep -B1 -E '^ *FAIL|Error' | cut -c1-160 | head -8; bad=1; fi
   done
   [ $bad = 0 ] || { echo "preflight FAILED: Unity not launched (HA_NO_PREFLIGHT=1 to override)" >&2; exit 1; };;
 build)
+  python3 "$REPO/tools/house/openings.py"     # every opening's casing, header and limits (HOUSE-KERNEL step 2; refused if a limit breaks)
   python3 "$REPO/tools/house/trim_faces.py"   # the face model the trim is laid from (HOUSE-KERNEL step 1; the build refuses a stale one)
   [ "${HA_NO_PREFLIGHT:-}" = 1 ] || "$0" preflight
   rsync -a "$P/Assets/Editor/" "$S/Assets/Editor/"; rsync -a "$P/Assets/Scripts/" "$S/Assets/Scripts/"
@@ -109,6 +111,9 @@ load)
   for m in "$S"/Assets/Scripts/*.cs.meta; do cmp -s "$m" "$P/Assets/Scripts/$(basename "$m")" || echo "WARNING: $(basename "$m") GUID differs from the project's"; done
   ev 'UnityEditor.AssetDatabase.Refresh(); return "r";' >/dev/null; idle
   (cd "$P" && "$CLI" command open_scene Assets/Scenes/House_WallGrid.unity >/dev/null); idle
+  # the first Play after a load can come up dull (lighting data still settling; user Oct 17, "sometimes this happens before it's
+  # loaded"): a second Play cycle fixed it each time. ponytail: workaround, find why the first Play misses the baked data if it persists
+  (cd "$P" && "$CLI" command editor_play >/dev/null); idle; (cd "$P" && "$CLI" command editor_stop >/dev/null); idle
   (cd "$P" && "$CLI" command editor_play | tail -1);;
 all) "$0" build && "$0" bake && "$0" load;;
 shot|cam)

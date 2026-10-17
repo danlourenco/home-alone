@@ -47,9 +47,18 @@ public static partial class SpecGreybox
             float w0 = Mathf.Min(c + n * d0, c + n * d1), w1 = Mathf.Max(c + n * d0, c + n * d1);
             TrimRuns.Add(ax == "x" ? (new Vector3(s0, y0, w0), new Vector3(s1, y1, w1), m) : (new Vector3(w0, y0, s0), new Vector3(w1, y1, s1), m));
         }
-        // the one wall-mounted model the face model does not know yet (kernel step 2: openings own their trim): the front door's frame
-        LayTrim(groot, new[] { "FrontDoor_HiFi" });
-        var g = groot.transform.Find("Trim").gameObject;
+        GameObject g;
+        if (OpeningsOwnTrim)
+        {   // step 2: the front door's frame is a piece of its opening (spec/openings.json), so the strips are already cut at it: laid as they are
+            g = Child(groot, "Trim"); float keep = FloorY; FloorY = 0f;
+            foreach (var (lo, hi, mm) in TrimRuns) Box(g, "Trim", lo.x, hi.x, lo.z, hi.z, lo.y, hi.y, mm);
+            FloorY = keep; TrimRuns.Clear();
+        }
+        else
+        {   // step 1: the one wall-mounted model the face model did not know: the front door's frame, found by probing its mesh
+            LayTrim(groot, new[] { "FrontDoor_HiFi" });
+            g = groot.transform.Find("Trim").gameObject;
+        }
         foreach (var s in raked) StripMesh(g, s, m);
         Debug.Log($"FaceTrim: {j["strips"].Count()} strips ({raked.Count} raked) from spec/trim_faces.json");
     }

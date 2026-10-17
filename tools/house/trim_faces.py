@@ -20,8 +20,12 @@ The model (read only from the house's own data: spec/geometry.json walls, rooms 
      + cap rail (h-0.01..h+0.03, 3 cm proud) over a wainscot (the wall's own lower material); stair = skirt (from the stair's surface:
      treads, landing or floor, so nothing can stand between them, to the line + 0.20; 2.2 cm), raking panel (line + 0.20 .. line + h,
      1.5 cm) and rail (line + h - 0.005 .. + 0.035, 1.5-4.5 cm off the wall).
-  5. A face whose wall carries a window MODEL (spec/house_spec.ground.json wall_openings) with its sill under the cap: the cap drops to
-     the window's stool and that model panels the wall (the landing window, film 11966/12133); the face is checked, not laid.
+  5. (step 1, OWN_TRIM false) A face whose wall carries a window MODEL (spec/house_spec.ground.json wall_openings) with its sill under
+     the cap: the cap drops to the window's stool and that model panels the wall; the face is checked, not laid.
+     (HOUSE-KERNEL step 2, spec/openings.json own_trim true) Every mounted piece (casing, stool, apron, prop door, a model's frame) comes
+     from its opening (tools/house/openings.py), so a run is cut exactly at it; the landing window's wall is laid like every face, and
+     a panel whose top a piece covers (the apron and stool under a window) is lowered to that piece's bottom, not cut: one wainscot
+     height runs round the landing (STATUS 8t-3).
 Every chain end must terminate at a corner, an opening (or a mounted piece) or another chain: a free end is an error.
 
   python3 tools/house/trim_faces.py            # -> spec/trim_faces.json (SpecGreybox lays it, the build's Trim check samples it)
@@ -31,13 +35,15 @@ Coordinates: computed in spec (x, z) with world y; written in Unity world (z = -
 import hashlib
 import json
 import math
+import os
+import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "spec/trim_faces.json"
 INPUTS = ["spec/geometry.json", "spec/house_spec.json", "spec/house_spec.ground.json", "spec/dressing/foyer.json",
-          "spec/dressing/finishes.json", "tools/house/trim_faces.py"]
+          "spec/dressing/finishes.json", "spec/openings.json", "tools/house/trim_faces.py"]
 CASING_W, CASING_PROUD, STOOL_PROUD, STOOL_T, HALF = 0.07, 0.02, 0.04, 0.025, 0.07   # SpecGreybox consts (door/window trim, h)
 NOSE = 0.025                                     # tread nosing (hifi_foyer.py)
 REACH = 0.02                                     # anything mounted within 2 cm in front of a member stops it (LayTrim)
@@ -53,6 +59,8 @@ def load(p):
 G, S, SG = load("spec/geometry.json"), load("spec/house_spec.json"), load("spec/house_spec.ground.json")
 FOY, FIN = load("spec/dressing/foyer.json")["walls"], load("spec/dressing/finishes.json")["rooms"]
 GY = G["ground"]["floor_y"]
+OPN = load("spec/openings.json")                 # HOUSE-KERNEL step 2: the openings' pieces and the switch (tools/house/openings.py)
+OWN = OPN["own_trim"] and os.environ.get("HA_TRIM_OLD") != "1"   # HA_TRIM_OLD=1: the step-1 path (for --compare)
 STOREYS = [("upstairs", 0.0, {"main_stair_opening"}), ("ground", GY, set(FOY["spaces"]))]   # SpecGreybox.BuildWallGrid's papered sets
 
 
@@ -64,7 +72,8 @@ WALLS, FLOORS = [], []
 for st, fy, _ in STOREYS:
     WALLS += [B(w["x"], w["z"], (w["y"][0] + fy, w["y"][1] + fy)) for w in G[st]["walls"]]
     FLOORS += [B(f["x"], f["z"], (f["y"][0] + fy, f["y"][1] + fy)) for f in G[st]["floor"]]
-CUTS = [B(o["x"], o["z"], (o["y"][0] + GY, o["y"][1] + GY)) for o in SG.get("wall_openings", [])]   # SpecGreybox.CutWallOpenings
+ROUGH = {r["id"].split(":")[-1]: r["rough"] for r in OPN["openings"] if r.get("rough")} if OWN else {}   # cut to the rough opening (under the stool)
+CUTS = [B(o["x"], o["z"], (ROUGH.get(o["name"], o)["y"][0] + GY, o["y"][1] + GY)) for o in SG.get("wall_openings", [])]   # SpecGreybox.CutWallOpenings
 STAIRS = [("main", S["stair"], 0.0), ("attic", S["attic_stair"], 0.0)] + ([("service", SG["stair"], GY)] if SG.get("stair") else [])
 SOLIDS = [B(b["x"], b["z"], (b["y"][0] + fy, b["y"][1] + fy)) for _, s, fy in STAIRS for b in s["boxes"] if b["kind"] in ("step", "landing")]
 
@@ -171,7 +180,12 @@ def mounted_pieces():
     return out
 
 
-MOUNTED = mounted_pieces()
+def opening_pieces():
+    """HOUSE-KERNEL step 2: every piece mounted on a face, from its opening (spec/openings.json), whoever draws it."""
+    return [("prop" if pc["part"] == "prop" else "casing", tuple(pc["face"]), tuple(pc["box"])) for r in OPN["openings"] for pc in r["pieces"]]
+
+
+MOUNTED = opening_pieces() if OWN else mounted_pieces()
 OPENING_EDGES = {}   # face line (axis, c) -> s of every opening jamb on it (both faces)
 for st, fy, _ in STOREYS:
     for o in G[st]["openings"]:
@@ -413,6 +427,41 @@ def lay(key, line, sfun, lo_s, hi_s, mem, corner_start=None):
     return [iv for iv in out if iv[1] - iv[0] >= 0.02]
 
 
+def covers(key, line, sfun, lo_s, hi_s, mem):
+    """Where mounted pieces cover only PART of the member's height (a window's apron, stool and its ears over a wainscot panel): the
+    free bands left, [(s0, s1, bottom, top)] (world y), so the panel is scribed round them instead of stopping short (a carpenter
+    notches the panel under the apron and round the stool's ears). Intervals come from the pieces' own edges (exact); a band under
+    1 cm is dropped."""
+    name, bot, top, d0, d1 = mem
+    cand = []
+    for kind, mk, box in MOUNTED:
+        if mk[0] != key[0] or abs(mk[1] - key[1]) > 0.005 or mk[2] != key[2]:
+            continue
+        sa, sb = (box[0], box[1]) if key[0] == "x" else (box[2], box[3])
+        sa, sb = max(sa, lo_s), min(sb, hi_s)
+        if sb - sa > 0.005:
+            cand.append((sa, sb, box[4], box[5]))
+    cuts = sorted({v for a, b, _, _ in cand for v in (a, b)})
+    out = []
+    for a, b in zip(cuts, cuts[1:]):
+        m = (a + b) / 2; y = line(m); yb, yt = bot(y, sfun(m, y)), top(y)
+        here = sorted((y0, y1) for sa, sb, y0, y1 in cand if sa <= a + 1e-9 and sb >= b - 1e-9 and y0 < yt and y1 > yb)
+        if not here or (here[0][0] <= yb + 0.02 and len(here) == 1 and here[0][1] >= yt):
+            continue                                   # nothing here (the full member) or covered from bottom to top
+        free, cur = [], yb
+        for y0, y1 in here:
+            if y0 - cur >= 0.01: free.append((cur, y0))
+            cur = max(cur, y1)
+        if yt - cur >= 0.01: free.append((cur, yt))
+        if len(free) == 1 and abs(free[0][0] - yb) < 1e-9 and abs(free[0][1] - yt) < 1e-9:
+            continue
+        for f in free:
+            prev = next((o for o in out if abs(o[1] - a) < 1e-9 and abs(o[2] - f[0]) < 1e-9 and abs(o[3] - f[1]) < 1e-9), None)
+            if prev: prev[1] = b
+            else: out.append([a, b, f[0], f[1]])
+    return out
+
+
 def open_spans(key, line, s0, s1):
     """Where the chain's face is open at baseboard height (a wall behind, nothing solid or mounted in front): its terminations are
     the ends of these spans (openings, casings, corners)."""
@@ -444,7 +493,7 @@ def build(chains):
                 rec = {"key": key, "label": lab, "s0": pc["s0"], "s1": pc["s1"], "samples": samples(lab), "by": None,
                        "pts": [(pc["s0"], line(pc["s0"]))] + [(s, y) for s, y in pts if pc["s0"] < s < pc["s1"]] + [(pc["s1"], line(pc["s1"]))]}
                 out_runs.append(rec)
-                stool = window_stool(key, pc["s0"], pc["s1"], line(pc["s0"]), fin_h + 0.03)
+                stool = None if OWN else window_stool(key, pc["s0"], pc["s1"], line(pc["s0"]), fin_h + 0.03)
                 if stool:                                # the window model panels this wall to its stool: checked, not laid
                     rec["by"], rec["samples"] = stool[0], [{"h": 0.10}, {"h": round(stool[1] - 0.045, 3)}]
                     continue
@@ -456,6 +505,11 @@ def build(chains):
                             if corner[2] > 0: iv[0] = corner[0] + corner[1] * d
                             else: iv[1] = corner[0] - corner[1] * d
                         strips.append(strip(key, line, sfun, iv, mem, lab, pts))
+                    if OWN and mem[0] == "panel":
+                        for a2, b2, y0, y1 in covers(key, line, sfun, pc["s0"], pc["s1"], mem):
+                            low = (mem[0], lambda y, sf, y0=y0: y0, lambda y, y1=y1: y1, mem[3], mem[4])
+                            for iv in lay(key, line, sfun, a2, b2, low):
+                                strips.append(strip(key, line, sfun, iv, low, lab, pts))
     return out_runs, strips
 
 
@@ -560,7 +614,7 @@ def write():
                  "strips = the trim SpecGreybox lays when TrimFromFaces (world coordinates; axis = the run's direction; c = the face plane; "
                  "n = the face's normal; st = stations [s, bottom, top]; d = depth off the face).",
          "inputs": {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in INPUTS},
-         "runs": [], "strips": [], "ends": ends, "problems": problems}
+         "own_trim": OWN, "runs": [], "strips": [], "ends": ends, "problems": problems}
     for r in out_runs:
         ax, c, n = world_key(r["key"])
         pts = sorted([[round(world_s(r["key"], s), 4), round(y, 4)] for s, y in r["pts"]])
@@ -585,16 +639,70 @@ def selftest(J):
         for name in ("skirt", "panel", "rail"):
             mine = [s for s in J["strips"] if s["name"] == name and s["axis"] == r["axis"] and abs(s["c"] - r["c"]) < 1e-3 and s["n"] == r["n"]
                     and s["st"][0][0] <= hi + 1e-3 and s["st"][-1][0] >= lo - 1e-3]
-            if len(mine) != 1 or mine[0]["st"][0][0] > lo + 1e-3 or mine[0]["st"][-1][0] < hi - 1e-3:
+            # continuous from end to end; a break only between two edges of mounted pieces (step 2: the rail stops at a casing leg)
+            mine.sort(key=lambda m: m["st"][0][0])
+            edges = [world_s(mk, v) for _, mk, box in MOUNTED if world_key(mk) == (r["axis"], round(r["c"], 4), r["n"]) or
+                     (world_key(mk)[0] == r["axis"] and abs(world_key(mk)[1] - r["c"]) < 1e-3 and world_key(mk)[2] == r["n"])
+                     for v in ((box[0], box[1]) if mk[0] == "x" else (box[2], box[3]))]
+            reach = [max(m["st"][-1][0] for m in mine[:i + 1]) for i in range(len(mine))]
+            breaks = [(r0, m1["st"][0][0]) for r0, m1 in zip(reach, mine[1:]) if m1["st"][0][0] - r0 > 1e-4]
+            edge = lambda v: any(abs(v - e) < 1e-4 for e in edges)
+            if not mine or mine[0]["st"][0][0] > lo + 1e-3 or max(m["st"][-1][0] for m in mine) < hi - 1e-3 or any(not (edge(a) and edge(b)) for a, b in breaks) \
+                    or (name != "panel" and any(m1["st"][0][0] < m0["st"][-1][0] - 1e-4 for m0, m1 in zip(mine, mine[1:]))):   # a scribed panel has bands over each other
                 bad.append(f"{name} on the {r['room']} run {r['axis']} {r['c']} is not one piece from {lo} to {hi}: {[(m['st'][0][0], m['st'][-1][0]) for m in mine]}")
+    if J.get("own_trim"):   # step 2: a member that stops at a mounted piece stops exactly at its edge (baseboard/cap/rail meet the casing by rule)
+        for s in J["strips"]:
+            for end, st in (("start", s["st"][0]), ("end", s["st"][-1])):
+                for kind, mk, box in MOUNTED:
+                    ax, c, n = world_key(mk)
+                    if ax != s["axis"] or abs(c - s["c"]) > 0.005 or n != s["n"] or box[5] <= st[1] + 0.002 or box[4] >= st[2] - 0.002:
+                        continue
+                    ea, eb = sorted(world_s(mk, v) for v in ((box[0], box[1]) if mk[0] == "x" else (box[2], box[3])))
+                    for e in (ea, eb):
+                        if 1e-4 < abs(st[0] - e) < 0.01:
+                            bad.append(f"{s['name']} {end} on {s['axis']} {s['c']} at {st[0]} misses the {kind} edge at {e:.4f} by {abs(st[0] - e) * 1000:.2f} mm")
     for s in J["strips"]:
         if any(t[2] < t[1] - 1e-6 for t in s["st"]) or any(b[0] < a[0] - 1e-6 for a, b in zip(s["st"], s["st"][1:])):
             bad.append(f"{s['name']} strip on {s['axis']} {s['c']} has a station out of order or upside down")
     return bad
 
 
+def compare(J):
+    """Old (step 1: mounted pieces emulated from SpecGreybox, the landing window's wall left to its model) vs new (step 2) strips:
+    which runs moved, by how much, and which are new or gone."""
+    old = json.loads(subprocess.run([sys.executable, __file__, "--dump"], env=dict(os.environ, HA_TRIM_OLD="1"), capture_output=True, text=True, check=True).stdout)
+    key = lambda t: (t["name"], t["axis"], t["c"], t["n"], t["room"])
+    span = lambda t: (t["st"][0][0], t["st"][-1][0])
+    sig = lambda t: json.dumps([key(t), t["st"]])
+    o_set, n_set = {sig(t): t for t in old["strips"]}, {sig(t): t for t in J["strips"]}
+    gone = [t for k, t in o_set.items() if k not in n_set]; new = [t for k, t in n_set.items() if k not in o_set]
+    print(f"strips: old {len(old['strips'])}, new {len(J['strips'])}, identical {len(set(o_set) & set(n_set))}, changed/removed {len(gone)}, changed/added {len(new)}")
+    for t in gone:
+        m = [u for u in new if key(u) == key(t) and span(u)[0] < span(t)[1] and span(t)[0] < span(u)[1]]
+        if m:
+            for u in m:
+                d0, d1 = span(u)[0] - span(t)[0], span(u)[1] - span(t)[1]
+                hb, ht = u["st"][0][1] - t["st"][0][1], u["st"][0][2] - t["st"][0][2]
+                print(f"  moved   {t['name']:9s} {t['room']:28s} {t['axis']} c {t['c']:.3f} n {t['n']:+d}: {span(t)[0]:.4f}..{span(t)[1]:.4f} -> {span(u)[0]:.4f}..{span(u)[1]:.4f}"
+                      f" (ends {d0 * 1000:+.1f} / {d1 * 1000:+.1f} mm; bottom {hb * 1000:+.1f}, top {ht * 1000:+.1f} mm)")
+        else:
+            print(f"  gone    {t['name']:9s} {t['room']:28s} {t['axis']} c {t['c']:.3f} n {t['n']:+d}: {span(t)[0]:.4f}..{span(t)[1]:.4f} y {t['st'][0][1]:.3f}..{t['st'][0][2]:.3f}")
+    for u in new:
+        if not any(key(u) == key(t) and span(u)[0] < span(t)[1] and span(t)[0] < span(u)[1] for t in gone):
+            print(f"  added   {u['name']:9s} {u['room']:28s} {u['axis']} c {u['c']:.3f} n {u['n']:+d}: {span(u)[0]:.4f}..{span(u)[1]:.4f} y {u['st'][0][1]:.3f}..{u['st'][0][2]:.3f}")
+    ro = {(r["axis"], r["c"], r["n"], r["room"], json.dumps(r["pts"])): r for r in old["runs"]}
+    for r in J["runs"]:
+        o = ro.get((r["axis"], r["c"], r["n"], r["room"], json.dumps(r["pts"])))
+        if o and o["by"] != r["by"]:
+            print(f"  run     {r['room']} {r['axis']} c {r['c']} n {r['n']:+d}: panelled by {o['by']} -> laid from the faces (by {r['by']})")
+
+
 if __name__ == "__main__":
     J = write()
+    if "--dump" in sys.argv:
+        print(json.dumps(J)); sys.exit(0)
+    if "--compare" in sys.argv:
+        compare(J); sys.exit(0)
     bad = selftest(J)
     if "--check" in sys.argv:
         old = json.loads(OUT.read_text()) if OUT.exists() else {}

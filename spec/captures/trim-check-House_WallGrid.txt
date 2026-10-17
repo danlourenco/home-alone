@@ -1,0 +1,2 @@
+Trim check: 63 face runs (3 on the stair and landings, 0 panelled by a window model), 91.1 m, 8679 samples, 1 gaps in the baseboard, wainscot or cap rail; run ends: corner 57, opening 67, outside-corner 2
+GAP     0.08 m of bare wall 0.42 above the line of the room:hall_corridor run at spec (7.34, 0.42, 9.91)

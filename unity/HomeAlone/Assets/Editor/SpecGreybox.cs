@@ -301,6 +301,7 @@ public static partial class SpecGreybox
         float gy = (float)gj["floor_y_m"];
         EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         MakeMaterials(); HoleProbes.Clear(); TrimRuns.Clear(); Windows = new List<Win>();
+        LoadOpenings();   // SpecGreybox.Openings.cs: HOUSE-KERNEL step 2 (spec/openings.json; own_trim = the switch)
         Landings = j["stair"]["boxes"].Where(b => (string)b["kind"] == "landing").Select(b => ((float)b["x"][0], (float)b["x"][1],
             -(float)b["z"][1], -(float)b["z"][0], (float)b["y"][0])).ToList();
         var paper = Dress != null ? Dress["walls"]["spaces"].Select(n => (string)n).ToHashSet() : new HashSet<string>();
@@ -312,6 +313,7 @@ public static partial class SpecGreybox
         if (gj["stair"]?["ceiling_openings"] is JArray holes)   // the back stair rises through its ceiling (spec ceiling_openings)
             geo["ground"]["ceilings"] = CutHoles((JArray)geo["ground"]["ceilings"], holes);
         var (gspaces, gdoors) = Storey(groot, (JObject)geo["ground"], paper, false);
+        LayCasings(root, groot);   // step 2: every opening's casing from its own record (the per-case Trim() calls are off then)
         FloorY = 0f;
         var stairPath = Stair(root, j["stair"], true, stairOnly: true);
         // its shaft and cap close it from above (user, Oct 16: sunlight down the void)
@@ -389,6 +391,7 @@ public static partial class SpecGreybox
         LimitShadows(root.transform.root.gameObject);   // SpecGreybox.Shadows.cs: real-time shadow budget
         EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), "Assets/Scenes/House_WallGrid.unity");
         Debug.Log("SpecGreybox.BuildWallGrid\n" + report);
+        OpeningsOwnTrim = false;   // the other builders keep their per-case casing
         if (System.Array.IndexOf(System.Environment.GetCommandLineArgs(), "-views") >= 0) RenderViews();   // renders in the same session (one Unity start)
     }
 
@@ -431,7 +434,7 @@ public static partial class SpecGreybox
         if (openings == null) return;
         foreach (var o in openings)
         {
-            var lo = new Vector3((float)o["x"][0], (float)o["y"][0] + gy, -(float)o["z"][1]);
+            var lo = new Vector3((float)o["x"][0], CutBottom(o) + gy, -(float)o["z"][1]);   // step 2: a model window's rough opening (under its stool)
             var hi = new Vector3((float)o["x"][1], (float)o["y"][1] + gy, -(float)o["z"][0]);
             var hole = new Bounds((lo + hi) / 2, hi - lo);
             int cut = 0;
@@ -1339,6 +1342,7 @@ public static partial class SpecGreybox
 
     static void Trim(GameObject p, bool alongX, float t0, float t1, float s0, float s1, float y0, float y1)
     {
+        if (OpeningsOwnTrim) return;   // HOUSE-KERNEL step 2: the casing comes from each opening's record (SpecGreybox.Openings.cs LayCasings)
         float ta = Mathf.Min(t0, t1), tb = Mathf.Max(t0, t1);
         // trim never runs into a wall or floor: its faces would lie in theirs and flicker (z-fight gate, Oct 16). This drops the
         // stool and apron of floor-level windows and casing legs where the next room is no wider than the opening.

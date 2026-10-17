@@ -1,0 +1,2 @@
+{"time": "2026-10-17T16:13:52", "cmd": "build", "job": "kernel2", "why": "kernel step 2 candidate 1: openings own casing/limits, landing window trim from faces, rough opening (after renders)", "wall_s": 75, "exit": 0}
+{"time": "2026-10-17T16:16:38", "cmd": "bake", "job": "kernel2", "why": "bake for the user's walk (candidate 1)", "wall_s": 91, "exit": 0}

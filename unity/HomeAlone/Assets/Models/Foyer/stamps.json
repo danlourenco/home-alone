@@ -41,7 +41,7 @@
  },
  "tools/house/hifi_hall_arches.py": {
   "models": "f8b6ae10beb76723",
-  "sources": "8ec5ae190c126a9e"
+  "sources": "71c436aebfb5efab"
  },
  "tools/house/hifi_kitchen.py": {
   "models": "98ab235e28f66103",
@@ -56,8 +56,8 @@
   "sources": "9944706660d54b6f"
  },
  "tools/house/hifi_landing_window.py": {
-  "models": "ddf776f8d8830d95",
-  "sources": "44acc6eea3c7be43"
+  "models": "c19bb98c7077b7fe",
+  "sources": "80177c1932c2d7b9"
  },
  "tools/house/hifi_lights.py": {
   "models": "039d900b97254c67",

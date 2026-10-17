@@ -36,6 +36,7 @@ GEO = json.loads((ROOT / "spec/geometry.json").read_text())["upstairs"]
 HALL = json.loads((ROOT / "spec/dressing/hall.json").read_text())
 PAINT = json.loads((ROOT / "spec/dressing/finishes.json").read_text())["rooms"]["hall_corridor"]["upper"]
 H, RND, PPM = 0.07, 0.005, 1024          # half wall thickness (B, C), edge round, texel density (hero: seen up close)
+DETAIL_ALBEDO = 0.25                     # share of the raw plaster scan's albedo variation kept on paint (as hifi_foyer_arch.py; model_quality +-2 x albedo_tol)
 
 
 def arch_spec(pair):
@@ -145,7 +146,8 @@ for (n, _), low, high in zip(lows, objs_low, objs_high):
     mp = hp.compose(maps, sc_lo, tuple(PAINT), PPM, 1.0, 0.35, (0.75, 0.05), 0.12, 0.30)
     extras = {"role": "baked", "albedo_srgb": list(PAINT), "albedo_tol": 0.06, "ppm": PPM, "detail_tiling": [2048 / PPM / 0.5, hs[n] / PPM / 0.5],
               "scan": "polyhaven:white_plaster_02 (CC0)"}
-    hp.write_unity_maps(TEX, f"Soffit{n}", mp, hp.detail_map(sc_hi), extras)
+    det = hp.detail_map(sc_hi); det[..., 0] = 0.5 + (det[..., 0] - 0.5) * DETAIL_ALBEDO   # painted plaster: the scan's pits read as dirt
+    hp.write_unity_maps(TEX, f"Soffit{n}", mp, det, extras)
     nm = low.active_material.name; low.active_material.name = nm + "_bake"
     m = hp.pbr_material(nm, mp, extras); low.data.materials.clear(); low.data.materials.append(m); final.append(low)
     print(n, {k: (round(float(v[..., 0].mean()), 3), round(float(v[..., 0].std()), 3)) for k, v in maps.items()})

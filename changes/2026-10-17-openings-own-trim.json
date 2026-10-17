@@ -1,0 +1,156 @@
+{
+ "gate": 7,
+ "change": "HOUSE-KERNEL step 2 (docs/HOUSE-KERNEL.md, approved Oct 17): openings own their header, trim and limits. tools/house/openings.py -> spec/openings.json gives every opening (doors, arches, windows, prop doors, the landing window, the front door assembly) its casing pieces per face, its header and its limits (head under the header, under the ceiling, spring under crown, a leaf's swing clear to 90 deg), checked at data time: a breach is refused with its reason (exit 1, nothing written). Casing the opening does NOT carry is a recorded 'dropped' decision (runs into a wall; replaced by a pack door frame; plain arch). SpecGreybox lays the casing from that file (SpecGreybox.Openings.cs LayCasings; the per-case Trim() calls in Storey/ArchTop are off), and trim_faces.py cuts every run at the same boxes, so baseboard, cap and rail end at the casing by construction (selftest: 103 strip ends on a piece edge, worst 0.0 mm). Absorbs STATUS 8t-3 (the landing window's panelling now comes from the face trim: one wainscot height round the landing; hifi_landing_window.py drops its own panelling and cap and takes its legs, stool and apron from the opening record) and 8t-2 (the stool rested flush in the cut: the wall is now cut to the rough opening 3.5 cm under the stool, and the stool board fills it). The front door's frame is a piece of its opening, so FaceTrim no longer probes the model (LayTrim FrontDoor_HiFi). One switch: openings.py OWN_TRIM (written as own_trim; read by SpecGreybox, trim_faces.py and hifi_landing_window.py).",
+ "target": "House_WallGrid",
+ "premise": "A casing is cut to the opening it trims and the trim is cut to the casing: deriving both from the opening's own record (the same numbers the wall is cut from) reproduces today's casing exactly and closes the joints where three producers met by chance; the landing's walls are one wainscot (the stair's 0.705 from the foyer), which the window's casing interrupts until its sill is re-measured (8w)",
+ "claim": {
+  "value": {
+   "casings_laid_from_data": 182,
+   "casings_identical_to_the_old_scene_within_1mm": 182,
+   "old_duplicate_casing_legs_removed": 2,
+   "landing_wainscot_above_landing_m": 0.705,
+   "landing_window_rough_opening_below_stool_m": 0.035,
+   "store_frame_baseboard_extension_mm": [
+    21.6,
+    22.7
+   ],
+   "limits_checked": 151,
+   "limits_broken": 0
+  },
+  "data": [
+   "marina-frame:312"
+  ],
+  "scale": [
+   "door-80in:312"
+  ],
+  "upstream": [
+   "door-80in:312"
+  ],
+  "how": "openings.py reads spec/geometry.json openings/walls/rooms, the stairs, house_spec.ground.json wall_openings, store_props.json, french_doors.json and hifi_door.py's frame constants; casing sizes are SpecGreybox's (unchanged). The landing wainscot height is the stair's (foyer.json wainscot_m 0.705, Marina 312 s), carried round the landing (ASSUMED there: DEVIATIONS 66/67). No opening was re-measured; the landing window's sill and head are unchanged (8w is its own trial)",
+  "surface": "ceiling-plane",
+  "surface_note": "the under-ceiling limit compares heads with each room's ceiling PLANE (spec/geometry.json rooms ceil), never a landing, crown or soffit edge",
+  "applies_to": [
+   "landing",
+   "main_stair",
+   "vestibule",
+   "hall_end",
+   "hall_corridor_south",
+   "all openings (casing)"
+  ],
+  "measured_in": [
+   "foyer"
+  ],
+  "assumed": {
+   "landing": "DEVIATIONS 67",
+   "main_stair": "DEVIATIONS 66",
+   "vestibule": "DEVIATIONS 67",
+   "hall_end": "DEVIATIONS 67",
+   "hall_corridor_south": "DEVIATIONS 67",
+   "all openings (casing)": "DEVIATIONS 67"
+  },
+  "alternatives": [
+   "old per-case casing (Storey/ArchTop Trim() + physics drop, StoreProps hiding, FrenchDoors hiding) + trim_faces's emulation of it; the landing window's model panels its wall to the stool; the front door found by a physics probe (built before; OWN_TRIM = false)",
+   "openings own their casing; the landing window wall gets the face trim's 0.705 wainscot, scribed under the apron and round the stool's ears, the rail stopping at the casing legs (built)",
+   "openings own their casing; the whole landing (and flight 2's north wall) panelled to the window stool height instead (rejected: the film's wainscot on the landing reads at table height ~0.7, i.e. the 0.705, with the stool on the cap)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "one wainscot line round the landing: the back (window) wall's cap continues the side walls' (the window's stool sits on it in the film)",
+     "observed_in": [
+      "film:11966",
+      "film:12133"
+     ],
+     "extrapolated": false
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-17",
+   "what": "HOUSE-KERNEL step 1 (trim from faces): the landing window wall left to its model's stool-height panelling; user walk 13:34 'this alignment on wainscotting can't be right', 13:32 'z fighting here' (STATUS 8t-2, 8t-3)",
+   "outcome": "accepted",
+   "ref": "changes/2026-10-17-trim-from-faces.json"
+  },
+  {
+   "date": "2026-10-16",
+   "what": "casing placed per case in SpecGreybox.Storey (Trim), physics drop into walls; arch casing model attempts (fascia picked for the crown, 2.17 under a 2.155 ceiling)",
+   "outcome": "ok",
+   "ref": "changes/2026-10-16-foyer-arch-model.json"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 11966 / 12133 (frontal on the landing, independent of Marina 312 and its door scale): the landing's back wall carries a white wainscot whose cap line runs into the window's stool at about the landing table's top (~0.7 m: the table is 0.74), continuous with the side walls' wainscot; one height round the landing",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:11966",
+    "film:12133"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "Same frames: the window's stool sits ON the cap (sill ~0.7 above the landing); ours stays at 0.36 (Marina 312 s), so in the build the 0.705 wainscot meets the casing legs 0.33 m above the stool instead",
+   "agrees": false,
+   "type": "topological",
+   "data": [
+    "film:11966",
+    "film:12133"
+   ],
+   "scale": [
+    "none"
+   ],
+   "disposition": "Not changed here by instruction: the sill/head re-measure is STATUS 8w, its own trial. If 8w puts the stool on the 0.705 cap, the face trim needs no change (the panel under the apron and the rail stopping at the legs follow the opening record)"
+  },
+  {
+   "what": "CONSISTENCY, not evidence (same data): openings.py --compare on the committed old-path scene House_WallGrid.unity: 184 visible casings vs 182 laid from data: 182 identical within 1 mm; the 2 left over are duplicates (ArchTop and Storey both laid hall arch C's legs in one place); the 9 store-frame casings (girls A, girls B, attic doors' hall faces) are replaced by the frames' own boxes",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "build:House_WallGrid"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "CONSISTENCY, not evidence: trim_faces.py --compare (step 1 vs step 2 strips): 93 identical; 14 moved (baseboard/cap +21.6/+22.7 mm to the girls A/B and attic pack frames; the vestibule baseboard now cut at the front door's plinths 8.838/10.593 in data instead of by a 5 mm physics probe); 10 added on the landing window wall (skirt, panel scribed under the apron and round the stool ears, rail to the legs); openings.py selftest refuses the Oct 16 arch (crown 2.170 ABOVE rear_passage's ceiling 2.155), a head off its header and a swing into a wall",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "spec:openings",
+    "spec:trim_faces"
+   ],
+   "scale": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/openings/before-landing-corner-n1334.png",
+   "spec/captures/views/openings/before-landing-stool-n1332.png",
+   "spec/captures/views/openings/before-landing-wall.png",
+   "spec/captures/views/openings/before-front-door.png",
+   "spec/captures/views/openings/before-girls-a-door.png",
+   "spec/captures/views/openings/before-attic-door.png",
+   "spec/captures/views/openings/before-dining-arch.png"
+  ],
+  "after": [
+   "spec/captures/views/openings/after-landing-corner-n1334.png",
+   "spec/captures/views/openings/after-landing-stool-n1332.png",
+   "spec/captures/views/openings/after-landing-wall.png",
+   "spec/captures/views/openings/after-front-door.png",
+   "spec/captures/views/openings/after-girls-a-door.png",
+   "spec/captures/views/openings/after-attic-door.png",
+   "spec/captures/views/openings/after-dining-arch.png"
+  ]
+ },
+ "user_walk": "accepted",
+ "user_walk_words": "user Oct 17: \"1. Much MUCH better. I left one tiny comment in the walkthru, but huge improvement. consider it accepted so long as you consider the comment in the future. 2. flicker is gone. 3. yep, looks great. Consider it accepted, but please take a look at the note\" (note 16:23 at 1.967,-0.682,-8.378 yaw 328: inside-corner cap rail join not perfect: STATUS 8t (6))"
+}
