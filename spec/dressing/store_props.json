@@ -315,6 +315,70 @@
    "source": "user Oct 17: \"can you replace the wreath on the front door with one from the christmas pack?\" Same pack as living_tree (AlterEgos; gitignored). Native size kept (scale 1): ring 0.534 m across (FrontDoor.glb's generated wreath was ~0.51), the pack's bow hangs below it (box 0.689 tall). Ring centred on the leaf at 1.47 m and z 9.7155 (hifi_door.py WC, film 10248); back 1 cm off the leaf's frame front (x 10.082, hifi_door.py xd). Front = model +z (bow, baubles) turned to face the vestibule (-x): yaw 270. Hides the generated Leaves/Berries (kept in FrontDoor.glb as the fallback for a clone without the pack). Keep both bow LODs (its LODGroup shows Bow_LOD1 from ~2 m; deleting it left no bow from the foyer).",
    "back": "+x",
    "hung": true
+  },
+  {
+   "name": "buzz_nightstand",
+   "floor": "upper",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/BEDSIDE_CAB_01.prefab",
+   "x": [
+    10.262,
+    10.812
+   ],
+   "z": [
+    11.585,
+    12.07
+   ],
+   "y0": 0.0,
+   "height": 0.579,
+   "hides": [
+    "buzz_nightstand"
+   ],
+   "collide": false,
+   "source": "Buzz TRIAL 1 (changes/2026-10-17-buzz-layout.json): box from spec/dressing/buzz.json (tools/house/buzz_layout.py); top's front-right corner (frames 44/30/32) on the front face's plane (dense depth, frames 44/30); width 0.55 from Marina 563 s (left end hidden by the pillow in the solved frames)",
+   "back": "-z"
+  },
+  {
+   "name": "buzz_desk",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Desk_01.prefab",
+   "x": [
+    8.751,
+    9.996
+   ],
+   "z": [
+    15.498,
+    15.983
+   ],
+   "y0": 0.0,
+   "height": 0.795,
+   "hides": [
+    "buzz_desk"
+   ],
+   "collide": false,
+   "source": "Buzz TRIAL 1 (changes/2026-10-17-buzz-layout.json): box from spec/dressing/buzz.json (tools/house/buzz_layout.py); top's four corners in frame 0 (back on the wall, front on the top's front plane; the four heights agree to 2.8 cm); drawer fronts 0.483 m off the wall (dense, 3 frames), top 0.50",
+   "back": "+z"
+  },
+  {
+   "name": "buzz_desk_chair",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Chair_01.prefab",
+   "x": [
+    8.725,
+    9.175
+   ],
+   "z": [
+    15.008,
+    15.478
+   ],
+   "y0": 0.0,
+   "height": 0.92,
+   "hides": [
+    "buzz_desk_chair"
+   ],
+   "collide": false,
+   "source": "Buzz TRIAL 1 (changes/2026-10-17-buzz-layout.json): box from spec/dressing/buzz.json (tools/house/buzz_layout.py); AUTHORED: Marina 540 s shows a spindle-back chair at the desk's right part (centre 0.84 of the desk's length), seat facing the desk; stands clear of the top (DEVIATIONS)",
+   "yaw": 180,
+   "back": ""
   }
  ]
 }

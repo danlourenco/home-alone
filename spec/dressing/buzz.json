@@ -1,0 +1,654 @@
+{
+ "note": "Buzz's room furniture (Oct 17 2026, TRIAL 1: layout only; changes/2026-10-17-buzz-layout.json, DEVIATIONS 68-72). Written by tools/house/buzz_layout.py --write: do not edit 'boxes' by hand. 'pieces' are HOUSE-KERNEL stage 8 placements: each piece sits against a built face, 'along' metres from the named corner (Marina's order from that corner), 'off' metres off the face, 'h' above the upper floor; measured in Marina's Buzz clip (45 solved cameras, VGGT real-vggt-buzzall) at the twin-mattress ruler. 'boxes' are the built boxes (spec x, y above the upper floor, z), read by SpecGreybox.Buzz; store models in store_props.json (buzz_*) hide the box of the same name.",
+ "marina_room": {
+  "front_to_shelves": 3.581,
+  "door_to_desk": 4.498,
+  "built": [
+   3.685,
+   4.428
+  ]
+ },
+ "pieces": [
+  {
+   "name": "buzz_bed",
+   "wall": "door",
+   "corner": "front",
+   "along": [
+    0.924,
+    2.102
+   ],
+   "off": [
+    0.015,
+    2.155
+   ],
+   "h": [
+    0.0,
+    1.342
+   ],
+   "foot_h": 0.884,
+   "mattress_top": 0.645,
+   "post": 0.09,
+   "source": "head posts' finials (7 frames each, cut 0.05 m off the door wall) centres 0.969 / 2.057 m from the front corner; footboard face 2.155 m off the wall (dense depth, 2 frames); finial tops head 1.342, foot 0.884; mattress top 0.645 (dense). Post 0.09 square authored (finial ball ~0.1)"
+  },
+  {
+   "name": "buzz_nightstand",
+   "wall": "door",
+   "corner": "front",
+   "along": [
+    0.346,
+    0.896
+   ],
+   "off": [
+    0.015,
+    0.5
+   ],
+   "h": [
+    0.0,
+    0.579
+   ],
+   "store": "Assets/Classic Wooden Furniture Pack/Prefabs/BEDSIDE_CAB_01.prefab",
+   "back": "-z",
+   "source": "top's front-right corner (frames 44/30/32) on the front face's plane (dense depth, frames 44/30); width 0.55 from Marina 563 s (left end hidden by the pillow in the solved frames)"
+  },
+  {
+   "name": "buzz_chest",
+   "wall": "front",
+   "corner": "door",
+   "along": [
+    1.96,
+    2.999
+   ],
+   "off": [
+    0.015,
+    0.438
+   ],
+   "h": [
+    0.0,
+    1.257
+   ],
+   "source": "top's front corners triangulated (left: frames 16/20/22/26/28, right: 16/20/22), front face dense depth (frames 16/20/22/26, IQR 0.5-0.8 cm)"
+  },
+  {
+   "name": "buzz_desk",
+   "wall": "desk",
+   "corner": "front",
+   "along": [
+    1.162,
+    2.407
+   ],
+   "off": [
+    0.015,
+    0.5
+   ],
+   "h": [
+    0.0,
+    0.795
+   ],
+   "store": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Desk_01.prefab",
+   "back": "+z",
+   "source": "top's four corners in frame 0 (back on the wall, front on the top's front plane; the four heights agree to 2.8 cm); drawer fronts 0.483 m off the wall (dense, 3 frames), top 0.50"
+  },
+  {
+   "name": "buzz_desk_chair",
+   "wall": "desk",
+   "corner": "front",
+   "along": [
+    1.983,
+    2.433
+   ],
+   "off": [
+    0.52,
+    0.99
+   ],
+   "h": [
+    0.0,
+    0.92
+   ],
+   "store": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Chair_01.prefab",
+   "yaw": 180,
+   "source": "AUTHORED: Marina 540 s shows a spindle-back chair at the desk's right part (centre 0.84 of the desk's length), seat facing the desk; stands clear of the top (DEVIATIONS)"
+  },
+  {
+   "name": "buzz_shelves",
+   "wall": "shelves",
+   "corner": "door",
+   "along": [
+    1.446,
+    3.622
+   ],
+   "off": [
+    0.015,
+    0.3
+   ],
+   "h": [
+    0.45,
+    1.741
+   ],
+   "boards": [
+    0.657,
+    1.004,
+    1.41,
+    1.741
+   ],
+   "standards": 3,
+   "spacing": 0.757,
+   "source": "near end: the glove board's front face, dense depth (4 frames) 1.446 m from the door wall, front 0.3 m off the wall; far end Marina 533 s 0.806 m from the desk-wall corner (SHELF_FAR_FROM_DESK); board top heights [0.657, 1.004, 1.41, 1.741] (triangulated, frames 40/44); 3 standards 0.757 m apart (533 s)"
+  },
+  {
+   "name": "buzz_tank",
+   "wall": "shelves",
+   "corner": "door",
+   "along": [
+    3.192,
+    3.602
+   ],
+   "off": [
+    0.04,
+    0.28
+   ],
+   "h": [
+    1.004,
+    1.234
+   ],
+   "source": "the tarantula tank on the glove board at its desk-side end, Marina 533 s: 0.02-0.43 m from the end, 0.23 high (592 px/m); depth authored"
+  }
+ ],
+ "boxes": [
+  {
+   "name": "buzz_bed_post_head_L",
+   "x": [
+    9.056,
+    9.146
+   ],
+   "y": [
+    0.0,
+    1.342
+   ],
+   "z": [
+    11.585,
+    11.675
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_bed_post_head_R",
+   "x": [
+    10.144,
+    10.234
+   ],
+   "y": [
+    0.0,
+    1.342
+   ],
+   "z": [
+    11.585,
+    11.675
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_bed_post_foot_L",
+   "x": [
+    9.056,
+    9.146
+   ],
+   "y": [
+    0.0,
+    0.884
+   ],
+   "z": [
+    13.635,
+    13.725
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_bed_post_foot_R",
+   "x": [
+    10.144,
+    10.234
+   ],
+   "y": [
+    0.0,
+    0.884
+   ],
+   "z": [
+    13.635,
+    13.725
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_bed_headboard",
+   "x": [
+    9.101,
+    10.189
+   ],
+   "y": [
+    0.45,
+    1.05
+   ],
+   "z": [
+    11.615,
+    11.645
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_bed_footboard",
+   "x": [
+    9.101,
+    10.189
+   ],
+   "y": [
+    0.4,
+    0.75
+   ],
+   "z": [
+    13.665,
+    13.695
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_bed_rail_L",
+   "x": [
+    9.086,
+    9.116
+   ],
+   "y": [
+    0.28,
+    0.4
+   ],
+   "z": [
+    11.675,
+    13.635
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_bed_rail_R",
+   "x": [
+    10.174,
+    10.204
+   ],
+   "y": [
+    0.28,
+    0.4
+   ],
+   "z": [
+    11.675,
+    13.635
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_bed_mattress",
+   "x": [
+    9.146,
+    10.144
+   ],
+   "y": [
+    0.4,
+    0.615
+   ],
+   "z": [
+    11.645,
+    13.665
+   ],
+   "mat": "mattress"
+  },
+  {
+   "name": "buzz_bed_blanket",
+   "x": [
+    9.131,
+    10.159
+   ],
+   "y": [
+    0.615,
+    0.645
+   ],
+   "z": [
+    12.135,
+    13.665
+   ],
+   "mat": "blanket"
+  },
+  {
+   "name": "buzz_nightstand",
+   "x": [
+    10.262,
+    10.812
+   ],
+   "y": [
+    0.0,
+    0.579
+   ],
+   "z": [
+    11.585,
+    12.07
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_chest",
+   "x": [
+    10.72,
+    11.143
+   ],
+   "y": [
+    0.0,
+    1.257
+   ],
+   "z": [
+    13.53,
+    14.569
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_desk",
+   "x": [
+    8.751,
+    9.996
+   ],
+   "y": [
+    0.0,
+    0.795
+   ],
+   "z": [
+    15.498,
+    15.983
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_desk_chair",
+   "x": [
+    8.725,
+    9.175
+   ],
+   "y": [
+    0.0,
+    0.92
+   ],
+   "z": [
+    15.008,
+    15.478
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_board0",
+   "x": [
+    7.488,
+    7.773
+   ],
+   "y": [
+    0.632,
+    0.657
+   ],
+   "z": [
+    13.016,
+    15.192
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_board1",
+   "x": [
+    7.488,
+    7.773
+   ],
+   "y": [
+    0.979,
+    1.004
+   ],
+   "z": [
+    13.016,
+    15.192
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_board2",
+   "x": [
+    7.488,
+    7.773
+   ],
+   "y": [
+    1.385,
+    1.41
+   ],
+   "z": [
+    13.016,
+    15.192
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_board3",
+   "x": [
+    7.488,
+    7.773
+   ],
+   "y": [
+    1.716,
+    1.741
+   ],
+   "z": [
+    13.016,
+    15.192
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_standard0_0",
+   "x": [
+    7.488,
+    7.513
+   ],
+   "y": [
+    0.45,
+    0.632
+   ],
+   "z": [
+    13.3345,
+    13.3595
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_standard0_1",
+   "x": [
+    7.488,
+    7.513
+   ],
+   "y": [
+    0.657,
+    0.979
+   ],
+   "z": [
+    13.3345,
+    13.3595
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_standard0_2",
+   "x": [
+    7.488,
+    7.513
+   ],
+   "y": [
+    1.004,
+    1.385
+   ],
+   "z": [
+    13.3345,
+    13.3595
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_standard0_3",
+   "x": [
+    7.488,
+    7.513
+   ],
+   "y": [
+    1.41,
+    1.716
+   ],
+   "z": [
+    13.3345,
+    13.3595
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_standard1_0",
+   "x": [
+    7.488,
+    7.513
+   ],
+   "y": [
+    0.45,
+    0.632
+   ],
+   "z": [
+    14.0915,
+    14.1165
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_standard1_1",
+   "x": [
+    7.488,
+    7.513
+   ],
+   "y": [
+    0.657,
+    0.979
+   ],
+   "z": [
+    14.0915,
+    14.1165
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_standard1_2",
+   "x": [
+    7.488,
+    7.513
+   ],
+   "y": [
+    1.004,
+    1.385
+   ],
+   "z": [
+    14.0915,
+    14.1165
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_standard1_3",
+   "x": [
+    7.488,
+    7.513
+   ],
+   "y": [
+    1.41,
+    1.716
+   ],
+   "z": [
+    14.0915,
+    14.1165
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_standard2_0",
+   "x": [
+    7.488,
+    7.513
+   ],
+   "y": [
+    0.45,
+    0.632
+   ],
+   "z": [
+    14.8485,
+    14.8735
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_standard2_1",
+   "x": [
+    7.488,
+    7.513
+   ],
+   "y": [
+    0.657,
+    0.979
+   ],
+   "z": [
+    14.8485,
+    14.8735
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_standard2_2",
+   "x": [
+    7.488,
+    7.513
+   ],
+   "y": [
+    1.004,
+    1.385
+   ],
+   "z": [
+    14.8485,
+    14.8735
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_shelves_standard2_3",
+   "x": [
+    7.488,
+    7.513
+   ],
+   "y": [
+    1.41,
+    1.716
+   ],
+   "z": [
+    14.8485,
+    14.8735
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "buzz_tank",
+   "x": [
+    7.513,
+    7.753
+   ],
+   "y": [
+    1.004,
+    1.234
+   ],
+   "z": [
+    14.762,
+    15.172
+   ],
+   "mat": "glass"
+  }
+ ]
+}

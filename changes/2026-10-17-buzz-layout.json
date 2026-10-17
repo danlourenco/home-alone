@@ -1,0 +1,243 @@
+{
+ "gate": 8,
+ "change": "Buzz's room furniture placed against the built faces (HOUSE-KERNEL step 5, TRIAL 1: layout only): bed, nightstand (BEDSIDE_CAB_01), chest of drawers, desk (SM_Desk_01) + chair (SM_Chair_01), wall shelves (4 boards, 3 standards), tarantula tank; spec/dressing/buzz.json via tools/house/buzz_layout.py, drawn by SpecGreybox.Buzz; the wall-grid house had no Buzz furniture before (spec/furniture.json's Oct 14 boxes belong to the retired Greybox_Upstairs builder and are left as they are)",
+ "target": "House_WallGrid",
+ "premise": "The built room (3.685 x 4.428 m inside) is within 3% of Marina's room on both axes, so her furniture, measured from her corners in her own metres and placed from the same corners of the built faces, fits by construction",
+ "claim": {
+  "value": {
+   "bed": "door wall, 0.924-2.102 m from the front corner, 2.155 m deep",
+   "nightstand": "door wall 0.346-0.896 m from the front corner, 0.50 deep",
+   "chest": "front wall 1.96-3.00 m from the door corner, 0.44 deep, 1.26 high",
+   "desk": "desk wall 1.162-2.407 m from the front corner, 0.50 deep, top 0.795",
+   "shelves": "shelves wall 1.446 m from the door corner to 0.806 m short of the desk corner, 0.30 deep, boards 0.657/1.004/1.41/1.741",
+   "marina_room": [
+    3.581,
+    4.498
+   ]
+  },
+  "data": [
+   "vggt:real-vggt-buzzall"
+  ],
+  "scale": [
+   "mattress-39in:buzz-clip"
+  ],
+  "risks": [
+   "extraction",
+   "scale"
+  ],
+  "applies_to": [
+   "buzz_room"
+  ],
+  "measured_in": [
+   "buzz_room"
+  ],
+  "pick": {
+   "crop": "spec/captures/picks/buzz1/head_L-f30.png",
+   "confirmed_by": "blind subagent (crops only, no context) named every pick; finials, chest top corners, shelf board ends, nightstand front-right corner, door casing/leaf corners, chart 5 ft tick confirmed; nightstand back corners and desk corner picks read as wall/occluded -> those picks were replaced (desk re-picked on frame 0 full res) or dropped (nightstand back corners; width authored); see spec/captures/picks/buzz1/"
+  },
+  "alternatives": [
+   "current build: the Oct 14 boxes in spec/furniture.json (bed/nightstand from 563 s pixel ratios, chest/desk/shelves as fractions of the 0:50 overhead)",
+   "this: every piece from Marina's 45 solved cameras, measured from its nearest corner"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "bed (head posts on the door wall, footboard depth)",
+     "observed_in": [
+      "vggt:real-vggt-buzzall frame 30",
+      "vggt:real-vggt-buzzall frame 32",
+      "vggt:real-vggt-buzzall frame 36",
+      "vggt:real-vggt-buzzall frame 40",
+      "vggt:real-vggt-buzzall frame 42",
+      "vggt:real-vggt-buzzall frame 43",
+      "vggt:real-vggt-buzzall frame 44",
+      "marina-frame:563",
+      "marina-frame:560"
+     ]
+    },
+    {
+     "part": "nightstand front-right corner",
+     "observed_in": [
+      "vggt:real-vggt-buzzall frame 30",
+      "vggt:real-vggt-buzzall frame 32",
+      "vggt:real-vggt-buzzall frame 44"
+     ]
+    },
+    {
+     "part": "chest between the front windows",
+     "observed_in": [
+      "vggt:real-vggt-buzzall frame 16",
+      "vggt:real-vggt-buzzall frame 20",
+      "vggt:real-vggt-buzzall frame 22",
+      "vggt:real-vggt-buzzall frame 26",
+      "vggt:real-vggt-buzzall frame 28"
+     ]
+    },
+    {
+     "part": "desk on the desk wall",
+     "observed_in": [
+      "vggt:real-vggt-buzzall frame 0 (four corners)",
+      "vggt:real-vggt-buzzall frame 6 (front face)",
+      "vggt:real-vggt-buzzall frame 9 (front face)"
+     ]
+    },
+    {
+     "part": "shelves near end and board heights",
+     "observed_in": [
+      "vggt:real-vggt-buzzall frame 36",
+      "vggt:real-vggt-buzzall frame 40",
+      "vggt:real-vggt-buzzall frame 42",
+      "vggt:real-vggt-buzzall frame 44",
+      "marina-frame:533"
+     ]
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-09-15",
+   "what": "single-view headpost/footpost depth fit (room size)",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-09-18",
+   "what": "candidate 3.65 x 4.27 and 3.90 x 4.80 rooms (estimated)",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-13",
+   "what": "grey-box built at Marina's SfM size: user 'still not marina's layout'",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-13",
+   "what": "old model resized to 4.35 x 3.54 (changes/2026-10-13-buzz-resize.json): 'terrible', reverted",
+   "outcome": "rejected"
+  },
+  {
+   "date": "2026-10-13",
+   "what": "bed placed from the 0:50 overhead's fractions (0.33 m door gap): 'Marina has a bit more space between door and bed'",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-14",
+   "what": "bed shifted to Marina's 0.46 m door gap: 'nightstand should be closer to the corner, bed with it'",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-14",
+   "what": "bed/nightstand from the front corner (563 s, mattress), chest/desk/shelves as wall fractions of the 0:50 overhead (changes/2026-10-14-buzz-bed-placement.json, -door-furniture.json): never walked; 'pretty close'",
+   "outcome": "pending"
+  }
+ ],
+ "premise_reviewed": "CENSUS of the failed Buzz attempts: (a) every room-SIZE attempt (Sep 15, Sep 18, Oct 13 x2) took its metres from the Buzz SfM scaled by an 80 in door in the same clip (the overhead trace inherits that scale); (b) every FURNITURE attempt (Oct 13 overhead fractions, Oct 14 door gap, Oct 14 wall fractions) placed pieces from ONE 2-D source per piece: fractions of the oblique 0:50 overhead, or one face-on frame's pixel ratios (563 s), never a solved camera; each fixed one gap and left neighbours wrong (user: 'match positioning a tiny bit more faithfully'). Shared input of the furniture failures = single-image 2-D reads; shared input of the size failures = door-80in scale. THIS attempt shares neither: 45 solved cameras of Marina's Buzz clip (VGGT; picks cut on RANSAC wall/floor planes or triangulated from 2-7 frames), at the twin-mattress ruler (39 in between the head posts' inner faces, 3 frames). ROOM CHECK (stop-or-go): at the mattress ruler Marina's room is 3.581 (front->shelves) x 4.498 m (door->desk); at the growth-chart ruler (a different kind: printed 3 ft/5 ft marks, vertical, desk wall) 3.615 x 4.541. Built: 3.685 x 4.428. Built is 2.9%/1.9% wider and 1.6%/2.5% shorter: same shape (walls 89.6 deg apart in her solve), under the 5% 'notably different' line, so no room change is proposed. The leftover is placed, not hidden: pieces are measured from the corner nearest them in Marina's order, so the extra 0.10 m of door-wall width ends up between the bed and the door (DEVIATIONS 26/69). DEVIATIONS 23 (door->desk had no independent check) now has two: mattress 4.498 and chart 4.541 vs built 4.428.",
+ "checks": [
+  {
+   "what": "Marina 560 s at the 80 in door (no solve, no mattress; buzz_layout.check_560): door leaf 0.800 m wide (+-0.022) vs the solve at the mattress ruler 0.798: the two rulers agree to 0.3%",
+   "agrees": true,
+   "data": [
+    "marina-frame:560"
+   ],
+   "scale": [
+    "door-80in:560"
+   ],
+   "tests": [
+    "scale"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/buzz1/m560_leaf_TR.png",
+    "confirmed_by": "blind subagent: c52 'top-right corner of the door leaf' (0-5 px); c51 leaf top-left, c53 leaf/jamb foot, c54 casing outer edge, c55 left post's outer face: offsets it reported (2-7 frame px) applied to M560"
+   }
+  },
+  {
+   "what": "growth chart (3 ft and 5 ft marks, 0.610 m, desk wall, frame 0) as the ruler: room 3.615 x 4.541 m, furniture positions scale by +0.95% vs the mattress ruler (<=3 cm at 3 m)",
+   "agrees": true,
+   "data": [
+    "vggt:real-vggt-buzzall"
+   ],
+   "scale": [
+    "growth-chart:buzz-clip"
+   ],
+   "tests": [
+    "scale"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/buzz1/chart_5ft-f0.png",
+    "confirmed_by": "blind subagent: c02 'left edge of the yellow tape at the long 5 ft tick' (high); c01 the 3 ft pick read as near the hook, 10-20 px from a tick (low): the 3 ft end has <=2% error on 0.61 m"
+   }
+  },
+  {
+   "what": "Marina 563 s (a frame the solve did not use; projective ratios along the door wall from its two corners, mattress_ruler.py's vanishing point): head posts' inner faces at 0.447 / 0.720 of the wall from the shelves corner (spread 0.44-0.45 / 0.71-0.73) vs the solve's 0.438 / 0.717; door casing outer edge 0.289 (0.283-0.294) vs 0.279 (1-3 cm)",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "marina-frame:563"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": [
+    "extraction"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/buzz1/m563_post_inner_L.png",
+    "confirmed_by": "blind subagent: c41 'right (inner) face of the left bed post' (5 px), c42 right post's inner face (10-15 px inside the post: ~1.5 cm), c43 'the ceiling/two-walls corner', c44 'outer edge of the door casing' (10-15 px); first picks (c34/c35/c33) read off-feature and were re-picked"
+   }
+  },
+  {
+   "what": "planned boxes drawn through all 45 solved cameras (spec/captures/buzz1/overlay/plan-*.jpg, sheet.jpg): bed posts, chest, desk top and shelf boards land on Marina's pieces within a few cm",
+   "agrees": true,
+   "data": [
+    "vggt:real-vggt-buzzall"
+   ],
+   "scale": [
+    "mattress-39in:buzz-clip"
+   ]
+  },
+  {
+   "what": "Oct 14 placement (563 s mattress ruler): nightstand from 0.10 m off the front corner, 0.66 wide; here its front-right corner is 0.346 m off the front corner",
+   "agrees": false,
+   "data": [
+    "marina-frame:563"
+   ],
+   "scale": [
+    "mattress-39in:563"
+   ],
+   "disposition": "The Oct 14 read measured the nightstand's back edge in a frame where it stands 0.45 m in front of the wall plane it was scaled on (no depth correction). The solve cuts its front-right corner (3 frames, pick confirmed) on its own front plane (dense depth 0.50 m). Kept the solve; logged DEVIATIONS 70; the walk judges it (the user asked for it closer to the corner on Oct 14)",
+   "pick": {
+    "crop": "spec/captures/picks/buzz1/ns_front_R-f44.png",
+    "confirmed_by": "blind subagent: c19 'front-right top corner of the nightstand top' (high)"
+   }
+  },
+  {
+   "what": "Marina 560 s at the 80 in door: door casing outer edge -> left head post outer face 0.452 m (+-0.022) vs the solve 0.481",
+   "agrees": false,
+   "data": [
+    "marina-frame:560"
+   ],
+   "scale": [
+    "door-80in:560"
+   ],
+   "disposition": "2.9 cm, just outside the read spread; the solve's bed edge assumes a 0.09 m post around the finial centre (authored). Kept the solve (7 frames per post); the built door-to-bed gap is 0.69 m anyway because the built door wall is 0.10 m wider than Marina's (DEVIATIONS 69) - the walk judges the gap",
+   "pick": {
+    "crop": "spec/captures/picks/buzz1/m560_post_L_outer.png",
+    "confirmed_by": "blind subagent: c55 'left (outer) edge of the left bed post' (pick corrected 5 px right)"
+   }
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/buzz1/before"
+  ],
+  "after": [
+   "spec/captures/views/buzz1/after"
+  ],
+  "overlays": [
+   "spec/captures/buzz1/overlay/sheet.jpg"
+  ]
+ },
+ "user_walk": "accepted",
+ "user_words": "",
+ "user_walk_words": "user Oct 17: \"left a comment, but i generally accept\" (note 18:10 at 8.449,0.030,-14.174 yaw 77, night: \"there is some strangle black outlines in the corners, and what looks to be black floating triangles. otherwise, the room layout is looking good!\": STATUS 8z follow-ups)"
+}

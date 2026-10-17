@@ -7,3 +7,6 @@
 {"time": "2026-10-17T16:32:10", "cmd": "build", "job": "wreath", "why": "wreath: keep bow LOD1", "wall_s": 2, "exit": 1}
 {"time": "2026-10-17T16:33:30", "cmd": "build", "job": "wreath", "why": "wreath: keep bow LOD1", "wall_s": 69, "exit": 0}
 {"time": "2026-10-17T16:35:17", "cmd": "bake", "job": "wreath", "why": "wreath bake", "wall_s": 92, "exit": 0}
+{"time": "2026-10-17T17:27:27", "cmd": "build", "job": "buzz1", "why": "Buzz TRIAL 1: furniture against faces from Marina's solved cameras", "wall_s": 77, "exit": 0}
+{"time": "2026-10-17T17:30:46", "cmd": "build", "job": "buzz1", "why": "Buzz TRIAL 1 build 2: furniture colliders as BuzzCollider_* so the room walk reaches Buzz", "wall_s": 76, "exit": 0}
+{"time": "2026-10-17T17:32:19", "cmd": "bake", "job": "buzz1", "why": "Buzz TRIAL 1 bake", "wall_s": 88, "exit": 0}
