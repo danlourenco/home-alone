@@ -113,7 +113,7 @@
   {
    "what": "LIVE Play in the user's editor after load (Oct 17): fills isBaked 52/52, sun the only realtime light; foyer day pose 8.4,-2.996,-9.4 yaw 268, still camera, AA off: FlickerProbe 0/0/0 pop pixels in 3 runs (before: 1353/2090/1865); PerfProbe triangles 6.60 M (before 72.4 M), shadow casters 6333 (before 102083), GPU median 13.6 ms (before 143.7 ms); spec/captures/flicker/fl-fixed-*.json, spec/captures/perf/perf-fixed-day.json",
    "agrees": true,
-   "type": "topological",
+   "type": "count",
    "data": [
     "live:play"
    ],
@@ -163,5 +163,8 @@
  },
  "perf": "not measured here (needs Play): STATUS 7a's 72.4 M tris/frame and the flicker pops should drop to the fills-disabled case; to confirm with FlickerProbe (3 runs) and PerfProbe when loaded",
  "user_walk": "accepted",
- "user_walk_words": "user Oct 17: \"it's much better on multiple front; flicker squares gone, frame rate is smoother\" then \"consider the walk accepted though; we can address that later\" (notes at 15:39: foyer mirror low-res; flight 2 underside shows treads: STATUS 8t)"
+ "user_walk_words": "user Oct 17: \"it's much better on multiple front; flicker squares gone, frame rate is smoother\" then \"consider the walk accepted though; we can address that later\" (notes at 15:39: foyer mirror low-res; flight 2 underside shows treads: STATUS 8t)",
+ "corrections": [
+  "Oct 17: the LIVE Play check's type corrected from 'topological' to 'count' (clerical; it is a count/measurement and wrongly triggered R7 layout). No numbers or wording changed. User approved: \"sure\"."
+ ]
 }
