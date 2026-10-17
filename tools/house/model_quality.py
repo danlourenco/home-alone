@@ -9,6 +9,12 @@ A model FAILS on any of:
   texel     a textured face under 512 px/m (house interiors: every face is within 3 m of the walk path)
   albedo    the base colour's mean (sRGB) more than the material's albedo_tol from its albedo_srgb (glTF material extras)
   lod       no node named *_LODn and no lod_reason in the root's extras
+  unity     a baked material whose Unity maps (what HDRP renders: SpecGreybox.BakedMat reads
+            Assets/Textures/Generated/<model>/<part>_{base,mask,normal,detail}.png + <part>.json, part = material name after "_")
+            are missing or differ from the GLB maps the gate judged (base, normal; mask G = AO, A = 1 - roughness; mean diff > 0.02)
+  albedo is also a failure when a baked material carries no albedo_srgb (nothing measured to judge it against), or when its
+            Unity detail map (HDRP overlay at _DetailAlbedoScale 1, as BakedMat sets) takes the measured albedo outside
+            +-2 x albedo_tol at its 2nd/98th percentile: specks no film frame shows (Oct 17: raw-plaster pits on paint read as dirt)
 Materials whose extras say role "system" (a room's wallpaper given by SpecGreybox) are skipped for maps, texel and albedo.
 Welding is per primitive: a joint between two materials (paper under a casing) is not an edge of either.
 
@@ -20,6 +26,7 @@ Welding is per primitive: a joint between two materials (paper under a casing) i
 import io
 import json
 import math
+import shutil
 import struct
 import sys
 from pathlib import Path
@@ -29,6 +36,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 MODELS = ROOT / "unity/HomeAlone/Assets/Models/Foyer"
+TEX = ROOT / "unity/HomeAlone/Assets/Textures/Generated"
 CT = {5120: np.int8, 5121: np.uint8, 5122: np.int16, 5123: np.uint16, 5125: np.uint32, 5126: np.float32}
 NC = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4, "MAT4": 16}
 
@@ -109,7 +117,41 @@ def edges_of(p):
     return out
 
 
-def check(path):
+def png(path):
+    return np.asarray(Image.open(path).convert("RGBA"), np.float64) / 255 if path.exists() else None
+
+
+def unity_maps(p, folder, tag=""):
+    """Problems with the Unity copies of a baked material's maps: missing, or not the maps the GLB carries."""
+    part = p["mat"].split("_", 1)[-1]; d = folder / part
+    got = {k: png(Path(f"{d}_{k}.png")) for k in ("base", "mask", "normal", "detail")}
+    miss = [k for k, v in got.items() if v is None] + ([] if Path(f"{d}.json").exists() else ["json"])
+    if miss: return [f"missing {', '.join(miss)} in {d.relative_to(ROOT) if d.is_relative_to(ROOT) else d}"]
+    if any(p[k] is None for k in ("base", "normal", "occ", "mr")): return []   # the maps check reports it
+    # glTF ORM: R occlusion, G roughness (one texture or two); HDRP mask: G AO, A smoothness
+    pairs = [("base", got["base"][..., :3], p["base"][..., :3]), ("normal", got["normal"][..., :3], p["normal"][..., :3]),
+             ("mask AO", got["mask"][..., 1], p["occ"][..., 0]), ("mask smoothness", got["mask"][..., 3], 1 - p["mr"][..., 1])]
+    out = []
+    for k, u, g in pairs:
+        if u.shape[:2] != g.shape[:2]: out.append(f"{k} {u.shape[1]}x{u.shape[0]} vs GLB {g.shape[1]}x{g.shape[0]}"); continue
+        dif = float(np.abs(u - g).mean())
+        if dif > 0.02: out.append(f"{k} differs from the GLB's (mean {dif:.3f})")
+    if "albedo_srgb" in p["extras"]:
+        t = np.array(p["extras"]["albedo_srgb"]); tol = p["extras"].get("albedo_tol", 0.06)
+        for r in np.percentile(got["detail"][..., 0], [2, 98]):
+            e = detail_albedo(t, r)
+            if np.abs(e - t).max() > 2 * tol: out.append(f"albedo  {tag}: detail map takes {t.tolist()} to {np.round(e, 3).tolist()} (+-{2 * tol:.2f} allowed)")
+    return out
+
+
+def detail_albedo(srgb, r):
+    """HDRP Lit's detail albedo (LitDataIndividualLayer.hlsl, detail mask 1, scale 1) on an sRGB colour, back in sRGB."""
+    lin = np.where(srgb <= 0.04045, srgb / 12.92, ((srgb + 0.055) / 1.055) ** 2.4)
+    s = min(abs(2 * r - 1), 1.0); o = (np.sqrt(lin) + ((1.0 if r >= 0.5 else 0.0) - np.sqrt(lin)) * s * s) ** 2
+    return np.where(o <= 0.0031308, o * 12.92, 1.055 * np.clip(o, 0, 1) ** (1 / 2.4) - 0.055)
+
+
+def check(path, tex=TEX):
     prims, names, rx = load(path); probs = []
     for p in prims:
         tag = f"{p['node']}[{p['mat']}]"
@@ -129,7 +171,6 @@ def check(path):
         if p["normal"] is not None:
             sd = float(p["normal"][..., :2].std(axis=(0, 1)).max())
             if sd < 0.004: probs.append(f"normal  {tag}: flat normal map (std {sd:.4f})")
-        elif "normal" not in miss: pass
         img = p["base"] if p["base"] is not None else p["normal"]
         if img is not None and p["uv"] is not None:
             H, W = img.shape[:2]; v, uv, f = p["v"], p["uv"], p["f"]
@@ -141,6 +182,10 @@ def check(path):
             if low: probs.append(f"texel   {tag}: {low} faces under 512 px/m (min {dens.min():.0f})")
         elif img is not None:
             probs.append(f"texel   {tag}: textured but no UVs")
+        if p["base"] is not None and "albedo_srgb" not in p["extras"]:
+            probs.append(f"albedo  {tag}: no measured albedo_srgb to judge the base colour against")
+        if rx.get("artist_pipeline") and p["extras"].get("role") == "baked":
+            probs += [u if u.startswith("albedo") else f"unity   {tag}: {u}" for u in unity_maps(p, tex / Path(path).stem, tag)]
         if p["base"] is not None and p["uv"] is not None and "albedo_srgb" in p["extras"]:
             rng = np.random.default_rng(0); v, uv, f = p["v"], p["uv"], p["f"]
             wa = np.linalg.norm(np.cross(v[f[:, 1]] - v[f[:, 0]], v[f[:, 2]] - v[f[:, 0]]), axis=1) / 2
@@ -220,10 +265,27 @@ def selftest():
     v, f, uv = arch_strip(8); write_glb(tmp / "coarse_arch.glb", [("Soffit", v, f, uv, mat, maps)], {"artist_pipeline": 1, "lod_reason": "selftest"})
     flat = dict(maps, normal=np.dstack([np.full((256, 2048, 2), 128), np.full((256, 2048, 2), 255)]).astype(np.uint8))
     v, f, uv = arch_strip(24); write_glb(tmp / "flat_normal.glb", [("Soffit", v, f, uv, mat, flat)], {"artist_pipeline": 1})
-    expect = {"stepped_arch.glb": {"edge", "maps", "lod"}, "good_arch.glb": set(), "coarse_arch.glb": {"facet"}, "flat_normal.glb": {"normal", "lod"}}
+    v, f, uv = arch_strip(24); write_glb(tmp / "no_unity_maps.glb", [("Soffit", v, f, uv, mat, maps)], {"artist_pipeline": 1, "lod_reason": "selftest"})
+    noalb = {"name": "Soffit", "extras": {"role": "baked"}}
+    v, f, uv = arch_strip(24); write_glb(tmp / "no_albedo.glb", [("Soffit", v, f, uv, noalb, maps)], {"artist_pipeline": 1, "lod_reason": "selftest"})
+    # the Unity copies (SpecGreybox.BakedMat): mask G = AO (ORM R), A = smoothness (1 - ORM G); a wrong AO for stale_unity_maps
+    mask = np.dstack([np.zeros((256, 2048, 1)), orm[..., :1], np.full((256, 2048, 1), 255), 255 - orm[..., 1:2]]).astype(np.uint8)
+    v, f, uv = arch_strip(24); write_glb(tmp / "stale_unity_maps.glb", [("Soffit", v, f, uv, mat, maps)], {"artist_pipeline": 1, "lod_reason": "selftest"})
+    v, f, uv = arch_strip(24); write_glb(tmp / "speckled_detail.glb", [("Soffit", v, f, uv, mat, maps)], {"artist_pipeline": 1, "lod_reason": "selftest"})
+    # detail maps (R albedo, 0.5 = none): painted plaster +-2 %, and raw plaster's pits (R 0.18-0.84, as FoyerArch had on Oct 17)
+    det = lambda a: np.dstack([np.clip(128 + rng.normal(0, a, (256, 2048, 1)), 0, 255), np.full((256, 2048, 2), 128), np.full((256, 2048, 1), 128)]).astype(np.uint8)
+    for stem, m, dm in (("good_arch", mask, det(3)), ("no_albedo", mask, det(3)), ("stale_unity_maps", np.dstack([mask[..., :1], mask[..., 1:2] // 2, mask[..., 2:]]), det(3)),
+                        ("speckled_detail", mask, det(40))):
+        d = tmp / "Textures" / stem; d.mkdir(parents=True, exist_ok=True)
+        for k, img in (("base", base), ("mask", m), ("normal", nrm), ("detail", dm)): Image.fromarray(img).save(d / f"Soffit_{k}.png")
+        (d / "Soffit.json").write_text("{}")
+    shutil.rmtree(tmp / "Textures" / "no_unity_maps", ignore_errors=True)
+    expect = {"stepped_arch.glb": {"edge", "maps", "lod"}, "good_arch.glb": set(), "coarse_arch.glb": {"facet", "unity"}, "flat_normal.glb": {"normal", "lod", "unity"},
+              "no_unity_maps.glb": {"unity"}, "no_albedo.glb": {"albedo"}, "stale_unity_maps.glb": {"unity"},
+              "speckled_detail.glb": {"albedo"}}
     ok = True
     for name, want in expect.items():
-        probs, _ = check(tmp / name); got = {p.split()[0] for p in probs}
+        probs, _ = check(tmp / name, tmp / "Textures"); got = {p.split()[0] for p in probs}
         good = got == want; ok &= good
         print(f"{'ok  ' if good else 'FAIL'} {name}: expected {sorted(want) or 'pass'}, got {sorted(got) or 'pass'}")
         for p in probs[:4]: print("       ", p)

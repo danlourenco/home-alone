@@ -35,9 +35,9 @@ FRAMES = {   # wall-side nosing ends {step: (u, v)}; carpet nosings {step: v at 
 }
 # On the back wall (u, v): arch inner jambs (at mid height), crown, springline, outer casing, the wallpaper's top edge,
 # the wainscot top; the rear door through the arch: left/right edges (leaf + casing), top and bottom.
-BACK = {"2677": dict(left=(1283, 500), right=(1604, 500), casing=(1629, 500), crown=(1443, 117), spring=(1604, 192), soffit=(1700, 104),
+BACK = {"2677": dict(left=(1283, 500), right=(1604, 500), casing=(1629, 500), crown=(1440, 152), spring=(1604, 192), soffit=(1600, 123),
                      wainscot=(1750, 557), door_l=(1321, 500), door_r=(1567, 500), door_t=(1450, 215), door_b=(1450, 738)),
-        "3888": dict(left=(1322, 500), right=(1658, 500), crown=(1490, 179), spring=(1658, 250), soffit=(1700, 167),
+        "3888": dict(left=(1322, 500), right=(1658, 500), crown=(1470, 214), spring=(1658, 250), soffit=(1600, 181),
                      wainscot=(1750, 625), door_l=(1362, 500), door_r=(1617, 500), door_t=(1490, 275), door_b=(1490, 821)),
         # 1616: the picture wall face-on (foyer_film.FRAMES): arch casing outer, the corner, its wallpaper top
         "1616": dict(casing=(1162, 450), corner=(1372, 450), soffit=(1300, 272), wainscot=(1300, 598))}
@@ -117,6 +117,8 @@ def main():
     # the solves agree with each other and with the doors they never saw
     assert all(2100 < cams[f][4] < 2400 for f in cams), "one lens for all three shots"
     assert abs(a["crown"] - b["crown"]) < 0.03 and abs(a["clear_width"] - b["clear_width"]) < 0.08
+    for r in (a, b):   # caught Oct 17: the crown was picked on the fascia, above the paper that runs over the arch in both frames
+        assert 0.05 < r["soffit"] - r["crown"] < 0.15, ("crown must sit a papered band under the wallpaper's top", r)
     for fr in ("2677", "3888"):
         r = rows[fr]; assert abs(r["door_height_at_rear_wall"] - 2.032) < 0.10   # 2677 -1.4%, 3888 +4.5%: depth is weak at this focal length
         assert abs(np.mean(r["door_z_at_rear_wall"]) - np.mean(BUILD_DOOR)) < 0.08

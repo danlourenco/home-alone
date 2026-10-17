@@ -71,10 +71,10 @@ ok      kevin down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor heigh
 ok      kevin down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
 ok      player up leg 1: ended 0.03 m from waypoint, 0.03 m off its floor height, 6 frames (clean walk 7)
 BLOCKED player up leg 2: ended 0.07 m from waypoint, 0.06 m off its floor height by ServiceStair/service_winder2_tread at (2.29, -2.41, 6.81) spec x,y,z, 1500 frames (clean walk 20) STALLED
-ok      player down leg 1: ended 0.02 m from waypoint, 0.08 m off its floor height, 18 frames (clean walk 20)
-ok      player down leg 2: ended 0.01 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 7)
+ok      player down leg 1: ended 0.02 m from waypoint, 0.09 m off its floor height, 18 frames (clean walk 20)
+ok      player down leg 2: ended 0.00 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 7)
 Render check (outward faces, ServiceStair): 97 parts, 0 inside-out
-Seam check: 692 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
+Seam check: 693 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
 Leak and headroom check: 1383 points, 0 leaks, 17 low-headroom points (ground floor, outside flight 1)
 LOW     den at (2.6, 18.2): 0.83 m clear under StoreProps/den_tv_Collider
 LOW     den at (6.1, 17.7): 0.37 m clear under DenColliders/DenCollider_coffee_table_top
@@ -88,7 +88,7 @@ LOW     kitchen at (1.1, 5.4): 0.57 m clear under KitchenColliders/KitchenCollid
 LOW     kitchen at (1.1, 4.9): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
 LOW     kitchen at (1.1, 4.4): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
 LOW     kitchen at (1.6, 5.4): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
-Peek check: 585984 rays from rooms you can walk in, 0 into closed spaces
+Peek check: 589680 rays from rooms you can walk in, 0 into closed spaces
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 84 legs, 0 blocked
 GROUND Room walk test (both bodies, every doorway to room centre and back): 64 legs, 0 blocked
 skip    bandit kitchen via back_stair/kitchen: the other side is all stair
@@ -97,14 +97,16 @@ skip    bandit back_stair: no cell to stand in (its floor is a stair)
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin back_stair: no cell to stand in (its floor is a stair)
-Z-fight check: 1196572 triangles, 1354 surfaces, 0 coplanar pairs seen from rooms (25 unreadable meshes skipped)
-Clash check: 1357624 triangles, 2 parts passing through another (1 allowed joints)
-CLASH   Upstairs/HallDressing_HiFi/Shade through Upstairs/HallDressing_HiFi/Brass: 1684 crossings, first at spec (6.79, 1.40, 5.71)
-CLASH   Upstairs/HallDressing_HiFi/Brass through Upstairs/HallDressing_HiFi/Shade: 388 crossings, first at spec (6.81, 1.40, 5.73)
+Z-fight check: 1196085 triangles, 1354 surfaces, 0 coplanar pairs seen from rooms (25 unreadable meshes skipped)
+Clash check: 1356504 triangles, 0 parts passing through another (1 allowed joints)
 Casing check: 0 casings placed apart from their opening
-Arch fit: 1 generated arches on their cuts, 2 joints off by more than 1 mm (worst 0.00 mm)
-ARCH    FoyerArch_Gen: the jamb wall does not end at 8.855 (wall beyond: False, wall inside the opening: False; within 5 cm of world (2.95, 1.81, -8.85): )
-ARCH    FoyerArch_Gen: the jamb wall does not end at 10.230 (wall beyond: False, wall inside the opening: False; within 5 cm of world (2.95, 1.81, -10.23): )
+Arch fit: 1 generated arches on their cuts, 0 joints off by more than 1 mm (worst 0.00 mm)
 Props check: 15 store models, 0 problems
 Trim check: 9 finished rooms, 10204 samples, 0 gaps in the baseboard or cap rail
-Envelope check: 2125 points at room joints, 0 see the sky through < 0.3 m of shadow caster
+Envelope check: 2133 points at room joints, 0 see the sky through < 0.3 m of shadow caster
+Quality check: 2 pipeline models of 30 generated (the rest predate the artist pipeline), 4 problems
+FAIL HallArches.glb: 4 problems
+        albedo  Soffit_B[AR_SoffitB]: detail map takes [0.393, 0.556, 0.476] to [0.272, 0.391, 0.333] (+-0.12 allowed)
+        albedo  Soffit_B[AR_SoffitB]: detail map takes [0.393, 0.556, 0.476] to [0.618, 0.717, 0.668] (+-0.12 allowed)
+        albedo  Soffit_C[AR_SoffitC]: detail map takes [0.393, 0.556, 0.476] to [0.272, 0.391, 0.333] (+-0.12 allowed)
+        albedo  Soffit_C[AR_SoffitC]: detail map takes [0.393, 0.556, 0.476] to [0.618, 0.717, 0.668] (+-0.12 allowed)

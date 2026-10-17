@@ -1,0 +1,96 @@
+[
+ {
+  "name": "arch/after2-walk-eats-kevin",
+  "pos": [
+   5.87,
+   -1.896,
+   -8.95
+  ],
+  "look_at": [
+   4.8791,
+   -1.7897,
+   -9.0332
+  ],
+  "vfov": 60,
+  "near": 0.05,
+  "note": "user walk note Oct 17 pose (5.87, -2.996, -8.95) yaw 265.2 pitch -6.1, eye feet+1.1"
+ },
+ {
+  "name": "arch/after2-walk-eats-eye128",
+  "pos": [
+   5.87,
+   -1.716,
+   -8.95
+  ],
+  "look_at": [
+   4.8791,
+   -1.6097,
+   -9.0332
+  ],
+  "vfov": 60,
+  "near": 0.05,
+  "note": "user walk note Oct 17 pose (5.87, -2.996, -8.95) yaw 265.2 pitch -6.1, eye feet+1.28"
+ },
+ {
+  "name": "arch/after2-walk-leg-kevin",
+  "pos": [
+   4.624,
+   -1.896,
+   -9.028
+  ],
+  "look_at": [
+   3.7104,
+   -1.7932,
+   -9.4215
+  ],
+  "vfov": 60,
+  "near": 0.05,
+  "note": "user walk note Oct 17 pose (4.624, -2.996, -9.028) yaw 246.7 pitch -5.9, eye feet+1.1"
+ },
+ {
+  "name": "arch/after2-walk-leg-eye128",
+  "pos": [
+   4.624,
+   -1.716,
+   -9.028
+  ],
+  "look_at": [
+   3.7104,
+   -1.6132,
+   -9.4215
+  ],
+  "vfov": 60,
+  "near": 0.05,
+  "note": "user walk note Oct 17 pose (4.624, -2.996, -9.028) yaw 246.7 pitch -5.9, eye feet+1.28"
+ },
+ {
+  "name": "arch/after2-film-2677",
+  "pos": [
+   10.501,
+   -2.218,
+   -9.138
+  ],
+  "look_at": [
+   9.531,
+   -2.218,
+   -9.381
+  ],
+  "vfov": 26.31,
+  "near": 1.71
+ },
+ {
+  "name": "arch/after2-film-3888",
+  "pos": [
+   10.474,
+   -2.004,
+   -8.96
+  ],
+  "look_at": [
+   9.513,
+   -2.004,
+   -9.237
+  ],
+  "vfov": 26.72,
+  "near": 1.62
+ }
+]

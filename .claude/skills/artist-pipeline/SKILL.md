@@ -51,7 +51,9 @@ A generated model FAILS when it has any of:
 - no baked normal map, or a normal map that is flat (std dev of tangent normals < threshold),
 - texel density < 512 px/m on a face within 3 m of the walk path,
 - missing base/mask/normal maps, or a base colour outside the film-measured range for that material,
-- no LODs (or no stated reason for one).
+- no LODs (or no stated reason for one),
+- Unity maps (Assets/Textures/Generated/<model>/<part>_{base,mask,normal,detail}.png, what SpecGreybox.BakedMat renders) missing
+  or not the GLB's maps, or a detail map that takes the measured albedo outside +-2 x albedo_tol (2nd/98th percentile).
 Report counts like the other gates; 0 before handing over.
 
 ## Before / after (always)
@@ -71,3 +73,6 @@ build, in the live editor (batch renders lie about lighting). Say what changed; 
 | A mitred moulding's joint read as a "coarse facet" to the gate | model_quality judges facets only where the faces on both sides are about as wide (a curve); a wide flat meeting a narrow face is a crease or mitre |
 | A casing inside a model fails the build's Casing check | Generated architecture is placed by the openings loop from its own cut (`SpecGreybox.ArchModel`), not as a `*_HiFi` dressing model; the build's **Arch fit** line proves every joint is on the cut (1 mm) |
 | Moulding running into a neighbour (the arch's casing at the stair's flank) | Sweep the full path with a short tail, then cut it at the neighbour's plane (`to_object(..., cuts=)`, before the normals); legs only where `free()` finds a wall face with nothing in front |
+| A raw-plaster scan's detail map put dark specks on painted plaster (detail albedo 0.18-0.84: paint at 0.66; the arch read dirty) | Scale the detail albedo for paint (`DETAIL_ALBEDO` 0.25 in hifi_foyer_arch.py); model_quality fails a detail map outside +-2 x albedo_tol |
+| The gate judged the GLB's maps while Unity renders the PNG copies in Textures/Generated (a stale copy would pass) | model_quality's `unity` check compares them (base, normal, mask AO/smoothness) |
+| Arch fit's jamb rays found no wall (they probed at the upper floor's height: the check ran with FloorY back at 0) | Probe from the arch model's own transform (`fy = g.transform.position.y`, SpecGreybox.Arch.cs) |

@@ -89,7 +89,8 @@ def gate(rec):
     open_ = [c["what"] for c in rec["checks"] if not c["agrees"] and not is_lead(c) and not c.get("disposition", "").strip()]
     out.append(("ok" if not open_ else "FAIL", "R6 contradictions: " + ("each disagreeing check has a disposition" if not open_ else
                 f"{len(open_)} without a disposition: " + "; ".join(w[:60] for w in open_))))
-    failed = [h for h in rec.get("history", []) if h["outcome"] == "failed"]
+    # "failed (user walk ...)" and "rejected ..." count too: an exact match let a rejected attempt read as 0 failures (Oct 17 review)
+    failed = [h for h in rec.get("history", []) if h["outcome"].split()[0].strip("(:,").lower() in ("failed", "rejected")]
     r2 = len(failed) < 2 or rec.get("premise_reviewed", "").strip()
     out.append(("ok" if r2 else "FAIL", f"R2 failed attempts on record: {len(failed)}; premise reviewed: {'yes' if rec.get('premise_reviewed', '').strip() else 'no'}"))
     r = rec.get("renders", {})
@@ -145,6 +146,8 @@ def selftest():
     assert res["R1"] == "FAIL" and res["R4"] == "FAIL", res
     rec["claim"]["surface"] = "landing-face"
     assert {m.split()[0]: lvl for lvl, m in gate(rec) if lvl != "info"}["R5"] == "FAIL"
+    hist = {"history": [{"outcome": "failed (user walk: wrong)"}, {"outcome": "rejected by the user"}], "premise_reviewed": ""}
+    assert {m.split()[0]: lvl for lvl, m in gate({**rec, **hist}) if lvl != "info"}["R2"] == "FAIL", "annotated failures not counted"
     rec = json.loads((ROOT / "changes/2026-10-15-foyer-length.json").read_text())
     rec["checks"].append({"what": "injected: independent survey says 9 m", "agrees": False, "data": ["survey:x"], "scale": ["tape:x"]})
     assert {m.split()[0]: lvl for lvl, m in gate(rec) if lvl != "info"}["R6"] == "FAIL", "an undisposed contradiction passed"

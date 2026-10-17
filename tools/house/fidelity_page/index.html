@@ -1,0 +1,382 @@
+<title>McCallister House Fidelity</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Layout: one column of full-width compare frames, room chips on top, like a contact sheet on a light table */
+:root{
+  --bg:#f3f1ee; --panel:#ffffff; --fg:#1d1b1a; --muted:#6b6560; --line:#ddd7d0; --accent:#9e1b22; --pine:#1f4d3a;
+  --display:"Fraunces",Georgia,serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141312;--panel:#1d1b1a;--fg:#ece7e1;--muted:#a39b93;--line:#33302d;--accent:#e0545b;--pine:#6fb08f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141312;--panel:#1d1b1a;--fg:#ece7e1;--muted:#a39b93;--line:#33302d;--accent:#e0545b;--pine:#6fb08f;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+header{display:grid;gap:8px}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,4vw,40px);line-height:1.1;margin:0;text-wrap:balance}
+.lede{color:var(--muted);max-width:68ch;margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding-block:10px;z-index:2}
+.chip{font:500 13px var(--body);letter-spacing:.02em;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:999px;padding:6px 14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chip:focus-visible,.cmp input:focus-visible+.knob{outline:2px solid var(--accent);outline-offset:2px}
+section.room{display:grid;gap:18px}
+h2{font-family:var(--display);font-weight:600;font-size:24px;margin:8px 0 0;border-bottom:1px solid var(--line);padding-bottom:6px}
+figure{margin:0;display:grid;gap:8px;min-width:0}
+.cmp{position:relative;width:100%;max-width:100%;overflow:hidden;background:#000;border-radius:4px;touch-action:pan-y;user-select:none}
+.cmp img{display:block;width:100%;height:auto;pointer-events:none}
+.cmp .top{position:absolute;inset:0;clip-path:inset(0 0 0 var(--p,50%))}
+.cmp .top img{height:100%;object-fit:cover}
+.cmp .bar{position:absolute;top:0;bottom:0;left:var(--p,50%);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.35);pointer-events:none}
+.cmp .knob{position:absolute;top:50%;left:var(--p,50%);width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4);pointer-events:none;display:grid;place-items:center;color:#222;font:500 13px var(--mono)}
+.cmp input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.tag{position:absolute;top:10px;font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.55);padding:3px 8px;border-radius:3px;pointer-events:none}
+.tag.l{left:10px}.tag.r{right:10px}
+figcaption{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
+figcaption b{font-weight:500}
+.src{font:400 12px var(--mono);color:var(--muted)}
+.note{font-size:13px;color:var(--accent);flex-basis:100%}
+.kind-marina .tag.l{background:rgba(31,77,58,.8)}
+footer{color:var(--muted);font-size:13px;max-width:72ch}
+@media (prefers-reduced-motion:no-preference){.cmp .top,.cmp .bar,.cmp .knob{transition:none}}
+</style>
+<div class="wrap">
+<header>
+<h1>McCallister House Fidelity</h1>
+<p class="lede">Each frame pairs a film still or a frame from Marina Coates's tour with our Unity render from the same camera. Drag across a frame to wipe between them: the reference is on the left, the build on the right. Arrow keys work too.</p>
+</header>
+<nav class="chips" id="chips" aria-label="Rooms"></nav>
+<main id="list" style="display:grid;gap:36px"></main>
+<footer>Renders are the latest batch captures on disk (date under each). They came from the builds of Oct 16–17, before the arch rebuild and the tree resize. Batch night renders read warmer than the editor does. Upstairs hall views come from paused work in progress.</footer>
+</div>
+<script>
+const P=[
+ {
+  "room": "Foyer",
+  "label": "Film 1616: front door to stair",
+  "kind": "film",
+  "note": "",
+  "ref": "img/00r.jpg",
+  "ren": "img/00b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 17 02:37"
+ },
+ {
+  "room": "Foyer",
+  "label": "Film 2677: stair and arch",
+  "kind": "film",
+  "note": "Arch still the old stepped version",
+  "ref": "img/01r.jpg",
+  "ren": "img/01b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 17 02:37"
+ },
+ {
+  "room": "Foyer",
+  "label": "Film 10248: vestibule",
+  "kind": "film",
+  "note": "",
+  "ref": "img/02r.jpg",
+  "ren": "img/02b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 16 21:01"
+ },
+ {
+  "room": "Foyer",
+  "label": "Marina 312 s",
+  "kind": "marina",
+  "note": "",
+  "ref": "img/03r.jpg",
+  "ren": "img/03b.jpg",
+  "w": 1280,
+  "h": 720,
+  "when": "Oct 16 21:01"
+ },
+ {
+  "room": "Foyer",
+  "label": "Marina 1068 s",
+  "kind": "marina",
+  "note": "",
+  "ref": "img/04r.jpg",
+  "ren": "img/04b.jpg",
+  "w": 1280,
+  "h": 720,
+  "when": "Oct 16 21:01"
+ },
+ {
+  "room": "Living room",
+  "label": "Film 10600: tree and fireplace",
+  "kind": "film",
+  "note": "Pose by eye (no solved film camera)",
+  "ref": "img/05r.jpg",
+  "ren": "img/05b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 17 03:39"
+ },
+ {
+  "room": "Living room",
+  "label": "Film 10636: through the foyer opening",
+  "kind": "film",
+  "note": "Camera pose is off (placed by eye, no solved film camera); judge finishes, not layout",
+  "ref": "img/06r.jpg",
+  "ren": "img/06b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 17 03:39"
+ },
+ {
+  "room": "Living room",
+  "label": "Film 5650: train and piano",
+  "kind": "film",
+  "note": "Camera pose is off (placed by eye, no solved film camera); judge finishes, not layout",
+  "ref": "img/07r.jpg",
+  "ren": "img/07b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 17 03:39"
+ },
+ {
+  "room": "Living room",
+  "label": "Marina f165: fireplace wall",
+  "kind": "marina",
+  "note": "",
+  "ref": "img/08r.jpg",
+  "ren": "img/08b.jpg",
+  "w": 1280,
+  "h": 720,
+  "when": "Oct 17 03:39"
+ },
+ {
+  "room": "Living room",
+  "label": "Marina f89",
+  "kind": "marina",
+  "note": "",
+  "ref": "img/09r.jpg",
+  "ren": "img/09b.jpg",
+  "w": 1280,
+  "h": 720,
+  "when": "Oct 17 03:39"
+ },
+ {
+  "room": "Den",
+  "label": "Marina f9",
+  "kind": "marina",
+  "note": "Render is wider than Marina's lens",
+  "ref": "img/10r.jpg",
+  "ren": "img/10b.jpg",
+  "w": 1280,
+  "h": 720,
+  "when": "Oct 16 19:30"
+ },
+ {
+  "room": "Den",
+  "label": "Marina f57",
+  "kind": "marina",
+  "note": "",
+  "ref": "img/11r.jpg",
+  "ren": "img/11b.jpg",
+  "w": 1280,
+  "h": 720,
+  "when": "Oct 16 19:30"
+ },
+ {
+  "room": "Den",
+  "label": "Marina f153",
+  "kind": "marina",
+  "note": "",
+  "ref": "img/12r.jpg",
+  "ren": "img/12b.jpg",
+  "w": 1280,
+  "h": 720,
+  "when": "Oct 16 19:30"
+ },
+ {
+  "room": "Den",
+  "label": "Marina f161",
+  "kind": "marina",
+  "note": "",
+  "ref": "img/13r.jpg",
+  "ren": "img/13b.jpg",
+  "w": 1280,
+  "h": 720,
+  "when": "Oct 16 19:30"
+ },
+ {
+  "room": "Den",
+  "label": "Film 2877 (night)",
+  "kind": "film",
+  "note": "Batch render; nights read warmer than the film",
+  "ref": "img/14r.jpg",
+  "ren": "img/14b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 16 22:30"
+ },
+ {
+  "room": "Den",
+  "label": "Film 2868 (night)",
+  "kind": "film",
+  "note": "Batch render; nights read warmer than the film",
+  "ref": "img/15r.jpg",
+  "ren": "img/15b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 16 22:30"
+ },
+ {
+  "room": "Kitchen",
+  "label": "Film 6902",
+  "kind": "film",
+  "note": "",
+  "ref": "img/17r.jpg",
+  "ren": "img/17b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 16 19:08"
+ },
+ {
+  "room": "Kitchen",
+  "label": "Film 6910",
+  "kind": "film",
+  "note": "",
+  "ref": "img/18r.jpg",
+  "ren": "img/18b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 16 19:08"
+ },
+ {
+  "room": "Kitchen",
+  "label": "Film 9812",
+  "kind": "film",
+  "note": "",
+  "ref": "img/19r.jpg",
+  "ren": "img/19b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 16 17:52"
+ },
+ {
+  "room": "Kitchen",
+  "label": "Film 1151: breakfast area",
+  "kind": "film",
+  "note": "Table: film has a single pedestal (queued)",
+  "ref": "img/20r.jpg",
+  "ren": "img/20b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 17 02:07"
+ },
+ {
+  "room": "Kitchen",
+  "label": "Film 10448 (night)",
+  "kind": "film",
+  "note": "Batch render; nights read warmer",
+  "ref": "img/22r.jpg",
+  "ren": "img/22b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 16 22:30"
+ },
+ {
+  "room": "Kitchen",
+  "label": "Film 10452 (night)",
+  "kind": "film",
+  "note": "Batch render; nights read warmer",
+  "ref": "img/23r.jpg",
+  "ren": "img/23b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 16 22:30"
+ },
+ {
+  "room": "Kitchen",
+  "label": "Film 6042 (night)",
+  "kind": "film",
+  "note": "Batch render; nights read warmer",
+  "ref": "img/24r.jpg",
+  "ren": "img/24b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 16 22:30"
+ },
+ {
+  "room": "Upstairs hall (WIP)",
+  "label": "Film 2085: hall arch",
+  "kind": "film",
+  "note": "Paused work in progress",
+  "ref": "img/25r.jpg",
+  "ren": "img/25b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 17 02:55"
+ },
+ {
+  "room": "Upstairs hall (WIP)",
+  "label": "Film 2055: sconces",
+  "kind": "film",
+  "note": "Paused work in progress",
+  "ref": "img/26r.jpg",
+  "ren": "img/26b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 17 02:55"
+ },
+ {
+  "room": "Upstairs hall (WIP)",
+  "label": "Film 2687",
+  "kind": "film",
+  "note": "Paused work in progress",
+  "ref": "img/27r.jpg",
+  "ren": "img/27b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 17 02:55"
+ },
+ {
+  "room": "Upstairs hall (WIP)",
+  "label": "Film 10819",
+  "kind": "film",
+  "note": "Paused work in progress",
+  "ref": "img/28r.jpg",
+  "ren": "img/28b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 17 02:55"
+ },
+ {
+  "room": "Upstairs hall (WIP)",
+  "label": "Film 410",
+  "kind": "film",
+  "note": "Paused work in progress",
+  "ref": "img/29r.jpg",
+  "ren": "img/29b.jpg",
+  "w": 1280,
+  "h": 705,
+  "when": "Oct 17 02:55"
+ }
+];
+const rooms=[...new Set(P.map(p=>p.room))];
+const list=document.getElementById('list'), chips=document.getElementById('chips');
+let sel='All';
+function chip(name){const b=document.createElement('button');b.className='chip';b.id='chip-'+name.replace(/\W+/g,'-');b.textContent=name;b.setAttribute('aria-pressed',name===sel);b.onclick=()=>{sel=name;render()};return b}
+function frame(p){
+  const f=document.createElement('figure');f.className='kind-'+p.kind;
+  const ar=p.w+' / '+p.h;
+  f.innerHTML=`<div class="cmp" style="aspect-ratio:${ar}"><img src="${p.ref}" alt="${p.kind==='film'?'Film still':'Marina tour frame'}: ${p.label}" loading="lazy" width="${p.w}" height="${p.h}"><div class="top"><img src="${p.ren}" alt="Unity render from the same view" loading="lazy"></div><div class="bar"></div><input type="range" min="0" max="100" value="50" step="0.5" aria-label="Wipe between reference and render: ${p.label}"><div class="knob">⇔</div><span class="tag l">${p.kind==='film'?'Film':'Marina'}</span><span class="tag r">Build</span></div>
+  <figcaption><b>${p.label}</b><span class="src">render ${p.when}</span>${p.note?`<span class="note">${p.note}</span>`:''}</figcaption>`;
+  const c=f.querySelector('.cmp'), r=f.querySelector('input');
+  r.addEventListener('input',()=>c.style.setProperty('--p',r.value+'%'));
+  return f;
+}
+function render(){
+  chips.replaceChildren(...['All',...rooms].map(chip));
+  list.replaceChildren(...rooms.filter(r=>sel==='All'||r===sel).map(r=>{
+    const s=document.createElement('section');s.className='room';s.innerHTML=`<h2>${r}</h2>`;
+    P.filter(p=>p.room===r).forEach(p=>s.appendChild(frame(p)));return s}));
+}
+render();
+</script>

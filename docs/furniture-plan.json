@@ -248,7 +248,7 @@
    "id": "F9",
    "room": "foyer",
    "item": "Oriental rugs (front-door rug, runners)",
-   "tier": "supporting",
+   "tier": "hero",
    "qty": 3,
    "seen_in": "film 2677, 1690, 3888",
    "start": {
@@ -271,7 +271,8 @@
      "cost": 0,
      "url": "https://sketchfab.com/3d-models/75e3aa2070f14720ad768cff77efa919"
     }
-   ]
+   ],
+   "note_oct17": "User walk Oct 17: the invented flat rugs read fake; tier raised to hero. Film: runner = red field, hooked-lozenge medallion chain, navy main border with tan guards, ivory fringe (2677/1616); FRONT RUG IS IVORY/BEIGE with dusty-rose/sage florals and thick white fringe (1616 foreground), not red. Market (Oct 17 research): no flat photoscanned Persian runner for sale; best realistic = free CC BY photo-textured meshes by Sketchfab mfb64 (Malayer runner e93557d4..., Nain dc989443..., Heriz e198f109... as a red/navy texture source). Paid alternatives ($4-10) are modelled, not scanned."
   },
   {
    "id": "F10",

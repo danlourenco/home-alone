@@ -359,6 +359,7 @@ public static partial class SpecGreybox
         report += ZFightCheck(root, groot);
         report += ClashCheck(root, groot);
         report += CasingCheck(root, groot);
+        report += ArchFitCheck();   // SpecGreybox.Arch.cs
         report += PropsCheck();   // StoreProps.cs
         report += TrimCheck(); TrimRooms.Clear();
         report += EnvelopeCheck(geo, j["attic_stair"]["boxes"], gj["wall_openings"], gy);
@@ -631,6 +632,11 @@ public static partial class SpecGreybox
             {   // segmental top (stepped slices) and casing legs on both faces
                 float spring = (float)o["spring"], crown = (float)o["height"];
                 ArchTop(go, alongX, wc - h, wc + h, 1f, s0, s1, spring, crown, crown);
+                if (ArchModel(go, o, (x, z) => Fin(x, z).upper ?? mWall) != null)   // SpecGreybox.Arch.cs: the generated arch; slices stay as colliders
+                {
+                    foreach (Transform t in go.transform) if (t.name == "Arch_Spandrel") t.GetComponent<MeshRenderer>().enabled = false;
+                    continue;
+                }
                 float f0 = wc - h, f1 = f0 - CasingProud;
                 Trim(go, alongX, f0, f1, s0 - CasingW, s0, 0f, spring); Trim(go, alongX, f0, f1, s1, s1 + CasingW, 0f, spring);
             }

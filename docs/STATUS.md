@@ -18,20 +18,72 @@ but the user has not walked it yet.
 | Den: film teal paint (wall colour too red/grey: candidate linear 0.052/0.179/0.170, user decision open), windows, bookcase + clutter, lamps, JVC TV (bought pack VTC_AV-2062s) playing the user's clip (Assets/StreamingAssets/LocalMedia/tv.mp4, gitignored; walls muffle it) | den ACCEPTED ("fantastic"); TV/lamps TRIAL | changes/2026-10-16-den.json; DenTV.cs |
 | Living room: film paper, windows/drapes, mantel, generated console upright piano (user: keep), bought Christmas tree (AlterEgos pack) with C7 bulbs | TRIAL | changes/2026-10-16-living-room.json; check: tree hides the den-side rear window; possible doubled white poinsettia; den/living French door vs piano |
 | Foyer finish: film console/mirror/chairs, bench, rugs, gallery (public-domain art), purchased ficus + poinsettias | TRIAL; user OK'd a WIDER ficus crown (~0.75 m, pot 0.1 m off the stair): not done yet | changes/2026-10-16-foyer-finish.json; tools/house/purchased_plants.py |
+| Kevin mode (FpsController: kid body default, eye 1.10, G toggles adult, H toggles step bob) | ACCEPTED (user Oct 17: "i like kevin mode") | Scripts/FpsController.cs |
 | Paint-can trap (2 cans, film 10700-10724) | TRIAL | docs/paint-can-trap.md; keys P/L/K/B/T |
 | House-wide shadow pass: cached shadows (fixes flicker squares), tiers, contact shadows | TRIAL, loaded, NOT checked live | DEVIATIONS 62; Editor/SpecGreybox.Shadows.cs, ShadowAudit.cs, Scripts/ShadowRefresh.cs |
-| Artist pipeline (skill .claude/skills/artist-pipeline) + foyer arch rebuilt smooth | PAUSED mid-way (user wants jobs SEQUENCED to save tokens) | changes/2026-10-16-foyer-arch-model.json; tools/house/hifi_pipeline.py, hifi_foyer_arch.py, model_quality.py |
+| Artist pipeline (skill .claude/skills/artist-pipeline) + foyer arch rebuilt smooth | Oct 17 attempt 2 REJECTED on walk; attempt 3 TRIAL (crown 2.17 -> 2.05 with paper over it, no casing; built in ~/.cache/home-alone-2, gates clean, NOT loaded, not re-baked; renders spec/captures/views/arch/{before,after}2-*.png). Earlier: gate finished (model_quality: Unity maps + detail albedo checks, self-test 8 cases), arch passes 0 problems; scratch build ~/.cache/home-alone-2: Arch fit 0, Z-fight 0, Clash 0; renders spec/captures/views/arch/. NOT loaded (user loads). Rollout to other models not started. HallArches.glb (hall job) now FAILS the detail-albedo check: apply DETAIL_ALBEDO there | changes/2026-10-16-foyer-arch-model.json; tools/house/hifi_pipeline.py, hifi_foyer_arch.py, model_quality.py |
 | Upstairs hall: film teal paint, trim, sconces, dressing, the film's elliptical ARCH (film 2080-2100; 2050-2060 for sconces), black-urn poinsettias (H1) | PAUSED mid-way, in its own scratch copy ~/.cache/home-alone-3 | changes/2026-10-17-upstairs-hall.json, -upstairs-arches.json; hifi_hall*.py; build reports Clash 2 in HallDressing (WIP) |
 
 ### NEXT (in order; run ONE agent at a time: the user hit the usage limit twice running six in parallel)
 1. User walks the loaded build (day + night): shadow flicker gone (den plant pose 7.407,-2.996,-17.872 yaw 284), French doors,
    kitchen fixtures, plants, tree, TV. Answer each walk note from its own pose (live capture).
 2. Resume the artist pipeline + foyer arch (finish model_quality.py gate, arch proof, before/after), then roll the pipeline out.
-3. Resume the upstairs hall (in ~/.cache/home-alone-3) incl. the arch and H1 poinsettias.
+3. Resume the upstairs hall (user walk notes Oct 17, spec/feedback/feel-notes.jsonl 08:28: at the stair-hall arch the side facing the stair should be PAINT not wallpaper per the film; 'random vertical stripe... bad connections' beside the hall arch jambs at 6.969,0.030,-9.737; the arch at 6.893,0.030,-9.487 yaw 188 'looks good') (in ~/.cache/home-alone-3) incl. the arch and H1 poinsettias.
 4. Breakfast table: single pedestal; measure the top shape from a solved film-1151 camera.
 5. Ficus crown wider; den wall saturation (ask the user); night white balance (agents measured nights 3-10x warmer than the film:
    ask the user about a house-wide night grade); sheers too bright at night (shared voile material).
 6. Z-fight reported 2 pairs in some builds: trace and fix.
+7. LATER (user Oct 17): shadow flicker STILL visible after the shadow pass (DEVIATIONS 62 did not fix it). Deferred to a dedicated
+   performance + optimization pass; troubleshoot it there, not before. Same pass: ~80 CS0618 obsolete-API warnings (Unity 6.6:
+   FindObjectsByType/FindFirstObjectByType sort-mode overloads, HDAdditionalLightData.spotLightShape): mechanical renames.
+8. Living-room tree HEIGHT: ACCEPTED (user Oct 17: "the height seems right"): 2.40 -> 1.70 m from film 10645 (changes/2026-10-17-living-tree-height.json; 1.6-1.8 m
+   after the depth correction). Built with the arch in copy 2; load + walk pending.
+8s. Main stair + landing finish (user walk notes Oct 17 08:30, spec/feedback/feel-notes.jsonl): (1) "shouldn't the rug be red?":
+   the stair/landing carpet is built near-black; film 1616/2677 show a deep RED stair runner (measure colour from the film like the
+   wallpaper); (2) landing wainscot on the right looks unfinished (pose 4.117,0.030,-8.559 yaw 264 pitch 33); (3) "weird triangular
+   gap in the wainscotting" on the stair wall (pose 2.791,-0.682,-10.621 yaw 119 pitch 41). Trim check reports 0 gaps there: the
+   check misses stair/landing wainscot: extend it (encode the lesson as a check).
+8r. Foyer rugs (user Oct 17; next agent job after the arch/tree load): FRONT RUG = mfb64 'Persian Nain' (CC BY 4.0, credit
+   required; Assets/Purchased/Rugs/persian_nain_carpet.glb, gitignored) fitted to foyer_props front_rug (cream field per film 1616/1690;
+   squash 1.88 x 2.18: crop instead if motifs read squashed), purchased_plants.py-style fit, generated rug stays the fallback.
+   RUNNER = the FILM'S OWN pattern (user pick): rectify from 2677/1616 like film_wallpaper.py (red field, hooked-lozenge chain, navy
+   border, tan guards), generated mesh 0.74 x 3.41 with fringe + pile (artist-pipeline gate). heriz glb also downloaded (unused).
+8p. PROCESS FIXES (Codex review, Oct 17; do before Buzz): (a) unity_pipeline.sh build/bake swallow failures (`|| true` on the Unity
+   build, the quality gate): stop build->bake->load on any failure; (b) change_gate R1 accepts model_quality alone as independent proof:
+   topological gates must not count as the independent ruler; (c) pre-commit hook watches old paths, misses spec/geometry.json,
+   hifi_*.py, spec/dressing/, House_WallGrid.unity; (d) walk notes don't store camera height/fov/day-night and note_views.py replays a
+   Kevin-height note 0.55 m too high: record them in FeelNotes.cs, replay exactly; (e) "pick check": someone independent confirms WHAT
+   a measured pixel shows before it is measured (the arch crown + "casing" were both the wrong feature). DONE: R2 now counts
+   "failed (...)"/"rejected" outcomes (change_gate.py + selftest).
+8y. LATER (user Oct 17, 'for another day'): recess the under-stair door in the rear passage like Marina's (her passage widens left beyond the stair line into a recess, DEVIATIONS 35); the foyer arch attempt 3 is accepted for now.
+8z. NEXT BIG JOB (user Oct 17, after this TRIAL is walked): BUZZ'S ROOM, room + furniture, nailed. It caused most of the Oct 13-14
+   drama (resize reverted, changes/2026-10-13-buzz-resize.json; furniture didn't fit). change-gate R2 applies (4+ failed attempts):
+   start with premise_reviewed + a census of what every failed attempt shared; DEVIATIONS 23-26 (door-to-desk wall 4.46 m has no
+   independent check); furniture by furniture-placement-faithful (measure each piece from the corner, place the whole sequence);
+   film (500-518) + Marina tour; walk it at Kevin's eye. User: "if we can nail this room i'll feel great about things".
+   USER: same approach as the den and living room = the room-upgrade skill's full dressing pass (film paint/paper, windows as
+   models, generated built-ins via artist-pipeline, bought/CC0 hero props, lamps + night light-match, colliders, before/after vs
+   film + Marina). Lesson from the living room: place every piece from SOLVED cameras, never by eye.
+8a. Living + den furniture re-layout (user walk Oct 17: piano needs rotating, sofa on the WRONG WALL, den desk needs rotating).
+   User rule: FILM where it shows the piece, Marina only for what the film never shows. Living positions were placed by eye
+   (DEVIATIONS 59): solve pitched film cameras (10636/10645, 5650, 10600; living_walls.py model) and re-place sofa, console,
+   piano, coffee table from them. USER (Oct 17): in the film the SOFA FACES THE FIREPLACE (rear wall); find the frames that
+   show it and set its line and distance from them.
+   TREE POSITION (walk note 08:32, pose 4.711,-2.996,-12.289): "the tree should sit a little bit further from the window; marv enters
+   through the window and steps on ornaments as a trap. i want to leave that as an option" -> keep the floor in front of the den-side
+   rear window (z 15.015-15.825 on the rear wall x 1.58) clear for Marv's landing + an ornament trap (film 10590-10620); film 11995 shows
+   the tree BESIDE the window (the film's window stands further from the corner than ours: DEVIATIONS 59). Re-place with the solved cameras.
+   Walk notes Oct 17 08:31: 'couch still doesn't appear where expected' (8.433,-2.996,-12.943 yaw 245); 'piano position is off' (7.505,-2.996,-13.158 yaw 149).
+   FILM 11995 + 12115 (Christmas morning, found Oct 17) are the KEY frames: wide view of the rear wall: sofa (green) faces the
+   fireplace; floral armchair + ottoman right of it; tree stands BESIDE (left of) the den-side window, not in front of it; tree has
+   small multicolour MINI lights (not C7s: revisit hifi_living.py C7 choice from 10600); wreath + two green-shaded lamps + photo on
+   the mantel; red Oriental rug; side table with milk/cookies by the tools. Check which wall the film's console wall is (10645: French door at its left end, tree in the
+   corner to its right). Den desk: film if seen, else Marina f153/f161. Change-gate + before/after; then 8b re-renders.
+8b. Fidelity compare page (artifact https://claude.ai/artifact/GqCSM6YXCgvsJpy6grdm8U; builder tools/house/fidelity_page/ (fid_build.py ROOT OUT; index.html embeds pairs.json)):
+   after the arch + tree, re-render every pair from the current build, add dining (Marina 228) and kitchen 2528, and solve film
+   10636/5650 cameras (pitched model, living_walls.py) so those two views match; republish to the same URL.
+9. FINISHING PASS (user Oct 17, skip until then): fireplace mantel regenerated via the artist pipeline (film Adam style, Marina f165
+   sizes) + a toggleable log fire; needs the firebox recessed ~0.4-0.5 m into the outside chimney (change-gate).
 
 ### Operating rules learned Oct 16-17 (also in memory)
 - One scratch copy per heavy job (HA_SCRATCH=~/.cache/home-alone-N tools/house/unity_pipeline.sh ...); disk is tight (~34 GB free;

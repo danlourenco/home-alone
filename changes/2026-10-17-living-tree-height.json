@@ -1,0 +1,144 @@
+{
+ "gate": 7,
+ "change": "Living-room Christmas tree scaled down uniformly 2.40 -> 1.70 m (star tip), footprint 1.75 -> 1.24 m, kept in the same corner at the same offsets (den-side wall 2.5 cm, rear wall 0.26 m): store_props living_tree box, living.json tree (at/h/r) and its collider; the generated C7 bulbs and gifts follow (hifi_living.py scales them with h)",
+ "target": "House_WallGrid",
+ "premise": "The film's tree (user walk Oct 17: 'in the movie the Christmas tree was much shorter') is the size film 10645 shows, the only frame with the whole tree; 2.40 m was authored (as tall as the room allowed), never measured",
+ "claim": {
+  "value": {
+   "tree_h_m": 1.7,
+   "spread_m": [
+    1.6,
+    1.8
+   ]
+  },
+  "data": [
+   "film:10645"
+  ],
+  "scale": [
+   "door-80in:10636"
+  ],
+  "upstream": [
+   "door-80in:10636"
+  ],
+  "how": "Film 10645 (from the foyer opening): the tree stands beside the console in the corner, the papered wall right behind it. Tree, star tip (row ~175) to the floor line under its gifts (~1020, +-30 px) = ~845 px = 2.28 vertical paper repeats (repeat 370 px: bouquet and medallion alternate in a column every ~185 px). Paper repeat 0.787 m from film 10636's knob ruler (film_wallpaper.py living(): leaf top to knob = 80 - 36 in) -> 1.80 m at the wall plane; the tree's centre stands ~0.6 m in front of the wall, seen from ~5-7 m: ~10% larger than at the wall -> ~1.63 m. Built 1.70 m (inside the bracket of this and the check)",
+  "applies_to": [
+   "living_room"
+  ],
+  "measured_in": [
+   "living_room"
+  ],
+  "alternatives": [
+   "2.40 m filling the ceiling (before)",
+   "1.70 m from film 10645 (built)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "tree height to the star",
+     "observed_in": [
+      "film:10645",
+      "film:11995"
+     ],
+     "extrapolated": false
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-16",
+   "what": "procedural fir stand-in, then the user's AlterEgos tree scaled to 2.40 m (authored, under the 2.438 ceiling)",
+   "outcome": "superseded",
+   "ref": "changes/2026-10-16-living-room.json, DEVIATIONS 59"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 11995 (Christmas morning, a different shot and day): the whole tree stands on the rear wall beside the fireplace. Ruler = the mantel shelf top, 1.37 m (Marina living f165 on the rear-wall plane, spec/dressing/living.json fireplace.shelf.top): shelf top row ~220, floor at the hearth front ~780 -> 560 px = 1.37 m, 2.45 mm/px at ~0.4 m off the wall (the tree's centre stands at about the same depth). Tree: floor under it ~785 (+-15, hidden by the sofa) to the topper's top ~68 = 717 px = 1.76 m; to the branch tip ~145 = 1.57 m. Built 1.70 to the star tip: inside both",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "film:11995"
+   ],
+   "scale": [
+    "marina-frame:f165"
+   ],
+   "upstream": [
+    "marina-frame:f165"
+   ]
+  },
+  {
+   "what": "Same frame, the paper repeat scaled by the overhead trace instead (film_wallpaper.py living() width ruler: the glazed leaf = half the den-living opening, 0.844 m repeat) -> 1.92 m at the wall, ~1.75 m at the tree's depth",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "film:10645",
+    "film:10636"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ],
+   "upstream": [
+    "overhead-trace:ground"
+   ]
+  },
+  {
+   "what": "Ratio in film 10645: tree height / paper vertical repeat = 2.28 (both read in the same frame; scale-free)",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "film:10645"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "Console in the same frame: top (row ~665) to its leg feet (~1010) = 345 px = 0.74 m at 2.14 mm/px, near the 30 in standard; tree/console = 2.45",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "film:10645"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "User walk Oct 17: the film's tree is much shorter than 2.40 m",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "user-summary"
+   ],
+   "scale": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/living/tree-after-f165.png",
+   "spec/captures/views/living/tree-after-f89.png",
+   "spec/captures/views/living/tree-after-film5650.png",
+   "spec/captures/views/living/tree-after-film10636.png",
+   "spec/captures/views/living/tree-after-film10600.png",
+   "spec/captures/views/living/tree-after-piano.png",
+   "spec/captures/views/living/tree-after-tree.png",
+   "spec/captures/views/living/tree-after-room.png"
+  ],
+  "after": [
+   "spec/captures/views/living/treeh-after-f165.png",
+   "spec/captures/views/living/treeh-after-f89.png",
+   "spec/captures/views/living/treeh-after-film5650.png",
+   "spec/captures/views/living/treeh-after-film10636.png",
+   "spec/captures/views/living/treeh-after-film10600.png",
+   "spec/captures/views/living/treeh-after-piano.png",
+   "spec/captures/views/living/treeh-after-tree.png",
+   "spec/captures/views/living/treeh-after-room.png"
+  ]
+ },
+ "user_walk": "accepted",
+ "user_walk_words": "user Oct 17: \"the height seems right\" (position to move away from the window: STATUS 8a, a separate change)"
+}

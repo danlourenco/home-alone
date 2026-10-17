@@ -241,14 +241,14 @@
    "prefab": "Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Prefabs/ChristmasTree.prefab",
    "x": [
     1.845,
-    3.595
+    3.085
    ],
    "z": [
-    14.295,
+    14.812,
     16.045
    ],
    "y0": 0.0,
-   "height": 2.4,
+   "height": 1.7,
    "yaw": 0,
    "hide_parts": [
     "LightBulbs",
@@ -256,7 +256,7 @@
    ],
    "hides": [],
    "collide": false,
-   "source": "user pick Oct 16: Asset Store 'Christmas Tree, Wreath, Adjustable Garland and Bubble Lights' (AlterEgos; licensed for use, not redistribution: gitignored). Film 10600 / Marina f3, f165: the rear wall's den-side corner by the fireplace. Box = the model's own footprint (1.86 x 1.85 native, after its mini lights and cord are left out) at a uniform 0.941 scale (2.55 -> 2.40 m under the 2.438 ceiling). Its warm-white mini lights and cord are not the film's (multicolour C7s): hifi_living.py puts C7 bulbs on its envelope. No bubble lights, wreath or garland: the film's living room shows none (the front-door wreath is FrontDoor.glb's). Collider: spec/dressing/living.json tree"
+   "source": "user pick Oct 16: Asset Store 'Christmas Tree, Wreath, Adjustable Garland and Bubble Lights' (AlterEgos; licensed for use, not redistribution: gitignored). Film 10600 / Marina f3, f165: the rear wall's den-side corner by the fireplace. Box = the model's own footprint (1.86 x 1.85 native, after its mini lights and cord are left out) at a uniform 0.667 scale (2.55 -> 1.70 m: film 10645, changes/2026-10-17-living-tree-height.json; was 2.40 authored). Its warm-white mini lights and cord are not the film's (multicolour C7s): hifi_living.py puts C7 bulbs on its envelope. No bubble lights, wreath or garland: the film's living room shows none (the front-door wreath is FrontDoor.glb's). Collider: spec/dressing/living.json tree"
   },
   {
    "name": "hall_table_parents",

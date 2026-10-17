@@ -37,12 +37,12 @@
  },
  "tree": {
   "at": [
-   2.72,
-   15.17
+   2.465,
+   15.4285
   ],
-  "h": 2.4,
-  "r": 0.875,
-  "source": "film 10600 and Marina f3/f165: the rear wall's den-side corner, beside the fireplace, in front of the den-side window. The user's Asset Store tree (AlterEgos ChristmasTree.prefab: Douglas fir, balls, candy canes, popcorn strands, star; 2.55 m native) scaled uniformly to 2.40 m under the 8 ft ceiling (1.75 m across); its mini lights replaced by generated C7 bulbs (hifi_living.py). Back 0.26 m off the rear wall (clear of the drapes), 2.5 cm off the den-side wall"
+  "h": 1.7,
+  "r": 0.62,
+  "source": "film 10600 and Marina f3/f165: the rear wall's den-side corner, beside the fireplace, in front of the den-side window. The user's Asset Store tree (AlterEgos ChristmasTree.prefab: Douglas fir, balls, candy canes, popcorn strands, star; 2.55 m native) scaled uniformly to 1.70 m, the film's (10645; changes/2026-10-17-living-tree-height.json; was 2.40 authored), 1.24 m across; its mini lights replaced by generated C7 bulbs (hifi_living.py). Back 0.26 m off the rear wall (clear of the drapes), 2.5 cm off the den-side wall"
  },
  "console": {
   "x": [
@@ -322,15 +322,15 @@
    "name": "tree",
    "x": [
     1.845,
-    3.595
+    3.085
    ],
    "z": [
-    14.295,
+    14.812,
     16.045
    ],
    "y": [
     0.0,
-    2.4
+    1.7
    ]
   },
   {

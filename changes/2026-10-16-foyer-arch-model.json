@@ -1,27 +1,36 @@
 {
  "gate": 7,
- "change": "The foyer's segmental arch to the rear passage drawn as a generated model through the artist pipeline (tools/house/hifi_foyer_arch.py -> Assets/Models/Foyer/FoyerArch.glb + Assets/Textures/Generated/FoyerArch, helpers tools/house/hifi_pipeline.py, gate tools/house/model_quality.py): a true segmental soffit (24 facets, chord error 0.47 mm) with a 4 mm round on the passage edge, the spandrels' papered faces (the room's own wallpaper, triplanar, given by SpecGreybox), and a 44 x 20 mm cased moulding on the foyer face (leg to the floor on the picture-wall jamb; on the stair jamb the arc's casing dies into the stair's flank), baked normal/AO/edge maps on Poly Haven white_plaster_02 tinted to the house's ceiling and trim paints. The 12 stepped slices (SpecGreybox.ArchTop) are no longer drawn; their colliders stay for walking. Placed by the openings loop from the cut's own record (SpecGreybox.Arch.cs ArchModel); the build's Arch fit line proves every joint is on the cut",
+ "change": "Attempt 3 (Oct 17, after the user's walk rejected attempt 2): the foyer arch's crown lowered 2.17 -> 2.05 m (springline 1.91 and the span z 8.855-10.23 unchanged; measurements/overhead/ground-doors.json -> spec), so a 12 cm papered band (the wall box above the cut) runs between the crown and the landing's underside (2.17) and the soffit stays 10 cm under the passage ceiling (2.155); and the casing removed (the film's arch is plain: paper to the arris, no leg, no arc band). Still drawn by the artist pipeline (tools/house/hifi_foyer_arch.py -> FoyerArch.glb: true segmental soffit, now a 4 mm round on both arrises, papered spandrels); SpecGreybox.Arch.cs makes the casing optional (remap and Arch fit). The Oct 15 crown was picked on the landing's fascia (tools/house/foyer_cameras.py BACK picks fixed; new checkpoint: the crown must sit a papered band under the paper's top edge)",
  "target": "House_WallGrid",
- "premise": "The arch's opening (spec/geometry.json ground opening foyer/rear_passage: x 2.845-2.985, z 8.855-10.23, springline 1.91, crown 2.17) is right as built (DEVIATIONS 35); this change only replaces how its top is drawn and adds the casing the film shows on the foyer face",
+ "premise": "The arch's plan opening (spec z 8.855-10.23: the user's and Marina's no-pier span, DEVIATIONS 35) and its springline 1.91 stand; what was wrong is its crown (read on the landing's fascia, not the arc) and the casing (read from the closet door's edge inside the jamb)",
  "claim": {
   "value": {
-   "casing_width_m": 0.044,
-   "casing_proud_m": 0.02,
-   "soffit_facets": 24,
-   "chord_error_mm": 0.47
+   "crown_m": 2.05,
+   "spring_m": 1.91,
+   "casing": "none",
+   "crown_over_paper_top_ratio": [
+    0.966,
+    0.958
+   ],
+   "paper_band_over_crown_film_m": [
+    0.072,
+    0.091
+   ]
   },
   "data": [
    "film:2677",
-   "film:3888"
+   "film:3888",
+   "film:1616"
   ],
   "scale": [
    "refcam:film-2677",
-   "refcam:film-3888fc"
+   "refcam:film-3888fc",
+   "refcam:film-1616fc"
   ],
   "upstream": [
    "foyer_cameras:flight1-nosings"
   ],
-  "how": "Casing width: the build's own arch outline projected through the solved film cameras (tools/house/refcam.py proj) with offset outlines at 3 and 6 cm; the film's white band on the right leg reads 4.8 cm (2677) and 3.8 cm (3888); built 4.4 cm. Proud: authored 2 cm (SpecGreybox CasingProud; the film shows a cast shadow beside the leg, so it stands well off the paper). Which jambs carry a leg: tools/house/hifi_foyer_arch.py free() on spec/geometry.json walls and spec/house_spec.json stair boxes",
+  "how": "Crown: the arc's top edge read as the luminance jump paper -> lit soffit in columns 1320-1610 (+-3 px; scratch arc_edge/col profiles), through the solved cameras on the arch wall's plane x 2.985 (tools/house/foyer_cameras.py, rms 2.2/2.7 px): crown 2.052/2.056, paper's top edge (fascia line) 2.124/2.147, springline 1.904/1.917; a circle fitted to 11/9 arc points (refcam proj) peaks at 2.041/2.062 (rms 2/4 mm). V4 checkpoint now: built 2.050 vs film 2.052/2.056 ok. Casing: the jamb's foyer-face arris and a 44 mm casing zone projected through the solved 2677 and 1616 cameras: the zone is dark paper (luminance 14-38 in 2677, 45-74 in 1616) while the white strip (97-113 / 124-148) lies inside the jamb where the closet door stands (its brass knob is on it in 2677 at 0.9 m, as the door record says)",
   "applies_to": [
    "foyer",
    "rear_passage"
@@ -33,30 +42,35 @@
    "rear_passage": "DEVIATIONS 65"
   },
   "alternatives": [
-   "stepped slices, no casing (current)",
-   "smooth arch, cased on the foyer face only, the arc's casing dying into the stair (built)",
-   "cased on both faces (no free face on the passage side: its side walls continue the reveal)"
+   "attempt 2 (rejected): crown 2.17 on the landing's underside, 44 mm casing with a leg on the picture-wall jamb",
+   "crown 2.05, no casing, span 8.855-10.23 (built)",
+   "crown 2.08 (the film's crown/paper-top ratio 0.96 x our landing underside 2.17: keeps the film's 7-9 cm band exactly; the absolute crown would then sit 3 cm over the cameras' 2.05)",
+   "crown 1.93-2.02 (film 10673 ratio x Marina's 0.705 wainscot ruler)",
+   "the film's own span 8.855-9.90 (1.045 m, apex z 9.37-9.47 in both fits) with crown 2.05: overridden by the user's no-pier span (DEVIATIONS 35); not changed here",
+   "arc casing kept, leg removed (no joinery does that; the film shows no band)"
   ],
   "layout": {
    "decides": [
     {
-     "part": "a narrow white band edging the arch on the foyer face, down the picture-wall jamb and round the arc (its cast shadow follows the curve)",
+     "part": "a papered band between the arch's crown and the landing's fascia line (the paper runs over the arc)",
      "observed_in": [
       "film:2677",
-      "film:3888"
+      "film:3888",
+      "film:10673"
      ],
      "extrapolated": false
     },
     {
-     "part": "the arc's band continues over the stair half (visible above the tree)",
+     "part": "no casing on the foyer face beside the picture-wall jamb (paper to the arris; the white strip is the closet door inside the jamb)",
      "observed_in": [
       "film:2677",
-      "film:3888"
+      "film:1616",
+      "film:3175"
      ],
      "extrapolated": false
     },
     {
-     "part": "no leg on the stair jamb: the arch springs off the stair's end with no pier (DEVIATIONS 35), so the band dies into the stair's flank",
+     "part": "no leg on the stair jamb: the arch springs off the stair's end with no pier (DEVIATIONS 35)",
      "observed_in": [
       "marina-frame:195",
       "marina-frame:1070.5"
@@ -66,41 +80,64 @@
    ]
   },
   "surface": "ceiling-plane",
-  "surface_note": "not a ceiling: the arch soffit and its casing only (the crown 2.17 is unchanged, DEVIATIONS 35)"
+  "surface_note": "not a ceiling: the arch's crown (2.05) and soffit; the passage ceiling (2.155) and landing underside (2.17) are unchanged"
  },
  "history": [
   {
    "date": "2026-10-15",
    "what": "segmental arch as 12 stepped slices (SpecGreybox.ArchTop), no casing drawn",
    "outcome": "superseded (user Oct 16: 'the arch for example is jagged')"
+  },
+  {
+   "date": "2026-10-17",
+   "what": "smooth generated arch (24-facet soffit, 44 mm casing, leg on the picture-wall jamb, crown on the landing fascia: no wall above the crown)",
+   "outcome": "failed (user walk Oct 17: 'the arch is wrong. it eats into the wall above and you can see the ceiling on the underside'; 'why do i see a cased vertical thing coming down from the arch?')"
+  },
+  {
+   "date": "2026-10-17",
+   "what": "attempt 3: crown 2.05 (12 cm paper over it), no casing, soffit rounded both arrises",
+   "outcome": "accepted (user Oct 17: 'acceptable for the time being')"
   }
  ],
- "premise_reviewed": "",
+ "premise_reviewed": "R2 census (2 failed attempts: the stepped slices, and the smooth cased arch). Both shared the same inputs: the Oct 15 foyer_cameras.py readings of film 2677/3888, i.e. the crown 2.165/2.168 and the 'casing' band, built at crown 2.17 = the landing's underside (no wall over the arch). Attempt 1 was rejected for its look (jagged), attempt 2 for exactly those shared inputs ('eats into the wall above', 'cased vertical thing'). Both shared readings are wrong: the crown pick (v 117/179) sits ABOVE the paper's top edge (v 123/181) in both frames, i.e. on the fascia; the paper visibly runs over the arc, whose top edge is at v 152/214 (2.05 m). The 'casing leg' is the closet door's edge (its knob is on the strip; the 44 mm zone outside the arris is dark paper in 2677 and 1616; 3175 shows paper to the arris). The cameras themselves (nosings) stay: they put the landing's fascia line at 2.12-2.15 (built 2.17), the wainscot at 0.72-0.74 (Marina 0.705) and the rear door at 80 in within 1.4/4.5 %. Premise kept: the plan opening and springline; dropped: the crown and the casing",
  "checks": [
   {
-   "what": "Build: Arch fit (soffit springings, springline, crown, both papered faces and the casing's back and leg on the cut's numbers within 1 mm; rays from the opening meet the jamb walls where the soffit springs)",
+   "what": "Film 10673 (a different shot; no camera solved): scale-free ratio on one vertical of the arch wall, (crown - floor) / (paper top - floor) = 410/425 px = 0.965 (floor v 646, crown v 236 at u 1300-1340, paper top v 221; +-3 px -> 0.958-0.972). The claim's cameras give 0.966 (2677) / 0.958 (3888). The crown sits ~4 % under the fascia line, not at it",
    "agrees": true,
-   "type": "topological",
+   "type": "ratio",
    "data": [
-    "unity:build"
+    "film:10673"
    ],
    "scale": [
     "none"
    ]
   },
   {
-   "what": "model_quality.py on FoyerArch.glb: 0 problems (facets, bevels, maps, texel density 1024 px/m, albedo within 0.06 of the measured paints, LOD reason); the stepped-slice arch in its self-test fails on unbevelled edges, missing maps and LODs",
+   "what": "Film 10673 ratio (crown - floor) / (wainscot cap - floor) = 2.74 (wainscot v 496-498) with Marina's foyer wainscot 0.705 m (spec/dressing/foyer.json, her 312 s picture wall) as the ruler: crown 1.93 m (1.91-1.96 at +-3 px)",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "film:10673",
+    "marina-frame:312"
+   ],
+   "scale": [
+    "marina-wainscot:312"
+   ],
+   "disposition": "Agrees that the crown is far under 2.17 (by 21+ cm) but reads 12 cm under the cameras' 2.05. The same ratio in the claim's frames is 2.76 (2677) / 2.86 (3888), so 10673 agrees with 2677 as a ratio; the gap is the ruler: the film cameras read the film's wainscot at 0.72-0.74 m, Marina's model has 0.705 (a known 3-5 % Marina/film scale difference), and 10673's crown pixel is under the lamp's glow. Built 2.05 keeps the V4 checkpoint (cameras) and the user-visible band; 2.08 and 1.93-2.02 listed as alternatives"
+  },
+  {
+   "what": "Film 3175 (close view from the stair foot, not in the claim): the closet door (hinge at v 590, knob at v 770) stands just inside the picture-wall jamb, the jamb's arris is a dark line, and the picture wall's damask paper runs from it to the picture frame with no white band: no casing leg",
    "agrees": true,
    "type": "topological",
    "data": [
-    "tools:model_quality"
+    "film:3175"
    ],
    "scale": [
     "none"
    ]
   },
   {
-   "what": "Film 2677/3888 (cameras solved from flight 1's nosings): the band's width 3.8-4.8 cm against offset outlines of the built arch (consistency only: the same frames and cameras; there is no independent ruler for the casing's width: Marina has no arch here)",
+   "what": "tools/house/foyer_cameras.py (re-run): V4 checkpoint arch crown built 2.050 vs film 2.052/2.056 (tol 0.022) ok; spring 1.910 vs 1.904/1.917 ok; right jamb ok. New checkpoint (asserts 0.05 < paper top - crown < 0.15 in both frames) passes, and fails the Oct 15 picks (crown 2.164 under paper top 2.171): proven by running the script with the old picks substituted",
    "agrees": true,
    "type": "metric",
    "data": [
@@ -113,26 +150,121 @@
    "upstream": [
     "foyer_cameras:flight1-nosings"
    ]
+  },
+  {
+   "what": "verify_plan.py --floor ground: 4 ok, 0 FAIL; upstairs 15 ok, 0 FAIL (after the crown edit; wall_graph.py --json regenerated spec/geometry.json: cut [0, 2.05])",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "tools:verify_plan"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "model_quality.py on FoyerArch.glb: 0 problems; --selftest passes; glb_orientation ok (Soffit, Paper Pos/Neg)",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "tools:model_quality"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "Scratch build ~/.cache/home-alone-2 (Oct 17, attempt 3): Arch fit 1 arch, 0 joints off (worst 0.00 mm); Z-fight 0; Clash 0; Seam 693 boxes, 0 overlaps/ledges/gaps (692 before: +1 lintel box over the cut); Casing 0; Trim 0 gaps; Peek 0; room walks ground 64 / upstairs 84 legs, 0 blocked; Quality: FoyerArch 0 problems (HallArches.glb 4: the paused hall job's, as before). Pre-existing: service stair up leg 2 BLOCKED (same in HEAD)",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "unity:build"
+   ],
+   "scale": [
+    "none"
+   ]
   }
  ],
  "renders": {
   "before": [
-   "spec/captures/views/arch/before-close.png",
-   "spec/captures/views/arch/before-soffit.png",
-   "spec/captures/views/arch/before-foyer.png",
-   "spec/captures/views/arch/before-film-2677.png",
-   "spec/captures/views/arch/before-night-close.png",
-   "spec/captures/views/arch/before-night-foyer.png"
+   "spec/captures/views/arch/before2-walk-eats-kevin.png",
+   "spec/captures/views/arch/before2-walk-eats-eye128.png",
+   "spec/captures/views/arch/before2-walk-leg-kevin.png",
+   "spec/captures/views/arch/before2-walk-leg-eye128.png",
+   "spec/captures/views/arch/before2-film-2677.png",
+   "spec/captures/views/arch/before2-film-3888.png"
   ],
   "after": [
-   "spec/captures/views/arch/after-close.png",
-   "spec/captures/views/arch/after-soffit.png",
-   "spec/captures/views/arch/after-foyer.png",
-   "spec/captures/views/arch/after-film-2677.png",
-   "spec/captures/views/arch/after-night-close.png",
-   "spec/captures/views/arch/after-night-foyer.png"
+   "spec/captures/views/arch/after2-walk-eats-kevin.png",
+   "spec/captures/views/arch/after2-walk-eats-eye128.png",
+   "spec/captures/views/arch/after2-walk-leg-kevin.png",
+   "spec/captures/views/arch/after2-walk-leg-eye128.png",
+   "spec/captures/views/arch/after2-film-2677.png",
+   "spec/captures/views/arch/after2-film-3888.png"
   ],
-  "note": "batch renders from the scratch copy (spec/captures/views/arch-{before,after}[-night].json); lighting to be judged live"
+  "earlier_attempt2": {
+   "before": [
+    "spec/captures/views/arch/before-close.png",
+    "spec/captures/views/arch/before-soffit.png",
+    "spec/captures/views/arch/before-foyer.png",
+    "spec/captures/views/arch/before-film-2677.png",
+    "spec/captures/views/arch/before-film-3888.png",
+    "spec/captures/views/arch/before-night-close.png",
+    "spec/captures/views/arch/before-night-soffit.png",
+    "spec/captures/views/arch/before-night-foyer.png",
+    "spec/captures/views/arch/before-night-film-2677.png",
+    "spec/captures/views/arch/before-night-film-3888.png"
+   ],
+   "after": [
+    "spec/captures/views/arch/after-close.png",
+    "spec/captures/views/arch/after-soffit.png",
+    "spec/captures/views/arch/after-foyer.png",
+    "spec/captures/views/arch/after-film-2677.png",
+    "spec/captures/views/arch/after-film-3888.png",
+    "spec/captures/views/arch/after-night-close.png",
+    "spec/captures/views/arch/after-night-soffit.png",
+    "spec/captures/views/arch/after-night-foyer.png",
+    "spec/captures/views/arch/after-night-film-2677.png",
+    "spec/captures/views/arch/after-night-film-3888.png",
+    "spec/captures/views/arch/after-walk-spawn.png",
+    "spec/captures/views/arch/after-walk-near.png",
+    "spec/captures/views/arch/after-night-walk-spawn.png",
+    "spec/captures/views/arch/after-night-walk-near.png"
+   ],
+   "note": "Oct 17 batch renders from scratch copy ~/.cache/home-alone-2: before = the repo build without the arch model, after = with it (spec/captures/views/arch-{before,after}[-night].json, arch-walk-after[-night].json; film cameras from measurements/cameras film-2677 / film-3888fc via refcam). Batch lighting is dim and lacks the room probes: judge the look live"
+  },
+  "note": "Oct 17 attempt 3, batch renders (SpecGreybox.RenderViews) in scratch ~/.cache/home-alone-2: before = the rejected attempt-2 scene, after = the rebuilt scene (NOT re-baked: the after lighting is cooler/flatter than before; judge the look live). Views: spec/captures/views/arch2-{before,after}.json = the user's two walk-note poses (eye feet+1.10 Kevin and +1.28, pitch from the note) and the solved film 2677/3888 cameras. Looked at: the paper band now runs over the crown (film 2677 shows the same), the casing and its picture-wall leg are gone; the remaining narrow white verticals at both jambs are the jamb reveals (plain painted plaster; film 2677/10673 show a white strip at the right jamb too)"
  },
- "user_walk": "pending"
+ "user_walk": "accepted",
+ "rejected_walk_attempt2": [
+  {
+   "time": "2026-10-17T08:26:22",
+   "pos": [
+    5.87,
+    -2.996,
+    -8.95
+   ],
+   "yaw": 265.2,
+   "note": "the arch is wrong. it eats into the wall above and you can see the ceiling on the underside.",
+   "shot": "spec/feedback/shots/20261017-082544-House_WallGrid.png"
+  },
+  {
+   "time": "2026-10-17T08:26:53",
+   "pos": [
+    4.624,
+    -2.996,
+    -9.028
+   ],
+   "yaw": 246.7,
+   "note": "why do i see a cased vertical thing coming down from the arch?",
+   "shot": "spec/feedback/shots/20261017-082626-House_WallGrid.png"
+  }
+ ],
+ "user_walk_notes": [
+  {
+   "time": "2026-10-17",
+   "note": "downstairs is ok for now, but thinking we may need to recess the door under the stairs like marina's in the future, but that's for another day. it's acceptable for the time being",
+   "scope": "attempt 3 (crown 2.05, no casing); accepted for now. Not confirmed whether from a live walk of the loaded build or from the screenshot page"
+  }
+ ]
 }
