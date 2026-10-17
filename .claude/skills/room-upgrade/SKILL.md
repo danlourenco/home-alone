@@ -13,6 +13,7 @@ layer of models generated from the same spec, plus real textures, props and ligh
 1. **Reference sheet first.** Pull Marina's frames and film stills of the room (the room's `art/home_alone/references/*` and
    `spec/captures/compare-marina/web/*-ref.jpg`). List every element: trim (baseboard, wainscot height and cap, chair/dado rail,
    raking rails on stair walls, crown, casings), fixtures (chandelier, sconces, switch plates), furniture, wallpaper, floor.
+1b. **Openings audit (part of every room's first trial, not later):** each door and window of the room measured against Marina/film AND the nearest stock size (doors 28/30/32/36 x 80 in; stock sash sizes): built vs measured vs stock in the change record, and a real pack door/window where the other rooms have one. Oct 17: Buzz's door stayed 30 in through trial 1 although Marina's leaf measured 0.800 m (a stock 32 in); the user had to ask.
 2. **Geometry from the spec, in Blender** (`/Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup -P <script>`), one
    script per room, every position read from `spec/house_spec*.json` / `spec/dressing/*.json`; only profiles are authored.
 3. **Unity:** instantiate the .glb under the right floor root, remap materials by name, strip its colliders, hide the grey-box AND
