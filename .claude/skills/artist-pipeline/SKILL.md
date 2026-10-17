@@ -43,6 +43,10 @@ and one tinted texture. Bought assets differ by process, not by magic: this skil
 6. **LODs**: LOD0 full, LOD1 ~50%, LOD2 ~20% (Blender decimate, normals preserved), cull distance per size; or a single LOD for
    small rooms if the triangle budget allows (state it).
 7. **Export** glTF/GLB with the maps; Unity import: materials remapped to HDRP Lit with the baked maps, mipmaps on, anisotropic 8.
+8. **Triangle budget: <= 150k triangles per model file** (LOD0, all its meshes; generated, bought or CC0). Detail beyond that goes
+   into the baked normal map; decimate a bought model in Blender before import. The build's `Props triangle budget` line names
+   every model file over it (`SpecGreybox.TriangleBudget`) and must read 0. Why (Oct 17): a 628k-triangle rug made the z-fight
+   gate run 27 minutes; catch it at import, not as a hung build.
 
 ## The quality gate (build: "Quality check"; a tool tools/house/model_quality.py for the Blender side)
 A generated model FAILS when it has any of:

@@ -342,7 +342,7 @@ public static partial class SpecGreybox
         Player(spawn, spawnYaw);
         var player = GameObject.Find("Player"); player.SetActive(false);
         Physics.SyncTransforms();
-        Step("WalkTest");
+        stepName = null; BudgetFails.Clear(); Step("WalkTest");
         string report = "WALL-GRID HOUSE (both floors from spec/geometry.json)\nUPSTAIRS\n" + WalkTest(spaces, doors);
         Step("WalkTest ground");
         FloorY = gy; report += "GROUND\n" + WalkTest(gspaces, gdoors); FloorY = 0f;
@@ -354,6 +354,7 @@ public static partial class SpecGreybox
         var walkIn = doors.Concat(gdoors).Where(d => d.kind != "fake_door").SelectMany(d => new[] { d.a, d.b }).ToHashSet();
         SeamRooms = spaces.Where(sp => walkIn.Contains(sp.name) || sp.kind == "opening").Select(sp => (sp.pts, sp.opens == "down" ? gy : 0f, sp.ceil)).ToList();
         SeamRooms.AddRange(gspaces.Where(sp => walkIn.Contains(sp.name)).Select(sp => (sp.pts, gy, gy + sp.ceil)));
+        File.WriteAllText("Library/SeamRooms.json", new JArray(SeamRooms.Select(r => new JArray(r.y0, r.y1, new JArray(r.pts.Select(p => new JArray(p.x, p.y)))))).ToString());   // to re-run the surface gates on the saved scene (CheckBench)
         Step("SeamCheck");
         report += SeamCheck(root, groot);
         Step("LeakAndHeadroom");
@@ -374,11 +375,13 @@ public static partial class SpecGreybox
         Step("ArchFitCheck");
         report += ArchFitCheck();   // SpecGreybox.Arch.cs
         Step("PropsCheck");
-        report += PropsCheck();   // StoreProps.cs
+        report += PropsCheck() + TriangleBudget(root, groot);   // StoreProps.cs; Checks.cs
         Step("TrimCheck");
         report += TrimCheck();   // over every face run of spec/trim_faces.json, either trim path
         Step("EnvelopeCheck");
         report += EnvelopeCheck(geo, j["attic_stair"]["boxes"], gj["wall_openings"], gy);
+        Step(null);
+        foreach (var f in BudgetFails) report += f + "\n";
         Traps(root, gy);   // Traps.cs: gameplay rigs (spec/dressing/traps.json), after the gates so none of them sees the rig
         player.SetActive(true);
         Directory.CreateDirectory(CaptureDir);
@@ -389,8 +392,29 @@ public static partial class SpecGreybox
         if (System.Array.IndexOf(System.Environment.GetCommandLineArgs(), "-views") >= 0) RenderViews();   // renders in the same session (one Unity start)
     }
 
-    // a timestamped line before each build check (they log nothing themselves): a silent build.log then means a stuck check, and names it
-    static void Step(string what) => Debug.Log($"[{System.DateTime.Now:HH:mm:ss}] BuildWallGrid: {what}");
+    // a timestamped line before each build check (they log nothing themselves): a silent build.log then means a stuck check, and names it.
+    // Each gate also logs its duration when the next starts, and has a time budget (zfight-check skill "Check speed"): over budget is
+    // "BUDGET FAIL <gate>" in the report and build.log (unity_pipeline.sh exits 1); the long loops call BudgetGuard, which stops the
+    // build mid-gate instead of leaving it silent for hours. A slow gate is a bug: fix its algorithm, never raise the budget to pass.
+    static readonly Dictionary<string, float> GateBudget = new() { ["ZFightCheck"] = 30f, ["ClashCheck"] = 60f };   // s (measured Oct 17: 2.2 s and 15.6 s); others 60
+    static string stepName; static readonly System.Diagnostics.Stopwatch stepClock = new(); static readonly List<string> BudgetFails = new();
+    static float Budget(string gate) => GateBudget.TryGetValue(gate, out var b) ? b : 60f;
+    static void Step(string what)
+    {
+        if (stepName != null)
+        {
+            float t = (float)stepClock.Elapsed.TotalSeconds;
+            Debug.Log($"[{System.DateTime.Now:HH:mm:ss}] BuildWallGrid: {stepName} done in {t:F1} s (budget {Budget(stepName):F0} s)");
+            if (t > Budget(stepName)) { var f = $"BUDGET FAIL {stepName}: {t:F0} s, budget {Budget(stepName):F0} s"; BudgetFails.Add(f); Debug.LogError(f); }
+        }
+        stepName = what; stepClock.Restart();
+        if (what != null) Debug.Log($"[{System.DateTime.Now:HH:mm:ss}] BuildWallGrid: {what}");
+    }
+    static void BudgetGuard()
+    {
+        if (stepName != null && stepClock.Elapsed.TotalSeconds > Budget(stepName))
+            throw new System.TimeoutException($"BUDGET FAIL {stepName}: still running after {Budget(stepName):F0} s, stopped (a slow check is a bug: zfight-check skill)");
+    }
 
     // One storey from geometry.json at the current FloorY: walls (papered on the faces of the named rooms, over the wainscot),
     // floor plate, ceilings, finishes, door/window trim, prop doors, glass, rails, arch tops. Returns the rooms and openings in

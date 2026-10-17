@@ -71,8 +71,8 @@ ok      kevin down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor heigh
 ok      kevin down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
 ok      player up leg 1: ended 0.03 m from waypoint, 0.03 m off its floor height, 6 frames (clean walk 7)
 BLOCKED player up leg 2: ended 0.07 m from waypoint, 0.06 m off its floor height by ServiceStair/service_winder2_tread at (2.29, -2.41, 6.81) spec x,y,z, 1500 frames (clean walk 20) STALLED
-ok      player down leg 1: ended 0.02 m from waypoint, 0.08 m off its floor height, 18 frames (clean walk 20)
-ok      player down leg 2: ended 0.01 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 7)
+ok      player down leg 1: ended 0.02 m from waypoint, 0.09 m off its floor height, 18 frames (clean walk 20)
+ok      player down leg 2: ended 0.00 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 7)
 Render check (outward faces, ServiceStair): 97 parts, 0 inside-out
 Seam check: 693 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
 Leak and headroom check: 1383 points, 0 leaks, 17 low-headroom points (ground floor, outside flight 1)
@@ -97,11 +97,14 @@ skip    bandit back_stair: no cell to stand in (its floor is a stair)
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin back_stair: no cell to stand in (its floor is a stair)
-Z-fight check: 1197267 triangles, 1355 surfaces, 0 coplanar pairs seen from rooms (25 unreadable meshes skipped)
-Clash check: 1357686 triangles, 0 parts passing through another (1 allowed joints)
+Z-fight check: 1466800 triangles, 1381 surfaces, 2 coplanar pairs seen from rooms (every visible mesh checked)
+ZFIGHT  Upstairs/LandingWindow_HiFi/Paint [LW_Paint] vs Ground/Walls/Wall [Dress_Wallpaper]: 0.0 mm apart, 0.041 m2, at spec (1.54, -0.34, 10.09)
+ZFIGHT  Upstairs/LandingWindow_HiFi/Paint [LW_Paint] vs Ground/Walls/Wall [Wall]: 0.0 mm apart, 0.007 m2, at spec (1.58, -0.34, 10.27)
+Clash check: 1634776 triangles, 0 parts passing through another (1 allowed joints) (every visible mesh checked)
 Casing check: 0 casings placed apart from their opening
 Arch fit: 1 generated arches on their cuts, 0 joints off by more than 1 mm (worst 0.00 mm)
 Props check: 15 store models, 0 problems
+Props triangle budget: 4 models over 150k triangles (Assets/Purchased/PurchasedPlants.glb 411k, Assets/Purchased/HallPlants.glb 296k, Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Models/ChristmasTree.fbx 259k, Assets/Models/Foyer/HallDressing.glb 201k)
 Trim check: 62 face runs (3 on the stair and landings, 1 panelled by a window model), 92.7 m, 8572 samples, 1 gaps in the baseboard, wainscot or cap rail; run ends: corner 57, opening 65, outside-corner 2
 GAP     0.06 m of bare wall 0.42 above the line of the room:hall_corridor run at spec (7.35, 0.42, 9.91)
 Envelope check: 2125 points at room joints, 0 see the sky through < 0.3 m of shadow caster

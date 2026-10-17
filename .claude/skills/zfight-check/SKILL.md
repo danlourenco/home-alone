@@ -56,7 +56,45 @@ through LFS (`git show REV:path | git lfs smudge`): a bare `git show` gives the 
   hole: probe the renderers at the spot (bounds intersect a small box), fix the gate first, then the geometry.
 - Fix at the source (the generator or shared builder), never by nudging one instance; then add the trap to this file.
 
+## Check speed (a slow check is a bug)
+Oct 17: ZFightCheck took 25 min 43 s, ClashCheck 80 s. Cause: 396k sliver triangles (cross product under 1e-5, so
+`Vector3.normalized` gave a ZERO normal) all keyed to one plane bucket and compared pairwise, O(k^2), though a zero normal can
+never pass the facing test. Now 2.2 s and 15.6 s on 1.47M / 1.64M triangles, with every visible mesh covered.
+- **Broad phase rule:** bucket by plane (normal to 1/50, 1 cm slabs) as before, then a 25 cm grid in the plane; examine a pair only
+  when its in-plane boxes overlap (2 cm slack), once, in the first grid cell both share; a surface's own triangles are contiguous
+  and skipped as a run; slivers (zero normal) skipped. Clash: 10 cm 3-D grid, first shared cell instead of a pair set, boxes must
+  meet, own renderer skipped as a run, and `Through()` reads the piercer's vertices from a 6 cm grid instead of every vertex.
+  Any new pairwise check uses the same rule; never a nested loop over a bucket.
+- **Proof it finds the same things:** `SpecGreybox.CheckBench` (Assets/Editor/CheckBench.cs; scratch copy only, after a build:
+  `Unity -batchmode -projectPath ~/.cache/home-alone-2/ucopy/HomeAlone -executeMethod SpecGreybox.CheckBench -quit -logFile bench.log`, results in `Library/CheckBench.txt`)
+  opens the built scene, restores the rooms from `Library/SeamRooms.json` (written by every build), plants two coplanar floor
+  quads and a rod through a panel, and runs the old loops (verbatim copies) and the new ones on the same triangles. Oct 17:
+  z-fight raw 309 / kept 43 pairs IDENTICAL on (pair, area, gap); clash crossings IDENTICAL on (pair, count); old 4.7 s vs new
+  1.3 s (z-fight, slivers removed for the old loop), 406 s vs 15.8 s (clash). Both find the planted floor quad (2 mm) and the
+  rod (16 crossings). Raw edge hits differ by 4 (Treads vs RisersStringers): the old loop's hits on triangles whose boxes are
+  apart, off the face's plane by up to 6 cm, i.e. float noise from a near-parallel edge; none became a finding. Reported
+  locations may differ (visit order), so compare on pair + area + gap. Re-run it after changing either loop.
+- **Budgets** (`GateBudget` in SpecGreybox.cs): ZFightCheck 30 s, ClashCheck 60 s, every other gate 60 s. The long loops call
+  `BudgetGuard()`, which throws `BUDGET FAIL <gate>` the moment a gate passes its budget (no silent hours); a gate that finishes
+  late adds a `BUDGET FAIL` line to the report. `unity_pipeline.sh build` exits 1 on either. Fix the algorithm or the input (a
+  triangle-heavy model: artist-pipeline rule 8, the `Props triangle budget` line); never raise a budget to pass.
+- **Reading the timings:** build.log has `[hh:mm:ss] BuildWallGrid: <gate>` when a gate starts and `<gate> done in N s (budget
+  B s)` when it ends; `ZPairs:` and `ClashCheck:` lines give triangles, cells, pairs examined and overlaps. A silent log with no
+  new stamp names the stuck gate.
+- **No result cache** (decided Oct 17): both gates now cost ~18 s, and a per-mesh cache cannot be sound: `Hidden`/`Visible`
+  ray-cast against every collider in the house, so one mesh's result depends on all the others.
+
+## Coverage
+The gate line ends `(every visible mesh checked)` or names the meshes NOT checked. Imported models with Read/Write off (25 on
+Oct 17, LandingWindow among them) are read through `Mesh.AcquireReadOnlyMeshData` (`ReadMesh`), in both gates.
+A face inside a wall's thickness (a window reveal, a recess) is outside every room outline; it counts as seen when a clear ray of
+up to 0.6 m (four horizontal directions and the face normal) reaches a room. That hole hid the landing window's stool against the
+wall top it sits on (walk note 2026-10-17T13:32:54; the check now reports `LandingWindow_HiFi/Paint vs Ground/Walls/Wall`).
+
 ## Known limits
 - Areas under 50 cm2 are not reported (flush mounts: fixture canopies on ceilings, a baluster touching a newel).
-- Meshes that are not readable (some imported assets) are skipped and counted in the gate line; Poly Haven props are fine.
+- Two stacked surfaces 4-10 mm apart where the upper one is an OPEN sheet (no back faces) read as hidden: the ray from 4 mm in
+  front of the lower one hits the sheet from behind, which the test takes for the inside of a solid (proven by CheckBench's
+  planted quads: floor vs quad 2 mm apart is found; quad vs quad 6 mm apart is not). Closed models are judged correctly.
+- Traps (Traps.cs) are added after the gates, so the paint cans' own lid/body overlaps are not checked in the build.
 - The exterior (`Exterior/`, the old reference yard and neighbourhood) is not checked.
