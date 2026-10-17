@@ -76,7 +76,8 @@ never pass the facing test. Now 2.2 s and 15.6 s on 1.47M / 1.64M triangles, wit
   locations may differ (visit order), so compare on pair + area + gap. Re-run it after changing either loop.
 - **Budgets** (`GateBudget` in SpecGreybox.cs): ZFightCheck 30 s, ClashCheck 60 s, every other gate 60 s. The long loops call
   `BudgetGuard()`, which throws `BUDGET FAIL <gate>` the moment a gate passes its budget (no silent hours); a gate that finishes
-  late adds a `BUDGET FAIL` line to the report. `unity_pipeline.sh build` exits 1 on either. Fix the algorithm or the input (a
+  late adds a `BUDGET FAIL` line to the report. `unity_pipeline.sh build` exits 1 on either (and on a Unity
+  exit code, a quality-gate FAIL, or a preflight FAIL before Unity starts: `unity_pipeline.sh preflight`, skip with HA_NO_PREFLIGHT=1). Fix the algorithm or the input (a
   triangle-heavy model: artist-pipeline rule 8, the `Props triangle budget` line); never raise a budget to pass.
 - **Reading the timings:** build.log has `[hh:mm:ss] BuildWallGrid: <gate>` when a gate starts and `<gate> done in N s (budget
   B s)` when it ends; `ZPairs:` and `ClashCheck:` lines give triangles, cells, pairs examined and overlaps. A silent log with no

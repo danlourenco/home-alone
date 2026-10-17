@@ -5,7 +5,8 @@ using UnityEngine;
 /// Walk-and-annotate: how does this spot FEEL compared with the film / Marina? Works in every scene with an
 /// FpsController (attached automatically on Play). Press M (mark): a screenshot is taken, then a small panel asks
 /// "feels right / feels off / not sure" plus a note. Each note is one JSON line in spec/feedback/feel-notes.jsonl
-/// with the scene, position, view direction and screenshot, so tools/house/feel_notes.py can map it to a room.
+/// with the scene, position, view direction and screenshot, so tools/house/feel_notes.py can map it to a room. It also records the
+/// camera's eye height (world y), vertical fov, Kevin/adult body and day/night, so tools/house/note_views.py replays the exact view.
 public class FeelNotes : MonoBehaviour
 {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -52,11 +53,13 @@ public class FeelNotes : MonoBehaviour
 
     void Save()
     {
-        var cam = Camera.main ? Camera.main.transform : transform;
+        var c = Camera.main; var cam = c ? c.transform : transform;
         var p = transform.position; var e = cam.eulerAngles;
+        var hm = Object.FindAnyObjectByType<HouseNightMode>();
         string Esc(string s) => s.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", " ");
         var line = $"{{\"time\":\"{System.DateTime.Now:s}\",\"scene\":\"{UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}\"," +
                    $"\"pos\":[{p.x:F3},{p.y:F3},{p.z:F3}],\"yaw\":{e.y:F1},\"pitch\":{(e.x > 180 ? e.x - 360 : e.x):F1}," +
+                   $"\"eye\":{cam.position.y:F3},\"fov\":{(c ? c.fieldOfView : 60f):F1},\"kid\":{(fc && fc.kid ? "true" : "false")},\"night\":{(hm && hm.night ? "true" : "false")}," +
                    $"\"rating\":\"{rating}\",\"lighting\":\"{light}\",\"note\":\"{Esc(note)}\",\"shot\":\"{shot}\"}}";
         File.AppendAllText(Path.Combine(Dir, "feel-notes.jsonl"), line + "\n");
         saved++; flash = $"Saved note {saved} (shape {rating}, lighting {light})"; flashUntil = Time.time + 2f;

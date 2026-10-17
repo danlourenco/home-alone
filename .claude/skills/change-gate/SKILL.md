@@ -20,6 +20,10 @@ Why this exists (Oct 13): Buzz's room was resized to the SfM size 4.35 m. The "p
    - **Film frames.**
    - **A source with its own scale**: Marina's on-screen dimensions, or the real-house plan.
 
+   **Pick check (before measuring any pixel feature in a film or Marina frame):** save a crop of the picked point (e.g. `spec/captures/picks/<slug>-<frame>.png`) and get an independent look that says WHAT it is: a subagent shown only the crop and asked to name the feature, or the same feature found in a second frame. Record it on the check (or claim) as `"pick": {"crop": "<path>", "confirmed_by": "<who/what, and what they said it is>"}`. R8 enforces it for records with `"gate": 8` (Oct 16-17: the arch crown was picked on the landing's fascia, and a "casing" the film doesn't have was measured).
+
+   The build's self-consistency gates (`model_quality`, `zfight`, `clash`, `verify_plan`, `trim_faces`, `unity:build`, `unity:walk-test`) check the model against itself, never against the house: they are never the independent ruler.
+
    A check that reuses the claim's clip, solve or door scale is consistency. It's still worth running, but it never counts as proof and must never be reported as proof. If no independent check exists, **don't make the change**. Tell the user what evidence is missing.
 4. **Make the smallest change**, re-runnable and reversible: editor scripts or the spec, never hand edits. The source GLB stays untouched.
 5. **Look at it (R3).** Render before and after from the same fixed views, inside and outside, and list the paths. Open the images and look for breakage: stretched or smeared textures, seams, gaps, floating or buried objects, doors and windows out of their walls, and bumps in the exterior. Numbers passing doesn't mean it looks right.
@@ -30,12 +34,13 @@ Why this exists (Oct 13): Buzz's room was resized to the SfM size 4.35 m. The "p
 
 | Rule | Fails when |
 |---|---|
-| R1 | No agreeing check is independent of the claim's data, scale and upstream |
+| R1 | No agreeing check is independent of the claim's data, scale and upstream (self-consistency gates never count) |
 | R2 | Two or more failed attempts are on record and `premise_reviewed` is empty |
 | R3 | Before or after renders are missing on disk |
 | R4 | The claim doesn't list `applies_to` and `measured_in`, or it is built into an item it wasn't measured in without an `assumed` DEVIATIONS row |
 | R5 | A ceiling claim's `surface` is not `ceiling-plane` (crown, beam, landing or soffit edges are not ceilings) |
 | R6 | A disagreeing check that is evidence has no `disposition` (why the claim stands, or what was done about it) |
+| R8 | (records with `"gate": 8`) A metric check (or claim) on a film/Marina frame lacks `pick.crop` on disk or `pick.confirmed_by` |
 | R7 | (records with `"gate": 7`) A layout claim (which way a stair runs or turns, where its parts are) lacks `alternatives` (the current build included), or a part where the alternatives differ is not seen directly in 2+ unoccluded frames, or is extrapolated (`claim.layout.decides`) |
 
 Each check may give a `type`: `metric` (default), `angular`, `ratio` or `topological`. Only a metric check needs a ruler; an angle or ratio with scale `none` is evidence. If the claim lists `risks` (e.g. `extraction`, `scale`, `registration`, `model-fidelity`), R1 needs an independent agreeing check whose `tests` covers each one: two Marina clips can test extraction but not her model's film accuracy, and two frames on one assumed door can't test the door.
@@ -46,6 +51,6 @@ Independence is judged by **ruler kind**: `door-80in:1125` and `door-80in:1175` 
 
 **Talking to the user:** say only what the gate says. Never "ruled out", "confirmed" or "proven" for a number whose record fails, and name the ruler and its assumption in the same sentence.
 
-The pre-commit hook blocks commits that touch `measurements/`, `spec/house_spec*`, `spec/furniture.json`, `tools/house/reconcile.py` or the two house scenes unless a staged `changes/*.json` passes. Commit pure rebuild outputs (same inputs, rebuilt) with `--no-verify`, and say so in the message.
+The pre-commit hook blocks commits that touch `measurements/`, `spec/house_spec*`, `spec/furniture.json`, `spec/geometry.json`, `spec/trim_faces.json`, `spec/dressing/`, `tools/house/reconcile.py`, `tools/house/hifi_*.py` or the house scenes (IntactHouseReference, Greybox_Upstairs, House_WallGrid) unless a staged `changes/*.json` passes. Commit pure rebuild outputs (same inputs, rebuilt) with `--no-verify`, and say so in the message.
 
 Prove the gate still works after editing it: `uv run python tools/house/change_gate.py --selftest`.

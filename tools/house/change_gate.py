@@ -30,6 +30,9 @@ Rules (exit 1 on any FAIL):
      (Oct 15: the back stair was called "one straight flight" from an upper-flight nosing line extended to the floor; the foot,
      where the options differ, was behind chairs in every frame used. The overhead, the film, the built TRIAL and the tool's
      own newel-to-wall-post line all showed the turned foot. The user: "marina doesn't have a straight flight".)
+  R8 pick check (records with "gate": 8): every metric check measured on a film or Marina frame (data film:/film-frame:/marina-frame:)
+     needs "pick": {"crop": <saved crop of the picked point, on disk>, "confirmed_by": <who/what independently said WHAT it is>}.
+     (Oct 16-17: the arch crown was picked on the landing's fascia and a "casing" that the film doesn't have was measured.)
 Check "type": metric (default) | angular | ratio | topological. Only a metric check needs a ruler; an angle, ratio or
 topology read with scale "none" is evidence, not a lead (Oct 15 review: the 35 deg pitch printed as a lead).
 Independence is per failure mode: a claim may list "risks" (e.g. extraction, scale, registration, model-fidelity) and
@@ -49,6 +52,9 @@ ROOT = Path(__file__).resolve().parents[2]
 
 LEADS = ("user-summary", "ai", "summary", "web-summary", "recollection", "standard", "none")
 NOT_RULERS = {"count", "none"}   # a count has no scale to share
+# self-consistency gates: they check the model against itself (mesh topology, overlaps, plan rules, trim runs), never against the
+# house, so they can't be R1's independent ruler (Oct 17 Codex review: R1 passed the arch record on tools:model_quality alone)
+SELF_GATES = ("model_quality", "zfight", "clash", "verify_plan", "trim_faces", "unity:build", "unity:walk-test")
 
 
 def kind(i):
@@ -68,15 +74,19 @@ def is_lead(x):
     return x.get("type", "metric") == "metric" and all(kind(i) in LEADS for i in x["scale"])
 
 
+def is_self(x):
+    """Rests only on the build's own self-consistency gates."""
+    return all(any(g in i.lower() for g in SELF_GATES) for i in x["data"])
+
+
 def gate(rec):
     out = []
     claim = rec["claim"]
     ci = inputs(claim)
-    indep = [c for c in rec["checks"] if c["agrees"] and not (inputs(c) & ci) and not is_lead(c)]
+    indep = [c for c in rec["checks"] if c["agrees"] and not (inputs(c) & ci) and not is_lead(c) and not is_self(c)]
     for c in rec["checks"]:
         shared = sorted(inputs(c) & ci)
-        how = ("LEAD, not evidence" if is_lead(c) else f"{c.get('type', 'metric')}, ") + ("" if is_lead(c) else "")
-        how = "LEAD, not evidence" if is_lead(c) else "consistency (shares " + ", ".join(shared) + ")" if shared else "independent"
+        how = "LEAD, not evidence" if is_lead(c) else "self-consistency gate, not a ruler" if is_self(c) else "consistency (shares " + ", ".join(shared) + ")" if shared else "independent"
         disp = f" -> disposition: {c['disposition']}" if c.get("disposition") else ""
         out.append(("info", f"check '{c['what']}' [{c.get('type', 'metric')}]: {'agrees' if c['agrees'] else 'DISAGREES'}, {how}{disp}"))
     risks = claim.get("risks")
@@ -112,6 +122,11 @@ def gate(rec):
         out.append(("ok" if r7 else "FAIL", "R7 layout: " + ("no alternatives listed" if not claim.get("alternatives") else
                     "no deciding parts listed" if not dec else f"parts not seen directly in 2+ frames (or extrapolated): {weak}" if weak else
                     f"{len(dec)} deciding parts each seen in 2+ frames against {len(claim['alternatives'])} alternatives")))
+    if rec.get("gate", 0) >= 8:
+        frame = [c for c in rec["checks"] + [claim] if c.get("type", "metric") == "metric" and any(kind(i) in ("film", "film-frame", "marina-frame") for i in c["data"])]
+        unpicked = [c.get("what", "claim")[:50] for c in frame if not (ROOT / c.get("pick", {}).get("crop", "\0")).is_file() or not c.get("pick", {}).get("confirmed_by", "").strip()]
+        out.append(("ok" if not unpicked else "FAIL", "R8 pick check: " + (f"{len(frame)} frame measurements each with a crop and a confirmation" if not unpicked else
+                    f"no saved crop or independent confirmation of what was picked: {unpicked}")))
     walk = rec.get("user_walk", "pending")
     out.append(("info", f"user walk: {walk}" + ("  (TRIAL: say so; not done until the user accepts it)" if walk == "pending" else "")))
     return out
@@ -164,6 +179,16 @@ def selftest():
     assert {m.split()[0]: lvl for lvl, m in gate(st) if lvl != "info"}["R7"] == "FAIL", "an extrapolated, once-seen foot decided a layout"
     st["claim"]["layout"]["decides"] = [{"part": "foot", "observed_in": ["marina-frame:926", "marina-frame:927.4"]}]
     assert {m.split()[0]: lvl for lvl, m in gate(st) if lvl != "info"}["R7"] == "ok"
+    arch = json.loads((ROOT / "changes/2026-10-16-foyer-arch-model.json").read_text())
+    arch["checks"] = [c for c in arch["checks"] if c["data"] == ["tools:model_quality"]]; arch["claim"].pop("risks", None)
+    assert arch["checks"] and {m.split()[0]: lvl for lvl, m in gate(arch) if lvl != "info"}["R1"] == "FAIL", "model_quality alone passed R1"
+    pk = {"gate": 8, "change": "x", "premise": "x", "history": [], "checks": [],
+          "claim": {"data": ["film:10673"], "scale": ["door-80in:10673"], "pick": {"crop": "tools/house/change_gate.py"}}}
+    assert {m.split()[0]: lvl for lvl, m in gate(pk) if lvl != "info"}["R8"] == "FAIL", "an unconfirmed frame pick passed R8"
+    pk["claim"]["pick"]["confirmed_by"] = "subagent: the crown of the arch, not the landing fascia"
+    assert {m.split()[0]: lvl for lvl, m in gate(pk) if lvl != "info"}["R8"] == "ok"
+    print("selftest PASS: a frame measurement without a confirmed pick crop fails R8 (gate 8)")
+    print("selftest PASS: a self-consistency gate (model_quality) alone fails R1")
     print("selftest PASS: a layout decided by an extrapolated, once-seen part fails R7")
     print("selftest PASS: an undisposed contradiction fails R6; an angle with no ruler is evidence; an uncovered listed risk fails R1")
     print("selftest PASS: the circular Buzz record fails R1/R2; adding an independent check and a review passes them;"

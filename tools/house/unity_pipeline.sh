@@ -2,13 +2,16 @@
 # unity_pipeline.sh: build, bake, load and capture House_WallGrid without touching the user's open editor until the load.
 #
 #   tools/house/unity_pipeline.sh setup      # (once) make the scratch build copy: ~/.cache/home-alone/ucopy/HomeAlone (+ spec link)
+#   tools/house/unity_pipeline.sh preflight  # the cheap Python gates (verify_plan, change_gate, build_models/trim_faces --check, model_quality);
+#                                            # build runs it first and refuses to launch Unity on a FAIL (HA_NO_PREFLIGHT=1 skips it)
 #   tools/house/unity_pipeline.sh build [unity args]   # copy Editor/Scripts/Models/HDRP.asset in, build the scene (batch); gates -> spec/captures/walk-test-wallgrid.txt
 #                                            # extra args go to Unity (e.g. -views trim-after.json: renders in the same session);
 #                                            # HA_OVERLAY=<dir>: drafts (dir/Editor, dir/Models ...) copied over Assets/ after the repo's, so
 #                                            # uncompiled C# or a model the open editor must not see yet never touches the repo
 #   tools/house/unity_pipeline.sh bake       # bake day + night (WINDOWED: batch mode has no sky; BakeLighting refuses it)
 #   tools/house/unity_pipeline.sh load       # copy scene + bake into the project, wait for import/compile, open, Play
-#   tools/house/unity_pipeline.sh all        # build, bake, load
+#   tools/house/unity_pipeline.sh all        # build, bake, load (stops at the first failure: every step exits non-zero on a FAIL)
+# build and bake append one line to spec/captures/build-log.jsonl (time, cmd, job=$HA_JOB, why=$HA_WHY, wall_s, exit): rebuilds per job
 #   tools/house/unity_pipeline.sh shot NAME x y z yaw pitch [day|night]     # live capture from a player pose (feet; eye +1.28)
 #   tools/house/unity_pipeline.sh cam  NAME px py pz lx ly lz vfov near [day|night]   # live capture from a camera pose (look-at)
 # Captures land in ~/.cache/home-alone/captures/NAME.png. They use a CLONE of the player camera in the user's running editor (batch
@@ -36,11 +39,28 @@ idle() {   # the user's editor: not compiling, not importing
   done; echo "editor never went idle" >&2; return 1
 }
 
-case "${1:-}" in
+CMD="${1:-}"; T0=$SECONDS
+case "$CMD" in build|bake)   # one JSON line per build/bake, whatever its outcome (STATUS 8p j)
+  trap 'e=$?; python3 -c "import json,sys,time; print(json.dumps({\"time\": time.strftime(\"%Y-%m-%dT%H:%M:%S\"), \"cmd\": sys.argv[1], \"job\": sys.argv[2], \"why\": sys.argv[3], \"wall_s\": int(sys.argv[4]), \"exit\": int(sys.argv[5])}))" "$CMD" "${HA_JOB:-}" "${HA_WHY:-}" $((SECONDS-T0)) $e >> "$REPO/spec/captures/build-log.jsonl"' EXIT;;
+esac
+
+case "$CMD" in
 setup)
   mkdir -p "$ROOT/ucopy"; rsync -a --exclude Temp "$P/" "$S/"; ln -sfn "$REPO/spec" "$ROOT/spec"
   echo "scratch copy at $S (first open imports the Library: minutes)";;
+preflight)   # cheap gates before any Unity launch (STATUS 8p f); runs them all, then fails if any failed
+  cd "$REPO"; bad=0
+  for g in "python3 tools/house/build_models.py --check" "python3 tools/house/trim_faces.py --check" \
+           "uv run -q --with numpy --with matplotlib --with pillow python -I tools/house/verify_plan.py" \
+           "uv run -q --with numpy --with pillow python -I tools/house/model_quality.py --report" \
+           "uv run -q python -I tools/house/change_gate.py $(grep -L '"user_walk": "rejected"' changes/*.json | tr '\n' ' ')"; do
+    n=$(echo "$g" | grep -oE '[a-z_]+\.py( --[a-z]+)?')
+    if out=$($g 2>&1); then echo "ok   $n"; else echo "FAIL $n"; echo "$out" | grep -E '^[^ ].*\.json:|^ *FAIL|Error' | grep -B1 -E '^ *FAIL|Error' | cut -c1-160 | head -8; bad=1; fi
+  done
+  [ $bad = 0 ] || { echo "preflight FAILED: Unity not launched (HA_NO_PREFLIGHT=1 to override)" >&2; exit 1; };;
 build)
+  python3 "$REPO/tools/house/trim_faces.py"   # the face model the trim is laid from (HOUSE-KERNEL step 1; the build refuses a stale one)
+  [ "${HA_NO_PREFLIGHT:-}" = 1 ] || "$0" preflight
   rsync -a "$P/Assets/Editor/" "$S/Assets/Editor/"; rsync -a "$P/Assets/Scripts/" "$S/Assets/Scripts/"
   rsync -a "$P/Assets/Models/" "$S/Assets/Models/"; cp "$P/Assets/Settings/HDRP.asset" "$S/Assets/Settings/"
   rsync -a --exclude Greybox --exclude Greybox.meta "$P/Assets/Textures/" "$S/Assets/Textures/"   # generated + Poly Haven maps (kitchen); Greybox/ is the build's own
@@ -48,21 +68,23 @@ build)
     [ -d "$P/Assets/$pk" ] && rsync -a "$P/Assets/$pk" "$P/Assets/$pk.meta" "$S/Assets/"; done
   [ -d "$P/Assets/Purchased" ] && rsync -a "$P/Assets/Purchased" "$S/Assets/" && { [ -f "$P/Assets/Purchased.meta" ] && cp "$P/Assets/Purchased.meta" "$S/Assets/" || true; }   # CGTrader buys (gitignored; may be absent: generated plants then)
   [ -n "${HA_OVERLAY:-}" ] && rsync -a "$HA_OVERLAY/" "$S/Assets/"
-  python3 "$REPO/tools/house/trim_faces.py"   # the face model the trim is laid from (HOUSE-KERNEL step 1; the build refuses a stale one)
-  "$UNITY" -batchmode -projectPath "$S" -executeMethod SpecGreybox.BuildWallGrid -quit -logFile "$ROOT/build.log" "${@:2}" || true
+  ux=0; "$UNITY" -batchmode -projectPath "$S" -executeMethod SpecGreybox.BuildWallGrid -quit -logFile "$ROOT/build.log" "${@:2}" || ux=$?
   if grep -q "error CS" "$ROOT/build.log"; then grep "error CS" "$ROOT/build.log" | head -5; exit 1; fi
   # a gate over its time budget (SpecGreybox.Step/BudgetGuard; zfight-check skill "Check speed") fails the build, naming the gate
   if grep -q "BUDGET FAIL" "$ROOT/build.log"; then grep -m5 "BUDGET FAIL" "$ROOT/build.log"; exit 1; fi
+  [ $ux = 0 ] || { grep -m5 -iE "exception|error" "$ROOT/build.log"; echo "Unity build exited $ux" >&2; exit $ux; }
   # artist-pipeline quality gate on the generated models (tools/house/model_quality.py; .claude/skills/artist-pipeline)
-  (cd "$REPO" && uv run -q --with numpy --with pillow python -I tools/house/model_quality.py --report >> spec/captures/walk-test-wallgrid.txt) || true
-  grep -E "^(Seam|Z-fight|Clash|Casing|Arch|Trim|Envelope|Props|Leak|Peek|Quality)|BLOCKED" "$REPO/spec/captures/walk-test-wallgrid.txt";;
+  (cd "$REPO" && uv run -q --with numpy --with pillow python -I tools/house/model_quality.py --report >> spec/captures/walk-test-wallgrid.txt) || q=$?
+  grep -E "^(Seam|Z-fight|Clash|Casing|Arch|Trim|Envelope|Props|Leak|Peek|Quality)|BLOCKED" "$REPO/spec/captures/walk-test-wallgrid.txt"
+  [ "${q:-0}" = 0 ] || { echo "quality gate FAILED (model_quality.py)" >&2; exit 1; };;
 bake)
   # the windowed bake opens the scratch project: no HDRP wizard popping up each time (a user-local editor preference)
   sed -i '' 's/m_WizardPopupAtStart: 1/m_WizardPopupAtStart: 0/' "$S/UserSettings/HDRPUserSettings.asset" 2>/dev/null || true
-  "$UNITY" -projectPath "$S" -executeMethod BakeLighting.Bake -logFile "$ROOT/bake.log" || true   # windowed; exits when done
-  grep -E "BakeLighting [DN]|Baked lights|Realtime lights|xception" "$ROOT/bake.log"
+  bx=0; "$UNITY" -projectPath "$S" -executeMethod BakeLighting.Bake -logFile "$ROOT/bake.log" || bx=$?   # windowed; exits when done
+  grep -E "BakeLighting [DN]|Baked lights|Realtime lights|xception" "$ROOT/bake.log" || true   # display only; the checks below decide
   # every authored-Baked light must be recorded as baked in the saved scene (BakeLighting.CheckBakedLights; the FilmFill bug, Oct 17)
-  if grep -q "BakeLighting FAIL" "$ROOT/bake.log" || ! grep -q "^Baked lights:" "$ROOT/bake.log"; then grep -m5 "BakeLighting FAIL" "$ROOT/bake.log"; echo "bake FAILED the baked-lights check" >&2; exit 1; fi;;
+  if grep -q "BakeLighting FAIL" "$ROOT/bake.log" || ! grep -q "^Baked lights:" "$ROOT/bake.log"; then grep -m5 "BakeLighting FAIL" "$ROOT/bake.log"; echo "bake FAILED the baked-lights check" >&2; exit 1; fi
+  [ $bx = 0 ] || { echo "bake: Unity exited $bx" >&2; exit $bx; };;
 load)
   (cd "$P" && "$CLI" command editor_stop >/dev/null 2>&1 || true)
   # switch the editor to an empty scene BEFORE overwriting House_WallGrid.unity: overwriting the open scene raised Unity's modal
@@ -102,5 +124,5 @@ shot|cam)
   (cd "$P" && "$CLI" command capture_game_view --camera TmpCam --save_path "Temp/$name.png" >/dev/null)
   ev "$clear UnityEngine.Object.FindFirstObjectByType<HouseNightMode>().SetNight(UnityEngine.PlayerPrefs.GetInt(\"tmpwas\")==1); return \"x\";" >/dev/null
   mv "$P/Assets/Temp/$name.png" "$CAP/"; rm -rf "$P/Assets/Temp" "$P/Assets/Temp.meta"; echo "$CAP/$name.png";;
-*) sed -n 2,14p "$0"; exit 1;;
+*) sed -n 2,17p "$0"; exit 1;;
 esac
