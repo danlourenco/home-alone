@@ -183,7 +183,8 @@
    "spec/captures/views/buzzdoor/after"
   ]
  },
- "user_walk": "pending",
+ "user_walk": "accepted",
  "user_words": "user Oct 17 (standing in Buzz's room facing its door): \"please place a real door like we have in other rooms upstairs in this opening, widening it if necessary\"; \"there's a good chance the door sizes are standard so it should be considered as part of this work\"",
- "gates": "build 1 (job buzzdoor, 70 s, exit 0) + bake 93 s: Z-fight 0, Clash 0 (11 allowed joints, unchanged), Props 20 store models / 1 problem (landing_table, pre-existing; 0 new), walk test 'ok buzz_room <-> hall_corridor (door, 0.81 m)', the service-stair BLOCKED line and 1 trim gap are unchanged from the previous build; openings.py 152 limits 0 broken (swing-room now tests furniture in spec/dressing/buzz.json; selftest plants a box in the Buzz swing and is refused); verify_plan 15 ok 0 FAIL; buzz_layout stage 8 PASS; change_gate 0 FAIL"
+ "gates": "build 1 (job buzzdoor, 70 s, exit 0) + bake 93 s: Z-fight 0, Clash 0 (11 allowed joints, unchanged), Props 20 store models / 1 problem (landing_table, pre-existing; 0 new), walk test 'ok buzz_room <-> hall_corridor (door, 0.81 m)', the service-stair BLOCKED line and 1 trim gap are unchanged from the previous build; openings.py 152 limits 0 broken (swing-room now tests furniture in spec/dressing/buzz.json; selftest plants a box in the Buzz swing and is refused); verify_plan 15 ok 0 FAIL; buzz_layout stage 8 PASS; change_gate 0 FAIL",
+ "user_walk_words": "user Oct 17, without walking it: \"Just accept it for now I believe you. We can change later if needed\" (open: no room-side head casing, swing partly assumed, DEVIATIONS 73)"
 }
