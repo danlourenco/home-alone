@@ -1,0 +1,188 @@
+{
+ "gate": 7,
+ "change": "Upstairs hall upgrade (Oct 17, TRIAL): the film's teal paint over a white wainscot (cap 0.76, baseboard 0.11) and dark wood floor in hall_end / hall_corridor / hall_corridor_south (finishes.json), the gallery's back wall papered with the stair well's damask; generated dressing tools/house/hifi_hall.py -> HallDressing.glb (fitted crimson runner, crown moulding, four brass sconces with frosted tulip shades and night lights, three urn stands, ten pictures incl. a tapestry, clock and barometer, globe, candlesticks, photographs, brass pot); two owned SIDE_TABLE_01 hall tables (store_props.json); the user's purchased poinsettias and ficus (gitignored HallPlants.glb); walk colliders (hall.json); the halls' generic overhead lamps removed (the sconces replace them)",
+ "target": "House_WallGrid",
+ "premise": "The film's hall set is dressed along the same walls as Marina's plan (the parents' table and two sconces on the vestibule's right wall, urns by the linen door, the attic table under a tapestry between two sconces); heights read on 80 in door rulers in the film's own wall planes hold in our hall",
+ "claim": {
+  "value": {
+   "paint_linear": [
+    0.128,
+    0.27,
+    0.192
+   ],
+   "wainscot_cap_top": 0.76,
+   "baseboard": 0.11,
+   "table_top": 0.762,
+   "sconce_glass": [
+    1.39,
+    1.59
+   ],
+   "urn_top": 0.62,
+   "runner_width": 0.7
+  },
+  "data": [
+   "film:410",
+   "film:10819",
+   "film:2687",
+   "film:10741",
+   "film:1276",
+   "film:2296"
+  ],
+  "scale": [
+   "door-80in:film410-attic",
+   "door-80in:film10819-parents"
+  ],
+  "upstream": [
+   "spec:door-80in"
+  ],
+  "how": "tools/house/hall_walls.py (--paint, --heights): ratios along one casing (one depth, level camera) for the cap and baseboard; the horizon method for the table top (10819: the table's top on the horizon with the cap rail); the table's own height as the ruler for the sconce and urn (2687). Positions along walls: the film's sequence fitted between our corners and doors (DEVIATIONS 63)",
+  "applies_to": [
+   "hall_end",
+   "hall_corridor",
+   "hall_corridor_south"
+  ],
+  "measured_in": [
+   "hall_end",
+   "hall_corridor",
+   "hall_corridor_south"
+  ],
+  "risks": [
+   "extraction"
+  ],
+  "alternatives": [
+   "the grey-box hall (plain walls, red carpet wall to wall, generic ceiling lamps)",
+   "the film's hall dressing (built)",
+   "Marina's hall (her dressing; DEVIATIONS 1: the upstairs look is the film's)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "parents' table with two sconces on hall_end's +x wall",
+     "observed_in": [
+      "film:2687",
+      "film:10741",
+      "film:10819"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "poinsettia urns by the linen door (closet_1 wall)",
+     "observed_in": [
+      "film:2687",
+      "film:10819",
+      "film:2085"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "attic-end table under a tapestry between two sconces on hall_corridor_south's +x wall",
+     "observed_in": [
+      "film:352",
+      "film:1276",
+      "film:2055",
+      "film:410"
+     ],
+     "extrapolated": false
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-15",
+   "what": "upstairs halls as grey-box (plain walls, red carpet floor, generic ceiling lamps)",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 2085 (a frame neither height read used), camera solved by refcam on the linen door and the bath doorway (two depths): the wainscot cap on the end wall reads 0.75 m (built cap top 0.76)",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:2085"
+   ],
+   "scale": [
+    "door-80in:film2085-linen"
+   ],
+   "upstream": [
+    "spec:door-80in"
+   ]
+  },
+  {
+   "what": "The foyer's film cameras (solved on flight 1's nosings, a stair-rise ruler) read the film set's wainscot cap at 0.765-0.785 m (DEVIATIONS 56): the same set's trim, a different ruler kind; built 0.76 (other frames, other cameras, another person's extraction method: tools/house/foyer_props_measure.py)",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "scale",
+    "extraction"
+   ],
+   "data": [
+    "film:1616",
+    "film:2677"
+   ],
+   "scale": [
+    "stair-rise:flight1"
+   ],
+   "upstream": [
+    "stair-rise:flight1"
+   ]
+  },
+  {
+   "what": "Film 2085: the gallery handrail reads 0.89-0.91 m on the same camera (a stock 36 in rail)",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:2085"
+   ],
+   "scale": [
+    "door-80in:film2085-linen"
+   ],
+   "upstream": [
+    "spec:door-80in"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/hall/before-film2085.png",
+   "spec/captures/views/hall/before-film410.png",
+   "spec/captures/views/hall/before-film10819.png",
+   "spec/captures/views/hall/before-film2687.png",
+   "spec/captures/views/hall/before-film2055.png",
+   "spec/captures/views/hall/before-sconces.png",
+   "spec/captures/views/hall/before-urns.png",
+   "spec/captures/views/hall/before-attic_end.png",
+   "spec/captures/views/hall/before-archA_hall.png",
+   "spec/captures/views/hall/before-film10819-night.png",
+   "spec/captures/views/hall/before-film2687-night.png",
+   "spec/captures/views/hall/before-sconces-night.png",
+   "spec/captures/views/hall/before-attic_end-night.png"
+  ],
+  "after": [
+   "spec/captures/views/hall/after-film2085.png",
+   "spec/captures/views/hall/after-film410.png",
+   "spec/captures/views/hall/after-film10819.png",
+   "spec/captures/views/hall/after-film2687.png",
+   "spec/captures/views/hall/after-film2055.png",
+   "spec/captures/views/hall/after-sconces.png",
+   "spec/captures/views/hall/after-urns.png",
+   "spec/captures/views/hall/after-attic_end.png",
+   "spec/captures/views/hall/after-archA_hall.png",
+   "spec/captures/views/hall/after-film10819-night.png",
+   "spec/captures/views/hall/after-film2687-night.png",
+   "spec/captures/views/hall/after-sconces-night.png",
+   "spec/captures/views/hall/after-attic_end-night.png"
+  ],
+  "note": "batch renders (RenderViews, -scene House_Before = the user's walked scene; after = scratch home-alone-3 build), views spec/captures/views/hall/views-{before,after}.json: film cameras (2085 solved; 410/10819/2687/2055 placed by their doors) and close views; side-by-side sheets spec/captures/views/hall/compare-*.jpg"
+ },
+ "user_walk": "pending",
+ "user_words": ""
+}

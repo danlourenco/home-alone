@@ -1,0 +1,17 @@
+PAINT-CAN TRAP TEST paint_can_1 (fixed dt 0.020 s, run at 0.02; solver 12/4; 2 cans)
+pivot (5.57, 0.92, -10.74) rope 1.509 m, pivot to can centre 1.684 m, can 5.2 kg, floor edge (5.58, -0.21, -10.74)
+1 REST 10 s: max drift 0.00 mm, max speed 0.00 mm/s
+2 PERIOD (10 deg across the flight, 7 periods): 2.606 s vs simple pendulum to the can's centre 2.608 s (-0.1%); energy rise max 0.00%, after 20 s -23.6%
+3 RELEASE 90 deg toward the landing, stair empty: reaches the bottom in 0.764 s (pendulum quarter period 0.766 s), 5.02 m/s there (free fall of its centre 1.509 m: 5.44; the rest spins the can on its bail); swings on 0.39 m past the rail under the gallery, centre up to -1.20 m vs the tie point; rope wrapped the floor edge: True; max speed 5.03 m/s; energy never above start: 0.00%; max rope stretch 13.8 mm; NaN False
+4 HIT: dummy climbed 2.9 s to x 5.493, feet -2.314 (ground +0.712), head top -0.514
+  hit 0.72 s after letting go: HEAD 1.64 m above the feet; can 5.01 m/s (18.0 km/h), 65 J, impulse 15.4 N s
+5 BOTH AT REST 5 s after a reset: max speed of any can 0.01 mm/s, max tilt 0.00 deg
+6 PLAYER up flight 1 between the hanging cans: reached x 3.03 (landing edge 2.985) in 1.2 s at y -0.69; cans pushed up to 1.41 m from rest
+PAINT-CAN TRAP TEST paint_can_2 (fixed dt 0.020 s, run at 0.02; solver 12/4; 2 cans)
+pivot (5.57, 0.92, -10.93) rope 1.509 m, pivot to can centre 1.684 m, can 5.2 kg, floor edge (5.58, -0.21, -10.93)
+1 REST 10 s: max drift 0.00 mm, max speed 0.01 mm/s
+2 PERIOD (10 deg across the flight, 7 periods): 2.606 s vs simple pendulum to the can's centre 2.608 s (-0.1%); energy rise max 0.00%, after 20 s -23.6%
+3 RELEASE 90 deg toward the landing, stair empty: reaches the bottom in 0.764 s (pendulum quarter period 0.766 s), 5.02 m/s there (free fall of its centre 1.509 m: 5.44; the rest spins the can on its bail); swings on 0.39 m past the rail under the gallery, centre up to -1.20 m vs the tie point; rope wrapped the floor edge: True; max speed 5.03 m/s; energy never above start: 0.00%; max rope stretch 13.8 mm; NaN False
+4 HIT: dummy climbed 2.9 s to x 5.493, feet -2.314 (ground +0.712), head top -0.514
+  hit 0.72 s after letting go: HEAD 1.64 m above the feet; can 5.01 m/s (18.0 km/h), 65 J, impulse 15.4 N s
+5 BOTH AT REST 5 s after a reset: max speed of any can 0.01 mm/s, max tilt 0.00 deg

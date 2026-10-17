@@ -31,6 +31,7 @@ mid = lambda r: (r[0] + r[1]) / 2
 wood, marble, brass, foil, bract, leaf, gilt, mat_ = (Part("Wood", "Dress_DarkWood"), Part("Marble", "Dress_Marble"), Part("Brass", "Door_Brass"),
                                                       Part("Foil", "Dress_Foil"), Part("Bracts", "Dress_Bract"), Part("Leaves", "Dress_Leaf"),
                                                       Part("Gilt", "Dress_Gilt"), Part("Mat", "Dress_Mat"))
+cyathia = Part("Cyathia", "Door_Brass")
 papers = {"print_left": Part("PaperL", "Print_Left"), "print_right": Part("PaperR", "Print_Right")}
 
 
@@ -71,7 +72,7 @@ def poinsettia(name, stand_name, seed):
         oy = top + 0.04 + 0.22 * (1 - (cr / (spread * 0.75)) ** 2) + random.uniform(-0.02, 0.02)          # a dome from the pot rim up
         for k in range(8):
             blade(bract, ox, oy, oz, 2 * math.pi * k / 8 + random.uniform(-0.2, 0.2), random.uniform(0.15, 0.7), random.uniform(0.14, 0.22), 0.045)
-        brass.lathe(ox, oz, oy - 0.005, [(0, 0.008), (0.012, 0.008)], n=6)                                 # yellow cyathia at the centre
+        cyathia.lathe(ox, oz, oy - 0.005, [(0, 0.008), (0.012, 0.008)], n=6)                               # yellow cyathia at the centre (own part: hidden with the plant)
 
 
 def framed_print(name):
@@ -97,7 +98,7 @@ M = {"Dress_DarkWood": material("Dress_DarkWood", (0.10, 0.045, 0.03), 0.35), "D
      "Print_Left": material("Print_Left", (1, 1, 1), 0.8), "Print_Right": material("Print_Right", (1, 1, 1), 0.8)}
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("FoyerDressing_HiFi", None); coll.objects.link(root)
-parts = (wood, marble, brass, foil, bract, leaf, gilt, mat_) + tuple(papers.values())
+parts = (wood, marble, brass, foil, bract, leaf, gilt, mat_, cyathia) + tuple(papers.values())
 for part in parts:
     if part.f:
         part.build(coll, M).parent = root

@@ -1,0 +1,66 @@
+{
+ "gate": 7,
+ "change": "Second-floor linen-closet prop door 24 in -> 30 in (0.61 -> 0.762 m), still centred on the closet's 0.986 m wall (z 8.893-9.655)",
+ "target": "House_WallGrid",
+ "premise": "The linen closet's door is a stock 30 x 80 in door, not 24 in",
+ "claim": {
+  "value": 0.762,
+  "data": [
+   "user-walk:2026-10-16",
+   "overhead-trace:upstairs"
+  ],
+  "scale": [
+   "door-30in:stock"
+  ],
+  "upstream": [
+   "overhead-trace:upstairs"
+  ],
+  "applies_to": [
+   "linen_closet"
+  ],
+  "measured_in": [
+   "linen_closet"
+  ],
+  "note": "user, Oct 16: stock door sizes wherever measurements allow; 24 in read small in the walk. The door's place along the wall is still from topology (DEVIATIONS 19)"
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film still of the upstairs hall (art/home_alone/references/foyer-film/upstairs-film-quality-target.png): the linen closet's six-panel leaf, inside its casing, is ~108 px wide by ~280-290 px from its head to the floor line of the wainscot beside it (same wall): width/height 0.37-0.39 = 29.6-31 in at 80 in tall; a 24 in leaf would read 0.30",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "film:upstairs-hall-target"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "fit: the closet's wall is 0.986 m (overhead trace); a 0.762 m door centred leaves 0.112 m each side, enough for the prop door's frame",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "overhead-trace:upstairs"
+   ],
+   "scale": [
+    "overhead-trace:upstairs"
+   ],
+   "upstream": [
+    "overhead-trace:upstairs"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/kitchen/before-linen-door.png"
+  ],
+  "after": [
+   "spec/captures/views/kitchen/after-linen-door.png"
+  ],
+  "note": "batch renders from the scratch copy (spec/captures/views/kitchen-wing-{before,after}.json)"
+ },
+ "user_walk": "pending",
+ "user_words": "size kept; user asked for a white door from the Free Wood Door Pack on it (Oct 16), still pending"
+}

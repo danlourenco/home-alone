@@ -1,0 +1,296 @@
+{
+ "note": "Asset Store models (bought by the user Oct 16; licensed for use, NOT redistribution: the packs are gitignored, a clone without them builds the grey-box boxes). SpecGreybox.StoreProps fits each prefab into its box (spec metres; y above the ground floor), turned so its long side follows the box's long side and its flat back faces `back` (spec axis), and hides the dressing boxes it replaces (their colliders stay). Missing pack = warning, nothing placed.",
+ "pieces": [
+  {
+   "name": "landing_table",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/SIDE_TABLE_01.prefab",
+   "x": [
+    1.59,
+    1.9
+   ],
+   "z": [
+    10.595,
+    11.334
+   ],
+   "y0": 2.326,
+   "height": 0.648,
+   "hides": [
+    "landing_table"
+   ],
+   "source": "the demilune hall table on the main-stair landing (film 11966/12133; user pick Oct 16). Box: spec/dressing/foyer.json landing_table (Marina 312 s; width checked in film 12133), 1 cm off the window wall, on the landing carpet (2.326). The model is 0.945 x 0.473 x 0.645 m: width and depth fitted to the measured box (x0.78, x0.66), height kept. Deviation: cabriole legs; the film's are straight turned legs.",
+   "back": "-x"
+  },
+  {
+   "name": "grandfather_clock",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_PendulumClock_01.prefab",
+   "x": [
+    9.76,
+    10.09
+   ],
+   "z": [
+    5.446,
+    5.998
+   ],
+   "y0": 0.0,
+   "height": 2.069,
+   "hides": [],
+   "collide": true,
+   "source": "Marina 1124-1130 s: a grandfather clock on the dining room's front wall, centred on the pier between the two French windows (1128 s: clock centre 298 px vs pier centre 295 px of a 100 px pier = +4 cm, within the read). Pier z 5.117-6.327 (spec/house_spec.ground.json front_french_* spans); back 4 cm off the wall face x 10.13 (wainscot cap 3 cm proud + 1 cm). Model at native size 0.552 x 0.330 x 2.069 m (Marina's reads ~2.0 m).",
+   "back": "+x"
+  },
+  {
+   "name": "linen_door",
+   "floor": "upper",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    7.168,
+    7.228
+   ],
+   "z": [
+    8.846,
+    9.702
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "back": "+x",
+   "hides": [
+    "PropDoor"
+   ],
+   "source": "user, Oct 16: 'use one of those white doors from the door pack for the upstairs linen closet'; Door_3 White chosen by the user (four panels, two tall over two tall) over an exact six-panel: the film's door (art/home_alone/references/foyer-film/upstairs-film-quality-target.png) is a white six-panel colonial, a logged deviation. Leaf = the 30 x 80 in opening (spec/geometry.json linen_closet fake_door, z 8.893-9.655, height 2.032); the pack's frame adds its own proportions (outer width = leaf x 1.124, height x 1.027, from Wood_Door.FBX: leaf 64.85 x 136.2 cm, frame 72.9 x 139.9 cm), so its panels stretch 1.28x in height. On the hall-side face (x 7.233), 0.5 cm proud, 6 cm deep; the hall-side PropDoor board is hidden, its collider keeps the closet shut."
+  },
+  {
+   "name": "girls_a_door",
+   "floor": "upper",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    5.7123,
+    5.7723
+   ],
+   "z": [
+    6.6656,
+    7.5424
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "back": "-x",
+   "hides": [
+    "Casing"
+   ],
+   "open": 0,
+   "hinge": "hi",
+   "source": "user, Oct 16: 'use that same door in the attic door casing and both girls rooms' (Door_3 White, as the linen closet). Walk-through doorway, the leaf is CLOSED for now (user, Oct 16: 'close the doors to the girls' rooms and attic for now'; was open 90 deg; set open back to 90 to reopen; hinge kept); the pack frame (outer = leaf x 1.124 wide, x 1.027 tall) replaces the generated casing on the hall face (its renderer hidden, collider kept), 0.5 cm proud, 6 cm deep. Hinge side and swing are ASSUMED (nearest room corner; no frame shows them): hinge at z 7.494 (0.14 m from girls_room_a's corner), swings into the room. Opening z 6.714-7.494 (0.78 m, spec/geometry.json)."
+  },
+  {
+   "name": "girls_b_door",
+   "floor": "upper",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    5.785,
+    5.845
+   ],
+   "z": [
+    12.1007,
+    12.9573
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "back": "-x",
+   "hides": [
+    "Casing"
+   ],
+   "open": 0,
+   "hinge": "lo",
+   "source": "user, Oct 16: 'use that same door in the attic door casing and both girls rooms' (Door_3 White, as the linen closet). Walk-through doorway, the leaf is CLOSED for now (user, Oct 16: 'close the doors to the girls' rooms and attic for now'; was open 90 deg; set open back to 90 to reopen; hinge kept); the pack frame (outer = leaf x 1.124 wide, x 1.027 tall) replaces the generated casing on the hall face (its renderer hidden, collider kept), 0.5 cm proud, 6 cm deep. Hinge side and swing are ASSUMED (nearest room corner; no frame shows them): hinge at z 12.148 (0.58 m from girls_room_b's corner), swings into the room. Opening z 12.148-12.910."
+  },
+  {
+   "name": "attic_door",
+   "floor": "upper",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    6.0647,
+    6.9213
+   ],
+   "z": [
+    13.456,
+    13.516
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "back": "+z",
+   "hides": [
+    "Casing"
+   ],
+   "open": 0,
+   "hinge": "lo",
+   "swing": "out",
+   "source": "user, Oct 16: 'use that same door in the attic door casing and both girls rooms' (Door_3 White, as the linen closet). Walk-through doorway, the leaf is CLOSED for now (user, Oct 16: 'close the doors to the girls' rooms and attic for now'; was open 90 deg; set open back to 90 to reopen; hinge kept); the pack frame (outer = leaf x 1.124 wide, x 1.027 tall) replaces the generated casing on the hall face (its renderer hidden, collider kept), 0.5 cm proud, 6 cm deep. Hinge side and swing are ASSUMED (nearest room corner; no frame shows them): hinge at x 6.112, swings OUT into hall_corridor_south: into the stair it would hit the first step (z 14.082, 0.42 m past the wall). Opening x 6.112-6.874."
+  },
+  {
+   "name": "den_desk",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Desk_01.prefab",
+   "x": [
+    8.08,
+    8.78
+   ],
+   "z": [
+    18.1,
+    19.3
+   ],
+   "y0": 0.0,
+   "height": 0.78,
+   "yaw": 270,
+   "back": "",
+   "hides": [],
+   "collide": true,
+   "source": "Den (Oct 16, TRIAL, changes/2026-10-16-den.json, DEVIATIONS 53): Fadnn Vintage Interior (owned; furniture-plan N5/N6). Marina's writing table at the front window (f153: legs z 18.41-18.99, x 8.03-8.79; centred z ~18.7, ~0.4 m off the window wall). Her table is smaller with cabriole legs; the pack's pedestal desk (1.61 x 0.94) fitted to 1.2 x 0.7 x 0.78 (x0.75/0.74/0.91), drawers to the room (yaw 270 = native +Z front to spec -x)"
+  },
+  {
+   "name": "den_desk_chair",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Chair_01.prefab",
+   "x": [
+    7.55,
+    8.03
+   ],
+   "z": [
+    18.35,
+    18.77
+   ],
+   "y0": 0.0,
+   "height": 0.95,
+   "yaw": 90,
+   "back": "",
+   "hides": [],
+   "collide": true,
+   "source": "Den (Oct 16, TRIAL, changes/2026-10-16-den.json, DEVIATIONS 53): Fadnn Vintage Interior (owned; furniture-plan N5/N6). the chair at the desk, facing the window (Marina f153/M09, at the desk's living-side half). Bentwood (sourcing N6), native size"
+  },
+  {
+   "name": "den_wall_chair",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Chair_01.prefab",
+   "x": [
+    8.7,
+    9.18
+   ],
+   "z": [
+    16.45,
+    16.87
+   ],
+   "y0": 0.0,
+   "height": 0.95,
+   "yaw": 270,
+   "back": "",
+   "hides": [],
+   "collide": true,
+   "source": "Den (Oct 16, TRIAL, changes/2026-10-16-den.json, DEVIATIONS 53): Fadnn Vintage Interior (owned; furniture-plan N5/N6). the side chair against the front wall by the living-side corner, facing the room (Marina f153: legs x 9.03 z 16.61; f161/f129)"
+  },
+  {
+   "name": "den_side_table",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Table_01.prefab",
+   "x": [
+    5.55,
+    6.14
+   ],
+   "z": [
+    16.3,
+    16.89
+   ],
+   "y0": 0.0,
+   "height": 0.62,
+   "back": "",
+   "hides": [],
+   "source": "Den (Oct 16, TRIAL, changes/2026-10-16-den.json, DEVIATIONS 53): Fadnn Vintage Interior (owned; furniture-plan N5/N6). the round side table with the lamp by the armchair, against the living wall (Marina f101/M27/f93: left of the armchair, below the left pictures); read off f101, not camera-solved"
+  },
+  {
+   "name": "den_tv",
+   "prefab": "Assets/VTC_AV-2062s/Prefabs/VTC_AV-2062s.prefab",
+   "x": [
+    2.386,
+    3.072
+   ],
+   "z": [
+    17.76,
+    18.48
+   ],
+   "y0": 0.883,
+   "height": 0.6412,
+   "yaw": 180,
+   "back": "-x",
+   "hides": [],
+   "collide": true,
+   "source": "user-bought CRT TV JVC AV-2049S (Valentyn Bahinskyi, Asset Store; pack VTC_AV-2062s, gitignored). Film 2877/2868: the den's TV is a black JVC filling the centre bay; measured 0.72 m wide (TV/bay height 0.91 against our 0.777 clear bay). The model is a 20 in set (0.466 x 0.415 x 0.444 m), scaled UNIFORMLY x1.545 into this box (0.72 x 0.641 x 0.686): its tube runs to the bay's back panel (x 2.385) and its face stands 0.30 m proud of the shelf front (the bookcase's 0.40 depth is assumed, DEVIATIONS 53/55). On the VCR (top 0.882). yaw 180: the prefab's screen faces -x at yaw 0 (probed in scratch: 253 vertices across the full 0.466 width at -x vs 12 at +x)"
+  },
+  {
+   "name": "living_chest",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/DRAWER_CAB_01.prefab",
+   "x": [
+    8.84,
+    9.74
+   ],
+   "z": [
+    11.585,
+    12.03
+   ],
+   "y0": 0.0,
+   "height": 0.8,
+   "hides": [],
+   "collide": false,
+   "source": "film 5650/5640 (a dark chest of drawers in the living room's front/foyer-side corner under the porcelain-dog brackets, a black-shaded lamp on it) and Marina f105 (a chest there too). Box authored inside the pier (front wall 9.954, the foyer opening ends x 8.58): 0.90 x 0.445 x 0.80, back 1.5 cm off the foyer-side wall; the pack's low 4-drawer chest (1.14 x 0.39 x 0.70) fitted (x0.79 wide, x1.14 deep, x1.14 tall). Collider: spec/dressing/living.json chest. Its lamp is hifi_living.py's (living.json lamps.chest)",
+   "back": "-z"
+  },
+  {
+   "name": "living_tree",
+   "prefab": "Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Prefabs/ChristmasTree.prefab",
+   "x": [
+    1.845,
+    3.595
+   ],
+   "z": [
+    14.295,
+    16.045
+   ],
+   "y0": 0.0,
+   "height": 2.4,
+   "yaw": 0,
+   "hide_parts": [
+    "LightBulbs",
+    "LightCord"
+   ],
+   "hides": [],
+   "collide": false,
+   "source": "user pick Oct 16: Asset Store 'Christmas Tree, Wreath, Adjustable Garland and Bubble Lights' (AlterEgos; licensed for use, not redistribution: gitignored). Film 10600 / Marina f3, f165: the rear wall's den-side corner by the fireplace. Box = the model's own footprint (1.86 x 1.85 native, after its mini lights and cord are left out) at a uniform 0.941 scale (2.55 -> 2.40 m under the 2.438 ceiling). Its warm-white mini lights and cord are not the film's (multicolour C7s): hifi_living.py puts C7 bulbs on its envelope. No bubble lights, wreath or garland: the film's living room shows none (the front-door wreath is FrontDoor.glb's). Collider: spec/dressing/living.json tree"
+  },
+  {
+   "name": "hall_table_parents",
+   "floor": "upper",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/SIDE_TABLE_01.prefab",
+   "x": [
+    6.591,
+    6.891
+   ],
+   "z": [
+    5.53,
+    6.43
+   ],
+   "y0": 0.0,
+   "height": 0.762,
+   "back": "+x",
+   "source": "Upstairs hall (Oct 16, TRIAL, changes/2026-10-16-upstairs-hall.json; furniture-plan H2): owned SIDE_TABLE_01 as the film's dark hall table (film 10819/2687/10741/410: on the vestibule's right wall seen from the stair, its far end at the parents' end wall). Box from spec/dressing/hall.json consoles: top 0.762 (film 10819: on the horizon with the cap rail, camera height 0.759 on the door ruler), 0.90 x 0.30, back 3 cm off the wall (the cap rail is 3 cm proud at the table's height). The model (0.945 x 0.473 x 0.645) is fitted x0.95 / x0.63 / x1.18: slimmer and taller; its cabriole legs differ from the film's square tapered legs (DEVIATIONS 63)."
+  },
+  {
+   "name": "hall_table_attic",
+   "floor": "upper",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/SIDE_TABLE_01.prefab",
+   "x": [
+    7.003,
+    7.303
+   ],
+   "z": [
+    12.4,
+    13.3
+   ],
+   "y0": 0.0,
+   "height": 0.762,
+   "back": "+x",
+   "source": "Upstairs hall (Oct 16, TRIAL, changes/2026-10-16-upstairs-hall.json; furniture-plan H2): owned SIDE_TABLE_01 as the film's dark hall table (film 352/410/1276/1333: beside the attic door under the tapestry). Box from spec/dressing/hall.json consoles: top 0.762 (film 10819: on the horizon with the cap rail, camera height 0.759 on the door ruler), 0.90 x 0.30, back 3 cm off the wall (the cap rail is 3 cm proud at the table's height). The model (0.945 x 0.473 x 0.645) is fitted x0.95 / x0.63 / x1.18: slimmer and taller; its cabriole legs differ from the film's square tapered legs (DEVIATIONS 63)."
+  }
+ ]
+}

@@ -29,6 +29,7 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | y = -1.73 | back_hall, rear_passage, under_landing | -1.74, -1.73, -1.73 | -1.73 | 0.2 |
 | y = 5.55 | vestibule, dining_room | 5.61, 5.51 | 5.55 | 5.8 |
 | x = 6.90 | dining_room, kitchen, back_stair | 6.92, 6.93, 6.86 | 6.90 | 3.9 |
+| x = -1.62 | sunroom, kitchen | -1.62, -1.62 | -1.62 | 0.0 |
 | y = -2.21 | kitchen, back_stair | -2.21, -2.21 | -2.21 | 0.0 |
 | y = -6.08 | kitchen, back_stair | -6.08, -6.09 | -6.08 | 0.6 |
 
@@ -57,7 +58,7 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | foyer / rear_passage | 14 | 1.38 |  |
 | foyer / under_landing | 14 | 0.99 |  |
 | foyer / vestibule | 23 | 3.29 |  |
-| kitchen / sunroom | 22 | 2.93 |  |
+| kitchen / sunroom | 22 | 3.60 |  |
 | living_room / under_landing | 31 | 1.26 |  |
 | living_room / vestibule | 31 | 0.83 |  |
 | rear_passage / under_landing | 14 | 1.27 |  |
@@ -75,7 +76,7 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | vestibule | 3.36 x 1.00 | 3.57 x 1.04 | 3.4 → 3.7 | +10.8% |
 | dining_room | 4.55 x 5.70 | 4.63 x 5.87 | 25.9 → 27.2 | +4.9% |
 | sunroom | 3.73 x 6.91 | 3.78 x 6.95 | 25.8 → 26.3 | +1.9% |
-| kitchen | 7.89 x 9.14 | 7.92 x 9.31 | 48.0 → 49.2 | +2.5% |
+| kitchen | 8.52 x 9.14 | 8.55 x 9.31 | 53.3 → 54.5 | +2.3% |
 | back_stair | 0.87 x 3.87 | 0.98 x 3.87 | 3.4 → 3.8 | +12.5% |
 
 ## 4. Doors and openings
@@ -86,12 +87,12 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 | living_room / foyer | arch | 2.51-4.00 | 1.49 | read in the overhead |
 | foyer / dining_room | arch | 2.37-4.08 | 1.71 | read in the overhead |
 | foyer / vestibule | arch | 8.09-9.74 | 1.65 | read in the overhead |
-| dining_room / kitchen | door | 5.72-6.73 | 1.01 | read in the overhead |
-| dining_room / kitchen | door | 2.97-4.00 | 1.03 | read in the overhead |
+| dining_room / kitchen | door | 5.83-6.54 | 0.71 | measured |
+| dining_room / kitchen | door | 3.01-3.73 | 0.71 | measured |
 | dining_room / sunroom | fake_door | 2.23-4.10 | 1.87 | read in the overhead |
 | back_stair / kitchen | open | 5.95-6.93 | 0.98 | full shared wall |
 | back_stair / kitchen | open | -6.08--2.21 | 3.87 | full shared wall |
-| foyer / kitchen | arch | -1.53--0.55 | 0.98 | read in the overhead |
+| foyer / kitchen | arch | -1.51--0.53 | 0.98 | measured |
 | foyer / rear_passage | arch | 8.15-9.53 | 1.38 | measured |
 | rear_passage / back_hall | fake_door | 8.26-9.18 | 0.92 | read in the overhead |
 | rear_passage / back_hall | fake_door | -2.63--1.87 | 0.76 | measured |
@@ -101,8 +102,8 @@ Anchors (SfM-measured, weight 5): . Tolerances: align 0.12 m, wall 0.08-0.5 m.
 
 | rule | result | value |
 |---|---|---|
-| adult fits door dining_room/kitchen | pass | 1.01 m wide x 2.03 m |
-| adult fits door dining_room/kitchen | pass | 1.03 m wide x 2.03 m |
+| adult fits door dining_room/kitchen | pass | 0.71 m wide x 2.03 m |
+| adult fits door dining_room/kitchen | pass | 0.71 m wide x 2.03 m |
 | adult fits hall foyer | pass | narrowest 3.65 m (min 0.90) |
 | adult fits hall back_hall | pass | narrowest 2.84 m (min 0.90) |
 | adult fits hall rear_passage | pass | narrowest 1.27 m (min 0.90) |

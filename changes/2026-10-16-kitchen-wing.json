@@ -1,0 +1,186 @@
+{
+ "gate": 7,
+ "change": "Kitchen wing widened from 4.20 m to 5.00 m inside: the window-seat wall moves out 0.635 m to spec z -0.915 (flush with the sunroom's outer wall), the sink wall out 0.162 m to z 4.085; length unchanged. Back door 36 x 80 in centred at z 2.525 (was 0.82 m wide at z 3.036), end-wall window 32 x 32 in centred z 0.614 (was 0.75 x 0.98 at z 1.153), sink window 32 x 32 in on the sink wall centred x -3.813, sill 1.22 m above the counter (was 0.72 x 1.33 at x -3.57, sill 0.82 below counter height). The seat-wall windows keep their positions along the wall",
+ "target": "House_WallGrid",
+ "premise": "The kitchen wing was traced on wall tops in Marina's angled overhead and came out 0.8 m too narrow; inside it is about 5.0 m wide, its window-seat side flush with the sunroom's outer wall",
+ "claim": {
+  "value": {
+   "wing_inner_width_m": 5.0,
+   "seat_wall_z": -0.915,
+   "sink_wall_z": 4.085,
+   "back_door_centre_z": 2.525,
+   "end_window_centre_z": 0.614,
+   "sink_window_centre_x": -3.813
+  },
+  "data": [
+   "marina-frame:1101",
+   "marina-frame:1098",
+   "marina-frame:1104",
+   "sfm:kitchen-sink"
+  ],
+  "scale": [
+   "door-80in:1101",
+   "counter-36in:1101"
+  ],
+  "upstream": [
+   "door-80in:1101"
+  ],
+  "how": "tools/house/kitchen_walls.py (default run): COLMAP of Part 1 1088-1112 s, door (end) wall and sink wall as RANSAC planes 90.0 deg apart, the seat wall parallel (0.7 deg). Width between the seat and sink planes 5.27 m at the 80 in leaf; the leaf sits in the door's recess, so its picks on the wall plane read small and the scale large: the casing's own opening, on the wall plane, reads 2.12 m tall at that scale against 2.056 m for an 80 in door (opening-80in ruler: 5.11 m); the counter where it meets the wall reads 0.911 m (counter-36in: 5.28 m). Marina's range at bias-free rulers: 5.11-5.28 m. The second clip (--wing, Part 1 868-950 s) cannot locate the sink wall cleanly (soffit, cabinets and window in every view; histogram peaks 4.70-5.04 m) and is reported, not used. Built value: 5.00 m, the real-house plan's width (check 1), which lies at the low edge of Marina's spread; along-wall positions are Marina's fractions of her end wall (scale-free)",
+  "applies_to": [
+   "kitchen"
+  ],
+  "measured_in": [
+   "kitchen"
+  ],
+  "risks": [
+   "scale",
+   "extraction"
+  ]
+ },
+ "alternatives": [
+  "current build: 4.20 m wide (overhead wall tops), seat wall at z -0.28 jogging 0.64 m in from the sunroom",
+  "Marina's leaf ruler: 5.27 m, sink wall at z 4.355",
+  "Marina's whole wing at her standard-object rulers: 5.1-5.3 m wide AND 5-9% longer (end wall 0.4-0.7 m further out)",
+  "built: 5.00 m wide (real-house plan), seat side flush with the sunroom, length unchanged"
+ ],
+ "layout": {
+  "note": "not a layout claim in R7's sense (no stair, nothing turns); recorded for the reader",
+  "decides": [
+   {
+    "part": "seat wall flush with the sunroom's outer wall",
+    "observed_in": [
+     "real-plan:dimensioned-first-floor"
+    ],
+    "extrapolated": false,
+    "note": "one source only: Marina's overhead shows a jog (check below); the film frames used do not show that side"
+   },
+   {
+    "part": "back door near the sink corner, end window toward the seat side",
+    "observed_in": [
+     "marina-frame:1101",
+     "marina-frame:878",
+     "film:6902",
+     "film:7068"
+    ],
+    "extrapolated": false
+   }
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-10-13",
+   "what": "kitchen + breakfast traced from Marina's overhead (wall tops), 4.20 m wide",
+   "outcome": "failed"
+  }
+ ],
+ "premise_reviewed": "One earlier attempt (the overhead trace). Its input, wall tops in an angled overhead, is not used here; the width comes from in-room planes and an independent plan.",
+ "checks": [
+  {
+   "what": "Real-house plan (Eric's visitor reconstruction of the film's location house), its own scale from four dimension arrows (16.52/16.67/16.67/16.60 px/ft): wing inner width 4.93 m; registered on our main block (8 wall faces, residuals <= 0.12 m): 5.00 m, the seat side flush with the sunroom (z -0.868 vs -0.915). Door opening z 2.13-3.10 (centre 2.61; built 2.525), end window z 0.21-1.03 (centre 0.62; built 0.614). tools/house/kitchen_walls.py --plan",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "scale",
+    "extraction"
+   ],
+   "data": [
+    "real-plan:dimensioned-first-floor"
+   ],
+   "scale": [
+    "plan-arrows:dimensioned-first-floor"
+   ],
+   "upstream": [
+    "plan-arrows:dimensioned-first-floor"
+   ]
+  },
+  {
+   "what": "Film exterior brick ruler (tools/house/brick_ruler.py, film 4575 and 7068): back-door / end-window centre spacing 1.81-1.93 m (modular to standard brick); built 1.911 m",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "scale"
+   ],
+   "data": [
+    "film:4575",
+    "film:7068"
+   ],
+   "scale": [
+    "brick:modular"
+   ],
+   "upstream": [
+    "brick:modular"
+   ]
+  },
+  {
+   "what": "Marina's leaf ruler alone (80 in leaf picked on the wall plane): 5.27 m",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "marina-frame:1101",
+    "sfm:kitchen-sink"
+   ],
+   "scale": [
+    "door-80in:1101"
+   ],
+   "upstream": [
+    "door-80in:1101"
+   ],
+   "disposition": "biased high: the leaf stands in the door's recess behind the wall plane; the opening read on the wall plane in the same frame is 3% tall for an 80 in door. Not used; DEVIATIONS 46"
+  },
+  {
+   "what": "Marina's wing length (second clip, Part 1 868-950 s, planes 0.3-0.4 deg parallel): end wall to the kitchen/sunroom wall 7.89-8.25 m, to the dining wall 9.62-10.05 m at the three on-wall rulers; built 7.508 / 9.312",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "sfm:kitchen",
+    "marina-frame:878"
+   ],
+   "scale": [
+    "opening-80in:878",
+    "counter-36in:878"
+   ],
+   "upstream": [
+    "opening-80in:878"
+   ],
+   "disposition": "length not changed: the real-house plan (registered) puts the end wall at x -5.166 (built -5.192), the kitchen/sunroom wall at 2.363 (2.316) and the dining wall at 4.024 (4.12), i.e. the built length; Marina's rulers read this whole wing 5-9% large in both directions, so her length excess is logged (DEVIATIONS 46), not built"
+  },
+  {
+   "what": "Marina's ground overhead (994 s), as traced and as seen in spec/captures/trace-review-ground.png: the wing's floor reads ~4.2 m wide and its seat-side wall stands in from the sunroom's outer wall by ~0.6 m",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "overhead-trace:ground"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ],
+   "upstream": [
+    "overhead-trace:ground"
+   ],
+   "disposition": "the overhead is the weakest source in the verify-plan order (an angled render read at the image's corner, wall tops); two in-room plane fits (5.11-5.28 m at on-wall rulers) and the independent real-house plan (4.93-5.00 m, flush) both put the wing ~0.8 m wider; the flush seat side rests on the plan alone (DEVIATIONS 46)"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/kitchen/before-note1506.png",
+   "spec/captures/views/kitchen/before-sink-wall.png",
+   "spec/captures/views/kitchen/before-seat-wall.png",
+   "spec/captures/views/kitchen/before-wing-long.png",
+   "spec/captures/views/kitchen/before-ext-rear.png",
+   "spec/captures/views/kitchen/before-ext-7068.png",
+   "spec/captures/views/kitchen/before-ext-side.png"
+  ],
+  "after": [
+   "spec/captures/views/kitchen/after-note1506.png",
+   "spec/captures/views/kitchen/after-sink-wall.png",
+   "spec/captures/views/kitchen/after-seat-wall.png",
+   "spec/captures/views/kitchen/after-wing-long.png",
+   "spec/captures/views/kitchen/after-ext-rear.png",
+   "spec/captures/views/kitchen/after-ext-7068.png",
+   "spec/captures/views/kitchen/after-ext-side.png"
+  ],
+  "note": "batch renders from the scratch copy (spec/captures/views/kitchen-wing-{before,after}.json); lighting not judged from them"
+ },
+ "user_walk": "accepted",
+ "user_words": "ok kitchen looks a lot better ... i like the back door a lot (Oct 16, after walking House_WallGrid)"
+}

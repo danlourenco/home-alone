@@ -11,6 +11,65 @@
    "source": "Marina 226 and 228 s: deep red paint over a white panelled wainscot with a cap rail; colour from the ratio of the red wall to the white wainscot in the same light (226: red (76,17,8), wainscot (160,155,141) sRGB, wainscot albedo 0.85 assumed); wainscot cap height solved in 228 by tools/house/wall_scale.py (0.704; the house's foyer wainscot is 0.705); film 184/190 (Kevin's dinner) shows the same red room",
    "floor": "wood",
    "floor_source": "Marina 226 and 228 s: the same dark hardwood as the foyer"
+  },
+  "den": {
+   "upper": [
+    0.329,
+    0.461,
+    0.459
+   ],
+   "wainscot_m": 0.14,
+   "source": "film 2877 (Kevin's movie night in the den; the film shows the den, so its colour is used, as the foyer paper, user Oct 15): flat teal-green PAINT, no repeat (not paper). Colour = wall/baseboard albedo ratio in the same light, 26 columns just above/below the board's top edge (tools/house/den_walls.py paint(); board albedo 0.85 assumed): linear 0.089/0.179/0.178 (IQR 0.007/0.020/0.015). Marina's den (Part 1 572 s, clip frame 69) is a darker pure green (linear 0.013/0.051/0.016): DEVIATIONS 51. No wainscot: 0.14 = the baseboard only (no cap rail is laid under 0.3 m).",
+   "floor": "wood",
+   "floor_source": "Marina Part 1 555-596 s: the foyer's dark hardwood with an oriental rug; the film's den floor (2856-2877) reads lighter (a pale rug or carpet), not measured: DEVIATIONS 50"
+  },
+  "living_room": {
+   "paper": "spec/dressing/living_wallpaper.png",
+   "upper": [
+    0.86,
+    0.84,
+    0.85
+   ],
+   "wainscot_m": 0.14,
+   "source": "film 10636 (frontal on the den-side wall) and 5640/5650: cream paper with rose bouquets hung from ribbon swags in a half-drop, cut by tools/house/film_wallpaper.py --living (repeat 0.533 x 0.79 m; DEVIATIONS 57); a white baseboard only (0.14 = the baseboard; no chair rail or wainscot in 5650/10636/10600). 'upper' is the fallback colour (the paper's ground) when the PNG is missing. Marina's paper is a different design (columns of bouquets and scrolls): film first",
+   "floor": "wood",
+   "floor_source": "film 5650/5640: dark stained strip hardwood (and Marina's dark hardwood); the foyer's wood"
+  },
+  "hall_end": {
+   "upper": [
+    0.393,
+    0.556,
+    0.476
+   ],
+   "wainscot_m": 0.73,
+   "baseboard_m": 0.11,
+   "source": "film 2687/10741/410/1276/2296 (the hall at night, lamp-lit): flat teal-green PAINT over a white panelled wainscot. Colour = wall / white wainscot ratio in the same light, per column just above / below the cap rail's top edge, the brighter (lit) half of the columns, white albedo 0.85 (tools/house/hall_walls.py --paint): linear 0.128/0.270/0.192 (124 columns; IQR 0.053/0.067/0.049; per-frame spread 0.07/0.12/0.06). Cap top 0.76 m on the 80 in door ruler (film 410 attic door 0.758-0.761, film 10819 parents' doorway 0.759; check on another ruler: the foyer's film cap reads 0.765-0.785 on the stair-nosing cameras, DEVIATIONS 56): wainscot_m 0.73 = the cap's top 3 cm lower (the cap runs h-0.01..h+0.03). Baseboard top 0.105-0.112 m (film 10819, three columns on the receding left wall, local scale from the floor-to-horizon run) -> 0.11. The film's wainscot is panelled (raised panels); built flat like the dining room's: DEVIATIONS 63",
+   "floor": "wood",
+   "floor_source": "film 2296/410/10741/10819: dark strip hardwood with bare borders either side of the crimson runner (spec/dressing/hall.json runner); the foyer's wood"
+  },
+  "hall_corridor": {
+   "upper": [
+    0.393,
+    0.556,
+    0.476
+   ],
+   "wainscot_m": 0.73,
+   "baseboard_m": 0.11,
+   "source": "film 2687/10741/410/1276/2296 (the hall at night, lamp-lit): flat teal-green PAINT over a white panelled wainscot. Colour = wall / white wainscot ratio in the same light, per column just above / below the cap rail's top edge, the brighter (lit) half of the columns, white albedo 0.85 (tools/house/hall_walls.py --paint): linear 0.128/0.270/0.192 (124 columns; IQR 0.053/0.067/0.049; per-frame spread 0.07/0.12/0.06). Cap top 0.76 m on the 80 in door ruler (film 410 attic door 0.758-0.761, film 10819 parents' doorway 0.759; check on another ruler: the foyer's film cap reads 0.765-0.785 on the stair-nosing cameras, DEVIATIONS 56): wainscot_m 0.73 = the cap's top 3 cm lower (the cap runs h-0.01..h+0.03). Baseboard top 0.105-0.112 m (film 10819, three columns on the receding left wall, local scale from the floor-to-horizon run) -> 0.11. The film's wainscot is panelled (raised panels); built flat like the dining room's: DEVIATIONS 63",
+   "floor": "wood",
+   "floor_source": "film 2296/410/10741/10819: dark strip hardwood with bare borders either side of the crimson runner (spec/dressing/hall.json runner); the foyer's wood"
+  },
+  "hall_corridor_south": {
+   "upper": [
+    0.393,
+    0.556,
+    0.476
+   ],
+   "wainscot_m": 0.73,
+   "baseboard_m": 0.11,
+   "source": "film 2687/10741/410/1276/2296 (the hall at night, lamp-lit): flat teal-green PAINT over a white panelled wainscot. Colour = wall / white wainscot ratio in the same light, per column just above / below the cap rail's top edge, the brighter (lit) half of the columns, white albedo 0.85 (tools/house/hall_walls.py --paint): linear 0.128/0.270/0.192 (124 columns; IQR 0.053/0.067/0.049; per-frame spread 0.07/0.12/0.06). Cap top 0.76 m on the 80 in door ruler (film 410 attic door 0.758-0.761, film 10819 parents' doorway 0.759; check on another ruler: the foyer's film cap reads 0.765-0.785 on the stair-nosing cameras, DEVIATIONS 56): wainscot_m 0.73 = the cap's top 3 cm lower (the cap runs h-0.01..h+0.03). Baseboard top 0.105-0.112 m (film 10819, three columns on the receding left wall, local scale from the floor-to-horizon run) -> 0.11. The film's wainscot is panelled (raised panels); built flat like the dining room's: DEVIATIONS 63",
+   "floor": "wood",
+   "floor_source": "film 2296/410/10741/10819: dark strip hardwood with bare borders either side of the crimson runner (spec/dressing/hall.json runner); the foyer's wood"
   }
  }
 }

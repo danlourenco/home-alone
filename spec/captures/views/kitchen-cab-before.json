@@ -1,0 +1,100 @@
+[
+ {
+  "name": "kitchen/before-cab-note1506",
+  "pos": [
+   -2.684,
+   -1.346,
+   -3.116
+  ],
+  "look_at": [
+   -3.666,
+   -1.417,
+   -2.941
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "kitchen/before-cab-sink-wall",
+  "pos": [
+   -3.6,
+   -1.43,
+   0.4
+  ],
+  "look_at": [
+   -3.6,
+   -1.65,
+   -4.2
+  ],
+  "vfov": 75
+ },
+ {
+  "name": "kitchen/before-cab-seat-wall",
+  "pos": [
+   -3.0,
+   -1.43,
+   -3.7
+  ],
+  "look_at": [
+   -3.0,
+   -1.65,
+   0.9
+  ],
+  "vfov": 75
+ },
+ {
+  "name": "kitchen/before-cab-wing-long",
+  "pos": [
+   1.5,
+   -1.43,
+   -2.0
+  ],
+  "look_at": [
+   -5.19,
+   -1.55,
+   -1.6
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "kitchen/before-cab-film6902",
+  "pos": [
+   -0.9,
+   -1.43,
+   -1.3
+  ],
+  "look_at": [
+   -5.19,
+   -1.75,
+   -2.3
+  ],
+  "vfov": 55
+ },
+ {
+  "name": "kitchen/before-cab-island",
+  "pos": [
+   0.9,
+   -1.35,
+   0.1
+  ],
+  "look_at": [
+   -3.0,
+   -2.0,
+   -1.3
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "kitchen/before-cab-fridge",
+  "pos": [
+   -3.6,
+   -1.43,
+   -0.6
+  ],
+  "look_at": [
+   -2.0,
+   -1.7,
+   -4.0
+  ],
+  "vfov": 65
+ }
+]

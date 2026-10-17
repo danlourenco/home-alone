@@ -1,0 +1,142 @@
+{
+ "gate": 7,
+ "change": "Kitchen night lighting from visible fixtures only: a fluorescent strip (housing + emissive diffuser) under each of the seven wall uppers over counters, each with a rectangle light (500 lm/m, 4100 K, shadowed); the breakfast chandelier (brass, 8 arms, frosted tulip shades; 2000 lm, 2700 K) at x 1.128 z 5.09 hanging to 1.50 m; a new upper between the sink window and the fridge (film 10448); the room's generic ceiling lamps (Light_kitchen, Light_back_stair) removed. All on the night layer: off by day (DEVIATIONS 44)",
+ "target": "House_WallGrid",
+ "premise": "The film's night kitchen is lit by under-cabinet fluorescent strips (and, beyond what the frames show, by the breakfast chandelier Marina models); every light comes from a visible fixture",
+ "claim": {
+  "value": {
+   "strips": "under end_A, end_B, sink_S1, sink_S2, seat_U1, seat_U2 (+ end_A lit in 9812/10452/6042, end_B in 6042, sink_S2 in 10448)",
+   "chandelier_xz": [
+    1.128,
+    5.09
+   ],
+   "chandelier_hub_bottom_h": 1.5
+  },
+  "data": [
+   "film:9812",
+   "film:10452",
+   "film:6042",
+   "film:10448",
+   "sfm:kitchen",
+   "marina-frame:917",
+   "marina-frame:933"
+  ],
+  "scale": [
+   "counter-36in:878"
+  ],
+  "upstream": [
+   "counter-36in:878"
+  ],
+  "how": "strips: one per upper over a counter, under its front (film frames show the lit strip just behind the cabinet's lower front edge). Chandelier: its hub bottom triangulated from Marina f197 and f261 of the big clip (rays miss by 3 mm), mapped into the built wing like the cabinets (DEVIATIONS 47); arms, shades and rod authored from those frames. Brightness: tools/house/film_light_match.py --night (region-luminance ratios against film 9812, 10452, 6042)",
+  "applies_to": [
+   "kitchen",
+   "back_stair"
+  ],
+  "measured_in": [
+   "kitchen"
+  ],
+  "assumed": {
+   "back_stair": "DEVIATIONS 48"
+  },
+  "alternatives": [
+   "generic ceiling lamps per room (before)",
+   "fixtures from the film and Marina only (built)",
+   "fixtures plus a ceiling light in the kitchen (none seen in the film or Marina)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "lit strips under the end-wall uppers",
+     "observed_in": [
+      "film:9812",
+      "film:10452",
+      "film:6042"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "an upper with a lit strip between the sink window and the breakfast end",
+     "observed_in": [
+      "film:10448",
+      "film:10446"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "breakfast chandelier over the table",
+     "observed_in": [
+      "marina-frame:917",
+      "marina-frame:933",
+      "film:island-detail"
+     ],
+     "extrapolated": false
+    }
+   ]
+  },
+  "surface": "ceiling-plane",
+  "surface_note": "the chandelier hangs from the built ceiling plane (2.438 m, DEVIATIONS 11); no ceiling height is claimed or changed"
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film night frames 9812, 10452, 6042: under-cabinet strips visible and lit under the end-wall uppers; 10448: lit under the sink-wall upper on the breakfast side; no ceiling fixture appears in any night kitchen frame",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:9812",
+    "film:10452",
+    "film:6042",
+    "film:10448"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "Film day frame film-island-detail.jpg: a brass chandelier with white shades over the breakfast table (independent of Marina's model)",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:island-detail"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "film_light_match.py --night (batch -night renders, 500 lm/m 4100 K): backsplash/upper-cabinet front film 19.4 / 11.9 / 17.0 vs ours 50.1 / 44.8 / 39.3 (2.3-3.8x: our cabinet fronts darker); backsplash/floor film 11.5 vs ours 44.3 (3.9x); backsplash/door film 6.7 / 5.2 vs ours 7.6 / 2.9 (1.13x, 0.56x); backsplash warmth R/B film 1.4-1.8 vs ours 5.4-7.5",
+   "agrees": false,
+   "type": "ratio",
+   "data": [
+    "film:9812",
+    "film:10452",
+    "film:6042"
+   ],
+   "scale": [
+    "none"
+   ],
+   "disposition": "the film's night kitchen also has an off-screen set key on the cabinet fronts and floor that no visible fixture provides (user: every light from a fixture), so with fixtures only the room reads ~1.2-2 stops darker away from the counters; warmth is not judged from batch renders: the BEFORE batch render with neutral generic lamps reads as warm (R/B ~2 in sRGB on the same wall), so the batch night pipeline itself skews warm. Live capture in the user's editor is the check (DEVIATIONS 48)"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/kitchen/before-night-film6042.png",
+   "spec/captures/views/kitchen/before-night-film9812.png",
+   "spec/captures/views/kitchen/before-night-film10452.png",
+   "spec/captures/views/kitchen/before-night-film10448.png",
+   "spec/captures/views/kitchen/before-night-breakfast.png"
+  ],
+  "after": [
+   "spec/captures/views/kitchen/after-night-film6042.png",
+   "spec/captures/views/kitchen/after-night-film9812.png",
+   "spec/captures/views/kitchen/after-night-film10452.png",
+   "spec/captures/views/kitchen/after-night-film10448.png",
+   "spec/captures/views/kitchen/after-night-breakfast.png",
+   "spec/captures/views/kitchen/after-day-film9812.png",
+   "spec/captures/views/kitchen/after-day-breakfast.png"
+  ],
+  "note": "batch renders with -night from the scratch copy (spec/captures/views/kitchen-night-{before,after}.json, approximate film poses); lighting can only be judged live"
+ },
+ "user_walk": "pending"
+}

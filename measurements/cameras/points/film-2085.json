@@ -1,0 +1,8 @@
+[
+ {"uv": [822, 325], "xyz": [7.233, 2.032, 8.893], "note": "linen door: leaf top-left (opening z 8.893, head 2.032; geometry.json fake_door)"},
+ {"uv": [1022, 325], "xyz": [7.233, 2.032, 9.655], "note": "linen door: leaf top-right"},
+ {"uv": [822, 848], "xyz": [7.233, 0.0, 8.893], "note": "linen door: foot left (floor line behind the balusters)"},
+ {"uv": [1022, 848], "xyz": [7.233, 0.0, 9.655], "note": "linen door: foot right"},
+ {"uv": [1148, 362], "xyz": [8.371, 2.032, 10.274], "note": "bath doorway: left jamb at the head (hall face x 8.371)"},
+ {"uv": [1148, 800], "xyz": [8.371, 0.0, 10.274], "note": "bath doorway: left jamb foot (where the hall carpet stops)"}
+]

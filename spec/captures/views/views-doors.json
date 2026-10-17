@@ -1,0 +1,4 @@
+[{"name": "props/girls-a-door", "pos": [6.6, 1.5, -6.4], "look_at": [5.6, 1.0, -7.1], "vfov": 65},
+ {"name": "props/girls-b-door", "pos": [6.9, 1.5, -11.8], "look_at": [5.7, 1.0, -12.5], "vfov": 65},
+ {"name": "props/attic-door", "pos": [6.9, 1.5, -11.9], "look_at": [6.5, 1.0, -13.6], "vfov": 65},
+ {"name": "props/girls-a-door-inside", "pos": [3.8, 1.5, -6.3], "look_at": [5.6, 1.0, -7.1], "vfov": 65}]

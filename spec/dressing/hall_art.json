@@ -1,0 +1,203 @@
+{
+ "note": "public-domain works (Wikimedia Commons metadata as fetched) and invented dials; uv = atlas rectangle [u0, v0, u1, v1], v up",
+ "pictures": {
+  "rose": {
+   "file": "File:Redoute - Rosa centifolia foliacea.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Redoute_-_Rosa_centifolia_foliacea.jpg",
+   "licence": "Public domain",
+   "artist": "Pierre-Joseph Redout\u00e9",
+   "credit": "\"Les Roses\" by Pierre-Joseph Redout\u00e9, published in Paris in 1817-24, page 290; book scan from the Library of Congress: http://lccn.loc.gov/50049695",
+   "date": "1824",
+   "art": "redoute_rose",
+   "uv": [
+    0.0419921875,
+    0.751953125,
+    0.2080078125,
+    0.998046875
+   ]
+  },
+  "small1": {
+   "file": "File:Pomological Watercolor POM00007055.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Pomological_Watercolor_POM00007055.jpg",
+   "licence": "Public domain",
+   "artist": "Strange, M.",
+   "credit": "http://usdawatercolors.nal.usda.gov/pom/catalog.xhtml?id=POM00007055",
+   "date": "21 January 1915",
+   "art": "pom_pear",
+   "uv": [
+    0.291015625,
+    0.751953125,
+    0.45849609375,
+    0.998046875
+   ]
+  },
+  "small2": {
+   "file": "File:Pomological Watercolor POM00004848.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Pomological_Watercolor_POM00004848.jpg",
+   "licence": "Public domain",
+   "artist": "Thompson, Harriet L.",
+   "credit": "http://usdawatercolors.nal.usda.gov/pom/catalog.xhtml?id=POM00004848",
+   "date": "1915",
+   "art": "pom_apple",
+   "uv": [
+    0.541015625,
+    0.751953125,
+    0.70849609375,
+    0.998046875
+   ]
+  },
+  "landscape": {
+   "file": "File:James Merritt Ives (American, 1824-1895), Nathaniel Currier (American, 1813-1888) - American Homestead, Winter - 1946.448.4 - Cleveland Museum of Art.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:James_Merritt_Ives_(American,_1824-1895),_Nathaniel_Currier_(American,_1813-1888)_-_American_Homestead,_Winter_-_1946.448.4_-_Cleveland_Museum_of_Art.jpg",
+   "licence": "Public domain",
+   "artist": "",
+   "credit": "Cleveland Museum of Art",
+   "date": "1868",
+   "art": "landscape_oak",
+   "uv": [
+    0.751953125,
+    0.80419921875,
+    0.998046875,
+    0.94580078125
+   ]
+  },
+  "tapestry": {
+   "file": "File:Stadhuis Maastricht, verdure wandtapijt (1).jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Stadhuis_Maastricht,_verdure_wandtapijt_(1).jpg",
+   "licence": "Public domain",
+   "artist": "unknown designer Karel van Straten (photographer)",
+   "credit": "Synthese. Twaalf facetten van cultuur en natuur in Zuid-Limburg (1977), page 248-261. DSM, Heerlen, the Netherlands",
+   "date": "1705",
+   "art": "verdure",
+   "uv": [
+    0.052734375,
+    0.501953125,
+    0.19677734375,
+    0.748046875
+   ]
+  },
+  "print_up": {
+   "file": "File:Winter Morning in the Country MET DT9292.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Winter_Morning_in_the_Country_MET_DT9292.jpg",
+   "licence": "CC0",
+   "artist": "Currier and Ives",
+   "credit": "This file was donated to Wikimedia Commons as part of a project by the Metropolitan Museum of Art . See the Image and Data Resources Open Access Policy",
+   "date": "1873 date QS:P571,+1873-00-00T00:00:00Z/9",
+   "art": "landscape_a",
+   "uv": [
+    0.251953125,
+    0.513671875,
+    0.498046875,
+    0.736328125
+   ]
+  },
+  "print_low": {
+   "file": "File:John Schutler after George Henry Durrie, Home to Thanksgiving, 1867, NGA 66577.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:John_Schutler_after_George_Henry_Durrie,_Home_to_Thanksgiving,_1867,_NGA_66577.jpg",
+   "licence": "Public domain",
+   "artist": "John Schutler after George Henry Durrie",
+   "credit": "This file was donated to Wikimedia Commons as part of a project by the National Gallery of Art . Please see the Gallery's Open Access Policy .",
+   "date": "1867 date QS:P571,+1867-00-00T00:00:00Z/9",
+   "art": "landscape_b",
+   "uv": [
+    0.5390625,
+    0.501953125,
+    0.71044921875,
+    0.748046875
+   ]
+  },
+  "tiny1": {
+   "file": "File:Pomological Watercolor POM00005005.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Pomological_Watercolor_POM00005005.jpg",
+   "licence": "Public domain",
+   "artist": "Amanda Newton",
+   "credit": "http://usdawatercolors.nal.usda.gov/pom/catalog.xhtml?id=POM00005005",
+   "date": "1928",
+   "art": "pom_plum",
+   "uv": [
+    0.78271484375,
+    0.501953125,
+    0.96728515625,
+    0.748046875
+   ]
+  },
+  "tiny2": {
+   "file": "File:Pomological Watercolor POM00005183.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Pomological_Watercolor_POM00005183.jpg",
+   "licence": "Public domain",
+   "artist": "Deborah Griscom Passmore",
+   "credit": "http://usdawatercolors.nal.usda.gov/pom/catalog.xhtml?id=POM00005183",
+   "date": "1905",
+   "art": "pom_peach",
+   "uv": [
+    0.03271484375,
+    0.251953125,
+    0.21728515625,
+    0.498046875
+   ]
+  },
+  "tiny3": {
+   "file": "File:Pomological Watercolor POM00005378.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Pomological_Watercolor_POM00005378.jpg",
+   "licence": "Public domain",
+   "artist": "Amanda Newton",
+   "credit": "http://usdawatercolors.nal.usda.gov/pom/catalog.xhtml?id=POM00005378",
+   "date": "29 July 1908",
+   "art": "pom_cherry",
+   "uv": [
+    0.28271484375,
+    0.251953125,
+    0.46728515625,
+    0.498046875
+   ]
+  },
+  "photo1": {
+   "file": "File:African American girl, portrait, cabinet card - DPLA - 3575c3990819eab7477b8046ff6e8933.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:African_American_girl,_portrait,_cabinet_card_-_DPLA_-_3575c3990819eab7477b8046ff6e8933.jpg",
+   "licence": "No restrictions",
+   "artist": "",
+   "credit": "File URL IIIF manifest Catalog record",
+   "date": "1890",
+   "art": "photo_girl",
+   "uv": [
+    0.537109375,
+    0.251953125,
+    0.712890625,
+    0.498046875
+   ]
+  },
+  "photo2": {
+   "file": "File:B.E. Canavan and Winifred Canavan Skinner (cabinet card is by LaRush, Artist) (8738376217).jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:B.E._Canavan_and_Winifred_Canavan_Skinner_(cabinet_card_is_by_LaRush,_Artist)_(8738376217).jpg",
+   "licence": "Public domain",
+   "artist": "mudra51 from USA",
+   "credit": "B.E. Canavan and Winifred Canavan Skinner (cabinet card is by LaRush, Artist)",
+   "date": "2013-05-14 14:43",
+   "art": "photo_pair",
+   "uv": [
+    0.78857421875,
+    0.251953125,
+    0.9609375,
+    0.498046875
+   ]
+  },
+  "clock": {
+   "licence": "invented (drawn by tools/house/hall_textures.py)",
+   "uv": [
+    0.001953125,
+    0.001953125,
+    0.248046875,
+    0.248046875
+   ]
+  },
+  "barometer": {
+   "licence": "invented (drawn by tools/house/hall_textures.py)",
+   "uv": [
+    0.251953125,
+    0.001953125,
+    0.498046875,
+    0.248046875
+   ]
+  }
+ }
+}

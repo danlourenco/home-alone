@@ -13,3 +13,27 @@
 unity/HomeAlone/Assets/_Recovery/
 unity/HomeAlone/Assets/_Recovery.meta
 __pycache__/
+
+# Unity Asset Store purchases: licensed for use, not redistribution (public repo). Never commit.
+unity/HomeAlone/Assets/Fadnn - Vintage Interior Furniture Pack/
+unity/HomeAlone/Assets/Fadnn - Vintage Interior Furniture Pack.meta
+unity/HomeAlone/Assets/Classic Wooden Furniture Pack/
+unity/HomeAlone/Assets/Classic Wooden Furniture Pack.meta
+unity/HomeAlone/Assets/Free Wood Door Pack/
+unity/HomeAlone/Assets/Free Wood Door Pack.meta
+unity/HomeAlone/Assets/ChristmasTreeAndGarland/
+unity/HomeAlone/Assets/ChristmasTreeAndGarland.meta
+
+# user-supplied clips for the den TV (DenTV.cs): never committed (public repo)
+unity/HomeAlone/Assets/StreamingAssets/LocalMedia/
+unity/HomeAlone/Assets/StreamingAssets/LocalMedia.meta
+# Asset Store: CRT TV JVC AV-2049S (user-bought, Oct 16; licensed for use, not redistribution)
+unity/HomeAlone/Assets/VTC_AV-2062s/
+unity/HomeAlone/Assets/VTC_AV-2062s.meta
+
+# CGTrader purchases (user-bought Oct 16; Royalty Free, no AI: use OK, NO redistribution): the fitted models built from them
+# by tools/house/purchased_plants.py. The raw downloads stay in sfm-work/purchased/ (also ignored).
+unity/HomeAlone/Assets/Purchased/
+unity/HomeAlone/Assets/Purchased.meta
+# renders showing the bought (CGTrader) models: kept local, not published with the public repo
+spec/captures/views/purchased/

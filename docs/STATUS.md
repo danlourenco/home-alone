@@ -1,5 +1,53 @@
 # Current status — start here
 
+## RESUME HERE (Oct 17, 2026, morning): downstairs dressed room by room; artist pipeline + upstairs hall paused mid-way
+
+**Read this section first.** Everything below is history except where pointed to. All work is TRIAL unless a change record says
+`user_walk: accepted`. The latest full build (scratch `~/.cache/home-alone/ucopy`) is LOADED in the user's editor (Oct 17 ~06:30)
+but the user has not walked it yet.
+
+### State of each job
+| Job | State | Where |
+|---|---|---|
+| Kitchen wing 5.00 m, back door + dog door, cabinets/island/tile | ACCEPTED (user: "EXCELLENT") | changes/2026-10-16-kitchen-wing.json, -kitchen-cabinets.json |
+| Kitchen wallpaper (film 6910 cut), curtains/sheers (dining + kitchen) | TRIAL, loaded | DEVIATIONS 50; tools/house/hifi_sheers.py |
+| Kitchen night lights (under-cabinet strips, breakfast chandelier) | TRIAL | changes/2026-10-16-kitchen-night-lights.json |
+| Breakfast table (Marina oval, 2 pedestals) | TRIAL; FILM shows a SINGLE turned pedestal (1151, 1049); top shape round vs oval NOT measured (steep view): solve film 1151's camera and measure the top before changing | hifi_breakfast_table.py, spec/dressing/kitchen.json |
+| Kitchen/breakfast fixtures: sconce pair + gallery + desk, back-stair sconce (only ONE found; user: second not clearly seen: leave), chandelier 6 arms | TRIAL | changes/2026-10-17-kitchen-fixtures.json |
+| French doors: 4 pairs (foyer/dining, foyer/living, den/living open; sunroom closed) | TRIAL; user Oct 17: KEEP all. Film confirms foyer/living (10636, 12138); dining + den pairs are Marina-only | changes/2026-10-16-french-doors.json |
+| Den: film teal paint (wall colour too red/grey: candidate linear 0.052/0.179/0.170, user decision open), windows, bookcase + clutter, lamps, JVC TV (bought pack VTC_AV-2062s) playing the user's clip (Assets/StreamingAssets/LocalMedia/tv.mp4, gitignored; walls muffle it) | den ACCEPTED ("fantastic"); TV/lamps TRIAL | changes/2026-10-16-den.json; DenTV.cs |
+| Living room: film paper, windows/drapes, mantel, generated console upright piano (user: keep), bought Christmas tree (AlterEgos pack) with C7 bulbs | TRIAL | changes/2026-10-16-living-room.json; check: tree hides the den-side rear window; possible doubled white poinsettia; den/living French door vs piano |
+| Foyer finish: film console/mirror/chairs, bench, rugs, gallery (public-domain art), purchased ficus + poinsettias | TRIAL; user OK'd a WIDER ficus crown (~0.75 m, pot 0.1 m off the stair): not done yet | changes/2026-10-16-foyer-finish.json; tools/house/purchased_plants.py |
+| Paint-can trap (2 cans, film 10700-10724) | TRIAL | docs/paint-can-trap.md; keys P/L/K/B/T |
+| House-wide shadow pass: cached shadows (fixes flicker squares), tiers, contact shadows | TRIAL, loaded, NOT checked live | DEVIATIONS 62; Editor/SpecGreybox.Shadows.cs, ShadowAudit.cs, Scripts/ShadowRefresh.cs |
+| Artist pipeline (skill .claude/skills/artist-pipeline) + foyer arch rebuilt smooth | PAUSED mid-way (user wants jobs SEQUENCED to save tokens) | changes/2026-10-16-foyer-arch-model.json; tools/house/hifi_pipeline.py, hifi_foyer_arch.py, model_quality.py |
+| Upstairs hall: film teal paint, trim, sconces, dressing, the film's elliptical ARCH (film 2080-2100; 2050-2060 for sconces), black-urn poinsettias (H1) | PAUSED mid-way, in its own scratch copy ~/.cache/home-alone-3 | changes/2026-10-17-upstairs-hall.json, -upstairs-arches.json; hifi_hall*.py; build reports Clash 2 in HallDressing (WIP) |
+
+### NEXT (in order; run ONE agent at a time: the user hit the usage limit twice running six in parallel)
+1. User walks the loaded build (day + night): shadow flicker gone (den plant pose 7.407,-2.996,-17.872 yaw 284), French doors,
+   kitchen fixtures, plants, tree, TV. Answer each walk note from its own pose (live capture).
+2. Resume the artist pipeline + foyer arch (finish model_quality.py gate, arch proof, before/after), then roll the pipeline out.
+3. Resume the upstairs hall (in ~/.cache/home-alone-3) incl. the arch and H1 poinsettias.
+4. Breakfast table: single pedestal; measure the top shape from a solved film-1151 camera.
+5. Ficus crown wider; den wall saturation (ask the user); night white balance (agents measured nights 3-10x warmer than the film:
+   ask the user about a house-wide night grade); sheers too bright at night (shared voile material).
+6. Z-fight reported 2 pairs in some builds: trace and fix.
+
+### Operating rules learned Oct 16-17 (also in memory)
+- One scratch copy per heavy job (HA_SCRATCH=~/.cache/home-alone-N tools/house/unity_pipeline.sh ...); disk is tight (~34 GB free;
+  copy 1's Library is 26 GB). Wait for a copy with an ANCHORED pattern:
+  `while pgrep -f '^/Applications/Unity/Hub/Editor/[^ ]*/MacOS/Unity .*/\.cache/home-alone/ucopy' >/dev/null; do sleep 10; done`
+  (unanchored patterns match the waiting shell itself and deadlock).
+- Never save uncompiled C# into the repo's Assets/Editor or Scripts: the user's open editor compiles them live (Safe Mode once).
+  Draft and compile in scratch, then copy.
+- `load` now switches the editor to an empty scene before copying (overwriting the open scene raised a modal reload dialog that froze
+  the editor for hours). If editor commands time out with the screen awake, ask what dialog is showing. The editor also freezes
+  while the Mac's screen sleeps.
+- Purchased assets (Asset Store packs, CGTrader models, the user's video) are gitignored: the repo is public. Never send the user's
+  email or personal data in any web request (one agent leaked it into Wikimedia's logs via User-Agent).
+- Built-ins are generated to measurement (artist-pipeline skill); organic/soft hero pieces are bought or scanned
+  (docs/furniture-plan.json: $0 start plan, hero upgrades $81.99).
+
 ## RESUME HERE (Oct 16, 2026, afternoon): systems pass done; day lighting matches the film's set; walk notes queued
 
 **Read this section first. Then read `tasks/wall-grid-plan.md` ("Walk notes queued", including the deferred overhang split) and
@@ -25,6 +73,8 @@
   - Film camera poses solved earlier are in `spec/captures/views/views-foyer-film-after.json` and `film10248.json`.
 - New script in `Assets/Scripts`: create it in the repo project FIRST. Each project gives a new `.cs` its own `.meta` GUID, and a
   scene built in scratch then points to a missing script. `load` warns when they differ.
+- The same GUID trap hits new MODELS and TEXTURES (Oct 16: the kitchen cabinets loaded with empty meshes): `load` now copies the
+  scratch copy's `.meta` for every built model and texture into the project ("synced GUID: ...").
 - Discriminator technique for "why does it look wrong":
   - Capture the same view with one HDRP frame setting off (SkyReflection, ReflectionProbe, SSR) and compare region means. That found
     the reflection-probe box bug in minutes.
@@ -52,6 +102,31 @@
 - Mac: Unity HDRP has no ray tracing on Metal (measured: `SystemInfo.supportsRayTracing` False; Unity 6000.6 reports macOS RT
   features None). Bounce light is baked.
 
+### Oct 16 late: answered so far
+- Lighting notes 11:16 / 11:43 / 11:49 / 12:03 / 12:48 re-captured live: they read right now.
+- Note 11:26 (landing window low): no change. Film 11966 puts the sill at ~0.52 of the hall table (0.385-0.405 m above the landing
+  for a 0.74-0.78 m table) vs our 0.36 m; the undressed landing table makes it feel lower.
+- **Note 15:06 (kitchen back door + dog door): waiting on a user decision**, https://claude.ai/artifact/9EFUbsKnUxUx6Pvc6U16Gg.
+  `tools/house/kitchen_walls.py` (new SfM `sfm-work/rooms/kitchen-sink`, Part 1 1088-1112 s, door wall + sink wall planes) puts
+  Marina's kitchen end wall at 5.27 m inside (80 in door ruler; the counter lands on 0.911 m high, 0.641 m deep; tiles 0.286 m) vs the
+  traced 4.20 m. The door casing is 1.05 m from the sink-wall corner (ours 0.40), the leaf is 36 x 80 in (film 6902 ratio 0.44),
+  and the sink-window stool is at 1.23 m (our sill 0.82, below the counter). Her stated 477 ft2 also says the traced kitchen zone
+  (340 ft2) is too small. Recommended: re-measure the whole kitchen/breakfast wing and rebuild it wider. The film exterior's
+  window-door spacing (1.81-1.93, brick ruler) still holds.
+- **Kitchen wing rebuilt (TRIAL, not committed, not loaded; changes/2026-10-16-kitchen-wing.json, DEVIATIONS 46):** 5.00 m wide inside (seat wall flush with the sunroom at z -0.915, sink wall z 4.085), length unchanged; back door 36 x 80 in at z 2.525 as a model (`tools/house/hifi_back_door.py` -> BackDoor.glb: nine-lite sash, dog door, tie-back curtains + sheer, brass knob/deadbolt/hinges); end and sink windows 32 x 32 in, sills 1.22. Linen-closet prop door 30 in (changes/2026-10-16-linen-door-30in.json). Scratch copy built and baked (gates 0); `unity_pipeline.sh load` NOT run (user busy in the editor). Renders: spec/captures/views/kitchen/{before,after}-*.png. Measurement tool: `tools/house/kitchen_walls.py` (default / --wing / --plan).
+- **Kitchen cabinets (TRIAL, not committed, not loaded; changes/2026-10-16-kitchen-cabinets.json, DEVIATIONS 47):** `tools/house/hifi_kitchen.py` (data spec/dressing/kitchen.json, positions from `kitchen_walls.py --fixtures`) -> KitchenCabinets.glb; tile maps `tools/house/kitchen_tile_tex.py`; wood Poly Haven cherry_veneer; colliders from kitchen.json; seat-wall windows now Marina's two (over the seats). Pipeline `build` now also syncs Assets/Textures.
+- **Kitchen night lighting (TRIAL, not committed, not loaded; changes/2026-10-16-kitchen-night-lights.json, DEVIATIONS 48):** under-cabinet strips (hifi_kitchen.py KT_UnderLight + rectangle lights) and the breakfast chandelier (`tools/house/hifi_kitchen_lights.py`), placed by SpecGreybox.KitchenFixtures, on the night layer; generic Light_kitchen/Light_back_stair removed. Calibration: `film_light_match.py --night spec/captures/views/kitchen` (re-run on live captures).
+- **Breakfast table (TRIAL, not committed, not loaded; changes/2026-10-16-breakfast-table.json, DEVIATIONS 49):** `tools/house/hifi_breakfast_table.py` -> BreakfastTable.glb (oval 2.20 x 1.26, double pedestal, oak_veneer_01), colliders in kitchen.json; back-stair walk test start moved east of it (reconcile.py).
+- **Kitchen wallpaper from film 6910 (TRIAL, not committed; DEVIATIONS 50):** `film_wallpaper.py --kitchen` -> spec/dressing/kitchen_wallpaper.png/.json, applied by SpecGreybox.KitchenPaper() to kitchen + back-stair walls.
+- **Den upgrade (TRIAL, not committed, not loaded; changes/2026-10-16-den.json, DEVIATIONS 51-53):** film teal paint (film 2877; Marina's is a darker green: user call), both windows as four mulled 24 x 66 in 6-over-6 units (tools/house/den_walls.py: cameras solved on the built den's corners in Marina's den clip; the real-house plan agrees on the front window), Marina's floral valance + tie-back drapes (no sheers: the sheer pass), built-in bookcase + TV/VCR/books, Poly Haven sofa/armchair/coffee table/TV, Fadnn desk/chairs/lamps/side table. Models: tools/house/hifi_den.py, hifi_den_props.py, SpecGreybox.Den.cs, spec/dressing/den.json. Renders: spec/captures/views/den/compare-*.jpg. Scratch built and baked, gates 0.
+- **Foyer finish (TRIAL, not committed, not loaded; changes/2026-10-16-foyer-finish.json, DEVIATIONS 56):** film-first furniture and decor from spec/dressing/foyer_props.json (readings: tools/house/foyer_props_measure.py on film-1616fc / film-2677): Hepplewhite console (top 0.762), two mahogany side chairs (red seats, vase splat), tall gilt pier mirror with crest (1.12-2.20 m), green rolled-arm bench, film-sized runner and front rug (invented Persian patterns), a 10-frame stair gallery (8 measured), the picture under the landing, the landing camellia print, poinsettias (console, under it, landing table) and a vestibule basket plant. Pictures are public-domain works (spec/dressing/foyer_art.json); the door prints' film cuts were replaced the same way. Models: tools/house/hifi_foyer_props.py -> FoyerProps.glb, textures tools/house/foyer_textures.py, placed by SpecGreybox.FoyerProps.cs. Renders: spec/captures/views/foyer-finish/compare-*.jpg. Scratch built and baked, gates 0. Found, not changed: the film's wainscot cap reads 6-8 cm above our 0.705.
+- **Bought plants (TRIAL, not committed, not loaded; DEVIATIONS 61):** CGTrader ficus (foyer, by the stair) and poinsettia gift plant (foyer x5, den x2, living x1; gold foil, white copies) fitted by tools/house/purchased_plants.py into the GITIGNORED unity/HomeAlone/Assets/Purchased/ (raw downloads in sfm-work/purchased/; Royalty Free, no redistribution). SpecGreybox.PurchasedPlants places them and hides the generated plants; without the folder the generated ones stay. unity_pipeline.sh build/load sync Assets/Purchased. Rebuild after a fresh download: unpack into sfm-work/purchased/{ficus,poinsettia} (bsdtar -xf textures.rar), then run the Blender script. Renders: spec/captures/views/purchased/compare-*.jpg.
+- **Living room upgrade (TRIAL, not committed, not loaded; changes/2026-10-16-living-room.json, DEVIATIONS 57-60):** the film's rose-swag paper (film 10636; `film_wallpaper.py --living`, 0.533 x 0.79 m) over a 0.14 baseboard, wood floor; rear windows widened to stock 2'8" 6-over-6 (Marina f165 + the real-house plan), French pairs in the front cuts, the film's green damask drapes + sheers + Marina's valances (`tools/house/hifi_living.py` -> LivingWindows.glb, reusing hifi_sheers.py's cloth); fireplace/hearth/screen/stockings, the film's console upright piano + bench + lamp (Marina has a grand: user call), lamps, brackets with dogs, nutcrackers, train, rug, the user's Asset Store Christmas tree (AlterEgos, gitignored `Assets/ChristmasTreeAndGarland`, store_props living_tree, mini lights replaced by generated C7 bulbs; StoreProps gained `hide_parts` and converts alpha-cutout pack materials) (LivingBuiltins.glb); piano: the user keeps the generated upright; Poly Haven sofa/console/coffee table/painting/clock/stand (`hifi_living_props.py` -> LivingProps.glb); pack chest (store_props living_chest); `SpecGreybox.Living.cs`, spec/dressing/living.json, finishes.json `paper`. Cameras: `tools/house/living_walls.py` (Marina's living clip needs pitch/roll: refcam's level model left 13 px). Room walk test now stands a body beside furniture at a room's centre (den and living were skipped). Night calibration `film_light_match.py --living-night` (sheers +1.4-2.2 stops, warmth far orange: see DEVIATIONS 60). Renders spec/captures/views/living/compare-*.jpg. Scratch built and baked, gates 0.
+- **French doors + kitchen sconces/gallery/desk (TRIAL, not committed; changes/2026-10-16-french-doors.json, 2026-10-17-kitchen-fixtures.json, DEVIATIONS 51-52):** tools/house/hifi_french_doors.py, hifi_kitchen_gallery.py, hifi_kitchen_lights.py (sconces); Editor/FrenchDoors.cs, Editor/SpecGreybox.KitchenLights.cs. Open: the film's breakfast table reads ROUND (1151, 1049) vs Marina's oval (built); the second stair sconce not found.
+- **Upstairs halls + arches (TRIAL, not committed, not loaded; changes/2026-10-17-upstairs-hall.json, changes/2026-10-17-upstairs-arches.json, DEVIATIONS 63-64):** the film's teal paint over a white wainscot (cap 0.76, baseboard 0.11; `tools/house/hall_walls.py --paint/--heights/--arches`), wood floor, fitted crimson runner, crown, four brass tulip sconces lit at night (350 lm; `film_light_match.py --hall-night`: wall falloff -0.1 stop vs film 10819, floor +1.4 stops brighter, light warmer), urn stands with the purchased poinsettias, ficus, two SIDE_TABLE_01 hall tables, public-domain pictures (`hall_textures.py`), tapestry, clock/barometer (`hifi_hall.py`, data `spec/dressing/hall.json`, `SpecGreybox.Hall.cs`). Arches: B and C segmental (doors file crown/spring -> reconcile; verify_plan 0 FAIL), A the film's elliptical gallery arch (2085 solved) as a papered header, crown 2.30 under our 2.40 ceiling (film 2.39: user call). Built in ~/.cache/home-alone-3. Renders spec/captures/views/hall/compare-*.jpg.
+- User, Oct 16: use stock door/window sizes wherever possible (the front door excepted). The upstairs linen-closet prop door
+  (24 in) is too small: 30 in fits its 0.986 m wall centred. Not built yet.
+
 ### NEXT (in order)
 1. **Read the user's walk notes on the TRIALs** (commits 4168e17, 09dd918, e30aa30, 0e3b560): the last lines of
    `spec/feedback/feel-notes.jsonl`. Answer each from its own pose, captured live.
@@ -74,7 +149,7 @@
    - The back-stair foot: Marina 321 / 1072.5 s show ONE foot step vs our 2. Solve those frames first.
    - The back-stair stall at winder 2.
    - The rest of the dining dressing (hutch, table, chairs, paintings, French doors).
-   - Mirror boxes, bench, the picture under the landing.
+   - ~~Mirror boxes, bench, the picture under the landing.~~ Done as the foyer finish TRIAL (Oct 16). Still open: upstairs-hall poinsettias (H1), the upper gallery frames (solve film 3225/10775).
    - Real sheers (DEVIATIONS 41).
 9. Deferred by the user: **the upstairs split** (overhang exists only from the stair up; tasks/wall-grid-plan.md).
 

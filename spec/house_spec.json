@@ -641,18 +641,18 @@
    "wall_coord": 2.725,
    "wall_thickness": 0.14,
    "span": [
-    8.265,
-    8.875
+    8.189,
+    8.951
    ],
-   "width": 0.61,
+   "width": 0.762,
    "height": 2.032,
    "opens": false,
    "placed_from": "topology (centred; position unverified)",
-   "source": "Muto's set model (linen closet beside the bathroom) + overhead shelf; prop door, does not open (user decision Oct 13); 24 in linen-closet door",
+   "source": "Muto's set model (linen closet beside the bathroom) + overhead shelf; prop door, does not open (user decision Oct 13); 24 in linen-closet door | Oct 16 (user): 30 in (0.762 m), a stock door; centred on the closet's 0.986 m wall it leaves 0.112 m each side (changes/2026-10-16-linen-door-30in.json)",
    "wall_coord_spec": 7.303,
    "span_spec": [
-    8.969,
-    9.579
+    8.893,
+    9.655
    ],
    "spec_axis": "x"
   },
@@ -745,10 +745,11 @@
     2.343
    ],
    "width": 1.247,
-   "height": null,
+   "height": 2.02,
+   "spring": 1.86,
    "opens": true,
    "placed_from": "full shared wall",
-   "source": "hall walk: arched openings (f141-147); header band in overhead",
+   "source": "hall walk: arched openings (f141-147); header band in overhead | Oct 17 (changes/2026-10-17-upstairs-arches.json): the film shows this arch (10828: a plain arch spanning the hall before the parents' vestibule) but no frame has a ruler in its plane; built as the hall's other arch (film 410: springline 1.86, rise-to-span 0.132) on its 1.214 m span: crown 2.02. Assumed: DEVIATIONS 64",
    "wall_coord_spec": 7.81,
    "span_spec": [
     5.674,
@@ -770,10 +771,11 @@
     2.755
    ],
    "width": 1.553,
-   "height": null,
+   "height": 2.06,
+   "spring": 1.86,
    "opens": true,
    "placed_from": "full shared wall",
-   "source": "header band in overhead",
+   "source": "header band in overhead | Oct 17 (changes/2026-10-17-upstairs-arches.json): film 410 sees this arch frontal with Buzz's doorway in the same wall plane (z 11.43): the doorway's head (208 px) and threshold (872 px) give 326.8 px/m on that plane (80 in ruler); the arch's lower edge springs at 1.86 m and its crown is 2.017 m over a 1.20 m clear span (393 px), a circular SEGMENT (fit rms 0.5 cm vs 2.3 cm for a half-ellipse; tools/house/hall_walls.py --arches). Built across our full shared wall (1.553 m, Marina's plan) at the film's springline and rise-to-span (0.132): spring 1.86, crown 2.06. Plain plastered arch, painted with the hall (film 2055 / 410: no casing)",
    "wall_coord_spec": 11.467,
    "span_spec": [
     5.78,

@@ -1,0 +1,8 @@
+[
+ {"uv": [632, 180], "x": 10.13, "h": 2.438, "z": 3.004, "note": "front wall / sunroom wall / ceiling corner"},
+ {"uv": [1785, 186], "x": 10.13, "h": 2.438, "z": 7.638, "note": "front wall / foyer wall / ceiling corner"},
+ {"uv": [1100, 182], "line": [[10.13, -0.588, 3.004], [10.13, -0.588, 7.638]], "note": "front wall's ceiling line"},
+ {"uv": [633, 500], "line": [[10.13, -3.026, 3.004], [10.13, -0.588, 3.004]], "note": "front-left vertical corner"},
+ {"uv": [1786, 500], "line": [[10.13, -3.026, 7.638], [10.13, -0.588, 7.638]], "note": "front-right vertical corner (behind the foyer-side French door's casing edge)"},
+ {"uv": [560, 100], "line": [[4.26, -0.588, 3.004], [10.13, -0.588, 3.004]], "note": "sunroom wall's ceiling line"}
+]

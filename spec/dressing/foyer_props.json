@@ -1,0 +1,53 @@
+{
+ "note": "Foyer furniture and decor as the FILM shows them (user, Oct 16: 'finish the foyer too. the side table and chair, mirror, etc.'). Spec metres, y above the ground floor. Positions along the walls are Marina 312 s (spec/dressing/foyer.json, foyer_length.py cameras); heights and the floor pieces are read on film cameras solved from flight 1's nosings: film-1616fc (foyer_cameras.py's 1616 solve, measurements/cameras/film-1616fc.json) and film-2677 (measurements/cameras/film-2677.json), pixel rays met with the plane each piece stands on (tools/house/foyer_props_measure.py re-runs every reading). Built by tools/house/hifi_foyer_props.py -> FoyerProps.glb; placed by SpecGreybox.FoyerProps (the dressing boxes they replace keep their colliders).",
+ "wall_faces": {"north": 7.778, "stair": 11.43, "picture": 2.985, "landing_window": 1.58, "wainscot_cap_proud": 0.03},
+ "console": {
+  "x": [5.17, 6.17], "z": [7.82, 8.2], "top": 0.762,
+  "source": "film 1616/10673/1690: a rectangular Hepplewhite side table, square tapered legs, plain apron with one drawer (Marina's is a demilune: film first). Top 0.79 (x 5.67) / 0.77-0.82 along its front edge on film-1616fc; standard 30 in inside that spread (sensible defaults). Length and centre: Marina 312 s (1.0 m, x 5.67), film 1616 overlay agrees. Back 4 cm off the wall (the wainscot cap is 3 cm proud at 0.705)."
+ },
+ "chairs": {
+  "centres_x": [4.82, 6.51], "z": [7.83, 8.27], "seat": 0.48, "back_top": 0.92, "front_w": 0.5, "back_w": 0.42,
+  "source": "film 1616/10673/1690: dark mahogany side chairs, red upholstered slip seat, vase splat, straight square legs with an H stretcher. Seat top 0.478 / 0.482 (front / rear chair, film-1616fc at Marina's x), back top 0.921 (front chair). Centres Marina 312 s (front-leg feet x 4.82 / 6.51; the film 1616 overlay puts both seats on the boxes)."
+ },
+ "mirror": {
+  "cx": 5.67, "w": 0.56, "y": [1.12, 2.2], "crest_top": 2.34, "z_back": 7.79, "depth": 0.04,
+  "source": "film 1616/1690/10673: a tall rectangular gilt pier mirror with a scrolled crest, between the hurricane sconces (Marina's is an oval: film first). Bottom 1.123, frame seen to 2.23 at x 5.67 on film-1616fc (crest above it, dark against the paper: 2.34 assumed). Width 0.56: Marina's (the film sees it edge-on); centre on the console."
+ },
+ "bench": {
+  "x": [3.203, 4.453], "z": [9.69, 10.17], "seat": 0.45, "arm_top": 0.62,
+  "source": "Marina M01/312 s (box spec/dressing/foyer.json bench): green velvet bench with scrolled arms; film 2677/3888/10673 show a green upholstered bench on dark cabriole legs in the same place. Arm height 0.62 assumed (M01 proportions)."
+ },
+ "runner": {
+  "x": [3.65, 7.06], "z": [8.58, 9.32], "fringe": 0.05,
+  "source": "film 1616 on film-1616fc, floor plane: near fringe x 7.10 at z 8.56-9.34, far end x 3.65 (one read); Marina's (foyer.json runner_rug) is 0.56 wide at z 8.98-9.54. Film first: 0.74 wide, 3.41 long (a 2.5 x 11 ft runner)."
+ },
+ "front_rug": {
+  "x": [7.48, 8.9], "z": [8.6, 10.72], "fringe": 0.05,
+  "source": "film 1616 on film-1616fc: far fringe x 7.45, ends z 8.59 / 10.73; the near edge (toward the door) is not in frame: stops 5 cm short of the vestibule wall (x 8.948), assumed. Cream field Oriental (film 1690, 30). Marina's is 1.26 x 1.70 (foyer.json front_rug)."
+ },
+ "pictures": {
+  "under_landing": {"wall": "picture", "z": [8.19, 8.7], "y": [1.12, 1.77], "mat": 0.075, "art": "ruysch", "frame": "gilt",
+                    "source": "film 1616 on film-1616fc, plane x 3.01: outer z 8.187-8.698, h 1.118-1.774; image z 8.28-8.61, h 1.19-1.69 (a dark floral in a cream mat, thin gilt frame). Marina's box: z 8.27-8.688, h 1.07-1.617."},
+  "landing": {"wall": "landing_window", "z": [10.659, 11.231], "y": [3.195, 3.825], "mat": 0.08, "mat_colour": "burgundy", "art": "camellia", "frame": "gilt",
+              "source": "Marina 312 s box (foyer.json landing_painting); film 11966/12133: a red camellia botanical in a gilt frame with a burgundy mat over the hall table"},
+  "gallery": [
+   {"x": [6.0, 6.31], "y": [1.53, 1.79], "frame": "dark", "art": "boy", "source": "film-2677 (frame corners 370,50 / 440,195); film-1616fc 5.86-6.34 x 1.59-1.87"},
+   {"x": [5.65, 5.89], "y": [1.69, 1.94], "frame": "gilt", "art": "lady_eden", "source": "film-2677 (463,20 / 510,150); film-1616fc 5.67-5.91 x 1.75-2.05"},
+   {"x": [6.09, 6.3], "y": [1.89, 2.08], "frame": "black", "art": "photo_woman", "source": "film-1616fc (290,150 / 315,230); film-2677 bottom edge 1.87-1.91"},
+   {"x": [5.84, 6.28], "y": [2.15, 2.4], "frame": "dark", "art": "nurse", "source": "film-1616fc (290,40 / 345,140)"},
+   {"x": [5.22, 5.5], "y": [1.95, 2.42], "frame": "gilt", "art": "red_hat", "source": "film-1616fc (380,80 / 400,230); film-2677 (520,0 / 590,80) 5.19-5.60 from 1.94"},
+   {"x": [4.77, 5.13], "y": [2.27, 2.54], "frame": "oval", "art": "photo_mother", "source": "film-1616fc (410,70 / 440,170); film 3225/10775 show an oval frame in the gallery"},
+   {"x": [4.38, 4.74], "y": [2.47, 2.7], "frame": "dark", "art": "yates", "source": "film-1616fc (440,50 / 470,130)"},
+   {"x": [3.93, 4.22], "y": [2.64, 2.88], "frame": "gilt", "art": "barefoot", "source": "film-1616fc (480,40 / 500,100)"},
+   {"x": [3.5, 3.8], "y": [2.95, 3.25], "frame": "black", "art": "photo_fan", "source": "ASSUMED: the rake continued (film 3225/10775 show frames up to the landing; not measured)"},
+   {"x": [3.05, 3.33], "y": [3.17, 3.47], "frame": "dark", "art": "boy_sargent2", "source": "ASSUMED: as above"}
+  ]
+ },
+ "plants": {
+  "console_top": {"at": [5.67, 8.0], "y0": 0.762, "spread": 0.36, "height": 0.34, "bract": "red", "source": "film 1616/1690/10673: a red arrangement on the console (poinsettia, ribbon); a red poinsettia in gold foil"},
+  "under_console": {"at": [5.45, 8.02], "y0": 0.0, "spread": 0.42, "height": 0.5, "bract": "white", "source": "film 10673/1616: a white poinsettia in a gold-foil pot on the floor under the console"},
+  "landing_red": {"at": [1.76, 11.1], "y0": 2.974, "wall_x": 1.62, "spread": 0.44, "height": 0.4, "bract": "red", "source": "film 11966/12133: red poinsettia in gold foil on the hall table, left of centre"},
+  "vestibule_basket": {"at": [9.86, 9.02], "y0": 0.0, "spread": 0.36, "height": 0.36, "bract": "none", "pot": "wicker", "source": "film 10248: a small leafy plant in a wicker basket on the vestibule floor under the left sidelight (placed by eye from that frame's solved camera view; not measured)"},
+  "landing_green": {"at": [1.76, 10.8], "y0": 2.974, "wall_x": 1.62, "spread": 0.34, "height": 0.3, "bract": "none", "source": "film 11966/12133: a green leafy plant in a gold pot beside it"}
+ }
+}

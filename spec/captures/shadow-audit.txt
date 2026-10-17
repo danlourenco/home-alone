@@ -1,0 +1,66 @@
+SHADOW AUDIT (ShadowAudit.Run, House_WallGrid, night)
+
+lights: 94 in scene, 41 on at night, 41 real-time shadowed (211 shadow maps: 34 Point, 1 Spot, 6 Rectangle)
+HDRP: maxShadowRequests 384, punctual atlas 8192 (rescale True), cached punctual atlas 8192, area atlas 4096, cached area 2048
+  Upstairs/Lights/DenLamp_bookcase: Point range 7.0 res 1024 OnDemand fade 10000 contact False
+  Upstairs/Lights/DenLamp_desk: Spot Cone 140deg range 7.0 res 512 OnDemand fade 10000 contact True
+  Upstairs/Lights/DenLamp_floor: Point range 7.0 res 1024 OnDemand fade 10000 contact False
+  Upstairs/Lights/DenLamp_side: Point range 7.0 res 1024 OnDemand fade 10000 contact False
+  Upstairs/Lights/Dome_Light: Point range 7.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/Hurricane_Light: Point range 7.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/Hurricane_Light: Point range 7.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/KitchenChandelier_Light: Point range 8.0 res 512 OnDemand fade 10000 contact True
+  Upstairs/Lights/Lantern_Light: Point range 7.0 res 512 OnDemand fade 10000 contact True
+  Upstairs/Lights/Light_back_hall: Point range 8.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_buzz_room: Point range 8.0 res 256 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_closet_1: Point range 8.0 res 256 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_dining_room: Point range 8.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_foyer: Point range 8.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_girls_room_a: Point range 8.0 res 256 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_girls_room_b: Point range 8.0 res 256 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_hall_bath: Point range 8.0 res 256 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_hall_corridor: Point range 8.0 res 256 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_hall_corridor_south: Point range 8.0 res 256 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_hall_end: Point range 8.0 res 256 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_kevin_jeff_room: Point range 8.0 res 256 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_parents_bath: Point range 8.0 res 256 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_parents_bedroom: Point range 8.0 res 256 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_rear_passage: Point range 8.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_sunroom: Point range 8.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/Light_vestibule: Point range 8.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/LivingLamp_banker: Point range 7.0 res 512 OnDemand fade 10000 contact True
+  Upstairs/Lights/LivingLamp_chest: Point range 7.0 res 1024 OnDemand fade 10000 contact False
+  Upstairs/Lights/LivingLamp_console_l: Point range 7.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/LivingLamp_console_r: Point range 7.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/LivingLamp_piano: Point range 7.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/LivingTreeGlow_0.8: Point range 7.0 res 256 OnDemand fade 10000 contact False
+  Upstairs/Lights/LivingTreeGlow_1.5: Point range 7.0 res 256 OnDemand fade 10000 contact False
+  Upstairs/Lights/Sconce_Light: Point range 7.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/Sconce_Light: Point range 7.0 res 512 OnDemand fade 10000 contact False
+  Upstairs/Lights/UnderCab_end_A: Rectangle range 5.0 res 512 OnDemand fade 10000 contact True
+  Upstairs/Lights/UnderCab_end_B: Rectangle range 5.0 res 512 OnDemand fade 10000 contact True
+  Upstairs/Lights/UnderCab_seat_U1: Rectangle range 5.0 res 512 OnDemand fade 10000 contact True
+  Upstairs/Lights/UnderCab_seat_U2: Rectangle range 5.0 res 512 OnDemand fade 10000 contact True
+  Upstairs/Lights/UnderCab_sink_S1: Rectangle range 5.0 res 512 OnDemand fade 10000 contact True
+  Upstairs/Lights/UnderCab_sink_S2: Rectangle range 5.0 res 512 OnDemand fade 10000 contact True
+cached texels wanted 58.9 M (punctual cached atlas holds 67.1 M)
+dynamic shadow casters (not staticShadowCaster): 4283
+den plant 20:42: requests 205/384 (visible lights want ~211 + sun cascades), dynamic tiles 0, atlas scale 1.000, cached placed 205 pending 0
+  pan +-30 deg: atlas scale 1.000..1.000, requests 109..211
+  8 still frames: max relative change 0.0720, pixels changed >1% 32788 (of 3628800); 66.8 ms/frame incl. readback
+living corner 20:41: requests 211/384 (visible lights want ~211 + sun cascades), dynamic tiles 0, atlas scale 1.000, cached placed 205 pending 0
+  pan +-30 deg: atlas scale 1.000..1.000, requests 192..211
+  8 still frames: max relative change 0.0550, pixels changed >1% 7360 (of 3628800); 46.4 ms/frame incl. readback
+foyer 12:03: requests 140/384 (visible lights want ~157 + sun cascades), dynamic tiles 0, atlas scale 1.000, cached placed 205 pending 0
+  pan +-30 deg: atlas scale 1.000..1.000, requests 139..145
+  8 still frames: max relative change 0.0303, pixels changed >1% 3393 (of 3628800); 42.2 ms/frame incl. readback
+foyer 11:43: requests 145/384 (visible lights want ~168 + sun cascades), dynamic tiles 0, atlas scale 1.000, cached placed 205 pending 0
+  pan +-30 deg: atlas scale 1.000..1.000, requests 128..151
+  8 still frames: max relative change 0.0248, pixels changed >1% 2328 (of 3628800); 37.2 ms/frame incl. readback
+kitchen 15:06: requests 30/384 (visible lights want ~66 + sun cascades), dynamic tiles 0, atlas scale 1.000, cached placed 205 pending 0
+  pan +-30 deg: atlas scale 1.000..1.000, requests 30..37
+  8 still frames: max relative change 0.0742, pixels changed >1% 32430 (of 3628800); 33.5 ms/frame incl. readback
+upstairs landing 11:26: requests 210/384 (visible lights want ~211 + sun cascades), dynamic tiles 0, atlas scale 1.000, cached placed 205 pending 0
+  pan +-30 deg: atlas scale 1.000..1.000, requests 199..210
+  8 still frames: max relative change 0.0915, pixels changed >1% 10259 (of 3628800); 39.8 ms/frame incl. readback
+cached atlas: 205 shadow maps placed, 57.3 M texels, furthest texel 8192, 0 overlapping pairs

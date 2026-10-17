@@ -1,0 +1,276 @@
+[
+ {
+  "name": "shadows/before/kitchen/after-night-film6042",
+  "pos": [
+   1.0,
+   -1.876,
+   -0.55
+  ],
+  "look_at": [
+   -5.19,
+   -2.026,
+   -0.65
+  ],
+  "vfov": 40
+ },
+ {
+  "name": "shadows/before/kitchen/after-night-film9812",
+  "pos": [
+   -2.3,
+   -1.576,
+   -1.9
+  ],
+  "look_at": [
+   -5.19,
+   -2.026,
+   -2.3
+  ],
+  "vfov": 55
+ },
+ {
+  "name": "shadows/before/kitchen/after-night-film10452",
+  "pos": [
+   -3.4,
+   -1.426,
+   -2.0
+  ],
+  "look_at": [
+   -5.19,
+   -1.726,
+   -1.5
+  ],
+  "vfov": 55
+ },
+ {
+  "name": "shadows/before/kitchen/after-night-film10448",
+  "pos": [
+   -4.7,
+   -1.226,
+   -2.7
+  ],
+  "look_at": [
+   -3.4,
+   -2.026,
+   -4.0
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "shadows/before/kitchen/after-night-breakfast",
+  "pos": [
+   -1.6,
+   -1.526,
+   -1.4
+  ],
+  "look_at": [
+   1.13,
+   -1.526,
+   -5.09
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "shadows/before/den/night-film2877",
+  "pos": [
+   5.3,
+   -1.9759999999999998,
+   -17.95
+  ],
+  "look_at": [
+   2.4,
+   -1.9759999999999998,
+   -17.05
+  ],
+  "vfov": 42
+ },
+ {
+  "name": "shadows/before/den/night-film2868",
+  "pos": [
+   5.8,
+   -1.9259999999999997,
+   -18.3
+  ],
+  "look_at": [
+   2.4,
+   -2.026,
+   -17.2
+  ],
+  "vfov": 50
+ },
+ {
+  "name": "shadows/before/den/night-room",
+  "pos": [
+   8.6,
+   -1.5259999999999998,
+   -17.0
+  ],
+  "look_at": [
+   3.0,
+   -2.226,
+   -18.6
+  ],
+  "vfov": 70
+ },
+ {
+  "name": "shadows/before/den/clutter-close",
+  "pos": [
+   4.4,
+   -2.126,
+   -17.6
+  ],
+  "look_at": [
+   2.4,
+   -2.3259999999999996,
+   -17.7
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "shadows/before/living/night-f165",
+  "pos": [
+   8.302,
+   -1.674,
+   -13.39
+  ],
+  "look_at": [
+   5.34,
+   -1.827,
+   -13.836
+  ],
+  "vfov": 44.34,
+  "near": 0.05
+ },
+ {
+  "name": "shadows/before/living/night-f89",
+  "pos": [
+   6.093,
+   -2.222,
+   -15.238
+  ],
+  "look_at": [
+   9.071,
+   -2.171,
+   -14.878
+  ],
+  "vfov": 44.34,
+  "near": 0.05
+ },
+ {
+  "name": "shadows/before/living/night-film5650",
+  "pos": [
+   5.0,
+   -1.026,
+   -14.4
+  ],
+  "look_at": [
+   9.95,
+   -2.126,
+   -13.4
+  ],
+  "vfov": 44,
+  "near": 0.05
+ },
+ {
+  "name": "shadows/before/living/night-film10636",
+  "pos": [
+   8.3,
+   -1.476,
+   -11.2
+  ],
+  "look_at": [
+   5.4,
+   -1.676,
+   -16.07
+  ],
+  "vfov": 40,
+  "near": 0.05
+ },
+ {
+  "name": "shadows/before/living/night-film10600",
+  "pos": [
+   3.9,
+   -2.026,
+   -14.0
+  ],
+  "look_at": [
+   1.58,
+   -1.926,
+   -14.3
+  ],
+  "vfov": 52,
+  "near": 0.05
+ },
+ {
+  "name": "shadows/before/living/night-piano",
+  "pos": [
+   7.2,
+   -1.526,
+   -13.3
+  ],
+  "look_at": [
+   9.3,
+   -2.226,
+   -15.7
+  ],
+  "vfov": 50,
+  "near": 0.05
+ },
+ {
+  "name": "shadows/before/living/night-tree",
+  "pos": [
+   4.4,
+   -1.626,
+   -13.4
+  ],
+  "look_at": [
+   2.4,
+   -1.826,
+   -15.2
+  ],
+  "vfov": 50,
+  "near": 0.05
+ },
+ {
+  "name": "shadows/before/living/night-room",
+  "pos": [
+   9.6,
+   -1.326,
+   -12.0
+  ],
+  "look_at": [
+   1.58,
+   -2.026,
+   -15.0
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "shadows/before/den/plant-note2042",
+  "pos": [
+   7.407,
+   -1.716,
+   -17.872
+  ],
+  "look_at": [
+   6.442985085018332,
+   -1.8257343110910453,
+   -17.629856190121938
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "shadows/before/den/desk-lamp",
+  "pos": [
+   7.6,
+   -1.6,
+   -18.0
+  ],
+  "look_at": [
+   8.56,
+   -2.2,
+   -19.09
+  ],
+  "vfov": 60
+ }
+]

@@ -1,0 +1,130 @@
+{
+ "gate": 7,
+ "change": "Breakfast table as a generated model (tools/house/hifi_breakfast_table.py -> BreakfastTable.glb, data spec/dressing/kitchen.json breakfast_table): oval top 2.20 x 1.26 m centred x 1.15 z 4.88, 0.76 m high, stepped edge and apron, double pedestal with turned columns and four swept legs each; honey oak (Poly Haven oak_veneer_01 tinted to film 2528); walk-layer colliders for the top and the two pedestals; the back-stair walk test now starts east of the table (tools/house/reconcile.py service_stair_spec walk_path: its start stood under the table); the top's collider is three boxes following the oval (full width over the middle 1.4 m, 1.10 m wide over each 0.4 m end) so its corners don't block the back stair's foot",
+ "target": "House_WallGrid",
+ "premise": "The breakfast table is an oval double-pedestal table about 2.2 x 1.25 m under the breakfast chandelier, its long axis along the breakfast area, honey oak with a moulded edge",
+ "claim": {
+  "value": {
+   "centre_xz": [
+    1.15,
+    4.88
+   ],
+   "length": 2.2,
+   "width": 1.26,
+   "height": 0.76
+  },
+  "data": [
+   "sfm:kitchen",
+   "marina-frame:915",
+   "marina-frame:917"
+  ],
+  "scale": [
+   "counter-36in:878"
+  ],
+  "upstream": [
+   "counter-36in:878"
+  ],
+  "how": "tools/house/kitchen_walls.py big clip: the top's near and far edges and its ends picked in frames 189 and 197 and intersected with the plane 0.75 m above the floor; mapped into the built wing x0.9379 / x0.9784 like the cabinets (DEVIATIONS 47)",
+  "applies_to": [
+   "kitchen"
+  ],
+  "measured_in": [
+   "kitchen"
+  ],
+  "assumed": {
+   "kitchen": "DEVIATIONS 49"
+  },
+  "alternatives": [
+   "no table (current)",
+   "the old blockout's 1.05 x 2.80 oval (art/home_alone/references/kitchen/README.md, inferred, unchecked)",
+   "Marina's oval double-pedestal table as measured (built)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "long axis along x (parallel to the back-stair wall)",
+     "observed_in": [
+      "marina-frame:915",
+      "marina-frame:917",
+      "film:2202"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "double pedestal base",
+     "observed_in": [
+      "marina-frame:915",
+      "marina-frame:917"
+     ],
+     "extrapolated": false
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-09-14",
+   "what": "KitchenLayout.cs blockout table 1.05 x 2.80 oval in IntactHouseReference (inferred, circulation only)",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 2202 / 2528: eight chairs round the table, three along each long side and one at each end, under the brass chandelier: an oval of about 2.1-2.3 m by 1.1-1.3 m by chair count (a side of three chairs at 0.6 m)",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:2202",
+    "film:2528"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "Consistency: the table's centre x 1.15 vs the chandelier triangulated from other picks of the same clip (x 1.128)",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "sfm:kitchen",
+    "marina-frame:933"
+   ],
+   "scale": [
+    "counter-36in:878"
+   ],
+   "upstream": [
+    "counter-36in:878"
+   ]
+  },
+  {
+   "what": "Consistency: the table's centre z 4.88 vs the chandelier's z 5.09 (0.21 m off; Marina's chandelier hangs over the table's far half, or the near-edge picks read the bevel)",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "sfm:kitchen"
+   ],
+   "scale": [
+    "counter-36in:878"
+   ],
+   "upstream": [
+    "counter-36in:878"
+   ],
+   "disposition": "built from the top's own edge picks (two frames agree within 0.12 m); the chandelier stays where it was triangulated; logged DEVIATIONS 49"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/kitchen/before-table-wide.png",
+   "spec/captures/views/kitchen/before-table-film2528.png",
+   "spec/captures/views/kitchen/before-table-night.png"
+  ],
+  "after": [
+   "spec/captures/views/kitchen/after-table-wide.png",
+   "spec/captures/views/kitchen/after-table-film2528.png",
+   "spec/captures/views/kitchen/after-table-night.png"
+  ],
+  "note": "batch renders from the scratch copy (kitchen-table-{before,after}.json day; *-night with -night)"
+ },
+ "user_walk": "pending"
+}

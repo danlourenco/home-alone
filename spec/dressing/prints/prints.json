@@ -1,44 +1,5 @@
 {
- "print_right": {
-  "frame": 778,
-  "quad": [
-   [
-    1598,
-    165
-   ],
-   [
-    1593,
-    533
-   ],
-   [
-    1806,
-    530
-   ],
-   [
-    1815,
-    170
-   ]
-  ]
- },
- "print_left": {
-  "frame": 3225,
-  "quad": [
-   [
-    360,
-    332
-   ],
-   [
-    360,
-    458
-   ],
-   [
-    455,
-    460
-   ],
-   [
-    455,
-    334
-   ]
-  ]
- }
+ "note": "Oct 16: the film cuts (frames 3225 / 778) were replaced by public-domain plates of the same fruit (tools/house/foyer_textures.py); sources in spec/dressing/foyer_art.json",
+ "print_left": "File:Pomological Watercolor POM00004432.jpg",
+ "print_right": "File:Vincent ribes-rubrum-1820.jpg"
 }

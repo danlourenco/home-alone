@@ -1,0 +1,263 @@
+{
+ "gate": 7,
+ "change": "Foyer finish (Oct 16, TRIAL): console, two side chairs, pier mirror, hall bench, runner and front rug, stair gallery (10), picture under the landing, landing print, poinsettias and plants, as generated models (tools/house/hifi_foyer_props.py -> FoyerProps.glb, SpecGreybox.FoyerProps); door prints' film cuts replaced by public-domain plates; the foyer.json dressing boxes they replace are hidden (colliders kept); Oct 17: the user's CGTrader ficus and poinsettias replace the generated ones where present (tools/house/purchased_plants.py -> gitignored Assets/Purchased/, SpecGreybox.PurchasedPlants)",
+ "target": "House_WallGrid",
+ "premise": "The film's foyer furniture stands where Marina's 312 s boxes put it; its heights, the rugs and the gallery can be read on film cameras solved from flight 1's nosings",
+ "claim": {
+  "value": {
+   "console_top": 0.762,
+   "chair_seat": 0.48,
+   "chair_back": 0.92,
+   "mirror_y": [
+    1.12,
+    2.2
+   ],
+   "runner": {
+    "x": [
+     3.65,
+     7.06
+    ],
+    "z": [
+     8.58,
+     9.32
+    ]
+   },
+   "front_rug": {
+    "x": [
+     7.48,
+     8.9
+    ],
+    "z": [
+     8.6,
+     10.72
+    ]
+   },
+   "picture_under_landing": {
+    "z": [
+     8.19,
+     8.7
+    ],
+    "y": [
+     1.12,
+     1.77
+    ]
+   },
+   "gallery_frames_measured": 8
+  },
+  "data": [
+   "film:1616",
+   "film:2677"
+  ],
+  "scale": [
+   "stair-rise:flight1"
+  ],
+  "upstream": [
+   "marina-frame:312",
+   "stair-rise:flight1"
+  ],
+  "how": "tools/house/foyer_props_measure.py: pixel rays from film-1616fc (foyer_cameras.py 1616 solve) and film-2677 (refcam) met with the plane each piece stands on; along the north wall only heights (plane x = Marina's centre)",
+  "applies_to": [
+   "foyer",
+   "vestibule",
+   "main_stair_landing"
+  ],
+  "measured_in": [
+   "foyer",
+   "vestibule",
+   "main_stair_landing"
+  ],
+  "risks": [
+   "extraction"
+  ],
+  "alternatives": [
+   "Marina's pieces (demilune 0.605, oval mirror 0.87-1.91, runner 0.56 wide; the boxes before)",
+   "the film's (built)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "console between two chairs under the mirror on the north wall; bench by the stair; runner along the hall",
+     "observed_in": [
+      "film:1616",
+      "film:1690",
+      "film:10673",
+      "marina-frame:312"
+     ],
+     "extrapolated": false
+    }
+   ]
+  },
+  "scale_note": "Metric scale is the BUILT flight-1 stair's (rise/going, gated earlier and walked); no ruler independent of it was found for the furniture heights. Consistency only: an 80 in door read through the same film cameras gives 2.016 m (film-2677) and 2.124 m (film-3888fc), -0.8% / +4.5%."
+ },
+ "history": [
+  {
+   "date": "2026-10-15",
+   "what": "foyer dressing as coloured boxes from Marina 312 s / 203 s (spec/dressing/foyer.json)",
+   "outcome": "superseded"
+  },
+  {
+   "date": "2026-10-16",
+   "what": "door prints cut from film 3225/778 (film_prints.py)",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 10673 (a frame no camera here used): console top over rear-chair seat, both above the floor at the chairs' front legs (z ~8.2-8.27): 190 px / 115 px = 1.65 +-0.1; built 0.762 / 0.48 = 1.59",
+   "agrees": true,
+   "type": "ratio",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:10673"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "none"
+   ]
+  },
+  {
+   "what": "US furniture standards, a ruler of another kind: side table 30 in (0.762) inside the film's 0.773-0.819 read; chair seat 18 in + slip seat (0.457 + ~0.02) vs film 0.478/0.482",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "scale"
+   ],
+   "data": [
+    "standard:furniture"
+   ],
+   "scale": [
+    "standard:furniture"
+   ],
+   "upstream": [
+    "standard:furniture"
+   ]
+  },
+  {
+   "what": "Two film cameras agree on the gallery: frames 1 and 2 read on film-2677 (6.00-6.31 x 1.53-1.79; 5.65-5.89 x 1.69-1.94) and film-1616fc (5.86-6.34 x 1.59-1.87; 5.67-5.91 x 1.75-2.05), ~5 cm",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:2677"
+   ],
+   "scale": [
+    "stair-rise:flight1"
+   ],
+   "upstream": [
+    "stair-rise:flight1"
+   ]
+  },
+  {
+   "what": "Held-out: film-1616fc re-projects flight-1 nosings 2 and 7 to 2 cm / 1 cm (x 6.210 h 0.365; x 4.755 h 1.243); the Marina 312 s chair and console boxes overlay the film's chairs and table in 1616",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:1616"
+   ],
+   "scale": [
+    "stair-rise:flight1"
+   ],
+   "upstream": [
+    "stair-rise:flight1"
+   ]
+  },
+  {
+   "what": "Marina 312 s: console top 0.605, oval mirror 0.87-1.91, runner 0.56 wide at z 8.98-9.54",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "marina-frame:312"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ],
+   "upstream": [
+    "overhead-trace:ground"
+   ],
+   "disposition": "Marina's CG model furnishes the foyer differently from the film (demilune, oval mirror); film first for the look, her positions kept along the walls; logged DEVIATIONS 56"
+  },
+  {
+   "what": "80 in rear door through film-2677 (2.016 m) and film-3888fc (2.124 m; foyer_cameras.py 3888 solve, measurements/cameras/film-3888fc.json): the film cameras' scale within ~5%",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "scale"
+   ],
+   "data": [
+    "film:2677",
+    "film:3888"
+   ],
+   "scale": [
+    "door-80in:film"
+   ],
+   "upstream": [
+    "stair-rise:flight1"
+   ]
+  },
+  {
+   "what": "Film-1616fc projects the build's wainscot cap (0.705) 15 px (picture wall) and ~35 px (north wall) BELOW the film's cap line: either the film's cap is ~6-8 cm higher than ours or 1616fc reads heights high there",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "film:1616"
+   ],
+   "scale": [
+    "stair-rise:flight1"
+   ],
+   "upstream": [
+    "stair-rise:flight1"
+   ],
+   "disposition": "Not a pitch error (the implied pitch differs 2.4x between the walls), and reading 7 cm lower would put the chair seats at 0.36-0.41 (implausible; 10673's ratio agrees with the built heights). Kept; the wainscot height vs the film is logged for review (DEVIATIONS 56), not changed here"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/foyer-finish/before-film-1616.png",
+   "spec/captures/views/foyer-finish/before-film-2677.png",
+   "spec/captures/views/foyer-finish/before-film-10248.png",
+   "spec/captures/views/foyer-finish/before-marina-312.png",
+   "spec/captures/views/foyer-finish/before-marina-1068.png",
+   "spec/captures/views/foyer-finish/before-close-north.png",
+   "spec/captures/views/foyer-finish/before-close-bench.png",
+   "spec/captures/views/foyer-finish/before-close-gallery.png",
+   "spec/captures/views/foyer-finish/before-close-landing.png",
+   "spec/captures/views/foyer-finish/before-close-front.png",
+   "spec/captures/views/foyer-finish/before-close-runner.png"
+  ],
+  "after": [
+   "spec/captures/views/foyer-finish/after-film-1616.png",
+   "spec/captures/views/foyer-finish/after-film-2677.png",
+   "spec/captures/views/foyer-finish/after-film-10248.png",
+   "spec/captures/views/foyer-finish/after-marina-312.png",
+   "spec/captures/views/foyer-finish/after-marina-1068.png",
+   "spec/captures/views/foyer-finish/after-close-north.png",
+   "spec/captures/views/foyer-finish/after-close-bench.png",
+   "spec/captures/views/foyer-finish/after-close-gallery.png",
+   "spec/captures/views/foyer-finish/after-close-landing.png",
+   "spec/captures/views/foyer-finish/after-close-front.png",
+   "spec/captures/views/foyer-finish/after-close-runner.png",
+   "spec/captures/views/purchased/after-film-2677.png",
+   "spec/captures/views/purchased/after-close-north.png",
+   "spec/captures/views/purchased/after-close-front.png",
+   "spec/captures/views/purchased/after-close-landing.png",
+   "spec/captures/views/purchased/after-den-bookcase-close.png",
+   "spec/captures/views/purchased/after-living-film5650.png",
+   "spec/captures/views/purchased/after-close-ficus.png",
+   "spec/captures/views/purchased/after-close-den-poinsettias.png",
+   "spec/captures/views/purchased/after-film-1616.png"
+  ],
+  "note": "batch renders from the scratch copy (views-foyer-finish-{before,after}.json: solved film cameras 1616/2677/10248, Marina 312/1068, close-ups from the open hall); sheets compare-*.jpg (reference | before | after). The mirror glass reads black in batch renders (reflection probes are off there): check it live; bought plants (Oct 17, DEVIATIONS 61): spec/captures/views/purchased/after-*.png and compare-*.jpg (before = the foyer-finish / den / living after renders with the generated plants). They exist only where the gitignored Assets/Purchased/ is present"
+ },
+ "user_walk": "pending",
+ "user_words": ""
+}

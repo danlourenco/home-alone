@@ -1,0 +1,38 @@
+{
+ "gate": 7,
+ "change": "Glazed French door pairs (white, 2 x 5 lites, brass knobs and hinges) as a generated model (tools/house/hifi_french_doors.py -> FrenchDoors.glb, data spec/dressing/french_doors.json): the foyer/dining, foyer/living and living/den openings get a pair standing open 90 deg into the dining / living room, and those three openings become cased openings 2.065 m high (80 in leaves + head jamb; were uncased 2.20 m default cuts); the sunroom's closed prop box becomes a closed pair (sheers behind the glass: the sunroom is sealed), its box kept as an invisible collider",
+ "target": "House_WallGrid",
+ "premise": "The foyer/dining, foyer/living and living/den openings each hold a pair of white glazed French doors (2 x 5 lites) standing open into the dining or living room, and the sunroom opening a closed pair of the same doors",
+ "claim": {
+  "value": {"lites": [2, 5], "open_deg": 90, "opening_head_m": 2.065},
+  "data": ["marina-frame:1124", "marina-frame:1132", "marina-frame:1136", "marina-frame:1142", "marina-frame:1150"],
+  "scale": ["door-80in:standard", "overhead-trace:ground"],
+  "upstream": ["overhead-trace:ground"],
+  "how": "Marina Part 1: 1132/1136 (from the dining room: a pair open against the dining side of the foyer opening), 1142 (from the foyer: pairs open on the far side of the dining and living openings), 1150 (from the living room: a pair open on the living side of the den opening), 1124 (a closed pair in the dining room's sunroom wall); every leaf 2 lites across, 5 down, brass knob at the meeting stile. Leaf widths fill the openings as already built (overhead and den clip); heights 80 in standard (the openings' 2.20 m was a default, never measured; her leaves reach the head casing)",
+  "applies_to": ["dining_room", "living_room", "den", "foyer", "sunroom"],
+  "measured_in": ["dining_room", "living_room"],
+  "assumed": {"den": "DEVIATIONS 51", "foyer": "DEVIATIONS 51", "sunroom": "DEVIATIONS 51"},
+  "alternatives": ["a closed prop box at the sunroom and bare 2.20 m openings elsewhere (current)", "glazed pairs in all four openings, three open, the sunroom pair closed (built)"],
+  "layout": {"decides": [
+   {"part": "pairs open into the dining room (foyer/dining) and the living room (foyer/living, den/living)", "observed_in": ["marina-frame:1132", "marina-frame:1136", "marina-frame:1142", "marina-frame:1150"], "extrapolated": false},
+   {"part": "2 x 5 lites per leaf", "observed_in": ["marina-frame:1136", "marina-frame:1150", "marina-frame:1124"], "extrapolated": false}
+  ]}
+ },
+ "history": [{"date": "2026-10-15", "what": "sunroom closed with a prop box 'pair' (walk notes 2); other openings left bare", "outcome": "superseded"}],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 12138 (looking from the foyer into the living room): white glazed door leaves stand open on the living side of the opening, either side",
+   "agrees": true,
+   "type": "topological",
+   "data": ["film:12138"],
+   "scale": ["none"]
+  }
+ ],
+ "renders": {
+  "before": ["spec/captures/views/french/before-dining.png", "spec/captures/views/french/before-sunroom.png", "spec/captures/views/french/before-living.png", "spec/captures/views/french/before-foyer.png"],
+  "after": ["spec/captures/views/french/after-dining.png", "spec/captures/views/french/after-sunroom.png", "spec/captures/views/french/after-living.png", "spec/captures/views/french/after-foyer.png"],
+  "note": "batch renders from the scratch copy, Marina 1132/1124/1150/1142-like poses (spec/captures/views/french-{before,after}.json)"
+ },
+ "user_walk": "pending"
+}

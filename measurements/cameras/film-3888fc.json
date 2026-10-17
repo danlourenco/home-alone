@@ -1,0 +1,19 @@
+{
+ "cx": 960.0,
+ "cy": 529.0,
+ "yaw": -0.2806344988771452,
+ "pos": [
+  10.474,
+  -2.004,
+  8.96
+ ],
+ "f": 2227.4061943924567,
+ "name": "film-3888fc",
+ "frame": "0-homealone/full/homealone-movie-screencaps.com-3888.jpg",
+ "size": [
+  1920,
+  1058
+ ],
+ "points": [],
+ "note": "foyer_cameras.py 3888 (level, nosings), not re-solved"
+}

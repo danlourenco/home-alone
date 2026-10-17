@@ -1,0 +1,198 @@
+{
+ "gate": 7,
+ "change": "Upstairs hall arches (Oct 17, TRIAL): B (hall_corridor | hall_corridor_south) and C (hall_end | hall_corridor) get the film's segmental heads (measurements/overhead/upstairs-doors.json crown/spring -> reconcile -> geometry.json; were square 2.20 m defaults), drawn as generated arches (tools/house/hifi_hall_arches.py -> HallArches.glb, artist pipeline: true arcs, rounded edges, baked plaster maps; grey-box slices kept as colliders); A, the film's wide elliptical gallery arch between the stair well and the hall, added as a papered header above head height (hall.json arch_a)",
+ "target": "House_WallGrid",
+ "premise": "The film's hall arches can be read on 80 in doorways in their own wall planes (410: Buzz's doorway beside arch B) or through a camera solved on the hall's doors (2085), and fitted to the plan's shared walls",
+ "claim": {
+  "value": {
+   "B": {
+    "spring": 1.86,
+    "crown": 2.06,
+    "shape": "segment",
+    "film_span": 1.203,
+    "film_crown": 2.017
+   },
+   "C": {
+    "spring": 1.86,
+    "crown": 2.02,
+    "shape": "segment",
+    "assumed": true
+   },
+   "A": {
+    "spring": 2.04,
+    "crown": 2.3,
+    "film_crown": 2.393,
+    "shape": "half-ellipse",
+    "z": [
+     7.778,
+     11.43
+    ]
+   }
+  },
+  "data": [
+   "film:410",
+   "film:2085"
+  ],
+  "scale": [
+   "door-80in:film410-buzz",
+   "door-80in:film2085-linen"
+  ],
+  "upstream": [
+   "spec:door-80in"
+  ],
+  "how": "tools/house/hall_walls.py --arches: B on the 326.8 px/m ruler of Buzz's doorway in the arch's own plane (film 410), circle vs half-ellipse fits; A on refcam film-2085 (rms 1.7 px over 6 points, linen door + bath doorway) on the plane x 5.607",
+  "applies_to": [
+   "hall_end",
+   "hall_corridor",
+   "hall_corridor_south",
+   "main_stair_opening"
+  ],
+  "measured_in": [
+   "hall_corridor",
+   "hall_corridor_south",
+   "main_stair_opening"
+  ],
+  "risks": [
+   "extraction"
+  ],
+  "alternatives": [
+   "square openings 2.20 m (the build before: ARCH_HEAD default)",
+   "segmental arches B and C (built)",
+   "half-ellipses B and C",
+   "no gallery arch (the build before)",
+   "the gallery arch at the film's crown 2.39 (does not fit under our 2.40 ceiling with its paper band)",
+   "the gallery arch at crown 2.30 (built)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "a wide elliptical arch between the gallery / stair well and the hall",
+     "observed_in": [
+      "film:2080",
+      "film:2085",
+      "film:2100",
+      "film:410"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "arch B segmental",
+     "observed_in": [
+      "film:410",
+      "film:2296",
+      "film:2055"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "arch C exists between hall_end and hall_corridor (its shape: claim.assumed)",
+     "observed_in": [
+      "film:10828",
+      "film:10819"
+     ],
+     "extrapolated": false
+    }
+   ]
+  },
+  "assumed": {
+   "hall_end": "DEVIATIONS 64 (arch C's springline and rise-to-span taken from arch B; no ruler in its plane)"
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-13",
+   "what": "hall arches from Marina's hall walk (f141-147) and the overhead header band, no head measured: 2.20 m square default",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 2296 (another camera, from the parents' end): arch B's edge is a circular segment (circle fit within ~2 px, a half-ellipse 6 px off at a third of the span), rise/span 0.16 +-0.02 (built 0.132 from 410)",
+   "agrees": true,
+   "type": "ratio",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:2296"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "none"
+   ]
+  },
+  {
+   "what": "Film 2100 (same static shot as 2085, Kevin elsewhere): the gallery arch's edge again fits a half-ellipse better than a circle: consistency only (same camera)",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:2100"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "none"
+   ]
+  },
+  {
+   "what": "Arch A on the solved 2085 camera vs our plan: its jambs land at z 7.841 / 11.626 where our walls are 7.778 / 11.43 (6 / 20 cm), and its crown (2.39) above our 2.40 ceiling's room for a header: the film's set is taller here",
+   "agrees": false,
+   "type": "metric",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:2085"
+   ],
+   "scale": [
+    "door-80in:film2085-linen"
+   ],
+   "upstream": [
+    "spec:door-80in"
+   ],
+   "disposition": "built wall to wall at a 2.30 crown under our measured 2.40 ceiling (Marina): a flatter arch, DEVIATIONS 64; the user decides whether the film's height matters more than Marina's ceiling here"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/hall/before-film2085.png",
+   "spec/captures/views/hall/before-film410.png",
+   "spec/captures/views/hall/before-film10819.png",
+   "spec/captures/views/hall/before-film2687.png",
+   "spec/captures/views/hall/before-film2055.png",
+   "spec/captures/views/hall/before-sconces.png",
+   "spec/captures/views/hall/before-urns.png",
+   "spec/captures/views/hall/before-attic_end.png",
+   "spec/captures/views/hall/before-archA_hall.png",
+   "spec/captures/views/hall/before-film10819-night.png",
+   "spec/captures/views/hall/before-film2687-night.png",
+   "spec/captures/views/hall/before-sconces-night.png",
+   "spec/captures/views/hall/before-attic_end-night.png"
+  ],
+  "after": [
+   "spec/captures/views/hall/after-film2085.png",
+   "spec/captures/views/hall/after-film410.png",
+   "spec/captures/views/hall/after-film10819.png",
+   "spec/captures/views/hall/after-film2687.png",
+   "spec/captures/views/hall/after-film2055.png",
+   "spec/captures/views/hall/after-sconces.png",
+   "spec/captures/views/hall/after-urns.png",
+   "spec/captures/views/hall/after-attic_end.png",
+   "spec/captures/views/hall/after-archA_hall.png",
+   "spec/captures/views/hall/after-film10819-night.png",
+   "spec/captures/views/hall/after-film2687-night.png",
+   "spec/captures/views/hall/after-sconces-night.png",
+   "spec/captures/views/hall/after-attic_end-night.png"
+  ],
+  "note": "as changes/2026-10-17-upstairs-hall.json (film2085, film410, film2055, archA_hall show the arches)"
+ },
+ "user_walk": "pending",
+ "user_words": ""
+}

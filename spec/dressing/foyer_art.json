@@ -1,0 +1,205 @@
+{
+ "note": "public-domain works (Wikimedia Commons metadata as fetched); uv = atlas rectangle [u0, v0, u1, v1], v up",
+ "pictures": {
+  "under_landing": {
+   "file": "File:Rachel Ruysch - Flowers in a vase on a stone slab - 1704 -1995.67.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Rachel_Ruysch_-_Flowers_in_a_vase_on_a_stone_slab_-_1704_-1995.67.jpg",
+   "licence": "Public domain",
+   "artist": "Rachel Ruysch",
+   "credit": "http://www.dia.org/user_area/comping/1995.67.jpg",
+   "date": "1704 date QS:P571,+1704-00-00T00:00:00Z/9",
+   "art": "ruysch",
+   "uv": [
+    0.041015625,
+    0.751953125,
+    0.208984375,
+    0.998046875
+   ]
+  },
+  "landing": {
+   "file": "File:The Botanical Magazine, Plate 42 (Volume 2, 1788).png",
+   "page": "https://commons.wikimedia.org/wiki/File:The_Botanical_Magazine,_Plate_42_(Volume_2,_1788).png",
+   "licence": "Public domain",
+   "artist": "Sydenham Edwards / William Curtis",
+   "credit": "Downloaded from https://www.biodiversitylibrary.org/item/7351 .",
+   "date": "1788",
+   "art": "camellia",
+   "uv": [
+    0.26904296875,
+    0.751953125,
+    0.48046875,
+    0.998046875
+   ]
+  },
+  "gallery1": {
+   "file": "File:'Portrait of a Boy', oil on canvas painting by John Singer Sargent, 1890.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:%27Portrait_of_a_Boy%27,_oil_on_canvas_painting_by_John_Singer_Sargent,_1890.jpg",
+   "licence": "Public domain",
+   "artist": "John Singer Sargent",
+   "credit": "1. ArtKnowledgeNews.com 2. arthistory.about.com",
+   "date": "1890 date QS:P571,+1890-00-00T00:00:00Z/9",
+   "art": "boy",
+   "uv": [
+    0.501953125,
+    0.78125,
+    0.748046875,
+    0.96875
+   ]
+  },
+  "gallery2": {
+   "file": "File:Sargent - Portrait of Lady Eden, 1906, W1920-2-1.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Sargent_-_Portrait_of_Lady_Eden,_1906,_W1920-2-1.jpg",
+   "licence": "Public domain",
+   "artist": "John Singer Sargent",
+   "credit": "https://philamuseum.org/collections/results.html?searchTxt=&amp;searchNameID=15909&amp;searchClassID=&amp;searchOrigin=&amp;searchDeptID=&amp;keySearch2=&amp;accessionID=&amp;page=1",
+   "date": "19-20c",
+   "art": "lady_eden",
+   "uv": [
+    0.759765625,
+    0.751953125,
+    0.98974609375,
+    0.998046875
+   ]
+  },
+  "gallery3": {
+   "file": "File:Portrait of an African American Woman, ca 1890.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Portrait_of_an_African_American_Woman,_ca_1890.jpg",
+   "licence": "No restrictions",
+   "artist": "SMU Libraries Digital Collections",
+   "credit": "https://www.flickr.com/photos/smu_cul_digitalcollections/38611691350/",
+   "date": "2018-01-09 08:50:22",
+   "art": "photo_woman",
+   "uv": [
+    0.001953125,
+    0.52490234375,
+    0.248046875,
+    0.7255859375
+   ]
+  },
+  "gallery4": {
+   "file": "File:Anne and Her Nurse by Mary Cassatt, c. 1897, oil on canvas, Portland Museum of Art.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Anne_and_Her_Nurse_by_Mary_Cassatt,_c._1897,_oil_on_canvas,_Portland_Museum_of_Art.jpg",
+   "licence": "CC0",
+   "artist": "Hiart",
+   "credit": "Own work",
+   "date": "circa 1897 date QS:P,+1897-00-00T00:00:00Z/9,P1480,Q5727902",
+   "art": "nurse",
+   "uv": [
+    0.251953125,
+    0.57080078125,
+    0.498046875,
+    0.67919921875
+   ]
+  },
+  "gallery5": {
+   "file": "File:Child with Red Hat, Mary Cassatt.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Child_with_Red_Hat,_Mary_Cassatt.jpg",
+   "licence": "Public domain",
+   "artist": "Mary Cassatt",
+   "credit": "[2]",
+   "date": "circa 1904 date QS:P571,+1904-00-00T00:00:00Z/9,P1480,Q5727902",
+   "art": "red_hat",
+   "uv": [
+    0.56494140625,
+    0.501953125,
+    0.6845703125,
+    0.748046875
+   ]
+  },
+  "gallery6": {
+   "file": "File:Unidentified woman with young child, Tacoma, Washington, ca 1896 (PORTRAITS 634).jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Unidentified_woman_with_young_child,_Tacoma,_Washington,_ca_1896_(PORTRAITS_634).jpg",
+   "licence": "Public domain",
+   "artist": "Wagness and Sather",
+   "credit": "Portraits Collection",
+   "date": "circa 1896 date QS:P571,+1896-00-00T00:00:00Z/9,P1480,Q5727902",
+   "art": "photo_mother",
+   "uv": [
+    0.751953125,
+    0.5390625,
+    0.998046875,
+    0.71142578125
+   ]
+  },
+  "gallery7": {
+   "file": "File:Gilbert Stuart - Catherine Brass Yates.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Gilbert_Stuart_-_Catherine_Brass_Yates.jpg",
+   "licence": "Public domain",
+   "artist": "Gilbert Stuart",
+   "credit": "http://www.nga.gov/exhibitions/2005/stuart/newyork.shtm",
+   "date": "1793 date QS:P571,+1793-00-00T00:00:00Z/9",
+   "art": "yates",
+   "uv": [
+    0.001953125,
+    0.31396484375,
+    0.248046875,
+    0.4365234375
+   ]
+  },
+  "gallery8": {
+   "file": "File:The Barefoot Child by Mary Cassatt, 1897, pastel.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:The_Barefoot_Child_by_Mary_Cassatt,_1897,_pastel.jpg",
+   "licence": "Public domain",
+   "artist": "Mary Cassatt",
+   "credit": "Bowdoin College Museum of Art",
+   "date": "1897",
+   "art": "barefoot",
+   "uv": [
+    0.251953125,
+    0.28466796875,
+    0.498046875,
+    0.4658203125
+   ]
+  },
+  "gallery9": {
+   "file": "File:Woman seated with fan in lap (6902668466).jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Woman_seated_with_fan_in_lap_(6902668466).jpg",
+   "licence": "No restrictions",
+   "artist": "SMU Central University Libraries",
+   "credit": "https://www.flickr.com/photos/smu_cul_digitalcollections/6902668466/",
+   "date": "1893-01-01 00:00:00",
+   "art": "photo_fan",
+   "uv": [
+    0.501953125,
+    0.251953125,
+    0.748046875,
+    0.498046875
+   ]
+  },
+  "gallery10": {
+   "file": "File:Sargent - Head of an Italian Boy, c. 1878, nr. 718.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Sargent_-_Head_of_an_Italian_Boy,_c._1878,_nr._718.jpg",
+   "licence": "Public domain",
+   "artist": "John Singer Sargent",
+   "credit": "https://www.pubhist.com/person/5166/john-singer-sargent",
+   "date": "",
+   "art": "boy_sargent2",
+   "uv": [
+    0.76416015625,
+    0.251953125,
+    0.98583984375,
+    0.498046875
+   ]
+  },
+  "print_left": {
+   "file": "File:Pomological Watercolor POM00004432.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Pomological_Watercolor_POM00004432.jpg",
+   "licence": "Public domain",
+   "artist": "Passmore, Deborah Griscom, 1840-1911",
+   "credit": "http://usdawatercolors.nal.usda.gov/pom/catalog.xhtml?id=POM00004432",
+   "date": "17 June 1910",
+   "art": "cherries",
+   "file_out": "spec/dressing/prints/print_left.png"
+  },
+  "print_right": {
+   "file": "File:Vincent ribes-rubrum-1820.jpg",
+   "page": "https://commons.wikimedia.org/wiki/File:Vincent_ribes-rubrum-1820.jpg",
+   "licence": "Public domain",
+   "artist": "Henriette Vincent",
+   "credit": "Studies of Flowers and Fruits Painted from Life , London, 1820",
+   "date": "1820",
+   "art": "currants",
+   "file_out": "spec/dressing/prints/print_right.png"
+  }
+ }
+}

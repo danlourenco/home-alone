@@ -28,6 +28,21 @@ BUILDS = {
     "tools/house/hifi_dressing.py": (["FoyerDressing.glb"], [LIB, "spec/dressing/foyer.json"]),
     "tools/house/hifi_landing_window.py": (["LandingWindow.glb"], [LIB, "spec/house_spec.ground.json"]),
     "tools/house/hifi_swing_door.py": (["SwingDoor.glb"], [LIB, "spec/geometry.json"]),
+    "tools/house/hifi_back_door.py": (["BackDoor.glb"], [LIB, "spec/house_spec.ground.json"]),
+    "tools/house/hifi_kitchen.py": (["KitchenCabinets.glb"], [LIB, "spec/dressing/kitchen.json"]),
+    "tools/house/hifi_kitchen_lights.py": (["KitchenChandelier.glb", "KitchenSconces.glb"], [LIB, "spec/dressing/kitchen.json"]),
+    "tools/house/hifi_kitchen_gallery.py": (["KitchenGallery.glb"], [LIB, "spec/dressing/kitchen.json"]),
+    "tools/house/hifi_breakfast_table.py": (["BreakfastTable.glb"], [LIB, "spec/dressing/kitchen.json"]),
+    "tools/house/hifi_sheers.py": (["Sheers.glb"], [LIB, "spec/house_spec.ground.json"]),
+    "tools/house/hifi_den.py": (["DenWindows.glb", "DenBuiltins.glb"], [LIB, "spec/house_spec.ground.json", "spec/dressing/den.json", "spec/dressing/den_fabric.json", "spec/dressing/den_labels.json", "tools/house/den_textures.py"]),
+    "tools/house/hifi_den_props.py": (["DenProps.glb"], ["spec/dressing/den.json"]),
+    "tools/house/hifi_foyer_props.py": (["FoyerProps.glb"], [LIB, "spec/dressing/foyer_props.json", "spec/dressing/foyer_art.json", "spec/dressing/foyer_art.png", "spec/dressing/rug_runner.png", "spec/dressing/rug_front.png"]),
+    "tools/house/hifi_paint_can.py": (["PaintCan.glb", "PaintCanSatin.glb"], [LIB]),
+    "tools/house/hifi_living.py": (["LivingWindows.glb", "LivingBuiltins.glb"], [LIB, "spec/house_spec.ground.json", "spec/dressing/living.json", "tools/house/hifi_sheers.py"]),
+    "tools/house/hifi_living_props.py": (["LivingProps.glb"], ["spec/dressing/living.json", "tools/house/hifi_den_props.py"]),
+    "tools/house/hifi_hall.py": (["HallDressing.glb"], [LIB, "spec/dressing/hall.json", "spec/dressing/hall_art.json", "spec/dressing/hall_art.png", "spec/geometry.json"]),
+    "tools/house/hifi_hall_arches.py": (["HallArches.glb"], ["tools/house/hifi_pipeline.py", LIB, "spec/geometry.json", "spec/dressing/hall.json", "spec/dressing/finishes.json"]),
+    "tools/house/hifi_foyer_arch.py": (["FoyerArch.glb"], [LIB, "tools/house/hifi_pipeline.py", "spec/geometry.json", "spec/house_spec.json"]),   # artist pipeline (+ Textures/Generated/FoyerArch)
 }
 
 
@@ -59,7 +74,7 @@ for s in todo:
     run = subprocess.run([BLENDER, "-b", "--factory-startup", "-P", str(ROOT / s)], capture_output=True, text=True)
     if any(not (MODELS / o).exists() or (MODELS / o).stat().st_mtime == before[o] for o in BUILDS[s][0]):   # Blender exits 0 on a script error
         sys.exit(f"{s} did not write its models:\n" + "\n".join((run.stdout + run.stderr).splitlines()[-15:]))
-    if s != "tools/house/hifi_props.py":   # Poly Haven models are not ours to orient
+    if s not in ("tools/house/hifi_props.py", "tools/house/hifi_den_props.py", "tools/house/hifi_living_props.py"):   # Poly Haven models are not ours to orient
         subprocess.run(["uv", "run", "-q", "--with", "trimesh", "--with", "numpy", "--with", "scipy", "--with", "networkx",
                         "python", "-I", str(ROOT / "tools/house/glb_orientation.py")] + [str(MODELS / o) for o in BUILDS[s][0]], check=True)
     stamps[s] = stamp_of(s)

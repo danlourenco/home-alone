@@ -1,0 +1,173 @@
+{
+ "gate": 7,
+ "change": "Kitchen cabinets, countertops, appliances, window seats and the L-shaped island as a generated model (tools/house/hifi_kitchen.py -> KitchenCabinets.glb, data spec/dressing/kitchen.json, tile textures tools/house/kitchen_tile_tex.py), colliding in the walk layer; the seat wall's three assumed windows replaced by the two Marina shows over her window seats (32 x 32 in, centres x -3.105 and -0.719, sills 1.20)",
+ "target": "House_WallGrid",
+ "premise": "Marina's kitchen has base runs on the end, seat and sink walls, a corner oven tower on the seat wall, two window seats under two windows, a fridge at the breakfast end of the sink wall and an L-shaped island, at positions her in-room SfM measures; the film's finish is dark cherry raised panels with brass bail pulls and 6 in blue-black glazed tile with a cobalt bullnose edge",
+ "claim": {
+  "value": {
+   "island_top": "x -3.241..0.342, z 0.846..1.600 (long leg), short leg x -0.502..0.342 to z 2.460",
+   "end_run": "z -0.915..1.789",
+   "tower": "x -4.526..-3.598",
+   "seat_1": "x -3.598..-2.687",
+   "seat_2": "x -1.178..-0.296",
+   "seat_windows_centre_x": [
+    -3.105,
+    -0.719
+   ],
+   "tile_pitch_m": 0.158
+  },
+  "data": [
+   "sfm:kitchen",
+   "marina-frame:878",
+   "marina-frame:888",
+   "marina-frame:893",
+   "marina-frame:885",
+   "marina-frame:943",
+   "marina-frame:945"
+  ],
+  "scale": [
+   "counter-36in:878",
+   "wing-built:2026-10-16"
+  ],
+  "upstream": [
+   "counter-36in:878"
+  ],
+  "how": "tools/house/kitchen_walls.py --fixtures: picks intersected with planes parallel to the end wall, seat wall and floor of the big clip (Part 1 868-950 s, frame n at ~867.75 + n/4 s), and height-banded point layers histogrammed along each wall; metres at the 36 in counter ruler, then mapped into the built wing per axis (x0.9379 along the seat wall: her end-to-pantry-wall 8.005 m onto the built 7.508; x0.9784 across: her seat-to-stair-wall 8.742 onto 8.553). Depths and heights stay standard (counter 0.641 / 36 in, uppers 54-87 in: her uppers read 1.36-1.43 / 2.20-2.23 m)",
+  "applies_to": [
+   "kitchen"
+  ],
+  "measured_in": [
+   "kitchen"
+  ],
+  "assumed": {
+   "kitchen": "DEVIATIONS 47"
+  },
+  "risks": [
+   "extraction",
+   "scale"
+  ],
+  "alternatives": [
+   "no cabinets (current build)",
+   "Marina's arrangement at her own counter-ruler scale (5-9% larger than the built wing, would not fit)",
+   "Marina's arrangement mapped per axis into the built wing (built)",
+   "the real-house plan's fixtures (island 0.5 m shorter, sink 0.2 m toward the breakfast end)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "island is an L: long leg parallel to the seat wall, short leg toward the sink wall at the breakfast end",
+     "observed_in": [
+      "marina-frame:942",
+      "marina-frame:945",
+      "marina-frame:870",
+      "film:island-detail"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "oven tower against the seat wall at the end-wall corner, window seat beside it",
+     "observed_in": [
+      "marina-frame:885",
+      "marina-frame:889",
+      "marina-frame:893"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "two window seats under two windows on the seat wall, counters between and after them, corner pantry",
+     "observed_in": [
+      "marina-frame:889",
+      "marina-frame:893",
+      "marina-frame:896",
+      "marina-frame:870"
+     ],
+     "extrapolated": false
+    }
+   ]
+  }
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Real-house plan fixtures (its own scale, registered on our main block; kitchen_walls.py --fixtures): island long leg z 0.965-1.580 (built 0.846-1.600) starting x -3.183 (built -3.241); sink centre x -3.605 (built -3.813, Marina's: under her window)",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "extraction",
+    "scale"
+   ],
+   "data": [
+    "real-plan:dimensioned-first-floor"
+   ],
+   "scale": [
+    "plan-arrows:dimensioned-first-floor"
+   ],
+   "upstream": [
+    "plan-arrows:dimensioned-first-floor"
+   ]
+  },
+  {
+   "what": "Real-house plan: the island's breakfast end and short leg at x -0.87..-0.15 (built -0.502..0.342) and to z 2.25 (built 2.46)",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "real-plan:dimensioned-first-floor"
+   ],
+   "scale": [
+    "plan-arrows:dimensioned-first-floor"
+   ],
+   "upstream": [
+    "plan-arrows:dimensioned-first-floor"
+   ],
+   "disposition": "the plan is the real house (the film's kitchen was a set); Marina's set layout is the interior authority and her island is measured in 4 frames; logged DEVIATIONS 47"
+  },
+  {
+   "what": "Film 6902: the end-wall counter's cobalt edge tiles repeat 58.5 px; the 36 in back-door leaf is 323 px at nearly the same depth and the 18 in compactor 140 px: 0.145-0.165 m -> 6 in tile (0.152 + 6 mm grout). Marina's own model tiles are 0.084 m (rectified island top, frame 69): the film wins on look (user: film first)",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "film:6902"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "Film 6902 / 9812 / island detail: dark cherry raised-panel doors, drawers with brass bail pulls, a black dishwasher left of the sink, an 18 in compactor right of the back door, cobalt bullnose edge, tiled backsplash",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:6902",
+    "film:island-detail"
+   ],
+   "scale": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/kitchen/before-cab-note1506.png",
+   "spec/captures/views/kitchen/before-cab-sink-wall.png",
+   "spec/captures/views/kitchen/before-cab-seat-wall.png",
+   "spec/captures/views/kitchen/before-cab-wing-long.png",
+   "spec/captures/views/kitchen/before-cab-film6902.png",
+   "spec/captures/views/kitchen/before-cab-island.png",
+   "spec/captures/views/kitchen/before-cab-fridge.png"
+  ],
+  "after": [
+   "spec/captures/views/kitchen/after-cab-note1506.png",
+   "spec/captures/views/kitchen/after-cab-sink-wall.png",
+   "spec/captures/views/kitchen/after-cab-seat-wall.png",
+   "spec/captures/views/kitchen/after-cab-wing-long.png",
+   "spec/captures/views/kitchen/after-cab-film6902.png",
+   "spec/captures/views/kitchen/after-cab-island.png",
+   "spec/captures/views/kitchen/after-cab-fridge.png",
+   "spec/captures/views/kitchen/after-cab-sinkrun.png"
+  ],
+  "note": "batch renders from the scratch copy (spec/captures/views/kitchen-cab-{before,after}.json); lighting not judged from them; 'sink-wall' stands inside the new oven tower (same pose as before); 'sinkrun' (after only) shows the sink run instead"
+ },
+ "user_walk": "accepted",
+ "user_words": "This is... EXCELLENT! REALLY WELL DONE! (Oct 16, after walking the kitchen cabinets in House_WallGrid)"
+}

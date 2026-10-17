@@ -1,0 +1,16 @@
+[
+ {
+  "name": "kitchen/before-table-night",
+  "pos": [
+   -1.2,
+   -1.476,
+   -1.9
+  ],
+  "look_at": [
+   1.15,
+   -2.326,
+   -4.9
+  ],
+  "vfov": 60
+ }
+]

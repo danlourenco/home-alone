@@ -1,0 +1,44 @@
+[
+ {
+  "name": "kitchen/before-fixnight-gallery",
+  "pos": [
+   -0.6,
+   -1.526,
+   -1.5
+  ],
+  "look_at": [
+   2.3,
+   -1.576,
+   -1.6
+  ],
+  "vfov": 55
+ },
+ {
+  "name": "kitchen/before-fixnight-stair",
+  "pos": [
+   1.4,
+   -1.526,
+   -4.6
+  ],
+  "look_at": [
+   2.82,
+   -1.426,
+   -7.638
+  ],
+  "vfov": 55
+ },
+ {
+  "name": "kitchen/before-fixnight-film1151",
+  "pos": [
+   -3.4,
+   -1.426,
+   -0.9
+  ],
+  "look_at": [
+   2.2,
+   -1.726,
+   -3.6
+  ],
+  "vfov": 50
+ }
+]

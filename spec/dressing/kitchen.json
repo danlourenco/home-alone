@@ -1,0 +1,1121 @@
+{
+ "note": "The kitchen's cabinets, counters, appliances, window seats and island in spec metres (x, z; heights above the ground floor). Built by tools/house/hifi_kitchen.py (KitchenCabinets.glb); SpecGreybox.KitchenColliders makes an invisible box collider for every piece with collide true. Positions: Marina's big clip (tools/house/kitchen_walls.py --fixtures; Part 1 868-950 s) mapped per axis into the built wing (x0.9379 along the seat wall, x0.9784 across); changes/2026-10-16-kitchen-cabinets.json, DEVIATIONS 47. Standard sizes where she reads them (36 in counter, 25 in deep tops, 54/87 in uppers, 24 in dishwasher, 36 in sink base and fridge, 18 in compactor).",
+ "std": {
+  "counter_h": 0.914,
+  "slab_bottom": 0.876,
+  "tile_top": 0.904,
+  "toe_h": 0.1,
+  "toe_recess": 0.075,
+  "door_t": 0.02,
+  "gap": 0.003,
+  "upper_bottom": 1.372,
+  "upper_top": 2.21,
+  "tile_pitch": 0.158,
+  "grout": 0.006,
+  "edge_w": 0.04,
+  "edge_drop": 0.05,
+  "edge_proud": 0.012,
+  "backsplash_h": 0.158,
+  "source": "counter 0.911-0.914 m (both clips at their rulers), 0.641 deep (small clip); uppers 1.36-1.43 to 2.20-2.23 (big clip, end and seat walls); tile from film 6902 (6 in at a 0.158 pitch); the edge is the film's cobalt bullnose"
+ },
+ "bases": [
+  {
+   "name": "end_run",
+   "x": [
+    -5.192,
+    -4.576
+   ],
+   "z": [
+    -0.915,
+    1.789
+   ],
+   "front": "+x",
+   "modules": [
+    {
+     "z": [
+      -0.915,
+      -0.274
+     ],
+     "type": "blind"
+    },
+    {
+     "z": [
+      -0.274,
+      0.528
+     ],
+     "type": "drawer_doors"
+    },
+    {
+     "z": [
+      0.528,
+      1.329
+     ],
+     "type": "drawer_doors"
+    },
+    {
+     "z": [
+      1.329,
+      1.789
+     ],
+     "type": "compactor"
+    }
+   ],
+   "source": "front u 0.57-0.68 (bases), end at the door 2.765 m from the seat wall (counter at the wall, f41: z 1.791); compactor front 2.294-2.764 (z 1.329-1.790); the corner behind the tower is blind"
+  },
+  {
+   "name": "seat_counter_1",
+   "x": [
+    -2.687,
+    -1.178
+   ],
+   "z": [
+    -0.915,
+    -0.299
+   ],
+   "front": "+z",
+   "modules": [
+    {
+     "x": [
+      -2.687,
+      -1.933
+     ],
+     "type": "drawer_doors"
+    },
+    {
+     "x": [
+      -1.933,
+      -1.178
+     ],
+     "type": "drawer_doors"
+    }
+   ],
+   "source": "between window seat 1 (its back wall at u 1.68-2.67) and seat 2 (4.28-5.22); base fronts v 0.6"
+  },
+  {
+   "name": "seat_counter_2",
+   "x": [
+    -0.296,
+    1.232
+   ],
+   "z": [
+    -0.915,
+    -0.299
+   ],
+   "front": "+z",
+   "modules": [
+    {
+     "x": [
+      -0.296,
+      0.468
+     ],
+     "type": "drawer_doors"
+    },
+    {
+     "x": [
+      0.468,
+      1.232
+     ],
+     "type": "drawer_doors"
+    }
+   ],
+   "source": "from seat 2 to the corner pantry (base fronts end u 6.83-6.92)"
+  },
+  {
+   "name": "sink_run",
+   "x": [
+    -5.192,
+    -2.419
+   ],
+   "z": [
+    3.469,
+    4.085
+   ],
+   "front": "-z",
+   "modules": [
+    {
+     "x": [
+      -5.192,
+      -4.27
+     ],
+     "type": "drawer_doors"
+    },
+    {
+     "x": [
+      -4.27,
+      -3.356
+     ],
+     "type": "sink_base"
+    },
+    {
+     "x": [
+      -3.356,
+      -2.746
+     ],
+     "type": "dishwasher"
+    },
+    {
+     "x": [
+      -2.746,
+      -2.419
+     ],
+     "type": "door"
+    }
+   ],
+   "source": "counter into the back-door corner (small clip: its end 0.641 m along the end wall, Oct 16); sink base centred under the sink window (x -3.813); dishwasher on its breakfast side (film 6902: left of the sink); the run stops at the fridge. The clip does not reconstruct this run past ~2.8 m: module split authored (DEVIATIONS 47)"
+  }
+ ],
+ "counters": [
+  {
+   "name": "end_run",
+   "poly": [
+    [
+     -5.192,
+     -0.915
+    ],
+    [
+     -4.551,
+     -0.915
+    ],
+    [
+     -4.551,
+     1.789
+    ],
+    [
+     -5.192,
+     1.789
+    ]
+   ],
+   "edges": [
+    [
+     1,
+     2,
+     -0.299
+    ],
+    [
+     2,
+     3
+    ]
+   ],
+   "backsplash": [
+    [
+     3,
+     0
+    ]
+   ],
+   "grid_origin": [
+    -4.551,
+    1.789
+   ]
+  },
+  {
+   "name": "seat_counter_1",
+   "poly": [
+    [
+     -2.687,
+     -0.915
+    ],
+    [
+     -1.178,
+     -0.915
+    ],
+    [
+     -1.178,
+     -0.274
+    ],
+    [
+     -2.687,
+     -0.274
+    ]
+   ],
+   "edges": [
+    [
+     2,
+     3
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     3,
+     0
+    ]
+   ],
+   "backsplash": [
+    [
+     0,
+     1
+    ]
+   ],
+   "grid_origin": [
+    -1.9325,
+    -0.274
+   ]
+  },
+  {
+   "name": "seat_counter_2",
+   "poly": [
+    [
+     -0.296,
+     -0.915
+    ],
+    [
+     1.232,
+     -0.915
+    ],
+    [
+     1.232,
+     -0.274
+    ],
+    [
+     -0.296,
+     -0.274
+    ]
+   ],
+   "edges": [
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     0
+    ]
+   ],
+   "backsplash": [
+    [
+     0,
+     1
+    ]
+   ],
+   "grid_origin": [
+    -0.296,
+    -0.274
+   ]
+  },
+  {
+   "name": "sink_run",
+   "poly": [
+    [
+     -5.192,
+     3.444
+    ],
+    [
+     -2.419,
+     3.444
+    ],
+    [
+     -2.419,
+     4.085
+    ],
+    [
+     -5.192,
+     4.085
+    ]
+   ],
+   "edges": [
+    [
+     0,
+     1
+    ]
+   ],
+   "backsplash": [
+    [
+     2,
+     3
+    ]
+   ],
+   "grid_origin": [
+    -3.813,
+    3.444
+   ],
+   "holes": [
+    {
+     "name": "sink",
+     "x": [
+      -4.233,
+      -3.393
+     ],
+     "z": [
+      3.524,
+      4.004
+     ]
+    }
+   ]
+  },
+  {
+   "name": "island",
+   "poly": [
+    [
+     -3.241,
+     0.846
+    ],
+    [
+     0.342,
+     0.846
+    ],
+    [
+     0.342,
+     2.46
+    ],
+    [
+     -0.502,
+     2.46
+    ],
+    [
+     -0.502,
+     1.6
+    ],
+    [
+     -3.241,
+     1.6
+    ]
+   ],
+   "edges": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     0
+    ]
+   ],
+   "grid_origin": [
+    -3.241,
+    0.846
+   ],
+   "holes": [
+    {
+     "name": "cooktop",
+     "x": [
+      -3.19,
+      -2.43
+     ],
+     "z": [
+      0.958,
+      1.488
+     ]
+    }
+   ],
+   "source": "long leg u 2.08-5.0 m from the end wall, v 1.80-2.57 from the seat wall (bases and top edges, big clip); short leg to u 5.9 (its top's breakfast edge; base face 5.8: a 9 cm overhang for the chairs) and v 3.45 (end face; f301 corner picks); cooktop at the end-wall end (overhead f9, f69)"
+  }
+ ],
+ "island_bases": [
+  {
+   "x": [
+    -3.216,
+    0.248
+   ],
+   "z": [
+    0.871,
+    1.575
+   ],
+   "faces": {
+    "-z": {
+     "from": -3.216,
+     "to": 0.248,
+     "n": 7,
+     "type": "drawer_doors"
+    },
+    "+z": {
+     "from": -3.216,
+     "to": -0.477,
+     "n": 6,
+     "type": "drawer_doors"
+    },
+    "-x": "panel",
+    "+x": "panel"
+   }
+  },
+  {
+   "x": [
+    -0.477,
+    0.248
+   ],
+   "z": [
+    1.575,
+    2.435
+   ],
+   "faces": {
+    "+z": {
+     "from": -0.477,
+     "to": 0.248,
+     "n": 1,
+     "type": "drawer_doors"
+    },
+    "-x": {
+     "from": 1.575,
+     "to": 2.435,
+     "n": 2,
+     "type": "drawer_doors"
+    },
+    "+x": "panel"
+   }
+  }
+ ],
+ "talls": [
+  {
+   "name": "tower",
+   "x": [
+    -4.551,
+    -3.598
+   ],
+   "z": [
+    -0.915,
+    -0.299
+   ],
+   "front": "+z",
+   "top": 2.21,
+   "oven": [
+    0.8,
+    1.76
+   ],
+   "source": "against the seat wall in the end-wall corner (f69, f85, f101); front v 0.6, u 0.63-1.73 (tall points); oven 0.80-1.76 and cabinet to 2.22 (f69 picks)"
+  },
+  {
+   "name": "pantry",
+   "poly": [
+    [
+     1.232,
+     -0.915
+    ],
+    [
+     1.232,
+     -0.299
+    ],
+    [
+     2.235,
+     0.504
+    ],
+    [
+     2.316,
+     0.504
+    ],
+    [
+     2.316,
+     -0.915
+    ]
+   ],
+   "front_edge": [
+    1,
+    2
+   ],
+   "top": 2.21,
+   "source": "corner pantry with an angled front (bases: diagonal from u 6.85 v 0.6 to u 7.9 v 1.45; f113, f141; film island detail: a tall wooden cupboard in that corner)"
+  }
+ ],
+ "seats": [
+  {
+   "name": "seat_1",
+   "x": [
+    -3.598,
+    -2.687
+   ],
+   "z": [
+    -0.915,
+    -0.299
+   ],
+   "seat_top": 0.5,
+   "cushion": 0.08,
+   "source": "back wall at seat height u 1.68-2.67; seat surface 0.47-0.53 (points); under seat window 1"
+  },
+  {
+   "name": "seat_2",
+   "x": [
+    -1.178,
+    -0.296
+   ],
+   "z": [
+    -0.915,
+    -0.299
+   ],
+   "seat_top": 0.5,
+   "cushion": 0.08,
+   "source": "u 4.28-5.22; under seat window 2"
+  }
+ ],
+ "uppers": [
+  {
+   "name": "end_A",
+   "x": [
+    -5.192,
+    -4.862
+   ],
+   "z": [
+    1.219,
+    1.874
+   ],
+   "front": "+x",
+   "source": "f41 picks at the fronts: v 2.181-2.852"
+  },
+  {
+   "name": "end_B",
+   "x": [
+    -5.192,
+    -4.862
+   ],
+   "z": [
+    -0.808,
+    0.128
+   ],
+   "front": "+x",
+   "source": "v 0.109-1.117; trimmed 5 cm to clear the end window's casing"
+  },
+  {
+   "name": "seat_U1",
+   "x": [
+    -2.61,
+    -1.234
+   ],
+   "z": [
+    -0.915,
+    -0.585
+   ],
+   "front": "+z",
+   "source": "f85/f101/f113: u 2.53-2.68 .. 4.08-4.10, between the seat windows' casings"
+  },
+  {
+   "name": "seat_U2",
+   "x": [
+    -0.231,
+    1.185
+   ],
+   "z": [
+    -0.915,
+    -0.585
+   ],
+   "front": "+z",
+   "source": "u 4.62-4.71 .. 6.78-6.80; starts past window 2's casing"
+  },
+  {
+   "name": "sink_S1",
+   "x": [
+    -5.192,
+    -4.3
+   ],
+   "z": [
+    3.755,
+    4.085
+   ],
+   "front": "-z",
+   "source": "small clip f61 and film 6902: uppers between the sink window and the end-wall corner"
+  },
+  {
+   "name": "sink_S2",
+   "x": [
+    -3.327,
+    -2.43
+   ],
+   "z": [
+    3.755,
+    4.085
+   ],
+   "front": "-z",
+   "source": "film 10448 (night): an upper between the sink window and the breakfast end, its under-cabinet light lit over the counter left of the sink; Marina's frames do not show this stretch (Oct 16, kitchen night lighting)"
+  },
+  {
+   "name": "over_fridge",
+   "x": [
+    -2.419,
+    -1.505
+   ],
+   "z": [
+    3.475,
+    4.085
+   ],
+   "front": "-z",
+   "bottom": 1.83,
+   "source": "f297: a cabinet above the fridge"
+  }
+ ],
+ "appliances": [
+  {
+   "name": "fridge",
+   "type": "fridge",
+   "x": [
+    -2.419,
+    -1.505
+   ],
+   "z": [
+    3.33,
+    4.085
+   ],
+   "front": "-z",
+   "top": 1.78,
+   "source": "black side-by-side at the breakfast end of the sink wall, its side in line with the breakfast rear wall (f281, f297); 36 in standard, not measured (DEVIATIONS 47)"
+  },
+  {
+   "name": "cooktop",
+   "type": "cooktop",
+   "x": [
+    -3.19,
+    -2.43
+   ],
+   "z": [
+    0.958,
+    1.488
+   ]
+  },
+  {
+   "name": "sink",
+   "type": "sink",
+   "x": [
+    -4.233,
+    -3.393
+   ],
+   "z": [
+    3.524,
+    4.004
+   ]
+  }
+ ],
+ "colliders": [
+  {
+   "name": "end_run",
+   "x": [
+    -5.192,
+    -4.539
+   ],
+   "z": [
+    -0.915,
+    1.801
+   ],
+   "y": [
+    0,
+    0.92
+   ]
+  },
+  {
+   "name": "tower",
+   "x": [
+    -4.551,
+    -3.598
+   ],
+   "z": [
+    -0.915,
+    -0.287
+   ],
+   "y": [
+    0,
+    2.21
+   ]
+  },
+  {
+   "name": "seat_1",
+   "x": [
+    -3.598,
+    -2.687
+   ],
+   "z": [
+    -0.915,
+    -0.299
+   ],
+   "y": [
+    0,
+    0.5
+   ]
+  },
+  {
+   "name": "seat_counter_1",
+   "x": [
+    -2.699,
+    -1.166
+   ],
+   "z": [
+    -0.915,
+    -0.262
+   ],
+   "y": [
+    0,
+    0.92
+   ]
+  },
+  {
+   "name": "seat_2",
+   "x": [
+    -1.178,
+    -0.296
+   ],
+   "z": [
+    -0.915,
+    -0.299
+   ],
+   "y": [
+    0,
+    0.5
+   ]
+  },
+  {
+   "name": "seat_counter_2",
+   "x": [
+    -0.308,
+    1.232
+   ],
+   "z": [
+    -0.915,
+    -0.262
+   ],
+   "y": [
+    0,
+    0.92
+   ]
+  },
+  {
+   "name": "pantry_a",
+   "x": [
+    1.232,
+    2.316
+   ],
+   "z": [
+    -0.915,
+    -0.299
+   ],
+   "y": [
+    0,
+    2.21
+   ]
+  },
+  {
+   "name": "pantry_b",
+   "x": [
+    1.565,
+    2.316
+   ],
+   "z": [
+    -0.299,
+    -0.032
+   ],
+   "y": [
+    0,
+    2.21
+   ]
+  },
+  {
+   "name": "pantry_c",
+   "x": [
+    1.9,
+    2.316
+   ],
+   "z": [
+    -0.032,
+    0.504
+   ],
+   "y": [
+    0,
+    2.21
+   ]
+  },
+  {
+   "name": "sink_run",
+   "x": [
+    -5.192,
+    -2.419
+   ],
+   "z": [
+    3.432,
+    4.085
+   ],
+   "y": [
+    0,
+    0.92
+   ]
+  },
+  {
+   "name": "fridge",
+   "x": [
+    -2.419,
+    -1.505
+   ],
+   "z": [
+    3.33,
+    4.085
+   ],
+   "y": [
+    0,
+    1.78
+   ]
+  },
+  {
+   "name": "island_long",
+   "x": [
+    -3.253,
+    0.354
+   ],
+   "z": [
+    0.834,
+    1.612
+   ],
+   "y": [
+    0,
+    0.92
+   ]
+  },
+  {
+   "name": "island_short",
+   "x": [
+    -0.514,
+    0.354
+   ],
+   "z": [
+    1.612,
+    2.472
+   ],
+   "y": [
+    0,
+    0.92
+   ]
+  },
+  {
+   "name": "breakfast_table_ped_a",
+   "x": [
+    0.28,
+    0.82
+   ],
+   "z": [
+    4.61,
+    5.15
+   ],
+   "y": [
+    0.0,
+    0.62
+   ]
+  },
+  {
+   "name": "breakfast_table_ped_b",
+   "x": [
+    1.48,
+    2.02
+   ],
+   "z": [
+    4.61,
+    5.15
+   ],
+   "y": [
+    0.0,
+    0.62
+   ]
+  },
+  {
+   "name": "breakfast_table_top_mid",
+   "x": [
+    0.44999999999999996,
+    1.8499999999999999
+   ],
+   "z": [
+    4.25,
+    5.51
+   ],
+   "y": [
+    0.62,
+    0.76
+   ]
+  },
+  {
+   "name": "breakfast_table_top_endA",
+   "x": [
+    0.04999999999999982,
+    0.44999999999999996
+   ],
+   "z": [
+    4.33,
+    5.43
+   ],
+   "y": [
+    0.62,
+    0.76
+   ]
+  },
+  {
+   "name": "breakfast_table_top_endB",
+   "x": [
+    1.8499999999999999,
+    2.25
+   ],
+   "z": [
+    4.33,
+    5.43
+   ],
+   "y": [
+    0.62,
+    0.76
+   ]
+  },
+  {
+   "name": "desk",
+   "x": [
+    1.886,
+    2.316
+   ],
+   "z": [
+    1.03,
+    2.13
+   ],
+   "y": [
+    0,
+    1.06
+   ]
+  }
+ ],
+ "colliders_note": "Invisible walk-layer boxes (SpecGreybox.KitchenColliders): each piece's footprint incl. counter overhang and edge tile; the angled pantry front as three steps (they cover up to 0.27 m of floor in front of its diagonal); the breakfast table's oval top as three boxes (the middle 1.4 m at full width, each end 0.4 m at the oval's width where it starts: 1.10 m), so its corners don't block the back stair's foot",
+ "under_lights": {
+  "note": "a fluorescent strip under every wall upper over a counter (not the one over the fridge): film 9812/10452 (end_A lit), 6042 (end_A and end_B lit), 10448 (sink_S2 lit); sink_S1, seat_U1, seat_U2 assumed the same (DEVIATIONS 48)",
+  "inset_front": 0.03,
+  "depth": 0.06,
+  "housing_h": 0.022,
+  "diffuser_h": 0.006,
+  "end_gap": 0.03,
+  "kelvin": 4100,
+  "lumens_per_m": 500,
+  "calibration": "film_light_match.py --night: first pass 700 lm/m at 3500 K read backsplash/upper 2.4-4.0x the film's, backsplash/floor 2.2x, backsplash/door 0.5-0.7x, backsplash R/B 6.6-9.1 vs 1.4-1.8; second pass 500 lm/m at 4100 K (cool-white fluorescent; the film's strips read white)"
+ },
+ "chandelier": {
+  "x": 1.128,
+  "z": 5.09,
+  "ceiling": 2.438,
+  "hub_bottom": 1.5,
+  "arms": 6,
+  "ring_r": 0.36,
+  "cup_y": 1.738,
+  "lumens": 2000,
+  "kelvin": 2700,
+  "source": "Marina's breakfast chandelier (big clip f197/f261, hub bottom triangulated: two rays miss each other by 3 mm; mapped x0.9379/x0.9784); brass, 8 curved arms, frosted tulip shades facing up (f197, f261); the film shows a brass chandelier with white shades over the breakfast table by day (film-island-detail.jpg) but no night frame of it (DEVIATIONS 48) | Oct 16 (lighting sweep): the film's breakfast chandelier (980, 1025, 1103, 2106) has 6 arms with frosted, ribbed bowls facing up on a brass column: arms 8 -> 6"
+ },
+ "breakfast_table": {
+  "cx": 1.15,
+  "cz": 4.88,
+  "length": 2.2,
+  "width": 1.26,
+  "height": 0.76,
+  "top_t": 0.035,
+  "edge_step": 0.012,
+  "apron_inset": 0.1,
+  "apron_h": 0.07,
+  "shape_exponent": 2.6,
+  "pedestals_x": [
+   0.55,
+   1.75
+  ],
+  "leg_reach": 0.38,
+  "legs": 4,
+  "source": "Marina big clip (Part 1 ~915-917 s, frames 189/197): table top edges picked on the plane h 0.75 in both frames (near edge z 4.20-4.32, far edge 5.48-5.56; the frames agree within 0.12 m), ends u 5.60-5.63 and 7.85-8.06 m from the end wall (silhouettes; the far end disagrees 0.2 m between frames), mapped x0.9379/x0.9784; double pedestal with splayed legs (f189, f197): pedestal centres authored from the foot-tip picks (x 0.42-0.43 and 2.02-2.10 at the floor). Height 0.76 (standard 30 in; her points cluster 0.75-0.77). Oval top with a stepped edge and an apron (film 2528). Long axis along x (f197). The real-house plan draws no table"
+ },
+ "sconces": {
+  "note": "brass wall sconces with frosted tulip shades facing up (film 1049/1133/1151/2106 gallery pair; film 1091/1094 by the back stair). Positions: the gallery pair from Marina's big clip f153/f165 picked on the kitchen/sunroom (pantry) wall plane (two frames within 1 cm); the stair sconce from film 1094 by its neighbours (left of the back stair's newel, right of the foyer arch's casing): estimated, no solved camera (DEVIATIONS 52)",
+  "plate_r": 0.06,
+  "plate_t": 0.012,
+  "reach": 0.14,
+  "shade_rim_r": 0.075,
+  "shade_h": 0.13,
+  "lumens": 350,
+  "kelvin": 2700,
+  "list": [
+   {
+    "name": "gallery_L",
+    "wall": "x",
+    "at": 2.316,
+    "along": 1.446,
+    "h": 1.66,
+    "out": -1
+   },
+   {
+    "name": "gallery_R",
+    "wall": "x",
+    "at": 2.316,
+    "along": 1.789,
+    "h": 1.66,
+    "out": -1
+   },
+   {
+    "name": "stair",
+    "wall": "z",
+    "at": 7.638,
+    "along": 2.82,
+    "h": 1.66,
+    "out": -1
+   }
+  ]
+ },
+ "gallery": {
+  "note": "framed pictures on the kitchen/sunroom wall round the sconce pair (Marina f153/f165, two frames within 1 cm; film 1133/2106 show a gallery of framed family photos there). The pictures are INVENTED (generated landscapes and still lifes), never film captures or real people's likenesses",
+  "wall_x": 2.316,
+  "frames": [
+   {
+    "name": "p1",
+    "z": [
+     1.085,
+     1.286
+    ],
+    "h": [
+     1.652,
+     1.852
+    ]
+   },
+   {
+    "name": "p2",
+    "z": [
+     1.97,
+     2.197
+    ],
+    "h": [
+     1.585,
+     1.902
+    ]
+   },
+   {
+    "name": "p3",
+    "z": [
+     1.13,
+     1.338
+    ],
+    "h": [
+     1.228,
+     1.431
+    ]
+   },
+   {
+    "name": "p4",
+    "z": [
+     1.511,
+     1.961
+    ],
+    "h": [
+     1.21,
+     1.465
+    ]
+   }
+  ],
+  "moulding": 0.025,
+  "depth": 0.02
+ },
+ "desk": {
+  "note": "slant-front writing desk under the gallery (Marina f153/f165: top front 1.06 m high, 0.40-0.45 m out from the wall, z 1.02-2.12; film 2106 shows a desk with greenery there)",
+  "x": [
+   1.886,
+   2.306
+  ],
+  "z": [
+   1.03,
+   2.13
+  ],
+  "base_h": 0.76,
+  "top_h": 1.06,
+  "back_depth": 0.22
+ }
+}

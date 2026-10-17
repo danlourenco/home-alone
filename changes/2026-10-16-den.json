@@ -1,0 +1,203 @@
+{
+ "gate": 7,
+ "change": "Den upgrade (Oct 16, TRIAL): (1) walls painted the film's teal-green (finishes.json den; flat paint, no wainscot, white baseboard) and the dark wood floor; (2) both windows re-measured and rebuilt as four mulled 24 x 66 in double-hung 6-over-6 units each (measurements/windows/ground.json den front_wide/side_twin, model DenWindows: tools/house/hifi_den.py -> DenWindows.glb with stool, apron, sashes, mull covers, locks, Marina's floral box-pleated valance and tie-back drapes; sheers left to the sheer pass); (3) the rear wall's built-in bookcase with TV, VCR and books (DenBuiltins.glb), Poly Haven TV/sofa/armchair/coffee table (tools/house/hifi_den_props.py -> DenProps.glb), Fadnn desk, two chairs, floor lamp, side table and two table lamps (store_props.json), walk colliders (spec/dressing/den.json)",
+ "target": "House_WallGrid",
+ "premise": "Each den window is four mulled stock double-hung units (6-over-6) whose glass, mullions and meeting rail can be read on the wall planes of the built den from Marina's frames with cameras solved on its corners",
+ "claim": {
+  "value": {
+   "front_wide": {
+    "z": [
+     16.994,
+     19.626
+    ],
+    "sill": 0.41,
+    "head": 2.086
+   },
+   "side_twin": {
+    "x": [
+     5.405,
+     8.037
+    ],
+    "sill": 0.41,
+    "head": 2.086
+   },
+   "unit_w": 0.61,
+   "mull": 0.064
+  },
+  "data": [
+   "sfm:den",
+   "marina-frame:den-f9",
+   "marina-frame:den-f153"
+  ],
+  "scale": [
+   "overhead-trace:ground",
+   "ceiling-8ft:den"
+  ],
+  "upstream": [
+   "overhead-trace:ground",
+   "ceiling-8ft:living-dining"
+  ],
+  "how": "tools/house/den_walls.py: level cameras (f 1526 px, the clip's COLMAP focal) solved on the built den's corners, ceiling and floor lines (measurements/cameras/den-f9|f153|f57.json, rms 2.5-4.8 px); unit glass edges, mull bands, sash rows read on the wall planes; stock 24 x 66 in units inside the spread (sensible-defaults); head from equal sashes (the valance hides it)",
+  "applies_to": [
+   "den"
+  ],
+  "measured_in": [
+   "den"
+  ],
+  "risks": [
+   "scale",
+   "extraction"
+  ],
+  "alternatives": [
+   "the old grey-box glass (2.30 / 2.55 m, sill 0.53, head 2.15 assumed; from the overhead curtain run)",
+   "four mulled 24 x 66 in 6-over-6 units, Marina's positions (built)",
+   "the real-house plan's larger end window (3.28 m, 0.78 m pitch)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "four double-hung units per window, 6-over-6",
+     "observed_in": [
+      "marina-frame:den-f9",
+      "marina-frame:den-f153",
+      "plan:dimensioned-first-floor",
+      "film:4382"
+     ],
+     "extrapolated": false
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-13",
+   "what": "den windows from the overhead curtain run and Part 1 556/586 s (2.30 x 0.53-2.15, 2.55 x 0.53-2.15), plain glass boxes",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Real-house plan (dimensioned-first-floor.png), its OWN ruler (16.61 px/ft from its dimension arrows): the front window symbol is 142.5 px = 2.615 m wide (built 2.632, -0.6%); registered on our walls its ends are z 17.002/19.655 (built 16.994/19.626) and its 3 mullion marks z 17.626/18.306/18.957 (built 17.636/18.310/18.984)",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "scale",
+    "extraction"
+   ],
+   "data": [
+    "plan:dimensioned-first-floor"
+   ],
+   "scale": [
+    "plan-ruler:16.61pxft"
+   ],
+   "upstream": [
+    "plan-ruler:16.61pxft"
+   ]
+  },
+  {
+   "what": "Film 4382 (facade): the left wing's ground-floor window is a group of four double-hung units, 6-over-6, wide white mullions",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:4382"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "Consistency: the two walls read the same unit (glass 0.487-0.509, mull band 0.173-0.190, meeting rail 1.26 / 1.263) from two cameras",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "sfm:den",
+    "marina-frame:den-f9",
+    "marina-frame:den-f153"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ],
+   "upstream": [
+    "overhead-trace:ground"
+   ]
+  },
+  {
+   "what": "Consistency: Marina's drape hems land on the floor plane (h -0.007 / 0.008) on both solved cameras",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "marina-frame:den-f9",
+    "marina-frame:den-f153"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ],
+   "upstream": [
+    "overhead-trace:ground"
+   ]
+  },
+  {
+   "what": "Real-house plan, end window: x 4.876-8.152 (3.28 m, pitch 0.78), centre 6.51 vs built 5.405-8.037 (2.632, centre 6.72)",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "plan:dimensioned-first-floor"
+   ],
+   "scale": [
+    "plan-ruler:16.61pxft"
+   ],
+   "upstream": [
+    "plan-ruler:16.61pxft"
+   ],
+   "disposition": "Marina is the interior authority and shows the same unit size on both walls (glass 0.50 vs 0.49); the plan's front window agrees with her to 2 cm; the end window kept at her size, logged DEVIATIONS 52 for the user"
+  },
+  {
+   "what": "Glass bottom: 0.508 (end, f9) vs 0.547 (front, f153); built 0.50 from the meeting rail both read (1.26)",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "marina-frame:den-f153"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ],
+   "upstream": [
+    "overhead-trace:ground"
+   ],
+   "disposition": "the front camera has the larger residual (4.8 px vs 2.5) and its glass bottom is hidden by the sheer's hem band; the meeting rail (same on both) sets the sashes"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/den/before-f9.png",
+   "spec/captures/views/den/before-f57.png",
+   "spec/captures/views/den/before-f153.png",
+   "spec/captures/views/den/before-f161.png",
+   "spec/captures/views/den/before-window-close.png",
+   "spec/captures/views/den/before-bookcase-close.png",
+   "spec/captures/views/den/before-f9-night.png",
+   "spec/captures/views/den/before-f57-night.png",
+   "spec/captures/views/den/before-f153-night.png",
+   "spec/captures/views/den/before-window-close-night.png"
+  ],
+  "after": [
+   "spec/captures/views/den/after-f9.png",
+   "spec/captures/views/den/after-f57.png",
+   "spec/captures/views/den/after-f153.png",
+   "spec/captures/views/den/after-f161.png",
+   "spec/captures/views/den/after-window-close.png",
+   "spec/captures/views/den/after-bookcase-close.png",
+   "spec/captures/views/den/after-f9-night.png",
+   "spec/captures/views/den/after-f57-night.png",
+   "spec/captures/views/den/after-f153-night.png",
+   "spec/captures/views/den/after-window-close-night.png"
+  ],
+  "note": "batch renders from the scratch copy, cameras solved on Marina's frames (views-den-{before,after}.json; *-night with -night); side-by-side sheets spec/captures/views/den/compare-*.jpg (Marina | before | after day | after night)"
+ },
+ "user_walk": "accepted",
+ "user_words": "\"This is fantastic!\" (user, Oct 16, after the main session loaded the den TRIAL; live captures). The wall colour (film teal vs Marina green) stays an open choice."
+}

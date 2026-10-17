@@ -1,0 +1,10 @@
+[
+ {"name": "arch/after-close", "pos": [3.95, -1.40, -9.15], "look_at": [2.985, -1.05, -9.25], "vfov": 55, "near": 0.05,
+  "note": "foyer arch at ~1 m (spec x 2.985 face, z 8.855-10.23, springline 1.91, crown 2.17; ground floor y -3.026)"},
+ {"name": "arch/after-soffit", "pos": [3.45, -1.55, -9.30], "look_at": [2.92, -0.88, -9.55], "vfov": 60, "near": 0.05,
+  "note": "looking up into the soffit and the right springline from 0.6 m"},
+ {"name": "arch/after-foyer", "pos": [7.20, -1.45, -9.35], "look_at": [2.90, -1.35, -9.55], "vfov": 40, "near": 0.05,
+  "note": "the arch from the middle of the foyer, eye 1.58 m"},
+ {"name": "arch/after-film-2677", "pos": [10.561, -2.194, -9.119], "look_at": [9.592, -2.194, -9.362], "vfov": 25.98, "near": 1.71,
+  "note": "film 2677 camera (foyer_cameras.py), as views-foyer-film-after.json"}
+]

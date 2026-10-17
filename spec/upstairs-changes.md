@@ -116,7 +116,7 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | kevin_jeff_room / closet_1 | door | 3.51-4.34 | 0.83 | measured |
 | girls_room_a / hall_end | door | 6.01-6.79 | 0.78 | measured |
 | hall_bath / hall_corridor | door | 9.57-10.24 | 0.67 | measured |
-| linen_closet / hall_corridor | fake_door | 8.26-8.87 | 0.61 | topology (centred; position unverified) |
+| linen_closet / hall_corridor | fake_door | 8.19-8.95 | 0.76 | topology (centred; position unverified) |
 | buzz_room / hall_corridor | door | 3.03-3.79 | 0.76 | measured, slid -7 cm onto the shared wall |
 | girls_room_b / hall_corridor_south | door | 11.44-12.21 | 0.76 | topology (centred; position unverified) |
 | attic_stair / hall_corridor_south | door | 1.53-2.30 | 0.76 | measured |

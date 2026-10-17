@@ -319,7 +319,7 @@ public static partial class SpecGreybox
         FloorY = gy;
         var servicePath = new List<Vector3>();
         if (gj["stair"] != null && gj["stair"].Type != JTokenType.Null)   // service stair: its solid steps read as the papered wall under it
-            servicePath = Stair(groot, gj["stair"], false, "ServiceStair", dress: false, stairOnly: true, stepMat: Mat("Paper_Kitchen", KitchenWall))
+            servicePath = Stair(groot, gj["stair"], false, "ServiceStair", dress: false, stairOnly: true, stepMat: KitchenPaper())
                 .Select(q => q + Vector3.up * gy).ToList();
         Dressing(groot, gy);
         FloorY = 0f;
@@ -328,7 +328,11 @@ public static partial class SpecGreybox
         CutWallOpenings(gj["wall_openings"], gy);
         HiFiStair(root, gy);
         HiFiLights(root, gy);
+        Hall(root);                    // SpecGreybox.Hall.cs: the upstairs hall's dressing, sconces and plants (spec/dressing/hall.json)
         SwingDoors(groot, gy, geo["ground"]);
+        FrenchDoors(root, groot, gy, geo["ground"]);   // FrenchDoors.cs: the glazed French door pairs (changes/2026-10-16-french-doors.json)
+        StoreProps(root, groot, gy);   // StoreProps.cs: Asset Store furniture in measured boxes (spec/dressing/store_props.json)
+        DenScreenPatch();              // SpecGreybox.Den.cs: the video screen over the bought TV's glass (after StoreProps placed it)
         LayTrim(groot);
         Envelope(root, geo, j["attic_stair"]["boxes"], gj["wall_openings"], gj["stair"]?["ceiling_openings"], gy);
         FilmFront(root, geo, gj["wall_openings"], gy);
@@ -355,11 +359,14 @@ public static partial class SpecGreybox
         report += ZFightCheck(root, groot);
         report += ClashCheck(root, groot);
         report += CasingCheck(root, groot);
+        report += PropsCheck();   // StoreProps.cs
         report += TrimCheck(); TrimRooms.Clear();
         report += EnvelopeCheck(geo, j["attic_stair"]["boxes"], gj["wall_openings"], gy);
+        Traps(root, gy);   // Traps.cs: gameplay rigs (spec/dressing/traps.json), after the gates so none of them sees the rig
         player.SetActive(true);
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, "walk-test-wallgrid.txt"), report);
+        LimitShadows(root.transform.root.gameObject);   // SpecGreybox.Shadows.cs: real-time shadow budget
         EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), "Assets/Scenes/House_WallGrid.unity");
         Debug.Log("SpecGreybox.BuildWallGrid\n" + report);
     }
@@ -499,8 +506,9 @@ public static partial class SpecGreybox
         foreach (var sp in spaces)
         {
             if (paperRooms.Contains(sp)) finishOf[sp.name] = (wpMat, byRoom?[sp.name] != null ? (float)byRoom[sp.name] : ws);
-            else if (painted[sp.name] is JObject pr) finishOf[sp.name] = (DressMat(pr["upper"], "Paint_" + sp.name), (float)pr["wainscot_m"]);
-            else if (KitchenRooms.Contains(sp.name)) finishOf[sp.name] = (Mat("Paper_Kitchen", KitchenWall), 0f);
+            else if (painted[sp.name] is JObject pr) finishOf[sp.name] = (pr["paper"] != null ? PaperMat("Paper_" + sp.name, (string)pr["paper"], DressMat(pr["upper"]).color)   // papered (the living room: SpecGreybox.Living.cs)
+                                                                                              : DressMat(pr["upper"], "Paint_" + sp.name), (float)pr["wainscot_m"]);
+            else if (KitchenRooms.Contains(sp.name)) finishOf[sp.name] = (KitchenPaper(), 0f);
         }
         if (wsMat == null) wsMat = Mat("Wainscot_White", new Color(0.85f, 0.85f, 0.85f));
         (Material upper, float h) Plain = (null, 0f);
@@ -544,7 +552,7 @@ public static partial class SpecGreybox
                     for (float s = s0 + st1; s < L; s += st1) { bool w = Wall(s); if (w != on) { if (on) Add(r0, s); r0 = s; on = w; } }
                     if (on) Add(r0, L);
                 }
-                Lay(0f, 0.14f, 0.012f);   // 1 cm shallower than the stair's skirt board, which it meets
+                Lay(0f, painted[(string)rm["name"]]?["baseboard_m"] is JToken bb ? (float)bb : 0.14f, 0.012f);   // 1 cm shallower than the stair's skirt board, which it meets (finishes.json baseboard_m: the hall's 0.11, film 10819)
                 if (rf.h > 0.3f) Lay(rf.h - 0.01f, rf.h + 0.03f, 0.03f);
             }
         }
@@ -637,12 +645,15 @@ public static partial class SpecGreybox
             {
                 float sill = (float)o["sill"], whead = (float)o["head"], ta = wc - 0.006f, tb = wc + 0.006f;
                 if (alongX) Box(go, "Glass", s0, s1, ta, tb, sill, whead, mGlass); else Box(go, "Glass", ta, tb, s0, s1, sill, whead, mGlass);
+                bool model = o["model"] != null;   // a generated door (BackDoor.glb): leaf, jambs and glass are the model's; casing only here
+                var glassBox = go.transform.GetChild(go.transform.childCount - 1).gameObject;
+                if (model) { glassBox.name = "DoorStop_" + (string)o["model"]; glassBox.GetComponent<MeshRenderer>().enabled = false; }   // its collider keeps the door shut
                 if (o["bare"] != null) continue;   // the frame belongs to a model (the door's sidelights): glass only
                 float ow = (float)o["faces"][0] * (alongX ? -1f : 1f), f0 = wc - ow * h, f1 = f0 - ow * CasingProud;
                 Trim(go, alongX, f0, f1, s0 - CasingW, s0, sill, whead + CasingW);
                 Trim(go, alongX, f0, f1, s1, s1 + CasingW, sill, whead + CasingW);
                 Trim(go, alongX, f0, f1, s0 - CasingW, s1 + CasingW, whead, whead + CasingW);
-                Trim(go, alongX, f0, f0 - ow * StoolProud, s0 - CasingW - 0.025f, s1 + CasingW + 0.025f, sill - StoolT, sill);
+                if (!model) Trim(go, alongX, f0, f0 - ow * StoolProud, s0 - CasingW - 0.025f, s1 + CasingW + 0.025f, sill - StoolT, sill);
             }
         }
         foreach (var d in doors.Where(d => d.kind == "rail")) Rail(go, d);
@@ -877,10 +888,25 @@ public static partial class SpecGreybox
         PlaceHiFi(root, gy, "LandingWindow", new Dictionary<string, Material> {   // tools/house/hifi_landing_window.py (film 11966, 12133)
             ["LW_Brass"] = BrassMat(), ["LW_Glass"] = mGlass, ["LW_Paper"] = Dress != null ? Wallpaper(Dress["walls"]) : mWall });
         PlaceHiFi(root, gy, "FrontDoor", new Dictionary<string, Material> { ["Door_Brass"] = BrassMat() });   // tools/house/hifi_door.py (film 10248)
+        {   // tools/house/hifi_back_door.py (film 6902; changes/2026-10-16-kitchen-wing.json): the kitchen's back door in its opening
+            var sheer = Mat("HiFi_Sheer", new Color(0.93f, 0.92f, 0.88f, 0.45f));
+            sheer.SetFloat("_SurfaceType", 1f); sheer.SetFloat("_DoubleSidedEnable", 1f); sheer.SetFloat("_Smoothness", 0.1f); HDMaterial.ValidateMaterial(sheer);
+            PlaceHiFi(root, gy, "BackDoor", new Dictionary<string, Material> { ["BD_Brass"] = BrassMat(), ["BD_Glass"] = mGlass, ["BD_Sheer"] = sheer });
+        }
+        Curtains(root, gy);       // SpecGreybox.Curtains.cs: tools/house/hifi_sheers.py (DEVIATIONS 41)
+        Living(root, gy);         // SpecGreybox.Living.cs: tools/house/hifi_living.py + hifi_living_props.py + spec/dressing/living.json (changes/2026-10-16-living-room.json)
+        Den(root, gy);            // SpecGreybox.Den.cs: tools/house/hifi_den.py + hifi_den_props.py + spec/dressing/den.json (changes/2026-10-16-den.json)
+        KitchenModel(root, gy);   // tools/house/hifi_kitchen.py + spec/dressing/kitchen.json (changes/2026-10-16-kitchen-cabinets.json)
+        KitchenSconcesAndGallery(root, gy);   // SpecGreybox.KitchenLights.cs: wall sconces, picture gallery, desk
+        {   // tools/house/hifi_breakfast_table.py (changes/2026-10-16-breakfast-table.json): honey oak, Poly Haven oak_veneer_01 tinted to film 2528
+            var t = PlaceHiFi(root, gy, "BreakfastTable", new Dictionary<string, Material> { ["BT_Wood"] = TexMat("HiFi_BreakfastOak", "oak_veneer_01", new Color(1f, 1f, 0.94f), 1.0f, 0.55f) });
+            if (t != null) foreach (var r in t.GetComponentsInChildren<MeshRenderer>()) r.gameObject.isStatic = true;
+        }
         PlaceHiFi(root, gy, "FoyerDressing", new Dictionary<string, Material> {   // tools/house/hifi_dressing.py: stands, poinsettias, prints (film)
             ["Door_Brass"] = BrassMat(), ["Dress_Foil"] = FoilMat(),
             ["Print_Left"] = SpecTexMat("HiFi_PrintLeft", "spec/dressing/prints/print_left.png"),
             ["Print_Right"] = SpecTexMat("HiFi_PrintRight", "spec/dressing/prints/print_right.png") });
+        FoyerProps(root, gy);   // SpecGreybox.FoyerProps.cs: tools/house/hifi_foyer_props.py (changes/2026-10-16-foyer-finish.json)
         string[] pre = { "flight1_", "flight2_", "landing", "newel", "tree_crown", "tree_trunk", "tree_pot", "bottom_step", "front_door", "sidelight_",
                          "flower_stand_", "flowers_", "print_" };
         int hidden = 0;
@@ -888,6 +914,128 @@ public static partial class SpecGreybox
             if (!r.transform.IsChildOf(go.transform) && r.transform.parent != null && (r.transform.parent.name == "MainStair" || r.transform.parent.name == "Dressing")
                 && pre.Any(p => r.name.StartsWith(p))) { r.enabled = false; hidden++; }
         Debug.Log($"HiFiStair: hid {hidden} grey-box/dressing stair renderers");
+    }
+
+    // The kitchen's cabinets, counters, appliances, seats and island (KitchenCabinets.glb), with their walk-layer colliders: invisible
+    // boxes from spec/dressing/kitchen.json "colliders" (the model itself carries none). Wood: Poly Haven cherry_veneer tinted to the
+    // film's dark cherry by mean albedo (lin 0.747/0.433/0.230 -> film 6902 0.105/0.012/0.013); tile: generated maps on the model's UVs
+    // (tools/house/kitchen_tile_tex.py; 1 UV = 8 tiles of 0.158 m), not triplanar, so the grid follows each counter's front edge.
+    static void KitchenModel(GameObject root, float gy)
+    {
+        string T(string f) => "Assets/Textures/Kitchen/" + f;
+        void Imp(string path, bool normal, bool srgb)
+        {
+            if (AssetImporter.GetAtPath(path) is TextureImporter ti && (ti.textureType == TextureImporterType.NormalMap) != normal | ti.sRGBTexture != srgb)
+            { ti.textureType = normal ? TextureImporterType.NormalMap : TextureImporterType.Default; ti.sRGBTexture = srgb; ti.SaveAndReimport(); }
+        }
+        Imp(T("tile_normal.png"), true, false); Imp(T("tile_mask.png"), false, false); Imp(T("tile_albedo.png"), false, true);
+        var tile = Mat("HiFi_KitchenTile", Color.white);
+        tile.SetTexture("_BaseColorMap", AssetDatabase.LoadAssetAtPath<Texture2D>(T("tile_albedo.png")));
+        tile.SetTexture("_NormalMap", AssetDatabase.LoadAssetAtPath<Texture2D>(T("tile_normal.png"))); tile.SetFloat("_NormalScale", 1f);
+        tile.SetTexture("_MaskMap", AssetDatabase.LoadAssetAtPath<Texture2D>(T("tile_mask.png")));
+        tile.SetFloat("_UVBase", 0f); tile.SetFloat("_Metallic", 0f); tile.SetFloat("_SmoothnessRemapMin", 0f); tile.SetFloat("_SmoothnessRemapMax", 1f);
+        tile.SetFloat("_AORemapMin", 0f); tile.SetFloat("_AORemapMax", 1f);
+        UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(tile); EditorUtility.SetDirty(tile);
+        Material Solid(string n, Color c, float smooth, float metal = 0f) { var m = Mat(n, c); m.SetFloat("_Smoothness", smooth); m.SetFloat("_Metallic", metal); return m; }
+        var g = PlaceHiFi(root, gy, "KitchenCabinets", new Dictionary<string, Material> {
+            ["KT_Wood"] = TexMat("HiFi_KitchenWood", "cherry_veneer", new Color(0.411f, 0.182f, 0.264f), 1.0f, 0.5f),
+            ["KT_Tile"] = tile,
+            ["KT_Edge"] = Solid("HiFi_KitchenEdge", new Color(0.16f, 0.38f, 0.59f), 0.85f),
+            ["KT_Grout"] = Solid("HiFi_KitchenGrout", new Color(0.80f, 0.78f, 0.74f), 0.2f),
+            ["KT_Brass"] = BrassMat(),
+            ["KT_Black"] = Solid("HiFi_ApplianceBlack", new Color(0.03f, 0.03f, 0.03f), 0.8f),
+            ["KT_Steel"] = Solid("HiFi_Steel", new Color(0.62f, 0.62f, 0.62f), 0.6f, 1f),
+            ["KT_Sink"] = Solid("HiFi_SinkEnamel", new Color(0.92f, 0.91f, 0.88f), 0.8f),
+            ["KT_Cushion"] = Solid("HiFi_SeatCushion", new Color(0.55f, 0.06f, 0.08f), 0.1f) });
+        if (g != null) foreach (var r in g.GetComponentsInChildren<MeshRenderer>()) r.gameObject.isStatic = true;
+        var fp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/kitchen.json"));
+        if (!File.Exists(fp)) return;
+        var col = new GameObject("KitchenColliders"); col.transform.SetParent(root.transform, false); int n = 0;
+        foreach (var b in JObject.Parse(File.ReadAllText(fp))["colliders"])
+        {
+            float x0 = (float)b["x"][0], x1 = (float)b["x"][1], z0 = (float)b["z"][0], z1 = (float)b["z"][1], y0 = (float)b["y"][0], y1 = (float)b["y"][1];
+            var c = new GameObject("KitchenCollider_" + (string)b["name"]); c.transform.SetParent(col.transform, false); c.isStatic = true;
+            c.transform.position = new Vector3((x0 + x1) / 2, gy + (y0 + y1) / 2, -(z0 + z1) / 2);
+            c.AddComponent<BoxCollider>().size = new Vector3(x1 - x0, y1 - y0, z1 - z0); n++;
+        }
+        Debug.Log($"KitchenModel: {n} colliders");
+        KitchenFixtures(root, gy, JObject.Parse(File.ReadAllText(fp)), g);
+    }
+
+    // The kitchen's night lights, each from a visible fixture (user, Oct 16: "add necessary light sources fixtures"): a rectangle light
+    // under every under-cabinet strip (KitchenCabinets.glb's KT_UnderLight diffusers; film 9812, 10452, 6042, 10448) and the breakfast
+    // chandelier (tools/house/hifi_kitchen_lights.py; Marina f197/f261). All join the night layer in Daylight() (off by day, DEVIATIONS 44),
+    // and the room's generic ceiling lamps (Light_kitchen, Light_back_stair) are removed there: no light without a fixture.
+    // Strengths: tools/house/film_light_match.py --night (film 6042/9812/10452 region ratios).
+    public static float UnderCabLumensPerM = 700f, ChandelierLumens = 2000f;
+    static void KitchenFixtures(GameObject root, float gy, JObject k, GameObject cabinets)
+    {
+        var g = Child(root, "KitchenFixtures");
+        var glowM = Mat("HiFi_UnderCabGlow", new Color(0.95f, 0.95f, 0.92f)); glowM.SetFloat("_Smoothness", 0.5f);
+        glowM.SetColor("_EmissiveColor", new Color(1f, 0.97f, 0.92f) * 3000f); UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(glowM);
+        if (cabinets != null)
+            foreach (var r in cabinets.GetComponentsInChildren<MeshRenderer>())
+                if (r.sharedMaterial != null && r.sharedMaterial.name.StartsWith("KT_UnderLight")) { r.sharedMaterial = glowM; r.shadowCastingMode = ShadowCastingMode.Off; }
+        var ul = k["under_lights"]; var std = k["std"];
+        if (ul != null)
+        {
+            float ub = (float)std["upper_bottom"], dt = (float)std["door_t"], inset = (float)ul["inset_front"], depth = (float)ul["depth"], gap = (float)ul["end_gap"];
+            float y = gy + ub - (float)ul["housing_h"] - (float)ul["diffuser_h"] - 0.003f;
+            foreach (var u in k["uppers"].Where(u => u["bottom"] == null))
+            {
+                float x0 = (float)u["x"][0], x1 = (float)u["x"][1], z0 = (float)u["z"][0], z1 = (float)u["z"][1]; string f = (string)u["front"];
+                bool alongZ = f.EndsWith("x"); float sgn = f.StartsWith("+") ? 1f : -1f;
+                float F = alongZ ? (sgn > 0 ? x1 : x0) : (sgn > 0 ? z1 : z0), dc = F - sgn * (dt + inset + depth / 2);
+                float a0 = (alongZ ? z0 : x0) + gap, a1 = (alongZ ? z1 : x1) - gap, len = a1 - a0, ac = (a0 + a1) / 2;
+                var l = new GameObject("UnderCab_" + (string)u["name"]).AddComponent<Light>(); l.transform.SetParent(g.transform, false);
+                l.transform.position = alongZ ? new Vector3(dc, y, -ac) : new Vector3(ac, y, -dc);
+                l.transform.rotation = Quaternion.LookRotation(Vector3.down, alongZ ? Vector3.forward : Vector3.right);
+                l.gameObject.AddComponent<HDAdditionalLightData>();
+                l.type = LightType.Rectangle; l.areaSize = new Vector2(0.04f, len - 0.02f);
+                l.lightUnit = LightUnit.Lumen; l.intensity = (ul["lumens_per_m"] != null ? (float)ul["lumens_per_m"] : UnderCabLumensPerM) * len; l.useColorTemperature = true; l.colorTemperature = (float)ul["kelvin"];
+                l.shadows = LightShadows.Soft; l.range = 5f;
+            }
+        }
+        var c = k["chandelier"];
+        if (c != null)
+        {
+            var a = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Models/Foyer/KitchenChandelier.glb");
+            if (a == null) { Debug.LogWarning("KitchenFixtures: missing KitchenChandelier.glb"); return; }
+            var brass = BrassMat();
+            var shade = Mat("HiFi_Shade", new Color(0.95f, 0.92f, 0.86f)); shade.SetFloat("_Smoothness", 0.8f);
+            shade.SetColor("_EmissiveColor", new Color(1f, 0.8f, 0.55f) * 300f); UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(shade);
+            var go = (GameObject)Object.Instantiate(a, g.transform); go.name = "KitchenChandelier";
+            float cx = (float)c["x"], cz = (float)c["z"], ceil = (float)c["ceiling"];
+            go.transform.position = new Vector3(cx, gy + ceil, -cz);
+            foreach (var r in go.GetComponentsInChildren<MeshRenderer>())
+            {
+                string n = r.sharedMaterial != null ? r.sharedMaterial.name : "";
+                r.sharedMaterial = n.StartsWith("Light_Brass") ? brass : n.StartsWith("Light_Shade") ? shade : r.sharedMaterial;
+                r.shadowCastingMode = ShadowCastingMode.Off;
+                foreach (var col in r.GetComponents<Collider>()) Object.DestroyImmediate(col);
+            }
+            var l = new GameObject("KitchenChandelier_Light").AddComponent<Light>(); l.transform.SetParent(go.transform, false);
+            l.transform.position = new Vector3(cx, gy + (float)c["cup_y"] + 0.07f, -cz); l.type = LightType.Point; l.range = 8f;
+            l.gameObject.AddComponent<HDAdditionalLightData>();
+            l.lightUnit = LightUnit.Lumen; l.intensity = c["lumens"] != null ? (float)c["lumens"] : ChandelierLumens; l.useColorTemperature = true; l.colorTemperature = (float)c["kelvin"]; l.shadows = LightShadows.Soft;
+        }
+    }
+
+    // The kitchen's paper as the film shows it (tools/house/film_wallpaper.py --kitchen: one half-drop repeat cut from film 6910,
+    // sized against the back-door leaf in film 6902), world-space triplanar at its own width and height; the plain cream if missing
+    static Material KitchenPaper()
+    {
+        var m = Mat("Paper_Kitchen", KitchenWall);
+        string src = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/kitchen_wallpaper.png"));
+        if (!File.Exists(src)) return m;
+        var rep = JObject.Parse(File.ReadAllText(Path.ChangeExtension(src, ".json")))["repeat_m"];
+        Directory.CreateDirectory("Assets/Textures/Greybox"); string dst = "Assets/Textures/Greybox/kitchen_wallpaper.png";
+        if (!File.Exists(dst) || !File.ReadAllBytes(dst).SequenceEqual(File.ReadAllBytes(src))) { File.Copy(src, dst, true); AssetDatabase.ImportAsset(dst); }
+        m.SetColor("_BaseColor", Color.white); m.SetTexture("_BaseColorMap", AssetDatabase.LoadAssetAtPath<Texture2D>(dst));
+        m.SetFloat("_UVBase", 5f); m.SetFloat("_TexWorldScale", 1f); m.SetFloat("_Smoothness", 0.15f);
+        m.SetTextureScale("_BaseColorMap", new Vector2(1f / (float)rep[0], 1f / (float)rep[1]));
+        HDMaterial.ValidateMaterial(m); EditorUtility.SetDirty(m); AssetDatabase.SaveAssetIfDirty(m);
+        return m;
     }
 
     static Material Wallpaper(JToken w)
@@ -1302,12 +1450,20 @@ public static partial class SpecGreybox
         if (lamps != null && groundLamps != null) foreach (var t in groundLamps.transform.Cast<Transform>().ToList()) t.SetParent(lamps, true);
         // the foyer's fixtures are lamps too: their lights join the night layer and their bulbs and shades go dark by day (user, Oct 16: "shut
         // off the sconces and foyer lighting during the day so i can get a read on it"; they were lit by day and in the day bake)
-        var fixtures = GameObject.Find("Upstairs/FoyerFixtures");
         Renderer[] glow = new Renderer[0];
-        if (lamps != null && fixtures != null)
+        foreach (var fxName in new[] { "Upstairs/FoyerFixtures", "Upstairs/KitchenFixtures", "Upstairs/DenFixtures", "Upstairs/DenBuiltins_HiFi", "Upstairs/LivingFixtures", "Upstairs/LivingBuiltins_HiFi", "Upstairs/HallFixtures", "Upstairs/HallDressing_HiFi" })   // the kitchen's, the den's and the living room's lamps too
         {
+            var fixtures = GameObject.Find(fxName);
+            if (lamps == null || fixtures == null) continue;
             foreach (var l in fixtures.GetComponentsInChildren<Light>(true)) l.transform.SetParent(lamps, true);
-            glow = fixtures.GetComponentsInChildren<MeshRenderer>(true).Where(r => r.sharedMaterial != null && (r.sharedMaterial.name.StartsWith("HiFi_Bulb") || r.sharedMaterial.name.StartsWith("HiFi_Shade"))).ToArray();
+            glow = glow.Concat(fixtures.GetComponentsInChildren<MeshRenderer>(true).Where(r => r.sharedMaterial != null && (r.sharedMaterial.name.StartsWith("HiFi_Bulb") || r.sharedMaterial.name.StartsWith("HiFi_Shade")))).ToArray();
+        }
+        var cab = GameObject.Find("Upstairs/KitchenCabinets_HiFi");
+        if (lamps != null && cab != null)
+        {
+            glow = glow.Concat(cab.GetComponentsInChildren<MeshRenderer>(true).Where(r => r.sharedMaterial != null && r.sharedMaterial.name.StartsWith("HiFi_UnderCabGlow"))).ToArray();
+            foreach (var n in new[] { "Light_kitchen", "Light_back_stair", "Light_den", "Light_living_room" })   // no light without a fixture: the fixtures replace the rooms' generic lamps (the den's: DenLamps)
+                foreach (var t in lamps.GetComponentsInChildren<Transform>(true).Where(t => t.name == n).ToList()) Object.DestroyImmediate(t.gameObject);
         }
         var mode = new GameObject("Day and night - press N").AddComponent<HouseNightMode>(); mode.transform.parent = day.transform; mode.glowRenderers = glow;
         mode.nightLayer = lamps != null ? lamps.gameObject : null; mode.dayLayer = dayLayer; mode.interiorLights = new Light[0]; mode.daytimeEnabled = new bool[0];
@@ -1499,16 +1655,27 @@ public static partial class SpecGreybox
             cc.radius = r; cc.height = h; cc.center = new Vector3(0, h / 2, 0); cc.stepOffset = StepOffset; cc.skinWidth = 0.02f;
             // spaces whose floor is all stair (the back stair): reached by its foot, not sideways through its balustrades
             Vector3 M0((float, float, float, float) q) => new Vector3((q.Item1 + q.Item2) / 2, FloorY, (q.Item3 + q.Item4) / 2);
-            var stairFloored = spaces.Where(sp => !Cells(sp.pts).Any(q => !Physics.CheckCapsule(M0(q) + Vector3.up * (r + 0.06f), M0(q) + Vector3.up * (h - r), r)))
-                                     .Select(sp => sp.name).ToHashSet();
+            bool Free(Vector3 p) => !Physics.CheckCapsule(p + Vector3.up * (r + 0.06f), p + Vector3.up * (h - r), r);
+            // where a body stands in a cell: its centre, or, when only FURNITURE stands there (walk-layer colliders "*Collider_*": the den's
+            // and living room's furniture took their centres, Oct 16), the free point nearest the centre on a 0.25 m grid. A stair still blocks.
+            Vector3? Stand((float, float, float, float) q)
+            {
+                var c0 = M0(q); if (Free(c0)) return c0;
+                if (!Physics.OverlapCapsule(c0 + Vector3.up * (r + 0.06f), c0 + Vector3.up * (h - r), r).All(k => k.name.Contains("Collider_"))) return null;
+                var pts = new List<Vector3>();
+                for (float x = q.Item1 + r + 0.05f; x <= q.Item2 - r - 0.05f; x += 0.25f)
+                    for (float z = q.Item3 + r + 0.05f; z <= q.Item4 - r - 0.05f; z += 0.25f) pts.Add(new Vector3(x, FloorY, z));
+                foreach (var p in pts.OrderBy(p => (p - c0).sqrMagnitude)) if (Free(p)) return p;
+                return null;
+            }
+            var stairFloored = spaces.Where(sp => !Cells(sp.pts).Any(q => Stand(q) != null)).Select(sp => sp.name).ToHashSet();
             foreach (var s in spaces.Where(s => s.kind == "room" || s.kind == "hall"))
             {
                 // target: the centre of the largest cell a body can stand in (an L-shaped foyer's largest cell centres on the stair)
-                Vector3 Mid((float, float, float, float) q) => new Vector3((q.Item1 + q.Item2) / 2, FloorY, (q.Item3 + q.Item4) / 2);
                 var order = Cells(s.pts).OrderByDescending(q => (q.Item2 - q.Item1) * (q.Item4 - q.Item3)).ToList();
-                var c = order.FirstOrDefault(q => !Physics.CheckCapsule(Mid(q) + Vector3.up * (r + 0.06f), Mid(q) + Vector3.up * (h - r), r));
-                if (c == default) { lines.Add($"skip    {name} {s.name}: no cell to stand in (its floor is a stair)"); continue; }
-                var mid = Mid(c);
+                var at = order.Select(Stand).FirstOrDefault(p => p != null);
+                if (at == null) { lines.Add($"skip    {name} {s.name}: no cell to stand in (its floor is a stair)"); continue; }
+                var mid = at.Value;
                 foreach (var d in doors.Where(d => (d.a == s.name || d.b == s.name) && (d.kind == "door" || d.kind == "arch" || d.kind == "open")))
                 {
                     if (d.kind == "open" && stairFloored.Contains(d.a == s.name ? d.b : d.a)) { lines.Add($"skip    {name} {s.name} via {d.a}/{d.b}: the other side is all stair"); continue; }
@@ -1624,7 +1791,8 @@ public static partial class SpecGreybox
     public static void RenderViews()
     {
         var a = System.Environment.GetCommandLineArgs(); int si = System.Array.IndexOf(a, "-scene"), vi = System.Array.IndexOf(a, "-views");
-        EditorSceneManager.OpenScene($"Assets/Scenes/{(si >= 0 ? a[si + 1] : "Greybox_Upstairs")}.unity");
+        // default: the scene we build (House_WallGrid); the old default Greybox_Upstairs silently rendered a stale house (Oct 16)
+        EditorSceneManager.OpenScene($"Assets/Scenes/{(si >= 0 ? a[si + 1] : "House_WallGrid")}.unity");
         var go = new GameObject("ViewCam"); var cam = go.AddComponent<Camera>(); go.AddComponent<HDAdditionalCameraData>(); cam.nearClipPlane = 0.05f;
         var rt = new RenderTexture(1920, 1080, 24); cam.targetTexture = rt;
         // Render-only fill, never saved (the scene is not saved): "-fill <intensity>" hangs a shadowless point light on the
@@ -1796,6 +1964,7 @@ public static partial class SpecGreybox
         cam.Render(); RenderTexture.active = rt;
         var tex = new Texture2D(rt.width, rt.height, TextureFormat.RGB24, false);
         tex.ReadPixels(new UnityEngine.Rect(0, 0, rt.width, rt.height), 0, 0); tex.Apply();
-        File.WriteAllBytes(Path.Combine(CaptureDir, name + ".png"), tex.EncodeToPNG()); Object.DestroyImmediate(tex);
+        string fp = Path.Combine(CaptureDir, name + ".png"); Directory.CreateDirectory(Path.GetDirectoryName(fp));   // view names may hold folders
+        File.WriteAllBytes(fp, tex.EncodeToPNG()); Object.DestroyImmediate(tex);
     }
 }

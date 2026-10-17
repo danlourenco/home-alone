@@ -1,0 +1,570 @@
+{
+ "note": "The upstairs hall's dressing (Oct 16 2026, TRIAL; changes/2026-10-16-upstairs-hall.json). Spec metres (spec/geometry.json frame: x, z; y above the upper floor). Film first (DEVIATIONS 1: the upstairs is Marina's plan drawn only from inside; the hall's look is the film's hall set). Read by tools/house/hifi_hall.py (generated parts -> HallDressing.glb), tools/house/hifi_hall_props.py (Poly Haven -> HallProps.glb), tools/house/hall_purchased.py (the user's CGTrader plants -> Assets/Purchased/HallPlants.glb, gitignored) and SpecGreybox.Hall.cs (placement, lights, colliders). Heights and colours: tools/house/hall_walls.py. Positions ALONG walls: the film's sequence on each wall (frames named per piece), fitted to our walls between their corners and doors; the film's set and Marina's plan differ in the vestibule (film 10819: doorway centred, ~1.05 m wide; ours 1.214 m with the doorway off-centre), so no single film camera fits our plan: DEVIATIONS 63.",
+ "walls": {
+  "end_kevin": {
+   "room": "hall_end",
+   "axis": "x",
+   "face": 6.921,
+   "room_side": -1,
+   "span": [
+    5.464,
+    6.684
+   ],
+   "note": "hall_end's +x wall from the parents' end to Kevin's door casing (door z 6.754-7.524, casing 7 cm)"
+  },
+  "end_girls": {
+   "room": "hall_end",
+   "axis": "x",
+   "face": 5.707,
+   "room_side": 1,
+   "span": [
+    5.464,
+    6.644
+   ],
+   "note": "hall_end's -x wall from the parents' end to the girls' door casing (door z 6.714)"
+  },
+  "closet": {
+   "room": "hall_corridor",
+   "axis": "x",
+   "face": 7.233,
+   "room_side": -1,
+   "span": [
+    7.778,
+    8.823
+   ],
+   "note": "hall_corridor's +x wall in front of closet_1, from the arch to the linen door's casing (door z 8.893)"
+  },
+  "south_east": {
+   "room": "hall_corridor_south",
+   "axis": "x",
+   "face": 7.333,
+   "room_side": -1,
+   "span": [
+    11.57,
+    13.521
+   ],
+   "note": "hall_corridor_south's +x wall (Buzz's side), the arch to the attic end"
+  },
+  "south_west": {
+   "room": "hall_corridor_south",
+   "axis": "x",
+   "face": 5.78,
+   "room_side": 1,
+   "span": [
+    11.57,
+    12.078
+   ],
+   "note": "hall_corridor_south's -x wall from the arch to the girls' door casing (door z 12.148)"
+  },
+  "attic_end": {
+   "room": "hall_corridor_south",
+   "axis": "z",
+   "face": 13.521,
+   "room_side": -1,
+   "span": [
+    5.78,
+    7.333
+   ],
+   "note": "the attic end wall; the attic door x 6.112-6.874 (casing 7 cm)"
+  },
+  "linen_right": {
+   "room": "hall_corridor",
+   "axis": "x",
+   "face": 7.233,
+   "room_side": -1,
+   "span": [
+    9.725,
+    9.907
+   ],
+   "note": "hall_corridor's +x wall between the linen door's casing (door z 9.655) and the corner to the bath bay (9.907)"
+  }
+ },
+ "runner": {
+  "width": 0.7,
+  "thickness": 0.01,
+  "albedo_linear": [
+   0.23,
+   0.01,
+   0.05
+  ],
+  "source": "Plain crimson wool runner on dark strip hardwood, the borders bare (film 10819, 2687, 2296, 10828, 410). Width: film 10819 at v 1040 the runner spans 0.61 of the floor between the walls (710 / 1160 px) -> 0.74 m in a 1.214 m hall; built 0.70 m (a stock 28 in runner), one fitted piece: x 5.86-6.56 in the vestibule (clear of the table, front x 6.591) and x 6.03-6.73 from the arch to the attic end (clear of the ficus by the rail and the urns and table on the +x walls), so it jogs 0.17 m under the first arch, where the film's runs straight (its hall is narrower): DEVIATIONS 63. Colour: runner / white wainscot in the same frame x 0.85, linear (0.19-0.26, 0.00-0.04, 0.04-0.07) over 10819/2687/2296/10828 -> (0.23, 0.01, 0.05). Gallery: film 2687 (from the stair top) shows the red carpet wide across the top of the stairs, from the balustrade to near the far wall: a rectangle over the gallery floor 13 cm off the rail line (z 9.16) and 4 cm off the stair's top edge (x 3.938).",
+  "outline": [
+   [
+    5.86,
+    5.53
+   ],
+   [
+    6.56,
+    5.53
+   ],
+   [
+    6.56,
+    7.708
+   ],
+   [
+    6.73,
+    7.708
+   ],
+   [
+    6.73,
+    13.45
+   ],
+   [
+    6.03,
+    13.45
+   ],
+   [
+    6.03,
+    9.06
+   ],
+   [
+    3.99,
+    9.06
+   ],
+   [
+    3.99,
+    7.93
+   ],
+   [
+    6.03,
+    7.93
+   ],
+   [
+    6.03,
+    7.708
+   ],
+   [
+    5.86,
+    7.708
+   ]
+  ]
+ },
+ "consoles": {
+  "parents": {
+   "wall": "end_kevin",
+   "z": [
+    5.53,
+    6.43
+   ],
+   "depth": 0.3,
+   "top": 0.762,
+   "source": "film 10819 / 2687 / 10741 / 410: a dark mahogany hall table on the vestibule's right wall (seen from the stair), its far end at the end wall, under the two sconces, with a brass globe on a stand, two red tapers in brass candlesticks and framed photographs. Top: 0.76 m (10819: the table's top sits on the horizon, where the side wall's cap rail lies, and the camera height there is 0.759 m by the door ruler). Owned SIDE_TABLE_01 (furniture-plan H2) fitted to the box"
+  },
+  "attic": {
+   "wall": "south_east",
+   "z": [
+    12.4,
+    13.3
+   ],
+   "depth": 0.3,
+   "top": 0.762,
+   "source": "film 352 / 410 / 1276 / 1333: a second dark hall table beside the attic door (seen from the parents' end, on the left wall) with two red tapers, under a tapestry hung between two sconces"
+  }
+ },
+ "sconces": {
+  "glass_bottom": 1.39,
+  "glass_top": 1.59,
+  "glass_top_dia": 0.155,
+  "plate": [
+   0.085,
+   0.17
+  ],
+  "lumens": 350,
+  "kelvin": 2700,
+  "at": [
+   {
+    "wall": "end_kevin",
+    "s": 5.7
+   },
+   {
+    "wall": "end_kevin",
+    "s": 6.26
+   },
+   {
+    "wall": "south_east",
+    "s": 12.42
+   },
+   {
+    "wall": "south_east",
+    "s": 13.28
+   }
+  ],
+  "source": "Brass wall sconces with frosted, swirl-moulded tulip shades open at the top (film 352, 1333, 1276, 2687, 10819, 410). Height: film 2687, near sconce over the console's near leg: glass 12-97 px above the leg's foot at 680 px, on the console's own ruler (top 0.762 m = 320 px at that depth) -> glass 1.39-1.59 m (the sconce is on the wall, ~0.25 m behind the leg: about +-0.05 m). Pairs: over the parents' console (2687 / 10741 / 10819: the two flank its middle and near end) and either side of the attic-end tapestry (352: sconces at 720 / 890 px with the hanging between). Lumens as the foyer's sconces (350 lm, 2700 K); night calibration: film_light_match.py --hall-night"
+ },
+ "urns": {
+  "height": 0.62,
+  "stand_dia": 0.34,
+  "bowl_dia": 0.3,
+  "at": [
+   {
+    "wall": "closet",
+    "s": 8.09
+   },
+   {
+    "wall": "closet",
+    "s": 8.53
+   },
+   {
+    "wall": "south_east",
+    "s": 11.8
+   }
+  ],
+  "source": "Red poinsettias in black fluted urns on turned dark-wood stands with cross feet (film 2687: two on the right near the linen door; 10819: one in the foreground right before the arch; 1333: on the right toward the attic end (two there in the film; one here, the wall holds the table and the brass pot too); quality target 2084). Urn top at 0.62 m: film 2687, the near stand's foot at 935 px, its rim at 665 px on the 420 px/m console ruler at a similar depth (~0.64; the stand is nearer: +-0.05). Plants: the user's CGTrader Poinsettia Gift Plant (furniture-plan H1/F1) seated in the urn, red bracts, foliage only (the urn is ours)"
+ },
+ "floor_pot": {
+  "at": [
+   7.13,
+   12.18
+  ],
+  "dia": 0.24,
+  "height": 0.2,
+  "spread": 0.36,
+  "source": "film 410: a red poinsettia in a brass pot on the floor beside the attic-end table (H5). Brass pot: Poly Haven brass_pot_01 (CC0)"
+ },
+ "ficus": {
+  "at": [
+   5.89,
+   11.27
+  ],
+  "pot_dia": 0.28,
+  "pot_h": 0.27,
+  "top": 1.95,
+  "crown": 0.44,
+  "source": "film 410 / 10828 / 2296 / 2084: a ficus in a ribbed brass planter at the balustrade's end before the arch to the attic end. The user's CGTrader Indoor Decorative Ficus Tree (as the foyer's); height as the foyer's measured tree (film 410: its top just under the arch's crown, ~1.9-2.0). Crown squeezed to 0.44 m (film ~0.6, over the rail) so the leaves stay clear of the handrail"
+ },
+ "pictures": [
+  {
+   "key": "rose",
+   "wall": "end_girls",
+   "s": [
+    5.8,
+    6.3
+   ],
+   "y": [
+    1.24,
+    1.88
+   ],
+   "frame": "mahogany",
+   "mat": 0.07,
+   "art": "redoute_rose",
+   "source": "film 2296 / 410: the big rose botanical print (dark frame, wide cream mat) on the wall facing the parents' table"
+  },
+  {
+   "key": "small1",
+   "wall": "end_girls",
+   "s": [
+    6.4,
+    6.53
+   ],
+   "y": [
+    1.66,
+    1.82
+   ],
+   "frame": "gilt",
+   "mat": 0.015,
+   "art": "pom_pear",
+   "source": "film 10819: small frames beside the big print on the vestibule's left wall"
+  },
+  {
+   "key": "small2",
+   "wall": "end_girls",
+   "s": [
+    6.4,
+    6.53
+   ],
+   "y": [
+    1.4,
+    1.56
+   ],
+   "frame": "gilt",
+   "mat": 0.015,
+   "art": "pom_apple",
+   "source": "film 10819"
+  },
+  {
+   "key": "landscape",
+   "wall": "closet",
+   "s": [
+    8.06,
+    8.7
+   ],
+   "y": [
+    1.5,
+    1.98
+   ],
+   "frame": "gilt",
+   "mat": 0.06,
+   "art": "landscape_oak",
+   "source": "film 2085 / 2687: a matted print on the linen-door wall above the urns (2085: left of the door, wide cream mat)"
+  },
+  {
+   "key": "tapestry",
+   "wall": "south_east",
+   "s": [
+    12.58,
+    13.12
+   ],
+   "y": [
+    1.1,
+    2.02
+   ],
+   "frame": "tapestry",
+   "art": "verdure",
+   "source": "film 352 / 1276: a woven verdure hanging between the attic-end sconces, its bottom just above the table's tapers"
+  },
+  {
+   "key": "print_up",
+   "wall": "south_west",
+   "s": [
+    11.64,
+    12.02
+   ],
+   "y": [
+    1.66,
+    2.02
+   ],
+   "frame": "mahogany",
+   "mat": 0.05,
+   "art": "landscape_a",
+   "source": "film 1276: two matted landscape prints stacked on the wall facing the attic table"
+  },
+  {
+   "key": "print_low",
+   "wall": "south_west",
+   "s": [
+    11.62,
+    12.04
+   ],
+   "y": [
+    1.06,
+    1.58
+   ],
+   "frame": "mahogany",
+   "mat": 0.06,
+   "art": "landscape_b",
+   "source": "film 1276"
+  },
+  {
+   "key": "tiny1",
+   "wall": "closet",
+   "s": [
+    7.86,
+    7.98
+   ],
+   "y": [
+    1.72,
+    1.86
+   ],
+   "frame": "gilt",
+   "mat": 0.012,
+   "art": "pom_plum",
+   "source": "film 2085 / 2687: three small gilt frames in a column on the linen-door wall, near the corner by the arch (2085: left of the big print; 2687: the small column right of the arch casing)"
+  },
+  {
+   "key": "tiny2",
+   "wall": "closet",
+   "s": [
+    7.86,
+    7.98
+   ],
+   "y": [
+    1.5,
+    1.64
+   ],
+   "frame": "gilt",
+   "mat": 0.012,
+   "art": "pom_peach",
+   "source": "film 2085 / 2687: three small gilt frames in a column on the linen-door wall, near the corner by the arch (2085: left of the big print; 2687: the small column right of the arch casing)"
+  },
+  {
+   "key": "tiny3",
+   "wall": "closet",
+   "s": [
+    7.86,
+    7.98
+   ],
+   "y": [
+    1.28,
+    1.42
+   ],
+   "frame": "gilt",
+   "mat": 0.012,
+   "art": "pom_cherry",
+   "source": "film 2085 / 2687: three small gilt frames in a column on the linen-door wall, near the corner by the arch (2085: left of the big print; 2687: the small column right of the arch casing)"
+  }
+ ],
+ "clock_barometer": {
+  "wall": "linen_right",
+  "s": 9.816,
+  "y": [
+   1.3,
+   1.8
+  ],
+  "width": 0.17,
+  "dial": 0.12,
+  "source": "film 2085: a brass ship's clock and barometer pair, white dials in round brass bezels, on a wooden plaque right of the linen door (the quality target's 'oval brass ornaments'; 352 shows the same pair); was first read on the attic door's wall"
+ },
+ "table_dressing": {
+  "globe": {
+   "console": "parents",
+   "s": 6.22,
+   "dia": 0.16,
+   "stand": 0.12,
+   "source": "film 2687 / 10741 / 10819 / 410: a brass globe on a turned brass stand at the table's near end"
+  },
+  "candles": [
+   {
+    "console": "parents",
+    "s": [
+     5.7,
+     5.82
+    ]
+   },
+   {
+    "console": "attic",
+    "s": [
+     12.68,
+     12.82
+    ]
+   }
+  ],
+  "candle_h": 0.3,
+  "photos": [
+   {
+    "console": "parents",
+    "s": 5.98,
+    "w": 0.13,
+    "h": 0.17
+   },
+   {
+    "console": "parents",
+    "s": 6.06,
+    "w": 0.1,
+    "h": 0.13
+   }
+  ],
+  "source": "two red tapers in brass candlesticks on each table (film 352, 1276, 2687, 410); framed photographs on the parents' table (2296, 410): invented images (stand-in prints from public-domain cabinet photographs)"
+ },
+ "colliders": [
+  {
+   "name": "console_parents",
+   "x": [
+    6.591,
+    6.891
+   ],
+   "z": [
+    5.53,
+    6.43
+   ],
+   "y": [
+    0.0,
+    0.762
+   ]
+  },
+  {
+   "name": "console_attic",
+   "x": [
+    7.003,
+    7.303
+   ],
+   "z": [
+    12.4,
+    13.3
+   ],
+   "y": [
+    0.0,
+    0.762
+   ]
+  },
+  {
+   "name": "urn1",
+   "x": [
+    6.86,
+    7.21
+   ],
+   "z": [
+    7.92,
+    8.26
+   ],
+   "y": [
+    0.0,
+    0.62
+   ]
+  },
+  {
+   "name": "urn2",
+   "x": [
+    6.86,
+    7.21
+   ],
+   "z": [
+    8.36,
+    8.7
+   ],
+   "y": [
+    0.0,
+    0.62
+   ]
+  },
+  {
+   "name": "urn3",
+   "x": [
+    6.96,
+    7.31
+   ],
+   "z": [
+    11.63,
+    11.97
+   ],
+   "y": [
+    0.0,
+    0.62
+   ]
+  },
+  {
+   "name": "ficus",
+   "x": [
+    5.75,
+    6.03
+   ],
+   "z": [
+    11.13,
+    11.41
+   ],
+   "y": [
+    0.0,
+    0.6
+   ]
+  },
+  {
+   "name": "floor_pot",
+   "x": [
+    7.01,
+    7.25
+   ],
+   "z": [
+    12.06,
+    12.3
+   ],
+   "y": [
+    0.0,
+    0.2
+   ]
+  }
+ ],
+ "arch_a": {
+  "x": [
+   5.547,
+   5.647
+  ],
+  "z": [
+   7.778,
+   11.43
+  ],
+  "spring": 2.04,
+  "crown": 2.3,
+  "top": 2.4,
+  "shape": "half-ellipse",
+  "source": "film 2080-2100 (17:53; best 2085): a wide, shallow elliptical arch between the stair well's gallery and the hall, the stair well's damask on both faces and the soffit, the gallery balustrade under its right part, the gallery floor (red carpet) under its left part. Camera solved by refcam on the linen door and the bath doorway (measurements/cameras/film-2085.json, rms 1.7 px, 80 in ruler; checks: the wainscot cap reads 0.75 m on the end wall (hall_walls.py: 0.76), the gallery handrail 0.89-0.91 m, a stock 36 in rail). On the plane x 5.607: jambs z 7.841 / 11.626 (our walls 7.778 / 11.43: built wall to wall), springs 2.029 / 2.060 -> 2.04, crown 2.393; half-ellipse residuals 1.9 cm rms vs circle 4.1 (tools/house/hall_walls.py --arches). Built with the crown at 2.30, 10 cm under our 2.40 ceiling (the film's set ceiling is ~2.6 m: the paper band above the crown reads ~0.17 m in 2085): a flatter arch than the film's (rise 0.26 vs 0.35), DEVIATIONS 64. Header 10 cm thick, its hall face on the rail line (x 5.647)."
+ }
+}

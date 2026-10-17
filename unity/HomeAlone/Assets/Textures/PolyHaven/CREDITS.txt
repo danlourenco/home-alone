@@ -2,3 +2,5 @@ Poly Haven textures (CC0, https://polyhaven.com/license), downloaded Oct 15 2026
 - dark_wooden_planks
 - dirty_carpet
 - wood_floor
+- cherry_veneer (Oct 16 2026, kitchen cabinets; tinted to the film's dark cherry in SpecGreybox: mean albedo lin 0.747/0.433/0.230 -> film 6902 0.105/0.012/0.013)
+- oak_veneer_01 (Oct 16 2026, breakfast table; mean albedo lin 0.359/0.210/0.097 vs film 2528's top flattened by the door's white 0.40/0.24/0.094)

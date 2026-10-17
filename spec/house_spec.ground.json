@@ -278,15 +278,15 @@
    "polygon_xz": [
     [
      -5.192,
-     3.923
+     4.085
     ],
     [
      -5.192,
-     -0.28
+     -0.915
     ],
     [
      2.316,
-     -0.28
+     -0.915
     ],
     [
      2.316,
@@ -314,10 +314,10 @@
     ],
     [
      -1.505,
-     3.923
+     4.085
     ]
    ],
-   "area_m2": 49.15,
+   "area_m2": 54.52,
    "ceiling_m": 2.438
   },
   {
@@ -361,10 +361,11 @@
     3.929
    ],
    "width": 1.508,
-   "height": null,
+   "height": 2.065,
+   "cased": true,
    "opens": true,
    "placed_from": "read in the overhead",
-   "source": "den clip (gate 5/6): 1.62 m gap in the living-side wall at door height, 12-35% of the den's depth from the FRONT (window) wall; frames 34-47 show it beside the front window. (First placed at the rear end by mistake, Oct 13; caught by the den registration.)",
+   "source": "den clip (gate 5/6): 1.62 m gap in the living-side wall at door height, 12-35% of the den's depth from the FRONT (window) wall; frames 34-47 show it beside the front window. (First placed at the rear end by mistake, Oct 13; caught by the den registration.) | Oct 16 (changes/2026-10-16-french-doors.json): a pair of glazed French doors stands open in it (Marina 1132/1136/1142/1150, film 12138): cased, 2.065 m high for 80 in leaves + head jamb (2.20 was a default)",
    "wall_coord_spec": 16.14,
    "span_spec": [
     6.999,
@@ -386,10 +387,11 @@
     4.002
    ],
    "width": 1.489,
-   "height": null,
+   "height": 2.065,
+   "cased": true,
    "opens": true,
    "placed_from": "read in the overhead",
-   "source": "overhead: French door leaves at the living/foyer wall, y 750-850 px",
+   "source": "overhead: French door leaves at the living/foyer wall, y 750-850 px | Oct 16 (changes/2026-10-16-french-doors.json): a pair of glazed French doors stands open in it (Marina 1132/1136/1142/1150, film 12138): cased, 2.065 m high for 80 in leaves + head jamb (2.20 was a default)",
    "wall_coord_spec": 11.5,
    "span_spec": [
     7.091,
@@ -411,10 +413,11 @@
     4.085
    ],
    "width": 1.713,
-   "height": null,
+   "height": 2.065,
+   "cased": true,
    "opens": true,
    "placed_from": "read in the overhead",
-   "source": "overhead: French door leaves on the dining room's left wall, y 740-855 px",
+   "source": "overhead: French door leaves on the dining room's left wall, y 740-855 px | Oct 16 (changes/2026-10-16-french-doors.json): a pair of glazed French doors stands open in it (Marina 1132/1136/1142/1150, film 12138): cased, 2.065 m high for 80 in leaves + head jamb (2.20 was a default)",
    "wall_coord_spec": 7.708,
    "span_spec": [
     6.95,
@@ -2427,9 +2430,14 @@
   ],
   "walk_path": [
    [
-    2.06,
+    2.56,
     0.0,
-    5.357
+    5.397
+   ],
+   [
+    2.56,
+    0.0,
+    5.78
    ],
    [
     2.253,
@@ -2465,11 +2473,12 @@
    "wall_axis": "z",
    "wall_coord_spec": 19.917,
    "span_spec": [
-    5.704,
-    8.004
+    5.405,
+    8.037
    ],
-   "sill_m": 0.53,
-   "head_m": 2.15
+   "sill_m": 0.41,
+   "head_m": 2.086,
+   "model": "DenWindows"
   },
   {
    "room": "den",
@@ -2477,11 +2486,12 @@
    "wall_axis": "x",
    "wall_coord_spec": 9.266,
    "span_spec": [
-    16.881,
-    19.431
+    16.994,
+    19.626
    ],
-   "sill_m": 0.53,
-   "head_m": 2.15
+   "sill_m": 0.41,
+   "head_m": 2.086,
+   "model": "DenWindows"
   },
   {
    "room": "living_room",
@@ -2489,11 +2499,12 @@
    "wall_axis": "x",
    "wall_coord_spec": 1.58,
    "span_spec": [
-    15.229,
-    15.749
+    15.015,
+    15.825
    ],
    "sill_m": 0.82,
-   "head_m": 2.15
+   "head_m": 2.15,
+   "model": "LivingWindows"
   },
   {
    "room": "living_room",
@@ -2501,11 +2512,12 @@
    "wall_axis": "x",
    "wall_coord_spec": 1.58,
    "span_spec": [
-    11.99,
-    12.51
+    11.815,
+    12.625
    ],
    "sill_m": 0.82,
-   "head_m": 2.15
+   "head_m": 2.15,
+   "model": "LivingWindows"
   },
   {
    "room": "living_room",
@@ -2517,7 +2529,8 @@
     13.313
    ],
    "sill_m": 0.0,
-   "head_m": 2.03
+   "head_m": 2.03,
+   "model": "LivingWindows"
   },
   {
    "room": "living_room",
@@ -2529,7 +2542,8 @@
     15.018
    ],
    "sill_m": 0.0,
-   "head_m": 2.03
+   "head_m": 2.03,
+   "model": "LivingWindows"
   },
   {
    "room": "dining_room",
@@ -2561,11 +2575,12 @@
    "wall_axis": "x",
    "wall_coord_spec": -5.192,
    "span_spec": [
-    2.626,
-    3.446
+    2.046,
+    3.004
    ],
    "sill_m": 0.0,
-   "head_m": 2.03
+   "head_m": 2.065,
+   "model": "BackDoor"
   },
   {
    "room": "kitchen",
@@ -2573,46 +2588,34 @@
    "wall_axis": "x",
    "wall_coord_spec": -5.192,
    "span_spec": [
-    0.778,
-    1.528
+    0.208,
+    1.021
    ],
-   "sill_m": 1.05,
+   "sill_m": 1.22,
    "head_m": 2.03
   },
   {
    "room": "kitchen",
-   "name": "side_rear",
+   "name": "seat_1",
    "wall_axis": "z",
-   "wall_coord_spec": -0.28,
+   "wall_coord_spec": -0.915,
    "span_spec": [
-    -4.201,
-    -3.481
+    -3.511,
+    -2.698
    ],
-   "sill_m": 1.05,
+   "sill_m": 1.2,
    "head_m": 2.03
   },
   {
    "room": "kitchen",
-   "name": "side_seat",
+   "name": "seat_2",
    "wall_axis": "z",
-   "wall_coord_spec": -0.28,
+   "wall_coord_spec": -0.915,
    "span_spec": [
-    -1.287,
-    -0.087
+    -1.125,
+    -0.312
    ],
-   "sill_m": 1.05,
-   "head_m": 2.03
-  },
-  {
-   "room": "kitchen",
-   "name": "side_front",
-   "wall_axis": "z",
-   "wall_coord_spec": -0.28,
-   "span_spec": [
-    0.83,
-    1.55
-   ],
-   "sill_m": 0.82,
+   "sill_m": 1.2,
    "head_m": 2.03
   },
   {
@@ -2631,13 +2634,13 @@
    "room": "kitchen",
    "name": "side_upper",
    "wall_axis": "z",
-   "wall_coord_spec": 3.923,
+   "wall_coord_spec": 4.085,
    "span_spec": [
-    -3.93,
-    -3.21
+    -4.22,
+    -3.407
    ],
-   "sill_m": 0.82,
-   "head_m": 2.15
+   "sill_m": 1.22,
+   "head_m": 2.03
   },
   {
    "room": "vestibule",

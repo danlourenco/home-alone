@@ -21,10 +21,10 @@ public class HouseNightMode : MonoBehaviour
         for (int i = 0; i < reflectionProbes.Length && i < set.Length; i++)
             if (reflectionProbes[i] && set[i]) reflectionProbes[i].bakedTexture = set[i];
     }
-    void Update(){if(Input.GetKeyDown(KeyCode.N))SetNight(!night);}
+    void Update(){if(Input.GetKeyDown(KeyCode.N))SetNight(!night);var cam=Camera.main;if(night&&cam)ShadowRefresh.Warm(cam);}   // lamp shadow maps drawn when first in view (ShadowRefresh)
     public void SetNight(bool enabled)
     {
-        night=enabled;nightLayer.SetActive(enabled);if(dayLayer)dayLayer.SetActive(!enabled);
+        night=enabled;nightLayer.SetActive(enabled);ShadowRefresh.Forget();if(dayLayer)dayLayer.SetActive(!enabled);
         for(int i=0;i<interiorLights.Length;i++)if(interiorLights[i])interiorLights[i].enabled=enabled||daytimeEnabled[i];
         var baked=FindFirstObjectByType<FoyerBakedLighting>();if(baked)baked.Apply(enabled);
         // baked bounce light: BakeLighting.Bake stores a "Night" scenario beside the day one ("Default")

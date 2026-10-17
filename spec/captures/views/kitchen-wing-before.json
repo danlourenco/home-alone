@@ -1,0 +1,117 @@
+[
+ {
+  "name": "kitchen/before-note1506",
+  "pos": [
+   -2.684,
+   -1.346,
+   -3.116
+  ],
+  "look_at": [
+   -3.666,
+   -1.417,
+   -2.941
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "kitchen/before-sink-wall",
+  "pos": [
+   -3.6,
+   -1.43,
+   0.4
+  ],
+  "look_at": [
+   -3.6,
+   -1.65,
+   -4.2
+  ],
+  "vfov": 75
+ },
+ {
+  "name": "kitchen/before-seat-wall",
+  "pos": [
+   -3.0,
+   -1.43,
+   -3.7
+  ],
+  "look_at": [
+   -3.0,
+   -1.65,
+   0.9
+  ],
+  "vfov": 75
+ },
+ {
+  "name": "kitchen/before-wing-long",
+  "pos": [
+   1.5,
+   -1.43,
+   -2.0
+  ],
+  "look_at": [
+   -5.19,
+   -1.55,
+   -1.6
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "kitchen/before-ext-rear",
+  "pos": [
+   -14.0,
+   -1.3,
+   -1.6
+  ],
+  "look_at": [
+   -5.3,
+   -1.8,
+   -1.6
+  ],
+  "vfov": 55,
+  "near": 0.3
+ },
+ {
+  "name": "kitchen/before-ext-7068",
+  "pos": [
+   -13.0,
+   -1.2,
+   -6.0
+  ],
+  "look_at": [
+   -5.3,
+   -1.6,
+   -1.8
+  ],
+  "vfov": 55,
+  "near": 0.3
+ },
+ {
+  "name": "kitchen/before-ext-side",
+  "pos": [
+   -3.0,
+   -0.9,
+   9.5
+  ],
+  "look_at": [
+   -3.0,
+   -1.6,
+   0.0
+  ],
+  "vfov": 60,
+  "near": 0.3
+ },
+ {
+  "name": "kitchen/before-linen-door",
+  "pos": [
+   5.66,
+   1.25,
+   -9.274
+  ],
+  "look_at": [
+   7.3,
+   1.05,
+   -9.274
+  ],
+  "vfov": 85
+ }
+]

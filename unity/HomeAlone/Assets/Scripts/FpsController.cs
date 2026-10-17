@@ -27,7 +27,7 @@ public class FpsController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) { Cursor.lockState = CursorLockMode.None; Cursor.visible = true; }
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab)) ReleaseMouse();   // Tab too: on macOS Esc was not always reaching the game (user, Oct 16)
         if (Input.GetMouseButtonDown(0) && Cursor.lockState != CursorLockMode.Locked) { Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false; }
         if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftControl)) { crouched = !crouched; SetEye(); }
         if (Input.GetKeyDown(KeyCode.R)) { cc.enabled = false; transform.SetPositionAndRotation(spawnPosition, spawnRotation); cc.enabled = true; vy = 0; pitch = 0; }
@@ -61,4 +61,9 @@ public class FpsController : MonoBehaviour
         cc.height = h; cc.center = new Vector3(0, h / 2, 0);
         if (cam) cam.localPosition = new Vector3(0, h - eyeOffset, 0);
     }
+
+    static void ReleaseMouse() { Cursor.lockState = CursorLockMode.None; Cursor.visible = true; }
+
+    // switching away from Unity (Cmd+Tab, clicking another app) always gives the mouse back; a click in the game view takes it again
+    void OnApplicationFocus(bool focused) { if (!focused) ReleaseMouse(); }
 }

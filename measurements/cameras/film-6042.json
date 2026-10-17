@@ -1,0 +1,217 @@
+{
+ "cx": 960.0,
+ "cy": 529.0,
+ "yaw": -0.015213854933589486,
+ "pos": [
+  3.7901240581036184,
+  -2.3872252191949177,
+  0.8687749638460073
+ ],
+ "f": 3500.0,
+ "name": "film-6042",
+ "frame": "0-homealone/full/homealone-movie-screencaps.com-6042.jpg",
+ "size": [
+  1920,
+  1058
+ ],
+ "rms_px": 37.8,
+ "points": [
+  {
+   "uv": [
+    590,
+    210
+   ],
+   "x": -4.862,
+   "h": 1.372,
+   "z": 1.874,
+   "note": "end-wall upper A, bottom front corner by the door (kitchen.json)"
+  },
+  {
+   "uv": [
+    890,
+    210
+   ],
+   "x": -4.862,
+   "h": 1.372,
+   "z": 1.219,
+   "note": "upper A, bottom front corner by the window"
+  },
+  {
+   "uv": [
+    1300,
+    213
+   ],
+   "x": -4.862,
+   "h": 1.372,
+   "z": 0.128,
+   "note": "upper B, bottom front corner by the window"
+  },
+  {
+   "uv": [
+    1650,
+    216
+   ],
+   "x": -4.862,
+   "h": 1.372,
+   "z": -0.808,
+   "note": "upper B, bottom front corner by the tower"
+  },
+  {
+   "uv": [
+    700,
+    386
+   ],
+   "line": [
+    [
+     -4.539,
+     -2.112,
+     -0.3
+    ],
+    [
+     -4.539,
+     -2.112,
+     1.8
+    ]
+   ],
+   "note": "end counter's front top edge"
+  },
+  {
+   "uv": [
+    1500,
+    392
+   ],
+   "line": [
+    [
+     -4.539,
+     -2.112,
+     -0.3
+    ],
+    [
+     -4.539,
+     -2.112,
+     1.8
+    ]
+   ],
+   "note": "end counter's front top edge"
+  },
+  {
+   "uv": [
+    524,
+    420
+   ],
+   "line": [
+    [
+     -5.192,
+     -3.026,
+     1.976
+    ],
+    [
+     -5.192,
+     -0.891,
+     1.976
+    ]
+   ],
+   "note": "back door casing, outer edge on the window side"
+  },
+  {
+   "uv": [
+    167,
+    420
+   ],
+   "line": [
+    [
+     -5.192,
+     -3.026,
+     3.074
+    ],
+    [
+     -5.192,
+     -0.891,
+     3.074
+    ]
+   ],
+   "note": "back door casing, outer edge on the hinge side"
+  },
+  {
+   "uv": [
+    1125,
+    445
+   ],
+   "x": -3.253,
+   "h": 0.914,
+   "z": 0.834,
+   "note": "island top, far (cooktop-end) corner on the stool side"
+  },
+  {
+   "uv": [
+    900,
+    447
+   ],
+   "line": [
+    [
+     -3.253,
+     -2.112,
+     0.834
+    ],
+    [
+     -3.253,
+     -2.112,
+     1.612
+    ]
+   ],
+   "note": "island top's far end edge"
+  },
+  {
+   "uv": [
+    1000,
+    800
+   ],
+   "line": [
+    [
+     -3.253,
+     -2.112,
+     0.834
+    ],
+    [
+     0.354,
+     -2.112,
+     0.834
+    ]
+   ],
+   "note": "island top's stool-side edge"
+  },
+  {
+   "uv": [
+    945,
+    1000
+   ],
+   "line": [
+    [
+     -3.253,
+     -2.112,
+     0.834
+    ],
+    [
+     0.354,
+     -2.112,
+     0.834
+    ]
+   ],
+   "note": "island top's stool-side edge"
+  }
+ ],
+ "residuals_px": [
+  28.65,
+  29.08,
+  23.21,
+  46.37,
+  108.21,
+  27.49,
+  21.09,
+  58.52,
+  10.04,
+  54.72,
+  20.83,
+  8.67
+ ]
+}

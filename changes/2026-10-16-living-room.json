@@ -1,0 +1,245 @@
+{
+ "gate": 7,
+ "change": "Living room upgrade (Oct 16, TRIAL): (1) the film's paper (tools/house/film_wallpaper.py --living from film 10636: rose bouquets on ribbon swags, half-drop, 0.533 x 0.79 m) over a white 0.14 m baseboard, dark wood floor (finishes.json living_room); (2) the rear windows re-measured and widened 0.52 -> 0.81 m (stock 2'8\" double-hung 6-over-6, centred 1.60 m either side of the fireplace: z 11.815-12.625 and 15.015-15.825; sill 0.82 / head 2.15 unchanged) and all four windows as models (LivingWindows: French pairs 2 x 5 lites over a raised panel in the unchanged 0.75 m front cuts) with the film's green damask drapes tied back, white sheers and Marina's box-pleated valances over the French windows; (3) LivingBuiltins: the fireplace (Marina f165 sizes, film 10600 Adam style) with hearth, firebox, brass screen and tools, stockings; the film's console upright piano + bench + brass piano lamp against the den-side wall; lamps; porcelain dogs on gilt brackets; nutcrackers; the toy train; rug; the user's Asset Store Christmas tree (AlterEgos ChristmasTree.prefab via store_props living_tree, uniform 0.94 to 2.40 m, its mini lights replaced by generated C7 bulbs); (4) Poly Haven sofa (green), console, coffee table, painting, mantel clock, plant stand (LivingProps); the owned pack chest (store_props living_chest); walk colliders (spec/dressing/living.json); lamps as lights at night, Light_living_room removed",
+ "target": "House_WallGrid",
+ "premise": "Each rear living-room window is one stock double-hung unit centred on a line 1.60 m from the fireplace axis, whose glass Marina's drapes partly hide, and whose masonry opening the real-house plan draws at 0.75-0.82 m",
+ "claim": {
+  "value": {
+   "rear_den_side": {
+    "z": [
+     15.015,
+     15.825
+    ],
+    "sill": 0.82,
+    "head": 2.15
+   },
+   "rear_foyer_side": {
+    "z": [
+     11.815,
+     12.625
+    ],
+    "sill": 0.82,
+    "head": 2.15
+   },
+   "fireplace_centre_z": 13.82,
+   "unit_w": 0.81
+  },
+  "data": [
+   "sfm:living",
+   "marina-frame:living-f165"
+  ],
+  "scale": [
+   "overhead-trace:ground"
+  ],
+  "upstream": [
+   "overhead-trace:ground"
+  ],
+  "how": "tools/house/living_walls.py: camera with yaw, pitch and roll (f 1325 px, the clip's COLMAP focal) solved on the built room's rear corners, rear and den-side ceiling lines and the den-side floor line (measurements/cameras/living-f165.json, rms 5.7 px); glass between the drapes z 15.118-15.631 / 11.939-12.430 (lower bounds: the drapes cover the casing), drape runs 14.80-15.96 / 11.595-12.754, firebox 13.471-14.150, wreath 13.825: centres 1.555 / 1.635 m from the fireplace axis; built the stock 2'8\" unit (sensible-defaults) centred 1.60",
+  "applies_to": [
+   "living_room"
+  ],
+  "measured_in": [
+   "living_room"
+  ],
+  "risks": [
+   "scale",
+   "extraction"
+  ],
+  "alternatives": [
+   "the old 0.52 m glass at z 11.99-12.51 / 15.229-15.749 (glass between drapes, Part 1 458 s)",
+   "stock 2'8\" units centred 1.60 m from the fireplace (built)",
+   "the plan's own centres (1.59 / 1.61 m) and widths (0.75-0.82)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "fireplace centred on the rear wall, a window either side",
+     "observed_in": [
+      "marina-frame:living-f165",
+      "marina-frame:living-f3",
+      "plan:dimensioned-first-floor",
+      "film:10600"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "piano: an upright, back to the den-side wall near the front corner, keyboard to the foyer side",
+     "observed_in": [
+      "film:5628",
+      "film:5640",
+      "film:5650"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "console with a gilt landscape over it on the den-side wall, the green sofa backed onto it",
+     "observed_in": [
+      "film:10636",
+      "film:10640",
+      "marina-frame:living-f13"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "tree in the rear wall's den-side corner, in front of the window",
+     "observed_in": [
+      "film:10600",
+      "marina-frame:living-f3",
+      "marina-frame:living-f165"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "chest with a black-shaded lamp in the front/foyer-side corner, brackets with figures above",
+     "observed_in": [
+      "film:5650",
+      "film:5640",
+      "marina-frame:living-f105"
+     ],
+     "extrapolated": false
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-13",
+   "what": "living rear windows 0.52 m (glass between drapes, Part 1 458 s; overhead 16:34), sill assumed 0.82, plain glass boxes",
+   "outcome": "superseded"
+  },
+  {
+   "date": "2026-10-16",
+   "what": "procedural fir of needle cards as the Christmas tree (stand-in)",
+   "outcome": "superseded",
+   "note": "user bought the AlterEgos tree; user keeps the generated upright piano"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Real-house plan (dimensioned-first-floor.png), its OWN ruler (the living room's 15' arrow, 244 px = 16.27 px/ft): rear-wall masonry openings 40-44 px = 0.75-0.82 m (built unit 0.81); window centres 86 / 85 px = 1.61 / 1.59 m either side of the chimney (built 1.60); chimney (3' firebox) centred 2.25 m from the den-side face = z 13.82 (Marina's firebox centre 13.81, wreath 13.825)",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "scale",
+    "extraction"
+   ],
+   "data": [
+    "plan:dimensioned-first-floor"
+   ],
+   "scale": [
+    "plan-ruler:16.27pxft"
+   ],
+   "upstream": [
+    "plan-ruler:16.27pxft"
+   ]
+  },
+  {
+   "what": "Consistency: Marina's glass between the drapes (0.513 / 0.491 m) is less than the built unit's glass (0.81 - 2 x 0.02 jamb - 2 x 0.05 stile = 0.67): the drapes overlap the sash, as f165 and f3 show",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "marina-frame:living-f165"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ],
+   "upstream": [
+    "overhead-trace:ground"
+   ]
+  },
+  {
+   "what": "Film 10600: the den-side rear window is a double-hung window with a white sheer and green damask drapes tied back with rope, the tree beside it on the corner side and the mantel on the other",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:10600"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "Front French windows (no change, checked): Marina f89 (camera on the front/den corner and floor lines, rms 1.6 px) frames 0.60 m (z 12.462-13.061 / 14.377-14.983), knobs 0.945 m, glass 0.44-1.87 m; film 4382 facade trim 100 px at 8.5 px brick courses = 0.79-0.82 m incl. brick mould; built cut 0.75 between",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "film:4382",
+    "marina-frame:living-f89"
+   ],
+   "scale": [
+    "brick-course:4382",
+    "overhead-trace:ground"
+   ]
+  },
+  {
+   "what": "Marina f89 puts the foyer-side French window's centre at z 12.76 (built 12.938, from 438 s and the overhead) and the plan at 12.91",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "marina-frame:living-f89"
+   ],
+   "scale": [
+    "overhead-trace:ground"
+   ],
+   "upstream": [
+    "overhead-trace:ground"
+   ],
+   "disposition": "not moved: f89's camera is solved on the den-side corner 2.5 m away (yaw lever arm); the 438 s face-on read, the overhead (0.317 vs 0.304) and the plan (12.91) agree within 3 cm; logged DEVIATIONS 57"
+  },
+  {
+   "what": "Marina has a GRAND piano in front of the front wall's den-side window and a red wingback before the other; the film shows a console upright against the den-side wall (5628/5640/5650) and no chair there",
+   "agrees": false,
+   "type": "topological",
+   "data": [
+    "marina-frame:living-f89",
+    "marina-frame:living-f77"
+   ],
+   "scale": [
+    "none"
+   ],
+   "disposition": "the film decides the look where it shows it (house rule; the task brief): the upright is built, logged DEVIATIONS 58 for the user"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/living/before-f165.png",
+   "spec/captures/views/living/before-f89.png",
+   "spec/captures/views/living/before-film5650.png",
+   "spec/captures/views/living/before-film10636.png",
+   "spec/captures/views/living/before-film10600.png",
+   "spec/captures/views/living/before-piano.png",
+   "spec/captures/views/living/before-tree.png",
+   "spec/captures/views/living/before-room.png"
+  ],
+  "after": [
+   "spec/captures/views/living/after-f165.png",
+   "spec/captures/views/living/after-f89.png",
+   "spec/captures/views/living/after-film5650.png",
+   "spec/captures/views/living/after-film10636.png",
+   "spec/captures/views/living/after-film10600.png",
+   "spec/captures/views/living/after-piano.png",
+   "spec/captures/views/living/after-tree.png",
+   "spec/captures/views/living/after-room.png",
+   "spec/captures/views/living/night-f165.png",
+   "spec/captures/views/living/night-f89.png",
+   "spec/captures/views/living/night-film5650.png",
+   "spec/captures/views/living/night-film10636.png",
+   "spec/captures/views/living/night-film10600.png",
+   "spec/captures/views/living/night-piano.png",
+   "spec/captures/views/living/night-tree.png",
+   "spec/captures/views/living/night-room.png",
+   "spec/captures/views/living/tree-after-f165.png",
+   "spec/captures/views/living/tree-after-tree.png",
+   "spec/captures/views/living/tree-after-room.png",
+   "spec/captures/views/living/tree-after-film10600.png",
+   "spec/captures/views/living/tree-night-f165.png",
+   "spec/captures/views/living/tree-night-tree.png",
+   "spec/captures/views/living/tree-night-room.png",
+   "spec/captures/views/living/tree-night-film10600.png"
+  ],
+  "note": "batch renders from the scratch copy (views-living-{before,after,night}.json; Marina cameras solved by tools/house/living_walls.py, film poses approximate: the film's living-room shots look down steeply). Side-by-side sheets: spec/captures/views/living/compare-*.jpg (reference | before | after day | after night). Batch renders light the C7 bulbs and shades by day (HouseNightMode only runs in play); judge lighting live"
+ },
+ "user_walk": "pending",
+ "user_words": ""
+}

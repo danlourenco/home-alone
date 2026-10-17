@@ -1,0 +1,438 @@
+{
+ "note": "The den's (family room's) generated pieces and placed props, Oct 16 2026 (TRIAL; changes/2026-10-16-den.json, DEVIATIONS 51-53). Spec metres, y above the ground floor. Measured with tools/house/den_walls.py on cameras solved from the built den's corners (measurements/cameras/den-f9|f57|f153.json) in Marina's den clip (Part 1 ~555-596 s); every number's source is in its 'source'. Read by tools/house/hifi_den.py (DenWindows.glb, DenBuiltins.glb), tools/house/hifi_den_props.py (DenProps.glb) and SpecGreybox.Den (colliders).",
+ "windows": {
+  "unit": {
+   "w": 0.61,
+   "h": 1.676,
+   "jamb": 0.016,
+   "stile": 0.045,
+   "top_rail": 0.05,
+   "bottom_rail": 0.075,
+   "meeting": 0.035,
+   "muntin": 0.018,
+   "cols": 3,
+   "rows": 2,
+   "source": "stock 24 x 66 in double-hung (6-over-6); Marina glass 0.487-0.509 wide (built 0.488), meeting rail 1.26 (built 1.255), pane pitch 0.36-0.375 (built 0.37)"
+  },
+  "stool": {
+   "proud": 0.045,
+   "ears": 0.095,
+   "t": 0.025,
+   "apron_h": 0.09,
+   "source": "standard stool and apron (the grey-box's: 4 cm past the casing face, 2.5 cm past the casing's sides); Marina's sheers hide hers"
+  },
+  "valance": {
+   "top": 2.21,
+   "bottom": 1.835,
+   "past_frame": 0.22,
+   "depth": 0.15,
+   "source": "Marina f153 (front) top 2.221/2.200, bottom 1.837, ends 0.530/3.562 from the living corner = frame -0.246/+0.138; f9 (end) top 2.210/2.209, bottom 1.832, ends -0.223/+0.207 past the frame. Measured on the plane 0.15 m off the wall (the projection assumed). Built symmetric 0.22 past the frame"
+  },
+  "drape": {
+   "outer_in": 0.02,
+   "top_inner": 0.18,
+   "mid_inner": 0.095,
+   "mid_h": 1.0,
+   "tie_h": 0.74,
+   "tie_w": 0.16,
+   "hem_w": 0.26,
+   "front": -0.13,
+   "back": -0.06,
+   "fold": 0.12,
+   "source": "Marina f153: inner edge 0.095 inside the frame at 1.0 m (0.871 from the living corner), tie-backs 0.697/0.718 (front) and 0.743/0.766 (end), hems at the floor (h -0.007/0.008: the camera check). Fold pitch and depth authored"
+  }
+ },
+ "bookcase": {
+  "x": [
+   2.37,
+   2.77
+  ],
+  "z": [
+   16.225,
+   19.902
+  ],
+  "top": 2.11,
+  "top_band": 2.006,
+  "plinth": 0.12,
+  "bottom_top": 0.17,
+  "dividers": [
+   [
+    17.505,
+    17.555
+   ],
+   [
+    18.687,
+    18.737
+   ]
+  ],
+  "lower_divider": [
+   18.11,
+   18.16,
+   0.76
+  ],
+  "shelves_side": [
+   0.452,
+   0.8,
+   1.208,
+   1.617
+  ],
+  "shelves_centre": [
+   0.452,
+   0.8,
+   1.617
+  ],
+  "shelf_t": 0.04,
+  "source": "Marina f57 (camera den-f57, rms 3.8 px), measured on the bookcase's front plane x 2.77: top 2.110, top band 2.006, dividers z 17.507-17.556 / 18.683-18.741, centre bay's lower divider 18.110-18.160 to 0.75, shelf tops 0.452/0.800/1.208/1.617 (side bays; the centre bay has no 1.208 shelf: the TV), bottom shelf 0.17, white plinth below it. Spans wall to wall (f57/f69: the ends meet both side walls), 1.5 cm off each wall (clear of the baseboards). DEPTH 0.40 ASSUMED (16 in, a TV built-in; the film's TV sits recessed in its bay, 2877): Marina's floor junction reads 0.09-0.16 (two picks, grazing view), DEVIATIONS 53. Film 2877: dark mahogany, TV on a shelf, a lamp and books",
+  "tv": {
+   "model": "store_props.json den_tv (CRT TV JVC AV-2049S, Asset Store, user-bought; gitignored)",
+   "z": [
+    17.76,
+    18.48
+   ],
+   "y0": 0.883,
+   "source": "film 2877/2868: a black JVC CRT filling the centre bay (TV 0.91 of the bay's clear height) -> 0.72 m wide; the 20 in model (0.466 wide) scaled UNIFORMLY x1.545 (0.72 x 0.641 x 0.686): DEVIATIONS 55"
+  },
+  "vcr": {
+   "z": [
+    17.83,
+    18.41
+   ],
+   "y": [
+    0.8,
+    0.882
+   ],
+   "x": [
+    2.42,
+    2.76
+   ],
+   "source": "film 2877: under the TV; 0.58 x 0.08 standard VCR"
+  }
+ },
+ "props": {
+  "sofa": {
+   "model": "sofa_02",
+   "x": [
+    4.22,
+    6.47
+   ],
+   "z": [
+    19.1,
+    19.82
+   ],
+   "y": [
+    0.0,
+    0.8
+   ],
+   "front": "-z",
+   "source": "Marina: front-left end x 6.472 (f9, plane 0.08 up), rear end x 4.22 (f57, the arm's outer edge at its front z 19.3), front z 19.20 (f9); back 9.7 cm off the end wall (clear of the window stool). Marina's sofa is RED FABRIC with rolled arms; Poly Haven sofa_02 is a tufted leather loveseat, stretched 1.4x and tinted to her red (DEVIATIONS 53)"
+  },
+  "armchair": {
+   "model": "sofa_02",
+   "x": [
+    6.25,
+    7.15
+   ],
+   "z": [
+    16.3,
+    17.25
+   ],
+   "y": [
+    0.0,
+    0.92
+   ],
+   "front": "-x",
+   "source": "Marina f101/M27: the brown leather armchair stands by the living wall facing the bookcase (TV), below the right-hand pictures; position read off f101 against the arch casing (x ~6.3-7.0), NOT camera-solved (f101 shows no room corner). The film's den chair (2856-2941) is a burgundy tufted leather club chair facing the TV: built from sofa_02 narrowed to a chair, burgundy (film)"
+  },
+  "coffee_table": {
+   "model": "round_wooden_table_01",
+   "cx": 5.98,
+   "cz": 17.83,
+   "d": 0.66,
+   "h": 0.5,
+   "source": "Marina f9: pedestal foot x 5.983 z 17.829 (floor), top centre x 5.91-6.06 at 0.45-0.5 m; dia from the top's left edge (0.3 m radius). Round pedestal table, Poly Haven round_wooden_table_01 squashed to 0.5 m"
+  }
+ },
+ "colliders": [
+  {
+   "name": "bookcase",
+   "x": [
+    2.355,
+    2.77
+   ],
+   "z": [
+    16.21,
+    19.917
+   ],
+   "y": [
+    0,
+    2.11
+   ]
+  },
+  {
+   "name": "sofa",
+   "x": [
+    4.22,
+    6.47
+   ],
+   "z": [
+    19.1,
+    19.917
+   ],
+   "y": [
+    0,
+    0.8
+   ]
+  },
+  {
+   "name": "armchair",
+   "x": [
+    6.25,
+    7.15
+   ],
+   "z": [
+    16.21,
+    17.25
+   ],
+   "y": [
+    0,
+    0.92
+   ]
+  },
+  {
+   "name": "coffee_table_top",
+   "x": [
+    5.65,
+    6.31
+   ],
+   "z": [
+    17.5,
+    18.16
+   ],
+   "y": [
+    0.42,
+    0.5
+   ]
+  },
+  {
+   "name": "coffee_table_foot",
+   "x": [
+    5.85,
+    6.11
+   ],
+   "z": [
+    17.7,
+    17.96
+   ],
+   "y": [
+    0,
+    0.42
+   ]
+  },
+  {
+   "name": "ficus_basket",
+   "x": [
+    2.94,
+    3.36
+   ],
+   "z": [
+    16.41,
+    16.83
+   ],
+   "y": [
+    0,
+    0.26
+   ]
+  },
+  {
+   "name": "poinsettia_red",
+   "x": [
+    2.84,
+    3.1
+   ],
+   "z": [
+    17.32,
+    17.58
+   ],
+   "y": [
+    0,
+    0.2
+   ]
+  },
+  {
+   "name": "poinsettia_white",
+   "x": [
+    2.88,
+    3.16
+   ],
+   "z": [
+    16.88,
+    17.16
+   ],
+   "y": [
+    0,
+    0.2
+   ]
+  },
+  {
+   "name": "floor_lamp",
+   "x": [
+    6.89,
+    7.17
+   ],
+   "z": [
+    19.26,
+    19.54
+   ],
+   "y": [
+    0,
+    1.44
+   ]
+  }
+ ],
+ "colliders_note": "walk layer for the generated/Poly Haven pieces (the models carry none); the coffee table's top is 0.42 m up so Kevin's body passes under the rim (he can't stand under it: 0.42 < his height)",
+ "lamps": {
+  "bookcase": {
+   "at": [
+    2.6,
+    1.208,
+    16.82
+   ],
+   "shade": [
+    0.13,
+    0.075,
+    0.17,
+    0.33
+   ],
+   "lumens": 1200,
+   "kelvin": 2400,
+   "colour": "orange",
+   "source": "film 2877/2868: an urn lamp with a red-orange cone shade, lit, on the shelf right of the TV (our living-side bay, shelf 1.208); size from the shelf gap (shade top 4 cm under the shelf above). 40 W incandescent ~350-450 lm (authored, standard)"
+  },
+  "floor": {
+   "at": [
+    7.03,
+    0.0,
+    19.4
+   ],
+   "arm": [
+    -0.3,
+    0.0
+   ],
+   "shade": [
+    0.24,
+    0.19,
+    1.16,
+    1.44
+   ],
+   "lumens": 300,
+   "kelvin": 2700,
+   "colour": "cream",
+   "source": "Marina f9/f13 (foot x 7.03 z 19.40) and film 2868 (top right: a brass swing-arm lamp with a cream drum shade): brass pole, arm 0.30 m toward the sofa; 100 W ~1100 lm (authored)"
+  },
+  "side": {
+   "at": [
+    5.845,
+    0.62,
+    16.595
+   ],
+   "shade": [
+    0.17,
+    0.14,
+    0.36,
+    0.6
+   ],
+   "lumens": 250,
+   "kelvin": 2700,
+   "colour": "white",
+   "source": "Marina f101/M27: white drum shade on a turned stem, on the side table by the armchair; 60 W ~700 lm (authored)"
+  },
+  "desk": {
+   "at": [
+    8.56,
+    0.78,
+    19.09
+   ],
+   "lumens": 350,
+   "kelvin": 2700,
+   "colour": "green",
+   "source": "Marina f141/M09: a green banker's lamp on the desk's end-wall side; 40 W (authored)"
+  }
+ },
+ "decor": {
+  "poinsettia_red": {
+   "at": [
+    2.97,
+    17.45
+   ],
+   "pot": "foil",
+   "r": 0.24,
+   "h": 0.55,
+   "source": "film 2868/2877: a red poinsettia in a gold foil pot on the floor in front of the shelves right of the TV"
+  },
+  "poinsettia_white": {
+   "at": [
+    3.02,
+    17.02
+   ],
+   "pot": "wicker",
+   "r": 0.26,
+   "h": 0.62,
+   "source": "film 2868/2877: a white poinsettia in a wicker pot beside it"
+  },
+  "ficus": {
+   "at": [
+    3.15,
+    16.62
+   ],
+   "basket_r": 0.21,
+   "basket_h": 0.26,
+   "height": 1.95,
+   "crown": 0.7,
+   "source": "film 2868/2877: a tall ficus in a wicker basket at the shelves' end by the side wall (our living-wall corner); Poly Haven pachira_aquatica_01 (CC0) as the tree (no CC0 ficus found), crown fitted"
+  },
+  "soldier": {
+   "at": [
+    2.62,
+    0.8,
+    18.95
+   ],
+   "h": 0.3,
+   "source": "film 2877: a wooden toy soldier (red coat, white trousers, black hat) beside the TV bay"
+  },
+  "bus": {
+   "at": [
+    2.62,
+    0.8,
+    16.95
+   ],
+   "size": [
+    0.07,
+    0.09,
+    0.19
+   ],
+   "source": "film 2877: a red toy double-decker bus on the books' shelf under the lamp"
+  },
+  "santa": {
+   "at": [
+    2.7,
+    0.8,
+    17.7
+   ],
+   "h": 0.09,
+   "source": "film 2877: a small Santa figure at the TV's foot"
+  },
+  "games": {
+   "bay": "end",
+   "shelves": [
+    0.17,
+    0.452
+   ],
+   "source": "film 2877/2868: stacked game and puzzle boxes (a '1000' puzzle) on the lower shelves left of the TV; labels ORIGINAL (tools/house/den_textures.py)"
+  },
+  "vhs": {
+   "bay": "centre_low_right",
+   "source": "film 2877: a row of VHS tapes on the lower shelf under the TV bay"
+  }
+ },
+ "lamps_calibration": "film 2877 (tools/house/film_light_match.py --den-night), three passes: standard bulbs (bookcase 350, floor 1100, side 700 lm) read the urn lamp's pool -1.5/-1.9 stops vs the wall and the game boxes; 900/550/350 -> -0.7/-1.3; built 1200/300/250 (the floor lamp, out of 2877's frame, lit the game boxes). Desk 350 (not in the frame)"
+}

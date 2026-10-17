@@ -1,0 +1,203 @@
+{
+ "gate": 7,
+ "change": "Window treatments as cloth (tools/house/hifi_sheers.py -> Sheers.glb, placed by SpecGreybox.Curtains): dining front French windows (both): a woven white sheer drawn across in two panels, cream pinch-pleated side panels tied back at 0.92 m, a box-pleated valance 2.10-2.39 m running 0.20 m past each casing (Marina 1118-1128 s; sheers from film 4382). Kitchen (sink, side_upper, seat_1, seat_2, breakfast_rear): a red shirred valance with ballooned swags cabinet-to-cabinet, red panels tied back ~0.42 of the glass up, a white sheer to the stool (film 6902, 10448; Marina 889/1101/1104 s for the valance run). Back door: the board-like red panels and flat sheer removed from hifi_back_door.py, replaced by shirred sash curtains (film 6902, 6910). Materials: HDRP Lit Translucent (thin-object diffusion profile), sheers alpha-blended with a generated voile texture, no shadows, out of the bake",
+ "target": "House_WallGrid",
+ "premise": "The dining room's front French windows carry Marina's cream drapes and box-pleated valance with the film's white sheers behind them, and the kitchen's windows carry the film's red valance, red tie-back panels and white sheers",
+ "claim": {
+  "value": {
+   "dining_valance_y": [
+    2.1,
+    2.39
+   ],
+   "dining_valance_past_casing": 0.2,
+   "dining_tie_y": 0.92,
+   "kitchen_valance": "casing-to-cabinet, 0.25 m tall (to 1.5 cm under the ceiling)",
+   "depths_off_wall": {
+    "sheer": [
+     0.045,
+     0.075
+    ],
+    "panels_min": 0.093,
+    "valance_face": 0.2
+   }
+  },
+  "data": [
+   "marina-frame:1118",
+   "marina-frame:1122",
+   "marina-frame:1126",
+   "marina-frame:1128"
+  ],
+  "scale": [
+   "window-head-2.03:dining"
+  ],
+  "upstream": [
+   "window-head-2.03:dining"
+  ],
+  "how": "pixel ratios on frame 1128 (960 px): valance top/bottom, tie height and drape width against the glass head (2.03, assumed in measurements/windows/ground.json) and the floor; kitchen positions from the spec windows and spec/dressing/kitchen.json cabinets",
+  "applies_to": [
+   "dining_room",
+   "kitchen"
+  ],
+  "measured_in": [
+   "dining_room"
+  ],
+  "assumed": {
+   "kitchen": "DEVIATIONS 41",
+   "dining_room": "DEVIATIONS 41"
+  },
+  "alternatives": [
+   "no treatments (current: bare glass; the back door's board panels)",
+   "Marina's dressing only (no sheers; cream panels in the kitchen)",
+   "the film's dressing where the film shows it, Marina's run and heights (built)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "dining: side panels tied back, valance over",
+     "observed_in": [
+      "marina-frame:1124",
+      "marina-frame:1128"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "dining: sheers drawn across the French windows",
+     "observed_in": [
+      "film:4382",
+      "film:4378"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "kitchen sink-wall and end-wall windows: red valance, red tie-back panels, white sheer",
+     "observed_in": [
+      "film:6902",
+      "film:10448",
+      "film:1074",
+      "film:1076"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "breakfast window: red ruffled valance, red tie-back panels, white sheer",
+     "observed_in": [
+      "film:1060",
+      "film:1062"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "seat windows: valance cabinet-to-cabinet and tied-back side panels",
+     "observed_in": [
+      "marina-frame:889",
+      "marina-frame:893"
+     ],
+     "extrapolated": false
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-16",
+   "what": "front door sidelight sheers as flat/faceted quads (hifi_door.py)",
+   "outcome": "failed",
+   "note": "user: 'the sheer looks terrible; figure out how to do it properly and realistically or don't do it at all' (DEVIATIONS 41)"
+  },
+  {
+   "date": "2026-09",
+   "what": "SurveyBuilder.AddFilmSheers: 16 folded single-surface sections in IntactHouseReference",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 4382 (the front from the street): white sheers drawn across both ground-floor French window pairs, split at the meeting stiles",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:4382"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "Film 6902 / 10448 / 6910: kitchen windows with a red ruffled valance, red tie-back panels and a white sheer; the back door with shirred white sash sheer and straight red panels on rods",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:6902",
+    "film:10448",
+    "film:6910"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "Ratio check: dining valance run / opening width 1.78 in frame 1128 vs built (0.75 + 0.54) / 0.75 = 1.72",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "marina-frame:1128"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "Marina shows clear glass in the dining windows and cream (not red) kitchen panels with no sheers",
+   "agrees": false,
+   "type": "topological",
+   "data": [
+    "marina-frame:1128",
+    "marina-frame:1101"
+   ],
+   "scale": [
+    "none"
+   ],
+   "disposition": "the film governs what the windows show (memory: exterior = film; kitchen built to the film's look); logged DEVIATIONS 41"
+  },
+  {
+   "what": "Seat windows: the film never shows them (frames searched 560-1400, 6902-6910, 9812, 10448); Marina 889/893 show a red valance with CREAM panels and no sheer. Built with the film's red panels and sheer like the other four kitchen windows",
+   "agrees": false,
+   "type": "topological",
+   "data": [
+    "marina-frame:889",
+    "marina-frame:893"
+   ],
+   "scale": [
+    "none"
+   ],
+   "disposition": "finish follows the film's kitchen (red, sheer); logged DEVIATIONS 41; revisit if a film frame of the seat wall turns up"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/sheers/before-room.png",
+   "spec/captures/views/sheers/before-window.png",
+   "spec/captures/views/sheers/before-folds.png",
+   "spec/captures/views/sheers/before-outside.png",
+   "spec/captures/views/sheers/before-k-film6902.png",
+   "spec/captures/views/sheers/before-k-backdoor.png",
+   "spec/captures/views/sheers/before-k-seat-wall.png",
+   "spec/captures/views/sheers/before-k-sink-wall.png",
+   "spec/captures/views/sheers/before-k-breakfast.png"
+  ],
+  "after": [
+   "spec/captures/views/sheers/after-room.png",
+   "spec/captures/views/sheers/after-window.png",
+   "spec/captures/views/sheers/after-folds.png",
+   "spec/captures/views/sheers/after-outside.png",
+   "spec/captures/views/sheers/after-k-film6902.png",
+   "spec/captures/views/sheers/after-k-backdoor.png",
+   "spec/captures/views/sheers/after-k-seat-wall.png",
+   "spec/captures/views/sheers/after-k-sink-wall.png",
+   "spec/captures/views/sheers/after-k-breakfast.png"
+  ],
+  "note": "batch renders from the scratch copy (views/sheers.json day; sheers-night.json with -night -> night-*). 'before' hides Upstairs/Sheers_HiFi in the same build, so the back door's old board curtains are not in it. Lighting and translucency must be judged live"
+ },
+ "user_walk": "pending"
+}

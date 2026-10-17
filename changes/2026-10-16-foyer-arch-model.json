@@ -1,0 +1,138 @@
+{
+ "gate": 7,
+ "change": "The foyer's segmental arch to the rear passage drawn as a generated model through the artist pipeline (tools/house/hifi_foyer_arch.py -> Assets/Models/Foyer/FoyerArch.glb + Assets/Textures/Generated/FoyerArch, helpers tools/house/hifi_pipeline.py, gate tools/house/model_quality.py): a true segmental soffit (24 facets, chord error 0.47 mm) with a 4 mm round on the passage edge, the spandrels' papered faces (the room's own wallpaper, triplanar, given by SpecGreybox), and a 44 x 20 mm cased moulding on the foyer face (leg to the floor on the picture-wall jamb; on the stair jamb the arc's casing dies into the stair's flank), baked normal/AO/edge maps on Poly Haven white_plaster_02 tinted to the house's ceiling and trim paints. The 12 stepped slices (SpecGreybox.ArchTop) are no longer drawn; their colliders stay for walking. Placed by the openings loop from the cut's own record (SpecGreybox.Arch.cs ArchModel); the build's Arch fit line proves every joint is on the cut",
+ "target": "House_WallGrid",
+ "premise": "The arch's opening (spec/geometry.json ground opening foyer/rear_passage: x 2.845-2.985, z 8.855-10.23, springline 1.91, crown 2.17) is right as built (DEVIATIONS 35); this change only replaces how its top is drawn and adds the casing the film shows on the foyer face",
+ "claim": {
+  "value": {
+   "casing_width_m": 0.044,
+   "casing_proud_m": 0.02,
+   "soffit_facets": 24,
+   "chord_error_mm": 0.47
+  },
+  "data": [
+   "film:2677",
+   "film:3888"
+  ],
+  "scale": [
+   "refcam:film-2677",
+   "refcam:film-3888fc"
+  ],
+  "upstream": [
+   "foyer_cameras:flight1-nosings"
+  ],
+  "how": "Casing width: the build's own arch outline projected through the solved film cameras (tools/house/refcam.py proj) with offset outlines at 3 and 6 cm; the film's white band on the right leg reads 4.8 cm (2677) and 3.8 cm (3888); built 4.4 cm. Proud: authored 2 cm (SpecGreybox CasingProud; the film shows a cast shadow beside the leg, so it stands well off the paper). Which jambs carry a leg: tools/house/hifi_foyer_arch.py free() on spec/geometry.json walls and spec/house_spec.json stair boxes",
+  "applies_to": [
+   "foyer",
+   "rear_passage"
+  ],
+  "measured_in": [
+   "foyer"
+  ],
+  "assumed": {
+   "rear_passage": "DEVIATIONS 65"
+  },
+  "alternatives": [
+   "stepped slices, no casing (current)",
+   "smooth arch, cased on the foyer face only, the arc's casing dying into the stair (built)",
+   "cased on both faces (no free face on the passage side: its side walls continue the reveal)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "a narrow white band edging the arch on the foyer face, down the picture-wall jamb and round the arc (its cast shadow follows the curve)",
+     "observed_in": [
+      "film:2677",
+      "film:3888"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "the arc's band continues over the stair half (visible above the tree)",
+     "observed_in": [
+      "film:2677",
+      "film:3888"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "no leg on the stair jamb: the arch springs off the stair's end with no pier (DEVIATIONS 35), so the band dies into the stair's flank",
+     "observed_in": [
+      "marina-frame:195",
+      "marina-frame:1070.5"
+     ],
+     "extrapolated": false
+    }
+   ]
+  },
+  "surface": "ceiling-plane",
+  "surface_note": "not a ceiling: the arch soffit and its casing only (the crown 2.17 is unchanged, DEVIATIONS 35)"
+ },
+ "history": [
+  {
+   "date": "2026-10-15",
+   "what": "segmental arch as 12 stepped slices (SpecGreybox.ArchTop), no casing drawn",
+   "outcome": "superseded (user Oct 16: 'the arch for example is jagged')"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Build: Arch fit (soffit springings, springline, crown, both papered faces and the casing's back and leg on the cut's numbers within 1 mm; rays from the opening meet the jamb walls where the soffit springs)",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "unity:build"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "model_quality.py on FoyerArch.glb: 0 problems (facets, bevels, maps, texel density 1024 px/m, albedo within 0.06 of the measured paints, LOD reason); the stepped-slice arch in its self-test fails on unbevelled edges, missing maps and LODs",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "tools:model_quality"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "Film 2677/3888 (cameras solved from flight 1's nosings): the band's width 3.8-4.8 cm against offset outlines of the built arch (consistency only: the same frames and cameras; there is no independent ruler for the casing's width: Marina has no arch here)",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "film:2677",
+    "film:3888"
+   ],
+   "scale": [
+    "refcam:film-2677"
+   ],
+   "upstream": [
+    "foyer_cameras:flight1-nosings"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/arch/before-close.png",
+   "spec/captures/views/arch/before-soffit.png",
+   "spec/captures/views/arch/before-foyer.png",
+   "spec/captures/views/arch/before-film-2677.png",
+   "spec/captures/views/arch/before-night-close.png",
+   "spec/captures/views/arch/before-night-foyer.png"
+  ],
+  "after": [
+   "spec/captures/views/arch/after-close.png",
+   "spec/captures/views/arch/after-soffit.png",
+   "spec/captures/views/arch/after-foyer.png",
+   "spec/captures/views/arch/after-film-2677.png",
+   "spec/captures/views/arch/after-night-close.png",
+   "spec/captures/views/arch/after-night-foyer.png"
+  ],
+  "note": "batch renders from the scratch copy (spec/captures/views/arch-{before,after}[-night].json); lighting to be judged live"
+ },
+ "user_walk": "pending"
+}

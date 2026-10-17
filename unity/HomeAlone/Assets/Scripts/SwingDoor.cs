@@ -17,7 +17,10 @@ public class SwingDoor : MonoBehaviour
         bool pushing = p.z > -0.1f && p.z < width + 0.1f && Mathf.Abs(p.x) < reach;
         float target = pushing ? -Mathf.Sign(p.x) * openAngle : 0f;
         float speed = Mathf.Abs(target) > Mathf.Abs(angle) ? openSpeed : closeSpeed;
+        float was = angle;
         angle = Mathf.MoveTowards(angle, target, speed * Time.deltaTime);
         leaf.localRotation = Quaternion.Euler(0f, angle, 0f);
+        // the lamps' cached shadow maps redraw while the leaf swings (ShadowRefresh)
+        if (angle != was) ShadowRefresh.Near(new Bounds(transform.position + Vector3.up * 1.1f, new Vector3(2f * width, 2.2f, 2f * width)));
     }
 }

@@ -1,0 +1,58 @@
+[
+ {
+  "name": "french/after-dining",
+  "pos": [
+   5.2,
+   -1.576,
+   -4.2
+  ],
+  "look_at": [
+   7.8,
+   -1.826,
+   -7.7
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "french/after-sunroom",
+  "pos": [
+   7.0,
+   -1.576,
+   -6.6
+  ],
+  "look_at": [
+   7.7,
+   -1.926,
+   -3.0
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "french/after-living",
+  "pos": [
+   6.0,
+   -1.576,
+   -13.0
+  ],
+  "look_at": [
+   7.8,
+   -1.826,
+   -16.14
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "french/after-foyer",
+  "pos": [
+   4.2,
+   -1.576,
+   -9.6
+  ],
+  "look_at": [
+   7.8,
+   -1.826,
+   -6.0
+  ],
+  "vfov": 60
+ }
+]

@@ -291,7 +291,10 @@ def service_stair_spec(final, o):
     xs_ = XL - (ks - 1) * g                                 # its front edge: an invisible stop across the flight
     box("service_stop", "stop", xs_ - 0.02, xs_, (NS + NW + ks - 1) * r, TOP, OZ0, z1)
     w1 = np.mean([piv, edge(ang[0]), edge(ang[1])], axis=0)   # walk test: up the straight steps onto the first winder (above it an
-    path = [[(XL + XN) / 2, 0.0, z0 - NS * g - 0.7], [w1[0], (NS + 1) * r, w1[1]]]   # adult meets the 2.44 m ceiling from winder 2 on)
+    # the start stands past the breakfast table's end (spec/dressing/kitchen.json, Oct 16): the table's far edge is 0.54 m from the
+    # first riser, less than the adult capsule, so the walk now comes in from the newel side (it started under the table at x 2.06)
+    # then to a floor point just clear of the first riser (adult capsule 0.275 m), from which the climb runs as before
+    path = [[XN - 0.08, 0.0, z0 - NS * g - 0.66], [XN - 0.08, 0.0, z0 - NS * g - 0.277], [w1[0], (NS + 1) * r, w1[1]]]   # adult meets the 2.44 m ceiling from winder 2 on)
     return {"rise_m": r, "going_m": g, "risers": NS + NW + k, "boxes": B, "walk_path": [[rd(v) for v in q] for q in path], "ceiling_openings": [OPEN],
             "authored": f"measured: {NS} straight steps + {NW} winders around the tall post (x {XL}), {k} flight steps (going {g}, rise {r}) to x {xt:.2f}; straight steps' fronts square (film: rounded)"}
 
@@ -424,7 +427,8 @@ def windows_spec(spaces):
         assert lo <= c - w["width_m"] / 2 and c + w["width_m"] / 2 <= hi, f"{w['room']}/{w['name']}: window runs past its wall"
         out.append({"room": w["room"], "name": w["name"], "wall_axis": "x" if ax == 0 else "z", "wall_coord_spec": round(float(coord), 3),
                     "span_spec": [round(float(c - w["width_m"] / 2), 3), round(float(c + w["width_m"] / 2), 3)],
-                    "sill_m": w["sill_m"], "head_m": w["head_m"], **({"bare": True} if w.get("bare") else {})})
+                    "sill_m": w["sill_m"], "head_m": w["head_m"], **({"bare": True} if w.get("bare") else {}),
+                    **({"model": w["model"]} if w.get("model") else {})})   # model: the frame, leaf and glass are a generated model
     return out
 
 

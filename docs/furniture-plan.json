@@ -1,0 +1,1947 @@
+{
+ "generated": "2026-10-16",
+ "description": "Costed furniture plan. Start = free (CC0/CC-BY), owned packs, or build-to-measurement. Upgrade = optional paid, higher fidelity. Companion to docs/furniture-sourcing.md.",
+ "licence_rules": {
+  "commit_ok": "CC0 and CC-BY (add ATTRIBUTION entry) and our own builds only",
+  "gitignore": "owned Asset Store packs, CGTrader Royalty Free (no AI), Sketchfab Standard/Free Standard, TurboSquid Standard",
+  "never": "editorial, CC-BY-NC, CC-BY-NC-SA"
+ },
+ "fidelity_scale": "1 = wrong type, 2 = right type wrong style, 3 = right style with visible differences, 4 = close (retint/rescale), 5 = matches the film",
+ "totals": {
+  "start_plan": {
+   "usd": 0,
+   "note": "every item has a free, owned or build option; nothing must be bought",
+   "unverified_prices": 0
+  },
+  "hero_upgrades_only": {
+   "usd": 81.99,
+   "paid_items": 5,
+   "unverified_prices": 0,
+   "includes": "hero items whose worth_it is yes: poinsettias (F1, also covers H1), ficus, Baldwin piano, Christmas tree, Chippendale chairs (also covers F6)"
+  },
+  "all_worth_it_upgrades": {
+   "usd": 81.99,
+   "paid_items": 5,
+   "unverified_prices": 0
+  },
+  "everything_upgraded": {
+   "usd": 178.44,
+   "paid_items": 14,
+   "unverified_prices": 0,
+   "note": "every listed paid upgrade on in-plan items, even ones judged not worth it (excludes the L1G grand and editorial items); TurboSquid china cabinet price unknown, not counted"
+  }
+ },
+ "items": [
+  {
+   "id": "F1",
+   "room": "foyer",
+   "item": "Red poinsettias in gold-foil pots (stair treads, landing, also upstairs hall H1)",
+   "tier": "hero",
+   "qty": 8,
+   "seen_in": "film 3225, 11966, 12133, 1333, 3900",
+   "start": {
+    "name": "Poinsettia (gggp999) + procedural gold-foil pot",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/de8ba50efa3f4dc8b319758e26217ea7",
+    "note": "27k faces, no pot: generate a crinkled foil cone"
+   },
+   "upgrade": {
+    "name": "Poinsettia Gift Plant (3dia)",
+    "url": "https://www.cgtrader.com/3d-models/plant/flower/poinsettia-gift-plant-21cb2b31-91f8-481b-b9dc-e82ca532d633",
+    "source": "CGTrader",
+    "price": 5.0,
+    "price_verified": true,
+    "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+    "fidelity": 4,
+    "worth_it": "yes: hero, cheap; foil-wrapped pot, retint red foil to gold",
+    "preview": "https://media.cgtrader.com/variants/kdh82EP9DBmiNVkZZBQmBVgM/a26e47dab5f2d22c43d6c5ce4b4b46ecc30c70918878397cba1a10c1e35d7bfc/Preview1.jpg"
+   },
+   "other_options": [
+    {
+     "name": "Poinsettia 3D Photoscan",
+     "source": "Sketchfab",
+     "licence": "CC-BY",
+     "fidelity": 3,
+     "commit_ok": true,
+     "cost": 0,
+     "url": "https://sketchfab.com/3d-models/a473413e1b764f678d908fa60c3aecf2",
+     "note": "116k faces, scanned"
+    }
+   ]
+  },
+  {
+   "id": "F2",
+   "room": "foyer",
+   "item": "White poinsettias in gold pots on the front-door pedestals (+1 living room)",
+   "tier": "supporting",
+   "qty": 3,
+   "seen_in": "film 10248, 9358, 5650",
+   "start": {
+    "name": "F1 model with white bract texture",
+    "source": "derived from F1",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0
+   },
+   "upgrade": {
+    "name": "Poinsettia plant 06 / 07 (white)",
+    "url": "https://www.cgtrader.com/3d-models/plant/bush/poinsettia-plant-06",
+    "source": "CGTrader",
+    "price": 10.0,
+    "price_verified": true,
+    "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+    "fidelity": 3,
+    "worth_it": "no: 3ds Max V-Ray/Corona only, no pot; recolour F1 instead"
+   }
+  },
+  {
+   "id": "F3",
+   "room": "foyer",
+   "item": "Pedestal plant stands",
+   "tier": "supporting",
+   "qty": 2,
+   "seen_in": "film 10248, 9358",
+   "start": {
+    "name": "side_table_tall_01",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/side_table_tall_01"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "F4",
+   "room": "foyer",
+   "item": "Weeping fig (ficus) tree by the stair, brass pot",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "film 2677, 1690, 3888; Marina M01, M04",
+   "start": {
+    "name": "potted_plant_01 (scale up, swap urn for brass)",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/potted_plant_01"
+   },
+   "upgrade": {
+    "name": "Indoor Decorative Ficus Tree",
+    "url": "https://www.cgtrader.com/3d-models/plant/pot-plant/indoor-decorative-ficus-tree",
+    "source": "CGTrader",
+    "price": 10.0,
+    "price_verified": true,
+    "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+    "fidelity": 4,
+    "worth_it": "yes: hero, visible in most stair shots"
+   }
+  },
+  {
+   "id": "F5",
+   "room": "foyer",
+   "item": "Hall bench (Marina: green velvet, scrolled arms)",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina M01; film unseen",
+   "start": {
+    "name": "Small upholstered bench with bolsters (recolour green)",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/fe99fcfb6bbb45649e9e38de24b23109"
+   },
+   "upgrade": null,
+   "other_options": [
+    {
+     "name": "build to measurement (Blender generator)",
+     "source": "build",
+     "licence": "built",
+     "fidelity": 3,
+     "commit_ok": true,
+     "cost": 0,
+     "note": "box bench with scrolled arms at 1.25 x 0.48 x 0.45 m"
+    }
+   ]
+  },
+  {
+   "id": "F6",
+   "room": "foyer",
+   "item": "Side chairs flanking the console (dark wood, red seat)",
+   "tier": "supporting",
+   "qty": 2,
+   "seen_in": "film 1690; Marina M20, M29",
+   "start": {
+    "name": "CHAIR_01",
+    "source": "owned: Classic Wooden Furniture Pack (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 2,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": {
+    "name": "same model as D2 (one licence covers both rooms)",
+    "url": "https://www.cgtrader.com/3d-models/furniture/chair/chippendale-chair",
+    "source": "CGTrader",
+    "price": 0,
+    "price_verified": true,
+    "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+    "fidelity": 4,
+    "worth_it": "yes if D2 is bought (no extra cost)"
+   }
+  },
+  {
+   "id": "F7",
+   "room": "foyer",
+   "item": "Console / demilune under the mirror",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina M20, M29",
+   "start": {
+    "name": "SIDE_TABLE_01 (same as landing)",
+    "source": "owned: Classic Wooden Furniture Pack (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 4,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": null
+  },
+  {
+   "id": "F8",
+   "room": "foyer",
+   "item": "Oval gilt mirror over the console",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina M20, M29",
+   "start": {
+    "name": "Echo Wall Mirror - salon de l'Echo (decimate)",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/974afa20c3cc4817867ec987b0204245",
+    "note": "246k faces scan: decimate to ~10k"
+   },
+   "upgrade": {
+    "name": "Kirkland Gold Oval Baroque Wall Mirror",
+    "url": "https://www.cgtrader.com/3d-models/furniture/other/kirkland-gold-oval-baroque-wall-mirror",
+    "source": "CGTrader",
+    "price": 7.0,
+    "price_verified": true,
+    "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+    "fidelity": 4,
+    "worth_it": "no: the free scan is as close"
+   }
+  },
+  {
+   "id": "F9",
+   "room": "foyer",
+   "item": "Oriental rugs (front-door rug, runners)",
+   "tier": "supporting",
+   "qty": 3,
+   "seen_in": "film 2677, 1690, 3888",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "thin box + rug texture; texture from the CC-BY scanned rug below"
+   },
+   "upgrade": null,
+   "other_options": [
+    {
+     "name": "Orientteppich Agra Taebriz (texture source)",
+     "source": "Sketchfab",
+     "licence": "CC-BY",
+     "fidelity": 3,
+     "commit_ok": true,
+     "cost": 0,
+     "url": "https://sketchfab.com/3d-models/75e3aa2070f14720ad768cff77efa919"
+    }
+   ]
+  },
+  {
+   "id": "F10",
+   "room": "foyer",
+   "item": "Framed pictures (stair gallery, botanical prints, landing painting)",
+   "tier": "detail",
+   "qty": 12,
+   "seen_in": "film 10248, 3225, 2677",
+   "start": {
+    "name": "fancy_picture_frame_01/02, hanging_picture_frame_01-03 + public-domain art",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/fancy_picture_frame_01"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "F11",
+   "room": "foyer",
+   "item": "Brass two-arm candle wall sconces",
+   "tier": "detail",
+   "qty": 4,
+   "seen_in": "film 10248, 9358",
+   "start": {
+    "name": "Wall Lamp - 2048px (single arm, shade)",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/487c69d1748c46d2b3cc433fe6885a5e",
+    "note": "one arm; the film's have two"
+   },
+   "upgrade": null,
+   "other_options": [
+    {
+     "name": "Vintage Brass Wall Light (3-arm candle, 254k faces)",
+     "source": "Sketchfab",
+     "licence": "CC-BY",
+     "fidelity": 3,
+     "commit_ok": true,
+     "cost": 0,
+     "url": "https://sketchfab.com/3d-models/735305521f404fcba27bc66d9675ca3e"
+    }
+   ]
+  },
+  {
+   "id": "L1",
+   "room": "living_room",
+   "item": "Piano: mahogany CONSOLE UPRIGHT + cabriole-leg bench (film); fallboard reads 'Baldwin'",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "film 5628, 5640, 5650",
+   "start": {
+    "name": "Brown Cherry Wood Upright Piano",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 2,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/ae0529d9da834820b8a9c30ec0b6228f",
+    "note": "1.8k faces, plain upright, no bench; placeholder only"
+   },
+   "upgrade": {
+    "name": "Baldwin Upright Piano French Cherry (kghannibal)",
+    "url": "https://www.cgtrader.com/3d-models/furniture/other/baldwin-upright-piano-french-cherry",
+    "source": "CGTrader",
+    "price": 25.0,
+    "price_verified": true,
+    "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+    "fidelity": 5,
+    "worth_it": "yes: hero, and the closest match found: Baldwin, dark cherry/mahogany, cabriole legs, cabriole bench, scrolled music desk (desk is more ornate than the film's); MAX/FBX/OBJ",
+    "preview": "https://media.cgtrader.com/variants/yic6VhuXXFAYbYaPkUvp5ajP/a26e47dab5f2d22c43d6c5ce4b4b46ecc30c70918878397cba1a10c1e35d7bfc/render.jpg"
+   },
+   "other_options": [
+    {
+     "name": "Baldwin Console Upright Piano (kghannibal)",
+     "url": "https://www.cgtrader.com/3d-models/furniture/other/baldwin-console-upright-piano",
+     "source": "CGTrader",
+     "price": 25.0,
+     "price_verified": true,
+     "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+     "fidelity": 3,
+     "worth_it": "second choice: Baldwin console, but straight turned legs, lighter walnut, fretwork desk",
+     "preview": "https://media.cgtrader.com/variants/CCCe8gkiJpPBW13cyPrSU9ot/a26e47dab5f2d22c43d6c5ce4b4b46ecc30c70918878397cba1a10c1e35d7bfc/render.jpg"
+    },
+    {
+     "name": "Kimball Artist Console Upright Piano 80 Antique Walnut",
+     "url": "https://www.cgtrader.com/3d-models/furniture/other/kimball-artist-console-upright-piano-80-antique-walnut",
+     "source": "CGTrader",
+     "price": 25.0,
+     "price_verified": true,
+     "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+     "fidelity": 3,
+     "worth_it": "previews show: console upright with scrolled cheeks, lattice fretwork panel above the keys, straight turned/fluted legs on casters, upholstered bench on turned legs, walnut. Right height and cheeks, WRONG legs (film: cabriole). Not recommended over the Baldwin French Cherry",
+     "preview": "https://img-new.cgtrader.com/items/3437561/0ca993f49b/large/kimball-artist-console-upright-piano-80-antique-walnut-3d-model-0ca993f49b.jpg"
+    },
+    {
+     "name": "Upright Piano (3D_Boom_dp_ua)",
+     "url": "https://sketchfab.com/3d-models/131e4f36f3044612b24dd68015f28156",
+     "source": "Sketchfab Store",
+     "price": 25.0,
+     "price_verified": true,
+     "licence": "Sketchfab Standard: use OK, no redistribution, gitignore",
+     "fidelity": 2,
+     "worth_it": "no: ornate saloon upright"
+    }
+   ],
+   "note": "CONFLICT: film = console upright (5628/5640/5650); Marina = grand. Film-first: upright. Log in DEVIATIONS when placed. Grand options are L1G."
+  },
+  {
+   "id": "L1G",
+   "room": "living_room",
+   "item": "(Alternative, Marina only) grand piano",
+   "tier": "hero",
+   "qty": 0,
+   "seen_in": "Marina M07, M25",
+   "start": {
+    "name": "Grand Piano (Raphael.Baget)",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/77ef2018382f4165a65372e594ed538e",
+    "note": "23k faces, black; owned Fadnn SM_Piano_01 is also a grand but 3.31 m long (needs ~0.6x scale)"
+   },
+   "upgrade": {
+    "name": "Grand Piano (Highpoly PBR)",
+    "url": "https://www.cgtrader.com/3d-models/furniture/other/grand-piano-deff8377-828c-436f-aae3-320456c631b3",
+    "source": "CGTrader",
+    "price": 12.99,
+    "price_verified": true,
+    "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+    "fidelity": 3,
+    "worth_it": "no: only if the user overrides the film; free CC-BY grand is adequate",
+    "preview": "https://www.cgtrader.com/3d-models/furniture/other/grand-piano-deff8377-828c-436f-aae3-320456c631b3 (preview not captured)"
+   },
+   "note": "Not recommended: the film shows an upright. qty 0 = not in the plan unless chosen."
+  },
+  {
+   "id": "L2",
+   "room": "living_room",
+   "item": "Brass bar-shade piano lamp on the piano top",
+   "tier": "detail",
+   "qty": 1,
+   "seen_in": "film 5650",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "bar shade on a curved arm; ~0.35 m"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "L3",
+   "room": "living_room",
+   "item": "Christmas tree (tall fir, multicolour C7 bulbs, tinsel, ornaments, gifts)",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "film 10600; Marina M06",
+   "start": {
+    "name": "Realistic fir trees pack (LODs, game-ready) + generated ornaments/emissive bulbs/tinsel",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/f58e8b6d733e4b0586e5b7db847b89e7"
+   },
+   "upgrade": {
+    "name": "Christmas Tree, Wreath, Adjustable Garland and Bubble Lights (AlterEgos)",
+    "url": "https://assetstore.unity.com/packages/3d/vegetation/trees/christmas-tree-full-size-with-ornaments-and-lights-187396",
+    "source": "Unity Asset Store",
+    "price": 16.99,
+    "price_verified": true,
+    "licence": "Asset Store EULA: use OK, no redistribution, gitignore",
+    "fidelity": 4,
+    "worth_it": "yes: hero; Built-in only, convert materials to HDRP/Lit"
+   },
+   "other_options": [
+    {
+     "name": "Christmas tree (archviz)",
+     "url": "https://www.cgtrader.com/3d-models/interior/other/christmas-tree-273bdf2a-0a70-4638-b815-af4b57deaf03",
+     "source": "CGTrader",
+     "price": 11.0,
+     "price_verified": true,
+     "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+     "fidelity": 3,
+     "worth_it": "heavy archviz, FBX/Max"
+    }
+   ]
+  },
+  {
+   "id": "L4",
+   "room": "living_room",
+   "item": "Red wingback armchair (Marina)",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina M07; film unseen",
+   "start": {
+    "name": "Brown Wingback Chair (recolour red)",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/ccd0712b0d76408fbc95952cabf067c5"
+   },
+   "upgrade": {
+    "name": "Queen Anne Wingback Armchair",
+    "url": "https://www.cgtrader.com/3d-models/furniture/chair/queen-anne-wingback-armchair",
+    "source": "CGTrader",
+    "price": 2.0,
+    "price_verified": true,
+    "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+    "fidelity": 3,
+    "worth_it": "maybe: cheap but OBJ/MDL only; not clearly better"
+   }
+  },
+  {
+   "id": "L5",
+   "room": "living_room",
+   "item": "Green velvet sofa",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "film 5750 (room inferred)",
+   "start": {
+    "name": "sofa_03 (camelback; re-skin green velvet)",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/sofa_03"
+   },
+   "upgrade": {
+    "name": "Chesterfield Sofa - 6 versions",
+    "url": "https://www.cgtrader.com/3d-models/furniture/sofa/chesterfield-couch-6-versions",
+    "source": "CGTrader",
+    "price": 20.0,
+    "price_verified": true,
+    "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+    "fidelity": 3,
+    "worth_it": "no: not closer than the CC0 camelback"
+   }
+  },
+  {
+   "id": "L6",
+   "room": "living_room",
+   "item": "Brass fireplace screen + tools",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "film 10600 (partial); Marina M06",
+   "start": {
+    "name": "Fireplace Screen (retint brass)",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/f6612d6deeb6498aaa95b07bfcc94987"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "L7",
+   "room": "living_room",
+   "item": "Mantel garniture: stockings, wreath, clock, candles",
+   "tier": "detail",
+   "qty": 1,
+   "seen_in": "Marina M06",
+   "start": {
+    "name": "mantel_clock_01 + brass_candleholders; stockings generated",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/mantel_clock_01"
+   },
+   "upgrade": {
+    "name": "Christmas Decor Pack (Jesse Mario)",
+    "url": "https://assetstore.unity.com/packages/3d/props/christmas-decor-pack-291100",
+    "source": "Unity Asset Store",
+    "price": 9.99,
+    "price_verified": true,
+    "licence": "Asset Store EULA: use OK, no redistribution, gitignore",
+    "fidelity": 3,
+    "worth_it": "no: contents unlisted; free is fine for detail"
+   }
+  },
+  {
+   "id": "L8",
+   "room": "living_room",
+   "item": "Sofa table / console with shaded lamp",
+   "tier": "supporting",
+   "qty": 2,
+   "seen_in": "film 5650; Marina M06",
+   "start": {
+    "name": "ClassicConsole_01 + owned SM_Lamp_01",
+    "source": "Poly Haven + owned: Fadnn Vintage Interior (Asset Store EULA, gitignored)",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/ClassicConsole_01"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "L9",
+   "room": "living_room",
+   "item": "Wall brackets with porcelain figurines",
+   "tier": "detail",
+   "qty": 2,
+   "seen_in": "film 5650",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 2,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "gilt bracket + simple figurine; or skip"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "L10",
+   "room": "living_room",
+   "item": "Nutcrackers",
+   "tier": "detail",
+   "qty": 3,
+   "seen_in": "film 5650",
+   "start": {
+    "name": "Nutcracker (julialemke)",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/bb182cd70cd244b291ba0e3020f132ce"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "L11",
+   "room": "living_room",
+   "item": "Toy train set around the tree",
+   "tier": "detail",
+   "qty": 1,
+   "seen_in": "film 5650",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 2,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "oval track + simple loco; low priority"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "L12",
+   "room": "living_room",
+   "item": "Green damask drapes with tie-backs",
+   "tier": "supporting",
+   "qty": 4,
+   "seen_in": "film 5650",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "as the current sheers generator"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "L13",
+   "room": "living_room",
+   "item": "Large red oriental rug",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "film 10600; Marina M06",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "plane + rug texture (see F9)"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "N1",
+   "room": "den",
+   "item": "Built-in bookcase / TV wall + books",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina M08",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "joinery generator; fill with Poly Haven book sets (CC0) and owned Fadnn books"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "N2",
+   "room": "den",
+   "item": "Late-80s CRT television",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina M08",
+   "start": {
+    "name": "television_02",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 5,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/television_02"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "N3",
+   "room": "den",
+   "item": "Sofa, red/burgundy rolled arm (Marina)",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "Marina M26",
+   "start": {
+    "name": "sofa_02 (leather Chesterfield, recolour)",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/sofa_02"
+   },
+   "upgrade": {
+    "name": "Tufted Chesterfield Sofa Pack (18 variants, glTF/FBX, PBR, low-poly)",
+    "url": "https://www.cgtrader.com/3d-models/furniture/chair/tufted-chesterfield-sofa-pack",
+    "source": "CGTrader",
+    "price": 17.99,
+    "price_verified": true,
+    "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+    "fidelity": 4,
+    "worth_it": "maybe: den is Marina-only; also covers N4"
+   }
+  },
+  {
+   "id": "N4",
+   "room": "den",
+   "item": "Brown leather club armchair",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina M27",
+   "start": {
+    "name": "Old Armchair",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 2,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/c20f084f29bd440197a18b4c750f69eb"
+   },
+   "upgrade": {
+    "name": "covered by N3 pack",
+    "url": "https://www.cgtrader.com/3d-models/furniture/chair/tufted-chesterfield-sofa-pack",
+    "source": "CGTrader",
+    "price": 0,
+    "price_verified": true,
+    "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+    "fidelity": 4,
+    "worth_it": "only with N3"
+   }
+  },
+  {
+   "id": "N5",
+   "room": "den",
+   "item": "Round coffee table + brass floor lamp",
+   "tier": "supporting",
+   "qty": 2,
+   "seen_in": "Marina M26",
+   "start": {
+    "name": "round_wooden_table_01 + Classic Brass Floor Lamp (CC-BY)",
+    "source": "Poly Haven + Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/round_wooden_table_01"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "N6",
+   "room": "den",
+   "item": "Window desk, chair, green banker's lamp",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina M09",
+   "start": {
+    "name": "SM_Desk_01 + SM_Chair_01; Desk lamp (7ASSAN, CC-BY)",
+    "source": "owned: Fadnn Vintage Interior (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 4,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": null
+  },
+  {
+   "id": "D1",
+   "room": "dining_room",
+   "item": "Dining table (under a white cloth in the film)",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "film 250; Marina M02",
+   "start": {
+    "name": "DINING_TABLE_01 (2.19 x 1.02 x 0.74) + generated tablecloth",
+    "source": "owned: Classic Wooden Furniture Pack (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 4,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": null,
+   "note": "No paid upgrade recommended: the film hides the table under a cloth. Sketchfab 'Large Antique Dining Tables' ($5) is rustic, wrong."
+  },
+  {
+   "id": "D2",
+   "room": "dining_room",
+   "item": "Chippendale-style dining chairs (dark mahogany, pierced splat)",
+   "tier": "hero",
+   "qty": 8,
+   "seen_in": "film 250; Marina M02, M24",
+   "start": {
+    "name": "CHAIR_01 (stand-in)",
+    "source": "owned: Classic Wooden Furniture Pack (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 2,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": {
+    "name": "CHIPPENDALE CHAIR",
+    "url": "https://www.cgtrader.com/3d-models/furniture/chair/chippendale-chair",
+    "source": "CGTrader",
+    "price": 25.0,
+    "price_verified": true,
+    "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+    "fidelity": 4,
+    "worth_it": "yes: hero x8 (also F6); formats SKP/DAE/blend (no FBX): export via Blender"
+   },
+   "other_options": [
+    {
+     "name": "build to measurement (Blender generator)",
+     "source": "build",
+     "licence": "built",
+     "fidelity": 4,
+     "commit_ok": true,
+     "cost": 0,
+     "note": "one chair modelled to the film, instanced x10 (equal or better than any listing found)"
+    },
+    {
+     "name": "Victorian Chippendale Dinning Chair (InfuseStudio)",
+     "url": "https://sketchfab.com/3d-models/49a5ed3d03534fd4959111bcd6f97f3d",
+     "source": "Sketchfab Store",
+     "price": 3.99,
+     "price_verified": true,
+     "licence": "EDITORIAL: not usable in a game",
+     "fidelity": 0,
+     "worth_it": "NO: editorial licence"
+    }
+   ]
+  },
+  {
+   "id": "D3",
+   "room": "dining_room",
+   "item": "Crystal chandelier",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "film 250",
+   "start": {
+    "name": "Chandelier_03",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/Chandelier_03"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "D4",
+   "room": "dining_room",
+   "item": "Mahogany china cabinet, glazed upper, stemware",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "film 10550; Marina M03",
+   "start": {
+    "name": "vintage_cabinet_01 + generated glassware",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/vintage_cabinet_01"
+   },
+   "upgrade": {
+    "name": "Age China Cabinet",
+    "url": "https://sketchfab.com/3d-models/728ea2909b9f4dbdb7605ab19c9fe9a3",
+    "source": "Sketchfab Store",
+    "price": 3.99,
+    "price_verified": true,
+    "licence": "Sketchfab Standard: use OK, no redistribution, gitignore",
+    "fidelity": 3,
+    "worth_it": "no: not closer"
+   },
+   "other_options": [
+    {
+     "name": "China cabinet with dishware",
+     "url": "https://www.turbosquid.com/3d-models/3d-model-china-cabinet/423947",
+     "source": "TurboSquid",
+     "price": null,
+     "price_verified": false,
+     "licence": "TurboSquid Standard: gitignore",
+     "fidelity": 3,
+     "worth_it": "maybe: price not verified; Max only"
+    }
+   ]
+  },
+  {
+   "id": "D5",
+   "room": "dining_room",
+   "item": "Centrepiece + brass candlesticks",
+   "tier": "detail",
+   "qty": 1,
+   "seen_in": "Marina M02, M24",
+   "start": {
+    "name": "F1 poinsettia + brass_candleholders",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/brass_candleholders"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "D6",
+   "room": "dining_room",
+   "item": "Paintings in gilt frames",
+   "tier": "detail",
+   "qty": 3,
+   "seen_in": "film 250; Marina M02",
+   "start": {
+    "name": "fancy_picture_frame_01 + public-domain art",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/fancy_picture_frame_01"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "D7",
+   "room": "dining_room",
+   "item": "Sideboard / buffet (partial view only)",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina M24 (partial)",
+   "start": {
+    "name": "DRAWER_CAB_01",
+    "source": "owned: Classic Wooden Furniture Pack (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 2,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": null
+  },
+  {
+   "id": "K1",
+   "room": "kitchen",
+   "item": "Black refrigerator (1990)",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "film 1150; Marina M19",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "box with door seams and handles at ~0.91 x 0.75 x 1.75 m"
+   },
+   "upgrade": {
+    "name": "Zowwy's Kitchen Appliances",
+    "url": "https://assetstore.unity.com/packages/3d/props/furniture/zowwy-s-kitchen-appliances-212035",
+    "source": "Unity Asset Store",
+    "price": 15.99,
+    "price_verified": true,
+    "licence": "Asset Store EULA: use OK, no redistribution, gitignore",
+    "fidelity": 2,
+    "worth_it": "no: modern style"
+   }
+  },
+  {
+   "id": "K2",
+   "room": "kitchen",
+   "item": "Island stools (oak, round seat, splayed legs, foot ring)",
+   "tier": "supporting",
+   "qty": 8,
+   "seen_in": "film-island-detail, 2200",
+   "start": {
+    "name": "wooden_stool_01 (stretch to bar height)",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/wooden_stool_01"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "K3",
+   "room": "kitchen",
+   "item": "Hanging pot rack with red/black enamel pots",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "film-island-detail, 1150",
+   "start": {
+    "name": "Hanging Pot Rack + pot_enamel_01",
+    "source": "Sketchfab + Poly Haven",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/d5dd65f6e88442dca5b49229f724f6c0"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "K4",
+   "room": "breakfast",
+   "item": "Breakfast table",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "film 2528; Marina M23",
+   "start": {
+    "name": "BUILT (generated to measurement)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 5,
+    "commit_ok": true,
+    "cost": 0
+   },
+   "upgrade": null,
+   "note": "Done (coordinator, Oct 16)."
+  },
+  {
+   "id": "K5",
+   "room": "breakfast",
+   "item": "Breakfast chairs: light pine FIDDLEBACK (curved top rail, single vase splat, red floral cushions)",
+   "tier": "supporting",
+   "qty": 8,
+   "seen_in": "film 2528",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "one fiddleback chair + floral cushion, instanced x8; no listing found matches"
+   },
+   "upgrade": null,
+   "other_options": [
+    {
+     "name": "Vintage Captain Chair with Floral Cushion (closest free, wrong back)",
+     "source": "Sketchfab",
+     "licence": "CC-BY",
+     "fidelity": 2,
+     "commit_ok": true,
+     "cost": 0,
+     "url": "https://sketchfab.com/3d-models/d598554088874811af5c107cfc675809"
+    },
+    {
+     "name": "Pine wood chair (ladder back)",
+     "source": "Sketchfab",
+     "licence": "CC-BY",
+     "fidelity": 2,
+     "commit_ok": true,
+     "cost": 0,
+     "url": "https://sketchfab.com/3d-models/fb38895905de4f0faf5fa7a8a2f99af2"
+    }
+   ]
+  },
+  {
+   "id": "K5W",
+   "room": "kitchen",
+   "item": "Windsor chairs at the island end",
+   "tier": "supporting",
+   "qty": 3,
+   "seen_in": "film 6042",
+   "start": {
+    "name": "1800s Windsor Bow-Back Chairs (Mad_Lobster_Workshop; lighten to oak)",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/3f1d7ca9158446d0a7fbdd829c195d43"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "K6",
+   "room": "breakfast",
+   "item": "White glazed built-in hutch",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "production photo; Marina M18",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "with the kitchen cabinet generator"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "K7",
+   "room": "breakfast",
+   "item": "Brass chandelier with upward white glass bowls",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "IMG_3842; Marina M23",
+   "start": {
+    "name": "Chandelier_02 (shades hang down; film's bowls face up)",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/Chandelier_02"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "K8",
+   "room": "kitchen",
+   "item": "White countertop microwave (1990)",
+   "tier": "detail",
+   "qty": 1,
+   "seen_in": "film 9500",
+   "start": {
+    "name": "Microwave Model with Detailed Controls",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/de032bcc16cb45f0988ad5fb49e92668"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "K9",
+   "room": "kitchen",
+   "item": "Black wall oven, island cooktop",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "film-kitchen-wide; Marina M13",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "with the cabinets"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "K10",
+   "room": "kitchen",
+   "item": "Countertop props: red kettle, drip coffee maker, toaster",
+   "tier": "detail",
+   "qty": 4,
+   "seen_in": "film-kitchen-reverse, 1150",
+   "start": {
+    "name": "vintage_electric_kettle + Vintage Style Kettle (retint red)",
+    "source": "Poly Haven + Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/vintage_electric_kettle"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "K11",
+   "room": "kitchen",
+   "item": "Window-seat red cushions",
+   "tier": "supporting",
+   "qty": 2,
+   "seen_in": "Marina M13, M14",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "cushion boxes"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "K12",
+   "room": "kitchen",
+   "item": "Plants, wall plates, small pictures",
+   "tier": "detail",
+   "qty": 6,
+   "seen_in": "Marina M15",
+   "start": {
+    "name": "potted_plant_02 + Poly Haven frames",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/potted_plant_02"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "KV1",
+   "room": "kevin_room",
+   "item": "Wooden bunk beds (pine panel ends, ladder, green quilts)",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "Marina p2-355s, 375s",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "panel ends, ladder, twin mattresses 0.99 x 1.91; gameplay hiding space must be exact"
+   },
+   "upgrade": null,
+   "other_options": [
+    {
+     "name": "simple wooden bunk bed",
+     "source": "Sketchfab",
+     "licence": "CC-BY",
+     "fidelity": 2,
+     "commit_ok": true,
+     "cost": 0,
+     "url": "https://sketchfab.com/3d-models/a7685bd7b2354157b4c1a8264892acf0"
+    }
+   ]
+  },
+  {
+   "id": "KV2",
+   "room": "kevin_room",
+   "item": "Low dresser + wall mirror",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina p2-365s",
+   "start": {
+    "name": "DRAWER_CAB_01",
+    "source": "owned: Classic Wooden Furniture Pack (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 4,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": null
+  },
+  {
+   "id": "KV3",
+   "room": "kevin_room",
+   "item": "Pale grey reading armchair",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina p2-365s",
+   "start": {
+    "name": "ArmChair_01",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/ArmChair_01"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "KV4",
+   "room": "kevin_room",
+   "item": "Desk, spindle chair, green banker's lamp",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina p2-385s",
+   "start": {
+    "name": "SM_Desk_01 + CHAIR_01 + Desk lamp (CC-BY)",
+    "source": "owned: Fadnn Vintage Interior (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 3,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": null
+  },
+  {
+   "id": "KV5",
+   "room": "kevin_room",
+   "item": "Toy trunk",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina p2-385s",
+   "start": {
+    "name": "treasure_chest",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/treasure_chest"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "KV6",
+   "room": "kevin_room",
+   "item": "Dartboard, pinboard, globe, bookcase",
+   "tier": "detail",
+   "qty": 4,
+   "seen_in": "Marina p2-355s, 385s",
+   "start": {
+    "name": "dartboard + owned BOOKCASE_01",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/dartboard"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "KV7",
+   "room": "kevin_room",
+   "item": "Green gingham curtains",
+   "tier": "detail",
+   "qty": 2,
+   "seen_in": "Marina p2-355s",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "curtain generator"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "B1",
+   "room": "buzz_room",
+   "item": "Twin bed, dark turned posts, green bedding",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "film 2350 (partial); Marina 556 s",
+   "start": {
+    "name": "BED_01 narrowed to twin (frame 1.19 x 2.05)",
+    "source": "owned: Classic Wooden Furniture Pack (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 3,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": null,
+   "other_options": [
+    {
+     "name": "build to measurement (Blender generator)",
+     "source": "build",
+     "licence": "built",
+     "fidelity": 4,
+     "commit_ok": true,
+     "cost": 0,
+     "note": "turned-post twin to the measured box"
+    }
+   ]
+  },
+  {
+   "id": "B2",
+   "room": "buzz_room",
+   "item": "Nightstand + lamp",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina 556 s",
+   "start": {
+    "name": "BEDSIDE_CAB_01",
+    "source": "owned: Classic Wooden Furniture Pack (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 4,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": null
+  },
+  {
+   "id": "B3",
+   "room": "buzz_room",
+   "item": "Tall chest 2 x 5 drawers",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina 550 s",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "0.84 x 0.44 x 1.27 m (DEVIATIONS O5)"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "B4",
+   "room": "buzz_room",
+   "item": "Desk, chair, pinboard",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "film 500, 529",
+   "start": {
+    "name": "SM_Desk_01 + SM_Chair_01",
+    "source": "owned: Fadnn Vintage Interior (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 4,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": null
+  },
+  {
+   "id": "B5",
+   "room": "buzz_room",
+   "item": "Wall shelves + trophies, helmets, game boxes",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "film 4500, 529",
+   "start": {
+    "name": "SHELVES_01 / WALL_SHELF_01 + props",
+    "source": "owned: Classic Wooden Furniture Pack (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 3,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": null
+  },
+  {
+   "id": "B6",
+   "room": "buzz_room",
+   "item": "Terrarium (tarantula)",
+   "tier": "detail",
+   "qty": 1,
+   "seen_in": "film 529",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "glass box"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "B7",
+   "room": "buzz_room",
+   "item": "Navajo zigzag rug",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "film 4450",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "plane + texture"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "B8",
+   "room": "buzz_room",
+   "item": "Posters, cutout, BB gun, mini hoop",
+   "tier": "detail",
+   "qty": 5,
+   "seen_in": "film 529; Marina 556 s",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 2,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "author original art; no NBA/Bulls marks"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "P1",
+   "room": "parents_room",
+   "item": "Mahogany rice-carved four-poster bed, red bedding",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "film 1600, 2650, p2-105s",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "lathe-turned posts with finials, scrolled headboard; queen ~1.65 x 2.2, posts ~2.2 m"
+   },
+   "upgrade": null,
+   "other_options": [
+    {
+     "name": "four posture bed 2 (fallback)",
+     "source": "Sketchfab",
+     "licence": "CC-BY",
+     "fidelity": 2,
+     "commit_ok": true,
+     "cost": 0,
+     "url": "https://sketchfab.com/3d-models/714bba66830045ac98b2eedbc7948731"
+    },
+    {
+     "name": "Four Poster Bed (studiolab.dev)",
+     "url": "https://sketchfab.com/3d-models/a41a7a3b39b04e05a34c661fd7cd8d8e",
+     "source": "Sketchfab Store",
+     "price": 9.0,
+     "price_verified": true,
+     "licence": "Sketchfab Standard: use OK, no redistribution, gitignore",
+     "fidelity": 2,
+     "worth_it": "no: canopy with red drapes, square posts"
+    }
+   ],
+   "note": "No rice bed exists on any store searched (CGTrader, Sketchfab, TurboSquid, Fab via search). Building it is the high-fidelity path."
+  },
+  {
+   "id": "P2",
+   "room": "parents_room",
+   "item": "Dressing table + green stool + lamp",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "film p2-105s",
+   "start": {
+    "name": "Late 1800s French Vanity Desks (Mad_Lobster)",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/b4193e4ae59b4756a9988d5ee1770a0e"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "P3",
+   "room": "parents_room",
+   "item": "Dark armoire",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina p2-180s",
+   "start": {
+    "name": "wardrobe antique",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/b003c56eb67e487d93c7cdc83497a5ba"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "P4",
+   "room": "parents_room",
+   "item": "Dress form",
+   "tier": "detail",
+   "qty": 1,
+   "seen_in": "film p2-105s; Marina p2-235s",
+   "start": {
+    "name": "1900 dress form",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/6353b94707ae4e799509364efb4480c1"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "P5",
+   "room": "parents_room",
+   "item": "Painted folding screen",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina p2-235s",
+   "start": {
+    "name": "chinese_screen_panels",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/chinese_screen_panels"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "P6",
+   "room": "parents_room",
+   "item": "Dark-red armchair",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina p2-180s",
+   "start": {
+    "name": "CHAIR_01",
+    "source": "owned: Classic Wooden Furniture Pack (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 2,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": {
+    "name": "Victorian Chairs Pack (G-Star)",
+    "url": "https://assetstore.unity.com/packages/3d/props/interior/victorian-chairs-pack-295359",
+    "source": "Unity Asset Store",
+    "price": 9.49,
+    "price_verified": true,
+    "licence": "Asset Store EULA: use OK, no redistribution, gitignore",
+    "fidelity": 3,
+    "worth_it": "maybe: contents unlisted; HDRP"
+   }
+  },
+  {
+   "id": "P7",
+   "room": "parents_room",
+   "item": "Nightstands + green lamps",
+   "tier": "supporting",
+   "qty": 2,
+   "seen_in": "Marina p2-255s",
+   "start": {
+    "name": "ClassicNightstand_01",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/ClassicNightstand_01"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "P8",
+   "room": "parents_room",
+   "item": "Floral foot-of-bed bench",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina p2-255s",
+   "start": {
+    "name": "F5 bench recoloured",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/fe99fcfb6bbb45649e9e38de24b23109"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "P9",
+   "room": "parents_room",
+   "item": "Luggage (packing scene)",
+   "tier": "detail",
+   "qty": 4,
+   "seen_in": "film 1600, p2-105s",
+   "start": {
+    "name": "vintage_suitcase",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/vintage_suitcase"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "P10",
+   "room": "parents_room",
+   "item": "Fireplace mantel, plant, pictures, rug",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "Marina p2-195s, 200s",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "mantel generator + Poly Haven frames"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "E1",
+   "room": "parents_bath",
+   "item": "Vanity, green marble top, brass mirror and taps",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "film 4400",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "built-in"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "E2",
+   "room": "parents_bath",
+   "item": "Towels, toiletries",
+   "tier": "detail",
+   "qty": 6,
+   "seen_in": "film 4400",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "folded towels"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "E3",
+   "room": "parents_bath",
+   "item": "Botanical prints",
+   "tier": "detail",
+   "qty": 3,
+   "seen_in": "Marina p2-215s",
+   "start": {
+    "name": "Poly Haven frames + public-domain botanicals",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 4,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/fancy_picture_frame_02"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "H1",
+   "room": "upstairs_hall",
+   "item": "Red poinsettias in gold foil on the floor",
+   "tier": "hero",
+   "qty": 4,
+   "seen_in": "film 1333, 1350, 1400, 3900",
+   "start": {
+    "name": "same as F1",
+    "source": "shared",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0
+   },
+   "upgrade": {
+    "name": "same as F1 (one licence)",
+    "url": "https://www.cgtrader.com/3d-models/plant/flower/poinsettia-gift-plant-21cb2b31-91f8-481b-b9dc-e82ca532d633",
+    "source": "CGTrader",
+    "price": 0,
+    "price_verified": true,
+    "licence": "CGTrader Royalty Free (no AI): use OK, no redistribution, gitignore",
+    "fidelity": 4,
+    "worth_it": "yes with F1"
+   }
+  },
+  {
+   "id": "H2",
+   "room": "upstairs_hall",
+   "item": "Hall demilune with lamp",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "film 2296, 10736",
+   "start": {
+    "name": "SIDE_TABLE_01",
+    "source": "owned: Classic Wooden Furniture Pack (Asset Store EULA, gitignored)",
+    "licence": "owned",
+    "fidelity": 4,
+    "commit_ok": false,
+    "cost": 0
+   },
+   "upgrade": null
+  },
+  {
+   "id": "H3",
+   "room": "upstairs_hall",
+   "item": "Framed prints, oval brass ornaments",
+   "tier": "detail",
+   "qty": 4,
+   "seen_in": "upstairs-film-quality-target.png",
+   "start": {
+    "name": "Poly Haven frames",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/hanging_picture_frame_01"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "H4",
+   "room": "upstairs_hall",
+   "item": "Brass wall sconces",
+   "tier": "detail",
+   "qty": 4,
+   "seen_in": "film 352, 1333",
+   "start": {
+    "name": "same as F11",
+    "source": "Sketchfab",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/487c69d1748c46d2b3cc433fe6885a5e"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "H5",
+   "room": "upstairs_hall",
+   "item": "Dark plant urn",
+   "tier": "detail",
+   "qty": 1,
+   "seen_in": "upstairs-film-quality-target.png",
+   "start": {
+    "name": "ceramic_pot + F1 plant",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/ceramic_pot"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "A1",
+   "room": "attic",
+   "item": "Bed with patterned quilt, lamp",
+   "tier": "supporting",
+   "qty": 1,
+   "seen_in": "film 1420",
+   "start": {
+    "name": "old_bed_frame / owned BED_01",
+    "source": "Poly Haven",
+    "licence": "CC0",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://polyhaven.com/a/old_bed_frame"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "A2",
+   "room": "attic",
+   "item": "Trunks, boxes, suitcases, toys",
+   "tier": "detail",
+   "qty": 10,
+   "seen_in": "film 1420 (partial)",
+   "start": {
+    "name": "Antique Luggage - Steamer Trunks Type B + vintage_suitcase; boxes generated",
+    "source": "Sketchfab + Poly Haven",
+    "licence": "CC-BY",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "url": "https://sketchfab.com/3d-models/21284fec9b0a4debae036ee309feac55"
+   },
+   "upgrade": null
+  },
+  {
+   "id": "X1",
+   "room": "basement",
+   "item": "Oil furnace ('octopus'), washer/dryer, shelves",
+   "tier": "hero",
+   "qty": 1,
+   "seen_in": "NOT inspected (frames not pulled)",
+   "start": {
+    "name": "build to measurement (Blender generator)",
+    "source": "build",
+    "licence": "built",
+    "fidelity": 3,
+    "commit_ok": true,
+    "cost": 0,
+    "note": "model once film frames are pulled; no matching model exists"
+   },
+   "upgrade": null
+  }
+ ]
+}
