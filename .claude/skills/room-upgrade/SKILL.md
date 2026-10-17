@@ -65,4 +65,5 @@ layer of models generated from the same spec, plus real textures, props and ligh
 1. Walk/seam/leak/peek gates unchanged and the z-fight gate at 0 (`spec/captures/walk-test-wallgrid.txt`); `glb_orientation.py` exits 0.
 2. Every walk note in the room re-rendered from its own pose (note_views.py) and looked at next to the user's screenshot.
 3. A render of each changed element from a camera in the open room, and a matched Marina/film view, looked at.
+   Plus a CLOSE-UP at Kevin's eye (1.10 m, ~0.5 m away) of one joint of every kind the change touched (inside and outside corner, run-to-casing, run-to-stair), looked at full size. Oct 17: a cap-rail inside corner overshot by mm; renders from metres away and half-size thumbnails hid it, the user found it at Kevin's eye.
 4. Load into the user's editor (memory load-scene-for-walk) and say what changed and what is still authored.
