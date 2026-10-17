@@ -97,6 +97,7 @@ Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.m
    decimate the 628k-tri download to ~30-60k + a baked normal map, THEN fit (tools/house/purchased_rugs.py is ready; switch
    SpecGreybox.UsePurchasedRug on). The 190k-tri fit made the build's triangle checks run 27+ min. Until then the generated front rug
    (invented pattern) stays: the front rug's colour/pattern is still wrong. Credit line already in docs/CREDITS.md.
+8n. NIGHT FRAME RATE (user Oct 17: "triangles baloon from 6.6 million during the day to north of 200 million at night"): FIXED. The paint cans (PaintCanTrap) had no damping; a nudge from the player (PushByPlayer) left them swinging forever, and ShadowRefresh.Near redrew every lamp in range each frame. Now damped while slow (<0.5 m/s), so the trap swing is unchanged. Live, night, foyer (1.5,-3.0,-10.0) yaw 90: swinging 209M tris / GPU 254 ms -> settled 2.1M / 35-46 ms (spec/captures/perf/night-cans-*). LEFT for the perf pass: night still costs ~3x day GPU at that pose (day 14 ms; 43 realtime shadowed lamps): fewer shadowed lamps, smaller ranges or shadow resolution. Any new moving thing that calls ShadowRefresh.Near must come to rest.
 8t. KERNEL STEP 1 follow-ups (user walk Oct 17 13:32: "mostly better now"): (1) top of flight 2: the raked panel/rail ends into the
    hall wainscot with visible misaligned joints ("small issues with alignment here", pose 3.010,-0.504,-8.502 yaw 56; the known 2.5 cm
    step, DEVIATIONS 66); (2) Z-FIGHT at the landing window stool/panelling (pose 2.235,-0.682,-9.391 yaw 266 pitch 39): the build's
@@ -132,6 +133,34 @@ Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.m
    build and RenderViews); try a persistent warm scratch editor driven by the unity CLI instead of cold batch launches, and measure
    the saving; (i) stop at the first failure (no renders/bake after a failed gate); (j) log every build (id, job, wall time, why) to
    spec/captures/build-log.jsonl so rebuilds per job are counted and reported in each hand-back.
+   8p STATE (Oct 17 afternoon; process/tooling only, no geometry):
+   (a) DONE: unity_pipeline.sh build/bake keep Unity's exit code (no `|| true`), the quality gate (model_quality --report) fails the build.
+   (b) DONE: change_gate.py SELF_GATES (model_quality, zfight, clash, verify_plan, trim_faces, unity:build, unity:walk-test) never count
+       for R1; selftest: the arch record with only tools:model_quality fails R1 (passed before). No existing record changed outcome.
+   (c) DONE: .githooks/pre-commit also watches spec/geometry.json, spec/trim_faces.json, spec/dressing/, tools/house/hifi_*.py, House_WallGrid.unity.
+   (d) DONE: FeelNotes.cs logs "eye" (camera world y), "fov", "kid", "night"; note_views.py replays eye/fov exactly and writes night notes
+       to views/notes-night.json (render with -night); old notes unchanged (47/47 identical views).
+   (e) DONE: change-gate skill step 3 "pick check" (crop + independent confirmation of WHAT was picked) and R8 in change_gate.py for
+       records with "gate": 8 (claim/check "pick": {"crop", "confirmed_by"}), with a selftest.
+   (f) DONE: `unity_pipeline.sh preflight` (build_models/trim_faces --check, verify_plan, model_quality --report, change_gate over every
+       record not rejected); build runs it first and refuses Unity on a FAIL; HA_NO_PREFLIGHT=1 skips. ON THE CURRENT TREE IT FAILS on two
+       pre-existing problems: HallArches.glb 4 quality problems (Soffit_C detail map albedo; the paused upstairs-arches TRIAL) and
+       changes/2026-10-17-filmfill-baked.json R7 (its live-play check is typed "topological", which triggers the layout rule). Decide:
+       fix the HallArches detail map, and retype that check (e.g. "count") or narrow R7's topological trigger. Until then: HA_NO_PREFLIGHT=1.
+       The extended pre-commit hook (c) also re-gates every record on those paths, so the filmfill R7 FAIL blocks such commits too.
+   (i) DONE: `all` = build && bake && load, each now exits non-zero on any failure, so nothing runs after a failed step.
+   (j) DONE: build/bake append {"time","cmd","job"($HA_JOB),"why"($HA_WHY),"wall_s","exit"} to spec/captures/build-log.jsonl (EXIT trap,
+       refused builds included).
+   (g) PLAN: refcam.py already solves film/Marina cameras (13 in measurements/cameras/) and `overlay` draws spec/geometry.json walls,
+       openings, stairs and foyer dressing on the frame. Missing: (1) overlay every dressing file (spec/dressing/*.json, store_props boxes,
+       furniture.json), not just foyer.json; (2) a `--spec DIR` / candidate geometry option so a draft is overlaid BEFORE it is in spec;
+       (3) `overlay-all` over every solved camera seeing the touched room -> one contact sheet; (4) a pre-build checklist line in
+       room-upgrade/change-gate: look at the overlay sheet first. No Unity involved; seconds per candidate.
+   (h) PLAN: half exists: `build -views FILE` already renders in the build's session (SpecGreybox.cs:392). Missing: (1) make that the
+       default for candidates (views list in the change record -> passed automatically); (2) a warm scratch editor: open ~/.cache/
+       home-alone/ucopy/HomeAlone windowed once, drive SpecGreybox.BuildWallGrid/RenderViews through `unity command eval` (as `ev` does
+       for the user's editor) instead of cold -batchmode launches; (3) measure cold vs warm with the build-log (j) wall_s over 3 builds
+       each before switching; keep cold batch as the fallback (domain reload after C# changes still needed).
 8y. LATER (user Oct 17, 'for another day'): recess the under-stair door in the rear passage like Marina's (her passage widens left beyond the stair line into a recess, DEVIATIONS 35); the foyer arch attempt 3 is accepted for now.
 8z. NEXT BIG JOB (user Oct 17, after this TRIAL is walked): BUZZ'S ROOM, room + furniture, nailed. It caused most of the Oct 13-14
    drama (resize reverted, changes/2026-10-13-buzz-resize.json; furniture didn't fit). change-gate R2 applies (4+ failed attempts):

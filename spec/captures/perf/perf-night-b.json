@@ -1,0 +1,1 @@
+{"name":"perf-night-b","frames":200,"cpu_ms_median":9.3,"cpu_ms_p95":17.7,"cpu_ms_p99":18.1,"gpu_ms_median":11.5,"batches":0,"setpass":173,"triangles":6607124,"shadow_casters":6333,"screen":"1366x768","focused":false,"cam":"8.40,-1.90,-9.40 yaw 268"}

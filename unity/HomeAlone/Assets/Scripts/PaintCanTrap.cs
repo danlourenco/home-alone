@@ -110,6 +110,10 @@ public class PaintCanTrap : MonoBehaviour
             if (x == dummyMarkX) climbing = false;
         }
         PushByPlayer(dt);
+        // a real can on a rope settles (rail friction, air): damp it only while slow, so a nudge dies out and the body sleeps, while a
+        // released trap (past 0.5 m/s within ~0.05 s, ~4 m/s at the hit) swings undamped. Undamped, an idle can swung forever and
+        // redrew every nearby lamp's shadow map each frame (night, Oct 17: 209M -> 2.1M triangles, GPU 254 -> 45 ms with it still)
+        can.linearDamping = can.linearVelocity.sqrMagnitude < 0.25f ? 1.5f : 0f;
         lastVel = can.linearVelocity;
     }
 

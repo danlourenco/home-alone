@@ -1,0 +1,1 @@
+{"name":"day-same-pose","frames":120,"cpu_ms_median":9.0,"cpu_ms_p95":16.8,"cpu_ms_p99":17.6,"gpu_ms_median":14.0,"batches":0,"setpass":164,"triangles":6165756,"shadow_casters":6729,"screen":"1366x768","focused":true,"cam":"1.50,-1.90,-10.00 yaw 90"}
