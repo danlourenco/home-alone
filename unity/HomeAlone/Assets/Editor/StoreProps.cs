@@ -13,7 +13,7 @@ public static partial class SpecGreybox
     {
         var fp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/store_props.json"));
         if (!File.Exists(fp)) return;
-        var gUp = Child(root, "StoreProps"); var gGround = Child(groot, "StoreProps"); PropRecords.Clear(); Converted.Clear();
+        var gUp = Child(root, "StoreProps"); var gGround = Child(groot, "StoreProps"); PropRecords.Clear(); Converted.Clear(); Hung.Clear();
         foreach (var p in JObject.Parse(File.ReadAllText(fp))["pieces"])
         {
             string name = (string)p["name"], path = (string)p["prefab"];
@@ -95,12 +95,14 @@ public static partial class SpecGreybox
                     Debug.Log($"StoreProps {name}: leaf open {ang} deg at {pivot}, now {sb.min} .. {sb.max}");
                 }
             }
+            if (p["hung"] != null && (bool)p["hung"]) Hung.Add(name);
             PropRecords.Add((name, go, new Bounds { min = new Vector3(x0, y0, z0), max = new Vector3(x1, y0 + h, z1) }, Back((string)p["back"]), g, swung));
             Debug.Log($"StoreProps {name}: yaw {yaw}, scale {go.transform.localScale}, bounds {fb.min} .. {fb.max}");
         }
     }
 
     static readonly System.Collections.Generic.List<(string name, GameObject go, Bounds box, Vector3 back, GameObject root, Transform swung)> PropRecords = new();
+    static readonly System.Collections.Generic.HashSet<string> Hung = new();   // "hung": on a wall (the door's wreath): its back is checked, not its feet
 
     // Props check (a build gate, Oct 16): every assumption made placing a store model, measured on what was built.
     //  fit   - drawn bounds within 1 cm of the measured box on every face (caught the 90-degree axis swap)
@@ -140,7 +142,7 @@ public static partial class SpecGreybox
                 else if (gaps.Min() < -0.005f || gaps.Min() > 0.03f) bad.Add($"{name}: back {gaps.Min() * 100:F1} cm from the drawn wall (want 0-3)");
             }
             float drop = Cast(new Vector3(b.center.x, b.min.y + 0.05f, b.center.z), Vector3.down, 0.5f) - 0.05f;
-            if (float.IsNaN(drop) || Mathf.Abs(drop) > 0.01f) bad.Add($"{name}: feet {(float.IsNaN(drop) ? "over no floor" : $"{drop * 100:F1} cm above the floor")}");
+            if (!Hung.Contains(name) && (float.IsNaN(drop) || Mathf.Abs(drop) > 0.01f)) bad.Add($"{name}: feet {(float.IsNaN(drop) ? "over no floor" : $"{drop * 100:F1} cm above the floor")}");
             foreach (var c in temp) Object.DestroyImmediate(c); Physics.SyncTransforms();
             int empty = rs.Sum(r => r.sharedMaterials.Count(m => m == null));   // a deleted or missing material draws magenta
             if (empty > 0) bad.Add($"{name}: {empty} empty material slots");

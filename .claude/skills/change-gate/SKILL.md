@@ -7,6 +7,8 @@ description: Gate for ANY change that moves, resizes or adds geometry in either 
 
 Why this exists (Oct 13): Buzz's room was resized to the SfM size 4.35 m. The "proof" was that Marina's cameras now stood inside the room, but those cameras came from the same reconstruction and door scale as the 4.35 m, so they could not have disagreed. Four attempts on that same premise had already failed. The result looked broken, and the user called it "terrible". It was reverted. `changes/2026-10-13-buzz-resize.json` is that change as a record; the gate fails it on all three rules, and `--selftest` keeps it failing.
 
+**Decorations skip this gate** (user Oct 17: "a wreath on a door is not load bearing like a wall. it's just a decoration"; rule approved: "yes"): a wreath, ornament, picture, plant or other dressing that nothing walks on, hides under or measures from needs no change record. Place it, build once through `unity_pipeline.sh` (preflight, z-fight and clash still run), look at one render, load it, and commit with `git commit --no-verify`, saying "decoration" in the message. Furniture and anything that changes where Kevin or a bandit can walk or hide is NOT decoration.
+
 ## Steps, in order. Don't skip ahead.
 
 1. **Write the record first**, `changes/<date>-<slug>.json` (copy the Buzz record's shape), before touching geometry:

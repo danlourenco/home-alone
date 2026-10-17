@@ -291,6 +291,30 @@
    "height": 0.762,
    "back": "+x",
    "source": "Upstairs hall (Oct 16, TRIAL, changes/2026-10-16-upstairs-hall.json; furniture-plan H2): owned SIDE_TABLE_01 as the film's dark hall table (film 352/410/1276/1333: beside the attic door under the tapestry). Box from spec/dressing/hall.json consoles: top 0.762 (film 10819: on the horizon with the cap rail, camera height 0.759 on the door ruler), 0.90 x 0.30, back 3 cm off the wall (the cap rail is 3 cm proud at the table's height). The model (0.945 x 0.473 x 0.645) is fitted x0.95 / x0.63 / x1.18: slimmer and taller; its cabriole legs differ from the film's square tapered legs (DEVIATIONS 63)."
+  },
+  {
+   "name": "front_door_wreath",
+   "prefab": "Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Prefabs/Wreath.prefab",
+   "x": [
+    9.928,
+    10.072
+   ],
+   "z": [
+    9.449,
+    9.982
+   ],
+   "y0": 1.048,
+   "height": 0.689,
+   "yaw": 270,
+   "hide_parts": [],
+   "hides": [
+    "Leaves",
+    "Berries"
+   ],
+   "collide": false,
+   "source": "user Oct 17: \"can you replace the wreath on the front door with one from the christmas pack?\" Same pack as living_tree (AlterEgos; gitignored). Native size kept (scale 1): ring 0.534 m across (FrontDoor.glb's generated wreath was ~0.51), the pack's bow hangs below it (box 0.689 tall). Ring centred on the leaf at 1.47 m and z 9.7155 (hifi_door.py WC, film 10248); back 1 cm off the leaf's frame front (x 10.082, hifi_door.py xd). Front = model +z (bow, baubles) turned to face the vestibule (-x): yaw 270. Hides the generated Leaves/Berries (kept in FrontDoor.glb as the fallback for a clone without the pack). Keep both bow LODs (its LODGroup shows Bow_LOD1 from ~2 m; deleting it left no bow from the foyer).",
+   "back": "+x",
+   "hung": true
   }
  ]
 }

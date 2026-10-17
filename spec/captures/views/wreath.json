@@ -1,0 +1,5 @@
+[
+ {"name": "wreath/front-door", "pos": [8.0, -1.93, -9.7], "look_at": [10.0, -1.75, -9.716], "vfov": 60},
+ {"name": "wreath/close", "pos": [9.35, -1.6, -9.45], "look_at": [10.03, -1.56, -9.716], "vfov": 50},
+ {"name": "wreath/side", "pos": [9.6, -1.5, -8.95], "look_at": [10.03, -1.56, -9.716], "vfov": 50}
+]

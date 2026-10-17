@@ -5,7 +5,7 @@
 "spec/geometry.json": "2ac3771d00d4dcb0e8f5b4d0604929a6c0fdd64b4e9f10aafebda8148358094a",
 "spec/house_spec.json": "568943ec92aaedb709d0ee3f4ccd785d1a8a595e98940fda4dc2aaa9f71b6aae",
 "spec/house_spec.ground.json": "c61d3732d53e46b7b76a94886088d26d2fb1a8989a8519b216b5b0f0c5fa9394",
-"spec/dressing/store_props.json": "803e3fdd4a26af780e1274f4d4a892e07c38ae4a348e928c4b05928cc6393495",
+"spec/dressing/store_props.json": "e2b12fa12a327c90b0eeb14edf7f98fdea9b2eb0dfd51b705902f6c188d39cff",
 "spec/dressing/french_doors.json": "493cfebb4db15bccadeacf7a705cfb330ee530e92d051fca881b921c5a3d4976",
 "tools/house/hifi_door.py": "43caa8e4502f58c7b108e6a1e623e15b7f158f7aac7dd50510b2abaf2d739788",
 "tools/house/openings.py": "c1d23eb210ce4dd83a8ba121b45e9862d3f68c3e18156433c4c31050fe7f9b0d"
