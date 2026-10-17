@@ -43,7 +43,7 @@ public static partial class SpecGreybox
             // the grey-box main stair keeps its colliders: a leg whose volume (grown 1 cm) meets one of them lies on the stair's side
             var temp = new List<MeshCollider>();   // the detailed stair's stringers as temporary colliders (the grey-box stair stops short)
             var hs = GameObject.Find("Upstairs/MainStair_HiFi");
-            if (hs != null) foreach (var mf in hs.GetComponentsInChildren<MeshFilter>().Where(m => m.name.StartsWith("RisersStringers")))
+            if (hs != null) foreach (var mf in hs.GetComponentsInChildren<MeshFilter>().Where(m => m.name.StartsWith("RisersStringers") || m.name.StartsWith("StairWallTrim")))
                 { var mc = mf.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = mf.sharedMesh; temp.Add(mc); }
             Physics.SyncTransforms();
             foreach (var r in groot.GetComponentsInChildren<MeshRenderer>().Where(r => r.name == "Casing"))

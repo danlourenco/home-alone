@@ -35,12 +35,27 @@ Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.m
 5. Ficus crown wider; den wall saturation (ask the user); night white balance (agents measured nights 3-10x warmer than the film:
    ask the user about a house-wide night grade); sheers too bright at night (shared voile material).
 6. Z-fight reported 2 pairs in some builds: trace and fix.
-7a. [ORDER, user Oct 17: rugs agent -> THIS flicker test -> HOUSE KERNEL step 1 (trim from faces; docs/HOUSE-KERNEL.md, APPROVED) -> 8p process fixes -> kernel steps 2-6 -> 8a furniture -> 8b compare page -> 8z Buzz] FLICKER, NEW LEAD (Oct 17 10:40 screen recording, static camera in the foyer: small squares pop on the wallpaper and a chair
-   back frame to frame): HDRP lightLoopSettings.maxLightsPerClusterCell = 8 while 54 lights are enabled (53 shadowed) EVEN BY DAY;
-   light ranges pass through walls, so a cluster cell can exceed 8 and drop lights tile by tile. The shadow-atlas premise (DEVIATIONS
-   62) failed to fix it: attack the premise. Discriminating test: raise maxLightsPerClusterCell (16/24) OR disable the night lamps by
-   day, re-record the same pose, diff frames (scratchpad method: count pixels toggling >25 between consecutive frames). Also: why are
-   night lamps enabled (and shadowed) by day? Perf cost even if not the flicker.
+7a. [ORDER, user Oct 17: rugs (PAUSED) -> HOUSE KERNEL step 1 (trim from faces) ACCEPTED Oct 17 -> FAST CHECKS (ZFight/Clash broad phase + per-mesh cache + per-gate timing + time budget + import triangle budget; equivalence proof old vs new; update zfight-check skill; user: "if you can find improvements to the algorithm, do them") -> FILL-LIGHT FIX (7a) -> 8p process fixes -> kernel steps 2-6 -> 8a furniture -> 8b compare page -> 8z Buzz]
+   FLICKER TEST RESULTS (Oct 17, live Play, foyer pose 8.4,-2.996,-9.4 yaw 268, still camera, day, AA off; tool Scripts/FlickerProbe.cs:
+   FlickerProbe.Run(name,180) -> spec/captures/flicker/<name>.json/-first.png/-heat.png; needs Application.runInBackground=true when the
+   editor is unfocused). Baseline maxLightsPerClusterCell 8: 4714 / 3902 / 4413 pop pixels (76/85/69 of 179 frames). 24: 1311, 5648,
+   160665 (an outlier). 48: 3128. => the per-tile light limit is NOT the cause (run-to-run noise is larger than any effect; the first
+   72% drop was noise). Shadows OFF on all 52 punctual lights: 2.46 M and 3.09 M pop pixels (far worse, every frame): the shadow/light
+   system is implicated but not explained. Setting restored to 8 (asset unchanged). Day: 53 lights on, all shadowed; night: 45 + sun.
+   ROOT CAUSE FOUND (Oct 17, measured): the 52 FilmFill ceiling area lights (SpecGreybox.Envelope.cs FilmFill, authored Baked, soft
+   shadows) are NOT baked at runtime: BakeLighting.cs bakes Default then Night LAST with the day layer inactive, so the lighting data
+   records the fills as not baked (in Play: bakingOutput.isBaked 0/52; night lamps Mixed->baked fine) and Unity renders them REALTIME
+   with every-frame shadows. Foyer day, still camera: as built 72.4 M tris/frame, pops 1353/2090/1865; fill shadows off 6.6 M tris,
+   pops 3350/2328; fills disabled pops 0/0/0 (3 runs). Night: no fills, no flicker (user saw the same). Also: day rooms are lit TWICE
+   (fills baked into the Default APV scenario + realtime), and the day film calibration was tuned on that.
+   FIX (queued right after kernel step 1; needs the scratch bake): after the Night pass restore the fills' LightBakingOutput
+   (isBaked=true, Baked) or bake Night first; verify in Play isBaked 52/52; re-run film_light_match day ratios and retune FillNits so
+   the look is unchanged; prove with FlickerProbe (3 runs = 0) and PerfProbe before/after. Tools: Scripts/FlickerProbe.cs,
+   Scripts/PerfProbe.cs (perf JSON in spec/captures/perf/).
+   (Superseded) NEXT: a fresh-context investigation with research (HDRP square/tile flicker with many lights: light list ordering, shadow atlas
+   eviction with OnDemand caching, contact shadows, SSAO/SSGI), each hypothesis tested with >= 3 probe runs against the baseline
+   spread; HDRP Rendering Debugger overlays (light count per tile, shadow atlas). Fix must keep the look and frame time.
+
 7. LATER (user Oct 17): shadow flicker STILL visible after the shadow pass (DEVIATIONS 62 did not fix it). Deferred to a dedicated
    performance + optimization pass; troubleshoot it there, not before. Same pass: ~80 CS0618 obsolete-API warnings (Unity 6.6:
    FindObjectsByType/FindFirstObjectByType sort-mode overloads, HDAdditionalLightData.spotLightShape): mechanical renames.
@@ -75,6 +90,16 @@ Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.m
    decimate the 628k-tri download to ~30-60k + a baked normal map, THEN fit (tools/house/purchased_rugs.py is ready; switch
    SpecGreybox.UsePurchasedRug on). The 190k-tri fit made the build's triangle checks run 27+ min. Until then the generated front rug
    (invented pattern) stays: the front rug's colour/pattern is still wrong. Credit line already in docs/CREDITS.md.
+8t. KERNEL STEP 1 follow-ups (user walk Oct 17 13:32: "mostly better now"): (1) top of flight 2: the raked panel/rail ends into the
+   hall wainscot with visible misaligned joints ("small issues with alignment here", pose 3.010,-0.504,-8.502 yaw 56; the known 2.5 cm
+   step, DEVIATIONS 66); (2) Z-FIGHT at the landing window stool/panelling (pose 2.235,-0.682,-9.391 yaw 266 pitch 39): the build's
+   Z-fight check said 0 because it skips 25 unreadable meshes (Codex #10): the fast-checks job now makes the check see it; the fix
+   (landing window panelling vs face trim: the window wall is "checked but not laid", yet something doubles) is a small follow-up.
+   (3) landing inside corner (note 13:34, pose 2.671,-0.682,-9.090 yaw 320: "this alignment on wainscotting can't be right"): the
+   landing-window wall's panelling (LandingWindow.glb, its own generator, cap level with the window stool) meets the north wall's
+   face trim (0.705 cap, ASSUMED) at different heights. One wainscot height must run round the landing. Likely tied to 8w (user:
+   the landing window reads low; film suggests a higher sill): if the film's sill sits on the wainscot cap, measuring the sill fixes
+   both. This is kernel step 2 territory (openings own their trim): the window must take its panelling from the face trim.
 8p. PROCESS FIXES (full review: docs/reviews/2026-10-17-codex-process.md, 15 findings; its top three = this week's first work) (Codex review, Oct 17; do before Buzz): (a) unity_pipeline.sh build/bake swallow failures (`|| true` on the Unity
    build, the quality gate): stop build->bake->load on any failure; (b) change_gate R1 accepts model_quality alone as independent proof:
    topological gates must not count as the independent ruler; (c) pre-commit hook watches old paths, misses spec/geometry.json,
@@ -82,6 +107,15 @@ Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.m
    Kevin-height note 0.55 m too high: record them in FeelNotes.cs, replay exactly; (e) "pick check": someone independent confirms WHAT
    a measured pixel shows before it is measured (the arch crown + "casing" were both the wrong feature). DONE: R2 now counts
    "failed (...)"/"rejected" outcomes (change_gate.py + selftest).
+   BUILD TIME FOUND (Oct 17, measured with the step-1 agent's per-step stamps "[hh:mm:ss] BuildWallGrid: <step>"): generating the
+   whole house ~1 min; every gate before ZFightCheck ~2 s combined; ZFightCheck (SpecGreybox.Checks.cs:29) is where the build sits
+   for many minutes ("stuck" twice today: silent log, the report is only written at the end). Cause in the code: triangles are
+   bucketed by PLANE only (normal + 1 cm offset), so every coplanar triangle in the house (all floor plates, rugs, ceilings at one
+   height, wainscot faces on one line) lands in one bucket and is compared pairwise (O(k^2)); a 628k-tri rug on the floor plane
+   made it effectively endless. Fix: add an in-plane 2-D grid (compare only triangles whose in-plane boxes overlap), skip pairs within
+   one mesh, and cache results per mesh hash so unchanged geometry isn't re-checked; log each gate's duration as it finishes.
+   BASELINE (step-1 build, Oct 17 12:42-13:10): all gates before ZFight 2 s; ZFightCheck 25 min 43 s; ClashCheck 80 s (already
+   gridded, 0.1 m cells: second target); the rest ~1 s. Draft broad phase: tools/house/drafts/zfight-broadphase.cs.txt.
    GOAL (user Oct 17): FEWER EXPENSIVE REBUILDS. Measured on the rug job: ~60% inference, ~40% local, nearly all of it Unity batch
    builds at 7-10 min each. Do: (f) PREFLIGHT before any Unity build: every cheap Python gate (verify_plan, change_gate, build_models
    --check, model_quality, JSON/spec lint, refcam overlays) must pass first; (g) BLOCKOUT OVERLAY without Unity: project the planned

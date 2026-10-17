@@ -20,3 +20,7 @@ Add new ones at the bottom with the date and the user's words.
 - **Web build** (Oct 17, question): Unity web needs URP (HDRP has no web target); three.js could load the generated GLBs and
   spec JSON with baked lighting. Decide before gameplay code; licences of bought assets and the film IP matter more than the
   engine.
+- **Ray tracing on Metal** (Oct 17): the user's Mac is an M3 Pro (hardware ray tracing). After the perf fixes (fill lights,
+  occlusion culling, sun shadow), test HDRP's ray-traced reflections/GI/shadows on Metal in this Unity version (support on Metal
+  must be verified first) in a standalone build, measured with PerfProbe. Native Swift/Metal engine considered and not recommended
+  (months; the house data would port, everything Unity provides would be rewritten).

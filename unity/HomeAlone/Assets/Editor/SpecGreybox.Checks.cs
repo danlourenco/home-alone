@@ -192,6 +192,7 @@ public static partial class SpecGreybox
         "Treads|Newels",                                              // a newel stands on its tread
         "Newels|Rail", "Rail|Newels",                                 // a handrail dies into its newel (runs end at the post's centre)
         "Balusters|RisersStringers", "RisersStringers|Treads",        // balusters into the cut stringer; treads housed in the skirt board
+        "StairWallTrim|Treads",                                       // the old path's skirt board (hifi_foyer.py StairWallTrim part)
         "Arch_Spandrel|Arch_Spandrel" };                              // the grey-box arch is stepped slices on purpose
     static string ClashCheck(params GameObject[] roots)
     {
@@ -288,48 +289,60 @@ public static partial class SpecGreybox
         return $"Casing check: {bad.Count} casings placed apart from their opening" + (bad.Count > 0 ? " (" + string.Join(", ", bad.Take(8)) + ")" : "") + "\n";
     }
 
-    // Trim (user note Oct 16 11:13: a gap in the moulding): along every finished room's outline, every 2 cm at the baseboard's and the
-    // cap rail's height, a ray from 10 cm inside the room toward the wall must meet trim or something mounted on the wall (a casing,
-    // a door, the stair) before bare wall; points inside something solid are skipped. Bare wall over 3 cm long is a GAP. Reads the built scene, not the trim's own runs.
-    static List<(List<Vector2> pts, float floorY, float h)> TrimRooms = new();
-
+    // Trim (user note Oct 16 11:13: a gap in the moulding; Oct 17 08:30: the stair's triangle and the landing's bare north wall, which the
+    // room-outline version never looked at). Over EVERY visible face run of the face model (spec/trim_faces.json: room outlines, the main
+    // stair's rakes and the landings' edges, merged where they touch; HOUSE-KERNEL step 1), every 2 cm, at each member's middle above
+    // the run's line: a ray from 10 cm in front toward the face must meet trim or something mounted on the wall before bare wall; at the
+    // wainscot panel's height a wall in the wainscot material is the panel. Points inside something solid are skipped. Bare wall over
+    // 3 cm is a GAP. It reads the built scene, never the strips, and runs the same on either trim path, so the two are measured alike.
     static string TrimCheck()
     {
+        var j = LoadTrimFaces(); string panelMat = TrimMat().name;
         var temp = new List<Collider>();
         foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
             if (r.enabled && r.GetComponent<Collider>() == null && r.GetComponent<MeshFilter>()?.sharedMesh is Mesh mesh)
             { var mc = r.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = mesh; temp.Add(mc); }
         Physics.SyncTransforms();
-        var gaps = new List<string>(); int samples = 0;
-        foreach (var (p, fy, h) in TrimRooms)
+        var gaps = new List<string>(); int samples = 0, stairRuns = 0, byModel = 0; float length = 0f;
+        foreach (var run in j["runs"])
         {
-            int n = p.Count; float area = 0f;
-            for (int i = 0; i < n; i++) area += p[i].x * p[(i + 1) % n].y - p[(i + 1) % n].x * p[i].y;
-            float sg = Mathf.Sign(area);
-            var heights = h > 0.3f ? new[] { 0.07f, h + 0.01f } : new[] { 0.07f };
-            for (int i = 0; i < n; i++)
+            string ax = (string)run["axis"], room = (string)run["room"]; float c = (float)run["c"], n = (float)run["n"];
+            var pts = run["pts"].Select(p => new Vector2((float)p[0], (float)p[1])).ToList();
+            float Line(float s) { for (int i = 0; i + 1 < pts.Count; i++) if (s <= pts[i + 1].x) return pts[i + 1].x - pts[i].x < 1e-6f ? pts[i + 1].y : Mathf.Lerp(pts[i].y, pts[i + 1].y, (s - pts[i].x) / (pts[i + 1].x - pts[i].x)); return pts[pts.Count - 1].y; }
+            float s0 = pts[0].x, s1 = pts[pts.Count - 1].x; length += s1 - s0;
+            if (room.StartsWith("stair")) stairRuns++; if (run["by"] != null && run["by"].Type != JTokenType.Null) byModel++;
+            foreach (var smp in run["samples"])
             {
-                Vector2 a = p[i], b = p[(i + 1) % n]; float L = Vector2.Distance(a, b); if (L < 0.1f) continue;
-                Vector2 t = (b - a) / L, nOut = new Vector2(sg * t.y, -sg * t.x);
-                foreach (float y in heights)
+                float h = (float)smp["h"]; bool panel = smp["panel"] != null && (bool)smp["panel"];
+                float g0 = -1f;
+                void Close(float s)
                 {
-                    float g0 = -1f;
-                    void Close(float s) { if (g0 >= 0f && s - g0 > 0.03f) { var m = a + t * (g0 + s) / 2; gaps.Add($"GAP     {s - g0:F2} m of bare wall at y {y:F2} by spec ({m.x:F2}, {fy:F2}, {-m.y:F2})"); } g0 = -1f; }
-                    for (float s = 0.03f; s < L - 0.03f; s += 0.02f)
+                    if (g0 >= 0f && s - g0 > 0.03f)
                     {
-                        samples++;
-                        var q = a + t * s; var o = new Vector3(q.x - nOut.x * 0.10f, fy + y, q.y - nOut.y * 0.10f);
-                        // a sample point inside something solid (the stair's steps: their grey-box colliders stay) is not seen from the room
-                        bool bare = !Physics.CheckSphere(o, 0.005f, ~0, QueryTriggerInteraction.Ignore) && Physics.Raycast(o, new Vector3(nOut.x, 0f, nOut.y), out var hit, 0.14f, ~0, QueryTriggerInteraction.Ignore)
-                                    && hit.collider.name == "Wall" && hit.distance > 0.09f;
-                        if (bare && g0 < 0f) g0 = s; else if (!bare) Close(s);
+                        float m = (g0 + s) / 2; float y = Line(m) + h;
+                        var spec = ax == "x" ? new Vector3(m, y, -c) : new Vector3(c, y, -m);
+                        gaps.Add($"GAP     {s - g0:F2} m of bare wall {h:F2} above the line of the {room} run at spec ({spec.x:F2}, {spec.y:F2}, {spec.z:F2})");
                     }
-                    Close(L - 0.03f);
+                    g0 = -1f;
                 }
+                for (float s = s0 + 0.03f; s < s1 - 0.03f; s += 0.02f)
+                {
+                    samples++;
+                    float y = Line(s) + h;
+                    var o = ax == "x" ? new Vector3(s, y, c + n * 0.10f) : new Vector3(c + n * 0.10f, y, s);
+                    var d = ax == "x" ? new Vector3(0, 0, -n) : new Vector3(-n, 0, 0);
+                    bool bare = !Physics.CheckSphere(o, 0.005f, ~0, QueryTriggerInteraction.Ignore) && Physics.Raycast(o, d, out var hit, 0.14f, ~0, QueryTriggerInteraction.Ignore)
+                                && hit.collider.name == "Wall" && hit.distance > 0.09f
+                                && !(panel && hit.collider.GetComponent<MeshRenderer>()?.sharedMaterial?.name == panelMat);
+                    if (bare && g0 < 0f) g0 = s; else if (!bare) Close(s);
+                }
+                Close(s1 - 0.03f);
             }
         }
         foreach (var c in temp) Object.DestroyImmediate(c);
         Physics.SyncTransforms();
-        return $"Trim check: {TrimRooms.Count} finished rooms, {samples} samples, {gaps.Count} gaps in the baseboard or cap rail\n" + string.Concat(gaps.Take(30).Select(g => g + "\n"));
+        var ends = string.Join(", ", ((JObject)j["ends"]).Properties().Select(p => $"{p.Name} {p.Value}"));
+        return $"Trim check: {j["runs"].Count()} face runs ({stairRuns} on the stair and landings, {byModel} panelled by a window model), {length:F1} m, {samples} samples, {gaps.Count} gaps in the baseboard, wainscot or cap rail; run ends: {ends}\n"
+               + string.Concat(gaps.Take(30).Select(g => g + "\n"));
     }
 }

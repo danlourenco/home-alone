@@ -1,0 +1,1 @@
+{"name":"perf-OnDemand","frames":200,"cpu_ms_median":40.5,"cpu_ms_p95":88.1,"cpu_ms_p99":94.2,"gpu_ms_median":45.4,"batches":0,"setpass":488,"triangles":27443196,"shadow_casters":39705,"screen":"1366x768","focused":false,"cam":"8.40,-1.90,-9.40 yaw 268"}

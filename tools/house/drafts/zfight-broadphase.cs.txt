@@ -1,0 +1,63 @@
+// DRAFT for the fast-checks job: replaces the candidate loop in SpecGreybox.Checks.cs ZFightCheck (from "var grid = new
+// Dictionary<(int, int, int, int), List<int>>();" through the end of the "for (int i = 0; i < tris.Count; i++)" pair loop).
+// Same candidates in the result, far fewer pairs examined: triangles are bucketed by plane exactly as before (normal to 1/50,
+// offset in 1 cm slabs, this slab and the next), then by a 2-D grid in the plane; a pair is examined only when their in-plane boxes
+// overlap, once, in the first grid cell they share. Pairs whose boxes don't overlap have zero overlap area, so the report is
+// identical (prove it: old vs new on the current house, plus a planted overlap).
+
+        const float Cell = 0.25f;   // m; a wall face spans tens of cells, a small trim triangle one
+        var basis = new Dictionary<(int, int, int), (Vector3 u, Vector3 w)>();
+        var bx = new (float u0, float u1, float w0, float w1, int cu0, int cw0, int cu1, int cw1)[tris.Count];
+        var grid = new Dictionary<(int, int, int, int, int, int), List<int>>();
+        for (int i = 0; i < tris.Count; i++)
+        {
+            var ti = tris[i]; var k = Key(ti.n, ti.d); var nk = (k.Item1, k.Item2, k.Item3);
+            if (!basis.TryGetValue(nk, out var b))
+            {
+                var nn = new Vector3(k.Item1, k.Item2, k.Item3).normalized;
+                var u = Vector3.Cross(nn, Mathf.Abs(nn.y) < 0.9f ? Vector3.up : Vector3.right).normalized;
+                basis[nk] = b = (u, Vector3.Cross(nn, u));
+            }
+            float ua = Vector3.Dot(ti.a, b.u), ub = Vector3.Dot(ti.b, b.u), uc = Vector3.Dot(ti.c, b.u);
+            float wa = Vector3.Dot(ti.a, b.w), wb = Vector3.Dot(ti.b, b.w), wc = Vector3.Dot(ti.c, b.w);
+            float u0 = Mathf.Min(ua, Mathf.Min(ub, uc)), u1 = Mathf.Max(ua, Mathf.Max(ub, uc));
+            float w0 = Mathf.Min(wa, Mathf.Min(wb, wc)), w1 = Mathf.Max(wa, Mathf.Max(wb, wc));
+            int cu0 = Mathf.FloorToInt(u0 / Cell), cu1 = Mathf.FloorToInt(u1 / Cell), cw0 = Mathf.FloorToInt(w0 / Cell), cw1 = Mathf.FloorToInt(w1 / Cell);
+            bx[i] = (u0, u1, w0, w1, cu0, cw0, cu1, cw1);
+            for (int cu = cu0; cu <= cu1; cu++) for (int cw = cw0; cw <= cw1; cw++)
+            {
+                var gk = (k.Item1, k.Item2, k.Item3, k.Item4, cu, cw);
+                if (!grid.TryGetValue(gk, out var l)) grid[gk] = l = new List<int>(); l.Add(i);
+            }
+        }
+        var pairs = new Dictionary<(int, int), (float area, float gap, Vector3 at)>();
+        const float Eps = 1e-4f;   // box overlap slack (projection rounding)
+        for (int i = 0; i < tris.Count; i++)
+        {
+            var ti = tris[i]; var k = Key(ti.n, ti.d); var bi = bx[i];
+            for (int dd = 0; dd <= 1; dd++)   // the same and the next 1 cm slab (each pair once)
+                for (int cu = bi.cu0; cu <= bi.cu1; cu++) for (int cw = bi.cw0; cw <= bi.cw1; cw++)
+                {
+                    if (!grid.TryGetValue((k.Item1, k.Item2, k.Item3, k.Item4 + dd, cu, cw), out var l)) continue;
+                    foreach (int j in l)
+                    {
+                        if (dd == 0 && j <= i) continue;
+                        var bj = bx[j];
+                        if (cu != Mathf.Max(bi.cu0, bj.cu0) || cw != Mathf.Max(bi.cw0, bj.cw0)) continue;   // only in the first shared cell
+                        if (bi.u1 < bj.u0 - Eps || bj.u1 < bi.u0 - Eps || bi.w1 < bj.w0 - Eps || bj.w1 < bi.w0 - Eps) continue;
+                        var tj = tris[j];
+                        if (tj.s == ti.s || surf[tj.s].m == surf[ti.s].m || Vector3.Dot(ti.n, tj.n) < 0.999f) continue;
+                        float gap = Mathf.Abs(tj.d - ti.d); if (gap >= 0.01f) continue;
+                        var (area, at) = Overlap(ti.a, ti.b, ti.c, tj.a, tj.b, tj.c, ti.n);
+                        if (area < 1e-5f || !Seen(at + ti.n * 0.02f) || Hidden(at, ti.n)) continue;
+                        var key = ti.s < tj.s ? (ti.s, tj.s) : (tj.s, ti.s);
+                        pairs.TryGetValue(key, out var acc);
+                        pairs[key] = (acc.area + area, acc.area == 0 ? gap : Mathf.Min(acc.gap, gap), acc.area == 0 ? at : acc.at);
+                    }
+                }
+        }
+
+// Caveat for the equivalence proof: the old loop visited pairs in a different ORDER, and `at` keeps the FIRST overlap point found,
+// so the reported location of a pair can differ (area, gap and the set of pairs must match exactly). Compare on (pair, area, gap).
+// Two normals that round to the same key but whose planes' bases differ slightly: the basis comes from the KEY's normal, the same
+// for every triangle in the bucket, so boxes are comparable within a bucket.

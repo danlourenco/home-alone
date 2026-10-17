@@ -1,0 +1,1 @@
+{"name":"foyer-day-cached","frames":240,"cpu_ms_median":100.0,"cpu_ms_p95":100.8,"cpu_ms_p99":101.9,"gpu_ms_median":25.9,"batches":0,"setpass":528,"triangles":28619228,"shadow_casters":40964,"screen":"1366x768","focused":false,"cam":"0.74,-1.90,-0.96 yaw 139"}

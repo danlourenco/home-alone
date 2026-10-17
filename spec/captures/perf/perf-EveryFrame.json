@@ -1,0 +1,1 @@
+{"name":"perf-EveryFrame","frames":200,"cpu_ms_median":67.0,"cpu_ms_p95":145.0,"cpu_ms_p99":152.3,"gpu_ms_median":143.7,"batches":0,"setpass":1149,"triangles":72408532,"shadow_casters":102083,"screen":"1366x768","focused":false,"cam":"8.40,-1.90,-9.40 yaw 268"}

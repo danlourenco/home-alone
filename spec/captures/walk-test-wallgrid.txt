@@ -71,8 +71,8 @@ ok      kevin down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor heigh
 ok      kevin down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
 ok      player up leg 1: ended 0.03 m from waypoint, 0.03 m off its floor height, 6 frames (clean walk 7)
 BLOCKED player up leg 2: ended 0.07 m from waypoint, 0.06 m off its floor height by ServiceStair/service_winder2_tread at (2.29, -2.41, 6.81) spec x,y,z, 1500 frames (clean walk 20) STALLED
-ok      player down leg 1: ended 0.02 m from waypoint, 0.09 m off its floor height, 18 frames (clean walk 20)
-ok      player down leg 2: ended 0.00 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 7)
+ok      player down leg 1: ended 0.02 m from waypoint, 0.08 m off its floor height, 18 frames (clean walk 20)
+ok      player down leg 2: ended 0.01 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 7)
 Render check (outward faces, ServiceStair): 97 parts, 0 inside-out
 Seam check: 693 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
 Leak and headroom check: 1383 points, 0 leaks, 17 low-headroom points (ground floor, outside flight 1)
@@ -97,13 +97,14 @@ skip    bandit back_stair: no cell to stand in (its floor is a stair)
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin back_stair: no cell to stand in (its floor is a stair)
-Z-fight check: 1196085 triangles, 1354 surfaces, 0 coplanar pairs seen from rooms (25 unreadable meshes skipped)
-Clash check: 1356504 triangles, 0 parts passing through another (1 allowed joints)
+Z-fight check: 1197267 triangles, 1355 surfaces, 0 coplanar pairs seen from rooms (25 unreadable meshes skipped)
+Clash check: 1357686 triangles, 0 parts passing through another (1 allowed joints)
 Casing check: 0 casings placed apart from their opening
 Arch fit: 1 generated arches on their cuts, 0 joints off by more than 1 mm (worst 0.00 mm)
 Props check: 15 store models, 0 problems
-Trim check: 9 finished rooms, 10204 samples, 0 gaps in the baseboard or cap rail
-Envelope check: 2133 points at room joints, 0 see the sky through < 0.3 m of shadow caster
+Trim check: 62 face runs (3 on the stair and landings, 1 panelled by a window model), 92.7 m, 8572 samples, 1 gaps in the baseboard, wainscot or cap rail; run ends: corner 57, opening 65, outside-corner 2
+GAP     0.06 m of bare wall 0.42 above the line of the room:hall_corridor run at spec (7.35, 0.42, 9.91)
+Envelope check: 2125 points at room joints, 0 see the sky through < 0.3 m of shadow caster
 Quality check: 2 pipeline models of 30 generated (the rest predate the artist pipeline), 4 problems
 FAIL HallArches.glb: 4 problems
         albedo  Soffit_B[AR_SoffitB]: detail map takes [0.393, 0.556, 0.476] to [0.272, 0.391, 0.333] (+-0.12 allowed)

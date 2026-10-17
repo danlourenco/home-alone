@@ -2,7 +2,10 @@
 # unity_pipeline.sh: build, bake, load and capture House_WallGrid without touching the user's open editor until the load.
 #
 #   tools/house/unity_pipeline.sh setup      # (once) make the scratch build copy: ~/.cache/home-alone/ucopy/HomeAlone (+ spec link)
-#   tools/house/unity_pipeline.sh build      # copy Editor/Scripts/Models/HDRP.asset in, build the scene (batch); gates -> spec/captures/walk-test-wallgrid.txt
+#   tools/house/unity_pipeline.sh build [unity args]   # copy Editor/Scripts/Models/HDRP.asset in, build the scene (batch); gates -> spec/captures/walk-test-wallgrid.txt
+#                                            # extra args go to Unity (e.g. -views trim-after.json: renders in the same session);
+#                                            # HA_OVERLAY=<dir>: drafts (dir/Editor, dir/Models ...) copied over Assets/ after the repo's, so
+#                                            # uncompiled C# or a model the open editor must not see yet never touches the repo
 #   tools/house/unity_pipeline.sh bake       # bake day + night (WINDOWED: batch mode has no sky; BakeLighting refuses it)
 #   tools/house/unity_pipeline.sh load       # copy scene + bake into the project, wait for import/compile, open, Play
 #   tools/house/unity_pipeline.sh all        # build, bake, load
@@ -44,8 +47,12 @@ build)
   for pk in "Fadnn - Vintage Interior Furniture Pack" "Classic Wooden Furniture Pack" "Free Wood Door Pack" "VTC_AV-2062s" "ChristmasTreeAndGarland"; do   # Asset Store packs (gitignored; may be absent)
     [ -d "$P/Assets/$pk" ] && rsync -a "$P/Assets/$pk" "$P/Assets/$pk.meta" "$S/Assets/"; done
   [ -d "$P/Assets/Purchased" ] && rsync -a "$P/Assets/Purchased" "$S/Assets/" && { [ -f "$P/Assets/Purchased.meta" ] && cp "$P/Assets/Purchased.meta" "$S/Assets/" || true; }   # CGTrader buys (gitignored; may be absent: generated plants then)
-  "$UNITY" -batchmode -projectPath "$S" -executeMethod SpecGreybox.BuildWallGrid -quit -logFile "$ROOT/build.log" || true
+  [ -n "${HA_OVERLAY:-}" ] && rsync -a "$HA_OVERLAY/" "$S/Assets/"
+  python3 "$REPO/tools/house/trim_faces.py"   # the face model the trim is laid from (HOUSE-KERNEL step 1; the build refuses a stale one)
+  "$UNITY" -batchmode -projectPath "$S" -executeMethod SpecGreybox.BuildWallGrid -quit -logFile "$ROOT/build.log" "${@:2}" || true
   if grep -q "error CS" "$ROOT/build.log"; then grep "error CS" "$ROOT/build.log" | head -5; exit 1; fi
+  # a gate over its time budget (SpecGreybox.Step/BudgetGuard; zfight-check skill "Check speed") fails the build, naming the gate
+  if grep -q "BUDGET FAIL" "$ROOT/build.log"; then grep -m5 "BUDGET FAIL" "$ROOT/build.log"; exit 1; fi
   # artist-pipeline quality gate on the generated models (tools/house/model_quality.py; .claude/skills/artist-pipeline)
   (cd "$REPO" && uv run -q --with numpy --with pillow python -I tools/house/model_quality.py --report >> spec/captures/walk-test-wallgrid.txt) || true
   grep -E "^(Seam|Z-fight|Clash|Casing|Arch|Trim|Envelope|Props|Leak|Peek|Quality)|BLOCKED" "$REPO/spec/captures/walk-test-wallgrid.txt";;

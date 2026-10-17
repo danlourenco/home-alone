@@ -333,7 +333,7 @@ public static partial class SpecGreybox
         FrenchDoors(root, groot, gy, geo["ground"]);   // FrenchDoors.cs: the glazed French door pairs (changes/2026-10-16-french-doors.json)
         StoreProps(root, groot, gy);   // StoreProps.cs: Asset Store furniture in measured boxes (spec/dressing/store_props.json)
         DenScreenPatch();              // SpecGreybox.Den.cs: the video screen over the bought TV's glass (after StoreProps placed it)
-        LayTrim(groot);
+        if (TrimFromFaces) FaceTrim(groot); else LayTrim(groot, new[] { "PropDoor", "Casing", "FrontDoor_HiFi", "MainStair_HiFi" });   // SpecGreybox.Trim.cs
         Envelope(root, geo, j["attic_stair"]["boxes"], gj["wall_openings"], gj["stair"]?["ceiling_openings"], gy);
         FilmFront(root, geo, gj["wall_openings"], gy);
         Daylight(root, gy);
@@ -342,26 +342,42 @@ public static partial class SpecGreybox
         Player(spawn, spawnYaw);
         var player = GameObject.Find("Player"); player.SetActive(false);
         Physics.SyncTransforms();
+        Step("WalkTest");
         string report = "WALL-GRID HOUSE (both floors from spec/geometry.json)\nUPSTAIRS\n" + WalkTest(spaces, doors);
+        Step("WalkTest ground");
         FloorY = gy; report += "GROUND\n" + WalkTest(gspaces, gdoors); FloorY = 0f;
+        Step("StairWalk");
         report += StairWalk(stairPath) + StairWalk(atticPath) + StairWalk(servicePath);
+        Step("RenderCheck");
         report += RenderCheck(groot.transform.Find("ServiceStair"));
         var dressing = GameObject.Find("Ground/Dressing"); dressing?.SetActive(false); Physics.SyncTransforms();
         var walkIn = doors.Concat(gdoors).Where(d => d.kind != "fake_door").SelectMany(d => new[] { d.a, d.b }).ToHashSet();
         SeamRooms = spaces.Where(sp => walkIn.Contains(sp.name) || sp.kind == "opening").Select(sp => (sp.pts, sp.opens == "down" ? gy : 0f, sp.ceil)).ToList();
         SeamRooms.AddRange(gspaces.Where(sp => walkIn.Contains(sp.name)).Select(sp => (sp.pts, gy, gy + sp.ceil)));
+        Step("SeamCheck");
         report += SeamCheck(root, groot);
+        Step("LeakAndHeadroom");
         report += LeakAndHeadroom(spaces, gspaces, gy);
+        Step("Peek");
         report += Peek(spaces, gspaces, gy, walkIn);
+        Step("RoomWalk upstairs");
         report += "UPSTAIRS " + RoomWalk(spaces, doors);
+        Step("RoomWalk ground");
         FloorY = gy; report += "GROUND " + RoomWalk(gspaces, gdoors); FloorY = 0f;
         dressing?.SetActive(true); Physics.SyncTransforms();
+        Step("ZFightCheck");
         report += ZFightCheck(root, groot);
+        Step("ClashCheck");
         report += ClashCheck(root, groot);
+        Step("CasingCheck");
         report += CasingCheck(root, groot);
+        Step("ArchFitCheck");
         report += ArchFitCheck();   // SpecGreybox.Arch.cs
+        Step("PropsCheck");
         report += PropsCheck();   // StoreProps.cs
-        report += TrimCheck(); TrimRooms.Clear();
+        Step("TrimCheck");
+        report += TrimCheck();   // over every face run of spec/trim_faces.json, either trim path
+        Step("EnvelopeCheck");
         report += EnvelopeCheck(geo, j["attic_stair"]["boxes"], gj["wall_openings"], gy);
         Traps(root, gy);   // Traps.cs: gameplay rigs (spec/dressing/traps.json), after the gates so none of them sees the rig
         player.SetActive(true);
@@ -370,7 +386,11 @@ public static partial class SpecGreybox
         LimitShadows(root.transform.root.gameObject);   // SpecGreybox.Shadows.cs: real-time shadow budget
         EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), "Assets/Scenes/House_WallGrid.unity");
         Debug.Log("SpecGreybox.BuildWallGrid\n" + report);
+        if (System.Array.IndexOf(System.Environment.GetCommandLineArgs(), "-views") >= 0) RenderViews();   // renders in the same session (one Unity start)
     }
+
+    // a timestamped line before each build check (they log nothing themselves): a silent build.log then means a stuck check, and names it
+    static void Step(string what) => Debug.Log($"[{System.DateTime.Now:HH:mm:ss}] BuildWallGrid: {what}");
 
     // One storey from geometry.json at the current FloorY: walls (papered on the faces of the named rooms, over the wainscot),
     // floor plate, ceilings, finishes, door/window trim, prop doors, glass, rails, arch tops. Returns the rooms and openings in
@@ -433,11 +453,10 @@ public static partial class SpecGreybox
         var sd = hinge.AddComponent<SwingDoor>(); sd.leaf = leaf.transform; sd.width = (float)o["hi"] - (float)o["lo"] - 0.01f;
     }
 
-    static void LayTrim(GameObject parent)
+    static void LayTrim(GameObject parent, string[] blockers)
     {   // sampled every 5 mm against the actual surfaces of what is mounted on the wall (doors, casings, the stair's skirt):
         // bounding boxes would cut whole walls (the stair model's box covers most of the hall)
         var g = Child(parent, "Trim");
-        string[] blockers = { "PropDoor", "Casing", "FrontDoor_HiFi", "MainStair_HiFi" };
         bool IsBlocker(Transform t) => blockers.Any(b => t.name.Contains(b) || (t.parent != null && t.parent.name.Contains(b)));
         var temp = new List<Collider>();
         foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
@@ -527,7 +546,6 @@ public static partial class SpecGreybox
         {
             if (!finishOf.TryGetValue((string)rm["name"], out var rf) || rf.h <= 0f) continue;   // no wainscot: no trim (stair well, kitchen)
             var p = rm["poly"].Select(q => new Vector2((float)q[0], (float)q[1])).ToList(); int n = p.Count;
-            TrimRooms.Add((p.Select(v => new Vector2(v.x, -v.y)).ToList(), FloorY, rf.h));
             float area = 0f; for (int i = 0; i < n; i++) area += p[i].x * p[(i + 1) % n].y - p[(i + 1) % n].x * p[i].y;
             float sg = Mathf.Sign(area);
             Vector2 Dir(int i) => (p[(i + 1) % n] - p[i]).normalized;
@@ -881,6 +899,8 @@ public static partial class SpecGreybox
             r.sharedMaterials = mats; r.gameObject.isStatic = true;
             foreach (var c in r.GetComponents<Collider>()) Object.DestroyImmediate(c);   // the grey-box carries collision
         }
+        if (TrimFromFaces)   // the stair wall's skirt, raking panel and rail now come from the face model (SpecGreybox.Trim.cs)
+            foreach (var r in go.GetComponentsInChildren<MeshRenderer>().Where(r => r.name.StartsWith("StairWallTrim")).ToList()) Object.DestroyImmediate(r.gameObject);
         var gb = root.transform.Find("MainStair");
         Bounds Bo(Transform t, System.Func<MeshRenderer, bool> f) { var rs = t.GetComponentsInChildren<MeshRenderer>().Where(f).ToArray(); var b = rs[0].bounds; foreach (var q in rs) b.Encapsulate(q.bounds); return b; }
         if (gb != null)

@@ -137,8 +137,11 @@ line = sorted(((b["x"][1] + NOSE, b["y"][1]) for b in f1), reverse=True)        
 line = [(line[0][0] + (line[0][0] - line[1][0]), line[0][1] - (line[1][1] - line[0][1]))] + line   # floor level
 line = [(STAIR_WALL_END, line[0][1])] + line                                          # flat along the floor to the wall's end (user note 09:34)
 line += [(LN["x"][1] + NOSE, LN["y"][1]), (LN["x"][0] + 0.02, LN["y"][1])]            # landing nosing, landing back wall
-white.sweep([(x, y, WALL_FACE - 0.011) for x, y in line[:-1]], [(-0.011, -0.10), (0.011, -0.10), (0.011, 0.20), (-0.011, 0.20)])   # to the landing nosing
-white.box(line[-1][0], line[-2][0], LN["y"][1], LN["y"][1] + 0.20, WALL_FACE - 0.022, WALL_FACE)   # on the landing: sits on it (a dip went through the ceiling below)
+# the stair wall's skirt, raking panel and rail are their own part (StairWallTrim): with SpecGreybox.TrimFromFaces the face model lays
+# them instead (tools/house/trim_faces.py: one run from the living-room casing up the flight, across the landing; HOUSE-KERNEL step 1)
+wall = Part("StairWallTrim", "Stair_White")
+wall.sweep([(x, y, WALL_FACE - 0.011) for x, y in line[:-1]], [(-0.011, -0.10), (0.011, -0.10), (0.011, 0.20), (-0.011, 0.20)])   # to the landing nosing
+wall.box(line[-1][0], line[-2][0], LN["y"][1], LN["y"][1] + 0.20, WALL_FACE - 0.022, WALL_FACE)   # on the landing: sits on it (a dip went through the ceiling below)
 
 # the wall under flight 1's open side (Marina 193.5 s): wallpaper between the stringer's bottom edge and a white wainscot
 # (0.705 m, foyer.json) with a cap; one plane 1 cm proud of the open side, over the flight only (the landing has its wall)
@@ -161,9 +164,9 @@ wains.box(xa1, xcap, y_floor + WAIN - 0.01, y_floor + WAIN + 0.03, zf - 0.02, zf
 # (film 2677, Marina 1070.5 s)
 zw = WALL_FACE - 0.015   # 1.5 cm proud: at 4 mm it z-fought the wallpaper face (user note Oct 16 07:11)
 for (xa, ya), (xb, yb) in zip(line, line[1:]):
-    wains.face([(xa, ya + 0.20, zw), (xa, ya + WAIN, zw), (xb, yb + WAIN, zw), (xb, yb + 0.20, zw)], (0, 0, -1))   # seen from the foyer
+    wall.face([(xa, ya + 0.20, zw), (xa, ya + WAIN, zw), (xb, yb + WAIN, zw), (xb, yb + 0.20, zw)], (0, 0, -1))   # seen from the foyer
 rk = [(x, y + WAIN + 0.015, WALL_FACE - 0.03) for x, y in line]
-white.sweep(rk, [(-0.015, -0.02), (0.015, -0.02), (0.015, 0.02), (-0.015, 0.02)])
+wall.sweep(rk, [(-0.015, -0.02), (0.015, -0.02), (0.015, 0.02), (-0.015, 0.02)])
 
 
 # the bottom step's bullnose (film 2677, Marina 193.5 s: the first step rounds out past the open side under the newel), replacing
@@ -247,8 +250,8 @@ MATS.update({"Stair_TreadWood": material("Stair_TreadWood", DRESS["rail"], 0.35)
              "Stair_Spandrel": material("Stair_Spandrel", DRESS["wallpaper"], 0.8)})
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("MainStair_HiFi", None); coll.objects.link(root)
-for p in (tread, white, runner, rail, bal, newel, spand, wains):
+for p in (tread, white, runner, rail, bal, newel, spand, wains, wall):
     p.build(coll, MATS).parent = root
 OUT.parent.mkdir(parents=True, exist_ok=True)
 bpy.ops.export_scene.gltf(filepath=str(OUT), export_format="GLB", export_yup=True, export_apply=True)
-print("wrote", OUT, {p.name: len(p.f) for p in (tread, white, runner, rail, bal, newel, spand, wains)})
+print("wrote", OUT, {p.name: len(p.f) for p in (tread, white, runner, rail, bal, newel, spand, wains, wall)})

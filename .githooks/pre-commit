@@ -5,6 +5,7 @@
 # commit with --no-verify and say so.
 # Generated models (Oct 16): a model must be rebuilt from its current sources; the stamp records what built it
 python3 tools/house/build_models.py --check || exit 1
+python3 tools/house/trim_faces.py --check || exit 1   # the trim face model (spec/trim_faces.json) is current and its runs all terminate
 geo=$(git diff --cached --name-only | grep -E '^(measurements/|spec/house_spec|spec/furniture\.json|tools/house/reconcile\.py|unity/HomeAlone/Assets/Scenes/(IntactHouseReference|Greybox_Upstairs)\.unity)')
 [ -z "$geo" ] && exit 0
 recs=$(git diff --cached --name-only --diff-filter=AM | grep -E '^changes/.*\.json$')

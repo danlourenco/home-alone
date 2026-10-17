@@ -1,0 +1,132 @@
+{
+ "gate": 7,
+ "change": "HOUSE-KERNEL step 1 (docs/HOUSE-KERNEL.md, approved Oct 17): a TOPOLOGY change in where trim goes. Baseboard, cap rail (over the wall's wainscot) and the stair's skirt, raking panel and rail are computed as runs along the house's visible wall faces (tools/house/trim_faces.py -> spec/trim_faces.json): room outlines, the main stair's nosing lines and the landing's edges are merged into one line wherever they touch, cut at casings and prop doors generated from the same openings, and laid by SpecGreybox.Trim.cs (switch TrimFromFaces, one line). The stair model's own wall skirt/panel/rail moved to a separate part (hifi_foyer.py StairWallTrim, triangles unchanged) that the new path drops. Fixes by construction the two walk notes of Oct 17 08:30 (triangle of paper at the landing nosing; the landing's north wall unfinished). The build's Trim check now samples every face run of the model (stair and landing faces included) on either path. Profiles unchanged.",
+ "target": "House_WallGrid",
+ "premise": "The stair's walls, the landing's edges and the rooms' outlines are faces of one wall set, so one run per face line (merged where floor, rake and landing meet) gives continuous trim; the stair and landing walls take the finish of the room the stair rises from (the foyer's 0.705 wainscot), which the film shows white below the rail on flight 1's wall, the landing, and the north wall behind flight 2",
+ "claim": {
+  "value": {
+   "stair_wainscot_above_nosing_m": 0.705,
+   "north_wall_and_flight2_wainscot": "skirt + raking panel + rail, 0.705 above the nosing line (assumed height)",
+   "landing_back_wall": "panelled to the window stool by the window model (unchanged)",
+   "runs": 62,
+   "run_ends_free": 0
+  },
+  "data": [
+   "marina-frame:312"
+  ],
+  "scale": [
+   "door-80in:312"
+  ],
+  "upstream": [
+   "door-80in:312"
+  ],
+  "how": "trim_faces.py reads spec/geometry.json (walls, rooms, openings), the stair boxes and the finishes; its height is the foyer's wainscot (foyer.json wainscot_m 0.705, Marina 312 s), carried along the stair's walls from the room it rises from. Where it goes is decided by the geometry (a wall behind, nothing solid or mounted in front); the north wall's height is ASSUMED (DEVIATIONS 66)",
+  "applies_to": [
+   "foyer",
+   "main_stair",
+   "landing"
+  ],
+  "measured_in": [
+   "foyer"
+  ],
+  "assumed": {
+   "main_stair": "DEVIATIONS 66",
+   "landing": "DEVIATIONS 66"
+  },
+  "alternatives": [
+   "old outline trim (rooms only) + the stair model's own skirt/panel/rail on flight 1's wall + the window model's panelling; the landing's north wall and flight 2's wall bare (built before; switch TrimFromFaces = false)",
+   "face-derived trim: one run per face line, stair rakes and landing edges included, the north wall wainscoted at the stair's 0.705 (built)",
+   "face-derived trim with the north wall panelled only to the window stool height (as the landing's back wall)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "white wainscot below the rail on the north wall behind flight 2 and along the landing (not paper to the floor)",
+     "observed_in": [
+      "film:11966",
+      "film:12133"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "flight 1's raking wainscot carried flat onto the landing to the back wall, meeting the back wall's stool-height panelling with a step at the corner",
+     "observed_in": [
+      "film:11966",
+      "film:12133"
+     ],
+     "extrapolated": false
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-16",
+   "what": "trim from room outlines (SpecGreybox.Storey -> LayTrim) after per-box trim stopped short (user note 11:13)",
+   "outcome": "ok",
+   "ref": "SpecGreybox.cs Storey"
+  },
+  {
+   "date": "2026-10-16",
+   "what": "stair wall: one trim line from the foot to the landing (user notes 08:41, 09:34)",
+   "outcome": "ok",
+   "ref": "hifi_foyer.py"
+  },
+  {
+   "date": "2026-10-17",
+   "what": "per-case patches (one skirt prism, a north-wall wainscot in hifi_foyer.py) + a stair-only trim check (branch wip/foyer-rugs-stair, 75caab5d); paused by the user, never built: superseded by this step",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 11966 / 12133 (frontal on the landing): flight 1's wall carries a white raking wainscot onto the landing; the landing's back wall is white only to the window stool; right of the window, behind flight 2's balusters, the wall below the rail reads white, paper above",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:11966",
+    "film:12133"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "CONSISTENCY, not evidence (its faces and heights come from the same model and the same 0.705): build Trim check over every face run (spec/captures/trim-check-House_WallGrid_HEAD.txt, the committed old-path scene): 4 gaps at the two notes (0.04 m at the landing nosing on flight 1's wall, 0.10 above the line; 2.2 m on the north wall at 0.10, 0.45, 0.72) + 1 pre-existing wall-finish gap in the upstairs hall (x 7.30-7.37, z 9.907: a thin wall split down its middle shows its plain half's end face to the hall; not trim, the hall is paused); new path: see the build report",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "build:House_WallGrid",
+    "marina-frame:312"
+   ],
+   "scale": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/trim/before-n0830a-k.png",
+   "spec/captures/views/trim/before-n0830a-e128.png",
+   "spec/captures/views/trim/before-n0830b-k.png",
+   "spec/captures/views/trim/before-n0830b-e128.png",
+   "spec/captures/views/trim/before-stairfoot-e128.png",
+   "spec/captures/views/trim/before-dining-e128.png",
+   "spec/captures/views/trim/before-living-e128.png",
+   "spec/captures/views/trim/before-halltop-e128.png"
+  ],
+  "after": [
+   "spec/captures/views/trim/after-n0830a-k.png",
+   "spec/captures/views/trim/after-n0830a-e128.png",
+   "spec/captures/views/trim/after-n0830b-k.png",
+   "spec/captures/views/trim/after-n0830b-e128.png",
+   "spec/captures/views/trim/after-stairfoot-e128.png",
+   "spec/captures/views/trim/after-dining-e128.png",
+   "spec/captures/views/trim/after-living-e128.png",
+   "spec/captures/views/trim/after-halltop-e128.png"
+  ]
+ },
+ "user_walk": "accepted",
+ "user_walk_words": "user Oct 17: \"accept step 1. move on\" (after \"left some notes, but mostly better now\"); follow-ups STATUS 8t: top-of-stair joint, landing-window z-fight, landing wainscot height mismatch"
+}
