@@ -24,6 +24,8 @@ but the user has not walked it yet.
 | Artist pipeline (skill .claude/skills/artist-pipeline) + foyer arch rebuilt smooth | Oct 17 attempt 2 REJECTED on walk; attempt 3 TRIAL (crown 2.17 -> 2.05 with paper over it, no casing; built in ~/.cache/home-alone-2, gates clean, NOT loaded, not re-baked; renders spec/captures/views/arch/{before,after}2-*.png). Earlier: gate finished (model_quality: Unity maps + detail albedo checks, self-test 8 cases), arch passes 0 problems; scratch build ~/.cache/home-alone-2: Arch fit 0, Z-fight 0, Clash 0; renders spec/captures/views/arch/. NOT loaded (user loads). Rollout to other models not started. HallArches.glb (hall job) now FAILS the detail-albedo check: apply DETAIL_ALBEDO there | changes/2026-10-16-foyer-arch-model.json; tools/house/hifi_pipeline.py, hifi_foyer_arch.py, model_quality.py |
 | Upstairs hall: film teal paint, trim, sconces, dressing, the film's elliptical ARCH (film 2080-2100; 2050-2060 for sconces), black-urn poinsettias (H1) | PAUSED mid-way, in its own scratch copy ~/.cache/home-alone-3 | changes/2026-10-17-upstairs-hall.json, -upstairs-arches.json; hifi_hall*.py; build reports Clash 2 in HallDressing (WIP) |
 
+Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.md) (stealth/lure, sit-and-watch TV, prep music, web).
+
 ### NEXT (in order; run ONE agent at a time: the user hit the usage limit twice running six in parallel)
 1. User walks the loaded build (day + night): shadow flicker gone (den plant pose 7.407,-2.996,-17.872 yaw 284), French doors,
    kitchen fixtures, plants, tree, TV. Answer each walk note from its own pose (live capture).
@@ -33,28 +35,61 @@ but the user has not walked it yet.
 5. Ficus crown wider; den wall saturation (ask the user); night white balance (agents measured nights 3-10x warmer than the film:
    ask the user about a house-wide night grade); sheers too bright at night (shared voile material).
 6. Z-fight reported 2 pairs in some builds: trace and fix.
+7a. [ORDER, user Oct 17: rugs agent -> THIS flicker test -> HOUSE KERNEL step 1 (trim from faces; docs/HOUSE-KERNEL.md, APPROVED) -> 8p process fixes -> kernel steps 2-6 -> 8a furniture -> 8b compare page -> 8z Buzz] FLICKER, NEW LEAD (Oct 17 10:40 screen recording, static camera in the foyer: small squares pop on the wallpaper and a chair
+   back frame to frame): HDRP lightLoopSettings.maxLightsPerClusterCell = 8 while 54 lights are enabled (53 shadowed) EVEN BY DAY;
+   light ranges pass through walls, so a cluster cell can exceed 8 and drop lights tile by tile. The shadow-atlas premise (DEVIATIONS
+   62) failed to fix it: attack the premise. Discriminating test: raise maxLightsPerClusterCell (16/24) OR disable the night lamps by
+   day, re-record the same pose, diff frames (scratchpad method: count pixels toggling >25 between consecutive frames). Also: why are
+   night lamps enabled (and shadowed) by day? Perf cost even if not the flicker.
 7. LATER (user Oct 17): shadow flicker STILL visible after the shadow pass (DEVIATIONS 62 did not fix it). Deferred to a dedicated
    performance + optimization pass; troubleshoot it there, not before. Same pass: ~80 CS0618 obsolete-API warnings (Unity 6.6:
    FindObjectsByType/FindFirstObjectByType sort-mode overloads, HDAdditionalLightData.spotLightShape): mechanical renames.
 8. Living-room tree HEIGHT: ACCEPTED (user Oct 17: "the height seems right"): 2.40 -> 1.70 m from film 10645 (changes/2026-10-17-living-tree-height.json; 1.6-1.8 m
    after the depth correction). Built with the arch in copy 2; load + walk pending.
-8s. Main stair + landing finish (user walk notes Oct 17 08:30, spec/feedback/feel-notes.jsonl): (1) "shouldn't the rug be red?":
+8s. [PAUSED by the user Oct 17; WIP on branch wip/foyer-rugs-stair (75caab5d), never built/reviewed; wainscot part superseded by HOUSE-KERNEL step 1] Main stair + landing finish (user walk notes Oct 17 08:30, spec/feedback/feel-notes.jsonl): (1) "shouldn't the rug be red?":
    the stair/landing carpet is built near-black; film 1616/2677 show a deep RED stair runner (measure colour from the film like the
    wallpaper); (2) landing wainscot on the right looks unfinished (pose 4.117,0.030,-8.559 yaw 264 pitch 33); (3) "weird triangular
    gap in the wainscotting" on the stair wall (pose 2.791,-0.682,-10.621 yaw 119 pitch 41). Trim check reports 0 gaps there: the
    check misses stair/landing wainscot: extend it (encode the lesson as a check).
-8r. Foyer rugs (user Oct 17; next agent job after the arch/tree load): FRONT RUG = mfb64 'Persian Nain' (CC BY 4.0, credit
+8c. Foyer/living opening + antialiasing (walk note Oct 17 10:37, pose 7.575,-2.996,-9.748 yaw 182: "why is the casing missing on the
+   right side? also is there no antialiasing? things looking a little jagged"). FOUND: (1) the casing leg IS built (Openings/Casing
+   x 8.580-8.650, z -11.43..-11.41, full height); it is hidden by the French door leaf, which stands open INTO THE FOYER at the hi jamb
+   (changes/2026-10-16-french-doors.json, TRIAL), so from the foyer the leaf covers the leg and wallpaper shows beside it. Decide from
+   the film which way the foyer/living leaves swing and where they rest (10636/10645/12138/5650; leaves folded back against the wall
+   outside the casing, or into the living room), then fix. Add a verification step: render every cased opening from both faces at
+   Kevin + adult eye and set the film view beside it (an "opening review" sheet) before handover; a casing hidden by a model in its
+   resting pose must be a stated, film-backed choice. (2) Player camera antialiasing was NONE (HDAdditionalCameraData.antialiasing):
+   set live to TAA High for the walk (not persistent); make it permanent in SpecGreybox.Player() after the rug agent (it edits builder
+   files): TAA (or SMAA High if the TV/traps ghost).
+8w. Landing window + table (walk note Oct 17 10:18, pose 3.462,-0.977,-10.830 yaw 289): "the window still reads low; some shots of
+   the foyer in the movie suggest it's a little taller and the bottom sill starts a bit higher up. we're also missing the matching
+   table on the other side of the window" (DEVIATIONS 29: landing window head ASSUMED 72 in sash). Measure sill/head from film with
+   solved cameras + a second ruler; add the pair table (film).
+8r. [PAUSED by the user Oct 17, same branch; the Nain (628k tris) hung the build's triangle checks: decimate to ~30-60k + normal map before fitting] Foyer rugs (user Oct 17; next agent job after the arch/tree load): FRONT RUG = mfb64 'Persian Nain' (CC BY 4.0, credit
    required; Assets/Purchased/Rugs/persian_nain_carpet.glb, gitignored) fitted to foyer_props front_rug (cream field per film 1616/1690;
    squash 1.88 x 2.18: crop instead if motifs read squashed), purchased_plants.py-style fit, generated rug stays the fallback.
    RUNNER = the FILM'S OWN pattern (user pick): rectify from 2677/1616 like film_wallpaper.py (red field, hooked-lozenge chain, navy
    border, tan guards), generated mesh 0.74 x 3.41 with fringe + pile (artist-pipeline gate). heriz glb also downloaded (unused).
-8p. PROCESS FIXES (Codex review, Oct 17; do before Buzz): (a) unity_pipeline.sh build/bake swallow failures (`|| true` on the Unity
+   STATE (Oct 17 rug agent, TRIAL): RUNNER built (hifi_foyer_runner.py, film_runner.py; changes/2026-10-17-foyer-runner-film.json;
+   measured: no navy on film, the dark guards are red-brown). FRONT RUG: the Nain fit is DEFERRED to its own small trial (user):
+   decimate the 628k-tri download to ~30-60k + a baked normal map, THEN fit (tools/house/purchased_rugs.py is ready; switch
+   SpecGreybox.UsePurchasedRug on). The 190k-tri fit made the build's triangle checks run 27+ min. Until then the generated front rug
+   (invented pattern) stays: the front rug's colour/pattern is still wrong. Credit line already in docs/CREDITS.md.
+8p. PROCESS FIXES (full review: docs/reviews/2026-10-17-codex-process.md, 15 findings; its top three = this week's first work) (Codex review, Oct 17; do before Buzz): (a) unity_pipeline.sh build/bake swallow failures (`|| true` on the Unity
    build, the quality gate): stop build->bake->load on any failure; (b) change_gate R1 accepts model_quality alone as independent proof:
    topological gates must not count as the independent ruler; (c) pre-commit hook watches old paths, misses spec/geometry.json,
    hifi_*.py, spec/dressing/, House_WallGrid.unity; (d) walk notes don't store camera height/fov/day-night and note_views.py replays a
    Kevin-height note 0.55 m too high: record them in FeelNotes.cs, replay exactly; (e) "pick check": someone independent confirms WHAT
    a measured pixel shows before it is measured (the arch crown + "casing" were both the wrong feature). DONE: R2 now counts
    "failed (...)"/"rejected" outcomes (change_gate.py + selftest).
+   GOAL (user Oct 17): FEWER EXPENSIVE REBUILDS. Measured on the rug job: ~60% inference, ~40% local, nearly all of it Unity batch
+   builds at 7-10 min each. Do: (f) PREFLIGHT before any Unity build: every cheap Python gate (verify_plan, change_gate, build_models
+   --check, model_quality, JSON/spec lint, refcam overlays) must pass first; (g) BLOCKOUT OVERLAY without Unity: project the planned
+   geometry/furniture boxes through the solved film cameras onto the stills (refcam proj) so wrong features and layouts are caught for
+   seconds, not a build; (h) ONE Unity session per candidate: build + checks + renders in a single -executeMethod (no relaunch between
+   build and RenderViews); try a persistent warm scratch editor driven by the unity CLI instead of cold batch launches, and measure
+   the saving; (i) stop at the first failure (no renders/bake after a failed gate); (j) log every build (id, job, wall time, why) to
+   spec/captures/build-log.jsonl so rebuilds per job are counted and reported in each hand-back.
 8y. LATER (user Oct 17, 'for another day'): recess the under-stair door in the rear passage like Marina's (her passage widens left beyond the stair line into a recess, DEVIATIONS 35); the foyer arch attempt 3 is accepted for now.
 8z. NEXT BIG JOB (user Oct 17, after this TRIAL is walked): BUZZ'S ROOM, room + furniture, nailed. It caused most of the Oct 13-14
    drama (resize reverted, changes/2026-10-13-buzz-resize.json; furniture didn't fit). change-gate R2 applies (4+ failed attempts):
