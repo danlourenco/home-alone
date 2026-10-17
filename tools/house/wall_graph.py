@@ -159,7 +159,8 @@ def openings(floor_spec, rooms):
             lo, hi = max(lo, slo), min(hi, shi)
         conflict = None
         if kind == "door":      # trim clearance: slide (keeping the width) until a casing fits beside each end
-            elo = max(x[2] for x in (fa, fb) if x) + CASING; ehi = min(x[3] for x in (fa, fb) if x) - CASING
+            cl = d.get("clear") or (CASING, CASING)   # trim width each end; a store door's pack frame or a casing-less end says its own (doors file "clear")
+            elo = max(x[2] for x in (fa, fb) if x) + cl[0]; ehi = min(x[3] for x in (fa, fb) if x) - cl[1]
             shift = max(0.0, elo - lo) - max(0.0, hi - ehi)
             if abs(shift) > MAX_SLIDE:     # more than a casing plus a snap: the door's place and a wall disagree
                 conflict = f"door {a}/{b}: needs {shift / 0.0254:+.1f} in to clear its trim; NOT slid (its position is measured): a decision"

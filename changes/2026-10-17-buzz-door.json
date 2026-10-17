@@ -1,0 +1,189 @@
+{
+ "gate": 8,
+ "change": "Buzz's door (upstairs:door:buzz_room|hall_corridor) widened from 0.762 m (30 in) to a stock 32 x 80 in leaf (0.813 x 2.032) and moved toward Marina's position as far as the hall corridor allows: x 7.539-8.301 -> 7.507-8.320 (hi edge +0.019 toward her door, lo -0.032 toward the shelves corner); a real door from the Free Wood Door Pack (Door_3 White, as girls_a/girls_b/attic/linen) through store_props.json buzz_door, its pack frame on the hall face, hinged at the shelves end, swinging into the room, standing open 80 deg against the shelves wall",
+ "target": "House_WallGrid",
+ "premise": "Marina's Buzz door leaf is a stock 32 in door (two rulers of different kinds read 0.798 and 0.800 m, both 1.6-1.9% under 0.813 and 4.5-5% over the built 30 in), hinged at the shelves end (knob at the bed end in two frames) and swinging into the room; the hall corridor's east wall (hall-bath wall, hall clips, DEVIATIONS 26) caps how far the door can move toward her position",
+ "claim": {
+  "value": {
+   "leaf_width_m": 0.813,
+   "stock_size": "32 x 80 in (2'8\" x 6'8\")",
+   "opening_x": [
+    7.507,
+    8.32
+   ],
+   "head_m": 2.032,
+   "hinge": "lo (shelves end, x 7.507)",
+   "swing": "into buzz_room (+z spec)",
+   "open_deg": 80,
+   "trim_clear_m": [
+    0.03,
+    0.05
+   ],
+   "marina_leaf_x_in_built_frame_from_front_corner": [
+    7.671,
+    8.469
+   ],
+   "marina_leaf_from_her_shelves_corner_m": [
+    0.094,
+    0.892
+   ],
+   "built_leaf_from_shelves_corner_m": [
+    0.034,
+    0.847
+   ]
+  },
+  "data": [
+   "vggt:real-vggt-buzzall"
+  ],
+  "scale": [
+   "mattress-39in:buzz-clip"
+  ],
+  "upstream": [
+   "mattress-39in:buzz-clip"
+  ],
+  "risks": [
+   "extraction",
+   "scale"
+  ],
+  "how": "Width: the solve's leaf corners (door_leaf_TL/TR, frame 44, tools/house/buzz_layout.py) at the twin-mattress ruler: 0.798 m. Stock sizes 30/32/36 in = 0.762/0.813/0.914: 32 in is 1.9% off, 30 in 4.5% off (sensible-defaults: stock unless a measurement excludes it; both rulers exclude 30 in, neither excludes 32 in). Position: the solve puts her leaf 0.094-0.892 m from her shelves corner (2.689-3.487 m from the front corner). The built door wall is 0.10 m longer than hers (DEVIATIONS 68), and the hall corridor ends at x 8.371 (hall-bath wall, fixed by the hall clips): the pack frame on the hall face (leaf x 1.124 wide, 0.050 m each side) must fit the corridor, so the leaf's hi edge is at most 8.320. The leaf is put there (its hinge end 0.034 m off the shelves wall: no room-side casing there, as before). Plan input: measurements/overhead/upstairs-doors.json span_spec + clear [0.03, 0.05] (the trim clearance each end, carried by reconcile.py into house_spec, used by wall_graph.py instead of the 0.07 generated casing)",
+  "applies_to": [
+   "buzz_room",
+   "hall_corridor"
+  ],
+  "measured_in": [
+   "buzz_room"
+  ],
+  "assumed": {
+   "hall_corridor": "DEVIATIONS 73"
+  },
+  "pick": {
+   "crop": "spec/captures/picks/buzz1/door_leaf_TR-f44.png",
+   "confirmed_by": "Buzz trial 1 blind pick check (leaf corners and casing edge in frame 44 named by a blind subagent: changes/2026-10-17-buzz-layout.json); the knob/hinge crops of this record (spec/captures/picks/buzzdoor/) named by a second blind subagent (crops only): 'brass knob at the RIGHT edge of the leaf' in 560 s and 563 s (high), leaf 'nearly flush with the casing face, thin reveal' (medium), no hinge knuckles visible (high)"
+  },
+  "hinge_swing_evidence": {
+   "hinge": "Marina 563 s and 560 s (room side, door closed): the knob is at the leaf's bed-side (front) edge in both frames, so the hinges are at the shelves end (spec lo). Blind check: knob at the RIGHT edge, high confidence, both frames (spec/captures/picks/buzzdoor/m563_door.png, m560_door.png, m563_knob.png, m560_knob.png)",
+   "swing": "Into the room. Evidence: the leaf sits nearly flush with the room-side casing (thin reveal; blind check medium) - a leaf sits on the side it swings to; out-swing would put a 0.81 m leaf across the 1.14 m corridor spur. Her model draws no hinge knuckles on the room side (blind check: none seen in 563/560/hinge-edge crop); the blind checker inferred 'likely swings away' from that, but her CG door shows no hardware besides the knob and no frame shows the hall side, so the knuckles are not evidence either way. The film never shows this door (film 486-533: Buzz's room scenes face the shelves/desk). Swing is therefore partly assumed: DEVIATIONS 73",
+   "open_angle": "AUTHORED 80 deg (Marina's door is closed in every frame): open against the shelves wall like a door left open, 4-5 cm short of flat so the leaf never touches the wall; the girls' doors were open 90 until the user closed them (Oct 16)"
+  },
+  "alternatives": [
+   "current build: 0.762 m (30 in) leaf at x 7.539-8.301, no leaf (a cased opening)",
+   "this: stock 32 in leaf at x 7.507-8.320 (hi edge at the corridor limit), pack door hinged at the shelves end, swinging in",
+   "stock 32 in leaf at Marina's own position from the front corner (x 7.656-8.469): rejected, its hi edge would stand 0.10 m past the hall corridor's east wall (the hall-bath wall) - needs that wall moved, a separate decision (DEVIATIONS 26)",
+   "stock 36 in leaf: rejected, 0.914 is 14% over both rulers"
+  ],
+  "stock_windows_report": {
+   "note": "report only (lead, Oct 17): Buzz's three windows vs stock double-hung sizes and Marina; not changed in this trial",
+   "built": "front_hall_side x 12.480-13.200, front_desk_side x 14.697-15.417 (front wall), desk_wall z 10.197-10.917: each 0.720 m clear x 1.340 m (sill 0.81, head 2.15)",
+   "marina": "desk-wall window width from its stool at the growth-chart ruler (541.5 s, buzz_windows.py) less horns and casing: 0.72 m; head 2.15 (2.09-2.21) from 563 s scaled by its stool; sill 0.81; the two front windows are ASSUMED the desk window's width (DEVIATIONS 24)",
+   "stock": "nearest stock double-hung: 28 in wide (0.711, -1.3%); height 1.34 = 52.8 in sits between stock 52 in (1.321, -1.4%) and 54 in (1.372, +2.4%): a 2852 (28 x 52 in) unit fits within the measurement spread (+-6 cm head); a 2854 also fits. Neither measurement excludes stock 28 x 52; if adopted, width -9 mm and height -19 mm"
+  },
+  "layout": {
+   "decides": [
+    {
+     "part": "hinge side: knob at the bed-side (front) edge of the leaf, hinges at the shelves end",
+     "observed_in": [
+      "marina-frame:560",
+      "marina-frame:563"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "leaf width (stock 32 in)",
+     "observed_in": [
+      "vggt:real-vggt-buzzall frame 44",
+      "marina-frame:560"
+     ],
+     "extrapolated": false
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-13",
+   "what": "Buzz door on the wrong wall from a misread overhead corner box (verify-plan checkpoint added)",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-14",
+   "what": "door pinned at Marina's room-side position (upstairs-doors.json, 563 s mattress scale); reconcile slid it -7 cm onto the shared wall and wall_graph -7 cm more for the hall casing: built 7.539-8.301 (DEVIATIONS 26)",
+   "outcome": "ok"
+  },
+  {
+   "date": "2026-10-17",
+   "what": "Buzz trial 1: door leaf 0.800 m at the 560 s door ruler vs 0.798 in the solve (changes/2026-10-17-buzz-layout.json)",
+   "outcome": "accepted",
+   "ref": "changes/2026-10-17-buzz-layout.json"
+  }
+ ],
+ "premise_reviewed": "One earlier failure on this door (Oct 13, wrong wall from the overhead) shares nothing with this change, which keeps the wall and only widens and moves the opening along it from Marina's solved frames.",
+ "checks": [
+  {
+   "what": "Marina 560 s at the 80 in door (no solve, no mattress; buzz_layout.check_560): leaf 0.800 m (+-0.022) wide: stock 32 in (0.813) inside the spread, 30 in (0.762) outside it",
+   "agrees": true,
+   "data": [
+    "marina-frame:560"
+   ],
+   "scale": [
+    "door-80in:560"
+   ],
+   "tests": [
+    "scale",
+    "extraction"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/buzz1/m560_leaf_TR.png",
+    "confirmed_by": "blind subagent (Buzz trial 1): c52 'top-right corner of the door leaf' (0-5 px), c51 leaf top-left, c53 leaf/jamb foot"
+   }
+  },
+  {
+   "what": "Marina 563 s ratio along the door wall (no scale): casing outer edge at 0.289 (0.283-0.294) of the wall from the shelves corner vs the solve's 0.279 (changes/2026-10-17-buzz-layout.json): her door is 1.00-1.04 m (casing) from her shelves corner; built casing outer edge now 0.917 (room side, leg_hi to 8.390), was 0.898",
+   "agrees": false,
+   "type": "ratio",
+   "data": [
+    "marina-frame:563"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": [
+    "extraction"
+   ],
+   "disposition": "Agrees with the solve on where HER door is; the built door cannot reach it: the hall corridor's east wall (x 8.371, hall clips) caps the hi edge at 8.320 for the hall-side frame. The door moves 1.9 cm toward her position (the width grows the rest toward the shelves corner). Remaining offset 0.08-0.12 m from the shelves corner, 0.15 m from the front corner, logged DEVIATIONS 26/69/73",
+   "pick": {
+    "crop": "spec/captures/picks/buzz1/m563_casing_R.png",
+    "confirmed_by": "blind subagent (Buzz trial 1): c44 'outer edge of the door casing' (10-15 px)"
+   }
+  },
+  {
+   "what": "Marina 560 s / 563 s knob side (no scale; topological): knob at the bed-side edge in both frames -> hinge at the shelves end",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "marina-frame:560",
+    "marina-frame:563"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": [
+    "extraction"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/buzzdoor/m563_knob.png",
+    "confirmed_by": "blind subagent (crops only): 'brass round knob ... close to the leaf's right edge with white trim beyond it' in both 563 and 560 (high)"
+   }
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/buzzdoor/before"
+  ],
+  "after": [
+   "spec/captures/views/buzzdoor/after"
+  ]
+ },
+ "user_walk": "pending",
+ "user_words": "user Oct 17 (standing in Buzz's room facing its door): \"please place a real door like we have in other rooms upstairs in this opening, widening it if necessary\"; \"there's a good chance the door sizes are standard so it should be considered as part of this work\"",
+ "gates": "build 1 (job buzzdoor, 70 s, exit 0) + bake 93 s: Z-fight 0, Clash 0 (11 allowed joints, unchanged), Props 20 store models / 1 problem (landing_table, pre-existing; 0 new), walk test 'ok buzz_room <-> hall_corridor (door, 0.81 m)', the service-stair BLOCKED line and 1 trim gap are unchanged from the previous build; openings.py 152 limits 0 broken (swing-room now tests furniture in spec/dressing/buzz.json; selftest plants a box in the Buzz swing and is refused); verify_plan 15 ok 0 FAIL; buzz_layout stage 8 PASS; change_gate 0 FAIL"
+}

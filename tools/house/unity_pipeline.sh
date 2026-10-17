@@ -114,7 +114,10 @@ load)
   # the first Play after a load can come up dull (lighting data still settling; user Oct 17, "sometimes this happens before it's
   # loaded"): a second Play cycle fixed it each time. ponytail: workaround, find why the first Play misses the baked data if it persists
   (cd "$P" && "$CLI" command editor_play >/dev/null); idle; (cd "$P" && "$CLI" command editor_stop >/dev/null); idle
-  (cd "$P" && "$CLI" command editor_play | tail -1);;
+  (cd "$P" && "$CLI" command editor_play | tail -1)
+  # HA_START="x,y,z,yaw" (world feet, Unity coords): start the walk in the room under review (user Oct 17), not at the spawn
+  if [ -n "${HA_START:-}" ]; then sleep 5; IFS=, read -r sx sy sz syaw <<< "$HA_START"
+    ev "var f=UnityEngine.Object.FindFirstObjectByType<FpsController>(); var cc=f.GetComponent<UnityEngine.CharacterController>(); cc.enabled=false; f.transform.SetPositionAndRotation(new UnityEngine.Vector3(${sx}f,${sy}f,${sz}f), UnityEngine.Quaternion.Euler(0,${syaw}f,0)); f.cam.localRotation=UnityEngine.Quaternion.identity; cc.enabled=true; return \"start \"+f.transform.position;"; fi;;
 all) "$0" build && "$0" bake && "$0" load;;
 shot|cam)
   mode="$1"; name="$2"; shift 2

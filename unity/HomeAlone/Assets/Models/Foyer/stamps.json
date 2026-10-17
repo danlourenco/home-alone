@@ -25,11 +25,11 @@
  },
  "tools/house/hifi_foyer.py": {
   "models": "23211846bb897ee2",
-  "sources": "eeda8c8183d1d540"
+  "sources": "4d70d227e9faffc2"
  },
  "tools/house/hifi_foyer_arch.py": {
   "models": "58773c07b2d399cd",
-  "sources": "9f72806efa3e64fe"
+  "sources": "65cebd564b819ec0"
  },
  "tools/house/hifi_foyer_props.py": {
   "models": "aa892f92495225a5",
@@ -37,11 +37,11 @@
  },
  "tools/house/hifi_hall.py": {
   "models": "92b5ef533c0b2c6d",
-  "sources": "dfb8d1bfd1999b9e"
+  "sources": "363bd17cb832070d"
  },
  "tools/house/hifi_hall_arches.py": {
   "models": "f8b6ae10beb76723",
-  "sources": "71c436aebfb5efab"
+  "sources": "9e68c0380f226c74"
  },
  "tools/house/hifi_kitchen.py": {
   "models": "98ab235e28f66103",
@@ -57,7 +57,7 @@
  },
  "tools/house/hifi_landing_window.py": {
   "models": "c19bb98c7077b7fe",
-  "sources": "75ecf2f5fe1f8534"
+  "sources": "039ab441f2594a98"
  },
  "tools/house/hifi_lights.py": {
   "models": "039d900b97254c67",
@@ -85,6 +85,6 @@
  },
  "tools/house/hifi_swing_door.py": {
   "models": "f7e1a4cdfc07a73c",
-  "sources": "2470c6d12367e48f"
+  "sources": "bdc9dc0d8b235b8a"
  }
 }

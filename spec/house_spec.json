@@ -666,18 +666,22 @@
    "wall_coord": 10.763,
    "wall_thickness": 0.14,
    "span": [
-    3.031,
-    3.793
+    2.929,
+    3.742
    ],
-   "width": 0.762,
+   "width": 0.813,
    "height": 2.032,
+   "clear": [
+    0.03,
+    0.05
+   ],
    "opens": true,
-   "placed_from": "measured, slid -7 cm onto the shared wall",
-   "source": "Marina's room-side frames: shelves corner to the door casing's outer edge 1.04 m in Part 2 563 s (twin-mattress scale, tools/house/mattress_ruler.py), door casing to head post 0.46 m in 563 s and in 560 s (door scale). Shifted +0.167 m along the wall from the hall-s1 registration [2.936, 3.698] (frames 148-192), which disagrees by 0.17 m; DEVIATIONS 26",
+   "placed_from": "measured",
+   "source": "Oct 17 (changes/2026-10-17-buzz-door.json): stock 32 x 80 in leaf (Marina's leaf 0.798 m in the solve at the twin-mattress ruler, 0.800 at the 560 s door ruler; 30 in excluded by both). Marina's leaf stands 0.094-0.892 m from her shelves corner (solve, frame 44); here its hi edge is put at the hall corridor's limit (east wall x 8.371 less the pack frame's 0.050): spec x 7.507-8.320. 'clear' = trim clearance at the lo/hi end (wall_graph.py; default 0.07 generated casing): lo 0.03 (room side abuts the shelves wall, no casing there), hi 0.05 (the store door's pack frame, store_props.json buzz_door). Was: span [3.103, 3.865] plan m from Marina's 563 s casing edge (1.04 m from the shelves corner, mattress scale), slid -7 cm by reconcile and -7 cm by wall_graph to 7.539-8.301 (DEVIATIONS 26)",
    "wall_coord_spec": 11.467,
    "span_spec": [
-    7.609,
-    8.371
+    7.507,
+    8.32
    ],
    "spec_axis": "z"
   },

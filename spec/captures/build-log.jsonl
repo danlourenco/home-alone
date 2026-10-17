@@ -10,3 +10,5 @@
 {"time": "2026-10-17T17:27:27", "cmd": "build", "job": "buzz1", "why": "Buzz TRIAL 1: furniture against faces from Marina's solved cameras", "wall_s": 77, "exit": 0}
 {"time": "2026-10-17T17:30:46", "cmd": "build", "job": "buzz1", "why": "Buzz TRIAL 1 build 2: furniture colliders as BuzzCollider_* so the room walk reaches Buzz", "wall_s": 76, "exit": 0}
 {"time": "2026-10-17T17:32:19", "cmd": "bake", "job": "buzz1", "why": "Buzz TRIAL 1 bake", "wall_s": 88, "exit": 0}
+{"time": "2026-10-17T18:24:40", "cmd": "build", "job": "buzzdoor", "why": "Buzz door: stock 32in leaf + pack door (changes/2026-10-17-buzz-door.json)", "wall_s": 70, "exit": 0}
+{"time": "2026-10-17T18:27:05", "cmd": "bake", "job": "buzzdoor", "why": "Buzz door bake", "wall_s": 93, "exit": 0}

@@ -42,7 +42,7 @@ OWN_TRIM = True
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "spec/openings.json"
 INPUTS = ["spec/geometry.json", "spec/house_spec.json", "spec/house_spec.ground.json", "spec/dressing/store_props.json",
-          "spec/dressing/french_doors.json", "tools/house/hifi_door.py", "tools/house/openings.py"]
+          "spec/dressing/french_doors.json", "spec/dressing/buzz.json", "tools/house/hifi_door.py", "tools/house/openings.py"]
 CASING_W, CASING_PROUD, STOOL_PROUD, STOOL_T, HALF, PROP_T = 0.07, 0.02, 0.04, 0.025, 0.07, 0.03   # SpecGreybox consts
 ARCH_MODELS = {"foyer|rear_passage": "FoyerArch"}   # SpecGreybox.Arch.cs ArchModels: plain (film), no casing
 
@@ -82,6 +82,9 @@ WALLS = {st: [B(w["x"], w["z"], w["y"], fy) for w in G[st]["walls"]] for st, fy 
 FLOORS = {st: [B(f["x"], f["z"], f["y"], fy) for f in G[st]["floor"]] for st, fy in STOREYS}
 STAIR_SOLIDS = [B(b["x"], b["z"], b["y"]) for b in S["stair"]["boxes"] + S["attic_stair"]["boxes"] if b["kind"] in ("step", "landing")] + \
                ([B(b["x"], b["z"], b["y"], GY) for b in SG["stair"]["boxes"] if b["kind"] in ("step", "landing")] if SG.get("stair") else [])
+# furniture a leaf must clear (plan only: any piece standing on the floor below the head); placed rooms' dressing files
+FURNITURE = {"upstairs": [[b["x"][0], b["x"][1], b["z"][0], b["z"][1], -99.0, 99.0]
+                          for b in load(ROOT / "spec/dressing/buzz.json")["boxes"] if b["y"][0] < 2.0]}
 
 
 def room_at(st, x, z):
@@ -250,8 +253,8 @@ def leaves():
 
 
 def swing_clear(st, o, hinge, latch, n, w):
-    """Sample the leaf's sweep (closed -> 90 deg open, its resting place) 1 m above the floor; the first point inside a wall or a stair
-    solid, or None."""
+    """Sample the leaf's sweep (closed -> 90 deg open, its resting place) 1 m above the floor; the first point inside a wall, a stair
+    solid or a piece of furniture (FURNITURE, plan), or None."""
     fy = dict(STOREYS)[st]; face = o["c"] + n * HALF
     for deg in range(0, 91, 5):
         t = math.radians(deg)
@@ -259,7 +262,7 @@ def swing_clear(st, o, hinge, latch, n, w):
             r = w * i / 10
             s, a = hinge + latch * r * math.cos(t), face + n * (0.005 + r * math.sin(t))
             p = (a, s, fy + 1.0) if o["axis"] == "x" else (s, a, fy + 1.0)   # box order: x, z, y
-            for b in WALLS[st] + STAIR_SOLIDS:
+            for b in WALLS[st] + STAIR_SOLIDS + FURNITURE.get(st, []):
                 if inside(b, p, -0.001):
                     return deg, round(r, 3), [round(v, 3) for v in p]
     return None
@@ -346,6 +349,13 @@ def selftest():
                     if w:
                         z = min(b["z"][0] for b in w); o["hi"], o["lo"] = z + 0.30, z + 0.30 - (o["hi"] - o["lo"])
         planted(swing, "swing-room")
+        def bed_in_swing(g):   # a piece of Buzz's furniture standing in his door's swing (store prop buzz_door, hinge lo, into the room)
+            o = next(o for o in g["upstairs"]["openings"] if o["between"] == ["buzz_room", "hall_corridor"])
+            FURNITURE["upstairs"].append([o["lo"] + 0.3, o["lo"] + 0.5, o["c"] + 0.4, o["c"] + 0.6, -99.0, 99.0])
+        try:
+            planted(bed_in_swing, "swing-room")
+        finally:
+            FURNITURE["upstairs"].pop()
     finally:
         G = keep
     return bad

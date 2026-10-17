@@ -464,7 +464,7 @@ def write(P, W, D):
            "pieces": P, "boxes": boxes}
     (ROOT / "spec/dressing/buzz.json").write_text(json.dumps(out, indent=1) + "\n")
     sp_path = ROOT / "spec/dressing/store_props.json"; SP = json.loads(sp_path.read_text())
-    SP["pieces"] = [q for q in SP["pieces"] if not q["name"].startswith("buzz_")]
+    SP["pieces"] = [q for q in SP["pieces"] if q["name"] not in {p["name"] for p in P}]   # its own pieces only (buzz_door is the door's, changes/2026-10-17-buzz-door.json)
     for p in P:
         if "store" not in p:
             continue

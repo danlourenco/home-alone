@@ -126,6 +126,28 @@
    "source": "user, Oct 16: 'use that same door in the attic door casing and both girls rooms' (Door_3 White, as the linen closet). Walk-through doorway, the leaf is CLOSED for now (user, Oct 16: 'close the doors to the girls' rooms and attic for now'; was open 90 deg; set open back to 90 to reopen; hinge kept); the pack frame (outer = leaf x 1.124 wide, x 1.027 tall) replaces the generated casing on the hall face (its renderer hidden, collider kept), 0.5 cm proud, 6 cm deep. Hinge side and swing are ASSUMED (nearest room corner; no frame shows them): hinge at x 6.112, swings OUT into hall_corridor_south: into the stair it would hit the first step (z 14.082, 0.42 m past the wall). Opening x 6.112-6.874."
   },
   {
+   "name": "buzz_door",
+   "floor": "upper",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    7.4566,
+    8.3704
+   ],
+   "z": [
+    11.365,
+    11.425
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "back": "+z",
+   "hides": [
+    "Casing"
+   ],
+   "open": 80,
+   "hinge": "lo",
+   "source": "user Oct 17 (in Buzz's room facing its door): 'please place a real door like we have in other rooms upstairs in this opening, widening it if necessary' (changes/2026-10-17-buzz-door.json). Door_3 White as girls_a/girls_b/attic/linen. Opening x 7.507-8.320 (stock 32 x 80 in leaf; Marina's leaf 0.798 solve / 0.800 at the 560 s door ruler); the pack frame (outer = leaf x 1.124 wide, x 1.027 tall) replaces the generated casing on the hall face (z 11.43; 0.5 cm proud, 6 cm deep), its hi side 0.6 mm short of the hall corridor's east wall (x 8.371). Hinge at the shelves end (lo, x 7.507): Marina 560/563 s show the knob at the bed-side edge (blind pick check). Swings into the room (her leaf sits by the room-side casing; standard; DEVIATIONS 73). Open 80 deg AUTHORED (her door is closed in every frame): toward the shelves wall, not flat against it"
+  },
+  {
    "name": "den_desk",
    "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Desk_01.prefab",
    "x": [
