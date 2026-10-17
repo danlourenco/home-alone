@@ -37,9 +37,35 @@ public static class BakeLighting
             EditorApplication.QueuePlayerLoopUpdate();   // a background editor otherwise idles and the frames never come
             if (e.MoveNext()) return;
             EditorApplication.update -= Tick;
-            if (exit) EditorApplication.Exit(0);
+            if (exit) EditorApplication.Exit(failed ? 1 : 0);
         }
         EditorApplication.update += Tick;
+    }
+
+    static bool failed;
+
+    // Invariant (Oct 17): every light authored Baked must come out of the bake recorded as baked in the SAVED scene. The scene keeps one
+    // lighting data asset, written by the LAST bake: with Night baked last (day layer off) the 52 FilmFill lights were recorded as not baked
+    // and Unity drew them in real time with soft shadows (72 M tris/frame in the foyer by day, the day-only flicker squares, and the day
+    // lit twice: baked into the probes AND real time). Returns the failure lines; logs "Baked lights: N of M baked" and every light that
+    // renders in real time in the scene's saved (day) state.
+    public static List<string> CheckBakedLights()
+    {
+        var all = Object.FindObjectsByType<Light>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        var baked = all.Where(l => l.lightmapBakeType == LightmapBakeType.Baked).ToList();
+        var bad = baked.Where(l => !l.bakingOutput.isBaked).Select(l => "  not baked: " + l.name).ToList();
+        Debug.Log($"Baked lights: {baked.Count - bad.Count} of {baked.Count} baked");
+        var rt = all.Where(l => l.enabled && l.gameObject.activeInHierarchy && !(l.bakingOutput.isBaked && l.bakingOutput.lightmapBakeType == LightmapBakeType.Baked)).Select(l => l.name).ToList();
+        Debug.Log($"Realtime lights in the saved state: {rt.Count} ({string.Join(", ", rt.Take(20))})");
+        foreach (var b in bad) Debug.LogError("BakeLighting FAIL:" + b);
+        return bad;
+    }
+
+    // Unity -batchmode -projectPath <p> -executeMethod BakeLighting.VerifyBakedLights -quit -logFile -   (the saved scene, no Play)
+    public static void VerifyBakedLights()
+    {
+        EditorSceneManager.OpenScene(ScenePath);
+        if (CheckBakedLights().Count > 0 && Application.isBatchMode) EditorApplication.Exit(1);
     }
 
     static IEnumerator Steps()
@@ -171,7 +197,10 @@ public static class BakeLighting
             typeof(ProbeVolumeBakingSet).GetField("lightingScenario", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(set, scenario);
             EditorUtility.SetDirty(set);
         }
-        foreach (var (scenario, night) in new[] { ("Default", false), ("Night", true) })
+        // Night first, Default LAST: the scene's one lighting data asset records the last bake's lights, and the scene opens (and plays) in
+        // day, so the day's Baked FilmFill must be the ones recorded as baked (CheckBakedLights). The night lamps are Mixed (Baked Indirect):
+        // their direct light and shadows are real time either way and their bounce is in the Night probe scenario, so they need no record.
+        foreach (var (scenario, night) in new[] { ("Night", true), ("Default", false) })
         {
             mode.nightLayer.SetActive(night); mode.dayLayer.SetActive(!night);
             staticSky.profile = night ? nightSky : daySky;
@@ -203,5 +232,7 @@ public static class BakeLighting
         mode.ApplyReflections(false); EditorUtility.SetDirty(mode);
         AssetDatabase.SaveAssets();
         EditorSceneManager.SaveScene(scene);
+        EditorSceneManager.OpenScene(ScenePath);   // check what was saved, not what is in memory
+        failed = CheckBakedLights().Count > 0;
     }
 }

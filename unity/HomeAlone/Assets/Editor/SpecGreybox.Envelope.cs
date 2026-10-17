@@ -260,7 +260,9 @@ public static partial class SpecGreybox
     // even, warm-neutral light from above, walls as bright as the frame's mean, windows blown out. Each room gets ceiling-wide rectangle
     // lights, one per rectangular cell of its outline, in the day layer and BAKED only (into the day's probes: no runtime cost, dark at
     // night). FillNits and FillKelvin are solved against matched film frames by tools/house/film_light_match.py. DEVIATIONS 44.
-    const float FillNits = 300f, FillKelvin = 5200f;
+    // 300 -> 600 nits (Oct 17, changes/2026-10-17-filmfill-baked.json): until then the fills were ALSO drawn in real time (the bake left them
+    // recorded as not baked, BakeLighting.CheckBakedLights), so 300 was tuned on double light; baked only, 600 gives back the same level.
+    const float FillNits = 600f, FillKelvin = 5200f;
 
     static void FilmFill(GameObject dayLayer, JObject geo, JToken atticBoxes, float gy)
     {

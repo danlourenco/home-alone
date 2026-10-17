@@ -1,0 +1,86 @@
+[
+ {
+  "name": "filmlight/night/after-night-film6042",
+  "pos": [
+   1.0,
+   -1.876,
+   -0.55
+  ],
+  "look_at": [
+   -5.19,
+   -2.026,
+   -0.65
+  ],
+  "vfov": 40
+ },
+ {
+  "name": "filmlight/night/after-night-film9812",
+  "pos": [
+   -2.3,
+   -1.576,
+   -1.9
+  ],
+  "look_at": [
+   -5.19,
+   -2.026,
+   -2.3
+  ],
+  "vfov": 55
+ },
+ {
+  "name": "filmlight/night/after-night-film10452",
+  "pos": [
+   -3.4,
+   -1.426,
+   -2.0
+  ],
+  "look_at": [
+   -5.19,
+   -1.726,
+   -1.5
+  ],
+  "vfov": 55
+ },
+ {
+  "name": "filmlight/night/after-night-film10448",
+  "pos": [
+   -4.7,
+   -1.226,
+   -2.7
+  ],
+  "look_at": [
+   -3.4,
+   -2.026,
+   -4.0
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "filmlight/night/after-night-breakfast",
+  "pos": [
+   -1.6,
+   -1.526,
+   -1.4
+  ],
+  "look_at": [
+   1.13,
+   -1.526,
+   -5.09
+  ],
+  "vfov": 60
+ },
+ {
+  "name": "filmlight/night/foyer-inside",
+  "pos": [
+   6.2,
+   -1.4759999999999998,
+   -9.2
+  ],
+  "look_at": [
+   2.9,
+   -1.7759999999999998,
+   -9.4
+  ],
+  "vfov": 60
+ }
+]

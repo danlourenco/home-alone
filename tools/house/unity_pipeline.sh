@@ -60,7 +60,9 @@ bake)
   # the windowed bake opens the scratch project: no HDRP wizard popping up each time (a user-local editor preference)
   sed -i '' 's/m_WizardPopupAtStart: 1/m_WizardPopupAtStart: 0/' "$S/UserSettings/HDRPUserSettings.asset" 2>/dev/null || true
   "$UNITY" -projectPath "$S" -executeMethod BakeLighting.Bake -logFile "$ROOT/bake.log" || true   # windowed; exits when done
-  grep -E "BakeLighting [DN]|xception" "$ROOT/bake.log";;
+  grep -E "BakeLighting [DN]|Baked lights|Realtime lights|xception" "$ROOT/bake.log"
+  # every authored-Baked light must be recorded as baked in the saved scene (BakeLighting.CheckBakedLights; the FilmFill bug, Oct 17)
+  if grep -q "BakeLighting FAIL" "$ROOT/bake.log" || ! grep -q "^Baked lights:" "$ROOT/bake.log"; then grep -m5 "BakeLighting FAIL" "$ROOT/bake.log"; echo "bake FAILED the baked-lights check" >&2; exit 1; fi;;
 load)
   (cd "$P" && "$CLI" command editor_stop >/dev/null 2>&1 || true)
   # switch the editor to an empty scene BEFORE overwriting House_WallGrid.unity: overwriting the open scene raised Unity's modal

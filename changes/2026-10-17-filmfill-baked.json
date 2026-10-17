@@ -1,0 +1,167 @@
+{
+ "gate": 7,
+ "kind": "light (not geometry)",
+ "change": "Day film fill really baked: BakeLighting bakes Night first and Default LAST, so the scene's lighting data records the 52 FilmFill overhead area lights (authored Baked, day layer) as baked and Unity stops drawing them in real time with soft shadows; new invariant BakeLighting.CheckBakedLights (every authored-Baked light isBaked in the saved scene, else the bake FAILs; unity_pipeline.sh bake exits 1). FillNits 300 -> 600: 300 had been tuned on the double light (baked into the Default probes AND real time)",
+ "target": "House_WallGrid",
+ "premise": "The day look the user has walked (film_light_match day ratios, DEVIATIONS 44) is the target; removing the real-time copy of the fills must keep it, so FillNits is re-solved against the same film frames and the same views' level",
+ "claim": {
+  "value": {
+   "FillNits": 600,
+   "FillKelvin": 5200,
+   "baked_fills": "52 of 52",
+   "realtime_by_day": [
+    "Sun"
+   ]
+  },
+  "data": [
+   "film:2677",
+   "film:10248"
+  ],
+  "scale": [
+   "none"
+  ],
+  "upstream": [
+   "film-cam:2677",
+   "film-cam:10248"
+  ],
+  "how": "Same build (HEAD 57a961c8 + this change), scratch ~/.cache/home-alone-2, batch SpecGreybox.RenderViews of spec/captures/views/filmlight-*.json (film 2677 and 10248 solved cameras; foyer 8.4,-2.996,-9.4 yaw 268 eye +1.28; living f165; kitchen breakfast). film_light_match.py <dir> <prefix> (day mode: region luminance / frame mean, R/B). FillNits tried at 300 and 600 (one build + bake each). Level check: the same views at fixed EV100 6 (-ev 6), linear mean, against the double-lit state (the fixed bake with the fills forced unbaked at render time, scratch-only flag; it reproduces the real bug's ratios to 0.02)",
+  "applies_to": [
+   "all rooms (day)"
+  ],
+  "measured_in": [
+   "foyer",
+   "living_room",
+   "kitchen"
+  ],
+  "assumed": {
+   "all rooms (day)": "DEVIATIONS 44 (the film-set fill is authored for every room; measured against film only in the foyer views, level checked in foyer, living, kitchen)"
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-16",
+   "what": "FilmFill added, FillNits 300 / 5200 K solved by film_light_match.py from live captures (10248 wallpaper 1.02x, door 1.08x; 2677 wallpaper 0.60x)",
+   "outcome": "superseded (tuned on double light)",
+   "ref": "DEVIATIONS 44"
+  },
+  {
+   "date": "2026-10-17",
+   "what": "Root cause of the day-only flicker squares measured live: fills isBaked 0/52, rendered real time, 72.4 M tris/frame in the foyer by day; fills disabled -> 0 pops in 3 runs",
+   "outcome": "this change",
+   "ref": "docs/STATUS.md 7a"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film match, day (auto exposure, batch). Before (real bug bake, FillNits 300): 2677 wallpaper 0.62x, stringer 0.90x, 10248 wallpaper 1.07x, door 1.19x. After, baked only, 300: 0.58 / 0.93 / 0.98 / 1.23. After, baked only, 600 (built): 0.56 / 0.88 / 1.07 / 1.19. 10248 identical to before; 2677 within 0.06 (2677 wallpaper is the known deep-albedo outlier, DEVIATIONS 44). Warmth R/B unchanged in kind (ours warmer than film on the paper, as before)",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "film:2677",
+    "film:10248"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "film-cam:2677",
+    "film-cam:10248"
+   ]
+  },
+  {
+   "what": "Level at fixed exposure EV100 6 (linear mean of the frame), baked-only / double-lit 300: at 300 0.67 / 0.74 / 0.62 / 0.77 / 0.80 (2677, 10248, foyer, living, kitchen): the fix alone darkens the day by ~0.6-0.8x; at 600 0.94 / 0.96 / 0.94 / 1.02 / 1.05: level back",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "render:filmlight-ev"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "render:filmlight-ev"
+   ],
+   "evidence": false,
+   "note": "consistency, our own renders"
+  },
+  {
+   "what": "Invariant after the bake (BakeLighting.CheckBakedLights in the bake, and BakeLighting.VerifyBakedLights on the saved scene in a fresh batch session): before 'Baked lights: 0 of 52 baked', realtime in the saved day state 53 (52 fills + Sun); after 'Baked lights: 52 of 52 baked', realtime: 1 (Sun)",
+   "agrees": true,
+   "type": "count",
+   "data": [
+    "unity:lighting-data"
+   ],
+   "scale": [
+    "none"
+   ]
+  },
+  {
+   "what": "Night unchanged: the night lamps (Mixed, Baked Indirect) are now recorded as not baked (Night is no longer the last bake). Kitchen night film views + foyer, -night, rendered with the lamps forced back to recorded-baked vs as baked: pixel-identical (max diff 1/255). Night film_light_match --night: 9812 upper 2.56x, floor 2.66x, door 0.32x; 10452 upper 3.67x, door 0.48x; 6042 upper 2.12x (both states). The 9812 door 0.32x vs 1.13x in the Oct 16 renders is from later kitchen changes (door curtain/flap), not this change",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "film:9812",
+    "film:10452",
+    "film:6042"
+   ],
+   "scale": [
+    "none"
+   ],
+   "evidence": false
+  },
+  {
+   "what": "LIVE Play in the user's editor after load (Oct 17): fills isBaked 52/52, sun the only realtime light; foyer day pose 8.4,-2.996,-9.4 yaw 268, still camera, AA off: FlickerProbe 0/0/0 pop pixels in 3 runs (before: 1353/2090/1865); PerfProbe triangles 6.60 M (before 72.4 M), shadow casters 6333 (before 102083), GPU median 13.6 ms (before 143.7 ms); spec/captures/flicker/fl-fixed-*.json, spec/captures/perf/perf-fixed-day.json",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "live:play"
+   ],
+   "scale": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/filmlight/before-foyer.png",
+   "spec/captures/views/filmlight/before-2677.png",
+   "spec/captures/views/filmlight/before-10248.png",
+   "spec/captures/views/filmlight/before-living-f165.png",
+   "spec/captures/views/filmlight/before-kitchen-breakfast.png"
+  ],
+  "after": [
+   "spec/captures/views/filmlight/n600-foyer.png",
+   "spec/captures/views/filmlight/n600-2677.png",
+   "spec/captures/views/filmlight/n600-10248.png",
+   "spec/captures/views/filmlight/n600-living-f165.png",
+   "spec/captures/views/filmlight/n600-kitchen-breakfast.png"
+  ],
+  "also": [
+   "spec/captures/views/filmlight/after-foyer.png",
+   "spec/captures/views/filmlight/after-2677.png",
+   "spec/captures/views/filmlight/after-10248.png",
+   "spec/captures/views/filmlight/after-living-f165.png",
+   "spec/captures/views/filmlight/after-kitchen-breakfast.png",
+   "spec/captures/views/filmlight/ev300-foyer.png",
+   "spec/captures/views/filmlight/ev300-2677.png",
+   "spec/captures/views/filmlight/ev300-10248.png",
+   "spec/captures/views/filmlight/ev300-living-f165.png",
+   "spec/captures/views/filmlight/ev300-kitchen-breakfast.png",
+   "spec/captures/views/filmlight/ev600-foyer.png",
+   "spec/captures/views/filmlight/ev600-2677.png",
+   "spec/captures/views/filmlight/ev600-10248.png",
+   "spec/captures/views/filmlight/ev600-living-f165.png",
+   "spec/captures/views/filmlight/ev600-kitchen-breakfast.png",
+   "spec/captures/views/filmlight/dblev300-foyer.png",
+   "spec/captures/views/filmlight/dblev300-2677.png",
+   "spec/captures/views/filmlight/dblev300-10248.png",
+   "spec/captures/views/filmlight/dblev300-living-f165.png",
+   "spec/captures/views/filmlight/dblev300-kitchen-breakfast.png"
+  ],
+  "note": "before = real bug bake (FillNits 300, fills real time); after-* = fixed bake at 300; n600-* = fixed bake at 600 (built); ev*/dblev* = fixed EV 6. Batch renders lack the room reflection probes: judge levels by the numbers, not by eye"
+ },
+ "perf": "not measured here (needs Play): STATUS 7a's 72.4 M tris/frame and the flicker pops should drop to the fills-disabled case; to confirm with FlickerProbe (3 runs) and PerfProbe when loaded",
+ "user_walk": "accepted",
+ "user_walk_words": "user Oct 17: \"it's much better on multiple front; flicker squares gone, frame rate is smoother\" then \"consider the walk accepted though; we can address that later\" (notes at 15:39: foyer mirror low-res; flight 2 underside shows treads: STATUS 8t)"
+}

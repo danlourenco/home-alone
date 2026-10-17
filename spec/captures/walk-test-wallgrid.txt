@@ -71,8 +71,8 @@ ok      kevin down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor heigh
 ok      kevin down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
 ok      player up leg 1: ended 0.03 m from waypoint, 0.03 m off its floor height, 6 frames (clean walk 7)
 BLOCKED player up leg 2: ended 0.07 m from waypoint, 0.06 m off its floor height by ServiceStair/service_winder2_tread at (2.29, -2.41, 6.81) spec x,y,z, 1500 frames (clean walk 20) STALLED
-ok      player down leg 1: ended 0.02 m from waypoint, 0.09 m off its floor height, 18 frames (clean walk 20)
-ok      player down leg 2: ended 0.00 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 7)
+ok      player down leg 1: ended 0.02 m from waypoint, 0.08 m off its floor height, 18 frames (clean walk 20)
+ok      player down leg 2: ended 0.01 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 7)
 Render check (outward faces, ServiceStair): 97 parts, 0 inside-out
 Seam check: 693 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
 Leak and headroom check: 1383 points, 0 leaks, 17 low-headroom points (ground floor, outside flight 1)

@@ -35,7 +35,7 @@ Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.m
 5. Ficus crown wider; den wall saturation (ask the user); night white balance (agents measured nights 3-10x warmer than the film:
    ask the user about a house-wide night grade); sheers too bright at night (shared voile material).
 6. Z-fight reported 2 pairs in some builds: trace and fix.
-7a. [ORDER, user Oct 17: rugs (PAUSED) -> HOUSE KERNEL step 1 (trim from faces) ACCEPTED Oct 17 -> FAST CHECKS (ZFight/Clash broad phase + per-mesh cache + per-gate timing + time budget + import triangle budget; equivalence proof old vs new; update zfight-check skill; user: "if you can find improvements to the algorithm, do them") -> FILL-LIGHT FIX (7a) -> 8p process fixes -> kernel steps 2-6 -> 8a furniture -> 8b compare page -> 8z Buzz]
+7a. [ORDER, user Oct 17: rugs (PAUSED) -> HOUSE KERNEL step 1 (trim from faces) ACCEPTED Oct 17 -> FAST CHECKS (ZFight/Clash broad phase + per-mesh cache + per-gate timing + time budget + import triangle budget; equivalence proof old vs new; update zfight-check skill; user: "if you can find improvements to the algorithm, do them") -> FILL-LIGHT FIX (7a) ACCEPTED Oct 17 -> 8p process fixes -> kernel steps 2-6 -> 8a furniture -> 8b compare page -> 8z Buzz]
    FLICKER TEST RESULTS (Oct 17, live Play, foyer pose 8.4,-2.996,-9.4 yaw 268, still camera, day, AA off; tool Scripts/FlickerProbe.cs:
    FlickerProbe.Run(name,180) -> spec/captures/flicker/<name>.json/-first.png/-heat.png; needs Application.runInBackground=true when the
    editor is unfocused). Baseline maxLightsPerClusterCell 8: 4714 / 3902 / 4413 pop pixels (76/85/69 of 179 frames). 24: 1311, 5648,
@@ -48,10 +48,17 @@ Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.m
    with every-frame shadows. Foyer day, still camera: as built 72.4 M tris/frame, pops 1353/2090/1865; fill shadows off 6.6 M tris,
    pops 3350/2328; fills disabled pops 0/0/0 (3 runs). Night: no fills, no flicker (user saw the same). Also: day rooms are lit TWICE
    (fills baked into the Default APV scenario + realtime), and the day film calibration was tuned on that.
-   FIX (queued right after kernel step 1; needs the scratch bake): after the Night pass restore the fills' LightBakingOutput
-   (isBaked=true, Baked) or bake Night first; verify in Play isBaked 52/52; re-run film_light_match day ratios and retune FillNits so
-   the look is unchanged; prove with FlickerProbe (3 runs = 0) and PerfProbe before/after. Tools: Scripts/FlickerProbe.cs,
-   Scripts/PerfProbe.cs (perf JSON in spec/captures/perf/).
+   FIX DONE and ACCEPTED (Oct 17, user walk; live: flicker 0/0/0, 72.4M -> 6.6M tris, GPU 144 -> 13.6 ms; changes/2026-10-17-filmfill-baked.json, DEVIATIONS 44):
+   BakeLighting bakes Night first and Default LAST (the scene's one lighting data asset records the last bake's lights; restoring
+   bakingOutput by hand would not persist: the scene YAML has no m_BakingOutput, it comes from LightingData.asset). New invariant
+   BakeLighting.CheckBakedLights: after the bake the SAVED scene is reopened and every authored-Baked light must report isBaked
+   ("Baked lights: N of M baked"; else "BakeLighting FAIL" and unity_pipeline.sh bake exits 1); also logs every light still real time
+   in the saved day state. BakeLighting.VerifyBakedLights runs it on a saved scene in batch. Scratch: before 0 of 52, realtime 53;
+   after 52 of 52, realtime 1 (Sun). Night lamps (Mixed, Baked Indirect) are now recorded unbaked: night renders pixel-identical to
+   recorded-baked. FillNits 300 -> 600 (300 was tuned on the double light): film_light_match day 2677 wallpaper/stringer, 10248
+   wallpaper/door: double-lit 0.62/0.90/1.07/1.19, baked 300 0.58/0.93/0.98/1.23, baked 600 0.56/0.88/1.07/1.19; fixed-EV level vs
+   double-lit 0.94-1.05 at 600. Renders spec/captures/views/filmlight/. TO DO when loaded: in Play isBaked 52/52, FlickerProbe 3 runs
+   (expect 0 pops) and PerfProbe (expect ~fills-disabled tris) before/after; user walk the day look.
    (Superseded) NEXT: a fresh-context investigation with research (HDRP square/tile flicker with many lights: light list ordering, shadow atlas
    eviction with OnDemand caching, contact shadows, SSAO/SSGI), each hypothesis tested with >= 3 probe runs against the baseline
    spread; HDRP Rendering Debugger overlays (light count per tile, shadow atlas). Fix must keep the look and frame time.
@@ -100,6 +107,7 @@ Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.m
    face trim (0.705 cap, ASSUMED) at different heights. One wainscot height must run round the landing. Likely tied to 8w (user:
    the landing window reads low; film suggests a higher sill): if the film's sill sits on the wainscot cap, measuring the sill fixes
    both. This is kernel step 2 territory (openings own their trim): the window must take its panelling from the face trim.
+    (4) walk note Oct 17 15:39 (7.33,-3.00,-9.59 yaw 297): the smooth underside under flight 2 is gone, the treads show from the hall. Cause found: the grey-box Dressing/Ground/flight2_soffit and flight2_stringer_open still exist but their renderers are off (the detailed stair replaced the grey-box look, and its model has no flight-2 soffit). Fix: give the detailed stair model a soffit, or re-enable those two renderers. (5) the foyer mirror reads low-res/blurry (reflection resolution or a better mirror asset): finishing pass.
 8p. PROCESS FIXES (full review: docs/reviews/2026-10-17-codex-process.md, 15 findings; its top three = this week's first work) (Codex review, Oct 17; do before Buzz): (a) unity_pipeline.sh build/bake swallow failures (`|| true` on the Unity
    build, the quality gate): stop build->bake->load on any failure; (b) change_gate R1 accepts model_quality alone as independent proof:
    topological gates must not count as the independent ruler; (c) pre-commit hook watches old paths, misses spec/geometry.json,
@@ -213,7 +221,7 @@ Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.m
     reach 7 cm past every surface with a 5 cm fade. A short box let the sky fill in: grey-blue rooms by day.
   - Day and night each have their own reflection images, swapped by `HouseNightMode`.
 - **Day look = the film's set lighting** (user choice, DEVIATIONS 44). `SpecGreybox.FilmFill` puts baked-only ceiling fills in every
-  room: 300 nits, 5200 K, solved against film 2677 and 10248 by `tools/house/film_light_match.py`.
+  room: 600 nits (300 until Oct 17, tuned while the fills were also drawn in real time: STATUS 7a), 5200 K, solved against film 2677 and 10248 by `tools/house/film_light_match.py`.
 - **The foyer fixtures** are lit at night only; by day the bulbs and shades are dark too.
 - **Orientation:** the front faces 227.6 deg (SW), measured (`tools/house/house_bearing.py`, OpenStreetMap). The film was shot here,
   so this is not a deviation. The sun's TIME is still a placeholder (DEVIATIONS 34).
