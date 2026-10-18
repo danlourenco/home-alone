@@ -6,7 +6,8 @@
 - MIRROR: tall rectangular gilt pier mirror with a scrolled crest and a small apron
 - BENCH: green velvet bench with scrolled (rolled) arms on cabriole legs (Marina M01; film 2677/3888 green)
 - RUGS: the runner and the front rug, a slab with an invented pattern (foyer_textures.py) and cotton fringes at the ends; the front
-  rug is the fallback when the user's bought Nain is absent (tools/house/purchased_rugs.py, SpecGreybox.PurchasedRug)
+  rug and the runner are the fallbacks when the user's bought rugs are absent (tools/house/purchased_rugs.py: the Nain, and a
+  runner cut from the Heriz photo; SpecGreybox.PurchasedRug)
 - PICTURES: the stair gallery (10), the picture under the landing, the landing print: gilt / dark / black / oval frames, mats, art
   from the public-domain atlas spec/dressing/foyer_art.png (foyer_textures.py)
 - PLANTS: red poinsettia on the console, white under it, red + a green plant on the landing table, crinkled gold-foil pots

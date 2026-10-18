@@ -35,7 +35,7 @@ public static partial class SpecGreybox
 
     // The user's two Sketchfab rugs (mfb64, CC BY 4.0: CREDITS.md), decimated to ~32k triangles each and fitted by
     // tools/house/purchased_rugs.py into the gitignored Assets/Purchased/PurchasedRug.glb: FrontRug (the Nain) on the foyer's
-    // front-rug box, LivingRug (the Heriz) on the living room's. Absent (a clone of the public repo): the generated rugs stay.
+    // front-rug box, LivingRug (the Heriz) on the living room's, Runner (cut from the Heriz photo) on the foyer runner's. Absent (a clone of the public repo): the generated rugs stay.
     // Runs after Living() (SpecGreybox.cs: Living is placed before FoyerProps), so both generated rugs exist to hide.
     static void PurchasedRug(GameObject root, float gy)
     {
@@ -44,7 +44,7 @@ public static partial class SpecGreybox
         var g = (GameObject)Object.Instantiate(a, root.transform); g.name = "PurchasedRug_HiFi"; g.transform.localPosition = new Vector3(0, gy, 0);
         foreach (var c in g.GetComponentsInChildren<Collider>()) Object.DestroyImmediate(c);
         foreach (var r in g.GetComponentsInChildren<MeshRenderer>()) r.gameObject.isStatic = true;
-        var hide = new Dictionary<string, string[]> { ["FoyerProps_HiFi"] = new[] { "Rug_RugFront", "Fringe_RugFront" }, ["LivingBuiltins_HiFi"] = new[] { "Rug" } };
+        var hide = new Dictionary<string, string[]> { ["FoyerProps_HiFi"] = new[] { "Rug_RugFront", "Fringe_RugFront", "Rug_RugRunner", "Fringe_RugRunner" }, ["LivingBuiltins_HiFi"] = new[] { "Rug" } };
         int n = 0;
         foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
             for (var t = r.transform.parent; t != null; t = t.parent)

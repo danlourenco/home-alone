@@ -922,7 +922,7 @@ public static partial class SpecGreybox
         Place("Lantern", new Vector3(8.50f, 2.82f, 9.62f), 0f, 700f, new Vector3(0, -0.8f, 0));
         foreach (float z in new[] { 8.56f, 10.99f }) Place("Sconce", new Vector3(10.13f, 1.57f, z), 180f, 350f, new Vector3(0.15f, 0.25f, 0));   // the vestibule's front wall beside the door surround: back-projected on film 10248 (tools/house/film_solve_10248.py)
         foreach (float x in new[] { 5.15f, 6.18f }) Place("Hurricane", new Vector3(x, 1.62f, 7.778f), 90f, 250f, new Vector3(0.13f, 0.12f, 0));   // glass-chimney pair beside the tall mirror (film 1616, 1689, 10673)
-        Place("Dome", new Vector3(2.21f, 2.155f, 9.54f), 0f, 600f, new Vector3(0, -0.15f, 0));   // opal ceiling light centred in the rear passage behind the arch (film 21, 10673, IMG_3843)
+        Place("Dome", new Vector3(2.21f, 2.155f, 9.54f), 0f, 400f, new Vector3(0, -0.15f, 0));   // 600 -> 400 lm Oct 18 (user: "slightly dim the flush mount under the arch on the first floor"); opal ceiling light centred in the rear passage behind the arch (film 21, 10673, IMG_3843)
         Place("Dome", new Vector3(2.28f, 3.026f + 2.4f, 9.60f), 0f, 600f, new Vector3(0, -0.15f, 0));   // ASSUMED (user Oct 17, not in the film): a second opal flush mount on the stair well's ceiling (upstairs main_stair_opening ceil 2.4) over the half landing's centre (x 1.58-2.985, on the landing window's axis); DEVIATIONS 79
     }
 
@@ -1493,7 +1493,9 @@ public static partial class SpecGreybox
             var l = new GameObject("Light_" + s.name).AddComponent<Light>(); l.transform.parent = lights.transform;
             l.transform.position = new Vector3(x, s.ceil - 0.3f + FloorY, z); l.type = LightType.Point; l.range = 8f;
             var hd = l.gameObject.AddComponent<HDAdditionalLightData>();   // first: adding it resets the light's intensity
-            l.intensity = 900f; l.color = new Color(1f, 0.95f, 0.88f);
+            // rear_passage 900 -> 450 (Oct 18, user: "slightly dim the flush mount under the arch"): this fill sits on the passage's opal flush
+            // mount (HiFiLights "Dome", 600 -> 400) and outshone it; the dome change alone measured no difference through the arch
+            l.intensity = s.name == "rear_passage" ? 450f : 900f; l.color = new Color(1f, 0.95f, 0.88f);
             // shadowed (user, Oct 16, night "daylight streaming from outside"): unshadowed lamps lit the snow outside and the next rooms through walls
             l.shadows = LightShadows.Soft; hd.normalBias = 0.1f; hd.SetShadowResolution(512);
         }

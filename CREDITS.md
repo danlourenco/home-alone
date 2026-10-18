@@ -17,7 +17,7 @@ Third-party assets used by the Unity build. The model files themselves are not i
   CC BY 4.0. Modified: fringe thinned to every 4th strand and decimated (628k to 32k triangles), a pile normal map derived from its
   photo, scaled non-uniformly to the measured box, matte (`tools/house/purchased_rugs.py`). The foyer's front rug.
 - "Fine Persian Heriz Carpet" by mfb64 (https://sketchfab.com/mfb64), https://sketchfab.com/3d-models/fine-persian-heriz-carpet-e198f1099ac34274ae2c867226adde79,
-  CC BY 4.0. Modified as the Nain (628k to 33k triangles), scaled to the measured box (`tools/house/purchased_rugs.py`). The living room's rug.
+  CC BY 4.0. Modified as the Nain (628k to 33k triangles), scaled to the measured box (`tools/house/purchased_rugs.py`). The living room's rug; its photo is also cut (borders, corners, medallion band, one scale) into the foyer floor runner, with its own fringe strands.
 - "Mannequin (1900s): M size" by Aleksei Moskvin (https://sketchfab.com/alekseimoskvin1), https://sketchfab.com/3d-models/mannequin-1900s-m-size-edce03ca9ee8410b8e0485504597389b, CC BY 4.0. The parents' bedroom dress form (rescaled).
 - "Sewing Machine" by Akram090 (https://sketchfab.com/Akram090), https://sketchfab.com/3d-models/sewing-machine-78c947841f4c4c27bf169b4e78ad189f, CC BY 4.0. The parents' bedroom treadle sewing table (rescaled).
 - "Still Life of White Roses" (1870) by Henri Fantin-Latour, public domain (https://commons.wikimedia.org/wiki/File:Henri_Fantin-Latour_-_Still_Life_of_White_Roses_-_Google_Art_Project.jpg). The painting over the parents' mantel.
