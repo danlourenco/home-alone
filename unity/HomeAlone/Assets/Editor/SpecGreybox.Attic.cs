@@ -72,5 +72,6 @@ public static partial class SpecGreybox
         Lamp("AtticLamp_bed", (float)Lp["at"][0], yf + 0.012f + (float)Lp["at"][1] + ((float)sh[2] + (float)sh[3]) / 2f, (float)Lp["at"][2], (float)Lp["lumens"], (float)Lp["kelvin"], 7f);
         foreach (var b in A["bulbs"]) Lamp("AtticBulb_" + (string)b["name"], (float)b["at"][0], (float)b["bulb_y"], (float)b["at"][1], (float)b["lumens"], (float)b["kelvin"], 9f);
         Debug.Log($"Attic: placed, {hidden} grey-box renderers hidden (colliders kept), casements open {deg} deg, {fx.transform.childCount} lights");
+        Treehouse(root);   // SpecGreybox.Treehouse.cs: the treehouse and the zipline from this dormer (changes/2026-10-18-treehouse-zipline.json)
     }
 }

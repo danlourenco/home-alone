@@ -1,0 +1,189 @@
+{
+ "change": "Treehouse + zipline TRIAL 1: Kevin's treehouse (generated, hifi_treehouse.py from spec/dressing/treehouse.json) behind the house where the registered old GLB has it, built to the FILM's size (deck 2.75 wide, top 3.6 m over the rear yard), walk colliders, a climbable ladder; the zipline rope from the attic collar tie under the dormer's head out to turns round the trunk, the handlebar trolley, and Scripts/ZipLine.cs (E ride / climb, C cut)",
+ "target": "House_WallGrid",
+ "gate": 8,
+ "premise": "The old GLB places the treehouse correctly in plan (its registered footprint, porch toward the house, the dormer straight ahead of the deck as in film 9435), but its treehouse is NOT modelled at the house's 0.757 oversize: the film's own rulers (Kevin, the ladder rungs) give the size and the deck height.",
+ "claim": {
+  "value": {
+   "deck_top_above_grade_m": 3.6,
+   "deck_width_m": 2.75,
+   "deck_depth_m": 3.0,
+   "cabin": "2.0 deep, 2.5 wide at the deck flaring to 3.0 at the eave, 1.8 m deck-to-eave at the front, shed roof to 1.6 at the back",
+   "centre_spec_xz": [
+    -12.12,
+    9.27
+   ],
+   "grade_y": -3.39,
+   "rope_span_m": 15.6,
+   "rope_sag_m": 0.5
+  },
+  "data": [
+   "film:6810",
+   "film:11102"
+  ],
+  "scale": [
+   "ladder-rung-12in:6810",
+   "kevin-137cm:11102"
+  ],
+  "upstream": [
+   "glb-registration:similarity"
+  ],
+  "risks": [
+   "scale",
+   "registration"
+  ],
+  "applies_to": [
+   "treehouse",
+   "zipline"
+  ],
+  "measured_in": [
+   "treehouse",
+   "zipline"
+  ],
+  "pick": {
+   "crop": "spec/captures/picks/treehouse/f6810_ladder_rungs_deck.png",
+   "confirmed_by": "independent subagent shown only the crop: 'the red ticks sit at the same heights as the lower ladder's rungs; the green line touches the base of the tree trunk at the snow; the cyan line touches the underside of the treehouse platform/deck edge' (so 3.64 m may be the deck's underside at the near corner: deck top up to ~3.8; built 3.6)"
+  },
+  "note": "Deck height: ladder rungs (12 in pitch, standard) in 6810, 6 rungs 617-750 px = 26.6 px per rung, lean ~15 deg -> 90.2 px/m vertical at the ladder's depth; ground at the ladder foot v 768, deck at the near corner v 440 -> 3.64 m (the near corner is ~1 m nearer the camera than the ladder: ~-3%; and the crop check reads v 440 as the deck's underside: +0.15). Deck width: Kevin 1.37 m (age 10, ASSUMED height) in 11102, 418 px head-to-feet -> 305 px/m; rail post to rail post 845 px -> 2.77, he stands ~0.3 m behind the rail -> 2.75. Depth and the cabin/porch split from the GLB object183's proportions (raw units = film metres for the treehouse, see checks). Position: registered GLB centre; ladder top and door place AUTHORED (DEVIATIONS 94).",
+  "alternatives": [
+   "porch toward the house, trunk through the cabin (built; GLB object183 orientation)",
+   "porch away from the house",
+   "porch on a side (+-z)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "porch/deck rail side (toward the house)",
+     "observed_in": [
+      "film:6810",
+      "film:6813"
+     ],
+     "note": "the low porch rail stands on the house side of the cabin (left, toward the house) in both day frames; GLB agrees"
+    },
+    {
+     "part": "trunk rising through the cabin",
+     "observed_in": [
+      "film:11102",
+      "film:11220"
+     ],
+     "note": "trunk seen through the doorway and above the roof (11102); rope wound round it inside the cabin (11220)"
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-16",
+   "what": "IntactHouseReference: the old GLB (unscaled, front-door aligned) carried a treehouse mesh (object183) with no trunk or ladder; the grey-box had none",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "DECK WIDTH, second ruler: the registered GLB's object183 deck reads 2.08 m at the house's similarity scale 0.757 but 2.76 m in raw GLB units; Kevin gives 2.75. The raw value agrees (+0.4%) and the scaled one does not (-24%): the GLB modeller built the treehouse at film size, not at the house's oversize. Used as the shape source (depth 3.0 = cabin 2.0 + porch 1.0, raw).",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "glb:object183"
+   ],
+   "scale": [
+    "glb-raw-units"
+   ],
+   "upstream": [
+    "glb:HomeAloneExterior"
+   ],
+   "tests": [
+    "scale"
+   ],
+   "disposition": "the registered (0.757) size is rejected for the treehouse; logged DEVIATIONS 94"
+  },
+  {
+   "what": "CABIN HEIGHT on the ladder ruler (6810): eave v 288 to sill v 438 at the near corner = 150 px -> 1.66 m deck-to-eave vs Kevin 11102 1.79 (built 1.8): spread 8%. Same frame as the deck height, a second kind of ruler (ladder) against the Kevin claim.",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "film:6810"
+   ],
+   "scale": [
+    "ladder-rung-12in:6810"
+   ],
+   "tests": [
+    "scale"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/treehouse/f11102_kevin_deck.png",
+    "confirmed_by": "independent subagent shown only the crop: 'the two green verticals mark the left and right edges of the treehouse front (wall and deck); of the red horizontals the top one is the roof/eave edge, the lower pair are the deck/floor line and Kevin's feet'"
+   }
+  },
+  {
+   "what": "DECK HEIGHT, second ruler: the registered GLB (vertical fit a = 0.757 tied to our floors) puts object183's deck top 3.42 m over its own rear-yard slab object251 (-3.39): built 3.6 from the ladder (+5%). Unlike its plan size, its height fits the house's registration.",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "glb-registration:23-features"
+   ],
+   "scale": [
+    "glb-registration:similarity"
+   ],
+   "upstream": [
+    "spec:geometry"
+   ],
+   "tests": [
+    "registration"
+   ]
+  },
+  {
+   "what": "BEARING, film 9435 (night, toward the house): the dormer is seen square-on (both cheeks hidden, the arched landing window centred under it). Built: the deck centre lies 0.40 m to spec -z of the dormer's axis over 15.2 m (1.5 deg off square: frontal). The film's rope leaves the dormer to the LOWER-LEFT; from our deck-front camera (z 9.30) it runs lower-right (the trunk end, z 9.47, is to that camera's right): the film camera's position is not solved, so the rope side is NOT used as evidence (open). Film 11050: the chimney stands right of the dormer seen from beside the treehouse: built, the rear stack (z 13.3-14.3) is at +z = image-right from there.",
+   "agrees": true,
+   "type": "angular",
+   "data": [
+    "film:9435",
+    "film:11050"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": [
+    "registration"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/treehouse/f9435_dormer_frontal.png",
+    "confirmed_by": "independent subagent shown only the crop: 'frontal; the gable is symmetric and both side cheeks are roughly equal and barely visible; the light-coloured line leaving the dormer runs to the lower-left'"
+   }
+  },
+  {
+   "what": "build gates (z-fight, clash, walk) and glb_orientation on Treehouse.glb (0 inward): self-consistency only, not evidence",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "unity:build"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": []
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/treehouse/before/film9435_deck_to_dormer.png",
+   "spec/captures/views/treehouse/before/film11050_wide_night.png",
+   "spec/captures/views/treehouse/before/film11060_frontal.png",
+   "spec/captures/views/treehouse/before/film11102_kevin_deck.png",
+   "spec/captures/views/treehouse/before/film6810_day_yard.png",
+   "spec/captures/views/treehouse/before/attic_dormer_out.png",
+   "spec/captures/views/treehouse/before/ride_side.png"
+  ],
+  "after": [
+   "spec/captures/views/treehouse/after/film9435_deck_to_dormer.png",
+   "spec/captures/views/treehouse/after/film11050_wide_night.png",
+   "spec/captures/views/treehouse/after/film11060_frontal.png",
+   "spec/captures/views/treehouse/after/film11102_kevin_deck.png",
+   "spec/captures/views/treehouse/after/film6810_day_yard.png",
+   "spec/captures/views/treehouse/after/attic_dormer_out.png",
+   "spec/captures/views/treehouse/after/ride_side.png"
+  ]
+ },
+ "user_walk": "pending"
+}

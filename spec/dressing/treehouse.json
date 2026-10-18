@@ -1,0 +1,69 @@
+{
+ "what": "Kevin's treehouse and the zipline from the attic dormer (Oct 18 2026, TRIAL; changes/2026-10-18-treehouse-zipline.json). Spec x, z (world z = -spec z); y is WORLD (upper floor 0). hifi_treehouse.py builds Treehouse.glb from this; SpecGreybox.Treehouse places it, adds the walk colliders and the ZipLine rig.",
+ "site": {
+  "center": [-12.12, 9.27],
+  "center_src": "registered old GLB treehouse object183 (spec/glb_registration.json plan similarity): x -13.43..-10.81, z 8.21..10.33, centre -12.12, 9.27",
+  "front": "+x",
+  "front_src": "GLB object183's porch is on its +x side (toward the house); film 11102/11060: the deck faces the house (Kevin lands on it from the dormer)",
+  "grade_y": -3.39,
+  "grade_src": "registered GLB rear-yard slab object251 top (-3.39 world; changes/2026-10-18-yard-registration.json rear_yard_y)"
+ },
+ "deck": {
+  "top_above_grade": 3.6,
+  "top_src": "ladder rungs (12 in pitch) in film 6810: rung step 26.6 px, ground at the ladder foot v 768, deck top v 440 at the near corner -> 3.64 m; GLB registered 3.40 (check)",
+  "width": 2.75,
+  "width_src": "Kevin 1.37 m in film 11102: rail post to rail post 845 px at 305 px/m -> 2.77 (Kevin ~0.3 m behind the rail: 2.75)",
+  "depth": 3.0,
+  "depth_src": "GLB object183 proportions: cabin 2.0 + porch 1.0 deep (raw GLB units; its deck 2.76 wide matches Kevin's 2.75, so raw GLB units = film metres for the treehouse)",
+  "thick": 0.15,
+  "rail_h": 0.6,
+  "rail_src": "film 11102: rail cap v 565 vs deck v 745 at 305 px/m"
+ },
+ "cabin": {
+  "depth": 2.0,
+  "base_w": 2.5,
+  "eave_w": 3.0,
+  "front_h": 1.8,
+  "back_h": 1.6,
+  "h_src": "Kevin 11102: deck v 745 to eave v 200 -> 1.79; ladder 6810: 150 px / 90.2 px/m -> 1.66 (check, 8%)",
+  "flare_src": "film 11064/11102 and GLB object183 front view: walls flare outward to the eave (2.0 -> 2.6 raw GLB; Kevin 11102: ~2.5 at the deck, 3.0 at the eave)",
+  "roof_over": 0.25,
+  "door": {"z": [8.95, 9.62], "h": 1.55, "src": "film 11102: opening beside the trunk, x 905-1110 (authored z: the rope passes through it to the trunk)"},
+  "windows": [
+   {"wall": "front", "z": [9.93, 10.45], "y": [1.10, 1.52], "src": "film 11102 x 600-780, v 280-410"},
+   {"wall": "front", "z": [8.27, 8.52], "y": [1.25, 1.54], "src": "film 11102 x 1210-1285, v 275-365"},
+   {"wall": "side_pz", "x": [-13.2, -12.5], "y": [1.0, 1.45], "src": "authored (film 11064 shows a side opening)"}
+  ]
+ },
+ "trunk": {
+  "at": [-12.62, 9.42],
+  "r": 0.3,
+  "r_base": 0.45,
+  "top_above_grade": 13.0,
+  "src": "film 11102: trunk 830-1000 px above the roof (0.56 m), just left of the cabin's centre (+z 0.15); 6810 base flare 75 px / 90 px/m = 0.83 m"
+ },
+ "ladder": {
+  "foot": [-11.12, 11.55],
+  "top": [-11.12, 10.70],
+  "w": 0.42,
+  "src": "film 11050/11280: an extension ladder leaning on the treehouse's +z side; 6810 shows its top on the braces ~2.1 m up (AUTHORED: here it reaches the porch rim so it can be climbed; DEVIATIONS)"
+ },
+ "flag": {"pole": [-10.70, 7.98], "h": 2.7, "src": "film 11102: black pirate flag on a pole at the deck's -z front corner, above the roof"},
+ "rope": {
+  "tie": [5.5, 5.0, 15.964],
+  "tie_src": "film 10922: looped over the collar tie above the stair head (hifi_attic.py head tie z 15.939-15.989, top y 4.99)",
+  "ceiling_edge": [4.58, 4.36, 9.80],
+  "window": [3.04, 4.205, 9.6745],
+  "window_src": "the dormer opening's head (4.23) on its outer face (x 3.018): the rope bears up on the head and the alcove ceiling's inner edge on its way to the tie",
+  "trunk": [-12.31, 1.26, 9.47],
+  "trunk_src": "film 11220: several turns round the trunk inside the cabin ~1.05 m above the deck",
+  "sag": 0.5,
+  "sag_src": "authored ~0.5 m (tune on 9435/11050 overlays)",
+  "d": 0.02
+ },
+ "ride": {
+  "kid_speed": 5.0, "adult_speed": 1.0, "ease_in_m": 1.5, "ease_out_m": 2.5,
+  "kid_eye_below_rope": 0.7, "adult_eye_below_rope": 0.5,
+  "land_inside_rail": 0.3, "attach_radius": 1.0
+ }
+}

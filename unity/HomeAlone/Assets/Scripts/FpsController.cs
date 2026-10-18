@@ -14,6 +14,7 @@ public class FpsController : MonoBehaviour
     public float standHeight = 1.8f, crouchHeight = 1.2f, eyeOffset = 0.15f;
     // Kevin: eye ~1.10 m (STATUS "scale the players"; Marina's camera rides at 1.0-1.2 m), crawls under ~0.45 m. Speeds are a kid's walk/run.
     public bool kid = true;
+    public bool frozen;   // set by scripted moves (ZipLine: riding, climbing): look still works, walking and bob pause
     public float kidHeight = 1.30f, kidEye = 1.10f, kidCrouchHeight = 0.45f, kidRadius = 0.2f, kidWalk = 1.6f, kidSprint = 4f, kidCrouchSpeed = 0.9f;
     // Crouched, the eye rides 5 cm under the capsule top (kid: 0.40 m, under the 0.48 m bed rails; the capsule is the 0.45 m crouch of DEVIATIONS 72/81).
     public float crouchEyeDrop = 0.05f;
@@ -70,6 +71,7 @@ public class FpsController : MonoBehaviour
             cam.localRotation = Quaternion.Euler(pitch, 0, 0);
         }
 
+        if (frozen) return;
         TickMotion(transform.right * Input.GetAxisRaw("Horizontal") + transform.forward * Input.GetAxisRaw("Vertical"),
             Input.GetKey(KeyCode.LeftShift), Input.GetKeyDown(KeyCode.Space), Time.deltaTime);
         Bob(Time.deltaTime);

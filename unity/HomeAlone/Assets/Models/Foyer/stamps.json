@@ -122,5 +122,9 @@
  "tools/house/hifi_swing_door.py": {
   "models": "f7e1a4cdfc07a73c",
   "sources": "2136d459057f6237"
+ },
+ "tools/house/hifi_treehouse.py": {
+  "sources": "7aca47292624edaa",
+  "models": "03d12bfc07e48b43"
  }
 }
