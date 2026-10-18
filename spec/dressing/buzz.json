@@ -14,9 +14,11 @@
    "wall": "door",
    "corner": "front",
    "along": [
-    0.924,
-    2.102
+    1.057,
+    2.249
    ],
+   "store": "Assets/Purchased/BuzzBed/BuzzBed.glb",
+   "yaw": 180,
    "off": [
     0.015,
     2.155
@@ -27,8 +29,8 @@
    ],
    "foot_h": 0.884,
    "mattress_top": 0.645,
-   "post": 0.09,
-   "source": "head posts' finials (7 frames each, cut 0.05 m off the door wall) centres 0.969 / 2.057 m from the front corner; footboard face 2.155 m off the wall (dense depth, 2 frames); finial tops head 1.342, foot 0.884; mattress top 0.645 (dense). Post 0.09 square authored (finial ball ~0.1)"
+   "post": 0.104,
+   "source": "head posts' finials (7 frames each, cut 0.05 m off the door wall) centres 0.969 / 2.057 m from the front corner, built 0.14 m further toward the door (adult passage to the chest, changes/2026-10-18-buzz-bed.json); footboard face 2.155 m off the wall (dense depth, 2 frames); finial tops head 1.342, foot 0.884; mattress top 0.645 (dense). Post 0.104 square: the pack bed's (purchased_bed.py)"
   },
   {
    "name": "buzz_nightstand",
@@ -88,6 +90,7 @@
    ],
    "store": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Desk_01.prefab",
    "back": "+z",
+   "yaw": 0,
    "source": "top's four corners in frame 0 (back on the wall, front on the top's front plane; the four heights agree to 2.8 cm); drawer fronts 0.483 m off the wall (dense, 3 frames), top 0.50"
   },
   {
@@ -159,8 +162,8 @@
   {
    "name": "buzz_bed_post_head_L",
    "x": [
-    9.056,
-    9.146
+    8.909,
+    9.013
    ],
    "y": [
     0.0,
@@ -168,15 +171,15 @@
    ],
    "z": [
     11.585,
-    11.675
+    11.689
    ],
    "mat": "wood"
   },
   {
    "name": "buzz_bed_post_head_R",
    "x": [
-    10.144,
-    10.234
+    9.997,
+    10.101
    ],
    "y": [
     0.0,
@@ -184,22 +187,22 @@
    ],
    "z": [
     11.585,
-    11.675
+    11.689
    ],
    "mat": "wood"
   },
   {
    "name": "buzz_bed_post_foot_L",
    "x": [
-    9.056,
-    9.146
+    8.909,
+    9.013
    ],
    "y": [
     0.0,
     0.884
    ],
    "z": [
-    13.635,
+    13.621,
     13.725
    ],
    "mat": "wood"
@@ -207,15 +210,15 @@
   {
    "name": "buzz_bed_post_foot_R",
    "x": [
-    10.144,
-    10.234
+    9.997,
+    10.101
    ],
    "y": [
     0.0,
     0.884
    ],
    "z": [
-    13.635,
+    13.621,
     13.725
    ],
    "mat": "wood"
@@ -223,88 +226,88 @@
   {
    "name": "buzz_bed_headboard",
    "x": [
-    9.101,
-    10.189
+    8.961,
+    10.049
    ],
    "y": [
-    0.45,
-    1.05
+    0.16,
+    1.192
    ],
    "z": [
-    11.615,
-    11.645
+    11.622,
+    11.652
    ],
    "mat": "wood"
   },
   {
    "name": "buzz_bed_footboard",
    "x": [
-    9.101,
-    10.189
+    8.961,
+    10.049
    ],
    "y": [
-    0.4,
-    0.75
+    0.16,
+    0.814
    ],
    "z": [
-    13.665,
-    13.695
+    13.658,
+    13.688
    ],
    "mat": "wood"
   },
   {
    "name": "buzz_bed_rail_L",
    "x": [
-    9.086,
-    9.116
+    8.946,
+    8.976
    ],
    "y": [
-    0.28,
-    0.4
+    0.48,
+    0.56
    ],
    "z": [
-    11.675,
-    13.635
+    11.689,
+    13.621
    ],
    "mat": "wood"
   },
   {
    "name": "buzz_bed_rail_R",
    "x": [
-    10.174,
-    10.204
+    10.034,
+    10.064
    ],
    "y": [
-    0.28,
-    0.4
+    0.48,
+    0.56
    ],
    "z": [
-    11.675,
-    13.635
+    11.689,
+    13.621
    ],
    "mat": "wood"
   },
   {
    "name": "buzz_bed_mattress",
    "x": [
-    9.146,
-    10.144
+    9.013,
+    9.997
    ],
    "y": [
-    0.4,
+    0.56,
     0.615
    ],
    "z": [
-    11.645,
-    13.665
+    11.652,
+    13.658
    ],
    "mat": "mattress"
   },
   {
    "name": "buzz_bed_blanket",
    "x": [
-    9.131,
-    10.159
+    8.998,
+    10.012
    ],
    "y": [
     0.615,
@@ -312,7 +315,7 @@
    ],
    "z": [
     12.135,
-    13.665
+    13.658
    ],
    "mat": "blanket"
   },

@@ -9,11 +9,11 @@
  },
  "tools/house/hifi_buzz_curtains.py": {
   "models": "356da5161781ccee",
-  "sources": "968b914f7f675808"
+  "sources": "f640230a01306a2b"
  },
  "tools/house/hifi_buzz_props.py": {
   "models": "1f09307fe63c6c9f",
-  "sources": "168311516b7aae9d"
+  "sources": "d4c52d7f1ce53024"
  },
  "tools/house/hifi_den.py": {
   "models": "725843a281bb5408",
@@ -53,7 +53,7 @@
  },
  "tools/house/hifi_hall_arches.py": {
   "models": "f8b6ae10beb76723",
-  "sources": "db0fffadd713d188"
+  "sources": "9b1a911c0ff6970d"
  },
  "tools/house/hifi_kitchen.py": {
   "models": "98ab235e28f66103",
@@ -69,7 +69,7 @@
  },
  "tools/house/hifi_landing_window.py": {
   "models": "c19bb98c7077b7fe",
-  "sources": "03a7417e95c0f9e8"
+  "sources": "eef19e86be38a308"
  },
  "tools/house/hifi_lights.py": {
   "models": "039d900b97254c67",

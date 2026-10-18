@@ -107,7 +107,7 @@ def lining():
 ROOM = next(r for r in json.loads((ROOT / "spec/geometry.json").read_text())["upstairs"]["rooms"] if r["name"] == "buzz_room")["poly"]
 X0, X1 = min(p[0] for p in ROOM), max(p[0] for p in ROOM)
 Z0, Z1 = min(p[1] for p in ROOM), max(p[1] for p in ROOM)
-BED_SHIFT = -0.14            # user: the bed moves ~0.14 m toward the door (-x) in a later trial; assumed here
+BED_SHIFT = 0.0              # the bed's -0.14 m in x is now in buzz.json itself (buzz_layout.py BED_SHIFT, changes/2026-10-18-buzz-bed.json)
 R_ADULT = 0.275 + 0.02       # CharacterController radius + skin
 WALL_PROUD = 0.03            # wainscot cap rail proud of the wall face
 LID_BACK = 0.12              # the open lid stands behind the hinge by its own depth (~0.11 m) + 1 cm: clear of the chest's front

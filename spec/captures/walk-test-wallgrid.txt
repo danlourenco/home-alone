@@ -103,15 +103,15 @@ BLOCKED kevin living_room via living_room/foyer: ended 1.19 m short
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin back_stair: no cell to stand in (its floor is a stair)
-Z-fight check: 1651068 triangles, 1556 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
-Clash check: 1896562 triangles, 0 parts passing through another (11 allowed joints) (every visible mesh checked)
+Z-fight check: 1659185 triangles, 1549 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
+Clash check: 1904685 triangles, 0 parts passing through another (12 allowed joints) (every visible mesh checked)
 Casing check: 0 casings placed apart from their opening
 Opening face check: 22 door faces, 0 without a head casing, 0 showing the other room's finish within the casing width
 Arch fit: 1 generated arches on their cuts, 0 joints off by more than 1 mm (worst 0.00 mm)
-Props check: 34 store models, 2 problems (landing_table: back -0.5 cm from the drawn wall (want 0-3); den_banker: material Glass_HDRP has no base colour map)
+Props check: 35 store models, 2 problems (landing_table: back -0.5 cm from the drawn wall (want 0-3); den_banker: material Glass_HDRP has no base colour map)
 Props triangle budget: 4 models over 150k triangles (Assets/Purchased/PurchasedPlants.glb 411k, Assets/Purchased/HallPlants.glb 296k, Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Models/ChristmasTree.fbx 259k, Assets/Models/Foyer/HallDressing.glb 201k)
 Trim check: 67 face runs (3 on the stair and landings, 0 panelled by a window model), 106.4 m, 9435 samples, 1 gaps in the baseboard, wainscot or cap rail; run ends: corner 64, opening 68, outside-corner 2
 GAP     0.08 m of bare wall 0.42 above the line of the room:hall_corridor run at spec (7.34, 0.42, 9.91)
-Envelope check: 2115 points at room joints, 0 see the sky through < 0.3 m of shadow caster
+Envelope check: 2113 points at room joints, 0 see the sky through < 0.3 m of shadow caster
 Quality check: 2 pipeline models of 32 generated (the rest predate the artist pipeline), 0 problems
 

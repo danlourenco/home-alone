@@ -335,14 +335,15 @@ def layout(pl, fr, pts, fc, cams_g):
     sp = {k: fr.spec(v)[0] for k, v in pts.items()}
     W = (pl["shelves"][1] - pl["front"][1]) @ pl["front"][0] * fr.s; D = (pl["desk"][1] - pl["door"][1]) @ pl["door"][0] * fr.s
     r3 = lambda v: round(float(v), 3)
-    sR, sL = X1 - sp["head_R"][0], X1 - sp["head_L"][0]; post = 0.09
+    sR, sL = X1 - sp["head_R"][0], X1 - sp["head_L"][0]; post = 0.104   # the pack bed's post (tools/house/purchased_bed.py; was 0.09 authored)
+    sR, sL = sR + BED_SHIFT, sL + BED_SHIFT
     P = []
-    P.append(dict(name="buzz_bed", wall="door", corner="front", along=[r3(sR - post / 2), r3(sL + post / 2)], off=[0.015, r3(fc["footboard"][2] - Z0)],
+    P.append(dict(name="buzz_bed", wall="door", corner="front", along=[r3(sR - post / 2), r3(sL + post / 2)], store="Assets/Purchased/BuzzBed/BuzzBed.glb", yaw=180, off=[0.015, r3(fc["footboard"][2] - Z0)],
                   h=[0.0, r3((sp["head_L"][1] + sp["head_R"][1]) / 2 + 0.05)], foot_h=r3((sp["foot_L"][1] + sp["foot_R"][1]) / 2 + 0.05),
                   mattress_top=r3(fc["mattress_top"][1]), post=post,
-                  source=f"head posts' finials (7 frames each, cut 0.05 m off the door wall) centres {r3(sR)} / {r3(sL)} m from the front corner; "
+                  source=f"head posts' finials (7 frames each, cut 0.05 m off the door wall) centres {r3(sR - BED_SHIFT)} / {r3(sL - BED_SHIFT)} m from the front corner, built {BED_SHIFT} m further toward the door (adult passage to the chest, changes/2026-10-18-buzz-bed.json); "
                          f"footboard face {r3(fc['footboard'][2] - Z0)} m off the wall (dense depth, 2 frames); finial tops head {r3((sp['head_L'][1] + sp['head_R'][1]) / 2 + 0.05)}, "
-                         f"foot {r3((sp['foot_L'][1] + sp['foot_R'][1]) / 2 + 0.05)}; mattress top {r3(fc['mattress_top'][1])} (dense). Post 0.09 square authored (finial ball ~0.1)"))
+                         f"foot {r3((sp['foot_L'][1] + sp['foot_R'][1]) / 2 + 0.05)}; mattress top {r3(fc['mattress_top'][1])} (dense). Post 0.104 square: the pack bed's (purchased_bed.py)"))
     # nightstand: its top's front-right corner (frames 44/30/32, confirmed by the pick check) cut on the front face's plane (dense
     # depth 0.50 m off the wall, frames 44/30). The wall cuts of its back corners (ns_back_*) read 0.16-0.74 but the pick check put
     # them on the wall above the top (not the corner): not used. Its left end is hidden by the pillow in every solved frame; width
@@ -376,6 +377,10 @@ def layout(pl, fr, pts, fc, cams_g):
     return P, r3(W), r3(D)
 
 
+BED_SHIFT = 0.14   # along the door wall toward the door (spec -x): adult passage bed-chest >= 0.59 (changes/2026-10-18-buzz-bed.json)
+UNDER_Z = 0.48     # bed rails' underside (purchased_bed.py)
+
+
 def place(p):
     """face-relative -> built box (spec x, y, z)"""
     a0, a1 = p["along"]; o0, o1 = p["off"]; h = p["h"]
@@ -398,11 +403,13 @@ def parts(p):
         for tag, (px, pz, top) in {"head_L": (xa, za, y[1]), "head_R": (xb - q, za, y[1]), "foot_L": (xa, zb - q, p["foot_h"]), "foot_R": (xb - q, zb - q, p["foot_h"])}.items():
             out.append((f"{n}_post_{tag}", [px, px + q], [0.0, top], [pz, pz + q], "wood"))
         t = 0.03; zc0 = za + q / 2; zc1 = zb - q / 2
-        out.append((f"{n}_headboard", [xa + q / 2, xb - q / 2], [0.45, 1.05], [zc0 - t / 2, zc0 + t / 2], "wood"))
-        out.append((f"{n}_footboard", [xa + q / 2, xb - q / 2], [0.40, 0.75], [zc1 - t / 2, zc1 + t / 2], "wood"))
+        # walk layer = the model's (purchased_bed.py): boards to the floor, rails and mattress from UNDER_Z up so kid Kevin
+        # (crouch 0.45 + skin 0.02) fits under (DEVIATIONS 72)
+        out.append((f"{n}_headboard", [xa + q / 2, xb - q / 2], [0.16, y[1] - 0.15], [zc0 - t / 2, zc0 + t / 2], "wood"))
+        out.append((f"{n}_footboard", [xa + q / 2, xb - q / 2], [0.16, p["foot_h"] - 0.07], [zc1 - t / 2, zc1 + t / 2], "wood"))
         for tag, (r0, r1) in {"L": (xa + q / 2 - 0.015, xa + q / 2 + 0.015), "R": (xb - q / 2 - 0.015, xb - q / 2 + 0.015)}.items():
-            out.append((f"{n}_rail_{tag}", [r0, r1], [0.28, 0.40], [za + q, zb - q], "wood"))
-        out.append((f"{n}_mattress", [xa + q, xb - q], [0.40, mt - 0.03], [zc0 + t / 2, zc1 - t / 2], "mattress"))
+            out.append((f"{n}_rail_{tag}", [r0, r1], [UNDER_Z, UNDER_Z + 0.08], [za + q, zb - q], "wood"))
+        out.append((f"{n}_mattress", [xa + q, xb - q], [UNDER_Z + 0.08, mt - 0.03], [zc0 + t / 2, zc1 - t / 2], "mattress"))
         out.append((f"{n}_blanket", [xa + q - 0.015, xb - q + 0.015], [mt - 0.03, mt], [za + 0.55, zc1 - t / 2], "blanket"))
         return out
     if n == "buzz_shelves":
@@ -472,7 +479,7 @@ def write(P, W, D):
             continue
         x, y, z = place(p)
         q = {"name": p["name"], "floor": "upper", "prefab": p["store"], "x": [round(v, 4) for v in x], "z": [round(v, 4) for v in z], "y0": 0.0,
-             "height": p["h"][1], "hides": [p["name"]], "collide": False,
+             "height": p["h"][1], "hides": [b[0] for b in parts(p)], "collide": False,
              "source": "Buzz TRIAL 1 (changes/2026-10-17-buzz-layout.json): box from spec/dressing/buzz.json (tools/house/buzz_layout.py); " + p["source"]}
         if "yaw" in p:
             q["yaw"] = p["yaw"]; q["back"] = ""

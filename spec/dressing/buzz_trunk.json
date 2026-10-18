@@ -17,8 +17,8 @@
  },
  "outer_length_m": 0.86,
  "x": [
-  9.192,
-  10.054
+  9.052,
+  9.914
  ],
  "z": [
   13.802,
@@ -27,10 +27,10 @@
  "front": "+z",
  "hinge": "-z",
  "yaw_deg": 90,
- "placement": "PLACED BY THE USER in the editor (Oct 17), then 0.12 m off the footboard so the lid opens (user: \"you can shift it to accommodate that as well as the planned bed nudge\"); x follows the bed: when the bed moves (planned -0.14 m in x), move the trunk with it",
+ "placement": "PLACED BY THE USER in the editor (Oct 17), then 0.12 m off the footboard so the lid opens (user: \"you can shift it to accommodate that as well as the planned bed nudge\"); x follows the bed: moved -0.14 m in x with the bed (Oct 18, changes/2026-10-18-buzz-bed.json)",
  "passage_m": 0.62,
  "passage_without_m": 0.62,
- "bed_shift_assumed_m": -0.14,
+ "bed_shift_assumed_m": 0.0,
  "lining": {
   "png": "spec/dressing/buzz_trunk_lining.png",
   "repeat_m": [

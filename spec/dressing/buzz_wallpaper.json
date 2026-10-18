@@ -1,1 +1,44 @@
-{"source": "film 530 x 1236.5-1522.1, rows 400-505: median of 4 periods", "repeat_m": [0.0853, 0.0853], "major_spacing_m": {"chart": 0.0853, "mattress": 0.0845}, "ruler": "chart (Marina 540 s, 3-5 ft)", "ground_srgb": [0.844, 0.822, 0.768]}
+{
+ "source": "film 2766 rows 700-1050, x 1150-1900: median of every clean period (red, grey, tan, grey lines), gaps staggered one per line per tile",
+ "repeat_m": [
+  0.1124,
+  0.1686
+ ],
+ "ruler": "gun (film 2766, Daisy lever BB gun 0.9 m): 8.01 periods butt to muzzle",
+ "gun_range_m": [
+  0.1112,
+  0.1174
+ ],
+ "check_chart_480": {
+  "px_per_m": 521.7,
+  "tick_resid_px": [
+   -2.5,
+   2.5,
+   2.5,
+   -2.5
+  ],
+  "knob_h_m": 0.873,
+  "minor_px": 15.63,
+  "major_px": 66.62,
+  "spacing_from_minors_m": 0.1198,
+  "spacing_from_reds_m": 0.1277
+ },
+ "line_to_ground_linear": {
+  "red": [
+   0.844,
+   0.254,
+   0.368
+  ],
+  "grey": [
+   0.622,
+   0.624,
+   0.624
+  ],
+  "tan": [
+   0.761,
+   0.73,
+   0.639
+  ]
+ },
+ "previous": "0.0853 (Marina's desk wall at her growth chart; her paper, not the film's)"
+}

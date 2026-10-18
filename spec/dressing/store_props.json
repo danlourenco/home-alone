@@ -710,6 +710,37 @@
    "source": "Buzz TRIAL 1 (changes/2026-10-17-buzz-layout.json): box from spec/dressing/buzz.json (tools/house/buzz_layout.py); top's front corners triangulated (left: frames 16/20/22/26/28, right: 16/20/22), front face dense depth (frames 16/20/22/26, IQR 0.5-0.8 cm)",
    "yaw": 270,
    "back": ""
+  },
+  {
+   "name": "buzz_bed",
+   "floor": "upper",
+   "prefab": "Assets/Purchased/BuzzBed/BuzzBed.glb",
+   "x": [
+    8.909,
+    10.101
+   ],
+   "z": [
+    11.585,
+    13.725
+   ],
+   "y0": 0.0,
+   "height": 1.342,
+   "hides": [
+    "buzz_bed_post_head_L",
+    "buzz_bed_post_head_R",
+    "buzz_bed_post_foot_L",
+    "buzz_bed_post_foot_R",
+    "buzz_bed_headboard",
+    "buzz_bed_footboard",
+    "buzz_bed_rail_L",
+    "buzz_bed_rail_R",
+    "buzz_bed_mattress",
+    "buzz_bed_blanket"
+   ],
+   "collide": false,
+   "source": "Buzz TRIAL 1 (changes/2026-10-17-buzz-layout.json): box from spec/dressing/buzz.json (tools/house/buzz_layout.py); head posts' finials (7 frames each, cut 0.05 m off the door wall) centres 0.969 / 2.057 m from the front corner, built 0.14 m further toward the door (adult passage to the chest, changes/2026-10-18-buzz-bed.json); footboard face 2.155 m off the wall (dense depth, 2 frames); finial tops head 1.342, foot 0.884; mattress top 0.645 (dense). Post 0.104 square: the pack bed's (purchased_bed.py)",
+   "yaw": 180,
+   "back": ""
   }
  ]
 }

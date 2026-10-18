@@ -145,56 +145,98 @@ def living():
 
 
 def buzz():
-    """Buzz's room paper (Buzz TRIAL 2). Film 530 (lamp-lit, frontal on the desk wall, below the bulletin board): a white ground with
-    fine grey pinstripes every 17.85 px and every fourth line red (a major every 71.4 px; autocorrelation of the redness: 72 / 143,
-    of the luminance 18 / 36 / 54 / 72). Line / ground, linear, per channel (cancels the lamp's colour): red 0.94/0.82/0.83, minor
-    0.84/0.82/0.81 (neutral grey, not a blue darkened by the lamp). Marina's paper (Part 2 540 s) has the same layout (a major line
-    every ~70 px at frame 0 with ~17 px minors between) but her majors cycle red / blue / tan: a different colourway, so the film's is
-    built (user, Oct 15: film first where they differ).
-    Tile: ONE period, the median of 4 (x 1236.5-1522.1, rows 400-505, between the board's frame and the desk's clutter), each
-    resampled to exactly one period, averaged down the rows (a printed stripe has no vertical structure; it removes JPEG noise) and
-    divided by its own ground (the lamp's falloff, and a shade over the region's left end). Ground albedo ASSUMED the house's off-white trim (0.71/0.67/0.57 linear, as the living room's; in 530
-    the paper and the white sheer read the same chroma, 1.45/0.94/0.61 vs 1.41/1.00/0.60).
-    Metric size: the major spacing measured on MARINA's desk wall (same layout) in her solved clip (tools/house/buzz_layout.py, frame 0,
-    rays cut with the desk wall plane), at two rulers of different kinds: the growth chart's 3-5 ft marks on that wall (built) and the
-    twin mattress (check)."""
-    from scipy.ndimage import map_coordinates, gaussian_filter1d
-    sys.path.insert(0, str(ROOT / "tools/house"))
-    import buzz_layout as bl
-    cams, world, conf = bl.load(); pl = bl.planes(world, conf, cams); R = bl.rulers(cams, pl)
-    n, c = pl["desk"]; ex = np.cross(pl["floor"][0], n); ex /= np.linalg.norm(ex)
-    MAJ = [583, 655, 724, 798, 867, 935, 1004, 1070, 1137, 1203]          # frame 0, row 650: the coloured majors (red, blue, tan, ...)
-    xs = np.array([bl.cut(cams[0], *bl.F(u, 650), n, c) @ ex for u in MAJ])
-    gap = float(np.mean(np.abs(np.diff(xs)))); spread = float(np.ptp(np.abs(np.diff(xs))))
-    rep = {k: gap * R[k][0] for k in ("chart", "mattress")}
-    print(f"Marina major spacing: chart ruler {rep['chart']:.4f} m, mattress ruler {rep['mattress']:.4f} m (gaps spread {spread / gap * 100:.0f}% of the mean)")
-    src = ROOT / "0-homealone/full/homealone-movie-screencaps.com-530.jpg"
-    out = ROOT / "spec/dressing/buzz_wallpaper.png"
-    PER, K, X0, Y0, Y1 = 71.4, 4, 1236.5, 400, 505
-    im = np.asarray(Image.open(src).convert("RGB"), float)
-    W = 128                                                                   # resampled px per period
-    rr, cc = np.mgrid[Y0:Y1, 0:K * W].astype(float); xx = X0 + cc * (PER / W)
-    strip = np.dstack([map_coordinates(im[..., k], [rr, xx], order=1) for k in range(3)])
-    prof = strip.mean(0)                                                      # one row: the stripe profile
+    """Buzz's room paper (Oct 18, changes/2026-10-18-buzz-bed.json; was film 530 on Marina's spacing, Buzz TRIAL 2). Film 2766 (daylight,
+    frontal and sharp: the BB gun on the wall) shows the paper close: a white ground, lines every quarter period in the order RED,
+    grey, TAN, grey (530's 'grey minors' at a distance), each line broken by a short gap every ~1.5 periods, the gaps staggered.
+    Metric size, two rulers of different kinds, never averaged:
+      * gun (built): the gun hanging level across the frame, butt plate (x 62) to muzzle (x 1845), Daisy lever BB gun ~0.90 m
+        (Red Ryder 35.4 in; the family runs 35-37 in): the red lines fitted per line over three clean row bands and counted along
+        the gun's rows, fractional periods at both ends -> spacing = L / periods.
+      * chart (check): film 480, the growth chart on the closet door (same wall as the desk/lamp): its 5/4/2/1 ft ticks give the
+        local px/m (least squares); the paper beside the door (left of the chart, x 0-190) gives the line pitch in px. The wall is
+        assumed frontal (foreshortening can only make the paper read NARROWER: a lower bound). The door knob is printed against
+        the chart (36 in standard, a lead).
+    Tile: ONE period across (the median of every clean period below the sling, rows 700-1050, x 1150-1900, each resampled to W px
+    between its red lines; the median over rows removes the gaps), divided by its own ground, ground albedo ASSUMED the house's
+    off-white (0.71/0.67/0.57 linear); TILE_H periods tall with one gap per line at staggered heights (film 2766: gaps every
+    ~275-410 px of ~226 px periods)."""
+    from scipy.ndimage import map_coordinates, gaussian_filter1d, percentile_filter
+    from scipy.signal import find_peaks
+    F = lambda n: ROOT / f"0-homealone/full/homealone-movie-screencaps.com-{n}.jpg"
+    im = np.asarray(Image.open(F(2766)).convert("RGB"), float)
+    red = im[..., 0] - (im[..., 1] + im[..., 2]) / 2
+
+    # ---- ruler 1: the gun
+    GUN_L, GUN_RANGE = 0.90, (0.89, 0.94)
+    BUTT, MUZZLE = (62, 528), (1845, 338)                 # butt plate's middle, muzzle face's middle (picks: spec/captures/picks/buzz3/)
+    bands = {150: (130, 170, 600), 620: (600, 640, 0), 1000: (980, 1020, 0)}   # row: (r0, r1, first clean x: the poster above)
+    pk = {r: [x for x in find_peaks(red[r0:r1].mean(0), height=25, distance=150)[0] if x >= x0] for r, (r0, r1, x0) in bands.items()}
+    lines = []
+    for x620 in pk[620]:
+        pts = [(r, min(pk[r], key=lambda x: abs(x - x620))) for r in pk]
+        pts = [(r, x) for r, x in pts if abs(x - x620) < 40]
+        lines.append(np.polyfit([r for r, _ in pts], [x for _, x in pts], 1) if len(pts) > 1 else (0.0, x620))
+    def frac(x, row):   # x in red-line periods along that row (linear extrapolation past the end lines)
+        xs = np.array(sorted(np.polyval(l, row) for l in lines)); k = np.arange(len(xs))
+        if x < xs[0]: return (x - xs[0]) / (xs[1] - xs[0])
+        if x > xs[-1]: return k[-1] + (x - xs[-1]) / (xs[-1] - xs[-2])
+        return float(np.interp(x, xs, k))
+    periods = frac(MUZZLE[0], MUZZLE[1]) - frac(BUTT[0], BUTT[1])
+    rep = GUN_L / periods
+    print(f"film 2766 gun: {periods:.2f} red periods butt to muzzle -> spacing {rep:.4f} m at L {GUN_L} m (L {GUN_RANGE[0]}-{GUN_RANGE[1]}: "
+          f"{GUN_RANGE[0] / periods:.4f}-{GUN_RANGE[1] / periods:.4f}); line pitch in px {np.ptp([np.polyval(l, 430) for l in lines]) / (len(lines) - 1):.1f}")
+
+    # ---- ruler 2 (check): film 480's growth chart
+    im2 = np.asarray(Image.open(F(480)).convert("RGB"), float)
+    TICKS = {5: 76, 4: 240, 2: 558, 1: 712}               # chart tick rows (picks: spec/captures/picks/buzz3/chart-480.png)
+    ft = np.array(list(TICKS)); rows = np.array(list(TICKS.values()), float)
+    slope, icpt = np.polyfit(ft * 0.3048, rows, 1); ppm = -slope
+    resid = rows - (slope * ft * 0.3048 + icpt)
+    knob_h = (418 - icpt) / slope
+    def ac_peak(x, lo, hi):
+        x = x - x.mean(); a = np.correlate(x, x, "full")[len(x) - 1:]; a /= a[0]
+        k = lo + int(np.argmax(a[lo:hi])); return k + 0.5 * (a[k - 1] - a[k + 1]) / (a[k - 1] - 2 * a[k] + a[k + 1])
+    lum2 = im2.mean(2); red2 = im2[..., 0] - im2[..., 1]
+    minor = np.median([ac_peak(lum2[r:r + 100, 0:190].mean(0) - gaussian_filter1d(lum2[r:r + 100, 0:190].mean(0), 6), 12, 22) for r in (0, 100, 200)])
+    major = np.median([ac_peak(red2[r:r + 100, 0:190].mean(0) - gaussian_filter1d(red2[r:r + 100, 0:190].mean(0), 25), 50, 90) for r in (0, 100, 200)])
+    chart = {"px_per_m": round(float(ppm), 1), "tick_resid_px": [round(float(v), 1) for v in resid], "knob_h_m": round(float(knob_h), 3),
+             "minor_px": round(float(minor), 2), "major_px": round(float(major), 2),
+             "spacing_from_minors_m": round(float(4 * minor / ppm), 4), "spacing_from_reds_m": round(float(major / ppm), 4)}
+    print("film 480 chart check:", chart)
+
+    # ---- the tile from 2766
+    W, TILE_H, GAP = 128, 1.5, 0.035                      # px per period; tile height in periods; gap length in periods
+    prof = []
+    for r in range(700, 1050, 10):
+        p = find_peaks(red[r:r + 10].mean(0), height=25, distance=150)[0]
+        p = p[(p >= 1150) & (p <= 1900)]
+        for a_, b_ in zip(p, p[1:]):
+            xx = a_ + (np.arange(W) + 0.5) * (b_ - a_) / W - 0.5 * (b_ - a_) / W   # the red line at column 0
+            prof.append(np.stack([map_coordinates(im[r:r + 10, :, k].mean(0)[None].repeat(3, 0), [np.ones(W), xx], order=1) for k in range(3)], 1))
+    prof = np.median(np.array(prof), 0)
     lin = np.where(prof / 255 <= 0.04045, prof / 255 / 12.92, ((prof / 255 + 0.055) / 1.055) ** 2.4)
-    # the strip divided by its ground (the lamp's falloff and the shade at the region's left end), then the median of the K periods:
-    # one clean period (a printed stripe repeats exactly)
-    from scipy.ndimage import percentile_filter
-    for k in range(3):   # the ground: a sliding 80th percentile one period wide (lines are dark: it rides on the ground), smoothed
-        g = gaussian_filter1d(percentile_filter(lin[:, k], 80, size=W, mode="nearest"), W / 6, mode="nearest")
-        lin[:, k] = lin[:, k] / g
-    lin = np.median(lin.reshape(K, W, 3), 0)
-    target = np.array([0.71, 0.67, 0.57])
-    lin = np.clip(lin * target, 0, 1)
-    srgb = np.where(lin <= 0.0031308, lin * 12.92, 1.055 * lin ** (1 / 2.4) - 0.055)
-    tile = np.repeat(srgb[None], W, axis=0)
-    Image.fromarray((tile * 255 + 0.5).astype(np.uint8)).resize((512, 512), Image.LANCZOS).save(out)
-    w_m = round(rep["chart"], 4)
-    out.with_suffix(".json").write_text(json.dumps({"source": f"film 530 x {X0}-{X0 + K * PER:.1f}, rows {Y0}-{Y1}: median of {K} periods", "repeat_m": [w_m, w_m],
-                                                     "major_spacing_m": {k: round(v, 4) for k, v in rep.items()}, "ruler": "chart (Marina 540 s, 3-5 ft)",
-                                                     "ground_srgb": [round(float(v), 3) for v in np.median(srgb, 0)]}) + "\n")
-    big = np.tile(np.asarray(Image.open(out)), (1, 8, 1)); Image.fromarray(big).save(ROOT / "sfm-work/buzz_wallpaper_tiled.png")
-    print(out, [w_m, w_m], "check: sfm-work/buzz_wallpaper_tiled.png")
+    # the ground per column (a sliding 80th percentile a quarter period wide, wrapped: lines are dark and narrow), smoothed: the
+    # light's slope across the wall left the plain paper shaded within each period (bands in the first cut)
+    g = np.stack([gaussian_filter1d(percentile_filter(lin[:, k], 80, size=W // 4, mode="wrap"), W / 16, mode="wrap") for k in range(3)], 1)
+    ratio = lin / g
+    lin = np.clip(ratio * np.array([0.71, 0.67, 0.57]), 0, 1)
+    H = int(round(W * TILE_H)); tile = np.repeat(lin[None], H, 0)
+    ground = np.array([0.71, 0.67, 0.57]); dark = ratio.mean(1) < 0.93
+    for i, (c, at) in enumerate(((0.0, 0.10), (0.25, 0.60), (0.5, 0.35), (0.75, 0.85))):   # red, grey, tan, grey: one staggered gap each
+        cols = [j for j in range(W) if dark[j] and min(abs(j / W - c), 1 - abs(j / W - c)) < 0.06]
+        y0 = int(at * H); tile[y0:y0 + max(2, int(GAP * W)), cols] = ground
+    srgb = np.where(tile <= 0.0031308, tile * 12.92, 1.055 * tile ** (1 / 2.4) - 0.055)
+    out = ROOT / "spec/dressing/buzz_wallpaper.png"
+    Image.fromarray((srgb * 255 + 0.5).astype(np.uint8)).resize((512, int(512 * TILE_H)), Image.LANCZOS).save(out)
+    w_m = round(rep, 4)
+    out.with_suffix(".json").write_text(json.dumps({
+        "source": "film 2766 rows 700-1050, x 1150-1900: median of every clean period (red, grey, tan, grey lines), gaps staggered one per line per tile",
+        "repeat_m": [w_m, round(w_m * TILE_H, 4)], "ruler": f"gun (film 2766, Daisy lever BB gun {GUN_L} m): {periods:.2f} periods butt to muzzle",
+        "gun_range_m": [round(GUN_RANGE[0] / periods, 4), round(GUN_RANGE[1] / periods, 4)], "check_chart_480": chart,
+        "line_to_ground_linear": {n: [round(float(v), 3) for v in ratio[int(c * W) + (1 if c == 0 else 0)]] for n, c in (("red", 0.0), ("grey", 0.25), ("tan", 0.5))},
+        "previous": "0.0853 (Marina's desk wall at her growth chart; her paper, not the film's)"}, indent=1) + "\n")
+    big = np.tile(np.asarray(Image.open(out)), (2, 8, 1)); Image.fromarray(big).save(ROOT / "sfm-work/buzz_wallpaper_tiled.png")
+    print(out, [w_m, round(w_m * TILE_H, 4)], "check: sfm-work/buzz_wallpaper_tiled.png")
 
 
 if "--buzz" in sys.argv:

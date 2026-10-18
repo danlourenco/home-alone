@@ -1,0 +1,203 @@
+{
+  "gate": 8,
+  "change": "Buzz's bed as a model (Classic Wooden Furniture Pack BED_01 cut to Marina's twin: tools/house/purchased_bed.py -> gitignored Assets/Purchased/BuzzBed/BuzzBed.glb, store_props buzz_bed hides the grey boxes); the bed nudged 0.14 m toward the door (spec -x; buzz_layout.py BED_SHIFT) with the footlocker moved the same (buzz_trunk.json x); the bed's walk-layer boxes raised so kid Kevin fits under (rails 0.48 m); Buzz's wallpaper re-cut from film 2766 (red/grey/tan/grey lines with staggered gaps) at 0.1124 m repeat (was 0.0853).",
+  "target": "House_WallGrid",
+  "premise": "Marina's measured bed (finial centres, footboard face, finial tops, mattress top; buzz_layout.py, mattress ruler) stands, and a twin cut from the pack double at those numbers reads as her bed; the film's paper close-up (2766) gives the paper's line layout and, with the gun as a ruler, its size.",
+  "claim": {
+    "value": {
+      "bed_outer_m": [
+        1.192,
+        2.14
+      ],
+      "head_finial_m": 1.342,
+      "foot_finial_m": 0.884,
+      "cover_top_m": 0.645,
+      "bed_x_shift_m": -0.14,
+      "under_bed_clearance_m": 0.48,
+      "adult_passage_bed_chest_m": 0.62,
+      "door_casing_to_bed_m": 0.54,
+      "paper_repeat_m": 0.1124
+    },
+    "data": [
+      "vggt:real-vggt-buzzall",
+      "film:2766"
+    ],
+    "scale": [
+      "mattress-39in:buzz-clip",
+      "gun-daisy-0.90m:2766"
+    ],
+    "upstream": [
+      "mattress-39in:buzz-clip",
+      "gun-daisy-0.90m:2766"
+    ],
+    "risks": [
+      "extraction",
+      "scale"
+    ],
+    "how": "Bed numbers are the accepted buzz_layout.py measures (changes/2026-10-17-buzz-layout.json), post 0.104 (the pack's) about the same finial centres, all shifted 0.14 m along the door wall toward the door (the user's planned nudge; buzz_trunk.py passage grid: 0.620 m bed-chest with the trunk, needs 0.59). Under-bed height free: Marina's frame is hidden by the sheet (553/561). Paper: red lines fitted per line over three clean row bands of film 2766, counted butt (x 62) to muzzle (x 1845) along the gun's rows: 8.01 periods; Daisy lever BB gun 0.90 m assumed (0.89-0.94 -> 0.111-0.117).",
+    "applies_to": [
+      "buzz_room"
+    ],
+    "measured_in": [
+      "buzz_room"
+    ],
+    "pick": {
+      "crop": "spec/captures/picks/buzz3/gun-muzzle-2766.png",
+      "confirmed_by": "blind haiku subagent (crops only): muzzle crop 'the muzzle end of a dark barrel-like cylinder on a wall with red and grey vertical lines' (medium); butt (spec/captures/picks/buzz3/gun-butt-2766-wide.png) 'butt end of a wooden gun stock, the circle on its left-hand edge' (medium/low: dark frame); bed picks: changes/2026-10-17-buzz-layout.json (spec/captures/picks/buzz1/)"
+    },
+    "alternatives": [
+      "current build: grey boxes (posts, boards, rails 0.28-0.40, mattress), bed 0.14 m nearer the chest (passage 0.48), paper 0.0853 film-530 two-colour",
+      "this: pack BED_01 cut to the twin, nudged, raised deck; film 2766 four-colour paper at the gun ruler"
+    ],
+    "layout": {
+      "decides": [
+        {
+          "part": "paper line order red/grey/tan/grey with gaps",
+          "observed_in": [
+            "film:2766",
+            "film:530"
+          ],
+          "extrapolated": false
+        }
+      ]
+    }
+  },
+  "history": [
+    {
+      "what": "changes/2026-10-14-buzz-bed-placement.json (boxes from 563 s; user notes on the door gap)",
+      "outcome": "superseded"
+    },
+    {
+      "what": "changes/2026-10-17-buzz-layout.json (bed from the solve, boxes)",
+      "outcome": "accepted"
+    },
+    {
+      "what": "changes/2026-10-17-buzz-finish.json (paper at Marina's 0.0853 from film 530's colourway)",
+      "outcome": "accepted (superseded here by the film close-up)"
+    },
+    {
+      "what": "changes/2026-10-13-buzz-resize.json (room size)",
+      "outcome": "rejected (walls; not touched here)"
+    }
+  ],
+  "premise_reviewed": "One rejected attempt in the room (its size, 2026-10-13); the bed numbers are the accepted layout's and no wall moves. The paper's previous size was right for Marina's paper but the film's differs (2766 close-up); the new size uses a film-only ruler.",
+  "checks": [
+    {
+      "what": "Marina 560 s at the 80 in door (no solve, no mattress; buzz_layout.check_560): door leaf 0.800 m wide (+-0.022) vs the solve at the mattress ruler 0.798: the two rulers agree to 0.3%",
+      "agrees": true,
+      "data": [
+        "marina-frame:560"
+      ],
+      "scale": [
+        "door-80in:560"
+      ],
+      "tests": [
+        "scale"
+      ],
+      "pick": {
+        "crop": "spec/captures/picks/buzz1/m560_leaf_TR.png",
+        "confirmed_by": "blind subagent: c52 'top-right corner of the door leaf' (0-5 px); c51 leaf top-left, c53 leaf/jamb foot, c54 casing outer edge, c55 left post's outer face: offsets it reported (2-7 frame px) applied to M560"
+      }
+    },
+    {
+      "what": "Marina 563 s (a frame the solve did not use; projective ratios along the door wall from its two corners, mattress_ruler.py's vanishing point): head posts' inner faces at 0.447 / 0.720 of the wall from the shelves corner (spread 0.44-0.45 / 0.71-0.73) vs the solve's 0.438 / 0.717; door casing outer edge 0.289 (0.283-0.294) vs 0.279 (1-3 cm)",
+      "agrees": true,
+      "type": "ratio",
+      "data": [
+        "marina-frame:563"
+      ],
+      "scale": [
+        "none"
+      ],
+      "tests": [
+        "extraction"
+      ],
+      "pick": {
+        "crop": "spec/captures/picks/buzz1/m563_post_inner_L.png",
+        "confirmed_by": "blind subagent: c41 'right (inner) face of the left bed post' (5 px), c42 right post's inner face (10-15 px inside the post: ~1.5 cm), c43 'the ceiling/two-walls corner', c44 'outer edge of the door casing' (10-15 px); first picks (c34/c35/c33) read off-feature and were re-picked"
+      }
+    },
+    {
+      "what": "Film 480 (another frame, another ruler kind): the growth chart's 5/4/2/1 ft ticks give 521.7 px/m (residuals 2.5 px); the paper beside the door reads minors 15.63 px (x4 = 0.120 m) and reds 66.6 px (0.128 m), a LOWER bound (frontal wall assumed). Agrees the film's paper is far wider than 0.0853 (+40-50%); 7-14% above the gun's 0.1124",
+      "agrees": false,
+      "type": "metric",
+      "data": [
+        "film:480"
+      ],
+      "scale": [
+        "growth-chart-ft:480"
+      ],
+      "upstream": [
+        "growth-chart-ft:480"
+      ],
+      "tests": [
+        "scale"
+      ],
+      "pick": {
+        "crop": "spec/captures/picks/buzz3/chart-480.png",
+        "confirmed_by": "blind haiku subagent: 'a height chart'; green ticks beside the top label and above the bottom label (5 ft / 1 ft), the middle two on plain strip (low-medium: soft frame); blue tick by the knob ('a round grey screw or bolt head')"
+      },
+      "disposition": "Built the gun frame (sharp, frontal, 8 periods counted). Both rulers lean the same way (the gun hangs ~5 cm proud of the paper on its hooks, so the paper reads small; the chart read is a lower bound), so the true spacing is likely 0.115-0.12: logged DEVIATIONS 82 with the revisit (a known object flat on the paper)"
+    },
+    {
+      "what": "Film 530 (desk wall, lamp-lit): minors 17.85 px, a red every 71.4 px (4 per period): the same layout as 2766 (red every fourth line); 2766 resolves the minors into grey/tan/grey",
+      "agrees": true,
+      "type": "ratio",
+      "data": [
+        "film:530"
+      ],
+      "scale": [
+        "none"
+      ],
+      "tests": [
+        "extraction"
+      ]
+    },
+    {
+      "what": "Kid Kevin under the bed: FpsController kidCrouchHeight 0.45 + skin 0.02 = 0.47 vs the built underside 0.48 (rails, slats; walk boxes and model alike): fits, 1 cm spare; the adult (radius 0.275 + 0.02) passage bed-chest 0.620 m (buzz_trunk.py grid)",
+      "agrees": true,
+      "type": "topological",
+      "data": [
+        "build"
+      ],
+      "scale": [
+        "none"
+      ]
+    },
+    {
+      "what": "Door gap: casing -> bed post 0.54 m built vs Marina 0.48 (solve) / 0.452 (560 s door ruler): +0.06-0.09 (was +0.21)",
+      "agrees": false,
+      "type": "metric",
+      "data": [
+        "marina-frame:560"
+      ],
+      "scale": [
+        "door-80in:560"
+      ],
+      "pick": {
+        "crop": "spec/captures/picks/buzz1/m560_leaf_TR.png",
+        "confirmed_by": "blind subagent: c52 'top-right corner of the door leaf' (0-5 px); c51 leaf top-left, c53 leaf/jamb foot, c54 casing outer edge, c55 left post's outer face: offsets it reported (2-7 frame px) applied to M560"
+      },
+      "disposition": "Kept: the rest is the built door wall 0.10 m wider than Marina's and the built door's own position (DEVIATIONS 68/69/26); moving the bed further toward the door would pull it off her distance from the nightstand and front corner. Logged DEVIATIONS 69"
+    }
+  ],
+  "renders": {
+    "before": [
+      "/Users/dlo/.cache/home-alone-2/captures/overnight3-before-passage.png",
+      "/Users/dlo/.cache/home-alone-2/captures/overnight3-before-bed553.png",
+      "/Users/dlo/.cache/home-alone-2/captures/overnight3-before-bed561.png",
+      "/Users/dlo/.cache/home-alone-2/captures/overnight3-before-wall.png"
+    ],
+    "after": [
+      "/Users/dlo/.cache/home-alone-2/captures/overnight3-after-passage.png",
+      "/Users/dlo/.cache/home-alone-2/captures/overnight3-after-bed553.png",
+      "/Users/dlo/.cache/home-alone-2/captures/overnight3-after-bed561.png",
+      "/Users/dlo/.cache/home-alone-2/captures/overnight3-after-wall.png",
+      "/Users/dlo/.cache/home-alone-2/captures/overnight3-after-passage-plot.png",
+      "/Users/dlo/.cache/home-alone-2/captures/overnight3-after-underbed.png",
+      "/Users/dlo/.cache/home-alone-2/captures/overnight3-wall-vs-2766.png"
+    ],
+    "note": "live captures (clone camera, day) in the user's editor; after = the overnight3 build loaded"
+  },
+  "user_walk": "pending"
+}

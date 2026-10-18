@@ -60,3 +60,5 @@
 {"time": "2026-10-18T00:21:55", "cmd": "bake", "job": "overnight2", "why": "auto: load of an unbaked build", "wall_s": 94, "exit": 0}
 {"time": "2026-10-18T00:26:46", "cmd": "build", "job": "overnight2", "why": "buzz chest: yaw 270, glTF textures", "wall_s": 96, "exit": 0}
 {"time": "2026-10-18T00:28:24", "cmd": "bake", "job": "overnight2", "why": "auto: load of an unbaked build", "wall_s": 90, "exit": 0}
+{"time": "2026-10-18T00:52:50", "cmd": "build", "job": "overnight3", "why": "buzz bed + nudge + pinstripes", "wall_s": 89, "exit": 0}
+{"time": "2026-10-18T00:54:33", "cmd": "bake", "job": "overnight3", "why": "auto: load of an unbaked build", "wall_s": 89, "exit": 0}

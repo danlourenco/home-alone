@@ -5,9 +5,9 @@
 "spec/geometry.json": "ab2ccb47a12f2c69a70ff411c4bff1a310383226d333050107c97e0b96718ccf",
 "spec/house_spec.json": "00563e5d3f64bf825efb3a3ba8b19e1a641a1cd7331aa03dda68a1883215dd89",
 "spec/house_spec.ground.json": "c61d3732d53e46b7b76a94886088d26d2fb1a8989a8519b216b5b0f0c5fa9394",
-"spec/dressing/store_props.json": "8e4d0867396a48f4bb29ed249ed5604154541be09fcc81bf708d6dc32a180f6d",
+"spec/dressing/store_props.json": "8e0792f4c35e8481d1b06cec5a301a4c28b0d6b39766d8d116ac18f297949f77",
 "spec/dressing/french_doors.json": "4deca1173b27e2e02f2bdf61d69ff1b9ff46ba4805b94891e7318ff2a3feb312",
-"spec/dressing/buzz.json": "77553a3b7ba36c437d180888a491a49f724c97ddff162ae8091b9646b4b9f27e",
+"spec/dressing/buzz.json": "adbe2e533194393922314595597d1404a3c1496c4d02da480ba9cb955d53eb7a",
 "tools/house/hifi_door.py": "43caa8e4502f58c7b108e6a1e623e15b7f158f7aac7dd50510b2abaf2d739788",
 "tools/house/openings.py": "83eec06b884ed468f0cf1458436d65e6db0f37f02630d81677afb946792ba1d1"
 },
