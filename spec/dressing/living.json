@@ -55,7 +55,7 @@
   ],
   "h": 0.78,
   "source": "film 10636 (painting over a Hepplewhite console with brass bail pulls, on the den-side wall rear of the den opening; Marina f13/f25 the same wall); centre x 5.2 authored (no solved den-wall camera); box standard 1.4 x 0.42 x 0.78",
-  "note": "user Oct 17: \"the table with two lamps should be underneith the picture frame as before, but there should be another console with nutcrackers behind the green sofa ... move the existing console and lamps back where you found them, but keep the couch where it is\"; the second console (nutcrackers, behind the sofa) is still to add"
+  "note": "user Oct 17: \"the table with two lamps should be underneith the picture frame as before, but there should be another console with nutcrackers behind the green sofa ... move the existing console and lamps back where you found them, but keep the couch where it is\"; the second console (nutcrackers, behind the sofa) is sofa_console"
  },
  "painting": {
   "x": [
@@ -401,6 +401,21 @@
     0.0,
     0.78
    ]
+  },
+  {
+   "name": "sofa_console",
+   "x": [
+    6.83,
+    7.17
+   ],
+   "z": [
+    12.97,
+    14.67
+   ],
+   "y": [
+    0.0,
+    0.8
+   ]
   }
  ],
  "red_chair": {
@@ -454,5 +469,18 @@
   "h": 2.0,
   "front": "+z",
   "source": "Marina 458/466 (right side; the film never shows this wall): a tall glass-front china cabinet against the foyer-side wall near the rear corner; Poly Haven vintage_cabinet_01 (CC0, 2.02 x 0.67 x 2.24 native) fitted to 1.5 x 0.45 x 2.0 (authored)"
+ },
+ "sofa_console": {
+  "x": [
+   6.83,
+   7.17
+  ],
+  "z": [
+   12.97,
+   14.67
+  ],
+  "h": 0.8,
+  "front": "+x",
+  "source": "Marina 458/452 (user Oct 17: \"there should be another console with nutcrackers behind the green sofa\"): a long dark console with drawers, its long side along the sofa's back, three nutcrackers on it (red coat, black coat with a top hat, green coat) and magazines. Poly Haven ClassicConsole_01 again (as the den-wall console; CC0) fitted to 1.70 x 0.34 x 0.80 (authored: sofa tables 30-32 in, 0.80 just under the sofa back 0.89), centred on the sofa (z 13.82), 3 cm behind its back (6.80); 0.34 deep keeps the den-to-foyer walkway 0.70 m wide beside the grand's box (x 7.87), an adult needs 0.59"
  }
 }

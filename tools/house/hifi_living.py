@@ -412,6 +412,11 @@ def small():
     at = lambda a, b: (cx + b, cz + a) if along_z else (cx + a, cz + b)   # a along the table's length, b across it
     nutcracker(*at(-0.35, -0.10), y, "Red", "Red"); nutcracker(*at(-0.15, 0.10), y, "Green", "Brown"); nutcracker(*at(0.08, -0.13), y, "Red", "Black")
     NC["Tin"].lathe(*at(-0.45, 0.15), y, [(0, 0.06), (0.11, 0.06), (0.12, 0.062), (0.13, 0.0)], 18)
+    sc = D.get("sofa_console")   # Marina 458: three nutcrackers and magazines on the console behind the sofa (user Oct 17)
+    if sc:
+        y2, sx_, sz_ = sc["h"], sum(sc["x"]) / 2, sum(sc["z"]) / 2
+        nutcracker(sx_, sz_ + 0.62, y2, "Red", "Black"); nutcracker(sx_ + 0.02, sz_ - 0.18, y2, "Black", "Black"); nutcracker(sx_ - 0.03, sz_ - 0.42, y2, "Green", "Black")
+        NC["White"].box(sx_ - 0.11, sx_ + 0.11, y2, y2 + 0.015, sz_ + 0.06, sz_ + 0.34)            # magazines (Marina 458): one stack (a thinner one on top fought it: z-fight)
     # the toy train: oval track (two rails, ties) on the floor, a black loco and two cars on the near straight
     t = D["train"]; (cx, cz), rx, rz = t["at"], t["rx"], t["rz"]
     Y = t.get("y", 0.0)   # 0.012 = on the rug (its top)

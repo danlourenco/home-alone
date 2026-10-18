@@ -32,6 +32,8 @@ recolour(o, "LP_SofaGreen", (0.09, 0.26, 0.13))                          # film 
 fit(o, s["x"], s["z"], [0.0, s["h"]], s["front"])
 c = D["console"]; o = load("ClassicConsole_01", "console"); recolour(o, "LP_ConsoleMahogany", MAHOGANY)
 fit(o, c["x"], c["z"], [0.0, c["h"]], c.get("front", "-z"))
+c = D["sofa_console"]; o = load("ClassicConsole_01", "sofaconsole"); recolour(o, "LP_SofaConsoleMahogany", MAHOGANY)   # Marina 458: behind the sofa
+fit(o, c["x"], c["z"], [0.0, c["h"]], c["front"])
 t = D["coffee_table"]; o = load("CoffeeTable_01", "coffee"); recolour(o, "LP_CoffeeMahogany", MAHOGANY)
 fit(o, t["x"], t["z"], [0.0, t["h"]], t.get("front", "+z"))
 p = D["painting"]; o = load("fancy_picture_frame_01", "painting")
@@ -85,7 +87,15 @@ fit(o, q["x"], q["z"], [0.0, q["h"]], q["front"])
 q = D["ottoman"]; o = load("Ottoman_01", "ottoman"); chintz(o, "LP_OttomanChintz", repeats=5)
 fit(o, q["x"], q["z"], [0.0, q["h"]], q["front"])
 q = D["curio"]; o = load("vintage_cabinet_01", "curio")   # its grey-brown stain read slate in the build: Marina 458's warm brown, brass kept
-recolour(o, "LP_CurioBrown", (0.26, 0.12, 0.06), keep=lambda rgb: (rgb[..., 0] > 0.3) & (rgb[..., 1] > 0.2) & (rgb[..., 2] < 0.7 * rgb[..., 1]))
+recolour(o, "LP_CurioBrown", (0.20, 0.11, 0.065), keep=lambda rgb: (rgb[..., 0] > 0.3) & (rgb[..., 1] > 0.2) & (rgb[..., 2] < 0.7 * rgb[..., 1]))   # Oct 18: was (0.26, 0.12, 0.06), read red-mahogany; Marina 458 a darker, browner wood
+for ob in o:   # Oct 18 (user: "reads slate-blue"): its near-mirror lacquer reflected the windows' sky; satin like Marina 458 (roughness 0.45 + 0.55 r)
+    for slot in getattr(ob, "material_slots", []):
+        for n in (slot.material.node_tree.nodes if slot.material else []):
+            if n.type == "TEX_IMAGE" and n.image and ("arm" in n.image.name or "rough" in n.image.name) and not n.image.name.startswith("LP_"):
+                img = n.image.copy(); img.name = "LP_Curio_" + n.image.name; W, H = img.size
+                a = np.array(img.pixels[:]).reshape(H, W, 4); a[..., 1] = 0.45 + 0.55 * a[..., 1]
+                if "rough" in n.image.name: a[..., 0] = a[..., 2] = a[..., 1]
+                img.pixels = a.ravel().tolist(); img.pack(); n.image = img
 fit(o, q["x"], q["z"], [0.0, q["h"]], q["front"])
 
 OUT.parent.mkdir(parents=True, exist_ok=True)
