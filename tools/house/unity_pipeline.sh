@@ -111,7 +111,9 @@ load)
   for pk in "Fadnn - Vintage Interior Furniture Pack" "Classic Wooden Furniture Pack" "Free Wood Door Pack" "VTC_AV-2062s" "ChristmasTreeAndGarland" "Tarantula" "BankersLamp" "ZNS3D"; do
     [ -d "$S/Assets/$pk" ] && rsync -a "$S/Assets/$pk" "$S/Assets/$pk.meta" "$P/Assets/"; done
   # StoreProps' HDRP copies of a GLB's materials (Purchased/, e.g. BuzzChest_BC_Mahogany_HDRP.mat) exist only in scratch: magenta without (Oct 18)
-  [ -d "$S/Assets/Purchased" ] && (cd "$S/Assets" && find Purchased -name '*_HDRP.mat*') | while read -r f; do cp "$S/Assets/$f" "$P/Assets/$f"; done
+  for d in Purchased Models; do   # Models too: a generated GLB placed as a store prop (KevinArmchair.glb) came up magenta in the walk (Oct 18)
+    [ -d "$S/Assets/$d" ] && (cd "$S/Assets" && find "$d" -name '*_HDRP.mat*') | while read -r f; do cp "$S/Assets/$f" "$P/Assets/$f"; done
+  done
   rsync -a "$S/Assets/Materials/Greybox/" "$P/Assets/Materials/Greybox/"; rsync -a "$S/Assets/Textures/Greybox/" "$P/Assets/Textures/Greybox/" 2>/dev/null || true
   # the scene was built against the SCRATCH copy's asset GUIDs: a model or texture new to both projects gets its own GUID in each
   # (the open editor imports it separately), and the loaded scene then shows empty meshes / missing maps (kitchen cabinets, Oct 16).

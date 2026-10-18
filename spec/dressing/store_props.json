@@ -3681,6 +3681,161 @@
    ],
    "source": "props lane (guest room, Oct 18): the poster's nightstand beside the bed (its window side); the parents' BEDSIDE_CAB_01 at their size (0.50 wide x 0.40 deep) and stain; 1 cm off the end wall, under the window (sill 0.81). yaw pinned 180 (= buzz_nightstand's 0 turned to face -z): the first box had width and depth swapped, which turned its drawers to the side.",
    "yaw": 180
+  },
+  {
+   "name": "kevin_dresser",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/DRAWER_CAB_01.prefab",
+   "x": [
+    7.6,
+    8.9
+   ],
+   "z": [
+    3.861,
+    4.361
+   ],
+   "y0": 0.0,
+   "height": 0.8,
+   "back": "-z",
+   "yaw": 180,
+   "collide": true,
+   "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): film 296/301: a low pine dresser across from the bunk's long side, mirror over it, toys and the red lamp on top; Marina 365/375: the dresser on the side wall opposite the hall door's corner, starting just past the nightstand. 1.30 x 0.50 x 0.80 by eye. Yaw 180 = the pack's back on -z (as dining_sideboard, walked). Tinted toward the film's honey pine (the pack's stain is dark walnut).",
+   "floor": "upper",
+   "hides": [],
+   "tint": [
+    1.9,
+    1.55,
+    1.05
+   ]
+  },
+  {
+   "name": "kevin_nightstand",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/BEDSIDE_CAB_01.prefab",
+   "x": [
+    7.08,
+    7.5
+   ],
+   "z": [
+    4.45,
+    4.95
+   ],
+   "y0": 0.0,
+   "height": 0.62,
+   "back": "-x",
+   "yaw": 270,
+   "collide": true,
+   "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): Marina 375 s: a small table with the globe right of the bunk's head, on the hall wall. Yaw 270 = back on -x (as parents_nightstand_*, walked). Tinted toward the film's honey pine (the pack's stain is dark walnut).",
+   "floor": "upper",
+   "hides": [],
+   "tint": [
+    1.9,
+    1.55,
+    1.05
+   ]
+  },
+  {
+   "name": "kevin_desk",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Desk_01.prefab",
+   "x": [
+    11.06,
+    11.66
+   ],
+   "z": [
+    6.3,
+    7.4
+   ],
+   "y0": 0.0,
+   "height": 0.76,
+   "back": "+x",
+   "yaw": 270,
+   "collide": true,
+   "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): Marina 355/385 s: the desk with the green banker's lamp under the closet-side front window (top under the 0.82 sill). Yaw 270 = back on +x (buzz_desk's back +z at 0, turned).",
+   "floor": "upper",
+   "hides": []
+  },
+  {
+   "name": "kevin_desk_chair",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    10.55,
+    11.0
+   ],
+   "z": [
+    6.62,
+    7.08
+   ],
+   "y0": 0.0,
+   "height": 0.92,
+   "back": "",
+   "yaw": 90,
+   "collide": true,
+   "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): Marina 385 s: a spindle-back wooden chair at the desk, facing the window. Yaw 90 faces +x (dining_chair_rear faces +x at 90).",
+   "floor": "upper",
+   "hides": []
+  },
+  {
+   "name": "kevin_bookcase",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/SHELVES_01.prefab",
+   "x": [
+    11.34,
+    11.66
+   ],
+   "z": [
+    5.2,
+    6.0
+   ],
+   "y0": 0.0,
+   "height": 1.0,
+   "back": "+x",
+   "yaw": 90,
+   "collide": true,
+   "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): Marina 355 s: a low open pine bookcase with toys between the two front windows, cork board above; film 303: open pine shelves with toys. Yaw 90 = back on +x (parents_etagere's back -z at 0, turned).",
+   "floor": "upper",
+   "hides": []
+  },
+  {
+   "name": "kevin_armchair",
+   "prefab": "Assets/Models/Foyer/KevinArmchair.glb",
+   "x": [
+    10.4,
+    11.1
+   ],
+   "z": [
+    3.92,
+    4.62
+   ],
+   "y0": 0.0,
+   "height": 0.85,
+   "back": "",
+   "yaw": 180,
+   "collide": true,
+   "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): Marina 365 s: a pale grey upholstered chair with dark wooden arms in the corner by the dresser-side front window. Poly Haven ArmChair_01 (CC0) fitted to the box (hifi_kevin.py re-exports it). Not in the film's shots. Yaw 180 pinned after the build-1 front render (yaw 0 faced the wall).",
+   "floor": "upper",
+   "hides": []
+  },
+  {
+   "name": "kevin_banker",
+   "prefab": "Assets/BankersLamp/Prefabs/BankersLamp.prefab",
+   "x": [
+    11.3,
+    11.53
+   ],
+   "z": [
+    7.08,
+    7.33
+   ],
+   "y0": 0.76,
+   "height": 0.382,
+   "back": "",
+   "yaw": 270,
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "collide": false,
+   "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): Marina 385 s: green banker's lamp on the desk's closet-wall end (the owned model at its own size). Yaw 270 faces -x (den_banker faces -z at ~0).",
+   "floor": "upper",
+   "hides": []
   }
  ]
 }

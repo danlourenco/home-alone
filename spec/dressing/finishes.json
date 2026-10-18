@@ -94,6 +94,18 @@
    "source": "film 1610 (packing morning, frontal on the headboard wall): cream ground, thin dark double stripes, red/rose/blue flowering vines; cut by tools/house/film_wallpaper.py --parents (per-pixel median over the clean wall patches on the measured half-drop lattice; repeat 1.066 x 0.762 m at an ASSUMED 21 in roll width, check: film 1610's head posts 1.90 m apart vs Marina 250's 1.89 at the bath doorway ruler). Marina's paper is a paler sprig stripe (film first). A white baseboard only (Marina 250: plain board; the film's and Marina's crown moulding is not built yet). 'upper' is the fallback colour. Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json)",
    "floor": "wood",
    "floor_source": "Marina 176/250 and the film's 104/130 s clips: dark stained strip hardwood (the house's wood); the film's oriental rug is not built"
+  },
+  "kevin_jeff_room": {
+   "paper": "spec/dressing/kevin_wallpaper.png",
+   "upper": [
+    0.91,
+    0.9,
+    0.86
+   ],
+   "wainscot_m": 0.14,
+   "source": "film 296/301 (packing night, the room's only film shots): white ground, small scattered sprig/dot motifs in muted green, rose and gold; the production still of the set (Marina Part 2 335 s) shows the same paper sharp (multicolour dots, ~4.7 cm spacing at an ASSUMED 0.74 m window casing). Too soft to cut a repeat: DRAWN by tools/house/kevin_wallpaper.py (repeat 0.188 m, DEVIATIONS 95). Marina's CG paper is red dots (her colourway). The set still's toy-robot border under the crown is NOT built. A white baseboard only (Marina 375/380). Kevin+Jeff TRIAL 1 (changes/2026-10-18-kevin-room.json)",
+   "floor": "wood",
+   "floor_source": "Marina 375/380 s: the house's dark stained strip hardwood, no rug; set still 335 s the same"
   }
  }
 }

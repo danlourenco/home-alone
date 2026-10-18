@@ -1,0 +1,167 @@
+[
+ {
+  "name": "kevin/after/door",
+  "pos": [
+   7.35,
+   1.6,
+   -7.15
+  ],
+  "look_at": [
+   11.0,
+   1.0,
+   -4.8
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "kevin/after/film296",
+  "pos": [
+   8.7,
+   1.0,
+   -5.7
+  ],
+  "look_at": [
+   7.9,
+   1.0,
+   -3.9
+  ],
+  "vfov": 40,
+  "near": 0.05
+ },
+ {
+  "name": "kevin/after/marina380",
+  "pos": [
+   10.3,
+   1.1,
+   -5.2
+  ],
+  "look_at": [
+   7.06,
+   1.0,
+   -6.9
+  ],
+  "vfov": 42,
+  "near": 0.05
+ },
+ {
+  "name": "kevin/after/marina375",
+  "pos": [
+   10.6,
+   1.1,
+   -5.4
+  ],
+  "look_at": [
+   7.06,
+   1.0,
+   -5.0
+  ],
+  "vfov": 42,
+  "near": 0.05
+ },
+ {
+  "name": "kevin/after/marina355",
+  "pos": [
+   7.7,
+   1.15,
+   -6.7
+  ],
+  "look_at": [
+   11.66,
+   1.0,
+   -5.3
+  ],
+  "vfov": 42,
+  "near": 0.05
+ },
+ {
+  "name": "kevin/after/marina385",
+  "pos": [
+   10.0,
+   1.1,
+   -4.6
+  ],
+  "look_at": [
+   9.6,
+   1.1,
+   -7.638
+  ],
+  "vfov": 42,
+  "near": 0.05
+ },
+ {
+  "name": "kevin/after/marina365",
+  "pos": [
+   9.3,
+   1.1,
+   -6.6
+  ],
+  "look_at": [
+   9.6,
+   1.0,
+   -3.86
+  ],
+  "vfov": 42,
+  "near": 0.05
+ },
+ {
+  "name": "kevin/after/plan",
+  "pos": [
+   9.36,
+   2.33,
+   -5.75
+  ],
+  "look_at": [
+   9.36,
+   0.0,
+   -5.749
+  ],
+  "vfov": 90,
+  "near": 0.05
+ },
+ {
+  "name": "kevin/after/close_bunk",
+  "pos": [
+   9.7,
+   1.1,
+   -4.75
+  ],
+  "look_at": [
+   8.9,
+   0.8,
+   -5.5
+  ],
+  "vfov": 50,
+  "near": 0.05
+ },
+ {
+  "name": "kevin/after/close_curtain",
+  "pos": [
+   10.9,
+   1.1,
+   -5.6
+  ],
+  "look_at": [
+   11.6,
+   1.6,
+   -6.6
+  ],
+  "vfov": 50,
+  "near": 0.05
+ },
+ {
+  "name": "kevin/after/close_dresser",
+  "pos": [
+   8.3,
+   1.1,
+   -5.0
+  ],
+  "look_at": [
+   8.2,
+   0.9,
+   -3.9
+  ],
+  "vfov": 55,
+  "near": 0.05
+ }
+]

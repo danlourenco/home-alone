@@ -1,0 +1,193 @@
+{
+  "change": "Kevin and Jeff's room TRIAL 1: generated honey-pine bunk beds (hifi_kevin.py -> KevinRoom.glb; walk box SpecGreybox.Kevin) head on the hall wall beside the hall door, the film's quilt and green gingham curtains, drawn film/set-still wallpaper (finishes.json kevin_jeff_room), mirror, cork board, dartboard, globe, the film's red lamp, footlocker; pack furniture (props lane, store_props kevin_*): dresser, nightstand, desk + chair, low bookcase, Poly Haven armchair, banker's lamp; two night lamps replace the room's generic light.",
+  "target": "House_WallGrid",
+  "premise": "The room's furniture order is the one Marina's tour shows (bunk head on the hall wall beside the hall door, dresser on the opposite side wall, chair by the dresser-side window, bookcase between the windows, desk at the closet-side window, footlocker under the dartboard on the closet wall), and the film (294-306) and the user's poster (room 22) agree with it; the bunk's width and place come from Marina 380 at the hall door, its heights from the film.",
+  "claim": {
+    "value": {
+      "bunk_post_centres_m": 0.874,
+      "bunk_outer_m": [
+        2.02,
+        0.944
+      ],
+      "bunk_z_m": [
+        5.045,
+        5.989
+      ],
+      "bunk_x_m": [
+        7.081,
+        9.101
+      ],
+      "closet_corner_to_post_m": 1.684,
+      "upper_deck_underside_m": 1.1,
+      "post_top_m": 1.68,
+      "paper_repeat_m": 0.188
+    },
+    "data": [
+      "marina-frame:380",
+      "film:296"
+    ],
+    "scale": [
+      "door-80in:380",
+      "seated-eye:296"
+    ],
+    "upstream": [
+      "door-80in:380",
+      "seated-eye:296"
+    ],
+    "how": "tools/house/wall_measure.py solve on Marina 380 s (spec/captures/picks/kevin/; job in the report): ruler = the hall door leaf (h 2.032, width solved 0.753 at f 1428), head posts 6 cm off the wall plane: centres 1.368 / 2.242 m along the wall from the leaf's left edge, the closet-side wall corner at -0.220 -> post 1.684 m from the corner. Our closet wall face z 7.638 -> post centres z 5.954 / 5.080, posts 0.07. Heights from film 296/301: the upper deck's side rail at seated Jeff's eye (~0.68 m over a 0.42 m mattress) -> underside 1.10; post top 1.68 and length 2.02 (33 x 75 in bunk mattress) ASSUMED: DEVIATIONS 95.",
+    "applies_to": [
+      "kevin_jeff_room"
+    ],
+    "measured_in": [
+      "kevin_jeff_room"
+    ],
+    "pick": {
+      "crop": "spec/captures/picks/kevin/m380_post_L.png",
+      "confirmed_by": "blind haiku subagent (crops only, Oct 18): post_L 'a vertical wooden post face, wallpaper left, green plaid fabric lower right' (high); post_R 'edge of a wooden post' (medium); corner 'interior corner where two pale walls meet the floor' (high); leaf TL/TR 'inner corner of door panel moulding / head casing inside corner' (medium: the leaf's top corners against the casing); leaf BL 'floor/wall junction at a trim seam' (medium); leaf BR read as 'a vertical wooden post': the leaf's bottom-right is occluded by the bunk's foot post, so the ruler's width is SOLVED (0.753 m) with the focal 1428, vs the built opening 0.77 (2.2%)"
+    },
+    "alternatives": [
+      "current build: an empty shell (no furniture)",
+      "this: Marina's order with the film's bunk (head on the hall wall, foot toward the front windows)",
+      "poster room 22: the bunk free-standing nearer the room's middle, head toward the hall wall"
+    ],
+    "layout": {
+      "decides": [
+        {
+          "part": "bunk head on the hall wall, long axis front-to-back, foot toward the windows",
+          "observed_in": [
+            "marina-frame:380",
+            "marina-frame:375",
+            "film:296",
+            "poster:IMG-second-floor-closeup"
+          ],
+          "extrapolated": false
+        },
+        {
+          "part": "dresser on the side wall opposite the closet, across from the bunk's long side",
+          "observed_in": [
+            "marina-frame:375",
+            "marina-frame:365",
+            "film:296",
+            "film:301"
+          ],
+          "extrapolated": false
+        }
+      ]
+    }
+  },
+  "history": [
+    {
+      "what": "Sept 14 furnishing in the old IntactHouseReference (KevinBedroom.cs; art/home_alone/references/kevin-bedroom/README.md): same Marina order, desk/chair swap corrected",
+      "outcome": "superseded (old model, retired)"
+    },
+    {
+      "what": "coordinator (Oct 18) confused this room with Buzz's (BB gun, tarantula, Jordan poster, footlocker are Buzz's); user: 'Kevin and Jeff share a room with bunkbeds'",
+      "outcome": "corrected here: evidence first (film 294-306)"
+    }
+  ],
+  "premise_reviewed": "No failed attempt on this room's furniture in the grey-box; walls and openings are not touched.",
+  "checks": [
+    {
+      "what": "User's cutaway poster (second-floor close-up, room 22): one bunk bed, head toward the hall wall, long axis front-to-back, closet doors on the side wall, a wardrobe-height piece by the parents' wall: the same orientation as the claim (the poster stands it nearer the middle)",
+      "agrees": true,
+      "type": "topological",
+      "data": [
+        "poster:IMG-second-floor-closeup"
+      ],
+      "scale": [
+        "none"
+      ],
+      "tests": [
+        "extraction"
+      ]
+    },
+    {
+      "what": "Film 296/301/303 (packing night): the dresser with its mirror is LEFT of the bunk's foot-end ladder and faces the bunk's long side; the green gingham window is beyond the ladder (the front wall); open pine shelves to the right: Marina's order seen from the film",
+      "agrees": true,
+      "type": "topological",
+      "data": [
+        "film:296",
+        "film:301",
+        "film:303"
+      ],
+      "scale": [
+        "none"
+      ],
+      "tests": [
+        "extraction"
+      ]
+    },
+    {
+      "what": "Marina 375 s (another frame, no ruler: ratios on the bunk's foot end): foot posts 683 px apart, lower end-rail top to upper end-rail underside 400 px -> 0.51 m at the 0.874 spacing; post top 0.92 m over the lower rail (~1.26 m): her CG bunk is lower than the film's",
+      "agrees": false,
+      "type": "ratio",
+      "data": [
+        "marina-frame:375"
+      ],
+      "scale": [
+        "none"
+      ],
+      "tests": [
+        "extraction"
+      ],
+      "disposition": "Width agrees with 380 (her model); the heights follow the film (Jeff's seated eye at the upper rail in 296), film first. Logged DEVIATIONS 95 with the revisit: a film frame with the bunk and a known object in one plane."
+    },
+    {
+      "what": "Marina 380: closet-side corner -> the hall door casing's outer edge 0.115 m vs ours 0.044 (opening 0.114 - casing 0.07): our hall door sits 7 cm nearer the corner than hers; the bunk is placed from the corner (her measure), so its gap to our casing is 7 cm larger than hers",
+      "agrees": false,
+      "type": "metric",
+      "data": [
+        "marina-frame:380"
+      ],
+      "scale": [
+        "door-80in:380"
+      ],
+      "pick": {
+        "crop": "spec/captures/picks/kevin/m380_post_L.png",
+        "confirmed_by": "blind haiku subagent (crops only, Oct 18): post_L 'a vertical wooden post face, wallpaper left, green plaid fabric lower right' (high); post_R 'edge of a wooden post' (medium); corner 'interior corner where two pale walls meet the floor' (high); leaf TL/TR 'inner corner of door panel moulding / head casing inside corner' (medium: the leaf's top corners against the casing); leaf BL 'floor/wall junction at a trim seam' (medium); leaf BR read as 'a vertical wooden post': the leaf's bottom-right is occluded by the bunk's foot post, so the ruler's width is SOLVED (0.753 m) with the focal 1428, vs the built opening 0.77 (2.2%)"
+      },
+      "disposition": "Kept: the door's position is the accepted plan's (verify-plan); the bunk keeps Marina's distance from the corner."
+    },
+    {
+      "what": "Walk: hall door -> room and round the bunk (RoomWalk upstairs in the build); adult passage dresser front (z 4.361) to bunk (z 5.045) 0.68 m >= 0.59; bunk to footlocker 1.18 m",
+      "agrees": true,
+      "type": "topological",
+      "data": [
+        "build"
+      ],
+      "scale": [
+        "none"
+      ]
+    }
+  ],
+  "renders": {
+    "before": [
+      "spec/captures/views/kevin/before/close_bunk.png",
+      "spec/captures/views/kevin/before/close_curtain.png",
+      "spec/captures/views/kevin/before/close_dresser.png",
+      "spec/captures/views/kevin/before/door.png",
+      "spec/captures/views/kevin/before/film296.png",
+      "spec/captures/views/kevin/before/marina355.png",
+      "spec/captures/views/kevin/before/marina365.png",
+      "spec/captures/views/kevin/before/marina375.png",
+      "spec/captures/views/kevin/before/marina380.png",
+      "spec/captures/views/kevin/before/marina385.png",
+      "spec/captures/views/kevin/before/plan.png"
+    ],
+    "after": [
+      "spec/captures/views/kevin/after/close_bunk.png",
+      "spec/captures/views/kevin/after/close_curtain.png",
+      "spec/captures/views/kevin/after/close_dresser.png",
+      "spec/captures/views/kevin/after/door.png",
+      "spec/captures/views/kevin/after/film296.png",
+      "spec/captures/views/kevin/after/marina355.png",
+      "spec/captures/views/kevin/after/marina365.png",
+      "spec/captures/views/kevin/after/marina375.png",
+      "spec/captures/views/kevin/after/marina380.png",
+      "spec/captures/views/kevin/after/marina385.png",
+      "spec/captures/views/kevin/after/plan.png"
+    ],
+    "note": "batch RenderViews (geometry/finishes; lighting judged live)"
+  },
+  "user_walk": "pending"
+}

@@ -126,5 +126,9 @@
  "tools/house/hifi_treehouse.py": {
   "sources": "7aca47292624edaa",
   "models": "03d12bfc07e48b43"
+ },
+ "tools/house/hifi_kevin.py": {
+  "models": "bf28e341c922eca7",
+  "sources": "dbfc0ced1f6df72d"
  }
 }

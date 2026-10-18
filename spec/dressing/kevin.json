@@ -1,0 +1,128 @@
+{
+ "note": "Kevin and Jeff's room layout (TRIAL 1, Oct 18; changes/2026-10-18-kevin-room.json). Spec metres above the upper floor. Read by tools/house/hifi_kevin.py (generated pieces), SpecGreybox.Kevin (lamps, bunk walk box); the pack pieces are store_props.json kevin_*. Order and walls from Marina 354-386 s, agreeing with film 294-306 and the poster (room 22).",
+ "room": {
+  "x": [
+   7.061,
+   11.664
+  ],
+  "z": [
+   3.861,
+   7.638
+  ]
+ },
+ "bunk": {
+  "x": [
+   7.081,
+   9.101
+  ],
+  "z": [
+   5.045,
+   5.989
+  ],
+  "post": 0.07,
+  "post_h": 1.68,
+  "low_rail": [
+   0.18,
+   0.32
+  ],
+  "up_rail": [
+   1.1,
+   1.24
+  ],
+  "guard": [
+   1.44,
+   1.6
+  ],
+  "rungs": [
+   0.52,
+   0.78,
+   1.0,
+   1.42
+  ],
+  "mattress": 0.84,
+  "source": "Width and place: Marina 380 s at the 80 in hall door (wall_measure.py, leaf solved 0.753 vs spec 0.77): head-post centres 0.874 m apart (a 33 in bunk mattress), the closet-side post 1.684 m from the closet wall's corner -> post centres z 5.954 / 5.080, head 2 cm off the hall wall. Heights: FILM 296/301 (film first): the upper deck's underside rail at seated Jeff's eye level (~1.10 m on a 0.42 m mattress; seated-eye ruler ~0.68 m ASSUMED); post top 1.68 ASSUMED (standard bunk). Marina 375's ratios give a lower CG bunk (deck gap 0.51 m, post top ~1.26): not followed (DEVIATIONS 95). Length 2.02 = a 33 x 75 in bunk mattress + posts ASSUMED. Film 296/301/303: honey pine, rungs at the foot end, a wide sticker-covered upper side board."
+ },
+ "curtains": {
+  "rod_y": 2.302,
+  "hem_y": 0.807,
+  "panel_w": 0.291,
+  "overhang": 0.06,
+  "depth": 0.09,
+  "source": "Buzz's measured drape geometry relative to the casing (buzz_curtains.json; Marina dresses the upstairs front rooms alike), on this room's two windows (head 2.20, sill 0.82); film 296 green gingham, Marina 355-365 green check panels to the stool"
+ },
+ "mirror": {
+  "x": [
+   7.85,
+   8.8
+  ],
+  "y": [
+   1.18,
+   1.8
+  ],
+  "source": "film 296: pine-framed mirror over the dresser; Marina 365/375 the same over her dresser; size by eye from the dresser (props lane)"
+ },
+ "corkboard": {
+  "z": [
+   5.25,
+   5.95
+  ],
+  "y": [
+   1.3,
+   1.85
+  ],
+  "source": "Marina 355 s: cork board with papers over the low bookcase between the windows (by eye)"
+ },
+ "dartboard": {
+  "x": 9.85,
+  "y": 1.73,
+  "source": "Marina 382-386 s: dartboard over the footlocker on the closet wall; bull at the regulation 1.73 m, 0.45 m board"
+ },
+ "globe": {
+  "at": [
+   7.29,
+   0.62,
+   4.72
+  ],
+  "source": "Marina 375 s: blue globe on the nightstand right of the bunk head"
+ },
+ "lamp_red": {
+  "at": [
+   7.8,
+   0.8,
+   4.05
+  ],
+  "source": "film 296/301: red swing-arm lamp at the back-left of the dresser top (Marina has an orange mushroom lamp there)"
+ },
+ "trunk": {
+  "x": [
+   9.45,
+   10.25
+  ],
+  "z": [
+   7.17,
+   7.628
+  ],
+  "h": 0.42,
+  "source": "Marina 382 s: khaki footlocker with a chessboard, under the dartboard, between the desk and the closet door (by eye)"
+ },
+ "lamps": {
+  "red": {
+   "at": [
+    8.02,
+    1.08,
+    4.15
+   ],
+   "lumens": 350,
+   "kelvin": 2700
+  },
+  "banker": {
+   "at": [
+    11.42,
+    1.02,
+    7.21
+   ],
+   "lumens": 300,
+   "kelvin": 2700
+  }
+ }
+}
