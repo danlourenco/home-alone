@@ -296,19 +296,78 @@ for b in A["bulbs"]:
     bulb.lathe(bx, bz, yt_ - 0.20, [(0.0, 0.01), (0.03, 0.03), (0.07, 0.032), (0.11, 0.015), (0.13, 0.013)], 16)
     box(porcelain, bx + 0.03, bx + 0.034, yt_ - 0.35, yt_ - 0.06, bz - 0.002, bz + 0.002)   # pull chain
 
+# ---------------------------------------------------------------- dressing round (Oct 18; spec/dressing/attic.json): flag, gumball machine, mug, rag doll
+DR = json.loads((ROOT / "spec/dressing/attic.json").read_text())
+flagW, flagB, flagR = Part("FlagWhite", "AT_FlagWhite"), Part("FlagBlue", "AT_FlagBlue"), Part("FlagRed", "AT_FlagRed")
+Fl = DR["flag"]; (fz0, fz1), fh, fd = Fl["z"], Fl["h"], Fl["drop"]
+INTO = (sn, -cs, 0.0)                                            # into the room, off the rear slope
+SL = (cs, sn, 0.0)                                               # up the rear slope
+base = add((Fl["x_low"], hr(Fl["x_low"]), 0.0), mul(INTO, fd))
+fp = lambda v, z, lift=0.0: add(add(base, mul(SL, v)), (INTO[0] * lift, INTO[1] * lift, z))
+row = fh / 6
+for k in range(6):                                               # rows from the bottom: 1 and 4 are the light-blue stripes
+    part = flagB if k in (1, 4) else flagW
+    part.face([fp(k * row, fz0), fp(k * row, fz1), fp((k + 1) * row, fz1), fp((k + 1) * row, fz0)], INTO)
+for f in (0.2, 0.4, 0.6, 0.8):                                   # four red six-pointed stars across the middle band
+    zc, vc = fz0 + (fz1 - fz0) * f, 3 * row
+    flagR.face([fp(vc + (0.075 if j % 2 == 0 else 0.040) * math.cos(math.pi * j / 6 + math.pi / 2), zc + (0.075 if j % 2 == 0 else 0.040) * math.sin(math.pi * j / 6 + math.pi / 2), 0.012)
+                for j in range(12)], INTO)
+
+gumR, gumG = Part("GumballBody", "AT_GumRed"), Part("GumballGlobe", "AT_Glass")
+gx, gz = DR["gumball"]["at"]; gy = F + Lt["h"]
+gumR.lathe(gx, gz, gy, [(0, 0.062), (0.02, 0.062), (0.03, 0.05), (0.09, 0.045), (0.10, 0.05), (0.11, 0.03)], 20)   # base with the coin housing
+P_gl = [(0.10 + 0.075 - 0.075 * math.cos(math.pi * i / 12), 0.075 * math.sin(math.pi * i / 12) + 0.002) for i in range(13)]
+gumG.lathe(gx, gz, gy, P_gl, 20)
+gumR.lathe(gx, gz, gy + 0.245, [(0, 0.032), (0.025, 0.03), (0.04, 0.012), (0.045, 0.002)], 16)                      # the cap
+gumR.box(gx - 0.015, gx + 0.015, gy + 0.045, gy + 0.075, gz + 0.04, gz + 0.055)                                     # coin knob
+balls = {c: Part("Gumballs" + c, "AT_Gum" + c) for c in ("Yel", "Grn", "Blu", "Wht", "Pnk")}
+import random
+rnd = random.Random(7)
+for i in range(46):
+    for _ in range(50):
+        a, rr, h = rnd.uniform(0, 2 * math.pi), rnd.uniform(0, 0.058), rnd.uniform(0.118, 0.215)
+        if (rr ** 2 + (h - 0.175) ** 2) ** 0.5 < 0.060:
+            break
+    list(balls.values())[i % 5].lathe(gx + rr * math.cos(a), gz + rr * math.sin(a), gy + h - 0.011, [(0, 0.001), (0.004, 0.008), (0.011, 0.011), (0.018, 0.008), (0.022, 0.001)], 8)
+
+mugW, mugB = Part("MugWhite", "AT_MugWhite"), Part("MugBlue", "AT_MugBlue")
+mx, mz = DR["mug"]["at"]
+mugW.lathe(mx, mz, gy, [(0, 0.036), (0.095, 0.04), (0.095, 0.034), (0.012, 0.031)], 20)
+mugW.sweep([(mx - 0.039, gy + 0.075, mz), (mx - 0.062, gy + 0.07, mz), (mx - 0.066, gy + 0.045, mz), (mx - 0.06, gy + 0.024, mz), (mx - 0.037, gy + 0.02, mz)],
+           [(0.006 * math.cos(t), 0.006 * math.sin(t)) for t in [2 * math.pi * i / 8 for i in range(8)]])
+mugB.face([(mx + 0.024 * math.cos(2 * math.pi * i / 14), gy + 0.05 + 0.024 * math.sin(2 * math.pi * i / 14), mz + 0.041) for i in range(14)], (0, 0, 1))   # the Cubs roundel, toward the room
+
+dS, dH, dD, dA, dL = (Part("DollSkin", "AT_DollSkin"), Part("DollHair", "AT_DollHair"), Part("DollDress", "AT_DollDress"),
+                      Part("DollApron", "AT_DollApron"), Part("DollLegs", "AT_DollLegs"))
+ox, oz = DR["doll"]["at"]; sy = DR["doll"]["seat_y"]
+dD.lathe(ox, oz - 0.03, sy, [(0, 0.13), (0.04, 0.12), (0.16, 0.075), (0.24, 0.055), (0.26, 0.001)], 16)   # dress, seated
+dA.lathe(ox, oz + 0.02, sy + 0.02, [(0, 0.09), (0.12, 0.06), (0.17, 0.001)], 14)                      # white apron front
+dS.lathe(ox, oz - 0.03, sy + 0.25, [(0, 0.001), (0.02, 0.06), (0.07, 0.085), (0.12, 0.07), (0.155, 0.001)], 16)   # head
+dH.lathe(ox, oz - 0.05, sy + 0.30, [(0, 0.075), (0.06, 0.092), (0.10, 0.07), (0.125, 0.001)], 16)      # orange yarn hair (back of the head)
+for dx in (-0.055, 0.055):
+    dL.sweep([(ox + dx, sy + 0.04, oz), (ox + dx, sy + 0.045, oz + 0.20), (ox + dx, sy - 0.12, oz + 0.25)], [(0.025 * math.cos(t), 0.025 * math.sin(t)) for t in [2 * math.pi * i / 10 for i in range(10)]])
+    dS.sweep([(ox + dx * 1.6, sy + 0.21, oz - 0.03), (ox + dx * 2.3, sy + 0.08, oz + 0.05)], [(0.018 * math.cos(t), 0.018 * math.sin(t)) for t in [2 * math.pi * i / 8 for i in range(8)]])
+DRESS = [flagW, flagB, flagR, gumR, gumG, mugW, mugB, dS, dH, dD, dA, dL] + list(balls.values())
+
 # ---------------------------------------------------------------- export
 for ob in list(bpy.data.objects):
     bpy.data.objects.remove(ob)
 coll = bpy.data.collections.new("Attic"); bpy.context.scene.collection.children.link(coll)
 mats = {n: material(n, c, r) for n, c, r in (
-    ("AT_Boards", (0.55, 0.36, 0.20), 0.7), ("AT_Shingle", (0.10, 0.11, 0.12), 0.9), ("AT_Rafter", (0.45, 0.28, 0.15), 0.7),
+    ("AT_Boards", (0.36, 0.22, 0.12), 0.7), ("AT_Shingle", (0.10, 0.11, 0.12), 0.9), ("AT_Rafter", (0.30, 0.18, 0.10), 0.7),
     ("AT_Floor", (0.35, 0.30, 0.26), 0.8), ("AT_Brick", (0.16, 0.05, 0.03), 0.9), ("AT_Iron", (0.06, 0.06, 0.06), 0.6),
     ("AT_Rail", (0.70, 0.50, 0.28), 0.6), ("AT_Paint", (0.88, 0.87, 0.82), 0.5), ("AT_Glass", (0.8, 0.85, 0.9), 0.05),
     ("AT_Curtain", (0.86, 0.80, 0.66), 0.9), ("AT_Sofa", (0.20, 0.12, 0.06), 0.9), ("AT_Mattress", (0.60, 0.60, 0.58), 0.9),
     ("AT_Wood", (0.22, 0.12, 0.06), 0.6), ("AT_LampGlass", (0.75, 0.22, 0.06), 0.15), ("AT_Shade", (0.90, 0.86, 0.74), 0.9),
-    ("AT_Bulb", (1.0, 0.95, 0.85), 0.1), ("AT_Porcelain", (0.92, 0.91, 0.88), 0.3))}
+    ("AT_Bulb", (1.0, 0.95, 0.85), 0.1), ("AT_Porcelain", (0.92, 0.91, 0.88), 0.3),
+    ("AT_FlagWhite", (0.92, 0.92, 0.90), 0.9), ("AT_FlagBlue", (0.45, 0.70, 0.88), 0.9), ("AT_FlagRed", (0.80, 0.08, 0.10), 0.9),
+    ("AT_GumRed", (0.75, 0.06, 0.06), 0.3), ("AT_GumYel", (0.95, 0.80, 0.10), 0.3), ("AT_GumGrn", (0.20, 0.65, 0.20), 0.3),
+    ("AT_GumBlu", (0.15, 0.35, 0.85), 0.3), ("AT_GumWht", (0.92, 0.92, 0.90), 0.3), ("AT_GumPnk", (0.95, 0.45, 0.65), 0.3),
+    ("AT_MugWhite", (0.93, 0.93, 0.91), 0.2), ("AT_MugBlue", (0.10, 0.20, 0.60), 0.3), ("AT_DollSkin", (0.95, 0.80, 0.68), 0.9),
+    ("AT_DollHair", (0.85, 0.35, 0.08), 0.95), ("AT_DollDress", (0.75, 0.10, 0.12), 0.9), ("AT_DollApron", (0.93, 0.92, 0.88), 0.9),
+    ("AT_DollLegs", (0.90, 0.90, 0.90), 0.9))}
 root = bpy.data.objects.new("Attic_HiFi", None); coll.objects.link(root)
-for p in [boards, roofout, rafter, floor, brick, iron, rail, paint, curtain, sofa, mattress, crib, cribmat, ltable, lglass, shade, bulb, porcelain] + [q for pair in leaves.values() for q in pair]:
+for p in [boards, roofout, rafter, floor, brick, iron, rail, paint, curtain, sofa, mattress, crib, cribmat, ltable, lglass, shade, bulb, porcelain] + [q for pair in leaves.values() for q in pair] + DRESS:
     if p.f:
         p.build(coll, mats).parent = root
 OUT.parent.mkdir(parents=True, exist_ok=True)

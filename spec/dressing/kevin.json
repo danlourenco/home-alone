@@ -124,5 +124,43 @@
    "lumens": 300,
    "kelvin": 2700
   }
+ },
+ "floor_lamp": {
+  "at": [
+   8.25,
+   4.43
+  ],
+  "pole_h": 1.12,
+  "head": [
+   7.98,
+   1.24,
+   4.28
+  ],
+  "source": "film 296/301: a silver swing-arm floor lamp standing in front of the dresser, its pole at ~52% of the dresser's width from its left (x 7.6) end, the arm reaching up-left to a pale rectangular head level with the mirror's bottom (by eye; the dresser as the ruler); pole 7 cm in front of the dresser so the pole leaves 0.60 m to the bunk (adult 0.59); its 3 cm base (r 0.11) is stepped over, no collider"
+ },
+ "penguin": {
+  "at": [
+   8.67,
+   0.8,
+   4.08
+  ],
+  "h": 0.22,
+  "source": "film 296: a black-and-white penguin plush in a red Santa hat at ~84% of the dresser top from its left end, against the mirror (by eye; dresser width ruler)"
+ },
+ "toy_yellow": {
+  "at": [
+   8.17,
+   0.8,
+   4.06
+  ],
+  "source": "film 296: a yellow Fisher-Price-style triangular toy with red trim at ~45% of the dresser top (by eye)"
+ },
+ "gloves": {
+  "knob": [
+   8.84,
+   0.94,
+   7.53
+  ],
+  "source": "Marina 380/383 s: a pair of brown boxing gloves hung by their laces from the closet door's knob (knob: the Door_3 leaf's latch edge, room face z 7.591 in the open editor)"
  }
 }

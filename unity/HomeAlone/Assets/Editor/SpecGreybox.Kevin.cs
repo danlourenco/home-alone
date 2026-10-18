@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine;
@@ -19,6 +20,14 @@ public static partial class SpecGreybox
         gingham.SetFloat("_DoubleSidedEnable", 1f); gingham.SetFloat("_DoubleSidedNormalMode", 0f); gingham.SetFloat("_Smoothness", 0.1f);
         HDMaterial.ValidateMaterial(gingham);
         var mirror = Mat("HiFi_KevinMirror", new Color(0.85f, 0.87f, 0.88f)); mirror.SetFloat("_Metallic", 1f); mirror.SetFloat("_Smoothness", 0.95f);
+        var steel = Mat("HiFi_KevinSteel", new Color(0.72f, 0.73f, 0.75f)); steel.SetFloat("_Metallic", 1f); steel.SetFloat("_Smoothness", 0.7f);
+        // the bunk's sticker board (film 303): the drawn pine + stickers (tools/house/kevin_stickers.py) on the face's own UVs
+        var stickers = Mat("HiFi_KevinStickerBoard", Color.white); stickers.SetFloat("_Smoothness", 0.3f);
+        {
+            string src = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/kevin_stickers.png")), dst = "Assets/Textures/Greybox/kevin_stickers.png";
+            if (File.Exists(src)) { Directory.CreateDirectory("Assets/Textures/Greybox"); File.Copy(src, dst, true); AssetDatabase.ImportAsset(dst); stickers.SetTexture("_BaseColorMap", AssetDatabase.LoadAssetAtPath<Texture2D>(dst)); }
+            HDMaterial.ValidateMaterial(stickers);
+        }
         var remap = new Dictionary<string, Material>
         {
             ["KV_Pine"] = TexMat("HiFi_KevinPine", "oak_veneer_01", new Color(1.1f, 0.95f, 0.78f), 0.8f, 0.3f),   // film 296: honey pine (build 1 at 1.0/0.80/0.55 read orange)
@@ -32,6 +41,14 @@ public static partial class SpecGreybox
             ["KV_Globe"] = Mat("HiFi_KevinGlobe", new Color(0.20f, 0.50f, 0.80f)), ["KV_LampRed"] = Mat("HiFi_KevinLampRed", new Color(0.80f, 0.10f, 0.10f)),
             ["KV_Bulb"] = Mat("HiFi_KevinBulb", new Color(1.0f, 0.95f, 0.85f)), ["KV_Trunk"] = Mat("HiFi_KevinTrunk", new Color(0.72f, 0.65f, 0.45f)),
             ["KV_TrunkBand"] = Mat("HiFi_KevinTrunkBand", new Color(0.55f, 0.40f, 0.24f)), ["KV_Chess"] = Mat("HiFi_KevinChess", new Color(0.72f, 0.56f, 0.36f)),
+            // Oct 18 dressing round: the bunk's stickers (film 303), the film's floor lamp, the dresser toys (film 296), Marina's gloves (380)
+            ["KV_StickRed"] = Mat("HiFi_KevinStickRed", new Color(0.80f, 0.08f, 0.10f)), ["KV_StickerBoard"] = stickers,
+            ["KV_Steel"] = steel,
+            ["KV_Shade"] = Mat("HiFi_KevinShade", new Color(0.90f, 0.89f, 0.85f)), ["KV_PlushWhite"] = Mat("HiFi_KevinPlushWhite", new Color(0.93f, 0.93f, 0.91f)),
+            ["KV_PlushBlack"] = Mat("HiFi_KevinPlush", new Color(0.05f, 0.05f, 0.06f)), ["KV_Beak"] = Mat("HiFi_KevinBeak", new Color(0.95f, 0.58f, 0.10f)),
+            ["KV_HatRed"] = Mat("HiFi_KevinHatRed", new Color(0.78f, 0.07f, 0.08f)), ["KV_ToyYellow"] = Mat("HiFi_KevinToyYellow", new Color(0.98f, 0.82f, 0.10f)),
+            ["KV_Lace"] = Mat("HiFi_KevinLace", new Color(0.88f, 0.86f, 0.80f)), ["KV_GloveCuff"] = Mat("HiFi_KevinGloveCuff", new Color(0.88f, 0.86f, 0.80f)),
+            ["KV_GloveLeather"] = Mat("HiFi_KevinGlove", new Color(0.36f, 0.16f, 0.08f)),
         };
         var g = PlaceHiFi(root, 0f, "KevinRoom", remap);
         if (g != null)

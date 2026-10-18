@@ -77,13 +77,42 @@ public static partial class SpecGreybox
         var B = gj["basement"]["basement"]; var L = B["light"];
         var pts = new List<(float x, float z, float y)> { ((float)L["x"], (float)L["z"], (float)L["bulb_y"]) };
         foreach (var q in L["more"]) pts.Add(((float)q[0], (float)q[1], (float)L["bulb_y"] + 0.15f));
+        var dp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/basement.json"));
+        var DB = File.Exists(dp) ? JObject.Parse(File.ReadAllText(dp)) : null;   // Oct 18 dressing round: dimmer bulbs, the door lamp
+        float bulbLm = DB != null ? (float)DB["bulb_lumens"] : 800f;
         var lights = Child(groot, "BasementLights"); int i = 0;
         foreach (var (x, z, y) in pts)
         {
             var l = new GameObject($"BasementBulb_{i++}_Light").AddComponent<Light>(); l.transform.SetParent(lights.transform, false);
             l.transform.position = new Vector3(x, gy + y - 0.02f, -z); l.type = LightType.Point; l.range = 9f;
             l.gameObject.AddComponent<HDAdditionalLightData>();
-            l.lightUnit = LightUnit.Lumen; l.intensity = 800f; l.useColorTemperature = true; l.colorTemperature = 2700f; l.shadows = LightShadows.Soft;
+            l.lightUnit = LightUnit.Lumen; l.intensity = bulbLm; l.useColorTemperature = true; l.colorTemperature = 2700f; l.shadows = LightShadows.Soft;
+        }
+        if (DB != null)
+        {   // the bare-bulb lamp beside the outside stairwell door (film 9936/10076), on day and night like the other bulbs
+            var q = DB["door_lamp"];
+            var l = new GameObject("BasementDoorLamp_Light").AddComponent<Light>(); l.transform.SetParent(lights.transform, false);
+            l.transform.position = new Vector3((float)q["at"][0] + 0.2f, gy + (float)q["at"][1], -(float)q["at"][2]); l.type = LightType.Point; l.range = 6f;
+            l.gameObject.AddComponent<HDAdditionalLightData>();
+            l.lightUnit = LightUnit.Lumen; l.intensity = (float)q["lumens"]; l.useColorTemperature = true; l.colorTemperature = (float)q["kelvin"]; l.shadows = LightShadows.Soft;
+        }
+        {   // the small windows glow only by day (user brief Oct 18: "the windows must not glow at night"): their glass and a faint cool fill
+            // light each go in BasementDaylight, which SpecGreybox moves into the day layer (switched off at night)
+            var dl = Child(groot, "BasementDaylight");
+            foreach (var r in g.GetComponentsInChildren<MeshRenderer>(true).Where(r => r.name == "WindowGlass").ToList()) r.transform.SetParent(dl.transform, true);
+            foreach (var w in B["windows"])
+            {
+                bool alongZ = (string)w["wall"] == "z"; float at = (float)w["at"];
+                var span = alongZ ? w["x"] : w["z"]; float mid = ((float)span[0] + (float)span[1]) / 2;
+                var fp = B["footprint"].Select(q => new Vector2((float)q[0], (float)q[1])).ToList();
+                bool Inside(float px, float pz) { bool c = false; for (int a = 0, b = fp.Count - 1; a < fp.Count; b = a++) if ((fp[a].y > pz) != (fp[b].y > pz) && px < (fp[b].x - fp[a].x) * (pz - fp[a].y) / (fp[b].y - fp[a].y) + fp[a].x) c = !c; return c; }
+                float inward = (alongZ ? Inside(mid, at + 0.6f) : Inside(at + 0.6f, mid)) ? 0.6f : -0.6f;   // toward the room
+                var p = alongZ ? new Vector3(mid, gy - 1.0f, -(at + inward)) : new Vector3(at + inward, gy - 1.0f, -mid);
+                var l = new GameObject("BasementWindowDay_Light").AddComponent<Light>(); l.transform.SetParent(dl.transform, false);
+                l.transform.position = p; l.type = LightType.Point; l.range = 4f;
+                l.gameObject.AddComponent<HDAdditionalLightData>();
+                l.lightUnit = LightUnit.Lumen; l.intensity = 120f; l.useColorTemperature = true; l.colorTemperature = 7500f; l.shadows = LightShadows.None;
+            }
         }
         {   // the furnace's fire through the grate: a low orange light in front of it
             var F = B["furnace"]; float fx = ((float)F["x"][0] + (float)F["x"][1]) / 2, fz = (float)F["z"][0] - 0.25f;

@@ -1557,6 +1557,7 @@ public static partial class SpecGreybox
         }
         if (lamps != null) foreach (var l in ShellLights) if (l) l.transform.SetParent(lamps, true);   // the exterior's night lights (SpecGreybox.Shell)
         WindowBackdrop(dayLayer, lamps != null ? lamps.gameObject : null, groundY);   // SpecGreybox.Backdrop.cs: winter backdrop outside the windows (overnight5)
+        var bdl = GameObject.Find("BasementDaylight"); if (bdl != null) bdl.transform.SetParent(dayLayer.transform, true);   // SpecGreybox.Basement: windows glow by day only
         var mode = new GameObject("Day and night - press N").AddComponent<HouseNightMode>(); mode.transform.parent = day.transform; mode.glowRenderers = glow.Concat(ShellGlow).ToArray();
         mode.nightLayer = lamps != null ? lamps.gameObject : null; mode.dayLayer = dayLayer; mode.interiorLights = new Light[0]; mode.daytimeEnabled = new bool[0];
         if (lamps != null) NightSetCheck(mode);   // SpecGreybox.Shell.cs

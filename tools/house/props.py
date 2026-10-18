@@ -72,6 +72,12 @@ def scaled(native, size=None, height=None):
     return [round(v * k, 3) for v in native]
 
 
+def glue_values(args):
+    """'--back -x', '--at -4.8,3.9': argparse reads a value starting with '-' as an option; glue each to its flag."""
+    neg = ("--back", "--at", "--wall", "--y0", "--size")
+    return [f"{a}={b}" if a in neg else b for a, b in zip([None] + args, args) if b not in neg]
+
+
 def matches(words, text):
     t = text.lower()
     return all(w.lower() in t for w in words)
@@ -283,6 +289,7 @@ def selftest():
         footprint([1, 1, 1], None, ""); raise AssertionError("free-standing without yaw must refuse")
     except SystemExit:
         pass
+    assert glue_values(["n", "--back", "-x", "--at", "-4.8,3.9", "--yaw", "90"]) == ["n", "--back=-x", "--at=-4.8,3.9", "--yaw", "90"]
     assert matches(["dresser", "PINE"], "Assets/Pine/Dresser.prefab") and not matches(["oak"], "Assets/Pine/Dresser.prefab")
     # front camera: a back on -z (Unity +z) is seen from Unity -z, looking at the centre; near never past the piece
     (pos, look, near, f), = cam_poses([0, 1, 0], [1.0, 0.8, 0.5], "-z")
@@ -319,6 +326,7 @@ def main():
         ap.add_argument("--yaw", type=int); ap.add_argument("--size"); ap.add_argument("--height", type=float)
         ap.add_argument("--source", required=True); ap.add_argument("--hides"); ap.add_argument("--no-refresh", action="store_true")
         ap.add_argument("--collide", dest="collide", action="store_true", default=None); ap.add_argument("--no-collide", dest="collide", action="store_false")
+        rest = glue_values(rest)
         cmd_add(ap.parse_args(rest))
     else:
         print(__doc__); sys.exit(1)

@@ -1,0 +1,7 @@
+{
+ "note": "Attic dressing round (Oct 18; props lane). Spec metres; y above the upper floor (the attic floor is at 2.62, finished 2.632). Read by tools/house/hifi_attic.py (generated pieces); pack pieces are store_props.json attic_*.",
+ "flag": {"z": [11.24, 12.76], "x_low": 4.306, "drop": 0.16, "h": 0.91, "source": "film 1410/1418/1432: a 3 x 5 ft Chicago flag (white, two light-blue stripes, four red six-pointed stars) hung flat under the rafters of the slope over the bed, long side along the ridge (by eye; standard flag size)"},
+ "gumball": {"at": [4.08, 13.13], "source": "film 1410/10925: a red gumball machine with a glass globe on the lamp table, left of the lamp (by eye; ~0.30 m, a stock home machine)"},
+ "mug": {"at": [4.40, 13.14], "source": "film 1418/1425: a white Cubs mug (red/blue logo) on the lamp table in front of the lamp (by eye; stock 11 oz mug)"},
+ "doll": {"at": [5.80, 10.70], "seat_y": 3.02, "source": "film 1418-1447: a rag doll (orange yarn hair, red dress, white apron) by the yellow armchair behind the bed; seated in the chair here (by eye, ~0.55 m doll)"}
+}

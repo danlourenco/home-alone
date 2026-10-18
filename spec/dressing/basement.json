@@ -1,0 +1,59 @@
+{
+ "note": "Basement dressing round (Oct 18; props lane). Spec metres, y above the GROUND floor (the slab is at -2.681). Read by tools/house/hifi_basement.py (generated pieces) and SpecGreybox.Basement (the door lamp's light); pack pieces are store_props.json basement_*.",
+ "bikes": [
+  {
+   "x": 5.0,
+   "z": -0.55,
+   "source": "film 2466: a bicycle hung upside down by its wheels from the joists along the wall (by eye; a stock 26 in bike)"
+  },
+  {
+   "x": 7.3,
+   "z": -0.55,
+   "source": "film 2394/2466: a second hanging bike in the clutter (by eye)"
+  }
+ ],
+ "shelving": {
+  "x": [
+   9.79,
+   10.12
+  ],
+  "z": [
+   6.4,
+   7.6
+  ],
+  "boards": [
+   0.05,
+   0.5,
+   0.95,
+   1.4,
+   1.85
+  ],
+  "source": "film 2430/10076: open shelving loaded with jars and cans against a wall (by eye; 1.2 m unit, 0.33 deep)"
+ },
+ "door_lamp": {
+  "at": [
+   -5.18,
+   -0.83,
+   1.25
+  ],
+  "lumens": 350,
+  "kelvin": 2700,
+  "source": "film 9936/10076: a bare-bulb lamp lit on the wall beside the outside stairwell door, inside (by eye: right of the door's casing, just over its head)"
+ },
+ "bulb_lumens": 450,
+ "bulb_source": "film 2466/2490: the basement reads dark, pools of warm light under a few bare bulbs (40 W, 450 lm; were 800)",
+ "floor_cans": [
+  [
+   5.5,
+   -0.72
+  ],
+  [
+   5.72,
+   -0.68
+  ],
+  [
+   7.7,
+   -0.72
+  ]
+ ]
+}

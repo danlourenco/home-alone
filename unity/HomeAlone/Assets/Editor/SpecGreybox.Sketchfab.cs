@@ -154,6 +154,9 @@ public static partial class SpecGreybox
         // the side window (wall z 0), machine head up, 1.05 m tall; the 1900s dress form in front of the window corner, 1.45 m
         Sketchfab(g, "sewing_machine", "parents_sewing_table", turn, 1.05f, new Vector3(5.75f, 0f, 0.33f));
         Sketchfab(g, "mannequin_1900s_m_size", "parents_dress_form", Quaternion.Euler(0, -90, 0), 1.45f, new Vector3(7.95f, 0f, 1.0f));
+        // --- basement (Oct 18 dressing round, film 2394: a shirted mannequin in the clutter by the stair's foot): the same dress form, 1.55 m,
+        // on the slab past the flight's foot, off the walk to the areaway door (spec/dressing/basement.json; slab at ground -2.681)
+        Sketchfab(g, "mannequin_1900s_m_size", "basement_mannequin", Quaternion.Euler(0, 180, 0), 1.55f, new Vector3(3.3f, gy - 2.681f, 8.5f));
 
         // --- kitchen: Kevin's blowtorch trap at the back door (film 10351-10363: a brass plumber's torch clamped beside the door at head
         // height by the upper cabinet, its nozzle across the doorway; a string to the door fires it into Harry's hat). CGTrader "Rusty Blow

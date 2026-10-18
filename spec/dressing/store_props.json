@@ -1293,9 +1293,9 @@
     "Casing"
    ],
    "collide": false,
-   "open": 30,
+   "open": 0,
    "hinge": "lo",
-   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White as the other interior doors (linen, girls_a/b, attic, Buzz, parents; the film's are white six-panel: DEVIATIONS 63h). The pack frame (outer = leaf x 1.124 wide, x 1.027 tall) centred on the opening, 0.5 cm proud of the face, 6 cm deep. Opening x 8.074-8.904 (0.83 m, stock 32/33 in) had no leaf. Frame on Kevin's room face (z 7.638), replacing its casing. Hinge ASSUMED at the lo end (x 8.074; the pack leaf's own hinge edge as it turns here, yaw 180, so the lever is at the latch edge); swings into the closet (0.86 m deep, the 0.83 leaf clears); AJAR 30 deg (a closet)."
+   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White as the other interior doors (linen, girls_a/b, attic, Buzz, parents; the film's are white six-panel: DEVIATIONS 63h). The pack frame (outer = leaf x 1.124 wide, x 1.027 tall) centred on the opening, 0.5 cm proud of the face, 6 cm deep. Opening x 8.074-8.904 (0.83 m, stock 32/33 in) had no leaf. Frame on Kevin's room face (z 7.638), replacing its casing. Hinge ASSUMED at the lo end (x 8.074; the pack leaf's own hinge edge as it turns here, yaw 180, so the lever is at the latch edge); swings into the closet (0.86 m deep, the 0.83 leaf clears); SHUT (Oct 18 dressing round: Marina 380/383 show it closed with the boxing gloves hung on its knob; was ajar 30, authored)."
   },
   {
    "name": "rear_passage_end_door",
@@ -3748,9 +3748,14 @@
    "back": "+x",
    "yaw": 270,
    "collide": true,
-   "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): Marina 355/385 s: the desk with the green banker's lamp under the closet-side front window (top under the 0.82 sill). Yaw 270 = back on +x (buzz_desk's back +z at 0, turned).",
+   "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): Marina 355/385 s: the desk with the green banker's lamp under the closet-side front window (top under the 0.82 sill). Yaw 270 = back on +x (buzz_desk's back +z at 0, turned). Oct 18 dressing round: tinted toward Marina 355's medium wood (was the pack's near-black walnut).",
    "floor": "upper",
-   "hides": []
+   "hides": [],
+   "tint": [
+    2.3,
+    1.85,
+    1.35
+   ]
   },
   {
    "name": "kevin_desk_chair",
@@ -3774,7 +3779,7 @@
   },
   {
    "name": "kevin_bookcase",
-   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/SHELVES_01.prefab",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/WALL_SHELF_01.prefab",
    "x": [
     11.34,
     11.66
@@ -3786,31 +3791,36 @@
    "y0": 0.0,
    "height": 1.0,
    "back": "+x",
-   "yaw": 90,
    "collide": true,
-   "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): Marina 355 s: a low open pine bookcase with toys between the two front windows, cork board above; film 303: open pine shelves with toys. Yaw 90 = back on +x (parents_etagere's back -z at 0, turned).",
+   "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): Marina 355 s: a low open pine bookcase with toys between the two front windows, cork board above; film 303: open pine shelves with toys. Yaw 90 = back on +x (parents_etagere's back -z at 0, turned). Oct 18 dressing round: the open etagere (SHELVES_01) swapped for the same pack's solid-sided WALL_SHELF_01 (1.32 x 0.38 x 1.08, fitted to 0.80 x 0.32 x 1.00), tinted honey pine like the dresser (Marina 355: solid pine sides).",
    "floor": "upper",
-   "hides": []
+   "hides": [],
+   "tint": [
+    1.9,
+    1.55,
+    1.05
+   ],
+   "yaw": 270
   },
   {
    "name": "kevin_armchair",
-   "prefab": "Assets/Models/Foyer/KevinArmchair.glb",
+   "prefab": "Assets/Models/PolyHaven/modern_arm_chair_01.glb",
    "x": [
-    10.4,
-    11.1
+    10.41,
+    11.09
    ],
    "z": [
-    3.92,
-    4.62
+    3.871,
+    4.701
    ],
    "y0": 0.0,
    "height": 0.85,
    "back": "",
-   "yaw": 180,
    "collide": true,
-   "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): Marina 365 s: a pale grey upholstered chair with dark wooden arms in the corner by the dresser-side front window. Poly Haven ArmChair_01 (CC0) fitted to the box (hifi_kevin.py re-exports it). Not in the film's shots. Yaw 180 pinned after the build-1 front render (yaw 0 faced the wall).",
+   "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): Marina 365 s: a pale grey upholstered chair with dark wooden arms in the corner by the dresser-side front window. Poly Haven ArmChair_01 (CC0) fitted to the box (hifi_kevin.py re-exports it). Not in the film's shots. Yaw 180 pinned after the build-1 front render (yaw 0 faced the wall). Oct 18 dressing round: ArmChair_01 (a Victorian bergere) swapped for Poly Haven modern_arm_chair_01 (CC0; 0.82 x 0.99 x 1.02 at 0.83 = 0.68 x 0.83 x 0.85): Marina 355/365's mid-century chair with flat wooden arms; its seat is black leather where Marina's is pale grey (colour miss, tint can't lighten it).",
    "floor": "upper",
-   "hides": []
+   "hides": [],
+   "yaw": 180
   },
   {
    "name": "kevin_banker",
@@ -3861,6 +3871,304 @@
     1.35,
     1.0
    ]
+  },
+  {
+   "name": "kevin_picture_upper",
+   "prefab": "Assets/Models/PolyHaven/hanging_picture_frame_02.glb",
+   "x": [
+    7.071,
+    7.077
+   ],
+   "z": [
+    4.665,
+    4.935
+   ],
+   "y0": 1.55,
+   "height": 0.18,
+   "back": "-x",
+   "collide": false,
+   "floor": "upper",
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): Marina 375/380 s: two small framed pictures stacked on the hall wall right of the bunk's head, over the nightstand (by eye; the bunk's post as the ruler). Model 0.594 x 0.016 x 0.841 m (hanging_picture_frame_01), fitted to 0.212 x 0.006 x 0.3.",
+   "yaw": 90
+  },
+  {
+   "name": "kevin_picture_lower",
+   "prefab": "Assets/Models/PolyHaven/hanging_picture_frame_01.glb",
+   "x": [
+    7.071,
+    7.076
+   ],
+   "z": [
+    4.701,
+    4.899
+   ],
+   "y0": 1.17,
+   "height": 0.28,
+   "back": "-x",
+   "collide": false,
+   "floor": "upper",
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): Marina 375/380 s: the lower of the two framed pictures on the hall wall over the nightstand (by eye). Model 0.594 x 0.016 x 0.841 m (hanging_picture_frame_01), fitted to 0.198 x 0.005 x 0.28.",
+   "yaw": 90
+  },
+  {
+   "name": "attic_yellow_chair",
+   "prefab": "Assets/Models/Foyer/KevinArmchair.glb",
+   "x": [
+    5.422,
+    6.178
+   ],
+   "z": [
+    10.379,
+    11.062
+   ],
+   "y0": 2.632,
+   "height": 0.95,
+   "back": "",
+   "yaw": 180,
+   "collide": true,
+   "floor": "upper",
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 1418-1447: a yellow upholstered armchair with a rounded back behind the bed, next to the crib, the rag doll beside it; Poly Haven ArmChair_01 (CC0, the old Kevin chair) tinted yellow; right of the crib here (our crib takes the spot left of it). Model 0.848 x 0.766 x 1.065 m (KevinArmchair), fitted to 0.756 x 0.683 x 0.95.",
+   "tint": [
+    1.45,
+    1.15,
+    0.25
+   ]
+  },
+  {
+   "name": "attic_box_1",
+   "prefab": "Assets/Models/PolyHaven/cardboard_box_01.glb",
+   "x": [
+    8.744,
+    9.131
+   ],
+   "z": [
+    10.942,
+    11.458
+   ],
+   "y0": 2.632,
+   "height": 0.342,
+   "back": "+x",
+   "collide": false,
+   "floor": "upper",
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 1403-1418: cardboard boxes and clutter along the attic's knee walls (by eye; the box's real size). Model 0.387 x 0.516 x 0.342 m (cardboard_box_01), native size.",
+   "yaw": 180
+  },
+  {
+   "name": "attic_box_2",
+   "prefab": "Assets/Models/PolyHaven/cardboard_box_01.glb",
+   "x": [
+    8.744,
+    9.131
+   ],
+   "z": [
+    11.492,
+    12.008
+   ],
+   "y0": 2.632,
+   "height": 0.342,
+   "back": "+x",
+   "collide": false,
+   "floor": "upper",
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 1403-1418: cardboard boxes along the knee wall (by eye). Model 0.387 x 0.516 x 0.342 m (cardboard_box_01), native size.",
+   "yaw": 180
+  },
+  {
+   "name": "attic_box_3",
+   "prefab": "Assets/Models/PolyHaven/cardboard_box_01.glb",
+   "x": [
+    8.792,
+    9.131
+   ],
+   "z": [
+    11.223,
+    11.676
+   ],
+   "y0": 2.972,
+   "height": 0.3,
+   "back": "+x",
+   "collide": false,
+   "floor": "upper",
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 1403-1418: a box stacked on the others (by eye). Model 0.387 x 0.516 x 0.342 m (cardboard_box_01), fitted to 0.339 x 0.453 x 0.3.",
+   "yaw": 180
+  },
+  {
+   "name": "attic_crate",
+   "prefab": "Assets/Models/PolyHaven/wooden_military_crate.glb",
+   "x": [
+    3.981,
+    4.501
+   ],
+   "z": [
+    8.679,
+    9.921
+   ],
+   "y0": 2.632,
+   "height": 0.465,
+   "back": "-x",
+   "collide": true,
+   "floor": "upper",
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 1403/1410: a wooden trunk/crate against the rear knee wall beyond the crib (by eye; the crate's real size). Model 1.242 x 0.52 x 0.465 m (wooden_military_crate), native size.",
+   "yaw": 270
+  },
+  {
+   "name": "attic_duck",
+   "prefab": "Assets/Models/PolyHaven/rubber_duck_toy.glb",
+   "x": [
+    4.497,
+    4.603
+   ],
+   "z": [
+    10.677,
+    10.824
+   ],
+   "y0": 3.042,
+   "height": 0.14,
+   "back": "",
+   "yaw": 180,
+   "collide": false,
+   "floor": "upper",
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 1410/1418: toys piled in the crib (a stand-in toy; by eye). Model 0.214 x 0.3 x 0.286 m (rubber_duck_toy), fitted to 0.105 x 0.147 x 0.14."
+  },
+  {
+   "name": "basement_hose_1",
+   "prefab": "Assets/Models/PolyHaven/garden_hose_wall_mounted_01.glb",
+   "x": [
+    3.367,
+    3.834
+   ],
+   "z": [
+    -0.905,
+    -0.655
+   ],
+   "y0": -1.68,
+   "height": 0.557,
+   "back": "-z",
+   "collide": false,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 2466: green garden hoses coiled on hangers on the basement wall (by eye; the hose reel's real size). Model 0.467 x 0.25 x 0.557 m (garden_hose_wall_mounted_01), native size.",
+   "yaw": 0
+  },
+  {
+   "name": "basement_hose_2",
+   "prefab": "Assets/Models/PolyHaven/garden_hose_wall_mounted_01.glb",
+   "x": [
+    3.967,
+    4.434
+   ],
+   "z": [
+    -0.905,
+    -0.655
+   ],
+   "y0": -1.75,
+   "height": 0.557,
+   "back": "-z",
+   "collide": false,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 2466: a second coiled hose beside the first (by eye). Model 0.467 x 0.25 x 0.557 m (garden_hose_wall_mounted_01), native size.",
+   "yaw": 0
+  },
+  {
+   "name": "basement_trunk",
+   "prefab": "Assets/Purchased/Trunk/BuzzTrunk.glb",
+   "x": [
+    9.585,
+    10.12
+   ],
+   "z": [
+    2.369,
+    3.231
+   ],
+   "y0": -2.681,
+   "height": 0.386,
+   "back": "+x",
+   "collide": true,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 2394/2466: an old trunk / footlocker in the clutter along the basement wall (by eye; Buzz's footlocker model at its own size). Model 0.535 x 0.862 x 0.386 m (BuzzTrunk), native size.",
+   "yaw": 0
+  },
+  {
+   "name": "basement_wreath",
+   "prefab": "Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Prefabs/Wreath.prefab",
+   "x": [
+    9.976,
+    10.12
+   ],
+   "z": [
+    8.934,
+    9.466
+   ],
+   "y0": -1.35,
+   "height": 0.688,
+   "back": "+x",
+   "collide": false,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 2394: a wreath hung in the basement clutter by the mannequin (by eye; the pack wreath's own size). Model 0.532 x 0.144 x 0.688 m (Wreath), native size.",
+   "yaw": 90
+  },
+  {
+   "name": "basement_cleaner",
+   "prefab": "Assets/Models/PolyHaven/all_purpose_cleaner.glb",
+   "x": [
+    -4.928,
+    -4.771
+   ],
+   "z": [
+    3.881,
+    3.998
+   ],
+   "y0": -1.496,
+   "height": 0.32,
+   "back": "+z",
+   "collide": false,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 2430: cleaner bottles on the shelf over the laundry tub (by eye; real bottle sizes). Model 0.157 x 0.117 x 0.32 m (all_purpose_cleaner), native size.",
+   "yaw": 180
+  },
+  {
+   "name": "basement_bleach",
+   "prefab": "Assets/Models/PolyHaven/bleach_bottle.glb",
+   "x": [
+    -4.664,
+    -4.576
+   ],
+   "z": [
+    3.909,
+    3.97
+   ],
+   "y0": -1.496,
+   "height": 0.294,
+   "back": "+z",
+   "collide": false,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 2430: a bleach bottle on the laundry shelf (by eye). Model 0.088 x 0.061 x 0.294 m (bleach_bottle), native size.",
+   "yaw": 180
+  },
+  {
+   "name": "basement_gallon",
+   "prefab": "Assets/Models/PolyHaven/plastic_bottle_gallon.glb",
+   "x": [
+    -4.433,
+    -4.267
+   ],
+   "z": [
+    3.877,
+    4.003
+   ],
+   "y0": -1.496,
+   "height": 0.274,
+   "back": "+z",
+   "collide": false,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 2430: a gallon jug on the laundry shelf (by eye). Model 0.166 x 0.126 x 0.274 m (plastic_bottle_gallon), native size.",
+   "yaw": 180
   }
  ]
 }

@@ -255,6 +255,100 @@ for zc in (qz0 - STt / 2, qz1 + STt / 2):
     for xp in (qx0, -5.492 - 0.05):
         box(iron, xp, xp + 0.04, GYa + 0.15, GYa + 1.10, zc - 0.02, zc + 0.02)              # end posts
 
+# ---------------------------------------------------------------- dressing round (Oct 18; spec/dressing/basement.json): hanging bikes, shelving with jars
+# and cans, the lamp by the outside stairwell door
+DB = json.loads((ROOT / "spec/dressing/basement.json").read_text())
+bframe, btire, bsteel, bseat = Part("BikeFrame", "BS_BikeRed"), Part("BikeTires", "BS_Iron"), Part("BikeSteel", "BS_Chrome"), Part("BikeSeat", "BS_Sink")
+
+
+def torus(part, c, u, v, R, r, n=32, m=8):
+    w = (u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0])
+    P_ = lambda a, b: tuple(c[k] + (R + r * math.cos(b)) * (math.cos(a) * u[k] + math.sin(a) * v[k]) + r * math.sin(b) * w[k] for k in range(3))
+    for i in range(n):
+        for j in range(m):
+            a0, a1, b0, b1 = 2 * math.pi * i / n, 2 * math.pi * (i + 1) / n, 2 * math.pi * j / m, 2 * math.pi * (j + 1) / m
+            q = [P_(a0, b0), P_(a1, b0), P_(a1, b1), P_(a0, b1)]
+            am, bm = (a0 + a1) / 2, (b0 + b1) / 2
+            nrm = tuple(math.cos(bm) * (math.cos(am) * u[k] + math.sin(am) * v[k]) + math.sin(bm) * w[k] for k in range(3))
+            part.face(q, nrm)
+
+
+rod = lambda r, k=8: [(r * math.cos(t), r * math.sin(t)) for t in [2 * math.pi * i / k for i in range(k)]]
+for bk in DB["bikes"]:
+    bx_, bz_ = bk["x"], bk["z"]; top = JB - 0.03
+    Pt = lambda x, y, dz=0.0: (bx_ + x, top - y, bz_ + dz)            # bike-local (upright: x along, y up from the ground), hung upside down
+    for ax in (0.0, 1.05):
+        torus(btire, Pt(ax, 0.33), (1, 0, 0), (0, 1, 0), 0.31, 0.022)
+        torus(bsteel, Pt(ax, 0.33), (1, 0, 0), (0, 1, 0), 0.285, 0.008, n=32, m=6)
+        for k in range(12):                                              # spokes
+            a = 2 * math.pi * k / 12
+            bsteel.sweep([Pt(ax, 0.33, 0.02 * (1 if k % 2 else -1)), Pt(ax + 0.28 * math.cos(a), 0.33 + 0.28 * math.sin(a))], rod(0.0015, 4))
+        iron.sweep([(bx_ + ax, JB, bz_), (bx_ + ax, top + 0.01, bz_)], rod(0.005))      # the hook from the joist to the rim
+    BB, SC, HT, HB, RA, FA = Pt(0.42, 0.30), Pt(0.30, 0.82), Pt(0.93, 0.86), Pt(0.97, 0.70), Pt(0.0, 0.33), Pt(1.05, 0.33)
+    for a_, b_ in ((BB, SC), (SC, HT), (BB, HB), (HB, HT)):
+        bframe.sweep([a_, b_], rod(0.016))
+    for dz_ in (-0.06, 0.06):                                            # stays and fork blades splay out before they reach the tyre's radius
+        for a_, (mx_, my_), (bx2, by2) in ((Pt(0.42, 0.30), (0.34, 0.31), (0.0, 0.33)), (Pt(0.30, 0.82), (0.24, 0.62), (0.0, 0.33)),
+                                          (Pt(0.97, 0.70), (0.99, 0.665), (1.05, 0.33))):
+            bframe.sweep([(a_[0], a_[1], a_[2] + dz_ * 0.2), Pt(mx_, my_, dz_), Pt(bx2, by2, dz_)], rod(0.011))
+    for ax in (0.0, 1.05):
+        bframe.sweep([Pt(ax, 0.33, -0.065), Pt(ax, 0.33, 0.065)], rod(0.008))    # axles
+    bframe.sweep([Pt(0.30, 0.82), Pt(0.27, 0.93)], rod(0.012))                         # seat post
+    bseat.box(bx_ + 0.17, bx_ + 0.37, top - 0.99, top - 0.93, bz_ - 0.07, bz_ + 0.07)     # saddle
+    bframe.sweep([Pt(0.93, 0.86), Pt(0.91, 1.0)], rod(0.012))                          # stem
+    bsteel.sweep([Pt(0.91, 1.0, -0.28), Pt(0.91, 1.0, 0.28)], rod(0.011))               # handlebar
+    for dz_ in (-0.28, 0.28):
+        bseat.sweep([Pt(0.91, 1.0, dz_), Pt(0.91, 1.0, dz_ + (0.09 if dz_ > 0 else -0.09))], rod(0.016))   # grips
+    bframe.sweep([Pt(0.42, 0.30, -0.06), Pt(0.42, 0.30, 0.06)], rod(0.03, 10))          # crank hub
+
+SH = DB["shelving"]; (sx0_, sx1_), (sz0_, sz1_) = SH["x"], SH["z"]
+wood = Part("Shelving", "BS_Shelf")
+for zz in (sz0_, sz1_ - 0.03):
+    for xx in (sx0_, sx1_ - 0.03):
+        box(wood, xx, xx + 0.03, FY, FY + SH["boards"][-1] + 0.04, zz, zz + 0.03)
+for by in SH["boards"]:
+    box(wood, sx0_ + 0.005, sx1_ - 0.005, FY + by, FY + by + 0.02, sz0_ + 0.03, sz1_ - 0.03)
+import random
+rnd = random.Random(11)
+jar = Part("Jars", "BS_JarGlass")
+fills = {c: Part("JarFill" + c, "BS_Fill" + c) for c in ("Red", "Amber", "Green")}
+lid = Part("JarLids", "BS_Brass")
+can = Part("Cans", "BS_Metal"); label = {c: Part("CanLabel" + c, "BS_Label" + c) for c in ("White", "Blue", "Red")}
+xc_ = (sx0_ + sx1_) / 2
+
+
+def paint_can(x, z, y0, lab, r=0.085, h=0.19):
+    """a gallon can: tin band, paper label, tin band and rim stacked (no overlapping faces)"""
+    can.lathe(x, z, y0, [(0, r), (0.03, r)], 18)
+    lab.lathe(x, z, y0 + 0.03, [(0, r), (0.13, r)], 18)
+    can.lathe(x, z, y0 + 0.16, [(0, r), (h - 0.16, r), (h - 0.155, r * 0.9)], 18)
+
+
+for bi, by in enumerate(SH["boards"][1:4]):
+    z = sz0_ + 0.10
+    y0 = FY + by + 0.02
+    while z < sz1_ - 0.12:
+        if bi < 2:                                                       # jars (home canning: tomatoes, peaches, pickles)
+            r, h = rnd.choice([(0.04, 0.15), (0.045, 0.17), (0.035, 0.12)])
+            list(fills.values())[rnd.randrange(3)].lathe(xc_, z, y0, [(0, r - 0.004), (0.004, r), (h * 0.72, r)], 14)   # the contents seen through the glass
+            jar.lathe(xc_, z, y0 + h * 0.72, [(0, r), (h * 0.08, r), (h * 0.18, r * 0.8), (h * 0.20, r * 0.8)], 14)       # the empty glass shoulder
+            lid.lathe(xc_, z, y0 + h * 0.92, [(0, r * 0.82), (0.02, r * 0.82), (0.022, 0.001)], 14)
+            z += 2 * r + 0.03
+        else:                                                            # paint cans
+            r, h = 0.085, 0.19
+            paint_can(xc_, z, y0, list(label.values())[rnd.randrange(3)])
+            z += 2 * r + 0.04
+
+for (cx, cz) in DB["floor_cans"]:                                      # film 2466/2490: paint cans on the floor along the wall
+    paint_can(cx, cz, FY, list(label.values())[rnd.randrange(3)])
+
+DL = DB["door_lamp"]; lx_, ly_, lz_ = DL["at"]                          # the bare-bulb lamp beside the outside stairwell door (film 9936)
+box(wood, -5.192, -5.192 + 0.025, ly_ - 0.06, ly_ + 0.06, lz_ - 0.06, lz_ + 0.06)       # its wooden block on the wall
+lampp = Part("DoorLampHolder", "BS_Enamel")
+lampp.sweep([(-5.192 + 0.025, ly_, lz_), (lx_ + 0.07, ly_, lz_)], rod(0.03, 14))
+bulb.sweep([(lx_ + 0.07, ly_, lz_), (lx_ + 0.15, ly_, lz_)], rod(0.03, 14))
+DRESS = [bframe, btire, bsteel, bseat, wood, jar, lid, can, lampp] + list(fills.values()) + list(label.values())
+
 # ---------------------------------------------------------------- export
 for ob in list(bpy.data.objects):
     bpy.data.objects.remove(ob)
@@ -267,9 +361,12 @@ mats = {nm: material(nm, c, r, *e) for nm, c, r, *e in (
     ("BS_Metal", (0.55, 0.56, 0.57), 0.4), ("BS_Dark", (0.01, 0.01, 0.01), 0.9), ("BS_DoorPaint", (0.86, 0.85, 0.80), 0.5),
     ("BS_Glass", (0.8, 0.85, 0.9), 0.05), ("BS_Gingham", (0.70, 0.12, 0.10), 0.9),
     ("BS_Glow", (1.0, 0.45, 0.10), 0.9, (1.0, 0.45, 0.10), 6.0), ("BS_Bulb", (1.0, 0.9, 0.7), 0.3, (1.0, 0.85, 0.6), 20.0),
-    ("BS_Daylight", (0.75, 0.80, 0.85), 0.2, (0.75, 0.80, 0.85), 1.5))}
+    ("BS_Daylight", (0.75, 0.80, 0.85), 0.2, (0.75, 0.80, 0.85), 1.5), ("BS_BikeRed", (0.55, 0.08, 0.06), 0.4),
+    ("BS_JarGlass", (0.75, 0.80, 0.78), 0.1), ("BS_FillRed", (0.55, 0.10, 0.06), 0.4), ("BS_FillAmber", (0.80, 0.50, 0.12), 0.4),
+    ("BS_FillGreen", (0.35, 0.45, 0.15), 0.4), ("BS_LabelWhite", (0.88, 0.87, 0.82), 0.6), ("BS_LabelBlue", (0.15, 0.25, 0.60), 0.6),
+    ("BS_LabelRed", (0.65, 0.10, 0.08), 0.6))}
 root = bpy.data.objects.new("Basement_HiFi", None); coll.objects.link(root)
-for p in (joist, tread, rail, green, iron, glow, duct, brass, enamel, chrome, shelf, sinkp, bulb, cord, metal, dark, door, glass, ging, wframe, wglass):
+for p in (joist, tread, rail, green, iron, glow, duct, brass, enamel, chrome, shelf, sinkp, bulb, cord, metal, dark, door, glass, ging, wframe, wglass, *DRESS):
     if p.f:
         p.build(coll, mats).parent = root
 OUT.parent.mkdir(parents=True, exist_ok=True)

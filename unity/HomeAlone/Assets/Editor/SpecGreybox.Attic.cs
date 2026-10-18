@@ -28,9 +28,9 @@ public static partial class SpecGreybox
                 if (c.name.StartsWith("attic_") && !c.name.StartsWith("attic_step") && !c.name.StartsWith("attic_wall_") && c.GetComponent<MeshRenderer>() is MeshRenderer mr)
                 { Object.DestroyImmediate(mr); hidden++; }
         var g = PlaceHiFi(root, 0f, "Attic", new Dictionary<string, Material> {
-            ["AT_Boards"] = TexMat("HiFi_AtticBoards", "wood_floor", new Color(0.70f, 0.52f, 0.36f), 1.2f, 0.2f),
+            ["AT_Boards"] = TexMat("HiFi_AtticBoards", "wood_floor", new Color(0.34f, 0.24f, 0.17f), 1.2f, 0.2f),
             ["AT_Floor"] = TexMat("HiFi_AtticFloor", "dark_wooden_planks", new Color(0.85f, 0.8f, 0.75f), 1.6f, 0.2f),
-            ["AT_Rafter"] = TexMat("HiFi_AtticRafter", "oak_veneer_01", new Color(0.55f, 0.38f, 0.24f), 1.0f, 0.2f),
+            ["AT_Rafter"] = TexMat("HiFi_AtticRafter", "oak_veneer_01", new Color(0.30f, 0.20f, 0.13f), 1.0f, 0.2f),
             ["AT_Rail"] = TexMat("HiFi_AtticRail", "oak_veneer_01", new Color(0.85f, 0.68f, 0.48f), 1.0f, 0.3f),
             ["AT_Glass"] = mGlass,
             // the bed group (Oct 18): crib and lamp table in dark stained wood, the film's lamp (1410/1418: red-orange glass base, cream drum
@@ -40,7 +40,16 @@ public static partial class SpecGreybox
             ["AT_LampGlass"] = AtticGlow("HiFi_AtticLampGlass", new Color(0.75f, 0.20f, 0.05f), 0f, 0.85f),
             ["AT_Shade"] = AtticGlow("HiFi_ShadeAtticCream", new Color(0.92f, 0.87f, 0.74f), 900f, 0.2f),
             ["AT_Bulb"] = AtticGlow("HiFi_BulbAttic", new Color(1f, 0.90f, 0.75f), 4000f, 0.6f),
-            ["AT_Porcelain"] = AtticGlow("HiFi_AtticPorcelain", new Color(0.90f, 0.89f, 0.86f), 0f, 0.6f) });
+            ["AT_Porcelain"] = AtticGlow("HiFi_AtticPorcelain", new Color(0.90f, 0.89f, 0.86f), 0f, 0.6f),
+            // Oct 18 dressing round (spec/dressing/attic.json): the Chicago flag (film 1410), gumball machine + Cubs mug, the rag doll
+            ["AT_FlagWhite"] = Mat("HiFi_AtticFlagWhite", new Color(0.90f, 0.90f, 0.88f)), ["AT_FlagBlue"] = Mat("HiFi_AtticFlagBlue", new Color(0.48f, 0.72f, 0.90f)),
+            ["AT_FlagRed"] = Mat("HiFi_AtticFlagRed", new Color(0.82f, 0.10f, 0.12f)), ["AT_GumRed"] = Mat("HiFi_AtticGumRed", new Color(0.78f, 0.08f, 0.08f)),
+            ["AT_GumYel"] = Mat("HiFi_AtticGumYel", new Color(0.96f, 0.82f, 0.12f)), ["AT_GumGrn"] = Mat("HiFi_AtticGumGrn", new Color(0.22f, 0.66f, 0.22f)),
+            ["AT_GumBlu"] = Mat("HiFi_AtticGumBlu", new Color(0.18f, 0.38f, 0.86f)), ["AT_GumWht"] = Mat("HiFi_AtticGumWht", new Color(0.92f, 0.92f, 0.90f)),
+            ["AT_GumPnk"] = Mat("HiFi_AtticGumPnk", new Color(0.95f, 0.48f, 0.66f)), ["AT_MugWhite"] = Mat("HiFi_AtticMugWhite", new Color(0.93f, 0.93f, 0.91f)),
+            ["AT_MugBlue"] = Mat("HiFi_AtticMugBlue", new Color(0.12f, 0.22f, 0.62f)), ["AT_DollSkin"] = Mat("HiFi_AtticDollSkin", new Color(0.95f, 0.80f, 0.68f)),
+            ["AT_DollHair"] = Mat("HiFi_AtticDollHair", new Color(0.86f, 0.36f, 0.10f)), ["AT_DollDress"] = Mat("HiFi_AtticDollDress", new Color(0.76f, 0.12f, 0.14f)),
+            ["AT_DollApron"] = Mat("HiFi_AtticDollApron", new Color(0.93f, 0.92f, 0.88f)), ["AT_DollLegs"] = Mat("HiFi_AtticDollLegs", new Color(0.90f, 0.90f, 0.90f)) });
         if (g == null) { Debug.Log("Attic: Attic.glb missing"); return; }
         foreach (var r in g.GetComponentsInChildren<MeshRenderer>()) r.gameObject.isStatic = true;
         var D = A["dormer"];

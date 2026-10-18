@@ -83,6 +83,10 @@
     {
       "what": "coordinator (Oct 18) confused this room with Buzz's (BB gun, tarantula, Jordan poster, footlocker are Buzz's); user: 'Kevin and Jeff share a room with bunkbeds'",
       "outcome": "corrected here: evidence first (film 294-306)"
+    },
+    {
+      "what": "Oct 18 dressing round (user: the bunk read chunky, generated boxes, next to Marina 375/380's shaped pine bunk and film 296's honey pine): hifi_kevin.py rebuilt the bunk's profiles inside the SAME measured box (x 7.081-9.101, z 5.045-5.989, posts 0.07, top 1.68, deck/guard heights unchanged): chamfered posts with turned caps, arched head/foot crests and an arched low head board (Marina 375/380), Marina's slatted guard on the dresser side, the film's wide guard board on the room side with its stickers (film 303: a Bulls sticker, dinosaurs, cars) as 2 mm decal faces, the film's dowel rungs (ladder) at the foot, 4 mm bevels on every pine edge; plus props-lane dressing (floor lamp, penguin, yellow toy, boxing gloves on the now-shut closet door, pictures, bookcase/chair/desk swaps: store_props kevin_*)",
+      "outcome": "TRIAL (dressing round build); walk box unchanged (SpecGreybox.Kevin collider from kevin.json bunk)"
     }
   ],
   "premise_reviewed": "No failed attempt on this room's furniture in the grey-box; walls and openings are not touched.",
@@ -172,7 +176,8 @@
       "spec/captures/views/kevin/before/marina375.png",
       "spec/captures/views/kevin/before/marina380.png",
       "spec/captures/views/kevin/before/marina385.png",
-      "spec/captures/views/kevin/before/plan.png"
+      "spec/captures/views/kevin/before/plan.png",
+      "spec/captures/views/dressing-round/kevin_bunk_before_after_blender.jpg"
     ],
     "after": [
       "spec/captures/views/kevin/after/close_bunk.png",
@@ -185,7 +190,9 @@
       "spec/captures/views/kevin/after/marina375.png",
       "spec/captures/views/kevin/after/marina380.png",
       "spec/captures/views/kevin/after/marina385.png",
-      "spec/captures/views/kevin/after/plan.png"
+      "spec/captures/views/kevin/after/plan.png",
+      "spec/captures/views/dressing-round/kevin_after.jpg",
+      "spec/captures/views/dressing-round/kevin_bunk_before_after_blender.jpg"
     ],
     "note": "batch RenderViews (geometry/finishes; lighting judged live)"
   },
