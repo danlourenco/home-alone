@@ -1535,6 +1535,7 @@ public static partial class SpecGreybox
             foreach (var n in new[] { "Light_kitchen", "Light_back_stair", "Light_den", "Light_living_room" })   // no light without a fixture: the fixtures replace the rooms' generic lamps (the den's: DenLamps)
                 foreach (var t in lamps.GetComponentsInChildren<Transform>(true).Where(t => t.name == n).ToList()) Object.DestroyImmediate(t.gameObject);
         }
+        WindowBackdrop(dayLayer, lamps != null ? lamps.gameObject : null, groundY);   // SpecGreybox.Backdrop.cs: winter backdrop outside the windows (overnight5)
         var mode = new GameObject("Day and night - press N").AddComponent<HouseNightMode>(); mode.transform.parent = day.transform; mode.glowRenderers = glow;
         mode.nightLayer = lamps != null ? lamps.gameObject : null; mode.dayLayer = dayLayer; mode.interiorLights = new Light[0]; mode.daytimeEnabled = new bool[0];
         if (lamps != null)   // night sky (user, Oct 16: "when it's nighttime i still see the daylight streaming from outside")

@@ -93,6 +93,9 @@ public static class BakeLighting
         {
             bool isOut = outdoors != null && r.transform.IsChildOf(outdoors.transform);
             if (r.GetComponentInParent<SwingDoor>() != null) continue;   // moving parts are not static scenery
+            // the window backdrop dome and card (SpecGreybox.Backdrop.cs) are pictures, not scenery: as GI contributors the 9000-nit dome would
+            // enclose the house, replace the sky in the bake and stretch the probe volume to 150 m
+            if (r.name.StartsWith("WinterBackdrop")) { GameObjectUtility.SetStaticEditorFlags(r.gameObject, 0); continue; }
             // glass passes light: as a GI contributor the lightmapper treats it as opaque and no sky or sun entered the house in the bake
             bool clear = r.sharedMaterials.Any(m => m != null && m.HasProperty("_SurfaceType") && m.GetFloat("_SurfaceType") > 0.5f);
             // the film's flush front (SpecGreybox.FilmFront, shadows only) stands in for the upper storey's walls in the SUN's shadows while the
@@ -109,7 +112,7 @@ public static class BakeLighting
             if (first) { house = r.bounds; first = false; } else house.Encapsulate(r.bounds);
         }
         foreach (var l in Object.FindObjectsByType<Light>(FindObjectsInactive.Include, FindObjectsSortMode.None))
-            if (!l.name.StartsWith("FilmFill")) l.lightmapBakeType = LightmapBakeType.Mixed;   // the film's fill is baked only
+            if (!l.name.StartsWith("FilmFill") && l.name != "Moonlight") l.lightmapBakeType = LightmapBakeType.Mixed;   // the film's fill is baked only; the backdrop's moon lights the yard only (real time)
 
         // probes cover the house only (a global volume would stretch over the 200 m snow plane)
         var old = GameObject.Find("HouseProbeVolume"); if (old) Object.DestroyImmediate(old);
