@@ -21,7 +21,7 @@
  },
  "tools/house/hifi_buzz_curtains.py": {
   "models": "356da5161781ccee",
-  "sources": "fe2722790d37739d"
+  "sources": "104d7a20ca0c2d58"
  },
  "tools/house/hifi_buzz_props.py": {
   "models": "2d758557410006f8",
@@ -81,7 +81,7 @@
  },
  "tools/house/hifi_kevin.py": {
   "models": "bf28e341c922eca7",
-  "sources": "dbfc0ced1f6df72d"
+  "sources": "a09907c0f52acaf1"
  },
  "tools/house/hifi_kitchen.py": {
   "models": "98ab235e28f66103",
@@ -97,7 +97,7 @@
  },
  "tools/house/hifi_landing_window.py": {
   "models": "c19bb98c7077b7fe",
-  "sources": "0a642200dd4f6a88"
+  "sources": "284dcfe75981840f"
  },
  "tools/house/hifi_lights.py": {
   "models": "039d900b97254c67",
@@ -121,7 +121,7 @@
  },
  "tools/house/hifi_parents_dressing.py": {
   "models": "342c1948f1ea8eeb",
-  "sources": "bd9389c10f28f50a"
+  "sources": "fed21fd680664cd4"
  },
  "tools/house/hifi_parents_fireplace.py": {
   "models": "784e462dec45d619",

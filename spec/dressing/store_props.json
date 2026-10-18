@@ -3836,6 +3836,31 @@
    "source": "props lane (Kevin+Jeff TRIAL 1 Oct 18, changes/2026-10-18-kevin-room.json; spec/dressing/kevin.json): Marina 385 s: green banker's lamp on the desk's closet-wall end (the owned model at its own size). Yaw 270 faces -x (den_banker faces -z at ~0).",
    "floor": "upper",
    "hides": []
+  },
+  {
+   "name": "kevin_dresser_bowl",
+   "prefab": "Assets/Models/PolyHaven/wooden_bowl_01.glb",
+   "x": [
+    8.253,
+    8.466
+   ],
+   "z": [
+    3.905,
+    4.115
+   ],
+   "y0": 0.8,
+   "height": 0.064,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "floor": "upper",
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 296: a shallow wooden bowl on the back half of Kevin's dresser top, centre at 46% of the dresser's width from its lamp end (px 680 of 90-1095 = 1.30 m), ~0.22 m across by that ruler. Poly Haven wooden_bowl_01 (CC0). Model 0.313 x 0.309 x 0.094 m (wooden_bowl_01), fitted to 0.213 x 0.21 x 0.064.",
+   "tint": [
+    1.6,
+    1.35,
+    1.0
+   ]
   }
  ]
 }

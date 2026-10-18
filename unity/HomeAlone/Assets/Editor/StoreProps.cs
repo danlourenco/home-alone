@@ -14,11 +14,16 @@ public static partial class SpecGreybox
         var fp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/store_props.json"));
         if (!File.Exists(fp)) return;
         var gUp = Child(root, "StoreProps"); var gGround = Child(groot, "StoreProps"); PropRecords.Clear(); Converted.Clear(); Hung.Clear();
-        foreach (var p in JObject.Parse(File.ReadAllText(fp))["pieces"])
+        foreach (var p in JObject.Parse(File.ReadAllText(fp))["pieces"]) PlaceStoreProp(p, gUp, gGround, gy);
+    }
+
+    // one store_props.json piece into the scene (the build, and Home Alone > Refresh Props in the open editor: StorePropsLive.cs)
+    static GameObject PlaceStoreProp(JToken p, GameObject gUp, GameObject gGround, float gy)
+    {
         {
             string name = (string)p["name"], path = (string)p["prefab"];
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-            if (prefab == null) { Debug.LogWarning($"StoreProps: {name}: {path} not imported; the grey-box box stays"); continue; }
+            if (prefab == null) { Debug.LogWarning($"StoreProps: {name}: {path} not imported; the grey-box box stays"); return null; }
             bool upper = (string)p["floor"] == "upper";   // spec y above the upper floor (0) instead of the ground floor
             var g = upper ? gUp : gGround; float fy = upper ? 0f : gy;
             var go = (GameObject)PrefabUtility.InstantiatePrefab(prefab, g.transform);
@@ -29,7 +34,7 @@ public static partial class SpecGreybox
             foreach (var hp in p["hide_parts"] ?? new JArray())   // parts of the pack's model left out (the tree's warm-white mini lights: the film's are C7s)
                 foreach (var t in go.GetComponentsInChildren<Transform>().Where(t => t != null && t.name == (string)hp).ToList()) Object.DestroyImmediate(t.gameObject);
             var rs = go.GetComponentsInChildren<Renderer>();
-            if (rs.Length == 0) { Debug.LogWarning($"StoreProps: {name}: no renderers"); Object.DestroyImmediate(go); continue; }
+            if (rs.Length == 0) { Debug.LogWarning($"StoreProps: {name}: no renderers"); Object.DestroyImmediate(go); return null; }
             // target box in Unity coordinates (z = -spec z), feet on y0 above the ground floor
             float x0 = (float)p["x"][0], x1 = (float)p["x"][1], z0 = -(float)p["z"][1], z1 = -(float)p["z"][0];
             go.transform.localScale = Vector3.one;
@@ -112,7 +117,9 @@ public static partial class SpecGreybox
             if (p["hung"] != null && (bool)p["hung"]) Hung.Add(name);
             var pp = go.AddComponent<PlacedProp>(); pp.spec = "store_props"; pp.yaw = yaw; pp.rot0 = go.GetComponentInChildren<Renderer>().transform.rotation; pp.c0 = go.GetComponentsInChildren<Renderer>().Aggregate(rs[0].bounds, (a, r) => { a.Encapsulate(r.bounds); return a; }).center;   // Home Alone > Save Prop Placement
             PropRecords.Add((name, go, new Bounds { min = new Vector3(x0, y0, z0), max = new Vector3(x1, y0 + h, z1) }, Back((string)p["back"]), g, swung));
+            pp.src = p.ToString(Newtonsoft.Json.Formatting.None);   // Refresh Props re-places a piece whose entry changed since it was placed
             Debug.Log($"StoreProps {name}: yaw {yaw}, scale {go.transform.localScale}, bounds {fb.min} .. {fb.max}");
+            return go;
         }
     }
 
@@ -212,6 +219,7 @@ public static partial class SpecGreybox
     // a pack material on a non-HDRP shader (Built-in/URP) becomes an HDRP Lit copy with the same maps
     // one conversion per source material per build: a second one deleted the copy the first renderer already held (magenta, Oct 16)
     static readonly System.Collections.Generic.Dictionary<Material, Material> Converted = new();
+    static bool LiveRefresh;   // set by StorePropsLive.Refresh
     static Material HdrpOrConvert(Material m)
     {
         if (m != null && m.name.StartsWith("BC_Brass")) return BrassMat();   // purchased_chest.py's pulls: the house brass
@@ -219,6 +227,7 @@ public static partial class SpecGreybox
         if (Converted.TryGetValue(m, out var done)) return done;
         // saved beside the source material, inside the pack's (gitignored) folder
         string src = AssetDatabase.GetAssetPath(m), dst = Path.ChangeExtension(src, null) + (src.EndsWith(".glb") ? "_" + m.name : "") + "_HDRP.mat";   // a GLB holds several materials
+        if (LiveRefresh && AssetDatabase.LoadAssetAtPath<Material>(dst) is Material have) return Converted[m] = have;   // the open editor: other pieces already draw with it (deleting it turns them magenta)
         AssetDatabase.DeleteAsset(dst);   // rebuilt every build: a stale copy (e.g. saved before its textures were found) must not linger
         var n = new Material(Shader.Find("HDRP/Lit")) { name = m.name + "_HDRP" };
         var envs = new SerializedObject(m).FindProperty("m_SavedProperties.m_TexEnvs");
