@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2641200960512413713
+--- !u!114 &-6085873289319313109
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -32,9 +32,9 @@ MonoBehaviour:
   m_Name: DayGrade
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.VolumeProfile
   components:
-  - {fileID: -2641200960512413713}
-  - {fileID: 3623701581391860509}
---- !u!114 &3623701581391860509
+  - {fileID: -6085873289319313109}
+  - {fileID: 6331404765685857586}
+--- !u!114 &6331404765685857586
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}

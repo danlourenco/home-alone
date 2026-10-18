@@ -46,16 +46,16 @@
  },
  "console": {
   "x": [
-   5.08,
-   5.5
+   4.5,
+   5.9
   ],
   "z": [
-   13.12,
-   14.52
+   15.64,
+   16.06
   ],
   "h": 0.78,
-  "source": "Marina 458/428: the console behind the sofa's back (4 cm), drawers to the front of the room, the two burgundy-shaded lamps on it (film 10636 has it on the den-side wall under the painting; the user chose Marina's layout Oct 17; the painting stays on the wall); box standard 1.4 x 0.42 x 0.78",
-  "front": "+x"
+  "source": "film 10636 (painting over a Hepplewhite console with brass bail pulls, on the den-side wall rear of the den opening; Marina f13/f25 the same wall); centre x 5.2 authored (no solved den-wall camera); box standard 1.4 x 0.42 x 0.78",
+  "note": "user Oct 17: \"the table with two lamps should be underneith the picture frame as before, but there should be another console with nutcrackers behind the green sofa ... move the existing console and lamps back where you found them, but keep the couch where it is\"; the second console (nutcrackers, behind the sofa) is still to add"
  },
  "painting": {
   "x": [
@@ -71,8 +71,8 @@
  },
  "sofa": {
   "x": [
-   4.3,
-   5.04
+   6.06,
+   6.8
   ],
   "z": [
    12.73,
@@ -80,12 +80,13 @@
   ],
   "h": 0.89,
   "front": "-x",
-  "source": "Marina 458/428 (user Oct 17: \"rotate the couch ... to face the fire place\"): mid-room facing the fireplace, centred on its axis (z 13.82), the console behind its back; the film's sofa (10635/10645) is the same green roll-arm piece. Poly Haven sofa_03 (2.73 x 0.925 x 1.12 native) scaled uniformly 0.8 to 2.18 x 0.74 x 0.89, re-skinned the film's green"
+  "source": "Marina 458/428 (user Oct 17: \"rotate the couch ... to face the fire place\"): mid-room facing the fireplace, centred on its axis (z 13.82), the console behind its back; the film's sofa (10635/10645) is the same green roll-arm piece. Poly Haven sofa_03 (2.73 x 0.925 x 1.12 native) scaled uniformly 0.8 to 2.18 x 0.74 x 0.89, re-skinned the film's green",
+  "note": "user Oct 17: \"the couch should be pushed further back, almost aligned with the line from the den cased opening to the foyer\" (+1.76 m: back at x 6.80, the arches start at 7.0); the coffee table and its banker lamp moved with it"
  },
  "coffee_table": {
   "x": [
-   3.25,
-   3.85
+   5.01,
+   5.61
   ],
   "z": [
    13.22,
@@ -174,9 +175,9 @@
  "lamps": {
   "console_l": {
    "at": [
-    5.29,
+    4.72,
     0.78,
-    13.34
+    15.86
    ],
    "kind": "candlestick",
    "shade": [
@@ -191,9 +192,9 @@
   },
   "console_r": {
    "at": [
-    5.29,
+    5.68,
     0.78,
-    14.3
+    15.86
    ],
    "kind": "candlestick",
    "shade": [
@@ -208,7 +209,7 @@
   },
   "banker": {
    "at": [
-    3.55,
+    5.31,
     0.46,
     14.17
    ],
@@ -239,8 +240,8 @@
   {
    "name": "sofa",
    "x": [
-    4.3,
-    5.04
+    6.06,
+    6.8
    ],
    "z": [
     12.73,
@@ -252,25 +253,10 @@
    ]
   },
   {
-   "name": "console",
-   "x": [
-    5.08,
-    5.5
-   ],
-   "z": [
-    13.12,
-    14.52
-   ],
-   "y": [
-    0.0,
-    0.78
-   ]
-  },
-  {
    "name": "coffee_table",
    "x": [
-    3.25,
-    3.85
+    5.01,
+    5.61
    ],
    "z": [
     13.22,
@@ -399,6 +385,21 @@
    "y": [
     0.0,
     2.0
+   ]
+  },
+  {
+   "name": "console",
+   "x": [
+    4.5,
+    5.9
+   ],
+   "z": [
+    15.64,
+    16.06
+   ],
+   "y": [
+    0.0,
+    0.78
    ]
   }
  ],

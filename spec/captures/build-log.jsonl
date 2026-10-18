@@ -46,3 +46,9 @@
 {"time": "2026-10-17T23:06:42", "cmd": "bake", "job": "living2", "why": "", "wall_s": 101, "exit": 0}
 {"time": "2026-10-17T23:09:49", "cmd": "build", "job": "living2", "why": "living: sofa faces fireplace (Marina layout), curio brown, den banker pack (user)", "wall_s": 102, "exit": 0}
 {"time": "2026-10-17T23:11:10", "cmd": "bake", "job": "living2", "why": "", "wall_s": 76, "exit": 0}
+{"time": "2026-10-17T23:16:43", "cmd": "build", "job": "deskconsole", "why": "console+lamps back under the painting (user); darkest Mix pack desk in the den (user)", "wall_s": 123, "exit": 0}
+{"time": "2026-10-17T23:19:54", "cmd": "build", "job": "couchback", "why": "couch back toward the arches line (user); banker lamp on the taller desk", "wall_s": 83, "exit": 0}
+{"time": "2026-10-17T23:21:44", "cmd": "bake", "job": "couchback", "why": "console lamps back, banker lamps moved", "wall_s": 104, "exit": 0}
+{"time": "2026-10-17T23:24:46", "cmd": "build", "job": "deskrevert", "why": "den desk back to SM_Desk_01 (user)", "wall_s": 76, "exit": 0}
+{"time": "2026-10-17T23:26:05", "cmd": "bake", "job": "deskrevert", "why": "banker lamp back at 0.78", "wall_s": 79, "exit": 0}
+{"time": "2026-10-17T23:27:52", "cmd": "build", "job": "piano75", "why": "grand x0.75 (user)", "wall_s": 88, "exit": 0}

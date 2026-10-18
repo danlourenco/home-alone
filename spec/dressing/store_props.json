@@ -170,20 +170,26 @@
    "name": "den_desk_chair",
    "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Chair_01.prefab",
    "x": [
-    7.55,
-    8.03
+    8.225,
+    8.656
    ],
    "z": [
-    18.35,
-    18.77
+    18.731,
+    19.236
    ],
    "y0": 0.0,
    "height": 0.95,
-   "yaw": 90,
+   "yaw": 178.0,
    "back": "",
    "hides": [],
    "collide": true,
-   "source": "Den (Oct 16, TRIAL, changes/2026-10-16-den.json, DEVIATIONS 53): Fadnn Vintage Interior (owned; furniture-plan N5/N6). the chair at the desk, facing the window (Marina f153/M09, at the desk's living-side half). Bentwood (sourcing N6), native size"
+   "source": "Den (Oct 16, TRIAL, changes/2026-10-16-den.json, DEVIATIONS 53): Fadnn Vintage Interior (owned; furniture-plan N5/N6). the chair at the desk, facing the window (Marina f153/M09, at the desk's living-side half). Bentwood (sourcing N6), native size",
+   "scale": [
+    0.995,
+    0.995,
+    0.976
+   ],
+   "placed_by": "user"
   },
   {
    "name": "den_wall_chair",
@@ -410,25 +416,25 @@
    "floor": "ground",
    "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Piano_01.prefab",
    "x": [
-    7.62,
-    9.62
+    7.87,
+    9.37
    ],
    "z": [
-    13.19,
-    15.43
+    13.47,
+    15.15
    ],
    "y0": 0.0,
-   "height": 0.996,
+   "height": 0.747,
    "yaw": 341.0,
    "back": "",
    "hides": [],
    "collide": true,
-   "source": "PROP, user Oct 17: the pack grand (with its stool) stands in for the film's console upright (DEVIATIONS 58). Marina's grand sits before the front wall's den-side window: long side along the front wall, keyboard and stool toward the foyer side (the film's keyboard side), tail toward the den wall. Box: the pack's concert grand (2.72 m case, 3.31 m with the stool) shortened front to back to x0.6, a 1.63 m baby grand at full keyboard width (user Oct 17: \"that piano is too big ... resize\"), placed by eye; the user adjusts with Home Alone > Save Prop Placement",
+   "source": "PROP, user Oct 17: the pack grand (with its stool) stands in for the film's console upright (DEVIATIONS 58). Marina's grand sits before the front wall's den-side window: long side along the front wall, keyboard and stool toward the foyer side (the film's keyboard side), tail toward the den wall. Box: the pack's concert grand (2.72 m case, 3.31 m with the stool) shortened front to back to x0.6, a 1.63 m baby grand at full keyboard width (user Oct 17: \"that piano is too big ... resize\"), placed by eye; the user adjusts with Home Alone > Save Prop Placement | user Oct 17: \"make the piano a little bit smaller? like 75% of the size now\" (uniform x0.75 about its centre)",
    "placed_by": "user",
    "scale": [
-    1.0,
-    1.0,
-    0.6
+    0.75,
+    0.75,
+    0.45
    ]
   },
   {
@@ -436,16 +442,16 @@
    "floor": "ground",
    "prefab": "Assets/BankersLamp/Prefabs/BankersLamp.prefab",
    "x": [
-    8.457,
-    8.663
+    8.531,
+    8.778
    ],
    "z": [
-    18.974,
-    19.206
+    19.26,
+    19.514
    ],
    "y0": 0.78,
    "height": 0.382,
-   "yaw": 90,
+   "yaw": 342.0,
    "scale": [
     1.0,
     1.0,
@@ -454,7 +460,8 @@
    "back": "",
    "hides": [],
    "collide": false,
-   "source": "PROP, user Oct 17: \"i bought and imported a real banker's lamp to replace the one in the den\". At den.json lamps.desk (Marina f141/M09: green banker's lamp on the desk's end-wall side); the model's own size (0.23 x 0.21 x 0.38); turn it with Home Alone > Save Prop Placement"
+   "source": "PROP, user Oct 17: \"i bought and imported a real banker's lamp to replace the one in the den\". At den.json lamps.desk (Marina f141/M09: green banker's lamp on the desk's end-wall side); the model's own size (0.23 x 0.21 x 0.38); turn it with Home Alone > Save Prop Placement",
+   "placed_by": "user"
   }
  ]
 }
