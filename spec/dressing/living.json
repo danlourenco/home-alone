@@ -115,7 +115,8 @@
    ],
    "h": 0.5
   },
-  "source": "film 5628/5640/5650: a dark mahogany console upright on cabriole legs with a matching bench, its back to the den-side wall near the front corner (keyboard facing the foyer side; the front wall's den-side window behind its far end). Marina has a grand in front of that window (DEVIATIONS). 1.37 m wide (54 in, the low end of consoles) fills the den-side wall between the den opening (x 8.507) and the front wall (9.954); height 1.02 (40 in console)"
+  "source": "film 5628/5640/5650: a dark mahogany console upright on cabriole legs with a matching bench, its back to the den-side wall near the front corner (keyboard facing the foyer side; the front wall's den-side window behind its far end). Marina has a grand in front of that window (DEVIATIONS). 1.37 m wide (54 in, the low end of consoles) fills the den-side wall between the den opening (x 8.507) and the front wall (9.954); height 1.02 (40 in console)",
+  "replaced_by": "store_props living_grand (user Oct 17: \"i don't care if the grand piano doesn't match the movie's mahogany console for right now; it's much higher resolution and a fine stand in for the time being. get rid of our piano and put this one in instead\"); hifi_living skips the upright, its bench and its bar lamp"
  },
  "chest": {
   "x": [
@@ -213,17 +214,6 @@
    "kelvin": 2700,
    "source": "film 10636/5650: brass banker's lamp with a brass bell shade on the coffee table"
   },
-  "piano": {
-   "at": [
-    9.5,
-    1.02,
-    15.82
-   ],
-   "kind": "piano",
-   "lumens": 300,
-   "kelvin": 2700,
-   "source": "film 5650: brass bar piano lamp on the piano top"
-  },
   "chest": {
    "at": [
     9.4,
@@ -243,36 +233,6 @@
   }
  },
  "colliders": [
-  {
-   "name": "piano",
-   "x": [
-    8.55,
-    9.92
-   ],
-   "z": [
-    15.44,
-    16.06
-   ],
-   "y": [
-    0.0,
-    1.02
-   ]
-  },
-  {
-   "name": "piano_bench",
-   "x": [
-    8.86,
-    9.66
-   ],
-   "z": [
-    14.97,
-    15.33
-   ],
-   "y": [
-    0.0,
-    0.5
-   ]
-  },
   {
    "name": "sofa",
    "x": [

@@ -27,3 +27,7 @@
 {"time": "2026-10-17T21:29:45", "cmd": "build", "job": "buzzprops", "why": "trunk to the foot of the bed (yaw 90), desk turned 180 (user)", "wall_s": 2, "exit": 1}
 {"time": "2026-10-17T21:31:24", "cmd": "build", "job": "buzzprops", "why": "trunk to the foot of the bed (yaw 90), desk turned 180 (user)", "wall_s": 79, "exit": 0}
 {"time": "2026-10-17T21:39:56", "cmd": "build", "job": "buzzprops2", "why": "user's editor placement of trunk + desk chair written back", "wall_s": 67, "exit": 0}
+{"time": "2026-10-17T21:44:09", "cmd": "build", "job": "saveprops", "why": "Save Prop Placement tool + trunk 0.12 off the footboard for the lid", "wall_s": 67, "exit": 0}
+{"time": "2026-10-17T21:47:30", "cmd": "build", "job": "grand", "why": "pack grand replaces the generated upright (user); trunk lid clearance; Save Prop Placement", "wall_s": 66, "exit": 0}
+{"time": "2026-10-17T21:48:55", "cmd": "build", "job": "grand2", "why": "grand clear of the drapes", "wall_s": 65, "exit": 0}
+{"time": "2026-10-17T21:54:14", "cmd": "build", "job": "grand3", "why": "grand shortened to a baby grand (user); save button uses the move", "wall_s": 81, "exit": 0}

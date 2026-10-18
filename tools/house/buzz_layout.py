@@ -465,6 +465,7 @@ def write(P, W, D):
            "pieces": P, "boxes": boxes}
     (ROOT / "spec/dressing/buzz.json").write_text(json.dumps(out, indent=1) + "\n")
     sp_path = ROOT / "spec/dressing/store_props.json"; SP = json.loads(sp_path.read_text())
+    user = {q["name"]: q for q in SP["pieces"] if q.get("placed_by") == "user"}   # Home Alone > Save Prop Placement: the user's hand placement wins
     SP["pieces"] = [q for q in SP["pieces"] if q["name"] not in {p["name"] for p in P}]   # its own pieces only (buzz_door is the door's, changes/2026-10-17-buzz-door.json)
     for p in P:
         if "store" not in p:
@@ -477,6 +478,8 @@ def write(P, W, D):
             q["yaw"] = p["yaw"]; q["back"] = ""
         else:
             q["back"] = p["back"]
+        if p["name"] in user:
+            q.update({k: user[p["name"]][k] for k in ("x", "z", "yaw", "back", "placed_by") if k in user[p["name"]]})
         SP["pieces"].append(q)
     sp_path.write_text(json.dumps(SP, indent=1) + "\n")
     return boxes

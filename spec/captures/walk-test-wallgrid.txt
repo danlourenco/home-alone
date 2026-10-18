@@ -74,7 +74,9 @@ BLOCKED player up leg 2: ended 0.07 m from waypoint, 0.06 m off its floor height
 ok      player down leg 1: ended 0.02 m from waypoint, 0.09 m off its floor height, 18 frames (clean walk 20)
 ok      player down leg 2: ended 0.00 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 7)
 Render check (outward faces, ServiceStair): 97 parts, 0 inside-out
-Seam check: 736 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
+Seam check: 740 structural boxes, 0 overlaps (flicker), 2 ledges, 0 gaps
+LEDGE   x 8.140 vs 8.107 (3.3 cm): living_grand/S_Piano_Grand_v01 at (8.92, -2.55, 14.80) | living_grand/S_Piano_Lid_v01 at (8.89, -2.05, 14.98)
+LEDGE   x 9.700 vs 9.672 (2.8 cm): living_grand/S_Piano_Grand_v01 at (8.92, -2.55, 14.80) | living_grand/S_Piano_Lid_v01 at (8.89, -2.05, 14.98)
 Leak and headroom check: 1383 points, 0 leaks, 17 low-headroom points (ground floor, outside flight 1)
 LOW     den at (2.6, 18.2): 0.83 m clear under StoreProps/den_tv_Collider
 LOW     den at (6.1, 17.7): 0.37 m clear under DenColliders/DenCollider_coffee_table_top
@@ -88,7 +90,7 @@ LOW     kitchen at (1.1, 5.4): 0.57 m clear under KitchenColliders/KitchenCollid
 LOW     kitchen at (1.1, 4.9): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
 LOW     kitchen at (1.1, 4.4): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
 LOW     kitchen at (1.6, 5.4): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
-Peek check: 585816 rays from rooms you can walk in, 0 into closed spaces
+Peek check: 583800 rays from rooms you can walk in, 0 into closed spaces
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 80 legs, 0 blocked
 skip    bandit buzz_room: no cell to stand in (its floor is a stair)
 skip    kevin buzz_room: no cell to stand in (its floor is a stair)
@@ -99,15 +101,15 @@ skip    bandit back_stair: no cell to stand in (its floor is a stair)
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin back_stair: no cell to stand in (its floor is a stair)
-Z-fight check: 1537553 triangles, 1483 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
-Clash check: 1705603 triangles, 0 parts passing through another (11 allowed joints) (every visible mesh checked)
+Z-fight check: 1537587 triangles, 1484 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
+Clash check: 1705303 triangles, 0 parts passing through another (11 allowed joints) (every visible mesh checked)
 Casing check: 0 casings placed apart from their opening
 Opening face check: 22 door faces, 0 without a head casing, 0 showing the other room's finish within the casing width
 Arch fit: 1 generated arches on their cuts, 0 joints off by more than 1 mm (worst 0.00 mm)
-Props check: 20 store models, 1 problems (landing_table: back -0.5 cm from the drawn wall (want 0-3))
+Props check: 21 store models, 1 problems (landing_table: back -0.5 cm from the drawn wall (want 0-3))
 Props triangle budget: 4 models over 150k triangles (Assets/Purchased/PurchasedPlants.glb 411k, Assets/Purchased/HallPlants.glb 296k, Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Models/ChristmasTree.fbx 259k, Assets/Models/Foyer/HallDressing.glb 201k)
 Trim check: 67 face runs (3 on the stair and landings, 0 panelled by a window model), 106.4 m, 9435 samples, 1 gaps in the baseboard, wainscot or cap rail; run ends: corner 64, opening 68, outside-corner 2
 GAP     0.08 m of bare wall 0.42 above the line of the room:hall_corridor run at spec (7.34, 0.42, 9.91)
-Envelope check: 2115 points at room joints, 0 see the sky through < 0.3 m of shadow caster
+Envelope check: 2123 points at room joints, 0 see the sky through < 0.3 m of shadow caster
 Quality check: 2 pipeline models of 31 generated (the rest predate the artist pipeline), 0 problems
 

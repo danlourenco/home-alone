@@ -96,6 +96,7 @@ public static partial class SpecGreybox
                 }
             }
             if (p["hung"] != null && (bool)p["hung"]) Hung.Add(name);
+            var pp = go.AddComponent<PlacedProp>(); pp.spec = "store_props"; pp.yaw = yaw; pp.rot0 = go.GetComponentInChildren<Renderer>().transform.rotation; pp.c0 = go.GetComponentsInChildren<Renderer>().Aggregate(rs[0].bounds, (a, r) => { a.Encapsulate(r.bounds); return a; }).center;   // Home Alone > Save Prop Placement
             PropRecords.Add((name, go, new Bounds { min = new Vector3(x0, y0, z0), max = new Vector3(x1, y0 + h, z1) }, Back((string)p["back"]), g, swung));
             Debug.Log($"StoreProps {name}: yaw {yaw}, scale {go.transform.localScale}, bounds {fb.min} .. {fb.max}");
         }

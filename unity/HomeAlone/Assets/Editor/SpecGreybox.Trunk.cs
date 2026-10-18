@@ -44,6 +44,7 @@ public static partial class SpecGreybox
         var lb = B(lid); var lc = lid.gameObject.AddComponent<BoxCollider>();
         var ls = lid.InverseTransformVector(lb.size);                          // the trunk may be turned (yaw_deg): size in the lid's axes
         lc.center = lid.InverseTransformPoint(lb.center); lc.size = new Vector3(Mathf.Abs(ls.x), Mathf.Abs(ls.y), Mathf.Abs(ls.z));
+        var pp = g.AddComponent<PlacedProp>(); pp.spec = "trunk"; pp.yaw = g.transform.eulerAngles.y; pp.rot0 = g.GetComponentInChildren<Renderer>().transform.rotation; pp.c0 = bb.center;   // Home Alone > Save Prop Placement (c0: the body's drawn centre)
         Debug.Log($"Trunk: body {bb.min} .. {bb.max}, lid {lb.min} .. {lb.max}, hinge at {lid.position}");
     }
 

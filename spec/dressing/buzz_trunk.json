@@ -21,13 +21,13 @@
   10.054
  ],
  "z": [
-  13.682,
-  14.217
+  13.802,
+  14.337
  ],
  "front": "+z",
  "hinge": "-z",
  "yaw_deg": 90,
- "placement": "PLACED BY THE USER in the editor (Oct 17): back flush with the footboard, centred on the bed (the open lid meets the footboard)",
+ "placement": "PLACED BY THE USER in the editor (Oct 17), then 0.12 m off the footboard so the lid opens (user: \"you can shift it to accommodate that as well as the planned bed nudge\"); x follows the bed: when the bed moves (planned -0.14 m in x), move the trunk with it",
  "passage_m": 0.62,
  "passage_without_m": 0.62,
  "bed_shift_assumed_m": -0.14,

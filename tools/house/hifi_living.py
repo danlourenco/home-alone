@@ -508,7 +508,7 @@ export([paint, glass, brass, voile, hem, damask, tie], {"LV_Paint": ((0.88, 0.87
 
 paint, glass, brass = P("Paint", "LV_Paint"), P("Glass", "LV_Glass"), P("Brass", "LV_Brass")
 SMOOTH.clear()
-fireplace(); fire_screen(); stockings(); piano(); lamps(); brackets(); extra = small(); tree()
+fireplace(); fire_screen(); stockings(); (piano() if "replaced_by" not in D["piano"] else None); lamps(); brackets(); extra = small(); tree()
 parts = [white, black, brick, slate, wood_log, screen_mesh, brass, mahog, keysw, keysb, felt, porcelain, gilt] + list(G.values()) + list(NC.values()) + \
         [STK["red"], STK["cream"], STK["cuff"]] + extra + list(C7.values()) + list(GIFT.values())
 MATS = {"LV_Paint": ((0.88, 0.87, 0.83), 0.35), "LV_Iron": ((0.02, 0.02, 0.02), 0.6), "LV_Firebrick": ((0.16, 0.06, 0.04), 0.9), "LV_Slate": ((0.04, 0.04, 0.045), 0.4),
