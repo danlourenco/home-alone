@@ -1,0 +1,1 @@
+{"name":"street-night","frames":300,"cpu_ms_median":15.2,"cpu_ms_p95":17.9,"cpu_ms_p99":18.7,"gpu_ms_median":22.1,"gpu_ms_p10":19.3,"rt_lights":60,"rt_shadow_lights":52,"batches":0,"setpass":129,"triangles":5113836,"shadow_casters":0,"draw_calls":0,"sys_mem_mb":5233,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"34.00,-2.70,-9.70 yaw 270"}

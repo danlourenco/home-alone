@@ -1,0 +1,1 @@
+{"name":"living-day","frames":300,"cpu_ms_median":20.7,"cpu_ms_p95":24.2,"cpu_ms_p99":25.8,"gpu_ms_median":27.9,"gpu_ms_p10":23.7,"rt_lights":6,"rt_shadow_lights":4,"batches":0,"setpass":175,"triangles":12426747,"shadow_casters":11775,"draw_calls":0,"sys_mem_mb":4697,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"6.50,-1.72,-13.80 yaw 180"}

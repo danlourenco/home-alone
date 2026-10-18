@@ -1,0 +1,1 @@
+{"name":"street-day","frames":300,"cpu_ms_median":19.0,"cpu_ms_p95":21.9,"cpu_ms_p99":24.0,"gpu_ms_median":24.6,"gpu_ms_p10":22.7,"rt_lights":6,"rt_shadow_lights":4,"batches":0,"setpass":270,"triangles":13099855,"shadow_casters":8233,"draw_calls":0,"sys_mem_mb":4703,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"34.00,-2.70,-9.70 yaw 270"}

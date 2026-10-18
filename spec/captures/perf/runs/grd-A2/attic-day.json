@@ -1,0 +1,1 @@
+{"name":"attic-day","frames":300,"cpu_ms_median":16.6,"cpu_ms_p95":20.1,"cpu_ms_p99":21.9,"gpu_ms_median":22.3,"gpu_ms_p10":20.5,"rt_lights":6,"rt_shadow_lights":4,"batches":0,"setpass":217,"triangles":6998053,"shadow_casters":5372,"draw_calls":0,"sys_mem_mb":4726,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"6.56,3.93,-16.95 yaw 351"}

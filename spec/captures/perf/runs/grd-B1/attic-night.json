@@ -1,0 +1,1 @@
+{"name":"attic-night","frames":300,"cpu_ms_median":19.7,"cpu_ms_p95":21.5,"cpu_ms_p99":22.4,"gpu_ms_median":33.3,"gpu_ms_p10":23.6,"rt_lights":60,"rt_shadow_lights":52,"batches":0,"setpass":92,"triangles":484,"shadow_casters":0,"draw_calls":0,"sys_mem_mb":5302,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"6.56,3.93,-16.95 yaw 351"}

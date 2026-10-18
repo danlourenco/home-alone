@@ -74,6 +74,9 @@ Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.m
    eviction with OnDemand caching, contact shadows, SSAO/SSGI), each hypothesis tested with >= 3 probe runs against the baseline
    spread; HDRP Rendering Debugger overlays (light count per tile, shadow atlas). Fix must keep the look and frame time.
 
+7p. PERFORMANCE PASS (Oct 18): standalone measuring tool + findings in [docs/PERFORMANCE.md](PERFORMANCE.md) (tools/house/perf_probe.sh).
+   Nothing shipped that changes the picture. GPU Resident Drawer + GPU occlusion measured 7-10% SLOWER (not enabled). Night root cause:
+   the cached shadow atlas overflows (82.1 M texels wanted, 67.1 M held); the 16384 fix visibly changes the night look: user decision.
 7. LATER (user Oct 17): shadow flicker STILL visible after the shadow pass (DEVIATIONS 62 did not fix it). Deferred to a dedicated
    performance + optimization pass; troubleshoot it there, not before. Same pass: ~80 CS0618 obsolete-API warnings (Unity 6.6:
    FindObjectsByType/FindFirstObjectByType sort-mode overloads, HDAdditionalLightData.spotLightShape): mechanical renames.

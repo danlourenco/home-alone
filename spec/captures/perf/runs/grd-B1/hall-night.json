@@ -1,0 +1,1 @@
+{"name":"hall-night","frames":300,"cpu_ms_median":37.0,"cpu_ms_p95":41.7,"cpu_ms_p99":43.4,"gpu_ms_median":66.2,"gpu_ms_p10":43.1,"rt_lights":60,"rt_shadow_lights":52,"batches":0,"setpass":86,"triangles":32836,"shadow_casters":0,"draw_calls":0,"sys_mem_mb":5285,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"6.89,1.31,-9.49 yaw 188"}

@@ -1,0 +1,1 @@
+{"name":"living-night","frames":300,"cpu_ms_median":22.6,"cpu_ms_p95":26.4,"cpu_ms_p99":27.7,"gpu_ms_median":39.4,"rt_lights":60,"rt_shadow_lights":52,"batches":0,"setpass":56,"triangles":1331933,"shadow_casters":0,"draw_calls":0,"sys_mem_mb":5227,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"6.50,-1.72,-13.80 yaw 180"}

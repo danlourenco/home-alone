@@ -1,0 +1,1 @@
+{"name":"yard-day","frames":300,"cpu_ms_median":13.4,"cpu_ms_p95":16.8,"cpu_ms_p99":18.2,"gpu_ms_median":23.3,"gpu_ms_p10":19.5,"rt_lights":6,"rt_shadow_lights":4,"batches":0,"setpass":74,"triangles":943476,"shadow_casters":690,"draw_calls":0,"sys_mem_mb":4772,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"-4.00,-2.10,-12.00 yaw 288"}

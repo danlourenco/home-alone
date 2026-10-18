@@ -1,0 +1,1 @@
+{"name":"yard-night","frames":300,"cpu_ms_median":12.4,"cpu_ms_p95":13.6,"cpu_ms_p99":15.5,"gpu_ms_median":22.0,"gpu_ms_p10":16.9,"rt_lights":60,"rt_shadow_lights":52,"batches":0,"setpass":33,"triangles":361712,"shadow_casters":0,"draw_calls":0,"sys_mem_mb":5215,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"-4.00,-2.10,-12.00 yaw 288"}
