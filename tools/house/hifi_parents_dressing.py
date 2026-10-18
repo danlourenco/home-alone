@@ -77,6 +77,42 @@ for k, o in enumerate(WINS):
     circ = [(ROD_R * math.cos(t), ROD_R * math.sin(t)) for t in [2 * math.pi * i / 12 for i in range(12)]]
     rod.sweep([P(ra, rod_y, PANEL_D), P(rb, rod_y, PANEL_D)], circ)
 
+# the sashes (Marina 180/238): mulled double-hung units, 6-over-6, white; the twin window two units, the side bank four. Unit
+# width from the opening (~0.72-0.75 m, mulls 0.10 by eye); members as the den's (hifi_den.py). The grey-box glass stays in the
+# wall's middle plane (d -WT/2), inside the sash members.
+sash = Part("Sash", "PB_Sash")
+MULL, JT, STILE, TOP, BOT, MEET, MUN, COLS, ROWS = 0.10, 0.016, 0.045, 0.05, 0.075, 0.035, 0.018, 3, 2
+SD = (-WT / 2 - 0.025, -WT / 2 + 0.025)                  # sash depth, straddling the glass
+
+
+def bx(P, a0, a1, y0, y1, d0, d1):
+    p, q = P(a0, y0, d0), P(a1, y1, d1)
+    sash.box(min(p[0], q[0]), max(p[0], q[0]), y0, y1, min(p[2], q[2]), max(p[2], q[2]))
+
+
+for o in WINS:
+    P = frame(o); lo, hi, s, h, n = o["lo"], o["hi"], o["sill"], o["head"], (4 if o["hi"] - o["lo"] > 2.5 else 2)
+    uw = (hi - lo - 2 * JT - (n - 1) * MULL) / n
+    bx(P, lo, lo + JT, s, h - JT, -WT / 2, 0); bx(P, hi - JT, hi, s, h - JT, -WT / 2, 0); bx(P, lo, hi, h - JT, h, -WT / 2, 0)   # jamb liners
+    for i in range(n):
+        a0 = lo + JT + i * (uw + MULL); a1 = a0 + uw
+        if i:
+            bx(P, a0 - MULL, a0, s, h - JT, -WT / 2, 0)    # mull
+        y0, y1 = s, h - JT; mid = (y0 + y1) / 2
+        bx(P, a0, a0 + STILE, y0, y1, *SD); bx(P, a1 - STILE, a1, y0, y1, *SD)
+        b0, b1 = a0 + STILE, a1 - STILE
+        rails = [(y0, y0 + BOT), (mid - MEET / 2, mid + MEET / 2), (y1 - TOP, y1)]
+        for r0, r1 in rails:
+            bx(P, b0, b1, r0, r1, *SD)
+        for g0, g1 in ((y0 + BOT, mid - MEET / 2), (mid + MEET / 2, y1 - TOP)):   # each sash's glass: COLS x ROWS lites
+            cw = (b1 - b0 - (COLS - 1) * MUN) / COLS; rh = (g1 - g0 - (ROWS - 1) * MUN) / ROWS
+            for c in range(1, COLS):
+                bx(P, b0 + c * cw + (c - 1) * MUN, b0 + c * (cw + MUN), g0, g1, *SD)
+            for r in range(1, ROWS):
+                yy = g0 + r * rh + (r - 1) * MUN
+                for c in range(COLS):
+                    bx(P, b0 + c * (cw + MUN), b0 + c * (cw + MUN) + cw, yy, yy + MUN, *SD)
+
 # the bedside lamps (film 1610/2648: a brass candlestick base with an urn, a black drum shade; Marina 250 dark shades): turned, on each
 # nightstand box's top (spec/dressing/parents.json), centred; overall 0.60 m (shade 0.36-0.58)
 brass, shade = Part("LampBrass", "PB_Brass"), Part("LampShade", "PB_Shade")
@@ -88,10 +124,11 @@ for bx in BOXES:
         shade.lathe(cx, cz, y0, [(0.36, 0.175), (0.58, 0.125)], n=32)
 bpy.ops.wm.read_factory_settings(use_empty=True)
 M = {"PB_Damask": material("PB_Damask", (0.26, 0.29, 0.36), 0.85), "PB_Brass": material("PB_Brass", (0.75, 0.56, 0.25), 0.3), "PB_Shade": material("PB_Shade", (0.02, 0.02, 0.02), 0.6),
-     "SH_Voile": material("SH_Voile", (0.95, 0.94, 0.91), 0.8), "SH_Hem": material("SH_Hem", (0.95, 0.94, 0.91), 0.8)}
+     "SH_Voile": material("SH_Voile", (0.95, 0.94, 0.91), 0.8), "SH_Hem": material("SH_Hem", (0.95, 0.94, 0.91), 0.8),
+     "PB_Sash": material("PB_Sash", (0.88, 0.87, 0.83), 0.35)}
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("ParentsDressing_HiFi", None); coll.objects.link(root)
-for p in (drape, valance, rod, voile, vhem, brass, shade):
+for p in (drape, valance, rod, voile, vhem, brass, shade, sash):
     ob = p.build(coll, M); ob.parent = root
     if p in SMOOTH:
         for poly in ob.data.polygons:
