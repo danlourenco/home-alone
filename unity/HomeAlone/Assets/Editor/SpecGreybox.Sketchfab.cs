@@ -158,7 +158,9 @@ public static partial class SpecGreybox
         // --- kitchen: Kevin's blowtorch trap at the back door (film 10351-10363: a brass plumber's torch clamped beside the door at head
         // height by the upper cabinet, its nozzle across the doorway; a string to the door fires it into Harry's hat). CGTrader "Rusty Blow
         // Torch" (free, user download Oct 18; GLB at 2K by the coordinator, gitignored). 0.33 m long, in front of the cabinet's door-side end
-        // (kitchen.json uppers[0] x -5.192..-4.862, z 1.219..1.874; door z 2.046..3.004 on the x -5.262 wall), bottom 1.70 m up
-        Sketchfab(g, "rusty_blowtorch", "kitchen_blowtorch", Quaternion.Euler(0, 90, 0), 0.33f, new Vector3(-4.80f, gy + 1.70f, 1.90f));
+        // (kitchen.json uppers[0] x -5.192..-4.862, z 1.219..1.874; door z 2.046..3.004 on the x -5.262 wall), bottom 1.70 m up.
+        // The import's nozzle is its +x end: the turn sends it to +spec z, across the doorway. Centre z 1.79 (was 1.90, which hung the
+        // tank past the cabinet's end in the air; film 10354/10357 hang it in front of the door-side end, the nozzle just past it)
+        Sketchfab(g, "rusty_blowtorch", "kitchen_blowtorch", Quaternion.Euler(0, 90, 0), 0.33f, new Vector3(-4.80f, gy + 1.70f, 1.79f));
     }
 }
