@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: DayGrade
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.VolumeProfile
   components:
-  - {fileID: 9126533053288901473}
-  - {fileID: 8695544233791988911}
---- !u!114 &8695544233791988911
+  - {fileID: 1551162437956939639}
+  - {fileID: 316335732078065803}
+--- !u!114 &316335732078065803
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,7 +43,7 @@ MonoBehaviour:
   saturation:
     m_OverrideState: 1
     m_Value: 12
---- !u!114 &9126533053288901473
+--- !u!114 &1551162437956939639
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}

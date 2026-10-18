@@ -411,25 +411,26 @@ def small():
     NC["Tin"].lathe(4.75, 14.3, y, [(0, 0.06), (0.11, 0.06), (0.12, 0.062), (0.13, 0.0)], 18)
     # the toy train: oval track (two rails, ties) on the floor, a black loco and two cars on the near straight
     t = D["train"]; (cx, cz), rx, rz = t["at"], t["rx"], t["rz"]
+    Y = t.get("y", 0.0)   # 0.012 = on the rug (its top)
     oval = lambda q, k: (cx + (rx + k) * math.cos(q), 0.0, cz + (rz + k) * math.sin(q))
     qs = np.linspace(0, 2 * math.pi, 73)
     for k in (-0.017, 0.017):
-        NC["Black"].sweep([(x, 0.012, z) for x, _, z in (oval(q, k) for q in qs)], [(-0.002, -0.004), (0.002, -0.004), (0.002, 0.004), (-0.002, 0.004)])
+        NC["Black"].sweep([(x, Y + 0.012, z) for x, _, z in (oval(q, k) for q in qs)], [(-0.002, -0.004), (0.002, -0.004), (0.002, 0.004), (-0.002, 0.004)])
     for q in qs[:-1:2]:
         x, _, z = oval(q, 0); tx, tz = -math.sin(q) * rx, math.cos(q) * rz; L = math.hypot(tx, tz); tx, tz = tx / L, tz / L
-        NC["Brown"].face([(x - tz * 0.03 - tx * 0.006, 0.010, z + tx * 0.03 - tz * 0.006), (x + tz * 0.03 - tx * 0.006, 0.010, z - tx * 0.03 - tz * 0.006),
-                          (x + tz * 0.03 + tx * 0.006, 0.010, z - tx * 0.03 + tz * 0.006), (x - tz * 0.03 + tx * 0.006, 0.010, z + tx * 0.03 + tz * 0.006)], (0, 1, 0))   # ties 1 cm up
+        NC["Brown"].face([(x - tz * 0.03 - tx * 0.006, Y + 0.010, z + tx * 0.03 - tz * 0.006), (x + tz * 0.03 - tx * 0.006, Y + 0.010, z - tx * 0.03 - tz * 0.006),
+                          (x + tz * 0.03 + tx * 0.006, Y + 0.010, z - tx * 0.03 + tz * 0.006), (x - tz * 0.03 + tx * 0.006, Y + 0.010, z + tx * 0.03 + tz * 0.006)], (0, 1, 0))   # ties 1 cm up
     zt = cz - rz
     circ = lambda r, n=10: [(r * math.cos(q), r * math.sin(q)) for q in np.linspace(0, 2 * math.pi, n + 1)[:-1]]
-    NC["Black"].sweep([(cx - 0.12, 0.082, zt), (cx + 0.08, 0.082, zt)], circ(0.03))                    # boiler
-    NC["Black"].box(cx + 0.08, cx + 0.15, 0.05, 0.14, zt - 0.033, zt + 0.033)                      # cab
-    NC["Black"].lathe(cx - 0.09, zt, 0.105, [(0, 0.012), (0.04, 0.016), (0.04, 0.0)], 8)            # chimney
+    NC["Black"].sweep([(cx - 0.12, Y + 0.082, zt), (cx + 0.08, Y + 0.082, zt)], circ(0.03))                    # boiler
+    NC["Black"].box(cx + 0.08, cx + 0.15, Y + 0.05, Y + 0.14, zt - 0.033, zt + 0.033)                      # cab
+    NC["Black"].lathe(cx - 0.09, zt, Y + 0.105, [(0, 0.012), (0.04, 0.016), (0.04, 0.0)], 8)            # chimney
     for xw in (cx - 0.09, cx - 0.03, cx + 0.03, cx + 0.11, cx + 0.20, cx + 0.29, cx + 0.37, cx + 0.46):   # loco and both cars
         for zz in ((zt - 0.024, zt - 0.012), (zt + 0.012, zt + 0.024)):                              # wheels on the rail heads (rail top 0.016)
-            NC["Red"].sweep([(xw, 0.033, zz[0]), (xw, 0.033, zz[1])], circ(0.016))
+            NC["Red"].sweep([(xw, Y + 0.033, zz[0]), (xw, Y + 0.033, zz[1])], circ(0.016))
     for k in range(2):
         a = cx + 0.17 + k * 0.17
-        NC["Black"].box(a, a + 0.15, 0.05, 0.12, zt - 0.03, zt + 0.03); NC["Brown"].box(a + 0.01, a + 0.14, 0.12, 0.13, zt - 0.03, zt + 0.03)
+        NC["Black"].box(a, a + 0.15, Y + 0.05, Y + 0.12, zt - 0.03, zt + 0.03); NC["Brown"].box(a + 0.01, a + 0.14, Y + 0.12, Y + 0.13, zt - 0.03, zt + 0.03)
     # the white poinsettia on the tall stand (film 5650): gold foil pot, bract dome (the den's generator, smaller)
     sx, sz = D["stand"]["at"]; y0 = D["stand"]["h"]; rng = random.Random(5)
     NC["Gold"].lathe(sx, sz, y0, [(0, 0.08), (0.14, 0.11), (0.15, 0.115), (0.15, 0.0)], 16)

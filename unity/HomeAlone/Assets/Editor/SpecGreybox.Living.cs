@@ -102,7 +102,7 @@ public static partial class SpecGreybox
             foreach (var r in b.GetComponentsInChildren<MeshRenderer>())
             {
                 string mn = r.sharedMaterial != null ? r.sharedMaterial.name : "";
-                if (mn.StartsWith("HiFi_Bulb") || mn == "HiFi_ShadeLivingBurgundy" || mn == "HiFi_LivingScreenMesh") r.shadowCastingMode = ShadowCastingMode.Off;
+                if (mn.StartsWith("HiFi_Bulb") || mn == "HiFi_ShadeLivingBurgundy" || mn == "HiFi_ShadeLivingBlack" || mn == "HiFi_LivingScreenMesh") r.shadowCastingMode = ShadowCastingMode.Off;
                 r.gameObject.isStatic = true;
             }
         var p = PlaceHiFi(root, gy, "LivingProps", null);

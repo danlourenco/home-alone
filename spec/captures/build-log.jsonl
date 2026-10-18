@@ -37,3 +37,6 @@
 {"time": "2026-10-17T22:12:24", "cmd": "bake", "job": "nightfix", "why": "night lamps dark after builds without a bake", "wall_s": 92, "exit": 0}
 {"time": "2026-10-17T22:26:45", "cmd": "build", "job": "nightfix2", "why": "night dark = Scene-view search filter forcing HDRP fixed exposure (guard + nightcheck); den French doors at any angle (175)", "wall_s": 85, "exit": 0}
 {"time": "2026-10-17T22:28:22", "cmd": "bake", "job": "nightfix2", "why": "bake after the nightfix2 build (French doors 175 change the den/living light)", "wall_s": 88, "exit": 0}
+{"time": "2026-10-17T22:44:10", "cmd": "build", "job": "livingfast", "why": "living room rearranged from the film (user); chest lamp on its top + unshadowed shade", "wall_s": 74, "exit": 0}
+{"time": "2026-10-17T22:47:15", "cmd": "build", "job": "livingfast", "why": "living train on rug; chest lamp; landing dome (user)", "wall_s": 74, "exit": 0}
+{"time": "2026-10-17T22:48:52", "cmd": "bake", "job": "livingfast", "why": "", "wall_s": 89, "exit": 0}

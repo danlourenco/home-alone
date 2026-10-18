@@ -256,7 +256,9 @@
    "hides": [],
    "collide": false,
    "source": "film 5650/5640 (a dark chest of drawers in the living room's front/foyer-side corner under the porcelain-dog brackets, a black-shaded lamp on it) and Marina f105 (a chest there too). Box authored inside the pier (front wall 9.954, the foyer opening ends x 8.58): 0.90 x 0.445 x 0.80, back 1.5 cm off the foyer-side wall; the pack's low 4-drawer chest (1.14 x 0.39 x 0.70) fitted (x0.79 wide, x1.14 deep, x1.14 tall). Collider: spec/dressing/living.json chest. Its lamp is hifi_living.py's (living.json lamps.chest)",
-   "back": "-z"
+   "back": "",
+   "yaw": 180,
+   "placed_by": "user"
   },
   {
    "name": "living_tree",
