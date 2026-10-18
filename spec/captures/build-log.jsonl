@@ -91,3 +91,7 @@
 {"time": "2026-10-18T04:13:50", "cmd": "build", "job": "overnight10", "why": "fixes: hooks raycast, restyle names, cork cards", "wall_s": 109, "exit": 0}
 {"time": "2026-10-18T04:16:58", "cmd": "build", "job": "overnight10", "why": "trunk contents ride with trunk, helmet out", "wall_s": 104, "exit": 0}
 {"time": "2026-10-18T04:19:26", "cmd": "bake", "job": "overnight10", "why": "auto: load of an unbaked build", "wall_s": 142, "exit": 0}
+{"time": "2026-10-18T04:42:15", "cmd": "build", "job": "overnight11", "why": "rugs + pack doors", "wall_s": 113, "exit": 0}
+{"time": "2026-10-18T04:46:54", "cmd": "build", "job": "overnight12", "why": "rugs fit + door hinges", "wall_s": 111, "exit": 0}
+{"time": "2026-10-18T04:49:18", "cmd": "build", "job": "overnight12", "why": "z-fight check honours mirrored parts", "wall_s": 108, "exit": 0}
+{"time": "2026-10-18T04:52:14", "cmd": "bake", "job": "overnight12", "why": "final load", "wall_s": 161, "exit": 0}

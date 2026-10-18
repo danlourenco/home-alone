@@ -40,6 +40,7 @@ public static partial class SpecGreybox
             var s = new Vector3((x1 - x0) / b.size.x, h / b.size.y, (z1 - z0) / b.size.z);   // world axes
             if (Mathf.RoundToInt(yaw / 90f) % 2 == 1) s = new Vector3(s.z, s.y, s.x);          // turned 90/270: local x lies along world z
             if (p["scale"] != null) s = new Vector3((float)p["scale"][0], (float)p["scale"][1], (float)p["scale"][2]);   // a turn off the 90s (Save Prop Placement): keep the model's own scale, centre it in the box
+            if (p["mirror"] != null && (bool)p["mirror"]) s.x = -s.x;   // "mirror": the model's own x flipped (a pack door's knob to its other edge, film)
             go.transform.localScale = s;
             b = rs.Aggregate(rs[0].bounds, (a, r) => { a.Encapsulate(r.bounds); return a; });
             go.transform.position += new Vector3((x0 + x1) / 2 - b.center.x, y0 - b.min.y, (z0 + z1) / 2 - b.center.z);

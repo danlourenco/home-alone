@@ -5,7 +5,7 @@
 "spec/geometry.json": "ab2ccb47a12f2c69a70ff411c4bff1a310383226d333050107c97e0b96718ccf",
 "spec/house_spec.json": "00563e5d3f64bf825efb3a3ba8b19e1a641a1cd7331aa03dda68a1883215dd89",
 "spec/house_spec.ground.json": "c61d3732d53e46b7b76a94886088d26d2fb1a8989a8519b216b5b0f0c5fa9394",
-"spec/dressing/store_props.json": "5c2f67823a8c40c3690e3cd66d59f0b14feb66b71439403fcb918130f5593843",
+"spec/dressing/store_props.json": "d20ca1ac19082445bfa65cf7f19caa85cc5e3dc676cf1920baba432719826a96",
 "spec/dressing/french_doors.json": "a5da39a702d68886d0f0a1e4ea5c20e62ca81435868ce73d253eaa209c3b4663",
 "spec/dressing/buzz.json": "adbe2e533194393922314595597d1404a3c1496c4d02da480ba9cb955d53eb7a",
 "tools/house/hifi_door.py": "43caa8e4502f58c7b108e6a1e623e15b7f158f7aac7dd50510b2abaf2d739788",
@@ -251,21 +251,32 @@
 ]
 },
 {
+"part": "frame",
+"face": [
+"z",
+3.21,
+1
+],
+"by": "store_props:parents_bath_door",
+"box": [
+3.215,
+3.275,
+3.5369,
+4.3911,
+0.0,
+2.087
+]
+}
+],
+"dropped": [
+{
 "part": "leg_lo",
 "face": [
 "z",
 3.21,
 1
 ],
-"by": null,
-"box": [
-3.21,
-3.23,
-3.514,
-3.584,
-0.0,
-2.102
-]
+"reason": "replaced by the store prop parents_bath_door's door frame (store_props.json)"
 },
 {
 "part": "leg_hi",
@@ -274,15 +285,7 @@
 3.21,
 1
 ],
-"by": null,
-"box": [
-3.21,
-3.23,
-4.344,
-4.414,
-0.0,
-2.102
-]
+"reason": "replaced by the store prop parents_bath_door's door frame (store_props.json)"
 },
 {
 "part": "head",
@@ -291,18 +294,9 @@
 3.21,
 1
 ],
-"by": null,
-"box": [
-3.21,
-3.23,
-3.514,
-4.414,
-2.032,
-2.102
-]
+"reason": "replaced by the store prop parents_bath_door's door frame (store_props.json)"
 }
 ],
-"dropped": [],
 "limits": [
 {
 "rule": "head-under-header",
@@ -322,12 +316,17 @@
 {
 "rule": "under-ceiling",
 "ok": true,
-"detail": "head + casing 2.102 under parents_bedroom's ceiling 2.500"
+"detail": "head 2.032 under parents_bedroom's ceiling 2.500"
 },
 {
 "rule": "head-cased",
 "ok": true,
-"detail": "parents_bedroom face: head by SpecGreybox"
+"detail": "parents_bedroom face: frame by store_props:parents_bath_door"
+},
+{
+"rule": "swing-room",
+"ok": true,
+"detail": "store door parents_bath_door: 0.74 m leaf swings clear to 90 deg"
 }
 ],
 "header": {
@@ -343,7 +342,15 @@
 "parents_bath": 2.5,
 "parents_bedroom": 2.5
 }
+},
+"swings": [
+{
+"what": "store door parents_bath_door",
+"hinge_s": 3.584,
+"toward_n": -1,
+"width": 0.74
 }
+]
 },
 {
 "id": "upstairs:door:hall_end|kevin_jeff_room:6.754",
@@ -366,13 +373,13 @@
 "part": "leg_lo",
 "face": [
 "z",
-6.921,
--1
+7.061,
+1
 ],
 "by": null,
 "box": [
-6.901,
-6.921,
+7.061,
+7.081,
 6.684,
 6.754,
 0.0,
@@ -383,13 +390,13 @@
 "part": "leg_hi",
 "face": [
 "z",
-6.921,
--1
+7.061,
+1
 ],
 "by": null,
 "box": [
-6.901,
-6.921,
+7.061,
+7.081,
 7.524,
 7.594,
 0.0,
@@ -400,72 +407,66 @@
 "part": "head",
 "face": [
 "z",
-6.921,
--1
+7.061,
+1
 ],
 "by": null,
 "box": [
-6.901,
-6.921,
+7.061,
+7.081,
 6.684,
 7.594,
 2.032,
 2.102
 ]
 },
+{
+"part": "frame",
+"face": [
+"z",
+6.921,
+-1
+],
+"by": "store_props:kevin_door",
+"box": [
+6.856,
+6.916,
+6.7063,
+7.5717,
+0.0,
+2.087
+]
+}
+],
+"dropped": [
 {
 "part": "leg_lo",
 "face": [
 "z",
-7.061,
-1
+6.921,
+-1
 ],
-"by": null,
-"box": [
-7.061,
-7.081,
-6.684,
-6.754,
-0.0,
-2.102
-]
+"reason": "replaced by the store prop kevin_door's door frame (store_props.json)"
 },
 {
 "part": "leg_hi",
 "face": [
 "z",
-7.061,
-1
+6.921,
+-1
 ],
-"by": null,
-"box": [
-7.061,
-7.081,
-7.524,
-7.594,
-0.0,
-2.102
-]
+"reason": "replaced by the store prop kevin_door's door frame (store_props.json)"
 },
 {
 "part": "head",
 "face": [
 "z",
-7.061,
-1
+6.921,
+-1
 ],
-"by": null,
-"box": [
-7.061,
-7.081,
-6.684,
-7.594,
-2.032,
-2.102
-]
+"reason": "replaced by the store prop kevin_door's door frame (store_props.json)"
 }
 ],
-"dropped": [],
 "limits": [
 {
 "rule": "head-under-header",
@@ -475,12 +476,12 @@
 {
 "rule": "under-ceiling",
 "ok": true,
-"detail": "head + casing 2.102 under hall_end's ceiling 2.400"
+"detail": "head 2.032 under hall_end's ceiling 2.400"
 },
 {
 "rule": "head-cased",
 "ok": true,
-"detail": "hall_end face: head by SpecGreybox"
+"detail": "hall_end face: frame by store_props:kevin_door"
 },
 {
 "rule": "under-ceiling",
@@ -491,6 +492,11 @@
 "rule": "head-cased",
 "ok": true,
 "detail": "kevin_jeff_room face: head by SpecGreybox"
+},
+{
+"rule": "swing-room",
+"ok": true,
+"detail": "store door kevin_door: 0.75 m leaf swings clear to 90 deg"
 }
 ],
 "header": {
@@ -506,7 +512,15 @@
 "hall_end": 2.4,
 "kevin_jeff_room": 2.4
 }
+},
+"swings": [
+{
+"what": "store door kevin_door",
+"hinge_s": 7.524,
+"toward_n": 1,
+"width": 0.75
 }
+]
 },
 {
 "id": "upstairs:door:closet_1|kevin_jeff_room:8.074",
@@ -529,15 +543,15 @@
 "part": "leg_lo",
 "face": [
 "x",
-7.638,
--1
+7.778,
+1
 ],
 "by": null,
 "box": [
 8.0035,
 8.0735,
-7.618,
-7.638,
+7.778,
+7.798,
 0.0,
 2.102
 ]
@@ -546,15 +560,15 @@
 "part": "leg_hi",
 "face": [
 "x",
-7.638,
--1
+7.778,
+1
 ],
 "by": null,
 "box": [
 8.9035,
 8.9735,
-7.618,
-7.638,
+7.778,
+7.798,
 0.0,
 2.102
 ]
@@ -563,72 +577,66 @@
 "part": "head",
 "face": [
 "x",
-7.638,
--1
+7.778,
+1
 ],
 "by": null,
 "box": [
 8.0035,
 8.9735,
-7.618,
-7.638,
+7.778,
+7.798,
 2.032,
 2.102
 ]
 },
+{
+"part": "frame",
+"face": [
+"x",
+7.638,
+-1
+],
+"by": "store_props:kevin_closet_door",
+"box": [
+8.022,
+8.955,
+7.573,
+7.633,
+0.0,
+2.087
+]
+}
+],
+"dropped": [
 {
 "part": "leg_lo",
 "face": [
 "x",
-7.778,
-1
+7.638,
+-1
 ],
-"by": null,
-"box": [
-8.0035,
-8.0735,
-7.778,
-7.798,
-0.0,
-2.102
-]
+"reason": "replaced by the store prop kevin_closet_door's door frame (store_props.json)"
 },
 {
 "part": "leg_hi",
 "face": [
 "x",
-7.778,
-1
+7.638,
+-1
 ],
-"by": null,
-"box": [
-8.9035,
-8.9735,
-7.778,
-7.798,
-0.0,
-2.102
-]
+"reason": "replaced by the store prop kevin_closet_door's door frame (store_props.json)"
 },
 {
 "part": "head",
 "face": [
 "x",
-7.778,
-1
+7.638,
+-1
 ],
-"by": null,
-"box": [
-8.0035,
-8.9735,
-7.778,
-7.798,
-2.032,
-2.102
-]
+"reason": "replaced by the store prop kevin_closet_door's door frame (store_props.json)"
 }
 ],
-"dropped": [],
 "limits": [
 {
 "rule": "head-under-header",
@@ -638,12 +646,12 @@
 {
 "rule": "under-ceiling",
 "ok": true,
-"detail": "head + casing 2.102 under kevin_jeff_room's ceiling 2.400"
+"detail": "head 2.032 under kevin_jeff_room's ceiling 2.400"
 },
 {
 "rule": "head-cased",
 "ok": true,
-"detail": "kevin_jeff_room face: head by SpecGreybox"
+"detail": "kevin_jeff_room face: frame by store_props:kevin_closet_door"
 },
 {
 "rule": "under-ceiling",
@@ -654,6 +662,11 @@
 "rule": "head-cased",
 "ok": true,
 "detail": "closet_1 face: head by SpecGreybox"
+},
+{
+"rule": "swing-room",
+"ok": true,
+"detail": "store door kevin_closet_door: 0.81 m leaf swings clear to 90 deg"
 }
 ],
 "header": {
@@ -669,7 +682,15 @@
 "kevin_jeff_room": 2.4,
 "closet_1": 2.4
 }
+},
+"swings": [
+{
+"what": "store door kevin_closet_door",
+"hinge_s": 8.0735,
+"toward_n": 1,
+"width": 0.81
 }
+]
 },
 {
 "id": "upstairs:door:girls_room_a|hall_end:6.714",
@@ -862,13 +883,13 @@
 "part": "leg_lo",
 "face": [
 "z",
-8.371,
--1
+8.511,
+1
 ],
 "by": null,
 "box": [
-8.351,
-8.371,
+8.511,
+8.531,
 10.204,
 10.274,
 0.0,
@@ -879,13 +900,13 @@
 "part": "leg_hi",
 "face": [
 "z",
-8.371,
--1
+8.511,
+1
 ],
 "by": null,
 "box": [
-8.351,
-8.371,
+8.511,
+8.531,
 10.949,
 11.019,
 0.0,
@@ -896,72 +917,66 @@
 "part": "head",
 "face": [
 "z",
-8.371,
--1
+8.511,
+1
 ],
 "by": null,
 "box": [
-8.351,
-8.371,
+8.511,
+8.531,
 10.204,
 11.019,
 2.032,
 2.102
 ]
 },
+{
+"part": "frame",
+"face": [
+"z",
+8.371,
+-1
+],
+"by": "store_props:hall_bath_door",
+"box": [
+8.306,
+8.366,
+10.2321,
+10.9909,
+0.0,
+2.087
+]
+}
+],
+"dropped": [
 {
 "part": "leg_lo",
 "face": [
 "z",
-8.511,
-1
+8.371,
+-1
 ],
-"by": null,
-"box": [
-8.511,
-8.531,
-10.204,
-10.274,
-0.0,
-2.102
-]
+"reason": "replaced by the store prop hall_bath_door's door frame (store_props.json)"
 },
 {
 "part": "leg_hi",
 "face": [
 "z",
-8.511,
-1
+8.371,
+-1
 ],
-"by": null,
-"box": [
-8.511,
-8.531,
-10.949,
-11.019,
-0.0,
-2.102
-]
+"reason": "replaced by the store prop hall_bath_door's door frame (store_props.json)"
 },
 {
 "part": "head",
 "face": [
 "z",
-8.511,
-1
+8.371,
+-1
 ],
-"by": null,
-"box": [
-8.511,
-8.531,
-10.204,
-11.019,
-2.032,
-2.102
-]
+"reason": "replaced by the store prop hall_bath_door's door frame (store_props.json)"
 }
 ],
-"dropped": [],
 "limits": [
 {
 "rule": "head-under-header",
@@ -971,12 +986,12 @@
 {
 "rule": "under-ceiling",
 "ok": true,
-"detail": "head + casing 2.102 under hall_corridor's ceiling 2.400"
+"detail": "head 2.032 under hall_corridor's ceiling 2.400"
 },
 {
 "rule": "head-cased",
 "ok": true,
-"detail": "hall_corridor face: head by SpecGreybox"
+"detail": "hall_corridor face: frame by store_props:hall_bath_door"
 },
 {
 "rule": "under-ceiling",
@@ -987,6 +1002,11 @@
 "rule": "head-cased",
 "ok": true,
 "detail": "hall_bath face: head by SpecGreybox"
+},
+{
+"rule": "swing-room",
+"ok": true,
+"detail": "store door hall_bath_door: 0.65 m leaf swings clear to 90 deg"
 }
 ],
 "header": {
@@ -1002,7 +1022,15 @@
 "hall_corridor": 2.4,
 "hall_bath": 2.4
 }
+},
+"swings": [
+{
+"what": "store door hall_bath_door",
+"hinge_s": 10.949,
+"toward_n": 1,
+"width": 0.655
 }
+]
 },
 {
 "id": "upstairs:fake_door:hall_corridor|linen_closet:8.893",
@@ -6342,6 +6370,111 @@
 15.998,
 0.0,
 2.087
+]
+}
+],
+"dropped": [],
+"limits": []
+},
+{
+"id": "ground:surface_door:rear_passage_end_door",
+"storey": "ground",
+"kind": "fake_door",
+"between": [],
+"axis": "x",
+"c": 1.585,
+"lo": 8.91,
+"hi": 9.944,
+"head": 2.087,
+"sill": null,
+"spring": null,
+"model": null,
+"pieces": [
+{
+"part": "frame",
+"face": [
+"z",
+1.585,
+1
+],
+"by": "store_props:rear_passage_end_door",
+"box": [
+1.585,
+1.645,
+8.91,
+9.944,
+-3.026,
+-0.939
+]
+}
+],
+"dropped": [],
+"limits": []
+},
+{
+"id": "ground:surface_door:rear_passage_side_door",
+"storey": "ground",
+"kind": "fake_door",
+"between": [],
+"axis": "z",
+"c": 8.86,
+"lo": 1.9029,
+"hi": 2.7571,
+"head": 2.087,
+"sill": null,
+"spring": null,
+"model": null,
+"pieces": [
+{
+"part": "frame",
+"face": [
+"x",
+8.86,
+1
+],
+"by": "store_props:rear_passage_side_door",
+"box": [
+1.9029,
+2.7571,
+8.86,
+8.92,
+-3.026,
+-0.939
+]
+}
+],
+"dropped": [],
+"limits": []
+},
+{
+"id": "ground:surface_door:under_landing_door",
+"storey": "ground",
+"kind": "fake_door",
+"between": [],
+"axis": "z",
+"c": 10.225,
+"lo": 1.9029,
+"hi": 2.7571,
+"head": 2.087,
+"sill": null,
+"spring": null,
+"model": null,
+"pieces": [
+{
+"part": "frame",
+"face": [
+"x",
+10.225,
+-1
+],
+"by": "store_props:under_landing_door",
+"box": [
+1.9029,
+2.7571,
+10.165,
+10.225,
+-3.026,
+-0.939
 ]
 }
 ],

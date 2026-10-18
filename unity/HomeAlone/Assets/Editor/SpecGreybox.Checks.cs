@@ -74,7 +74,7 @@ public static partial class SpecGreybox
             if (!r.enabled || r.shadowCastingMode == ShadowCastingMode.ShadowsOnly) continue;
             var mesh = r.GetComponent<MeshFilter>()?.sharedMesh; if (mesh == null) continue;
             var (v, sub) = ReadMesh(mesh); if (v == null) { unread.Add(r.name); continue; }
-            var M = r.transform.localToWorldMatrix;
+            var M = r.transform.localToWorldMatrix; float flip = M.determinant < 0 ? -1f : 1f;   // a mirrored part (store_props "mirror") draws its faces flipped
             for (int i = 0; i < v.Length; i++) v[i] = M.MultiplyPoint3x4(v[i]);
             for (int sm = 0; sm < sub.Length; sm++)
             {
@@ -84,7 +84,7 @@ public static partial class SpecGreybox
                 {
                     Vector3 a = v[t[k]], b = v[t[k + 1]], c = v[t[k + 2]]; var cr = Vector3.Cross(b - a, c - a);
                     if (cr.magnitude < 2e-6f) continue;
-                    var n = cr.normalized; tris.Add((sid, a, b, c, n, Vector3.Dot(n, a)));
+                    var n = cr.normalized * flip; tris.Add((sid, a, b, c, n, Vector3.Dot(n, a)));
                 }
             }
         }

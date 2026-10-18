@@ -1193,6 +1193,185 @@
    "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): openings audit: opening 0.770 x 2.032 (stock 30 x 80 in; Marina's slab 0.762 at her 80 in ruler); Door_3 White as girls_a/girls_b/attic/linen/Buzz (the film's are white six-panel: logged with the hall's DEVIATIONS 63h); the pack frame (leaf x 1.124 wide, x 1.027 tall) replaces the generated casing on the hall face, 0.5 cm proud. Hinge at the notch end (hi): Marina 180 s shows the knob at the fireplace-side edge; swings into the room. Open 80 deg AUTHORED (closed in every Marina frame), clear of the door-wall armchair",
    "open": 80,
    "hinge": "hi"
+  },
+  {
+   "name": "kevin_door",
+   "floor": "upper",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    6.856,
+    6.916
+   ],
+   "z": [
+    6.7063,
+    7.5717
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "back": "+x",
+   "hides": [
+    "Casing"
+   ],
+   "collide": false,
+   "open": 85,
+   "hinge": "hi",
+   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White as the other interior doors (linen, girls_a/b, attic, Buzz, parents; the film's are white six-panel: DEVIATIONS 63h). The pack frame (outer = leaf x 1.124 wide, x 1.027 tall) centred on the opening, 0.5 cm proud of the face, 6 cm deep. Opening z 6.754-7.524 (0.77 m, stock 30 x 80 in; spec/geometry.json kevin_jeff_room|hall_end) had no leaf. Frame on the hall_end face (x 6.921), replacing its casing. Hinge ASSUMED at the hi end (z 7.524, 0.11 m from the room's north wall, x 7.061-7.638 corner): the open leaf rests along that wall. Swings into the room; open 85 deg AUTHORED (no leaf has collision: walking unchanged)."
+  },
+  {
+   "name": "hall_bath_door",
+   "floor": "upper",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    8.306,
+    8.366
+   ],
+   "z": [
+    10.2321,
+    10.9909
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "back": "+x",
+   "hides": [
+    "Casing"
+   ],
+   "collide": false,
+   "open": 85,
+   "hinge": "hi",
+   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White as the other interior doors (linen, girls_a/b, attic, Buzz, parents; the film's are white six-panel: DEVIATIONS 63h). The pack frame (outer = leaf x 1.124 wide, x 1.027 tall) centred on the opening, 0.5 cm proud of the face, 6 cm deep. Opening z 10.274-10.949 (0.675 m, a 26.5 in leaf: the opening's measured width kept, not a stock 28) had no leaf. Frame on the hall corridor face (x 8.371), replacing its casing. Hinge ASSUMED at the hi end (z 10.949, nearer the bath's z 11.43 wall); swings into the bath; open 85 deg AUTHORED."
+  },
+  {
+   "name": "parents_bath_door",
+   "floor": "upper",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    3.215,
+    3.275
+   ],
+   "z": [
+    3.5369,
+    4.3911
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "back": "-x",
+   "hides": [
+    "Casing"
+   ],
+   "collide": false,
+   "open": 85,
+   "hinge": "lo",
+   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White as the other interior doors (linen, girls_a/b, attic, Buzz, parents; the film's are white six-panel: DEVIATIONS 63h). The pack frame (outer = leaf x 1.124 wide, x 1.027 tall) centred on the opening, 0.5 cm proud of the face, 6 cm deep. Opening z 3.584-4.344 (0.76 m, stock 30 x 80 in) had no leaf. Frame on the bedroom face (x 3.21), replacing its casing (the bath-side casing stays). Hinge ASSUMED at the lo end (z 3.584; the pack leaf's own hinge edge as it turns here, yaw 270: hinged at hi its lever stood in the wall, clash gate); swings into the bath, resting toward z 2.82 (the bath runs to z 2.373 there); open 85 deg AUTHORED."
+  },
+  {
+   "name": "kevin_closet_door",
+   "floor": "upper",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    8.022,
+    8.955
+   ],
+   "z": [
+    7.573,
+    7.633
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "back": "+z",
+   "hides": [
+    "Casing"
+   ],
+   "collide": false,
+   "open": 30,
+   "hinge": "lo",
+   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White as the other interior doors (linen, girls_a/b, attic, Buzz, parents; the film's are white six-panel: DEVIATIONS 63h). The pack frame (outer = leaf x 1.124 wide, x 1.027 tall) centred on the opening, 0.5 cm proud of the face, 6 cm deep. Opening x 8.074-8.904 (0.83 m, stock 32/33 in) had no leaf. Frame on Kevin's room face (z 7.638), replacing its casing. Hinge ASSUMED at the lo end (x 8.074; the pack leaf's own hinge edge as it turns here, yaw 180, so the lever is at the latch edge); swings into the closet (0.86 m deep, the 0.83 leaf clears); AJAR 30 deg (a closet)."
+  },
+  {
+   "name": "rear_passage_end_door",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    1.585,
+    1.645
+   ],
+   "z": [
+    8.91,
+    9.944
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "back": "-x",
+   "hides": [
+    "PropDoor"
+   ],
+   "collide": false,
+   "surface": true,
+   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White as the other interior doors (linen, girls_a/b, attic, Buzz, parents; the film's are white six-panel: DEVIATIONS 63h). The pack frame (outer = leaf x 1.124 wide, x 1.027 tall) centred on the opening, 0.5 cm proud of the face, 6 cm deep. Replaces the plain PropDoor slab of the fake door at the rear passage's end (spec/geometry.json rear_passage|back_hall, x 1.51, z 8.967-9.887: 0.92 m, a 36 in leaf kept at the opening's width). Film 1690 shows a white panelled door with a brass knob through the arch. Closed: nothing is cut behind it (back_hall is a closed unknown space, DEVIATIONS 22). Hung on the passage face (x 1.58); surface: openings.py stops the baseboard at its frame. The hidden slab's collider keeps it shut. mirror: the pack's lever moved to the low-z edge (right as seen from the foyer), as the brass knob in film 1690.",
+   "mirror": true
+  },
+  {
+   "name": "rear_passage_side_door",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    1.9029,
+    2.7571
+   ],
+   "z": [
+    8.86,
+    8.92
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "back": "-z",
+   "hides": [
+    "PropDoor"
+   ],
+   "collide": false,
+   "surface": true,
+   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White as the other interior doors (linen, girls_a/b, attic, Buzz, parents; the film's are white six-panel: DEVIATIONS 63h). The pack frame (outer = leaf x 1.124 wide, x 1.027 tall) centred on the opening, 0.5 cm proud of the face, 6 cm deep. Replaces the PropDoor slab of the fake door on the rear passage's south wall (rear_passage|back_hall, z 8.785, x 1.95-2.71: 0.76 m, stock 30 x 80 in). Closed (back_hall is closed, DEVIATIONS 22); on the passage face (z 8.855); surface."
+  },
+  {
+   "name": "under_landing_door",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    1.9029,
+    2.7571
+   ],
+   "z": [
+    10.165,
+    10.225
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "back": "+z",
+   "hides": [
+    "PropDoor"
+   ],
+   "collide": false,
+   "surface": true,
+   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White as the other interior doors (linen, girls_a/b, attic, Buzz, parents; the film's are white six-panel: DEVIATIONS 63h). The pack frame (outer = leaf x 1.124 wide, x 1.027 tall) centred on the opening, 0.5 cm proud of the face, 6 cm deep. Replaces the PropDoor slab of the fake door on the rear passage's north wall (rear_passage|under_landing closet, z 10.3, x 1.95-2.71: 0.76 m, stock 30 x 80 in). Closed (the closet is not cut); on the passage face (z 10.23); surface."
+  },
+  {
+   "name": "basement_door",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    -1.354,
+    -0.375
+   ],
+   "z": [
+    6.257,
+    6.317
+   ],
+   "y0": 0.0,
+   "height": 2.1,
+   "back": "+z",
+   "hides": [
+    "basement_PropDoor_knob",
+    "basement_Casing_l",
+    "basement_Casing_r",
+    "basement_Casing_head"
+   ],
+   "collide": false,
+   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White over the basement door's plain slab (house_spec.ground.json stair boxes basement_PropDoor x -1.284..-0.445, 0.84 m: a 33 in leaf, tools/house/reconcile.py). The frame takes the generated casing's outline (x -1.354..-0.375, to 2.10 m: casing legs 7 cm, head to 2.10) and replaces it (casings and the slab's knob hidden); the slab itself stays drawn behind the leaf, 0.5 cm off the frame's back (z 6.322), so the door still reads shut from every side. Closed (the basement is not built)."
   }
  ]
 }
