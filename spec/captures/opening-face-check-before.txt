@@ -1,0 +1,4 @@
+Opening face check: 22 door faces, 1 without a head casing, 2 showing the other room's finish within the casing width
+NO HEAD upstairs:door:buzz_room|hall_corridor:7.507: buzz_room face, 38/38 rays at the head casing's height meet bare wall or nothing
+PAINT   upstairs:door:buzz_room|hall_corridor:7.507: buzz_room face shows hall_corridor's Dress_D9D9D9 within the casing width (87 rays, spec x 7.482-7.502, y 0.16-0.72)
+PAINT   upstairs:door:buzz_room|hall_corridor:7.507: buzz_room face shows hall_corridor's Paint_hall_corridor within the casing width (319 rays, spec x 7.482-8.362, y 0.74-2.38)

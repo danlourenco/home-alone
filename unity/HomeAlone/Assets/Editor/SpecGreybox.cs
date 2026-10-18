@@ -375,6 +375,8 @@ public static partial class SpecGreybox
         report += ClashCheck(root, groot);
         Step("CasingCheck");
         report += CasingCheck(root, groot);
+        Step("OpeningFaceCheck");
+        report += OpeningFaceCheck();   // SpecGreybox.OpeningFaces.cs: every door face has a head casing and only its own room's finish
         Step("ArchFitCheck");
         report += ArchFitCheck();   // SpecGreybox.Arch.cs
         Step("PropsCheck");
@@ -635,6 +637,14 @@ public static partial class SpecGreybox
             {
                 if (f.Item1 != null) return f;
                 var a = Fin(endA.x, endA.y); return a.Item1 != null ? a : Fin(endB.x, endB.y);
+            }
+            // a stub thin both ways (a pier between an opening and a corner) is split like the thin wall it belongs to: down the
+            // thickness whose two faces border rooms. As one "thick piece" it took the hall's teal on Buzz's room face above the door
+            // casing (walk note 2026-10-17 20:38)
+            if (thinX && thinZ)
+            {
+                bool zRooms = Fin(mx, z0 - e).upper != null || Fin(mx, z1 + e).upper != null, xRooms = Fin(x0 - e, mz).upper != null || Fin(x1 + e, mz).upper != null;
+                if (zRooms && !xRooms) thinX = false; else if (xRooms && !zRooms) thinZ = false;
             }
             if (thinX && !thinZ)
                 Runs(z0, z1, z => (Fin(x0 - e, z), Fin(x1 + e, z)), (za, zb, a, c) =>

@@ -77,7 +77,7 @@ build)
   [ $ux = 0 ] || { grep -m5 -iE "exception|error" "$ROOT/build.log"; echo "Unity build exited $ux" >&2; exit $ux; }
   # artist-pipeline quality gate on the generated models (tools/house/model_quality.py; .claude/skills/artist-pipeline)
   (cd "$REPO" && uv run -q --with numpy --with pillow python -I tools/house/model_quality.py --report >> spec/captures/walk-test-wallgrid.txt) || q=$?
-  grep -E "^(Seam|Z-fight|Clash|Casing|Arch|Trim|Envelope|Props|Leak|Peek|Quality)|BLOCKED" "$REPO/spec/captures/walk-test-wallgrid.txt"
+  grep -E "^(Seam|Z-fight|Clash|Casing|Opening|Arch|Trim|Envelope|Props|Leak|Peek|Quality)|BLOCKED" "$REPO/spec/captures/walk-test-wallgrid.txt"
   [ "${q:-0}" = 0 ] || { echo "quality gate FAILED (model_quality.py)" >&2; exit 1; };;
 bake)
   # the windowed bake opens the scratch project: no HDRP wizard popping up each time (a user-local editor preference)

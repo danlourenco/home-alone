@@ -146,10 +146,24 @@ def openings():
                 a, b2 = min(f0, f1), max(f0, f1)
                 box = [s0, s1, a, b2, y0 + fy, y1 + fy] if faxis == "x" else [a, b2, s0, s1, y0 + fy, y1 + fy]
                 face = [faxis, round(c + n * HALF, 4), n]
-                if part in ("leg_lo", "leg_hi", "head", "stool") and any(overlap(box, w, 0.002) for w in walls_so_far + floors_so_far):
-                    rec["dropped"].append({"part": part, "face": face, "reason": "would run into a wall or floor (the next room is no wider than the opening)"})
-                    return
-                rec["pieces"].append({"part": part, "face": face, "by": by, "box": [round(v, 5) for v in box]})
+                # a piece that meets a wall beside the opening is scribed to it (cut along the face to the free span), as a carpenter
+                # would; it is dropped only when nothing is left or the blocker stands over the opening itself (a floor). Before Oct 17
+                # 20:38 the whole piece was dropped, so a leg with no room beside it took the head with it (Buzz's room face)
+                i0 = 0 if faxis == "x" else 2; m = (lo + hi) / 2; w0 = box[i0 + 1] - box[i0]
+                if part in ("leg_lo", "leg_hi", "head", "stool"):
+                    for w in walls_so_far + floors_so_far:
+                        if not overlap(box, w, 0.002):
+                            continue
+                        if w[i0 + 1] <= m: box[i0] = max(box[i0], w[i0 + 1])
+                        elif w[i0] >= m: box[i0 + 1] = min(box[i0 + 1], w[i0])
+                        else: box[i0] = box[i0 + 1]
+                        if box[i0 + 1] - box[i0] < 0.005:
+                            rec["dropped"].append({"part": part, "face": face, "reason": "no room for it: a wall or floor stands where it would go (the next room is no wider than the opening)"})
+                            return
+                pc = {"part": part, "face": face, "by": by, "box": [round(v, 5) for v in box]}
+                if box[i0 + 1] - box[i0] < w0 - 1e-6:
+                    pc["scribed"] = round(box[i0 + 1] - box[i0], 4)   # width left after scribing to the wall beside it
+                rec["pieces"].append(pc)
 
             def cased(n, head, sill=0.0):
                 f0 = c + n * HALF; f1 = f0 + n * CASING_PROUD
@@ -304,6 +318,9 @@ def check_limits(recs, leaf_list):
             top = r["head"] + (CASING_W if casing else 0.0)
             what = "crown" if r.get("spring") is not None else "head + casing" if casing else "head"
             lim(r, "under-ceiling", top < ceil - 1e-6, f"{what} {top:.3f} {'under' if top < ceil - 1e-6 else 'ABOVE'} {room['name']}'s ceiling {ceil:.3f}")
+            if r["kind"] == "door":   # a door is cased over its head on every face that faces a room (walk note 2026-10-17 20:38, Buzz)
+                head = [pc for pc in r["pieces"] if pc["face"][2] == n and (pc["part"] == "head" or pc["part"] == "frame")]
+                lim(r, "head-cased", head, f"{room['name']} face: " + (f"{head[0]['part']} by {head[0]['by'] or 'SpecGreybox'}" if head else "NO head casing"))
         if r.get("spring") is not None:
             lim(r, "spring-under-crown", r["spring"] < r["head"], f"spring {r['spring']:.3f} under the crown {r['head']:.3f}")
     for st, o, hinge, latch, n, w, what in leaf_list:

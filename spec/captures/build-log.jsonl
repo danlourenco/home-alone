@@ -20,3 +20,5 @@
 {"time": "2026-10-17T19:19:10", "cmd": "bake", "job": "buzz2", "why": "Buzz TRIAL 2 bake 5 (experiment C: overhang in the bake, FilmFront out, no dilation)", "wall_s": 13, "exit": 1}
 {"time": "2026-10-17T19:20:50", "cmd": "bake", "job": "buzz2", "why": "Buzz TRIAL 2 bake 6 (experiment C retry)", "wall_s": 92, "exit": 0}
 {"time": "2026-10-17T19:24:46", "cmd": "bake", "job": "buzz2", "why": "Buzz TRIAL 2 final bake (overhang bakes with its walls; no in-room invalidation)", "wall_s": 96, "exit": 0}
+{"time": "2026-10-17T20:50:17", "cmd": "build", "job": "buzzcasing", "why": "Buzz door casing scribed + stub finish split (TRIAL build 1)", "wall_s": 79, "exit": 0}
+{"time": "2026-10-17T20:52:13", "cmd": "bake", "job": "buzzcasing", "why": "Buzz door casing TRIAL bake (new casing + split piers in Buzz/hall)", "wall_s": 91, "exit": 0}

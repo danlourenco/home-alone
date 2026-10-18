@@ -1,0 +1,113 @@
+{
+  "gate": 8,
+  "change": "Opening casing and the wall around it built by construction (HOUSE-KERNEL step 2), fixing walk note 2026-10-17 20:38 in Buzz's room ('green vertical hands above the door and the missing header casing'). Two generator faults, both general: (1) tools/house/openings.py dropped a whole casing piece when it ran into a wall, so a leg with no room beside it also took the HEAD away (Buzz's room face: leg_lo and head dropped; hall face: head dropped, hidden by the pack frame). A piece is now scribed to the wall it meets (cut along the face to the free span), dropped only when nothing is left; the head always spans the opening. (2) SpecGreybox.Storey gave a wall stub thin in both directions (the 3.4 and 5.1 cm piers beside Buzz's opening) ONE finish for all faces, the neighbour with the tallest wainscot (the hall's teal), so its room face above the casing showed hall paint. Such a stub is now split down its thickness like any thin wall, each face taking its own room's finish. New checks: openings.py limit head-cased (every interior door has a head casing or a frame on each face it faces a room) and Unity OpeningFaceCheck (each door face: a head casing at the head, and no wall within the casing width showing the other room's finish)",
+  "target": "House_WallGrid",
+  "premise": "A carpenter scribes casing to the wall beside an opening rather than leaving it off, and every face of a wall takes the finish of the room it faces; Marina's room side of Buzz's door shows a head casing over the full opening and a narrow leg against the shelves wall, with the room's paper above",
+  "claim": {
+    "value": {
+      "buzz_room_face": "leg_lo scribed to 0.034 m (x 7.473-7.507) up to the head, head x 7.473-8.390, leg_hi unchanged (8.320-8.390)",
+      "piers_above_head": "x 7.473-7.507 and 8.320-8.371 (z 11.43-11.57) split at z 11.50: room half Buzz's paper, hall half the hall's finish"
+    },
+    "data": [
+      "overhead-trace:upstairs"
+    ],
+    "scale": [
+      "none"
+    ],
+    "upstream": [
+      "overhead-trace:upstairs"
+    ],
+    "how": "No dimension changes: the opening, its walls and the casing size (0.07 x 0.02) are as accepted in changes/2026-10-17-buzz-door.json. Only which casing pieces exist (scribed instead of dropped) and which face of a stub takes which finish",
+    "applies_to": [
+      "buzz_room",
+      "hall_corridor"
+    ],
+    "measured_in": [
+      "buzz_room"
+    ],
+    "assumed": {
+      "hall_corridor": "DEVIATIONS 73"
+    },
+    "alternatives": [
+      "current build: Buzz's room face has leg_hi only (no head, no shelves-side leg), the piers above the head show hall teal on the room face",
+      "this: scribed leg and full head on the room face; piers split per face",
+      "head only, no shelves-side leg (rejected: Marina 563 s shows a narrow leg there)"
+    ],
+    "layout": {
+      "decides": [
+        {
+          "part": "room-side casing over Buzz's door: a head across the opening and a narrow leg against the shelves wall",
+          "observed_in": [
+            "marina-frame:563",
+            "marina-frame:560"
+          ],
+          "extrapolated": false
+        }
+      ]
+    }
+  },
+  "history": [
+    {
+      "date": "2026-10-17",
+      "what": "Buzz's door widened to a stock 32 in pack door; room-side head casing left missing (open item in its record)",
+      "outcome": "accepted",
+      "ref": "changes/2026-10-17-buzz-door.json"
+    },
+    {
+      "date": "2026-10-17",
+      "what": "HOUSE-KERNEL step 2: openings own their casing; 'would run into a wall' recorded as a drop",
+      "outcome": "accepted",
+      "ref": "changes/2026-10-17-openings-own-trim.json"
+    }
+  ],
+  "premise_reviewed": "",
+  "checks": [
+    {
+      "what": "Marina 563 s (room side, door closed; topological, no scale): a head casing runs across the top of the opening, a narrow leg stands between the leaf and the shelves wall, the full leg on the bed side, the striped paper continues above the head to the ceiling with no other colour",
+      "agrees": true,
+      "type": "topological",
+      "data": [
+        "marina-frame:563"
+      ],
+      "scale": [
+        "none"
+      ],
+      "tests": [
+        "extraction"
+      ],
+      "pick": {
+        "crop": "spec/captures/picks/buzzdoor/m563_door.png",
+        "confirmed_by": "blind subagent shown only the crop (Oct 17): a horizontal casing across the top of the opening (high); a vertical casing strip left of the leaf between it and the shelves, about as wide as the right one (exists: high, width: medium); striped cream paper above the head, same as the walls beside (medium-high)"
+      }
+    },
+    {
+      "what": "CONSISTENCY, not evidence (build self-check): OpeningFaceCheck on the trial-2 scene the user walked (standalone, no rebuild): 22 door faces, 1 without a head casing (Buzz room face, 38/38 rays bare), 2 PAINT (Buzz room face shows hall_corridor's Paint_hall_corridor x 7.482-8.362 y 0.74-2.38 and its wainscot at the shelves pier); after the fix: 0 and 0 (spec/captures/opening-face-check-before.txt; walk-test-wallgrid.txt). openings.py head-cased limit on the old generator: FAIL upstairs:door:buzz_room|hall_corridor:7.507 buzz_room face NO head casing; after: 0 broken of 174",
+      "agrees": true,
+      "type": "topological",
+      "data": [
+        "build:House_WallGrid"
+      ],
+      "scale": [
+        "none"
+      ]
+    }
+  ],
+  "renders": {
+    "before": [
+      "spec/captures/views/buzzcasing/before/note-2038.png",
+      "spec/captures/views/buzzcasing/before/head-room.png",
+      "spec/captures/views/buzzcasing/before/corner-room.png",
+      "spec/captures/views/buzzcasing/before/head-hall.png"
+    ],
+    "after": [
+      "spec/captures/views/buzzcasing/after/note-2038.png",
+      "spec/captures/views/buzzcasing/after/head-room.png",
+      "spec/captures/views/buzzcasing/after/corner-room.png",
+      "spec/captures/views/buzzcasing/after/head-hall.png",
+      "spec/captures/views/buzzcasing/after/note-2038-live.png"
+    ]
+  },
+  "user_walk": "accepted",
+  "gates": "build 1 (job buzzcasing, exit 0) + bake 1: Seam 0, Z-fight 0, Clash 0 (11 allowed joints), Casing 0, Opening face 22 faces 0/0, Arch fit 0, Envelope 0, Peek 0; unchanged pre-existing: service-stair BLOCKED line, Props landing_table, 1 trim gap; preflight all ok; models rebuilt byte-identical (stamps only: LandingWindow, BuzzCurtains read openings.json)",
+  "user_words": "user Oct 17 after walking the casing trial: \"moulding looks good. accepted.\""
+}

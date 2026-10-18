@@ -9,7 +9,7 @@
 "spec/dressing/french_doors.json": "493cfebb4db15bccadeacf7a705cfb330ee530e92d051fca881b921c5a3d4976",
 "spec/dressing/buzz.json": "81f2ab30096b30f1dbc75adda7ff81044fc2fc6f0851a09593209c5b4e52850a",
 "tools/house/hifi_door.py": "43caa8e4502f58c7b108e6a1e623e15b7f158f7aac7dd50510b2abaf2d739788",
-"tools/house/openings.py": "14fded165ddc020b0ea904a45628266c4e4f928294c71207fa703b2165d677a9"
+"tools/house/openings.py": "83eec06b884ed468f0cf1458436d65e6db0f37f02630d81677afb946792ba1d1"
 },
 "openings": [
 {
@@ -145,9 +145,19 @@
 "detail": "head + casing 2.102 under parents_bedroom's ceiling 2.500"
 },
 {
+"rule": "head-cased",
+"ok": true,
+"detail": "parents_bedroom face: head by SpecGreybox"
+},
+{
 "rule": "under-ceiling",
 "ok": true,
 "detail": "head + casing 2.102 under hall_end's ceiling 2.400"
+},
+{
+"rule": "head-cased",
+"ok": true,
+"detail": "hall_end face: head by SpecGreybox"
 }
 ],
 "header": {
@@ -298,9 +308,19 @@
 "detail": "head + casing 2.102 under parents_bath's ceiling 2.500"
 },
 {
+"rule": "head-cased",
+"ok": true,
+"detail": "parents_bath face: head by SpecGreybox"
+},
+{
 "rule": "under-ceiling",
 "ok": true,
 "detail": "head + casing 2.102 under parents_bedroom's ceiling 2.500"
+},
+{
+"rule": "head-cased",
+"ok": true,
+"detail": "parents_bedroom face: head by SpecGreybox"
 }
 ],
 "header": {
@@ -451,9 +471,19 @@
 "detail": "head + casing 2.102 under hall_end's ceiling 2.400"
 },
 {
+"rule": "head-cased",
+"ok": true,
+"detail": "hall_end face: head by SpecGreybox"
+},
+{
 "rule": "under-ceiling",
 "ok": true,
 "detail": "head + casing 2.102 under kevin_jeff_room's ceiling 2.400"
+},
+{
+"rule": "head-cased",
+"ok": true,
+"detail": "kevin_jeff_room face: head by SpecGreybox"
 }
 ],
 "header": {
@@ -604,9 +634,19 @@
 "detail": "head + casing 2.102 under kevin_jeff_room's ceiling 2.400"
 },
 {
+"rule": "head-cased",
+"ok": true,
+"detail": "kevin_jeff_room face: head by SpecGreybox"
+},
+{
 "rule": "under-ceiling",
 "ok": true,
 "detail": "head + casing 2.102 under closet_1's ceiling 2.400"
+},
+{
+"rule": "head-cased",
+"ok": true,
+"detail": "closet_1 face: head by SpecGreybox"
 }
 ],
 "header": {
@@ -751,9 +791,19 @@
 "detail": "head + casing 2.102 under girls_room_a's ceiling 2.400"
 },
 {
+"rule": "head-cased",
+"ok": true,
+"detail": "girls_room_a face: head by SpecGreybox"
+},
+{
 "rule": "under-ceiling",
 "ok": true,
 "detail": "head 2.032 under hall_end's ceiling 2.400"
+},
+{
+"rule": "head-cased",
+"ok": true,
+"detail": "hall_end face: frame by store_props:girls_a_door"
 },
 {
 "rule": "swing-room",
@@ -917,9 +967,19 @@
 "detail": "head + casing 2.102 under hall_corridor's ceiling 2.400"
 },
 {
+"rule": "head-cased",
+"ok": true,
+"detail": "hall_corridor face: head by SpecGreybox"
+},
+{
 "rule": "under-ceiling",
 "ok": true,
 "detail": "head + casing 2.102 under hall_bath's ceiling 2.400"
+},
+{
+"rule": "head-cased",
+"ok": true,
+"detail": "hall_bath face: head by SpecGreybox"
 }
 ],
 "header": {
@@ -1010,6 +1070,24 @@
 "model": null,
 "pieces": [
 {
+"part": "leg_lo",
+"face": [
+"x",
+11.57,
+1
+],
+"by": null,
+"box": [
+7.473,
+7.507,
+11.57,
+11.59,
+0.0,
+2.102
+],
+"scribed": 0.034
+},
+{
 "part": "leg_hi",
 "face": [
 "x",
@@ -1025,6 +1103,24 @@
 0.0,
 2.102
 ]
+},
+{
+"part": "head",
+"face": [
+"x",
+11.57,
+1
+],
+"by": null,
+"box": [
+7.473,
+8.39,
+11.57,
+11.59,
+2.032,
+2.102
+],
+"scribed": 0.917
 },
 {
 "part": "frame",
@@ -1046,43 +1142,25 @@
 ],
 "dropped": [
 {
+"part": "leg_lo",
+"face": [
+"x",
+11.43,
+-1
+],
+"reason": "replaced by the store prop buzz_door's door frame (store_props.json)"
+},
+{
 "part": "leg_hi",
 "face": [
 "x",
 11.43,
 -1
 ],
-"reason": "would run into a wall or floor (the next room is no wider than the opening)"
+"reason": "replaced by the store prop buzz_door's door frame (store_props.json)"
 },
 {
 "part": "head",
-"face": [
-"x",
-11.43,
--1
-],
-"reason": "would run into a wall or floor (the next room is no wider than the opening)"
-},
-{
-"part": "leg_lo",
-"face": [
-"x",
-11.57,
-1
-],
-"reason": "would run into a wall or floor (the next room is no wider than the opening)"
-},
-{
-"part": "head",
-"face": [
-"x",
-11.57,
-1
-],
-"reason": "would run into a wall or floor (the next room is no wider than the opening)"
-},
-{
-"part": "leg_lo",
 "face": [
 "x",
 11.43,
@@ -1103,9 +1181,19 @@
 "detail": "head 2.032 under hall_corridor's ceiling 2.400"
 },
 {
+"rule": "head-cased",
+"ok": true,
+"detail": "hall_corridor face: frame by store_props:buzz_door"
+},
+{
 "rule": "under-ceiling",
 "ok": true,
-"detail": "head 2.032 under buzz_room's ceiling 2.400"
+"detail": "head + casing 2.102 under buzz_room's ceiling 2.400"
+},
+{
+"rule": "head-cased",
+"ok": true,
+"detail": "buzz_room face: head by SpecGreybox"
 },
 {
 "rule": "swing-room",
@@ -1263,9 +1351,19 @@
 "detail": "head + casing 2.102 under girls_room_b's ceiling 2.400"
 },
 {
+"rule": "head-cased",
+"ok": true,
+"detail": "girls_room_b face: head by SpecGreybox"
+},
+{
 "rule": "under-ceiling",
 "ok": true,
 "detail": "head 2.032 under hall_corridor_south's ceiling 2.290"
+},
+{
+"rule": "head-cased",
+"ok": true,
+"detail": "hall_corridor_south face: frame by store_props:girls_b_door"
 },
 {
 "rule": "swing-room",
@@ -1423,9 +1521,19 @@
 "detail": "head 2.032 under hall_corridor_south's ceiling 2.290"
 },
 {
+"rule": "head-cased",
+"ok": true,
+"detail": "hall_corridor_south face: frame by store_props:attic_door"
+},
+{
 "rule": "under-ceiling",
 "ok": true,
 "detail": "head + casing 2.102 under attic_stair's ceiling 2.400"
+},
+{
+"rule": "head-cased",
+"ok": true,
+"detail": "attic_stair face: head by SpecGreybox"
 },
 {
 "rule": "swing-room",
@@ -1571,7 +1679,7 @@
 11.57,
 1
 ],
-"reason": "would run into a wall or floor (the next room is no wider than the opening)"
+"reason": "no room for it: a wall or floor stands where it would go (the next room is no wider than the opening)"
 },
 {
 "part": "leg_hi",
@@ -1580,7 +1688,7 @@
 11.57,
 1
 ],
-"reason": "would run into a wall or floor (the next room is no wider than the opening)"
+"reason": "no room for it: a wall or floor stands where it would go (the next room is no wider than the opening)"
 }
 ],
 "limits": [
@@ -3841,9 +3949,19 @@
 "detail": "head + casing 2.102 under kitchen's ceiling 2.438"
 },
 {
+"rule": "head-cased",
+"ok": true,
+"detail": "kitchen face: head by SpecGreybox"
+},
+{
 "rule": "under-ceiling",
 "ok": true,
 "detail": "head + casing 2.102 under dining_room's ceiling 2.438"
+},
+{
+"rule": "head-cased",
+"ok": true,
+"detail": "dining_room face: head by SpecGreybox"
 },
 {
 "rule": "swing-room",
@@ -4018,9 +4136,19 @@
 "detail": "head + casing 2.102 under kitchen's ceiling 2.438"
 },
 {
+"rule": "head-cased",
+"ok": true,
+"detail": "kitchen face: head by SpecGreybox"
+},
+{
 "rule": "under-ceiling",
 "ok": true,
 "detail": "head + casing 2.102 under dining_room's ceiling 2.438"
+},
+{
+"rule": "head-cased",
+"ok": true,
+"detail": "dining_room face: head by SpecGreybox"
 }
 ],
 "header": {
@@ -5151,7 +5279,7 @@
 10.13,
 -1
 ],
-"reason": "would run into a wall or floor (the next room is no wider than the opening)"
+"reason": "no room for it: a wall or floor stands where it would go (the next room is no wider than the opening)"
 }
 ],
 "limits": [
@@ -5256,7 +5384,7 @@
 10.13,
 -1
 ],
-"reason": "would run into a wall or floor (the next room is no wider than the opening)"
+"reason": "no room for it: a wall or floor stands where it would go (the next room is no wider than the opening)"
 }
 ],
 "limits": [
