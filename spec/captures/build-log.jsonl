@@ -40,3 +40,9 @@
 {"time": "2026-10-17T22:44:10", "cmd": "build", "job": "livingfast", "why": "living room rearranged from the film (user); chest lamp on its top + unshadowed shade", "wall_s": 74, "exit": 0}
 {"time": "2026-10-17T22:47:15", "cmd": "build", "job": "livingfast", "why": "living train on rug; chest lamp; landing dome (user)", "wall_s": 74, "exit": 0}
 {"time": "2026-10-17T22:48:52", "cmd": "bake", "job": "livingfast", "why": "", "wall_s": 89, "exit": 0}
+{"time": "2026-10-17T23:00:45", "cmd": "build", "job": "living2", "why": "living sofa/table aligned, red chair, Marina pieces, no foyer french doors, smaller chest lamp (user)", "wall_s": 87, "exit": 0}
+{"time": "2026-10-17T23:02:40", "cmd": "bake", "job": "living2", "why": "living sofa/table aligned, red chair, Marina pieces (user)", "wall_s": 101, "exit": 0}
+{"time": "2026-10-17T23:05:01", "cmd": "build", "job": "living2", "why": "living pass 2: curio brown, den banker lamp pack (user)", "wall_s": 2, "exit": 1}
+{"time": "2026-10-17T23:06:42", "cmd": "bake", "job": "living2", "why": "", "wall_s": 101, "exit": 0}
+{"time": "2026-10-17T23:09:49", "cmd": "build", "job": "living2", "why": "living: sofa faces fireplace (Marina layout), curio brown, den banker pack (user)", "wall_s": 102, "exit": 0}
+{"time": "2026-10-17T23:11:10", "cmd": "bake", "job": "living2", "why": "", "wall_s": 76, "exit": 0}

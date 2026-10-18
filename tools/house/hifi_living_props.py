@@ -28,12 +28,12 @@ MAHOGANY = (0.10, 0.035, 0.022)                       # linear; the film's dark 
 wood = lambda rgb: (rgb[..., 0] > 1.35 * rgb[..., 1]) & (rgb[..., 0] > 0.08) & (rgb[..., 1] < 0.25)   # sofa_03's carved show-wood
 
 s = D["sofa"]; o = load("sofa_03", "sofa")
-recolour(o, "LP_SofaGreen", (0.022, 0.10, 0.04))                          # film 10636: green velvet all over (its show-wood and leather too)
+recolour(o, "LP_SofaGreen", (0.09, 0.26, 0.13))                          # film 10635/10636: green velvet all over (its show-wood and leather too); was (0.022, 0.10, 0.04): read near-black (user Oct 17)
 fit(o, s["x"], s["z"], [0.0, s["h"]], s["front"])
 c = D["console"]; o = load("ClassicConsole_01", "console"); recolour(o, "LP_ConsoleMahogany", MAHOGANY)
-fit(o, c["x"], c["z"], [0.0, c["h"]], "-z")
+fit(o, c["x"], c["z"], [0.0, c["h"]], c.get("front", "-z"))
 t = D["coffee_table"]; o = load("CoffeeTable_01", "coffee"); recolour(o, "LP_CoffeeMahogany", MAHOGANY)
-fit(o, t["x"], t["z"], [0.0, t["h"]], "+z")
+fit(o, t["x"], t["z"], [0.0, t["h"]], t.get("front", "+z"))
 p = D["painting"]; o = load("fancy_picture_frame_01", "painting")
 fit(o, p["x"], [p["z"] - 0.025, p["z"] - 0.005], p["h"], "-z")               # 1.5-2 cm off the den-side wall face (16.07)
 for q in o:   # the canvas sat 1.7 mm behind the frame's lip over its edge (Z-fight check): 3% smaller, so the lip no longer covers it
@@ -48,6 +48,45 @@ for g in [q for q in o if "glass" in q.name.lower()]:   # its glass sat inside t
 fit(o, [1.59, 1.82], [zc - 0.2415, zc + 0.2415], [top + 0.001, top + 0.162], "+x")   # native 0.48 x 0.25 x 0.16, 2 cm shallower to stay on the shelf
 st = D["stand"]; (sx, sz), h = st["at"], st["h"]
 o = load("side_table_tall_01", "stand"); fit(o, [sx - 0.18, sx + 0.18], [sz - 0.18, sz + 0.18], [0.0, h], "+x")
+
+# Oct 17 (user: "the rest of the living room furniture"): the film's red armchair (10635/10645 = Marina 436-442's red wingback),
+# Marina's floral armchair + ottoman right of the fireplace (418/466) and her glass-front china cabinet (458/466)
+import numpy as np
+CHINTZ = ROOT / "sfm-work/living_fabric/chintz.png"   # tools/house/living_chintz.py: Marina 418's chintz drawn (olive ground, cream blossoms, red buds)
+frame = lambda rgb: rgb.mean(2) < 0.16                # ArmChair_01's dark carved frame (kept)
+
+
+def chintz(objs, new_name, keep=None, repeats=6):
+    """re-skin: the diff texture's fabric pixels become the chintz tile (repeats per UV unit), keeping the model's shading"""
+    tile = bpy.data.images.load(str(CHINTZ)); tw, th = tile.size
+    t = np.array(tile.pixels[:]).reshape(th, tw, 4)[..., :3]
+    for o in objs:
+        for slot in getattr(o, "material_slots", []):
+            m = slot.material
+            if m is None:
+                continue
+            m2 = m.copy(); m2.name = new_name; slot.material = m2
+            for n in m2.node_tree.nodes:
+                if n.type == "TEX_IMAGE" and n.image and "diff" in n.image.name:
+                    img = n.image.copy(); img.name = new_name + "_diff"; W, H = img.size
+                    a = np.array(img.pixels[:]).reshape(H, W, 4); rgb = a[..., :3]; lum = rgb.mean(2)
+                    mask = np.ones(lum.shape, bool) if keep is None else ~keep(rgb)
+                    yy, xx = np.mgrid[0:H, 0:W]
+                    pat = t[(yy * repeats * th // H) % th, (xx * repeats * tw // W) % tw]
+                    shade = np.clip(lum / max(np.median(lum[mask]), 1e-3), 0, 1.6)[..., None]
+                    rgb[mask] = np.clip(pat * shade, 0, 1)[mask]
+                    a[..., :3] = rgb; img.pixels = a.ravel().tolist(); img.pack(); n.image = img
+
+
+q = D["red_chair"]; o = load("ArmChair_01", "redchair"); recolour(o, "LP_ChairRed", (0.42, 0.05, 0.06), keep=frame)
+fit(o, q["x"], q["z"], [0.0, q["h"]], q["front"])
+q = D["floral_chair"]; o = load("ArmChair_01", "floralchair"); chintz(o, "LP_ChairChintz", keep=frame)
+fit(o, q["x"], q["z"], [0.0, q["h"]], q["front"])
+q = D["ottoman"]; o = load("Ottoman_01", "ottoman"); chintz(o, "LP_OttomanChintz", repeats=5)
+fit(o, q["x"], q["z"], [0.0, q["h"]], q["front"])
+q = D["curio"]; o = load("vintage_cabinet_01", "curio")   # its grey-brown stain read slate in the build: Marina 458's warm brown, brass kept
+recolour(o, "LP_CurioBrown", (0.26, 0.12, 0.06), keep=lambda rgb: (rgb[..., 0] > 0.3) & (rgb[..., 1] > 0.2) & (rgb[..., 2] < 0.7 * rgb[..., 1]))
+fit(o, q["x"], q["z"], [0.0, q["h"]], q["front"])
 
 OUT.parent.mkdir(parents=True, exist_ok=True)
 bpy.ops.export_scene.gltf(filepath=str(OUT), export_format="GLB", export_yup=True, export_apply=True)

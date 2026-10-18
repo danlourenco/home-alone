@@ -46,15 +46,16 @@
  },
  "console": {
   "x": [
-   4.5,
-   5.9
+   5.08,
+   5.5
   ],
   "z": [
-   15.64,
-   16.06
+   13.12,
+   14.52
   ],
   "h": 0.78,
-  "source": "film 10636 (painting over a Hepplewhite console with brass bail pulls, on the den-side wall rear of the den opening; Marina f13/f25 the same wall); centre x 5.2 authored (no solved den-wall camera); box standard 1.4 x 0.42 x 0.78"
+  "source": "Marina 458/428: the console behind the sofa's back (4 cm), drawers to the front of the room, the two burgundy-shaded lamps on it (film 10636 has it on the den-side wall under the painting; the user chose Marina's layout Oct 17; the painting stays on the wall); box standard 1.4 x 0.42 x 0.78",
+  "front": "+x"
  },
  "painting": {
   "x": [
@@ -70,28 +71,29 @@
  },
  "sofa": {
   "x": [
-   4.15,
-   6.25
+   4.3,
+   5.04
   ],
   "z": [
-   14.8,
-   15.62
+   12.73,
+   14.91
   ],
-  "h": 0.86,
-  "front": "-z",
-  "source": "film 10636: a green velvet roll-arm sofa backed onto the console; Poly Haven sofa_03 re-skinned green; Marina's green sofa stands mid-room (her layout differs: DEVIATIONS)"
+  "h": 0.89,
+  "front": "-x",
+  "source": "Marina 458/428 (user Oct 17: \"rotate the couch ... to face the fire place\"): mid-room facing the fireplace, centred on its axis (z 13.82), the console behind its back; the film's sofa (10635/10645) is the same green roll-arm piece. Poly Haven sofa_03 (2.73 x 0.925 x 1.12 native) scaled uniformly 0.8 to 2.18 x 0.74 x 0.89, re-skinned the film's green"
  },
  "coffee_table": {
   "x": [
-   4.6,
-   5.8
+   3.25,
+   3.85
   ],
   "z": [
-   13.85,
-   14.45
+   13.22,
+   14.42
   ],
   "h": 0.46,
-  "source": "film 10636/5650: mahogany table with drawers and cabriole legs carrying the nutcrackers, a brass banker's lamp and a green tin; Poly Haven CoffeeTable_01 recoloured mahogany"
+  "source": "film 10636/5650: mahogany table with drawers and cabriole legs carrying the nutcrackers, a brass banker's lamp and a green tin; Poly Haven CoffeeTable_01 recoloured mahogany; Oct 17: between the sofa and the fireplace, centred on the sofa (z 13.82), square to it, 0.45 m in front of its front (x 4.30)",
+  "front": "+x"
  },
  "piano": {
   "x": [
@@ -172,9 +174,9 @@
  "lamps": {
   "console_l": {
    "at": [
-    4.72,
+    5.29,
     0.78,
-    15.86
+    13.34
    ],
    "kind": "candlestick",
    "shade": [
@@ -189,9 +191,9 @@
   },
   "console_r": {
    "at": [
-    5.68,
+    5.29,
     0.78,
-    15.86
+    14.3
    ],
    "kind": "candlestick",
    "shade": [
@@ -206,9 +208,9 @@
   },
   "banker": {
    "at": [
-    5.55,
+    3.55,
     0.46,
-    14.2
+    14.17
    ],
    "kind": "banker",
    "lumens": 250,
@@ -223,41 +225,41 @@
    ],
    "kind": "urn",
    "shade": [
-    0.2,
-    0.13,
-    0.42,
-    0.68
+    0.14,
+    0.09,
+    0.29,
+    0.48
    ],
    "lumens": 525,
    "kelvin": 2700,
-   "source": "y 0.726 = the pack chest's drawn top (DRAWER_CAB_01.fbx top plate 0.774 of 0.699 native above its base 0.140, x 0.8/0.699; 0.8 was its gallery top: lamp floated, user walk Oct 17). film 5650/5640: brass urn lamp with a black shade on the corner chest (lit); 525 lm: film 5650 has the paper over the lamp 3.0x the mid-wall paper; ours read 1.82x at 450 lm and 6.48x at 750 lm (film_light_match.py --living-night, batch -night renders); 525 is the linear interpolation to 3.0 (check live)"
+   "source": "y 0.726 = the pack chest's drawn top (DRAWER_CAB_01.fbx top plate 0.774 of 0.699 native above its base 0.140, x 0.8/0.699; 0.8 was its gallery top: lamp floated, user walk Oct 17). film 5650/5640: brass urn lamp with a black shade on the corner chest (lit); 525 lm: film 5650 has the paper over the lamp 3.0x the mid-wall paper; ours read 1.82x at 450 lm and 6.48x at 750 lm (film_light_match.py --living-night, batch -night renders); 525 is the linear interpolation to 3.0 (check live); Oct 17 scaled ~0.7x (user: too tall vs film 5633, lamp ~0.45-0.5 m above the chest top; eyeballed): shade [0.2,0.13,0.42,0.68] -> [0.14,0.09,0.29,0.48], urn scaled with it"
   }
  },
  "colliders": [
   {
    "name": "sofa",
    "x": [
-    4.15,
-    6.25
+    4.3,
+    5.04
    ],
    "z": [
-    14.8,
-    15.62
+    12.73,
+    14.91
    ],
    "y": [
     0.0,
-    0.86
+    0.89
    ]
   },
   {
    "name": "console",
    "x": [
-    4.5,
-    5.9
+    5.08,
+    5.5
    ],
    "z": [
-    15.64,
-    16.06
+    13.12,
+    14.52
    ],
    "y": [
     0.0,
@@ -267,12 +269,12 @@
   {
    "name": "coffee_table",
    "x": [
-    4.6,
-    5.8
+    3.25,
+    3.85
    ],
    "z": [
-    13.85,
-    14.45
+    13.22,
+    14.42
    ],
    "y": [
     0.0,
@@ -338,6 +340,118 @@
     0.0,
     1.2
    ]
+  },
+  {
+   "name": "red_chair",
+   "x": [
+    9.15,
+    9.92
+   ],
+   "z": [
+    12.15,
+    13.0
+   ],
+   "y": [
+    0.0,
+    0.98
+   ]
+  },
+  {
+   "name": "floral_chair",
+   "x": [
+    1.8,
+    2.52
+   ],
+   "z": [
+    11.8,
+    12.6
+   ],
+   "y": [
+    0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "ottoman",
+   "x": [
+    2.65,
+    3.15
+   ],
+   "z": [
+    11.92,
+    12.42
+   ],
+   "y": [
+    0.0,
+    0.42
+   ]
+  },
+  {
+   "name": "curio",
+   "x": [
+    3.35,
+    4.85
+   ],
+   "z": [
+    11.585,
+    12.035
+   ],
+   "y": [
+    0.0,
+    2.0
+   ]
   }
- ]
+ ],
+ "red_chair": {
+  "x": [
+   9.15,
+   9.92
+  ],
+  "z": [
+   12.15,
+   13.0
+  ],
+  "h": 0.98,
+  "front": "-x",
+  "source": "film 10635/10645 left edge (red upholstered armchair) = Marina 436-442's red wingback before the front wall's foyer-side window (the film's spot by the den doors is taken by the user-placed grand); Poly Haven ArmChair_01 (CC0) recoloured red, a tub armchair not a wingback (authored stand-in)"
+ },
+ "floral_chair": {
+  "x": [
+   1.8,
+   2.52
+  ],
+  "z": [
+   11.8,
+   12.6
+  ],
+  "h": 1.0,
+  "front": "+x",
+  "source": "Marina 418/466 (the film never shows this spot): floral armchair right (foyer side) of the fireplace before the rear window; Poly Haven ArmChair_01 (CC0) re-skinned with fabric sampled from Marina 418 (green ground, cream/pink flowers)"
+ },
+ "ottoman": {
+  "x": [
+   2.65,
+   3.15
+  ],
+  "z": [
+   11.92,
+   12.42
+  ],
+  "h": 0.42,
+  "front": "+x",
+  "source": "Marina 418/466: matching floral ottoman in front of the chair; Poly Haven Ottoman_01 (CC0) re-skinned like the chair; kept off the rug (z < 12.45)"
+ },
+ "curio": {
+  "x": [
+   3.35,
+   4.85
+  ],
+  "z": [
+   11.585,
+   12.035
+  ],
+  "h": 2.0,
+  "front": "+z",
+  "source": "Marina 458/466 (right side; the film never shows this wall): a tall glass-front china cabinet against the foyer-side wall near the rear corner; Poly Haven vintage_cabinet_01 (CC0, 2.02 x 0.67 x 2.24 native) fitted to 1.5 x 0.45 x 2.0 (authored)"
+ }
 }

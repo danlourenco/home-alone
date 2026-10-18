@@ -263,8 +263,9 @@ def lamps(P):
     P["stemwood"].lathe(x, z, y, [(0, 0.07), (0.03, 0.07), (0.05, 0.03), (0.15, 0.04), (0.25, 0.02), (s0 + 0.05, 0.012), (s0 + 0.05, 0.0)], 16)
     P["shade_white"].lathe(x, z, y + s0, [(0, rb), (s1 - s0, rt), (s1 - s0, 0.0)], 24)
     x, y, z = Lm["desk"]["at"]                                                        # banker's lamp: brass base and stem, green shade
-    P["brass"].lathe(x, z, y, [(0, 0.075), (0.02, 0.07), (0.025, 0.012), (0.30, 0.012), (0.30, 0.0)], 16)
-    P["shade_green"].box(x - 0.06, x + 0.06, y + 0.30, y + 0.36, z - 0.13, z + 0.13)
+    if "store" not in Lm["desk"]:   # the bought lamp (store_props den_banker) replaces this stand-in
+     P["brass"].lathe(x, z, y, [(0, 0.075), (0.02, 0.07), (0.025, 0.012), (0.30, 0.012), (0.30, 0.0)], 16)
+     P["shade_green"].box(x - 0.06, x + 0.06, y + 0.30, y + 0.36, z - 0.13, z + 0.13)
     for name in ("bookcase", "floor", "side"):                                           # a bulb inside each shade (it glows through)
         x, y, z = Lm[name]["at"]; ax, az = Lm[name].get("arm", [0, 0]); rb, rt, s0, s1 = Lm[name]["shade"]
         yb = (y if name != "floor" else 0) + (s0 + s1) / 2 - (0.03 if name == "floor" else 0)

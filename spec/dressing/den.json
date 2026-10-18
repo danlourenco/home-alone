@@ -355,7 +355,8 @@
    "lumens": 350,
    "kelvin": 2700,
    "colour": "green",
-   "source": "Marina f141/M09: a green banker's lamp on the desk's end-wall side; 40 W (authored)"
+   "source": "Marina f141/M09: a green banker's lamp on the desk's end-wall side; 40 W (authored); Oct 17: the user bought a real banker's lamp (Assets/BankersLamp, gitignored): store_props den_banker; hifi_den.py no longer builds the stand-in",
+   "store": "den_banker"
   }
  },
  "decor": {

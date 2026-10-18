@@ -357,7 +357,8 @@ def lamps():
             if q["kind"] == "candlestick":
                 brass.lathe(x, z, y, [(0, 0.07), (0.015, 0.07), (0.03, 0.03), (0.08, 0.022), (0.10, 0.03), (0.12, 0.02), (0.30, 0.016), (0.33, 0.026), (0.36, 0.014), (s1 - 0.02, 0.008), (s1 - 0.02, 0.0)], 16)
             else:
-                brass.lathe(x, z, y, [(0, 0.06), (0.02, 0.06), (0.05, 0.04), (0.14, 0.09), (0.24, 0.05), (0.28, 0.025), (0.32, 0.02), (s1 - 0.02, 0.008), (s1 - 0.02, 0.0)], 16)
+                k = s1 / 0.68   # the urn scales with its shade (Oct 17: chest lamp ~0.7x, film 5633)
+                brass.lathe(x, z, y, [(0, 0.06 * k), (0.02 * k, 0.06 * k), (0.05 * k, 0.04 * k), (0.14 * k, 0.09 * k), (0.24 * k, 0.05 * k), (0.28 * k, 0.025 * k), (0.32 * k, 0.02 * k), (s1 - 0.02, 0.008), (s1 - 0.02, 0.0)], 16)
             part = G["shade_burgundy"] if q["kind"] == "candlestick" else G["shade_black"]
             part.lathe(x, z, y + s0, [(0, rb), (s1 - s0, rt), (s1 - s0, 0.0)], 24)
             G["bulb"].lathe(x, z, y + (s0 + s1) / 2 - 0.05, [(0, 0.0001), (0.01, 0.022), (0.05, 0.03), (0.07, 0.012), (0.07, 0.0)], 10)
@@ -406,9 +407,11 @@ def nutcracker(x, z, y, coat, hat, beard=True):
 
 
 def small():
-    ct = D["coffee_table"]; y = ct["h"]
-    nutcracker(4.85, 14.05, y, "Red", "Red"); nutcracker(5.05, 14.25, y, "Green", "Brown"); nutcracker(5.28, 14.02, y, "Red", "Black")
-    NC["Tin"].lathe(4.75, 14.3, y, [(0, 0.06), (0.11, 0.06), (0.12, 0.062), (0.13, 0.0)], 18)
+    ct = D["coffee_table"]; y = ct["h"]; cx, cz = sum(ct["x"]) / 2, sum(ct["z"]) / 2   # dressing rides with the table (its centre)
+    along_z = ct["z"][1] - ct["z"][0] > ct["x"][1] - ct["x"][0]
+    at = lambda a, b: (cx + b, cz + a) if along_z else (cx + a, cz + b)   # a along the table's length, b across it
+    nutcracker(*at(-0.35, -0.10), y, "Red", "Red"); nutcracker(*at(-0.15, 0.10), y, "Green", "Brown"); nutcracker(*at(0.08, -0.13), y, "Red", "Black")
+    NC["Tin"].lathe(*at(-0.45, 0.15), y, [(0, 0.06), (0.11, 0.06), (0.12, 0.062), (0.13, 0.0)], 18)
     # the toy train: oval track (two rails, ties) on the floor, a black loco and two cars on the near straight
     t = D["train"]; (cx, cz), rx, rz = t["at"], t["rx"], t["rz"]
     Y = t.get("y", 0.0)   # 0.012 = on the rug (its top)

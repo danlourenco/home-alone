@@ -68,7 +68,7 @@ build)
   rsync -a "$P/Assets/Editor/" "$S/Assets/Editor/"; rsync -a "$P/Assets/Scripts/" "$S/Assets/Scripts/"
   rsync -a "$P/Assets/Models/" "$S/Assets/Models/"; cp "$P/Assets/Settings/HDRP.asset" "$S/Assets/Settings/"
   rsync -a --exclude Greybox --exclude Greybox.meta "$P/Assets/Textures/" "$S/Assets/Textures/"   # generated + Poly Haven maps (kitchen); Greybox/ is the build's own
-  for pk in "Fadnn - Vintage Interior Furniture Pack" "Classic Wooden Furniture Pack" "Free Wood Door Pack" "VTC_AV-2062s" "ChristmasTreeAndGarland" "Tarantula"; do   # Asset Store packs (gitignored; may be absent)
+  for pk in "Fadnn - Vintage Interior Furniture Pack" "Classic Wooden Furniture Pack" "Free Wood Door Pack" "VTC_AV-2062s" "ChristmasTreeAndGarland" "Tarantula" "BankersLamp"; do   # Asset Store packs (gitignored; may be absent)
     [ -d "$P/Assets/$pk" ] && rsync -a "$P/Assets/$pk" "$P/Assets/$pk.meta" "$S/Assets/"; done
   [ -d "$P/Assets/Purchased" ] && rsync -a "$P/Assets/Purchased" "$S/Assets/" && { [ -f "$P/Assets/Purchased.meta" ] && cp "$P/Assets/Purchased.meta" "$S/Assets/" || true; }   # CGTrader buys (gitignored; may be absent: generated plants then)
   [ -n "${HA_OVERLAY:-}" ] && rsync -a "$HA_OVERLAY/" "$S/Assets/"
@@ -100,7 +100,7 @@ load)
   cp "$S/Assets/Settings/HouseLighting.lighting" "$S/Assets/Settings/"*.asset "$P/Assets/Settings/"
   # Asset Store packs (gitignored): the whole pack folders from scratch, incl. the HDRP copies StoreProps saves inside them; a pack
   # imported only in scratch, or a missing *_HDRP.mat, leaves the scene with missing meshes or magenta (Oct 16)
-  for pk in "Fadnn - Vintage Interior Furniture Pack" "Classic Wooden Furniture Pack" "Free Wood Door Pack" "VTC_AV-2062s" "ChristmasTreeAndGarland" "Tarantula"; do
+  for pk in "Fadnn - Vintage Interior Furniture Pack" "Classic Wooden Furniture Pack" "Free Wood Door Pack" "VTC_AV-2062s" "ChristmasTreeAndGarland" "Tarantula" "BankersLamp"; do
     [ -d "$S/Assets/$pk" ] && rsync -a "$S/Assets/$pk" "$S/Assets/$pk.meta" "$P/Assets/"; done
   rsync -a "$S/Assets/Materials/Greybox/" "$P/Assets/Materials/Greybox/"; rsync -a "$S/Assets/Textures/Greybox/" "$P/Assets/Textures/Greybox/" 2>/dev/null || true
   # the scene was built against the SCRATCH copy's asset GUIDs: a model or texture new to both projects gets its own GUID in each

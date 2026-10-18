@@ -430,6 +430,31 @@
     1.0,
     0.6
    ]
+  },
+  {
+   "name": "den_banker",
+   "floor": "ground",
+   "prefab": "Assets/BankersLamp/Prefabs/BankersLamp.prefab",
+   "x": [
+    8.457,
+    8.663
+   ],
+   "z": [
+    18.974,
+    19.206
+   ],
+   "y0": 0.78,
+   "height": 0.382,
+   "yaw": 90,
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "back": "",
+   "hides": [],
+   "collide": false,
+   "source": "PROP, user Oct 17: \"i bought and imported a real banker's lamp to replace the one in the den\". At den.json lamps.desk (Marina f141/M09: green banker's lamp on the desk's end-wall side); the model's own size (0.23 x 0.21 x 0.38); turn it with Home Alone > Save Prop Placement"
   }
  ]
 }
