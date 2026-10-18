@@ -26,3 +26,16 @@
 {"time": "2026-10-18T07:58:57", "kind": "prop", "job": "parents-sashes+den-books", "s": 2400.0, "tools": 60}
 {"time": "2026-10-18T09:02:13", "kind": "search", "job": "attic-evidence", "s": 563.0, "tools": 44}
 {"time": "2026-10-18T09:09:31", "kind": "fixture", "job": "parents-fireplace", "s": 2045.0, "tools": 120}
+{"time": "2026-10-18T09:15:42", "kind": "tool", "job": "wall-measure", "s": 900.0, "tools": 12}
+{"time": "2026-10-18T09:49:22", "kind": "fixture", "job": "attic-shell", "s": 2571.0, "tools": 95}
+{"time": "2026-10-18T10:21:43", "kind": "fixture", "job": "attic-shell-trial2", "s": 1570.0, "tools": 60}
+{"time": "2026-10-18T10:24:09", "kind": "tool", "job": "register-glb", "s": 733.0, "tools": 40}
+{"time": "2026-10-18T11:12:38", "kind": "search", "job": "over-den", "s": 223.0, "tools": 20}
+{"time": "2026-10-18T11:58:27", "kind": "fixture", "job": "basement-shell", "s": 2972.0, "tools": 120}
+{"time": "2026-10-18T12:42:28", "kind": "fixture", "job": "guest-room", "s": 3874.0, "tools": 190}
+{"time": "2026-10-18T13:17:19", "kind": "tool", "job": "walking-feel", "s": 900.0, "tools": 25}
+{"time": "2026-10-18T13:30:05", "kind": "fixture", "job": "yard-registration", "s": 374.0, "tools": 75}
+{"time": "2026-10-18T14:03:01", "kind": "fixture", "job": "upstairs-polish", "s": 2350.0, "tools": 150}
+{"time": "2026-10-18T14:07:07", "kind": "fixture", "job": "treehouse-zipline", "s": 3165.0, "tools": 140}
+{"time": "2026-10-18T14:19:03", "kind": "fixture", "job": "kevin-room", "s": 3879.0, "tools": 115}
+{"time": "2026-10-18T14:32:10", "kind": "fixture", "job": "exterior-shell", "s": 9000.0, "tools": 170}

@@ -5,8 +5,8 @@
 "spec/house_spec.json": "aa13c8ba63825b984b8fec9d3d9e0a94b75ce00158b842fe54949ec7900a05eb",
 "spec/house_spec.ground.json": "b2202c1e6656e5f08dccf8c5a2836afd2a9aaf8a7d2b300ab8cb65f0f4ed7286",
 "spec/dressing/foyer.json": "ddc26402b9a3aab46412955dd1c9a0f8ea1d7f39150543c1f91ed2f981c5c7d3",
-"spec/dressing/finishes.json": "74ce77dd18f489364cbbd162b335c2e015787bdddf7ec290fe9fc7b4a0e6177f",
-"spec/openings.json": "c5e77eef19469ba30b41bc97e016322f50bddd052b9909ae6bfb0e73262940e3",
+"spec/dressing/finishes.json": "ff51afb2ff9366c5664802dc6cecbbc56fd71e3ee4dd9a4d36a76d071d336059",
+"spec/openings.json": "a8d6244593dc42c79731899c6c34ac5d3865f326ff0867a5f96021d43c8d1343",
 "tools/house/trim_faces.py": "a4e53dfe8cd8200b7196e3e06778f95496491d829de4872b9c098398f6fb6206"
 },
 "own_trim": true,
@@ -743,6 +743,32 @@
 ]
 },
 {
+"room": "room:kevin_jeff_room",
+"axis": "x",
+"c": -3.861,
+"n": -1,
+"pts": [
+[
+7.061,
+0.0
+],
+[
+11.664,
+0.0
+]
+],
+"samples": [
+{
+"h": 0.07
+}
+],
+"by": null,
+"ends": [
+"corner",
+"corner"
+]
+},
+{
 "room": "room:parents_bedroom",
 "axis": "x",
 "c": -5.3239,
@@ -918,6 +944,58 @@
 },
 {
 "h": 0.714
+}
+],
+"by": null,
+"ends": [
+"opening",
+"corner"
+]
+},
+{
+"room": "room:kevin_jeff_room",
+"axis": "x",
+"c": -7.638,
+"n": 1,
+"pts": [
+[
+7.061,
+0.0
+],
+[
+8.022,
+0.0
+]
+],
+"samples": [
+{
+"h": 0.07
+}
+],
+"by": null,
+"ends": [
+"corner",
+"opening"
+]
+},
+{
+"room": "room:kevin_jeff_room",
+"axis": "x",
+"c": -7.638,
+"n": 1,
+"pts": [
+[
+8.955,
+0.0
+],
+[
+11.664,
+0.0
+]
+],
+"samples": [
+{
+"h": 0.07
 }
 ],
 "by": null,
@@ -1545,6 +1623,32 @@
 ]
 },
 {
+"room": "room:kevin_jeff_room",
+"axis": "z",
+"c": 11.664,
+"n": -1,
+"pts": [
+[
+-7.638,
+0.0
+],
+[
+-3.861,
+0.0
+]
+],
+"samples": [
+{
+"h": 0.07
+}
+],
+"by": null,
+"ends": [
+"corner",
+"corner"
+]
+},
+{
 "room": "room:den",
 "axis": "z",
 "c": 2.355,
@@ -1995,6 +2099,58 @@
 "by": null,
 "ends": [
 "outside-corner",
+"corner"
+]
+},
+{
+"room": "room:kevin_jeff_room",
+"axis": "z",
+"c": 7.061,
+"n": 1,
+"pts": [
+[
+-6.684,
+0.0
+],
+[
+-3.861,
+0.0
+]
+],
+"samples": [
+{
+"h": 0.07
+}
+],
+"by": null,
+"ends": [
+"corner",
+"opening"
+]
+},
+{
+"room": "room:kevin_jeff_room",
+"axis": "z",
+"c": 7.061,
+"n": 1,
+"pts": [
+[
+-7.638,
+0.0
+],
+[
+-7.594,
+0.0
+]
+],
+"samples": [
+{
+"h": 0.07
+}
+],
+"by": null,
+"ends": [
+"opening",
 "corner"
 ]
 },
@@ -3766,6 +3922,30 @@
 },
 {
 "name": "baseboard",
+"room": "room:kevin_jeff_room",
+"axis": "x",
+"c": -3.861,
+"n": -1,
+"d": [
+0.0,
+0.012
+],
+"flat": true,
+"st": [
+[
+7.073,
+0.0,
+0.14
+],
+[
+11.664,
+0.0,
+0.14
+]
+]
+},
+{
+"name": "baseboard",
 "room": "room:parents_bedroom",
 "axis": "x",
 "c": -5.3239,
@@ -4001,6 +4181,54 @@
 10.1,
 -2.332,
 -2.292
+]
+]
+},
+{
+"name": "baseboard",
+"room": "room:kevin_jeff_room",
+"axis": "x",
+"c": -7.638,
+"n": 1,
+"d": [
+0.0,
+0.012
+],
+"flat": true,
+"st": [
+[
+7.061,
+0.0,
+0.14
+],
+[
+8.022,
+0.0,
+0.14
+]
+]
+},
+{
+"name": "baseboard",
+"room": "room:kevin_jeff_room",
+"axis": "x",
+"c": -7.638,
+"n": 1,
+"d": [
+0.0,
+0.012
+],
+"flat": true,
+"st": [
+[
+8.955,
+0.0,
+0.14
+],
+[
+11.652,
+0.0,
+0.14
 ]
 ]
 },
@@ -5229,6 +5457,30 @@
 },
 {
 "name": "baseboard",
+"room": "room:kevin_jeff_room",
+"axis": "z",
+"c": 11.664,
+"n": -1,
+"d": [
+0.0,
+0.012
+],
+"flat": true,
+"st": [
+[
+-7.638,
+0.0,
+0.14
+],
+[
+-3.873,
+0.0,
+0.14
+]
+]
+},
+{
+"name": "baseboard",
 "room": "room:den",
 "axis": "z",
 "c": 2.355,
@@ -5805,6 +6057,54 @@
 },
 {
 "name": "baseboard",
+"room": "room:kevin_jeff_room",
+"axis": "z",
+"c": 7.061,
+"n": 1,
+"d": [
+0.0,
+0.012
+],
+"flat": true,
+"st": [
+[
+-6.684,
+0.0,
+0.14
+],
+[
+-3.861,
+0.0,
+0.14
+]
+]
+},
+{
+"name": "baseboard",
+"room": "room:kevin_jeff_room",
+"axis": "z",
+"c": 7.061,
+"n": 1,
+"d": [
+0.0,
+0.012
+],
+"flat": true,
+"st": [
+[
+-7.626,
+0.0,
+0.14
+],
+[
+-7.594,
+0.0,
+0.14
+]
+]
+},
+{
+"name": "baseboard",
 "room": "room:hall_corridor",
 "axis": "z",
 "c": 7.233,
@@ -6333,8 +6633,8 @@
 }
 ],
 "ends": {
-"corner": 75,
-"opening": 75,
+"corner": 83,
+"opening": 79,
 "outside-corner": 4
 },
 "problems": []

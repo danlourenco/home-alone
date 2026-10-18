@@ -131,3 +131,20 @@
 {"time": "2026-10-18T13:15:56", "cmd": "build", "job": "yard-registration", "why": "yard build 1 (registered site, grade ring, steps, routes)", "wall_s": 126, "exit": 0}
 {"time": "2026-10-18T13:23:09", "cmd": "build", "job": "yard-registration", "why": "yard build 2 (areaway slab, garage/driveway, torch z, routes end at the shut doors)", "wall_s": 130, "exit": 0}
 {"time": "2026-10-18T13:28:44", "cmd": "bake", "job": "yard-registration", "why": "load yard trial 1", "wall_s": 173, "exit": 0}
+{"time": "2026-10-18T13:33:19", "cmd": "build", "job": "treehouse-zipline", "why": "treehouse build 1 (treehouse, rope, ZipLine)", "wall_s": 3, "exit": 1}
+{"time": "2026-10-18T13:35:02", "cmd": "build", "job": "treehouse-zipline", "why": "treehouse build 1 (treehouse, rope, ZipLine)", "wall_s": 91, "exit": 0}
+{"time": "2026-10-18T13:38:39", "cmd": "bake", "job": "treehouse-zipline", "why": "treehouse load 1", "wall_s": 202, "exit": 0}
+{"time": "2026-10-18T13:50:24", "cmd": "build", "job": "upstairs-polish", "why": "upstairs hall polish build 1", "wall_s": 91, "exit": 0}
+{"time": "2026-10-18T13:54:06", "cmd": "build", "job": "upstairs-polish", "why": "upstairs hall polish build 2 (arch floors wood)", "wall_s": 91, "exit": 0}
+{"time": "2026-10-18T13:56:58", "cmd": "build", "job": "treehouse-zipline", "why": "treehouse build 2 (canopy, cut clamp, Tie)", "wall_s": 77, "exit": 0}
+{"time": "2026-10-18T14:00:17", "cmd": "bake", "job": "treehouse-zipline", "why": "treehouse load 2", "wall_s": 194, "exit": 0}
+{"time": "2026-10-18T14:01:27", "cmd": "build", "job": "kevin-room", "why": "kevin room build 1", "wall_s": 2, "exit": 1}
+{"time": "2026-10-18T14:04:27", "cmd": "build", "job": "kevin-room", "why": "kevin room build 1", "wall_s": 116, "exit": 0}
+{"time": "2026-10-18T14:05:52", "cmd": "build", "job": "kevin-room", "why": "kevin room build 2 (chair yaw, pine tint)", "wall_s": 4, "exit": 1}
+{"time": "2026-10-18T14:08:31", "cmd": "build", "job": "kevin-room", "why": "kevin room build 2 (chair yaw, pine tint)", "wall_s": 132, "exit": 0}
+{"time": "2026-10-18T14:12:33", "cmd": "bake", "job": "kevin-room", "why": "kevin room load", "wall_s": 179, "exit": 0}
+{"time": "2026-10-18T14:14:59", "cmd": "build", "job": "exterior-shell", "why": "exterior shell trial 1 build 1", "wall_s": 2, "exit": 1}
+{"time": "2026-10-18T14:16:04", "cmd": "build", "job": "exterior-shell", "why": "exterior shell trial 1 build 1", "wall_s": 34, "exit": 1}
+{"time": "2026-10-18T14:19:04", "cmd": "build", "job": "exterior-shell", "why": "exterior shell trial 1 build 1", "wall_s": 145, "exit": 0}
+{"time": "2026-10-18T14:24:30", "cmd": "build", "job": "exterior-shell", "why": "exterior shell trial 1 build 2", "wall_s": 135, "exit": 0}
+{"time": "2026-10-18T14:29:14", "cmd": "bake", "job": "exterior-shell", "why": "exterior shell trial 1 load", "wall_s": 170, "exit": 0}
