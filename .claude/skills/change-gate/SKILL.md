@@ -9,6 +9,8 @@ Why this exists (Oct 13): Buzz's room was resized to the SfM size 4.35 m. The "p
 
 **Decorations skip this gate** (user Oct 17: "a wreath on a door is not load bearing like a wall. it's just a decoration"; rule approved: "yes"): a wreath, ornament, picture, plant or other dressing that nothing walks on, hides under or measures from needs no change record. Place it, build once through `unity_pipeline.sh` (preflight, z-fight and clash still run), look at one render, load it, and commit with `git commit --no-verify`, saying "decoration" in the message. Furniture and anything that changes where Kevin or a bandit can walk or hide is NOT decoration.
 
+**Props lane** (user Oct 17, on a 25-minute trunk job: "we might need to revisit our approach for something like a trunk vs more permanent fixtures"; approved: "yes, that's much better"): movable props (a trunk, a bin, books, toys, posters, easter eggs, an animal) and freestanding furniture that nothing is built from also skip this gate, like decorations. Size from the product's real dimensions or ONE ruler in a film frame (no spread, no second ruler); place by eye from the film (Marina where the film doesn't show it); no change record, no bake; batch several props per build; one render; the user nudges them in the walk; commit with `--no-verify`, "prop" in the message. Still required: z-fight/clash 0 and the walk passages clear (an adult, radius 0.275 + skin 0.02). Stays a FIXTURE (full gate): walls, openings, trim, stairs, built-ins, and any furniture Kevin or a bandit can hide under or inside (e.g. Buzz's low bed).
+
 ## Steps, in order. Don't skip ahead.
 
 1. **Write the record first**, `changes/<date>-<slug>.json` (copy the Buzz record's shape), before touching geometry:
