@@ -180,7 +180,7 @@ Film: 500, 510, 518, 529 (`buzz-bedroom/`), 2350, 4450, 4500. Marina: 532-560 s.
 | B5 | Wall shelves with trophies, helmets, game boxes | | 4500, 529 (seen) | 2.7 x 0.30 x 1.8 (measured) | 1 | Owned `SHELVES_01` / `WALL_SHELF_01` + props | |
 | B6 | Terrarium (tarantula) | Glass tank on the lower shelf | 529 (seen) | ~0.6 x 0.3 x 0.3 | 1 | Procedural (glass box; exists in the old builder) | |
 | B7 | Navajo zigzag rug | Black/white/grey zigzag | 4450 (seen) | ~1.5 x 2.4 | 1 | Texture on a plane | |
-| B8 | Posters, Jordan cutout, BB gun, mini hoop | | 529, p2-556s | | set | Skip trademarked images; author originals | Licence: NBA/Bulls marks. |
+| B8 | Posters, Jordan cutout, BB gun, mini hoop | | 529, p2-556s | | set | Film-accurate: reuse the Jordan photo cutout, posters and logos (user Oct 17: hobby project) | Overridden Oct 17 |
 
 ## Parents' bedroom
 
@@ -266,7 +266,7 @@ The Christmas tree and the Chippendale chairs are higher impact than several of 
 - **Sketchfab "Free Standard"**: free to use, but it forbids redistributing the files, so do not commit them (Steinway K-52, Chinese Cabinet, Vintage Microwave by cacybernetic and others).
 - **CGTrader "Royalty Free (no AI)", TurboSquid Standard, Asset Store EULA**: game use is fine, redistribution is not. Keep them gitignored like the current packs. All bought CGTrader items above carry "(no AI)": no use as AI training data.
 - **Daz3D** (Predatron Poinsettias): game use needs a separate Interactive licence.
-- **Trademarks**: strip maker logos (Kimball, Steinway, Natuzzi, Restoration Hardware) from bought models. Do not reproduce NBA/Bulls posters or the Jordan cutout from photos.
+- **Trademarks** (overridden Oct 17, user: "forget those sourcing notes. this is just for me. it's totally fine, this is a hobby project for me."): film-accurate props, logos and posters are fine. Store-pack files still stay gitignored (their EULAs forbid redistribution) and CC-BY models still get a CREDITS.md line.
 - **Possibly AI-made**: the Festive Poinsettia Pack's marketing image looks AI-assisted, and search results also surfaced Hyper3D/Rodin AI-generated chairs. Their licensing is unclear, so I left them out.
 - **Committable**: only Poly Haven (CC0) outright. CC-BY items can be committed with an `ATTRIBUTION.md` entry.
 
