@@ -10,8 +10,9 @@
 #                                            # HA_OVERLAY=<dir>: drafts (dir/Editor, dir/Models ...) copied over Assets/ after the repo's, so
 #                                            # uncompiled C# or a model the open editor must not see yet never touches the repo
 #   tools/house/unity_pipeline.sh bake       # bake day + night (WINDOWED: batch mode has no sky; BakeLighting refuses it)
-#   tools/house/unity_pipeline.sh load       # copy scene + bake into the project, wait for import/compile, open, Play
+#   tools/house/unity_pipeline.sh load       # copy scene + bake into the project, wait for import/compile, open, Play (bakes first if the build is unbaked)
 #   tools/house/unity_pipeline.sh nightcheck # live: night shots at 3 room poses must reach a luminance floor (load runs it last)
+#   tools/house/unity_pipeline.sh daycheck   # live: APV loaded + day saturation floor at 2 Buzz views (load runs it after nightcheck)
 #   tools/house/unity_pipeline.sh all        # build, bake, load (stops at the first failure: every step exits non-zero on a FAIL)
 # build and bake append one line to spec/captures/build-log.jsonl (time, cmd, job=$HA_JOB, why=$HA_WHY, wall_s, exit): rebuilds per job
 #   tools/house/unity_pipeline.sh shot NAME x y z yaw pitch [day|night]     # live capture from a player pose (feet; eye +1.28)
@@ -91,6 +92,11 @@ bake)
   if grep -q "BakeLighting FAIL" "$ROOT/bake.log" || ! grep -q "^Baked lights:" "$ROOT/bake.log"; then grep -m5 "BakeLighting FAIL" "$ROOT/bake.log"; echo "bake FAILED the baked-lights check" >&2; exit 1; fi
   [ $bx = 0 ] || { echo "bake: Unity exited $bx" >&2; exit $bx; };;
 load)
+  # a build writes a fresh scene with no lighting data (default LightingDataAsset, no APV baking set, no probe images): loaded as is, day
+  # is lit by the flat blue sky ambient only (user Oct 17 "the daytime lighting seems a little... flatter": 3 builds since the last bake;
+  # day saturation 0.04-0.07 vs 0.11-0.15 baked). Bake first whenever the scratch scene is unbaked
+  if grep -q 'm_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000' "$S/Assets/Scenes/House_WallGrid.unity"; then
+    echo "load: the built scene has no bake (builds since the last bake): baking first"; HA_WHY="${HA_WHY:-auto: load of an unbaked build}" "$0" bake; fi
   (cd "$P" && "$CLI" command editor_stop >/dev/null 2>&1 || true)
   # switch the editor to an empty scene BEFORE overwriting House_WallGrid.unity: overwriting the open scene raised Unity's modal
   # "scene changed on disk, reload?" dialog, which froze the editor (and every command) for hours on Oct 17
@@ -122,6 +128,7 @@ load)
   if [ -n "${HA_START:-}" ]; then sleep 5; IFS=, read -r sx sy sz syaw <<< "$HA_START"
     ev "var f=UnityEngine.Object.FindFirstObjectByType<FpsController>(); var cc=f.GetComponent<UnityEngine.CharacterController>(); cc.enabled=false; f.transform.SetPositionAndRotation(new UnityEngine.Vector3(${sx}f,${sy}f,${sz}f), UnityEngine.Quaternion.Euler(0,${syaw}f,0)); f.cam.localRotation=UnityEngine.Quaternion.identity; cc.enabled=true; return \"start \"+f.transform.position;"; fi
   nc=0; "$0" nightcheck || nc=$?   # night lit at 3 room poses (shots use a camera clone)
+  "$0" daycheck || nc=1             # day has its baked bounce (APV loaded, colour not flat)
   # the player came back at the spawn after the night check (user Oct 17): put the walk start back in the reviewed room
   if [ -n "${HA_START:-}" ]; then IFS=, read -r sx sy sz syaw <<< "$HA_START"
     ev "var f=UnityEngine.Object.FindFirstObjectByType<FpsController>(); var cc=f.GetComponent<UnityEngine.CharacterController>(); cc.enabled=false; f.transform.SetPositionAndRotation(new UnityEngine.Vector3(${sx}f,${sy}f,${sz}f), UnityEngine.Quaternion.Euler(0,${syaw}f,0)); f.cam.localRotation=UnityEngine.Quaternion.identity; cc.enabled=true; return \"start \"+f.transform.position;"; fi
@@ -136,6 +143,18 @@ nightcheck)   # night must be lit: mean luminance of night shots at 3 room poses
     ok=$(python3 -c "print(1 if $m >= $6 else 0)"); [ "$ok" = 1 ] && echo "ok   night $1 mean $m (floor $6)" || { echo "FAIL night $1 mean $m < floor $6: $f"; fails=1; }
   done
   [ $fails = 0 ] || { echo "nightcheck FAILED: night is dark (Scene-view search filter on? HDRP exposure stuck?)" >&2; exit 1; };;
+daycheck)   # day must have its baked bounce: the APV baking set loaded, and day colour above a measured floor (user Oct 17 "flatter")
+  # broken state it catches: a build loaded without a bake (no APV, sky ambient only): saturation marina-16 0.042, kevin-front 0.059;
+  # baked 0.114 / 0.118 (accepted Buzz trial 2: 0.113 / 0.118). Floor 0.085 each. load runs it after nightcheck.
+  fails=0
+  apv=$(ev 'var p=UnityEngine.Rendering.ProbeReferenceVolume.instance; return (p.currentBakingSet!=null && p.DataHasBeenLoaded())?"yes":"no";')
+  [ "$apv" = yes ] && echo "ok   day APV baking set loaded" || { echo "FAIL day: no APV baking set loaded (scene unbaked?)"; fails=1; }
+  for p in "marina-16 8.652 1.304 -13.193 9.536 1.197 -13.649 37.57 0.05 0.085" "kevin-front 8.4 1.1 -12.6 11.15 0.9 -14.2 60 0.05 0.085"; do
+    set -- $p; f=$("$0" cam "daycheck-$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9" day)
+    m=$(uv run -q --with pillow --with numpy python -I -c "import sys,numpy as n; from PIL import Image; a=n.asarray(Image.open(sys.argv[1]).convert('RGB'))/255.; print('%.3f'%(a.max(-1)-a.min(-1)).mean())" "$f")
+    ok=$(python3 -c "print(1 if $m >= ${10} else 0)"); [ "$ok" = 1 ] && echo "ok   day $1 saturation $m (floor ${10})" || { echo "FAIL day $1 saturation $m < floor ${10}: $f"; fails=1; }
+  done
+  [ $fails = 0 ] || { echo "daycheck FAILED: day is flat (unbaked build loaded? APV missing?)" >&2; exit 1; };;
 all) "$0" build && "$0" bake && "$0" load;;
 shot|cam)
   mode="$1"; name="$2"; shift 2
