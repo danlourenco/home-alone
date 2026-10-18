@@ -24,6 +24,7 @@ Why this exists (Oct 13): Buzz's room was resized to the SfM size 4.35 m. The "p
    - **Film frames.**
    - **A source with its own scale**: Marina's on-screen dimensions, or the real-house plan.
 
+   **Measuring from one frame:** use `tools/house/wall_measure.py` (frame fetch, ONE sheet of gridded crops for all picks with sub-pixel corner snapping, a ruler-rectangle solve for sizes on or proud of a wall, an overlay grid, and the spread against a second ruler) instead of writing a new per-job solver. The crops sheet doubles as the pick-check crop.
    **Pick check (before measuring any pixel feature in a film or Marina frame):** save a crop of the picked point (e.g. `spec/captures/picks/<slug>-<frame>.png`) and get an independent look that says WHAT it is: a subagent shown only the crop and asked to name the feature, or the same feature found in a second frame. Record it on the check (or claim) as `"pick": {"crop": "<path>", "confirmed_by": "<who/what, and what they said it is>"}`. R8 enforces it for records with `"gate": 8` (Oct 16-17: the arch crown was picked on the landing's fascia, and a "casing" the film doesn't have was measured).
 
    The build's self-consistency gates (`model_quality`, `zfight`, `clash`, `verify_plan`, `trim_faces`, `unity:build`, `unity:walk-test`) check the model against itself, never against the house: they are never the independent ruler.
