@@ -1,0 +1,6 @@
+[
+ {"name": "buzztrunk/film-2718", "pos": [9.45, 0.95, -14.15], "look_at": [10.75, 0.35, -14.55], "vfov": 50},
+ {"name": "buzztrunk/passage-overhead", "pos": [10.25, 2.3, -13.95], "look_at": [10.25, 0.0, -13.951], "vfov": 75},
+ {"name": "buzztrunk/lid-open", "pos": [9.55, 1.05, -14.75], "look_at": [10.35, 0.2, -14.77], "vfov": 55, "trunk_lid": 95},
+ {"name": "buzztrunk/room", "pos": [8.2, 1.4, -12.3], "look_at": [10.4, 0.3, -14.7], "vfov": 60}
+]

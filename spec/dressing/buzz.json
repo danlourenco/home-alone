@@ -93,12 +93,12 @@
    "wall": "desk",
    "corner": "front",
    "along": [
-    1.983,
-    2.433
+    1.517,
+    1.967
    ],
    "off": [
-    0.52,
-    0.99
+    0.297,
+    0.767
    ],
    "h": [
     0.0,
@@ -106,7 +106,7 @@
    ],
    "store": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Chair_01.prefab",
    "yaw": 180,
-   "source": "AUTHORED: Marina 540 s shows a spindle-back chair at the desk's right part (centre 0.84 of the desk's length), seat facing the desk; stands clear of the top (DEVIATIONS)"
+   "source": "PLACED BY THE USER in the editor (Oct 17): tucked under the desk's right part, seat facing the desk (was AUTHORED from Marina 540 s)"
   },
   {
    "name": "buzz_shelves",
@@ -365,16 +365,16 @@
   {
    "name": "buzz_desk_chair",
    "x": [
-    8.725,
-    9.175
+    9.191,
+    9.641
    ],
    "y": [
     0.0,
     0.92
    ],
    "z": [
-    15.008,
-    15.478
+    15.231,
+    15.701
    ],
    "mat": "wood"
   },

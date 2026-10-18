@@ -22,3 +22,8 @@
 {"time": "2026-10-17T19:24:46", "cmd": "bake", "job": "buzz2", "why": "Buzz TRIAL 2 final bake (overhang bakes with its walls; no in-room invalidation)", "wall_s": 96, "exit": 0}
 {"time": "2026-10-17T20:50:17", "cmd": "build", "job": "buzzcasing", "why": "Buzz door casing scribed + stub finish split (TRIAL build 1)", "wall_s": 79, "exit": 0}
 {"time": "2026-10-17T20:52:13", "cmd": "bake", "job": "buzzcasing", "why": "Buzz door casing TRIAL bake (new casing + split piers in Buzz/hall)", "wall_s": 91, "exit": 0}
+{"time": "2026-10-17T21:17:44", "cmd": "build", "job": "buzztrunk", "why": "Buzz footlocker: bought scan rebuilt hollow, lid on hinge, placed clear of bed-chest passage", "wall_s": 89, "exit": 0}
+{"time": "2026-10-17T21:19:30", "cmd": "build", "job": "buzztrunk", "why": "build 2: trunk was at the origin (imported root transform zeroed)", "wall_s": 76, "exit": 0}
+{"time": "2026-10-17T21:29:45", "cmd": "build", "job": "buzzprops", "why": "trunk to the foot of the bed (yaw 90), desk turned 180 (user)", "wall_s": 2, "exit": 1}
+{"time": "2026-10-17T21:31:24", "cmd": "build", "job": "buzzprops", "why": "trunk to the foot of the bed (yaw 90), desk turned 180 (user)", "wall_s": 79, "exit": 0}
+{"time": "2026-10-17T21:39:56", "cmd": "build", "job": "buzzprops2", "why": "user's editor placement of trunk + desk chair written back", "wall_s": 67, "exit": 0}

@@ -1,0 +1,60 @@
+{
+ "note": "Buzz's footlocker (TRIAL, changes/2026-10-17-buzz-trunk.json). Written by tools/house/buzz_trunk.py; the GLB by tools/house/purchased_trunk.py (gitignored Assets/Purchased/Trunk/BuzzTrunk.glb, from the bought scan); placed by SpecGreybox.Trunk. Spec metres, y above the upper floor.",
+ "size": {
+  "L_playboy": 0.86,
+  "L_playboy_spread": [
+   0.839,
+   0.882
+  ],
+  "L_fist": 0.847,
+  "L_fist_spread": [
+   0.744,
+   0.965
+  ],
+  "rim_px_per_cm": 20.26,
+  "foreshortening": 0.894,
+  "depth_min": 0.486
+ },
+ "outer_length_m": 0.86,
+ "x": [
+  9.192,
+  10.054
+ ],
+ "z": [
+  13.682,
+  14.217
+ ],
+ "front": "+z",
+ "hinge": "-z",
+ "yaw_deg": 90,
+ "placement": "PLACED BY THE USER in the editor (Oct 17): back flush with the footboard, centred on the bed (the open lid meets the footboard)",
+ "passage_m": 0.62,
+ "passage_without_m": 0.62,
+ "bed_shift_assumed_m": -0.14,
+ "lining": {
+  "png": "spec/dressing/buzz_trunk_lining.png",
+  "repeat_m": [
+   0.188,
+   0.182
+  ],
+  "albedo_lin": [
+   0.306,
+   0.088,
+   0.037
+  ]
+ },
+ "scan": {
+  "scale": 0.6069,
+  "footprint_depth_m": 0.535,
+  "body_depth_m": 0.535,
+  "length_m": 0.862,
+  "height_m": 0.386,
+  "body_height_m": 0.272,
+  "lid_height_m": 0.114,
+  "liner_inside_m": [
+   0.423,
+   0.83
+  ],
+  "hinge_above_floor_m": 0.272
+ }
+}

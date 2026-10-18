@@ -358,12 +358,13 @@ def layout(pl, fr, pts, fc, cams_g):
                   source="top's front corners triangulated (left: frames 16/20/22/26/28, right: 16/20/22), front face dense depth (frames 16/20/22/26, IQR 0.5-0.8 cm)"))
     P.append(dict(name="buzz_desk", wall="desk", corner="front", along=[r3(X1 - sp["desk_back_L"][0]), r3(X1 - sp["desk_back_R"][0])], off=[0.015, 0.50],
                   h=[0.0, r3((sp["desk_back_L"][1] + sp["desk_back_R"][1] + sp["desk_front_L"][1] + sp["desk_front_R"][1]) / 4)],
-                  store="Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Desk_01.prefab", back="+z",
+                  store="Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Desk_01.prefab", back="+z", yaw=0,   # yaw 0: user Oct 17 "rotate the desk 180" (Orient gave 180: drawers to the wall)
+                 
                   source=f"top's four corners in frame 0 (back on the wall, front on the top's front plane; the four heights agree to 2.8 cm); drawer fronts {r3(D - (fc['desk_front'][2] - Z0))} m off the wall (dense, 3 frames), top 0.50"))
     ch0 = P[-1]["along"][0] + 0.84 * (P[-1]["along"][1] - P[-1]["along"][0])
-    P.append(dict(name="buzz_desk_chair", wall="desk", corner="front", along=[r3(ch0 - 0.225), r3(ch0 + 0.225)], off=[0.52, 0.99], h=[0.0, 0.92],
+    P.append(dict(name="buzz_desk_chair", wall="desk", corner="front", along=[1.517, 1.967], off=[0.297, 0.767], h=[0.0, 0.92],   # placed by the user in the editor, Oct 17
                   store="Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Chair_01.prefab", yaw=180,
-                  source="AUTHORED: Marina 540 s shows a spindle-back chair at the desk's right part (centre 0.84 of the desk's length), seat facing the desk; stands clear of the top (DEVIATIONS)"))
+                  source="PLACED BY THE USER in the editor (Oct 17): tucked under the desk's right part, seat facing the desk (was AUTHORED from Marina 540 s)"))
     near = fc["shelf_end"][2] - Z0; far = (Z1 - Z0) - SHELF_FAR_FROM_DESK; depth = fc["shelf_end"][0] - (X1 - W)   # far end from the BUILT desk corner, as measured depth = fc["shelf_end"][0] - (X1 - W)
     boards = sorted(r3(sp[k][1]) for k in ("shelf_bottom", "shelf_end", "shelf_2", "shelf_top"))
     P.append(dict(name="buzz_shelves", wall="shelves", corner="door", along=[r3(near), r3(far)], off=[0.015, r3(depth)], h=[0.45, boards[-1]], boards=boards,

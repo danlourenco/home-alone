@@ -331,6 +331,7 @@ public static partial class SpecGreybox
         HiFiStair(root, gy);
         HiFiLights(root, gy);
         Hall(root);                    // SpecGreybox.Hall.cs: the upstairs hall's dressing, sconces and plants (spec/dressing/hall.json)
+        Trunk(root);                   // SpecGreybox.Trunk.cs: Buzz's footlocker, bought scan rebuilt hollow (spec/dressing/buzz_trunk.json)
         Buzz(root);                    // SpecGreybox.Buzz.cs: Buzz's furniture against the faces (spec/dressing/buzz.json; changes/2026-10-17-buzz-layout.json)
         SwingDoors(groot, gy, geo["ground"]);
         FrenchDoors(root, groot, gy, geo["ground"]);   // FrenchDoors.cs: the glazed French door pairs (changes/2026-10-16-french-doors.json)
@@ -1908,11 +1909,14 @@ public static partial class SpecGreybox
             // optional "hide": object paths to switch off for this view (e.g. "Upstairs", "Ground/Ceilings")
             var hidden = (v["hide"] ?? new JArray()).Select(h => GameObject.Find((string)h)).Where(o => o).ToList();
             hidden.ForEach(o => o.SetActive(false));
+            var lid = v["trunk_lid"] != null ? GameObject.Find("TrunkLid")?.transform : null; var lidRot = lid ? lid.rotation : Quaternion.identity;
+            if (lid) OpenTrunkLid(lid, (float)v["trunk_lid"]);   // "trunk_lid": degrees open for this view only (SpecGreybox.Trunk)
             go.transform.position = V(v["pos"]); go.transform.LookAt(V(v["look_at"])); cam.fieldOfView = (float)v["vfov"];
             cam.nearClipPlane = v["near"] != null ? (float)v["near"] : 0.05f;   // film cameras stood outside the front door (long lens)
             cam.Render(); cam.Render();   // warm-up frames, always: HDRP's first frame has no sky ambient yet
             Shot(cam, rt, Path.Combine("views", (string)v["name"]));
             hidden.ForEach(o => o.SetActive(true));
+            if (lid) lid.rotation = lidRot;
         }
         RenderTexture.active = null; Object.DestroyImmediate(go); rt.Release();
     }

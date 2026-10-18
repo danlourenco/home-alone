@@ -378,19 +378,20 @@
    ],
    "collide": false,
    "source": "Buzz TRIAL 1 (changes/2026-10-17-buzz-layout.json): box from spec/dressing/buzz.json (tools/house/buzz_layout.py); top's four corners in frame 0 (back on the wall, front on the top's front plane; the four heights agree to 2.8 cm); drawer fronts 0.483 m off the wall (dense, 3 frames), top 0.50",
-   "back": "+z"
+   "back": "+z",
+   "yaw": 0
   },
   {
    "name": "buzz_desk_chair",
    "floor": "upper",
    "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Chair_01.prefab",
    "x": [
-    8.725,
-    9.175
+    9.191,
+    9.641
    ],
    "z": [
-    15.008,
-    15.478
+    15.231,
+    15.701
    ],
    "y0": 0.0,
    "height": 0.92,
@@ -398,7 +399,7 @@
     "buzz_desk_chair"
    ],
    "collide": false,
-   "source": "Buzz TRIAL 1 (changes/2026-10-17-buzz-layout.json): box from spec/dressing/buzz.json (tools/house/buzz_layout.py); AUTHORED: Marina 540 s shows a spindle-back chair at the desk's right part (centre 0.84 of the desk's length), seat facing the desk; stands clear of the top (DEVIATIONS)",
+   "source": "Buzz: PLACED BY THE USER in the editor (Oct 17): tucked under the desk's right part, seat facing the desk (was AUTHORED from Marina 540 s)",
    "yaw": 180,
    "back": ""
   }
