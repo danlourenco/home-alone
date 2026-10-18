@@ -3,10 +3,17 @@
     "SessionStart": [
       {
         "hooks": [
-          { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/tools/house/slow_jobs.py\"" }
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/tools/house/slow_jobs.py\""
+          }
         ]
       }
     ]
   },
-  "statusLine": { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/tools/house/slow_jobs.py\" eta --line" }
+  "statusLine": {
+    "type": "command",
+    "command": "python3 \"$CLAUDE_PROJECT_DIR/tools/house/slow_jobs.py\" eta --line",
+    "refreshInterval": 30
+  }
 }

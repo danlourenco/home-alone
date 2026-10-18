@@ -53,6 +53,23 @@ def report(builds, agents):
     return out
 
 
+def short(running, agents, now, building=None):
+    """the status-line form: 'basement-shell 44m (over usual) · guest-room 36m (~0-7m left) · Unity building'"""
+    out = []
+    for r in running:
+        past = sorted(a["s"] for a in agents if a["kind"] == r["kind"])
+        el = now - r["start"]
+        if past:
+            med, p75 = past[len(past) // 2], past[min(len(past) - 1, (3 * len(past)) // 4)]
+            tag = f"~{max(0, med - el) / 60:.0f}-{max(0, p75 - el) / 60:.0f}m left" if el < p75 else "over usual"
+        else:
+            tag = "no history"
+        out.append(f"{r['job']} {el / 60:.0f}m ({tag})")
+    if building:
+        out.append("Unity " + building)
+    return out
+
+
 def eta(running, agents, now, building=None):
     """one line per running job: elapsed, and the remaining time against the median and 75th percentile of past jobs of its kind"""
     out = []
@@ -101,8 +118,9 @@ def main():
             f.write(json.dumps({"kind": a.kind, "job": a.job, "start": t}) + "\n")
         return
     if a.cmd == "eta":
-        lines = eta(rows(RUNNING), rows(AGENTS), time.time(), building_now())
-        print((" | ".join(lines) or "no agent jobs running") if a.line else ("\n".join(lines) or "no agent jobs running"))
+        args = (rows(RUNNING), rows(AGENTS), time.time(), building_now())
+        lines = short(*args) if a.line else eta(*args)
+        print("\n".join(lines) or "no agent jobs running")
         return
     lines = report(rows(BUILDS), rows(AGENTS))
     print("slow_jobs: " + ("nothing flagged" if not lines else f"{len(lines)} flag(s)"))
@@ -121,6 +139,7 @@ def demo():
     assert report([], []) == []
     e = eta([{"kind": "prop", "job": "t3", "start": 0}], ag, 300)
     assert "t3 (prop): 5 min in, ~15-15 min left" in e[0], e       # median and p75 of [600, 1200] are both 1200 here
+    assert short([{"kind": "prop", "job": "t3", "start": 0}], ag, 300) == ["t3 5m (~15-15m left)"]
     assert "past the usual time" in eta([{"kind": "prop", "job": "t4", "start": 0}], ag, 2000)[0]
 
 
