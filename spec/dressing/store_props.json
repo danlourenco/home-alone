@@ -18,7 +18,8 @@
     "landing_table"
    ],
    "source": "the demilune hall table on the main-stair landing (film 11966/12133; user pick Oct 16). Box: spec/dressing/foyer.json landing_table (Marina 312 s; width checked in film 12133), 1 cm off the window wall, on the landing carpet (2.326). The model is 0.945 x 0.473 x 0.645 m: width and depth fitted to the measured box (x0.78, x0.66), height kept. Deviation: cabriole legs; the film's are straight turned legs.",
-   "back": "-x"
+   "back": "-x",
+   "yaw": 90
   },
   {
    "name": "grandfather_clock",
@@ -334,7 +335,8 @@
    "y0": 0.0,
    "height": 0.762,
    "back": "+x",
-   "source": "Upstairs hall (Oct 16, TRIAL, changes/2026-10-16-upstairs-hall.json; furniture-plan H2): owned SIDE_TABLE_01 as the film's dark hall table (film 10819/2687/10741/410: on the vestibule's right wall seen from the stair, its far end at the parents' end wall). Box from spec/dressing/hall.json consoles: top 0.762 (film 10819: on the horizon with the cap rail, camera height 0.759 on the door ruler), 0.90 x 0.30, back 3 cm off the wall (the cap rail is 3 cm proud at the table's height). The model (0.945 x 0.473 x 0.645) is fitted x0.95 / x0.63 / x1.18: slimmer and taller; its cabriole legs differ from the film's square tapered legs (DEVIATIONS 63)."
+   "source": "Upstairs hall (Oct 16, TRIAL, changes/2026-10-16-upstairs-hall.json; furniture-plan H2): owned SIDE_TABLE_01 as the film's dark hall table (film 10819/2687/10741/410: on the vestibule's right wall seen from the stair, its far end at the parents' end wall). Box from spec/dressing/hall.json consoles: top 0.762 (film 10819: on the horizon with the cap rail, camera height 0.759 on the door ruler), 0.90 x 0.30, back 3 cm off the wall (the cap rail is 3 cm proud at the table's height). The model (0.945 x 0.473 x 0.645) is fitted x0.95 / x0.63 / x1.18: slimmer and taller; its cabriole legs differ from the film's square tapered legs (DEVIATIONS 63).",
+   "yaw": 270
   },
   {
    "name": "hall_table_attic",
@@ -351,7 +353,8 @@
    "y0": 0.0,
    "height": 0.762,
    "back": "+x",
-   "source": "Upstairs hall (Oct 16, TRIAL, changes/2026-10-16-upstairs-hall.json; furniture-plan H2): owned SIDE_TABLE_01 as the film's dark hall table (film 352/410/1276/1333: beside the attic door under the tapestry). Box from spec/dressing/hall.json consoles: top 0.762 (film 10819: on the horizon with the cap rail, camera height 0.759 on the door ruler), 0.90 x 0.30, back 3 cm off the wall (the cap rail is 3 cm proud at the table's height). The model (0.945 x 0.473 x 0.645) is fitted x0.95 / x0.63 / x1.18: slimmer and taller; its cabriole legs differ from the film's square tapered legs (DEVIATIONS 63)."
+   "source": "Upstairs hall (Oct 16, TRIAL, changes/2026-10-16-upstairs-hall.json; furniture-plan H2): owned SIDE_TABLE_01 as the film's dark hall table (film 352/410/1276/1333: beside the attic door under the tapestry). Box from spec/dressing/hall.json consoles: top 0.762 (film 10819: on the horizon with the cap rail, camera height 0.759 on the door ruler), 0.90 x 0.30, back 3 cm off the wall (the cap rail is 3 cm proud at the table's height). The model (0.945 x 0.473 x 0.645) is fitted x0.95 / x0.63 / x1.18: slimmer and taller; its cabriole legs differ from the film's square tapered legs (DEVIATIONS 63).",
+   "yaw": 270
   },
   {
    "name": "front_door_wreath",
@@ -396,7 +399,8 @@
    ],
    "collide": false,
    "source": "Buzz TRIAL 1 (changes/2026-10-17-buzz-layout.json): box from spec/dressing/buzz.json (tools/house/buzz_layout.py); top's front-right corner (frames 44/30/32) on the front face's plane (dense depth, frames 44/30); width 0.55 from Marina 563 s (left end hidden by the pillow in the solved frames)",
-   "back": "-z"
+   "back": "-z",
+   "yaw": 0
   },
   {
    "name": "buzz_desk",
@@ -954,7 +958,8 @@
    "back": "-z",
    "hides": [],
    "collide": true,
-   "source": "Dining room (overnight Oct 18, prop, not walked): the film's sideboard (246/252: under the gilt still life, left of the sunroom French doors, a brass tea service on it; 10548 its brass chafing dish beside the kitchen door). Owned DRAWER_CAB_01 (1.14 x 0.39 x 0.70 native) fitted to 1.50 x 0.48 x 0.86 (x1.32/1.23/1.23; sideboard standard 34 in), back 4 cm off the sunroom wall (wainscot cap 3 cm proud + 1), its rear end 0.59 m from the kitchen wall"
+   "source": "Dining room (overnight Oct 18, prop, not walked): the film's sideboard (246/252: under the gilt still life, left of the sunroom French doors, a brass tea service on it; 10548 its brass chafing dish beside the kitchen door). Owned DRAWER_CAB_01 (1.14 x 0.39 x 0.70 native) fitted to 1.50 x 0.48 x 0.86 (x1.32/1.23/1.23; sideboard standard 34 in), back 4 cm off the sunroom wall (wainscot cap 3 cm proud + 1), its rear end 0.59 m from the kitchen wall",
+   "yaw": 180
   },
   {
    "name": "parents_bed",
@@ -1010,7 +1015,8 @@
     0.62,
     0.4,
     0.34
-   ]
+   ],
+   "yaw": 270
   },
   {
    "name": "parents_nightstand_bath",
@@ -1036,7 +1042,8 @@
     0.62,
     0.4,
     0.34
-   ]
+   ],
+   "yaw": 270
   },
   {
    "name": "parents_etagere",
@@ -1057,7 +1064,8 @@
    ],
    "collide": false,
    "back": "-z",
-   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): film 2648/2663 (open dark etagere with books and a hat box at the window corner, left of the side window) and Marina 244/250 (its front-left corner about 0.43 m off the headboard wall at z 0.35 in 250); SHELVES_01 squeezed to 0.49 x 0.33 x 1.45 (film's is a slim turned-post stand)"
+   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): film 2648/2663 (open dark etagere with books and a hat box at the window corner, left of the side window) and Marina 244/250 (its front-left corner about 0.43 m off the headboard wall at z 0.35 in 250); SHELVES_01 squeezed to 0.49 x 0.33 x 1.45 (film's is a slim turned-post stand)",
+   "yaw": 0
   },
   {
    "name": "parents_armoire",
@@ -1105,7 +1113,8 @@
    ],
    "collide": false,
    "back": "+x",
-   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): Marina 238/188: a demilune writing table under the front windows (film 104 s clip: a dressing table on the window wall); SIDE_TABLE_01 0.80 x 0.45 x 0.70 (centred under the window, clear of the side panels), under the 0.81 sill"
+   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): Marina 238/188: a demilune writing table under the front windows (film 104 s clip: a dressing table on the window wall); SIDE_TABLE_01 0.80 x 0.45 x 0.70 (centred under the window, clear of the side panels), under the 0.81 sill",
+   "yaw": 270
   },
   {
    "name": "parents_window_chair",
