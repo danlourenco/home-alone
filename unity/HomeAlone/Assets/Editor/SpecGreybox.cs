@@ -1636,6 +1636,7 @@ public static partial class SpecGreybox
                   $"{inside.Count} inside the rooms removed ({string.Join(", ", inside.GroupBy(n => n).Select(q => $"{q.Count()} x {q.Key}"))})");
         ExteriorPlants(ext.transform.Find("Yard").gameObject, gy + 2.996f);   // SpecGreybox.Shell.cs: plants, mini-lights, lamp posts (exterior polish;
                           // after the cull: the strung lights' one mesh spans the front, and the den-front shrubs' boxes touch the den's volume)
+        Trees(ext);       // SpecGreybox.Trees.cs: generated bare winter trees replace the stick trees (hifi_bare_trees.py)
         Shell(ext, gy);   // SpecGreybox.Shell.cs: the house's exterior skin (after the cull above: its upper storey crosses Marina's rooms by design)
     }
 

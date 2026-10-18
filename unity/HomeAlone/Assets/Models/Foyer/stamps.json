@@ -7,6 +7,10 @@
   "models": "0d4291972387f8cb",
   "sources": "5b3368c698056ea3"
  },
+ "tools/house/hifi_bare_trees.py": {
+  "models": "cb0a4d0f9d6f714c",
+  "sources": "e0ed64b604c40b73"
+ },
  "tools/house/hifi_basement.py": {
   "models": "d530281d6dd3caa6",
   "sources": "a6870e35f291e4fc"
@@ -136,7 +140,7 @@
   "sources": "2136d459057f6237"
  },
  "tools/house/hifi_treehouse.py": {
-  "models": "03d12bfc07e48b43",
-  "sources": "7aca47292624edaa"
+  "models": "86cc6bf65e6587aa",
+  "sources": "67a25ed0b2ec71db"
  }
 }

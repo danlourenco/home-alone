@@ -6,3 +6,4 @@ Poly Haven textures (CC0, https://polyhaven.com/license), downloaded Oct 15 2026
 - oak_veneer_01 (Oct 16 2026, breakfast table; mean albedo lin 0.359/0.210/0.097 vs film 2528's top flattened by the door's white 0.40/0.24/0.094)
 - red_brick_03, concrete_floor_worn_001, stone_wall, painted_concrete (Oct 18 2026, basement shell: chimney brick, floor, areaway stone walls, painted foundation walls; 1k)
 - old_planks_02 (as old_planks_02_h, turned 90 deg: horizontal boards), weathered_planks (weathered_planks_h, turned), bark_brown_02 (Oct 18 2026, treehouse boards, timbers, trunk; 1k)
+- bark_willow_02 (Oct 18 2026, generated bare winter trees: oak/ash bark; bark_brown_02 for the maples/elms; 1k)

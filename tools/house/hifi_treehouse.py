@@ -166,27 +166,12 @@ for zz in (zr0, zr1 - 0.025):                                                   
     timber.box(XB - ov, XF + ov, min(ra[1], rb[1]) - 0.12, max(ra[1], rb[1]) - 0.02, zz, zz + 0.025)
 
 # ---------------------------------------------------------------- trunk, branch stubs, braces, posts, slats
-th = K["top_above_grade"]
-prof = [(0.0, K["r_base"]), (0.35, K["r_base"] * 0.85), (0.9, K["r"] * 1.12), (2.5, K["r"] * 1.03), (6.0, K["r"]), (9.0, K["r"] * 0.78), (th, 0.10)]
+# the trunk up to the crown join; the tree above it (a generated oak crown, film 6810) is hifi_bare_trees.py's TreehouseCrown, whose
+# trunk tube starts at CROWN_JOIN 8 mm wider than this lathe and covers its closing cone (Oct 18: replaces the stick limbs)
+from hifi_bare_trees import CROWN_JOIN   # noqa: E402
+prof = [(0.0, K["r_base"]), (0.35, K["r_base"] * 0.85), (0.9, K["r"] * 1.12), (2.5, K["r"] * 1.03), (6.0, K["r"]),
+        (CROWN_JOIN, K["r"] * 0.97), (CROWN_JOIN + 0.25, K["r"] * 0.4)]
 bark.lathe(TX, TZ, G - 0.15, [(h + (0.15 if i else 0.0), r) for i, (h, r) in enumerate(prof)], 24)
-def limb(p0, d, ln, r, depth):
-    """a tapering branch from p0 along d (unit), splitting into smaller ones (film 6810: a mature bare tree over the cabin)"""
-    n = 3; pts = [p0]
-    for k in range(1, n + 1):
-        q = add(pts[-1], mul(d, ln / n)); q = (q[0] + random.uniform(-0.1, 0.1) * ln / n, q[1] + random.uniform(-0.05, 0.1) * ln / n, q[2] + random.uniform(-0.1, 0.1) * ln / n)
-        tube(bark, [pts[-1], q], max(r * (1 - 0.25 * k), 0.015), 6); pts.append(q)
-    if depth:
-        for j in range(random.choice((2, 3))):
-            a = random.uniform(0, 2 * math.pi); dd = norm(add(d, (0.7 * math.cos(a), random.uniform(0.1, 0.5), 0.7 * math.sin(a))))
-            limb(pts[random.choice((1, 2))], dd, ln * random.uniform(0.45, 0.65), r * 0.5, depth - 1)
-
-
-ga = math.radians(137.5)
-for i in range(8):                                                                         # limbs above the roof, round the trunk
-    y0 = DY + HF + 0.6 + i * 0.8; a = i * ga + 0.4
-    rr = K["r"] * (0.55 - 0.03 * i); up_ = random.uniform(0.6, 1.1)
-    d = norm((math.cos(a), up_, math.sin(a)))
-    limb((TX + math.cos(a) * K["r"] * 0.5, y0, TZ + math.sin(a) * K["r"] * 0.5), d, random.uniform(3.0, 4.5) * (1 - 0.06 * i), rr, 2)
 yb = DY - 2.2                                                                              # braces from the trunk to the deck's corners (6810, 11060)
 for cx_, cz_ in ((X0 + 0.15, Z0 + 0.15), (X0 + 0.15, Z1 - 0.15), (X1 - 0.3, Z0 + 0.15), (X1 - 0.3, Z1 - 0.15)):
     d = norm((cx_ - TX, 0.0, cz_ - TZ))
