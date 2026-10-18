@@ -44,6 +44,7 @@ BUILDS = {
     "tools/house/hifi_hall.py": (["HallDressing.glb"], [LIB, "spec/dressing/hall.json", "spec/dressing/hall_art.json", "spec/dressing/hall_art.png", "spec/geometry.json"]),
     "tools/house/hifi_hall_arches.py": (["HallArches.glb"], ["tools/house/hifi_pipeline.py", LIB, "spec/geometry.json", "spec/dressing/hall.json", "spec/dressing/finishes.json"]),
     "tools/house/hifi_french_doors.py": (["FrenchDoors.glb"], [LIB, "spec/dressing/french_doors.json", "spec/geometry.json"]),
+    "tools/house/hifi_buzz_props.py": (["BuzzProps.glb"], [LIB, "tools/house/hifi_pipeline.py", "spec/dressing/buzz.json", "spec/dressing/buzz_props_can.png", "spec/dressing/buzz_props_jordan.png", "spec/dressing/buzz_props_playboy.png", "spec/dressing/buzz_props_girlfriend.png", "spec/dressing/buzz_props_chips.png"]),   # props lane (Oct 17 overnight)
     "tools/house/hifi_foyer_arch.py": (["FoyerArch.glb"], [LIB, "tools/house/hifi_pipeline.py", "spec/geometry.json", "spec/house_spec.json"]),   # artist pipeline (+ Textures/Generated/FoyerArch)
 }
 

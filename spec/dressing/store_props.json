@@ -151,20 +151,26 @@
    "name": "den_desk",
    "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Desk_01.prefab",
    "x": [
-    8.08,
-    8.78
+    7.837,
+    9.049
    ],
    "z": [
-    18.1,
-    19.3
+    19.046,
+    19.766
    ],
    "y0": 0.0,
    "height": 0.78,
-   "yaw": 270,
+   "yaw": 359.0,
    "back": "",
    "hides": [],
    "collide": true,
-   "source": "Den (Oct 16, TRIAL, changes/2026-10-16-den.json, DEVIATIONS 53): Fadnn Vintage Interior (owned; furniture-plan N5/N6). Marina's writing table at the front window (f153: legs z 18.41-18.99, x 8.03-8.79; centred z ~18.7, ~0.4 m off the window wall). Her table is smaller with cabriole legs; the pack's pedestal desk (1.61 x 0.94) fitted to 1.2 x 0.7 x 0.78 (x0.75/0.74/0.91), drawers to the room (yaw 270 = native +Z front to spec -x)"
+   "source": "Den (Oct 16, TRIAL, changes/2026-10-16-den.json, DEVIATIONS 53): Fadnn Vintage Interior (owned; furniture-plan N5/N6). Marina's writing table at the front window (f153: legs z 18.41-18.99, x 8.03-8.79; centred z ~18.7, ~0.4 m off the window wall). Her table is smaller with cabriole legs; the pack's pedestal desk (1.61 x 0.94) fitted to 1.2 x 0.7 x 0.78 (x0.75/0.74/0.91), drawers to the room (yaw 270 = native +Z front to spec -x)",
+   "scale": [
+    0.745,
+    0.906,
+    0.747
+   ],
+   "placed_by": "user"
   },
   {
    "name": "den_desk_chair",
@@ -462,6 +468,226 @@
    "collide": false,
    "source": "PROP, user Oct 17: \"i bought and imported a real banker's lamp to replace the one in the den\". At den.json lamps.desk (Marina f141/M09: green banker's lamp on the desk's end-wall side); the model's own size (0.23 x 0.21 x 0.38); turn it with Home Alone > Save Prop Placement",
    "placed_by": "user"
+  },
+  {
+   "name": "buzz_typewriter",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Typewriter_01.prefab",
+   "x": [
+    9.12,
+    9.46
+   ],
+   "z": [
+    15.62,
+    15.91
+   ],
+   "y0": 0.795,
+   "height": 0.21,
+   "back": "",
+   "yaw": 0,
+   "hides": [],
+   "collide": false,
+   "source": "props lane (Oct 17 overnight, not walked): film 530 (the typewriter centre-right on Buzz's desk, lamp at its right end). Fadnn SM_Typewriter_01 at its own size (0.34 x 0.29 x 0.21); keys to the room (yaw 0 = native front +Unity z). The film's is a light grey electric; the pack's is a dark manual"
+  },
+  {
+   "name": "buzz_book_01",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    7.495,
+    7.675
+   ],
+   "z": [
+    13.4,
+    13.45
+   ],
+   "y0": 0.657,
+   "height": 0.23,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "source": "props lane (Oct 17 overnight, not walked): film 486/496 (a row of books on Buzz's shelves); Fadnn SM_Book at its own size, standing on board 0 of buzz_shelves (spec/dressing/buzz.json), spine to the room (yaw 90: build 1's auto turn, 270, put the spine to the wall)",
+   "yaw": 90
+  },
+  {
+   "name": "buzz_book_02",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    7.495,
+    7.675
+   ],
+   "z": [
+    13.454,
+    13.504
+   ],
+   "y0": 0.657,
+   "height": 0.23,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "source": "props lane (Oct 17 overnight, not walked): film 486/496 (a row of books on Buzz's shelves); Fadnn SM_Book at its own size, standing on board 0 of buzz_shelves (spec/dressing/buzz.json), spine to the room (yaw 90: build 1's auto turn, 270, put the spine to the wall)",
+   "yaw": 90
+  },
+  {
+   "name": "buzz_book_03",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_03.prefab",
+   "x": [
+    7.495,
+    7.675
+   ],
+   "z": [
+    13.508,
+    13.558
+   ],
+   "y0": 0.657,
+   "height": 0.23,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "source": "props lane (Oct 17 overnight, not walked): film 486/496 (a row of books on Buzz's shelves); Fadnn SM_Book at its own size, standing on board 0 of buzz_shelves (spec/dressing/buzz.json), spine to the room (yaw 90: build 1's auto turn, 270, put the spine to the wall)",
+   "yaw": 90
+  },
+  {
+   "name": "buzz_book_04",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    7.495,
+    7.675
+   ],
+   "z": [
+    13.562,
+    13.602
+   ],
+   "y0": 0.657,
+   "height": 0.23,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "source": "props lane (Oct 17 overnight, not walked): film 486/496 (a row of books on Buzz's shelves); Fadnn SM_Book at its own size, standing on board 0 of buzz_shelves (spec/dressing/buzz.json), spine to the room (yaw 90: build 1's auto turn, 270, put the spine to the wall)",
+   "yaw": 90
+  },
+  {
+   "name": "buzz_book_05",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    7.495,
+    7.675
+   ],
+   "z": [
+    13.606,
+    13.656
+   ],
+   "y0": 0.657,
+   "height": 0.23,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "source": "props lane (Oct 17 overnight, not walked): film 486/496 (a row of books on Buzz's shelves); Fadnn SM_Book at its own size, standing on board 0 of buzz_shelves (spec/dressing/buzz.json), spine to the room (yaw 90: build 1's auto turn, 270, put the spine to the wall)",
+   "yaw": 90
+  },
+  {
+   "name": "buzz_book_06",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_06.prefab",
+   "x": [
+    7.495,
+    7.675
+   ],
+   "z": [
+    14.16,
+    14.21
+   ],
+   "y0": 1.41,
+   "height": 0.25,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "source": "props lane (Oct 17 overnight, not walked): film 486/496 (a row of books on Buzz's shelves); Fadnn SM_Book at its own size, standing on board 2 of buzz_shelves (spec/dressing/buzz.json), spine to the room (yaw 90: build 1's auto turn, 270, put the spine to the wall)",
+   "yaw": 90
+  },
+  {
+   "name": "buzz_book_07",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    7.495,
+    7.675
+   ],
+   "z": [
+    14.214,
+    14.264
+   ],
+   "y0": 1.41,
+   "height": 0.25,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "source": "props lane (Oct 17 overnight, not walked): film 486/496 (a row of books on Buzz's shelves); Fadnn SM_Book at its own size, standing on board 2 of buzz_shelves (spec/dressing/buzz.json), spine to the room (yaw 90: build 1's auto turn, 270, put the spine to the wall)",
+   "yaw": 90
+  },
+  {
+   "name": "buzz_book_08",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_08.prefab",
+   "x": [
+    7.495,
+    7.675
+   ],
+   "z": [
+    14.268,
+    14.328
+   ],
+   "y0": 1.41,
+   "height": 0.25,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "source": "props lane (Oct 17 overnight, not walked): film 486/496 (a row of books on Buzz's shelves); Fadnn SM_Book at its own size, standing on board 2 of buzz_shelves (spec/dressing/buzz.json), spine to the room (yaw 90: build 1's auto turn, 270, put the spine to the wall)",
+   "yaw": 90
+  },
+  {
+   "name": "buzz_book_09",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_09.prefab",
+   "x": [
+    7.495,
+    7.675
+   ],
+   "z": [
+    14.332,
+    14.382
+   ],
+   "y0": 1.41,
+   "height": 0.25,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "source": "props lane (Oct 17 overnight, not walked): film 486/496 (a row of books on Buzz's shelves); Fadnn SM_Book at its own size, standing on board 2 of buzz_shelves (spec/dressing/buzz.json), spine to the room (yaw 90: build 1's auto turn, 270, put the spine to the wall)",
+   "yaw": 90
+  },
+  {
+   "name": "buzz_book_10",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_10.prefab",
+   "x": [
+    7.495,
+    7.675
+   ],
+   "z": [
+    14.386,
+    14.436
+   ],
+   "y0": 1.41,
+   "height": 0.23,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "source": "props lane (Oct 17 overnight, not walked): film 486/496 (a row of books on Buzz's shelves); Fadnn SM_Book at its own size, standing on board 2 of buzz_shelves (spec/dressing/buzz.json), spine to the room (yaw 90: build 1's auto turn, 270, put the spine to the wall)",
+   "yaw": 90
   }
  ]
 }

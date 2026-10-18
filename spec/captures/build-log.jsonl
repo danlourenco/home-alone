@@ -52,3 +52,5 @@
 {"time": "2026-10-17T23:24:46", "cmd": "build", "job": "deskrevert", "why": "den desk back to SM_Desk_01 (user)", "wall_s": 76, "exit": 0}
 {"time": "2026-10-17T23:26:05", "cmd": "bake", "job": "deskrevert", "why": "banker lamp back at 0.78", "wall_s": 79, "exit": 0}
 {"time": "2026-10-17T23:27:52", "cmd": "build", "job": "piano75", "why": "grand x0.75 (user)", "wall_s": 88, "exit": 0}
+{"time": "2026-10-17T23:52:57", "cmd": "build", "job": "overnight1", "why": "Buzz hero props batch", "wall_s": 93, "exit": 0}
+{"time": "2026-10-17T23:57:45", "cmd": "build", "job": "overnight1", "why": "Buzz props fixes: spider pivot, book spines, trunk frame z-fight", "wall_s": 90, "exit": 0}

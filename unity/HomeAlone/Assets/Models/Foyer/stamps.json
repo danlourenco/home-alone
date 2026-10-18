@@ -9,7 +9,11 @@
  },
  "tools/house/hifi_buzz_curtains.py": {
   "models": "356da5161781ccee",
-  "sources": "4f616c8559432cf3"
+  "sources": "01db0030d77b0bb0"
+ },
+ "tools/house/hifi_buzz_props.py": {
+  "models": "1f09307fe63c6c9f",
+  "sources": "34ed4f0d7af7ff01"
  },
  "tools/house/hifi_den.py": {
   "models": "725843a281bb5408",
@@ -65,7 +69,7 @@
  },
  "tools/house/hifi_landing_window.py": {
   "models": "c19bb98c7077b7fe",
-  "sources": "e9844cbc53b2c3d4"
+  "sources": "94f27a1b4aff1887"
  },
  "tools/house/hifi_lights.py": {
   "models": "039d900b97254c67",
