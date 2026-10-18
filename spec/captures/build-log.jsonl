@@ -62,3 +62,9 @@
 {"time": "2026-10-18T00:28:24", "cmd": "bake", "job": "overnight2", "why": "auto: load of an unbaked build", "wall_s": 90, "exit": 0}
 {"time": "2026-10-18T00:52:50", "cmd": "build", "job": "overnight3", "why": "buzz bed + nudge + pinstripes", "wall_s": 89, "exit": 0}
 {"time": "2026-10-18T00:54:33", "cmd": "bake", "job": "overnight3", "why": "auto: load of an unbaked build", "wall_s": 89, "exit": 0}
+{"time": "2026-10-18T01:07:15", "cmd": "build", "job": "overnight3b", "why": "buzz daylight: probe re-render + film paper chroma", "wall_s": 97, "exit": 0}
+{"time": "2026-10-18T01:10:03", "cmd": "bake", "job": "overnight3b", "why": "buzz daylight: probe re-render", "wall_s": 159, "exit": 0}
+{"time": "2026-10-18T01:17:21", "cmd": "bake", "job": "overnight3b", "why": "room probes on every rendering layer", "wall_s": 150, "exit": 0}
+{"time": "2026-10-18T01:20:50", "cmd": "bake", "job": "overnight3b", "why": "room probes on every rendering layer (Editor synced)", "wall_s": 153, "exit": 0}
+{"time": "2026-10-18T01:26:11", "cmd": "build", "job": "overnight3b", "why": "DayGrade white balance removed", "wall_s": 92, "exit": 0}
+{"time": "2026-10-18T01:28:38", "cmd": "bake", "job": "overnight3b", "why": "DayGrade white balance removed", "wall_s": 147, "exit": 0}

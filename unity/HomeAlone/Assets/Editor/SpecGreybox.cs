@@ -1492,10 +1492,12 @@ public static partial class SpecGreybox
         var toSun = new Vector3(Mathf.Cos(rel) * Mathf.Cos(el), Mathf.Sin(el), -Mathf.Sin(rel) * Mathf.Cos(el));   // spec +z (right, from inside facing front) -> world -z
         var dayLayer = Child(day, "DayLayer");   // switched off at night (N) with the sun in it
         {   // day grade (user note 09:33, "the color look flat"): the sky's blue bounce made the floor blue and the paper grey; the
-            // film's day interiors read warm. White balance and a little saturation, in the day layer only
+            // film's day interiors read warm. A little saturation, in the day layer only
             string dp = "Assets/Settings/DayGrade.asset"; AssetDatabase.DeleteAsset(dp);
             var prof = ScriptableObject.CreateInstance<VolumeProfile>(); AssetDatabase.CreateAsset(prof, dp);
-            var wb = prof.Add<WhiteBalance>(true); wb.temperature.value = 12f; AssetDatabase.AddObjectToAsset(wb, prof);
+            // White balance +12 removed (Oct 18, overnight3b): the blue it countered was the room probes not lighting LayerOverhang (Buzz's
+            // navy floor) and probe images baked without the fill (BakeLighting); fixed, it only pushed the paper yellow. Without it every
+            // film_light_match warmth read moves toward the film (foyer 2677 paper 5.91 -> 4.91 vs film 1.96; 10248 door 1.75 -> 1.58 vs 1.44)
             var ca = prof.Add<ColorAdjustments>(true); ca.saturation.value = 12f; AssetDatabase.AddObjectToAsset(ca, prof);
             var dv = new GameObject("DayGrade").AddComponent<Volume>(); dv.transform.parent = dayLayer.transform; dv.isGlobal = true; dv.priority = 5f; dv.sharedProfile = prof;
         }

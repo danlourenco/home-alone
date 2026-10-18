@@ -23,6 +23,11 @@
   "spacing_from_minors_m": 0.1198,
   "spacing_from_reds_m": 0.1277
  },
+ "ground_albedo_linear": [
+  0.693,
+  0.72,
+  0.71
+ ],
  "line_to_ground_linear": {
   "red": [
    0.844,

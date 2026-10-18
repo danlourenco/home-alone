@@ -137,6 +137,9 @@ public static class BakeLighting
             rp.transform.position = new Vector3((x0 + x1) / 2, (r.y0 + r.y1) / 2, (z0 + z1) / 2);
             var hd = rp.gameObject.AddComponent<HDAdditionalReflectionData>();
             rp.mode = UnityEngine.Rendering.ReflectionProbeMode.Baked; hd.mode = ProbeSettings.Mode.Baked;
+            // every rendering layer: the upstairs pieces past the film's front are on LayerOverhang (SpecGreybox.FilmFront) and a probe
+            // lights only layer 1 by default, so Buzz's floor, chest and nightstand reflected the blue sky (navy wood by day; overnight3b)
+            hd.lightLayers = UnityEngine.Rendering.HighDefinition.RenderingLayerMask.Everything;
             hd.influenceVolume.shape = InfluenceShape.Box; hd.influenceVolume.boxSize = size;
             hd.influenceVolume.boxBlendDistancePositive = Vector3.one * 0.05f; hd.influenceVolume.boxBlendDistanceNegative = Vector3.one * 0.05f;
             probes++;
@@ -230,6 +233,15 @@ public static class BakeLighting
             var t = System.Diagnostics.Stopwatch.StartNew();
             bool ok = Lightmapping.Bake();
             Debug.Log($"BakeLighting {scenario}: {(ok ? "done" : "FAILED")} in {t.Elapsed.TotalSeconds:F0} s");
+            // the room probes again, now that this scenario's probe volume is baked and loaded: the images Lightmapping.Bake renders
+            // see the walls without the baked FilmFill (Buzz's paper R/B 0.88 in its day probe: lit by the sky alone), and every dark
+            // glossy surface showed that: Buzz's wood floor and mahogany chest read navy by day (overnight3b, Oct 18; live, a probe
+            // re-rendered in Play took the floor from R/B 0.65 to 1.44). HDRP's own probe bake needs the scene saved first
+            EditorSceneManager.SaveScene(scene);
+            for (int f = 0; f < SkyFrames; f++) { SceneView.RepaintAll(); yield return null; }
+            bool rp = UnityEditor.Experimental.Rendering.ScriptableBakedReflectionSystemSettings.system.BakeAllReflectionProbes();
+            Debug.Log($"BakeLighting {scenario}: reflection probes re-rendered after the bake: {rp}");
+            if (!rp) { Debug.LogError("BakeLighting FAIL: reflection probes not re-rendered"); }
             // each scenario keeps its own reflections: the probes' images are copied per scenario and HouseNightMode swaps them (one set,
             // baked in the night pass, put the lamp-lit night room into the day's reflections)
             var rps = Object.FindObjectsByType<HDAdditionalReflectionData>(FindObjectsSortMode.None).Where(q => q.name.StartsWith("Probe_")).OrderBy(q => q.name).ToArray();

@@ -86,6 +86,7 @@ build)
 bake)
   # the windowed bake opens the scratch project: no HDRP wizard popping up each time (a user-local editor preference)
   sed -i '' 's/m_WizardPopupAtStart: 1/m_WizardPopupAtStart: 0/' "$S/UserSettings/HDRPUserSettings.asset" 2>/dev/null || true
+  rsync -a "$P/Assets/Editor/" "$S/Assets/Editor/"   # the bake runs the repo's BakeLighting, not the last build's copy (overnight3b: a bake-only fix never ran)
   bx=0; "$UNITY" -projectPath "$S" -executeMethod BakeLighting.Bake -logFile "$ROOT/bake.log" || bx=$?   # windowed; exits when done
   grep -E "BakeLighting [DN]|Baked lights|Realtime lights|xception" "$ROOT/bake.log" || true   # display only; the checks below decide
   # every authored-Baked light must be recorded as baked in the saved scene (BakeLighting.CheckBakedLights; the FilmFill bug, Oct 17)
@@ -156,6 +157,11 @@ daycheck)   # day must have its baked bounce: the APV baking set loaded, and day
     m=$(uv run -q --with pillow --with numpy python -I -c "import sys,numpy as n; from PIL import Image; a=n.asarray(Image.open(sys.argv[1]).convert('RGB'))/255.; print('%.3f'%(a.max(-1)-a.min(-1)).mean())" "$f")
     ok=$(python3 -c "print(1 if $m >= ${10} else 0)"); [ "$ok" = 1 ] && echo "ok   day $1 saturation $m (floor ${10})" || { echo "FAIL day $1 saturation $m < floor ${10}: $f"; fails=1; }
   done
+  # Buzz's wood floor must read brown, not navy (overnight3b, Oct 18): linear R/B of the floor beside the chest. The room probes lit only
+  # rendering layer 1 and Buzz's furniture/floor (LayerOverhang) reflected the blue sky: R/B 0.65; probes on every layer 8.2, with DayGrade WB removed 6.3. Floor 1.5
+  f=$("$0" shot daycheck-buzz-floor 9.3 0.03 -13.4 120 35 day)
+  m=$(uv run -q --with pillow --with numpy python -I -c "import sys,numpy as n; from PIL import Image; a=(n.asarray(Image.open(sys.argv[1]).convert('RGB').resize((640,360)))[160:220,420:540]/255.)**2.2; m=a.reshape(-1,3).mean(0); print('%.2f'%(m[0]/m[2]))" "$f")
+  ok=$(python3 -c "print(1 if $m >= 1.5 else 0)"); [ "$ok" = 1 ] && echo "ok   day buzz floor warmth R/B $m (floor 1.5)" || { echo "FAIL day buzz floor R/B $m < 1.5 (blue: probes not lighting its layer?): $f"; fails=1; }
   [ $fails = 0 ] || { echo "daycheck FAILED: day is flat (unbaked build loaded? APV missing?)" >&2; exit 1; };;
 all) "$0" build && "$0" bake && "$0" load;;
 shot|cam)

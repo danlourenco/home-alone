@@ -157,8 +157,8 @@ def buzz():
         assumed frontal (foreshortening can only make the paper read NARROWER: a lower bound). The door knob is printed against
         the chart (36 in standard, a lead).
     Tile: ONE period across (the median of every clean period below the sling, rows 700-1050, x 1150-1900, each resampled to W px
-    between its red lines; the median over rows removes the gaps), divided by its own ground, ground albedo ASSUMED the house's
-    off-white (0.71/0.67/0.57 linear); TILE_H periods tall with one gap per line at staggered heights (film 2766: gaps every
+    between its red lines; the median over rows removes the gaps), divided by its own ground, ground chroma the film's (2766), level ASSUMED 0.72 (was the house's
+    off-white 0.71/0.67/0.57, which read yellow: DEVIATIONS 83); TILE_H periods tall with one gap per line at staggered heights (film 2766: gaps every
     ~275-410 px of ~226 px periods)."""
     from scipy.ndimage import map_coordinates, gaussian_filter1d, percentile_filter
     from scipy.signal import find_peaks
@@ -205,6 +205,7 @@ def buzz():
     print("film 480 chart check:", chart)
 
     # ---- the tile from 2766
+    GROUND_LEVEL = 0.72                                   # ground albedo, max channel (ASSUMED; chroma measured)
     W, TILE_H, GAP = 128, 1.5, 0.035                      # px per period; tile height in periods; gap length in periods
     prof = []
     for r in range(700, 1050, 10):
@@ -219,9 +220,13 @@ def buzz():
     # light's slope across the wall left the plain paper shaded within each period (bands in the first cut)
     g = np.stack([gaussian_filter1d(percentile_filter(lin[:, k], 80, size=W // 4, mode="wrap"), W / 16, mode="wrap") for k in range(3)], 1)
     ratio = lin / g
-    lin = np.clip(ratio * np.array([0.71, 0.67, 0.57]), 0, 1)
+    # the ground's CHROMA is the film's own (2766 by day, frontal: linear ~1/1/0.98, a white paper); its LEVEL is ASSUMED 0.72 (max
+    # channel, the house's white papers). Until Oct 18 (overnight3b) the ground was the house's off-white 0.71/0.67/0.57: it read
+    # yellow-tan beside film 2766 (DEVIATIONS 83)
+    gc = np.median(g, 0); ground = GROUND_LEVEL * gc / gc.max()
+    lin = np.clip(ratio * ground, 0, 1)
     H = int(round(W * TILE_H)); tile = np.repeat(lin[None], H, 0)
-    ground = np.array([0.71, 0.67, 0.57]); dark = ratio.mean(1) < 0.93
+    dark = ratio.mean(1) < 0.93
     for i, (c, at) in enumerate(((0.0, 0.10), (0.25, 0.60), (0.5, 0.35), (0.75, 0.85))):   # red, grey, tan, grey: one staggered gap each
         cols = [j for j in range(W) if dark[j] and min(abs(j / W - c), 1 - abs(j / W - c)) < 0.06]
         y0 = int(at * H); tile[y0:y0 + max(2, int(GAP * W)), cols] = ground
@@ -233,7 +238,7 @@ def buzz():
         "source": "film 2766 rows 700-1050, x 1150-1900: median of every clean period (red, grey, tan, grey lines), gaps staggered one per line per tile",
         "repeat_m": [w_m, round(w_m * TILE_H, 4)], "ruler": f"gun (film 2766, Daisy lever BB gun {GUN_L} m): {periods:.2f} periods butt to muzzle",
         "gun_range_m": [round(GUN_RANGE[0] / periods, 4), round(GUN_RANGE[1] / periods, 4)], "check_chart_480": chart,
-        "line_to_ground_linear": {n: [round(float(v), 3) for v in ratio[int(c * W) + (1 if c == 0 else 0)]] for n, c in (("red", 0.0), ("grey", 0.25), ("tan", 0.5))},
+        "ground_albedo_linear": [round(float(v), 3) for v in ground], "line_to_ground_linear": {n: [round(float(v), 3) for v in ratio[int(c * W) + (1 if c == 0 else 0)]] for n, c in (("red", 0.0), ("grey", 0.25), ("tan", 0.5))},
         "previous": "0.0853 (Marina's desk wall at her growth chart; her paper, not the film's)"}, indent=1) + "\n")
     big = np.tile(np.asarray(Image.open(out)), (2, 8, 1)); Image.fromarray(big).save(ROOT / "sfm-work/buzz_wallpaper_tiled.png")
     print(out, [w_m, round(w_m * TILE_H, 4)], "check: sfm-work/buzz_wallpaper_tiled.png")
