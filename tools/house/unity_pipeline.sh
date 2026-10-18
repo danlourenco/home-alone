@@ -11,6 +11,7 @@
 #                                            # uncompiled C# or a model the open editor must not see yet never touches the repo
 #   tools/house/unity_pipeline.sh bake       # bake day + night (WINDOWED: batch mode has no sky; BakeLighting refuses it)
 #   tools/house/unity_pipeline.sh load       # copy scene + bake into the project, wait for import/compile, open, Play
+#   tools/house/unity_pipeline.sh nightcheck # live: night shots at 3 room poses must reach a luminance floor (load runs it last)
 #   tools/house/unity_pipeline.sh all        # build, bake, load (stops at the first failure: every step exits non-zero on a FAIL)
 # build and bake append one line to spec/captures/build-log.jsonl (time, cmd, job=$HA_JOB, why=$HA_WHY, wall_s, exit): rebuilds per job
 #   tools/house/unity_pipeline.sh shot NAME x y z yaw pitch [day|night]     # live capture from a player pose (feet; eye +1.28)
@@ -58,6 +59,7 @@ preflight)   # cheap gates before any Unity launch (STATUS 8p f); runs them all,
     n=$(echo "$g" | grep -oE '[a-z_]+\.py( --[a-z]+)?')
     if out=$($g 2>&1); then echo "ok   $n"; else echo "FAIL $n"; echo "$out" | grep -E '^[^ ].*\.json:|^ *FAIL|Error' | grep -B1 -E '^ *FAIL|Error' | cut -c1-160 | head -8; bad=1; fi
   done
+  python3 tools/house/slow_jobs.py | sed 's/^/     /'   # informational: recurring slow work and builds since the last bake (never fails)
   [ $bad = 0 ] || { echo "preflight FAILED: Unity not launched (HA_NO_PREFLIGHT=1 to override)" >&2; exit 1; };;
 build)
   python3 "$REPO/tools/house/openings.py"     # every opening's casing, header and limits (HOUSE-KERNEL step 2; refused if a limit breaks)
@@ -66,11 +68,12 @@ build)
   rsync -a "$P/Assets/Editor/" "$S/Assets/Editor/"; rsync -a "$P/Assets/Scripts/" "$S/Assets/Scripts/"
   rsync -a "$P/Assets/Models/" "$S/Assets/Models/"; cp "$P/Assets/Settings/HDRP.asset" "$S/Assets/Settings/"
   rsync -a --exclude Greybox --exclude Greybox.meta "$P/Assets/Textures/" "$S/Assets/Textures/"   # generated + Poly Haven maps (kitchen); Greybox/ is the build's own
-  for pk in "Fadnn - Vintage Interior Furniture Pack" "Classic Wooden Furniture Pack" "Free Wood Door Pack" "VTC_AV-2062s" "ChristmasTreeAndGarland"; do   # Asset Store packs (gitignored; may be absent)
+  for pk in "Fadnn - Vintage Interior Furniture Pack" "Classic Wooden Furniture Pack" "Free Wood Door Pack" "VTC_AV-2062s" "ChristmasTreeAndGarland" "Tarantula"; do   # Asset Store packs (gitignored; may be absent)
     [ -d "$P/Assets/$pk" ] && rsync -a "$P/Assets/$pk" "$P/Assets/$pk.meta" "$S/Assets/"; done
   [ -d "$P/Assets/Purchased" ] && rsync -a "$P/Assets/Purchased" "$S/Assets/" && { [ -f "$P/Assets/Purchased.meta" ] && cp "$P/Assets/Purchased.meta" "$S/Assets/" || true; }   # CGTrader buys (gitignored; may be absent: generated plants then)
   [ -n "${HA_OVERLAY:-}" ] && rsync -a "$HA_OVERLAY/" "$S/Assets/"
   ux=0; "$UNITY" -batchmode -projectPath "$S" -executeMethod SpecGreybox.BuildWallGrid -quit -logFile "$ROOT/build.log" "${@:2}" || ux=$?
+  for d in Scripts Editor; do rsync -a --ignore-existing --include='*/' --include='*.meta' --exclude='*' "$S/Assets/$d/" "$P/Assets/$d/"; done   # a new script's .meta: the scratch's GUID is the one the scene references (PlacedProp, Oct 17)
   if grep -q "error CS" "$ROOT/build.log"; then grep "error CS" "$ROOT/build.log" | head -5; exit 1; fi
   # a gate over its time budget (SpecGreybox.Step/BudgetGuard; zfight-check skill "Check speed") fails the build, naming the gate
   if grep -q "BUDGET FAIL" "$ROOT/build.log"; then grep -m5 "BUDGET FAIL" "$ROOT/build.log"; exit 1; fi
@@ -97,7 +100,7 @@ load)
   cp "$S/Assets/Settings/HouseLighting.lighting" "$S/Assets/Settings/"*.asset "$P/Assets/Settings/"
   # Asset Store packs (gitignored): the whole pack folders from scratch, incl. the HDRP copies StoreProps saves inside them; a pack
   # imported only in scratch, or a missing *_HDRP.mat, leaves the scene with missing meshes or magenta (Oct 16)
-  for pk in "Fadnn - Vintage Interior Furniture Pack" "Classic Wooden Furniture Pack" "Free Wood Door Pack" "VTC_AV-2062s" "ChristmasTreeAndGarland"; do
+  for pk in "Fadnn - Vintage Interior Furniture Pack" "Classic Wooden Furniture Pack" "Free Wood Door Pack" "VTC_AV-2062s" "ChristmasTreeAndGarland" "Tarantula"; do
     [ -d "$S/Assets/$pk" ] && rsync -a "$S/Assets/$pk" "$S/Assets/$pk.meta" "$P/Assets/"; done
   rsync -a "$S/Assets/Materials/Greybox/" "$P/Assets/Materials/Greybox/"; rsync -a "$S/Assets/Textures/Greybox/" "$P/Assets/Textures/Greybox/" 2>/dev/null || true
   # the scene was built against the SCRATCH copy's asset GUIDs: a model or texture new to both projects gets its own GUID in each
@@ -117,7 +120,18 @@ load)
   (cd "$P" && "$CLI" command editor_play | tail -1)
   # HA_START="x,y,z,yaw" (world feet, Unity coords): start the walk in the room under review (user Oct 17), not at the spawn
   if [ -n "${HA_START:-}" ]; then sleep 5; IFS=, read -r sx sy sz syaw <<< "$HA_START"
-    ev "var f=UnityEngine.Object.FindFirstObjectByType<FpsController>(); var cc=f.GetComponent<UnityEngine.CharacterController>(); cc.enabled=false; f.transform.SetPositionAndRotation(new UnityEngine.Vector3(${sx}f,${sy}f,${sz}f), UnityEngine.Quaternion.Euler(0,${syaw}f,0)); f.cam.localRotation=UnityEngine.Quaternion.identity; cc.enabled=true; return \"start \"+f.transform.position;"; fi;;
+    ev "var f=UnityEngine.Object.FindFirstObjectByType<FpsController>(); var cc=f.GetComponent<UnityEngine.CharacterController>(); cc.enabled=false; f.transform.SetPositionAndRotation(new UnityEngine.Vector3(${sx}f,${sy}f,${sz}f), UnityEngine.Quaternion.Euler(0,${syaw}f,0)); f.cam.localRotation=UnityEngine.Quaternion.identity; cc.enabled=true; return \"start \"+f.transform.position;"; fi
+  "$0" nightcheck;;   # night lit at 3 room poses (shots use a camera clone: the player is not moved)
+nightcheck)   # night must be lit: mean luminance of night shots at 3 room poses >= a floor (user Oct 17 "why are all the lights off at night?")
+  # broken state it catches: a Scene-view search filter ("piano") made HDRP force fixed exposure from the physical camera (EV 14.6):
+  # night means were 0.011 / 0.001 / 0.000; fixed (SceneFilterExposureGuard) 0.339 / 0.311 / 0.290. Floor 0.10 each. load runs it last.
+  fails=0
+  for p in "foyer 1.5 -3.0 -10.0 90 0.10" "living 6.5 -3.0 -13.8 180 0.10" "buzz 8.45 0.03 -13.0 340 0.10"; do
+    set -- $p; f=$("$0" shot "nightcheck-$1" "$2" "$3" "$4" "$5" 0 night)
+    m=$(uv run -q --with pillow python -I -c "import sys; from PIL import Image, ImageStat; print('%.3f'%(ImageStat.Stat(Image.open(sys.argv[1]).convert('L')).mean[0]/255))" "$f")
+    ok=$(python3 -c "print(1 if $m >= $6 else 0)"); [ "$ok" = 1 ] && echo "ok   night $1 mean $m (floor $6)" || { echo "FAIL night $1 mean $m < floor $6: $f"; fails=1; }
+  done
+  [ $fails = 0 ] || { echo "nightcheck FAILED: night is dark (Scene-view search filter on? HDRP exposure stuck?)" >&2; exit 1; };;
 all) "$0" build && "$0" bake && "$0" load;;
 shot|cam)
   mode="$1"; name="$2"; shift 2

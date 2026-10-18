@@ -388,7 +388,7 @@ MonoBehaviour:
   supportLayerMaskChunkSize: 0
   supportOffsetsChunkSize: 98304
   supportDataChunkSize: 262144
-  lightingScenario: Default
+  lightingScenario: Night
   version: 2
   freezePlacement: 0
   probeOffset: {x: 0, y: 0, z: 0}

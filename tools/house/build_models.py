@@ -43,6 +43,7 @@ BUILDS = {
     "tools/house/hifi_living_props.py": (["LivingProps.glb"], ["spec/dressing/living.json", "tools/house/hifi_den_props.py"]),
     "tools/house/hifi_hall.py": (["HallDressing.glb"], [LIB, "spec/dressing/hall.json", "spec/dressing/hall_art.json", "spec/dressing/hall_art.png", "spec/geometry.json"]),
     "tools/house/hifi_hall_arches.py": (["HallArches.glb"], ["tools/house/hifi_pipeline.py", LIB, "spec/geometry.json", "spec/dressing/hall.json", "spec/dressing/finishes.json"]),
+    "tools/house/hifi_french_doors.py": (["FrenchDoors.glb"], [LIB, "spec/dressing/french_doors.json", "spec/geometry.json"]),
     "tools/house/hifi_foyer_arch.py": (["FoyerArch.glb"], [LIB, "tools/house/hifi_pipeline.py", "spec/geometry.json", "spec/house_spec.json"]),   # artist pipeline (+ Textures/Generated/FoyerArch)
 }
 

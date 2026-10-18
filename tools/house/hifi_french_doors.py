@@ -100,7 +100,7 @@ def centroid(name):
 
 for pr in D["pairs"]:
     o = next(o for o in GEO["openings"] if sorted(o["between"]) == sorted(pr["between"]))
-    assert pr["open_deg"] in (0, 90), "colliders (SpecGreybox.FrenchDoorColliders) handle 0 and 90 deg only"
+    assert 0 <= pr["open_deg"] <= 180, "open_deg: 0 closed .. 180 folded flat back into the room (SpecGreybox.FrenchDoors colliders follow any angle)"
     alongX = o["axis"] == "z"                       # the wall is z = c, the opening runs along x
     c, lo, hi = o["c"], o["lo"], o["hi"]
     rc = centroid(pr["room"]); ns = 1.0 if ((rc[1] if alongX else rc[0]) > c) else -1.0

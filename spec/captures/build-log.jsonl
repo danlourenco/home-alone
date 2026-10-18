@@ -33,3 +33,7 @@
 {"time": "2026-10-17T21:54:14", "cmd": "build", "job": "grand3", "why": "grand shortened to a baby grand (user); save button uses the move", "wall_s": 81, "exit": 0}
 {"time": "2026-10-17T22:01:17", "cmd": "build", "job": "grand4", "why": "user turned the grand to match Marina (Save Prop Placement)", "wall_s": 68, "exit": 0}
 {"time": "2026-10-17T22:02:50", "cmd": "build", "job": "grand5", "why": "grand: explicit scale for an off-90 turn", "wall_s": 66, "exit": 0}
+{"time": "2026-10-17T22:10:45", "cmd": "build", "job": "nightfix", "why": "den French doors folded open (user); then bake: night lamps dark after 6 builds without a bake", "wall_s": 83, "exit": 0}
+{"time": "2026-10-17T22:12:24", "cmd": "bake", "job": "nightfix", "why": "night lamps dark after builds without a bake", "wall_s": 92, "exit": 0}
+{"time": "2026-10-17T22:26:45", "cmd": "build", "job": "nightfix2", "why": "night dark = Scene-view search filter forcing HDRP fixed exposure (guard + nightcheck); den French doors at any angle (175)", "wall_s": 85, "exit": 0}
+{"time": "2026-10-17T22:28:22", "cmd": "bake", "job": "nightfix2", "why": "bake after the nightfix2 build (French doors 175 change the den/living light)", "wall_s": 88, "exit": 0}

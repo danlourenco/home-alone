@@ -7,7 +7,7 @@ using UnityEngine;
 
 // The glazed French door pairs (tools/house/hifi_french_doors.py -> FrenchDoors.glb; spec/dressing/french_doors.json;
 // changes/2026-10-16-french-doors.json). Places the model, hides the sunroom's prop box renderers (their colliders stay: the
-// walk layer is unchanged there) and gives each OPEN leaf a walk-layer box collider (90 deg leaves standing in the room).
+// walk layer is unchanged there) and gives each OPEN leaf a walk-layer box collider at its open_deg (any angle).
 public static partial class SpecGreybox
 {
     static void FrenchDoors(GameObject root, GameObject groot, float gy, JToken ground)
@@ -54,14 +54,17 @@ public static partial class SpecGreybox
                 { r.enabled = false; Debug.Log($"FrenchDoors: casing leg at {b.center} hidden (on the main stair's side)"); }
             }
             foreach (var mc in temp) Object.DestroyImmediate(mc);
-            if ((float)pr["open_deg"] != 90f) continue;
-            float width = (hi - lo - 2 * JT - 3 * GAP) / 2;
+            float th = (float)pr["open_deg"] * Mathf.Deg2Rad; if (th <= 0f) continue;
+            float width = (hi - lo - 2 * JT - 3 * GAP) / 2, cs = Mathf.Cos(th), sn = Mathf.Sin(th);
             foreach (var (sgn, h) in new[] { (1f, lo + JT + GAP), (-1f, hi - JT - GAP) })
-            {   // the open leaf stands in the room: along the opening it occupies h + sgn*[0.006, 0.006 + T], into the room [0.003, width]
-                float a0 = h + sgn * 0.006f, a1 = h + sgn * (0.006f + T);
-                var p0 = W(Mathf.Min(a0, a1), 0.003f, 0f); var p1 = W(Mathf.Max(a0, a1), width, head - JT - GAP);
+            {   // the leaf as hifi_french_doors.rot builds it: u along the leaf from the hinge, w through its thickness ([0.006, 0.006 + T]),
+                // both in (along, into-room); the collider spans u [0.003, width] (90 deg: the leaf standing in the room; 175: folded back)
+                Vector2 u = new Vector2(sgn * cs, sn), w = sgn > 0 ? new Vector2(sn, -cs) : new Vector2(-sn, -cs);
+                Vector2 m = new Vector2(h, 0f) + u * ((0.003f + width) / 2) + w * (0.006f + T / 2);
+                var pc = W(m.x, m.y, (head - JT - GAP) / 2); var pu = W(m.x + u.x, m.y + u.y, 0f) - W(m.x, m.y, 0f); pu.y = 0f;
                 var bc = new GameObject("FrenchLeafCollider_" + pr["room"] + "_" + (sgn > 0 ? "lo" : "hi")); bc.transform.SetParent(col.transform, false); bc.isStatic = true;
-                bc.transform.position = (p0 + p1) / 2; bc.AddComponent<BoxCollider>().size = new Vector3(Mathf.Abs(p1.x - p0.x), Mathf.Abs(p1.y - p0.y), Mathf.Abs(p1.z - p0.z)); nCol++;
+                bc.transform.SetPositionAndRotation(pc, Quaternion.LookRotation(Vector3.Cross(pu, Vector3.up), Vector3.up));   // local x along the leaf
+                bc.AddComponent<BoxCollider>().size = new Vector3(width - 0.003f, head - JT - GAP, T); nCol++;
             }
         }
         Debug.Log($"FrenchDoors: {nCol} leaf colliders, {nHid} prop renderers hidden");

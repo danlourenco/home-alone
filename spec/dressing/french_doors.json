@@ -4,7 +4,7 @@
  "pairs": [
   {"between": ["foyer", "dining_room"], "room": "dining_room", "open_deg": 90},
   {"between": ["living_room", "foyer"], "room": "living_room", "open_deg": 90},
-  {"between": ["den", "living_room"], "room": "living_room", "open_deg": 90},
+  {"between": ["den", "living_room"], "room": "living_room", "open_deg": 175, "why": "user Oct 17: keep the french doors completely open between the living room and den (folded back against the living-room wall)"},
   {"between": ["dining_room", "sunroom"], "room": "dining_room", "open_deg": 0, "surface": true}
  ]
 }

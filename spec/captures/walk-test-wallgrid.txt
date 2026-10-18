@@ -88,7 +88,7 @@ LOW     kitchen at (1.1, 5.4): 0.57 m clear under KitchenColliders/KitchenCollid
 LOW     kitchen at (1.1, 4.9): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
 LOW     kitchen at (1.1, 4.4): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
 LOW     kitchen at (1.6, 5.4): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
-Peek check: 582120 rays from rooms you can walk in, 0 into closed spaces
+Peek check: 582792 rays from rooms you can walk in, 0 into closed spaces
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 80 legs, 0 blocked
 skip    bandit buzz_room: no cell to stand in (its floor is a stair)
 skip    kevin buzz_room: no cell to stand in (its floor is a stair)
@@ -108,6 +108,6 @@ Props check: 21 store models, 1 problems (landing_table: back -0.5 cm from the d
 Props triangle budget: 4 models over 150k triangles (Assets/Purchased/PurchasedPlants.glb 411k, Assets/Purchased/HallPlants.glb 296k, Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Models/ChristmasTree.fbx 259k, Assets/Models/Foyer/HallDressing.glb 201k)
 Trim check: 67 face runs (3 on the stair and landings, 0 panelled by a window model), 106.4 m, 9435 samples, 1 gaps in the baseboard, wainscot or cap rail; run ends: corner 64, opening 68, outside-corner 2
 GAP     0.08 m of bare wall 0.42 above the line of the room:hall_corridor run at spec (7.34, 0.42, 9.91)
-Envelope check: 2123 points at room joints, 0 see the sky through < 0.3 m of shadow caster
+Envelope check: 2120 points at room joints, 0 see the sky through < 0.3 m of shadow caster
 Quality check: 2 pipeline models of 31 generated (the rest predate the artist pipeline), 0 problems
 
