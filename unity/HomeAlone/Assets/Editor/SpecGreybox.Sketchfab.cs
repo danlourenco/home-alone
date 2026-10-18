@@ -154,5 +154,11 @@ public static partial class SpecGreybox
         // the side window (wall z 0), machine head up, 1.05 m tall; the 1900s dress form in front of the window corner, 1.45 m
         Sketchfab(g, "sewing_machine", "parents_sewing_table", turn, 1.05f, new Vector3(5.75f, 0f, 0.33f));
         Sketchfab(g, "mannequin_1900s_m_size", "parents_dress_form", Quaternion.Euler(0, -90, 0), 1.45f, new Vector3(7.95f, 0f, 1.0f));
+
+        // --- kitchen: Kevin's blowtorch trap at the back door (film 10351-10363: a brass plumber's torch clamped beside the door at head
+        // height by the upper cabinet, its nozzle across the doorway; a string to the door fires it into Harry's hat). CGTrader "Rusty Blow
+        // Torch" (free, user download Oct 18; GLB at 2K by the coordinator, gitignored). 0.33 m long, in front of the cabinet's door-side end
+        // (kitchen.json uppers[0] x -5.192..-4.862, z 1.219..1.874; door z 2.046..3.004 on the x -5.262 wall), bottom 1.70 m up
+        Sketchfab(g, "rusty_blowtorch", "kitchen_blowtorch", Quaternion.Euler(0, 90, 0), 0.33f, new Vector3(-4.80f, gy + 1.70f, 1.90f));
     }
 }

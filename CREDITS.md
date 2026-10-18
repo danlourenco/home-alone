@@ -22,3 +22,4 @@ Third-party assets used by the Unity build. The model files themselves are not i
 - "Sewing Machine" by Akram090 (https://sketchfab.com/Akram090), https://sketchfab.com/3d-models/sewing-machine-78c947841f4c4c27bf169b4e78ad189f, CC BY 4.0. The parents' bedroom treadle sewing table (rescaled).
 - "Still Life of White Roses" (1870) by Henri Fantin-Latour, public domain (https://commons.wikimedia.org/wiki/File:Henri_Fantin-Latour_-_Still_Life_of_White_Roses_-_Google_Art_Project.jpg). The painting over the parents' mantel.
 - Poly Haven "Standing Picture Frame 01/02" (CC0, https://polyhaven.com/models). The parents' mantel photo frames.
+- "Rusty Blow Torch" (CGTrader, free download by the user, Oct 18 2026; royalty-free licence, file gitignored). Kevin's blowtorch trap by the kitchen back door (film 10351-10363), re-exported to GLB with 2K maps.
