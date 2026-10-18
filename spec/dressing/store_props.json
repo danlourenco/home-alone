@@ -741,6 +741,195 @@
    "source": "Buzz TRIAL 1 (changes/2026-10-17-buzz-layout.json): box from spec/dressing/buzz.json (tools/house/buzz_layout.py); head posts' finials (7 frames each, cut 0.05 m off the door wall) centres 0.969 / 2.057 m from the front corner, built 0.14 m further toward the door (adult passage to the chest, changes/2026-10-18-buzz-bed.json); footboard face 2.155 m off the wall (dense depth, 2 frames); finial tops head 1.342, foot 0.884; mattress top 0.645 (dense). Post 0.104 square: the pack bed's (purchased_bed.py)",
    "yaw": 180,
    "back": ""
+  },
+  {
+   "name": "dining_table",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/DINING_TABLE_01.prefab",
+   "x": [
+    6.1,
+    8.29
+   ],
+   "z": [
+    4.811,
+    5.831
+   ],
+   "y0": 0.0,
+   "height": 0.74,
+   "yaw": 0,
+   "back": "",
+   "hides": [],
+   "collide": true,
+   "source": "Dining room (overnight Oct 18, prop, not walked): owned DINING_TABLE_01 at native 2.19 x 1.02 x 0.74 (furniture-sourcing D1), long side along the room under the chandelier, centred on the room (film 246/252, Marina 1124); spec/dressing/dining.json table. The film's lace cloth over it is generated (hifi_dining_props.py)"
+  },
+  {
+   "name": "dining_chair_foyer_1",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    6.29,
+    6.81
+   ],
+   "z": [
+    5.88,
+    6.37
+   ],
+   "y0": 0.0,
+   "height": 0.97,
+   "yaw": 0,
+   "back": "",
+   "hides": [],
+   "collide": true,
+   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+  },
+  {
+   "name": "dining_chair_foyer_2",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    6.935,
+    7.455
+   ],
+   "z": [
+    5.88,
+    6.37
+   ],
+   "y0": 0.0,
+   "height": 0.97,
+   "yaw": 0,
+   "back": "",
+   "hides": [],
+   "collide": true,
+   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+  },
+  {
+   "name": "dining_chair_foyer_3",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    7.58,
+    8.1
+   ],
+   "z": [
+    5.88,
+    6.37
+   ],
+   "y0": 0.0,
+   "height": 0.97,
+   "yaw": 0,
+   "back": "",
+   "hides": [],
+   "collide": true,
+   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+  },
+  {
+   "name": "dining_chair_sunroom_1",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    6.29,
+    6.81
+   ],
+   "z": [
+    4.27,
+    4.76
+   ],
+   "y0": 0.0,
+   "height": 0.97,
+   "yaw": 180,
+   "back": "",
+   "hides": [],
+   "collide": true,
+   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+  },
+  {
+   "name": "dining_chair_sunroom_2",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    6.935,
+    7.455
+   ],
+   "z": [
+    4.27,
+    4.76
+   ],
+   "y0": 0.0,
+   "height": 0.97,
+   "yaw": 180,
+   "back": "",
+   "hides": [],
+   "collide": true,
+   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+  },
+  {
+   "name": "dining_chair_sunroom_3",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    7.58,
+    8.1
+   ],
+   "z": [
+    4.27,
+    4.76
+   ],
+   "y0": 0.0,
+   "height": 0.97,
+   "yaw": 180,
+   "back": "",
+   "hides": [],
+   "collide": true,
+   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+  },
+  {
+   "name": "dining_chair_rear",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    5.56,
+    6.05
+   ],
+   "z": [
+    5.061,
+    5.581
+   ],
+   "y0": 0.0,
+   "height": 0.97,
+   "yaw": 90,
+   "back": "",
+   "hides": [],
+   "collide": true,
+   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+  },
+  {
+   "name": "dining_chair_front",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    8.34,
+    8.83
+   ],
+   "z": [
+    5.061,
+    5.581
+   ],
+   "y0": 0.0,
+   "height": 0.97,
+   "yaw": 270,
+   "back": "",
+   "hides": [],
+   "collide": true,
+   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+  },
+  {
+   "name": "dining_sideboard",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/DRAWER_CAB_01.prefab",
+   "x": [
+    4.85,
+    6.35
+   ],
+   "z": [
+    3.044,
+    3.524
+   ],
+   "y0": 0.0,
+   "height": 0.86,
+   "back": "-z",
+   "hides": [],
+   "collide": true,
+   "source": "Dining room (overnight Oct 18, prop, not walked): the film's sideboard (246/252: under the gilt still life, left of the sunroom French doors, a brass tea service on it; 10548 its brass chafing dish beside the kitchen door). Owned DRAWER_CAB_01 (1.14 x 0.39 x 0.70 native) fitted to 1.50 x 0.48 x 0.86 (x1.32/1.23/1.23; sideboard standard 34 in), back 4 cm off the sunroom wall (wainscot cap 3 cm proud + 1), its rear end 0.59 m from the kitchen wall"
   }
  ]
 }

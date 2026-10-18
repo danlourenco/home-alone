@@ -962,6 +962,7 @@ public static partial class SpecGreybox
         }
         Curtains(root, gy);       // SpecGreybox.Curtains.cs: tools/house/hifi_sheers.py (DEVIATIONS 41)
         Living(root, gy);         // SpecGreybox.Living.cs: tools/house/hifi_living.py + hifi_living_props.py + spec/dressing/living.json (changes/2026-10-16-living-room.json)
+        Dining(root, gy);         // SpecGreybox.Dining.cs: tools/house/hifi_dining_props.py + spec/dressing/dining.json (props lane, Oct 18)
         Den(root, gy);            // SpecGreybox.Den.cs: tools/house/hifi_den.py + hifi_den_props.py + spec/dressing/den.json (changes/2026-10-16-den.json)
         KitchenModel(root, gy);   // tools/house/hifi_kitchen.py + spec/dressing/kitchen.json (changes/2026-10-16-kitchen-cabinets.json)
         KitchenSconcesAndGallery(root, gy);   // SpecGreybox.KitchenLights.cs: wall sconces, picture gallery, desk
@@ -1521,7 +1522,7 @@ public static partial class SpecGreybox
         // the foyer's fixtures are lamps too: their lights join the night layer and their bulbs and shades go dark by day (user, Oct 16: "shut
         // off the sconces and foyer lighting during the day so i can get a read on it"; they were lit by day and in the day bake)
         Renderer[] glow = new Renderer[0];
-        foreach (var fxName in new[] { "Upstairs/FoyerFixtures", "Upstairs/KitchenFixtures", "Upstairs/DenFixtures", "Upstairs/DenBuiltins_HiFi", "Upstairs/LivingFixtures", "Upstairs/LivingBuiltins_HiFi", "Upstairs/HallFixtures", "Upstairs/HallDressing_HiFi" })   // the kitchen's, the den's and the living room's lamps too
+        foreach (var fxName in new[] { "Upstairs/FoyerFixtures", "Upstairs/KitchenFixtures", "Upstairs/DenFixtures", "Upstairs/DenBuiltins_HiFi", "Upstairs/LivingFixtures", "Upstairs/LivingBuiltins_HiFi", "Upstairs/DiningFixtures", "Upstairs/HallFixtures", "Upstairs/HallDressing_HiFi" })   // the kitchen's, the den's and the living room's lamps too
         {
             var fixtures = GameObject.Find(fxName);
             if (lamps == null || fixtures == null) continue;
@@ -1532,7 +1533,7 @@ public static partial class SpecGreybox
         if (lamps != null && cab != null)
         {
             glow = glow.Concat(cab.GetComponentsInChildren<MeshRenderer>(true).Where(r => r.sharedMaterial != null && r.sharedMaterial.name.StartsWith("HiFi_UnderCabGlow"))).ToArray();
-            foreach (var n in new[] { "Light_kitchen", "Light_back_stair", "Light_den", "Light_living_room" })   // no light without a fixture: the fixtures replace the rooms' generic lamps (the den's: DenLamps)
+            foreach (var n in new[] { "Light_kitchen", "Light_back_stair", "Light_den", "Light_living_room", "Light_dining_room" })   // no light without a fixture: the fixtures replace the rooms' generic lamps (the den's: DenLamps)
                 foreach (var t in lamps.GetComponentsInChildren<Transform>(true).Where(t => t.name == n).ToList()) Object.DestroyImmediate(t.gameObject);
         }
         WindowBackdrop(dayLayer, lamps != null ? lamps.gameObject : null, groundY);   // SpecGreybox.Backdrop.cs: winter backdrop outside the windows (overnight5)

@@ -1,0 +1,85 @@
+{
+ "note": "Dining room first furnishing (Oct 18 2026, props lane, overnight, not walked). Spec metres, y/h above the ground floor; room x 4.26 (kitchen wall) - 10.13 (front wall), z 3.004 (sunroom wall) - 7.638 (foyer wall). Read by tools/house/hifi_dining_props.py (-> DiningProps.glb: cloth, chandelier, china cabinet, painting, brass pot) and SpecGreybox.Dining (the chandelier's light, the colliders); the table, chairs and sideboard are owned pack pieces (spec/dressing/store_props.json dining_*). Placed by eye from the film (246-254 from the foyer arch; 10548-10662 the feather trap), Marina 1124-1150 for the rest; sizes are the products' own or standard (authored).",
+ "table": {
+  "x": [
+   6.1,
+   8.29
+  ],
+  "z": [
+   4.811,
+   5.831
+  ],
+  "h": 0.74,
+  "source": "film 246/252: the table runs along the room (front to back) under the chandelier, its long side to the foyer arch; Marina 1124/1126 the same. Owned DINING_TABLE_01 at its native 2.19 x 1.02 x 0.74, centred on the room (7.195, 5.321)"
+ },
+ "cloth": {
+  "overhang": 0.025,
+  "drop": 0.3,
+  "lace": 0.09,
+  "source": "film 246/252/254: an ivory lace tablecloth (an all-over floral lace, a scalloped lace border) hanging about 0.30 m (40% of the table's height in 246); generated (hifi_dining_props.py), top 12 mm over the table (overlays >= 1 cm: zfight-check), skirt 2.5 cm outside its edge"
+ },
+ "chandelier": {
+  "at": [
+   7.195,
+   5.321
+  ],
+  "y": [
+   1.58,
+   2.433
+  ],
+  "lumens": 1500,
+  "kelvin": 2700,
+  "source": "film 246/252 (top edge) and 10560/10658: a brass candle-arm chandelier with crystal over the table; Poly Haven Chandelier_03 (CC0; brass, crystal cups, 18 flame bulbs; 0.78 x 1.04 native) scaled uniformly 0.82 to 0.64 across, hung from the 2.438 ceiling to 0.84 m over the table (standard 30-36 in). 1500 lm authored (18 dimmed flame bulbs)"
+ },
+ "china_cabinet": {
+  "x": [
+   4.3,
+   4.75
+  ],
+  "z": [
+   4.88,
+   6.08
+  ],
+  "h": 2.0,
+  "front": "+x",
+  "source": "film 10550/10658: a dark mahogany china cabinet full of stemware beside a white-cased doorway, the chandelier in front of it: placed on the kitchen wall's pier between the two kitchen doors (z 4.43-6.53), centred (ASSUMED: the film shows it beside a doorway, no frame shows which wall). Poly Haven vintage_cabinet_01 (CC0; as the living room's curio) fitted to 1.2 x 0.45 x 2.0 (D4 standard), back 4 cm off the wall (wainscot cap)"
+ },
+ "painting": {
+  "x": [
+   5.12,
+   6.08
+  ],
+  "h": [
+   1.4,
+   2.14
+  ],
+  "z": 3.004,
+  "source": "film 246/252: a gilt-framed still life over the sideboard, left of the sunroom French doors; Poly Haven fancy_picture_frame_01 (CC0; as the living room's), centred on the sideboard"
+ },
+ "pot": {
+  "at": [
+   5.25,
+   3.284
+  ],
+  "d": 0.24,
+  "source": "film 246/10548: brass tea service and a chafing dish on the sideboard; Poly Haven brass_pot_01 (CC0) 0.24 across as one piece of it; y = the sideboard's drawn top (DRAWER_CAB_01's top plate at 0.9075 of its height: living.json lamps.chest) + 1 mm",
+  "y": 0.7814
+ },
+ "colliders": [
+  {
+   "name": "china_cabinet",
+   "x": [
+    4.3,
+    4.75
+   ],
+   "z": [
+    4.88,
+    6.08
+   ],
+   "y": [
+    0.0,
+    2.0
+   ]
+  }
+ ]
+}
