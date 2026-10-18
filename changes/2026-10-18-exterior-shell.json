@@ -1,0 +1,204 @@
+{
+ "change": "Exterior shell TRIAL 1: the film's house as a brick skin on our measured ground footprint (veneer on the ground storey, the upper storey carried straight up, hip roofs at 40 deg with the film's 2 front dormers + the zipline dormer, rear chimney, portico, shutters, cornices, gutters, set-back den and right sections, kitchen wing / back stair / back hall roofs, sun porch + greenhouse, terraced front beds); Marina's upstairs strip and the attic drawn only from upstairs (HouseSplit); GLB driveway loop trimmed (z >= 20.2), Marv's route round the porch, back-route waypoint x -7.3",
+ "target": "House_WallGrid exterior (Exterior/HouseShell, Exterior/Yard); upstairs + attic draw sets",
+ "premise": "The film's facade is one flush brick face over both storeys standing on the ground storey's walls (4382, 6399/6400): the skin sits on our measured ground outer faces and its upper storey is the film's, drawn lower than Marina's (her upstairs keeps its own size and height inside, the Oct 15 split).",
+ "claim": {
+  "value": {
+   "facade_planes": {
+    "main": 10.37,
+    "den": 9.506,
+    "right": 9.647,
+    "rear_main": 1.34,
+    "note": "brick faces = our ground outer faces + 0.10 veneer (living's wall 0.176 behind the plane, filled)"
+   },
+   "upper_storey_dy_m": -0.346,
+   "upper_windows_world_y": [
+    0.464,
+    1.804
+   ],
+   "eave_main_y": 2.204,
+   "eave_sections_y": 2.104,
+   "roof_pitch_deg": 40.0,
+   "main_ridge_y": 6.33,
+   "front_dormers_z": [
+    6.702,
+    12.938
+   ],
+   "rear_dormer_z": 9.6745,
+   "chimney": {
+    "x": [
+     0.64,
+     1.34
+    ],
+    "z": [
+     13.32,
+     14.32
+    ],
+    "top_y": 6.75
+   }
+  },
+  "data": [
+   "film:4382",
+   "film:6399"
+  ],
+  "scale": [
+   "spec:geometry-ground-openings"
+  ],
+  "upstream": [
+   "marina-overhead:ground-calibration"
+  ],
+  "risks": [
+   "registration",
+   "model-fidelity"
+  ],
+  "applies_to": [
+   "exterior"
+  ],
+  "measured_in": [
+   "exterior"
+  ],
+  "note": "tools/house/exterior_film_fit.py: cameras solved on 11/13 facade window centres (the ground windows ours, the upper ones at the skin's z), the upper storey's height left free: dy -0.358 (4382) / -0.334 (6399) m before the drop; after it 4382 puts ridge, gutter, frieze, dormer peak and sill 1-7 px from the film. Plan positions are our measured ground walls; upper windows over the ground bays (film), widths 0.86 (film), not Marina's 0.60-0.72"
+ },
+ "history": [
+  {
+   "date": "2026-09-11",
+   "what": "ExteriorShell.cs: the downloaded GLB house shell at scale 0.83 around the survey rooms",
+   "outcome": "superseded (did not fit the measured rooms)"
+  },
+  {
+   "date": "2026-10-16",
+   "what": "SpecGreybox.Exterior: the GLB site and neighbourhood only, the house shell dropped (grey-box walls seen from outside); FilmFront shadows-only stand-in for the film's flush upper storey (DEVIATIONS 45)",
+   "outcome": "superseded by this skin"
+  },
+  {
+   "date": "2026-10-18",
+   "what": "yard registration TRIAL 1 (changes/2026-10-18-yard-registration.json): the registered GLB site, stoop + steps, no bed walls",
+   "outcome": "pending (folded in: driveway, beds, routes)"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "film 4443 (same set-up as 4382, a different frame): ratio (upper sill bottom - ground window mould top) / (upper window incl. mould and sill) in the facade plane: film (669-567)/(567-448) = 0.857; skin 0.892 (+4.1%); Marina's upper heights (before the drop) 1.126 (+31%). Crop spec/captures/picks/exterior/f4443_ratio.png",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "film:4443"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "none"
+   ],
+   "tests": [
+    "model-fidelity",
+    "registration"
+   ]
+  },
+  {
+   "what": "attic roof pitch 40 deg (measurements/rooms/attic.json, Marina p2 775-935 s, accepted Oct 18) vs the skin's 40 deg read off film 4382's ridge (264.6 vs 265 px); the attic's own ridge 3.43 m over its floor vs the skin's 4.13 over its eave",
+   "agrees": true,
+   "type": "angular",
+   "data": [
+    "marina-frame:p2-775-935"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "none"
+   ],
+   "tests": [
+    "model-fidelity"
+   ]
+  },
+  {
+   "what": "registered old GLB (spec/glb_registration.json): eave y 2.45, main ridge 7.4, front dormers z 6.46 / 13.04, rear dormer z 9.62, chimney x 0.58-1.46 z 13.22-14.46. Dormers and chimney agree (0.17 / 0.10 m); its eave is 0.25 m higher and ridge 1.1 m higher, its house 1.4 m deeper than our ground floor",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "glb:HomeAloneExterior"
+   ],
+   "scale": [
+    "glb-registration:similarity"
+   ],
+   "upstream": [
+    "spec:geometry"
+   ],
+   "tests": [
+    "registration"
+   ],
+   "disposition": "not averaged: the GLB's depth is wrong by the same 1.4 m that drops its ground front (registration report), so its ridge over a 10.3 m deep block is higher at any pitch; its eave sits over Marina's upper storey (0.35 m higher than the film's). Its dormer/chimney plan positions are used"
+  },
+  {
+   "what": "film 6399 (oblique left), camera solved the same way: windows fit 8.5 px with dy +0.012 m after the drop (agrees), but the roof extrapolates 16-57 px low (ridge 57, gutter 25, dormer peak 16; sill 5) and the solve is ill-conditioned in camera height (f 1002-1515 for heights -3.5..+2 m; at 0.0 m the dormer peak is 1 px off and the ridge 27)",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "film:6399"
+   ],
+   "scale": [
+    "spec:geometry-ground-openings"
+   ],
+   "upstream": [
+    "marina-overhead:ground-calibration"
+   ],
+   "tests": [],
+   "disposition": "4382 (straight-on, sharp) is stable over camera heights -3.5..-1.5 m (ridge 265-271 vs 265, dormers 214-223 vs 213); 6399's roof residual follows its camera height, not the skin: kept as a qualitative check (side-by-side spec/captures/views/exterior/compare/film6399.png)"
+  },
+  {
+   "what": "build gates (build 2, ~/.cache/home-alone-2): exterior_shell.py room check 0 (no always-drawn skin face inside a ground/upstairs room or the attic, no upper face inside a ground room); FRONT WALK 18 legs 0 blocked (was 6 blocked: the GLB loop), BACK DOOR 12 legs 0 blocked (was 3; waypoint x -7.3), MARV round the sun porch 78 legs 0 blocked; seam 0, clash 0, z-fight 2 (the living-room gifts vs rug, pre-existing), envelope 0, stair_arrival ok, props_yaw 0, verify_plan 16 ok; 193 upstairs/attic renderers drawn only upstairs; interior renders (foyer up the stair, dining window, Kevin's window, landing window, attic dormer) show no skin part and no hole",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "build"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": []
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/yard/after/film4382_front_walk.png",
+   "spec/captures/views/yard/after/front_steps.png",
+   "spec/captures/views/yard/after/aerial_front.png",
+   "spec/captures/views/yard/after/aerial_rear.png",
+   "spec/captures/views/guest/before/street_wide_6399.png"
+  ],
+  "after": [
+   "spec/captures/views/exterior/after/film4382.png",
+   "spec/captures/views/exterior/after/film6399.png",
+   "spec/captures/views/exterior/after/film10_wide_garage.png",
+   "spec/captures/views/exterior/after/film1890_right.png",
+   "spec/captures/views/exterior/after/film6810_rear.png",
+   "spec/captures/views/exterior/after/film9435_treehouse.png",
+   "spec/captures/views/exterior/after/rear_straight.png",
+   "spec/captures/views/exterior/after/front_steps.png",
+   "spec/captures/views/exterior/after/film4382_front_walk.png",
+   "spec/captures/views/exterior/after/aerial_front.png",
+   "spec/captures/views/exterior/after/aerial_rear.png",
+   "spec/captures/views/exterior/after/sunporch.png",
+   "spec/captures/views/exterior/after/in_foyer_up_stair.png",
+   "spec/captures/views/exterior/after/in_dining_window.png",
+   "spec/captures/views/exterior/after/in_kevin_window.png",
+   "spec/captures/views/exterior/after/in_landing_window.png",
+   "spec/captures/views/exterior/after/in_attic_dormer.png",
+   "spec/captures/views/exterior/after/in_hallbath_portico.png"
+  ],
+  "compare": [
+   "spec/captures/views/exterior/compare/film4382_vs_film4382.png",
+   "spec/captures/views/exterior/compare/film4382_blend_film4382.png",
+   "spec/captures/views/exterior/compare/film6399_vs_film6399.png",
+   "spec/captures/views/exterior/compare/film6399_blend_film6399.png",
+   "spec/captures/views/exterior/compare/film10_wide_garage_vs_film10.png",
+   "spec/captures/views/exterior/compare/film1890_right_vs_film1890.png",
+   "spec/captures/views/exterior/compare/film6810_rear_vs_film6810.png",
+   "spec/captures/views/exterior/compare/film9435_treehouse_vs_film9435.png",
+   "spec/captures/views/exterior/compare/film4382_front_walk_vs_film4382.png"
+  ]
+ },
+ "user_walk": "pending"
+}

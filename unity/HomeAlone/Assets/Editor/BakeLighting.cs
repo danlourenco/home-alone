@@ -104,7 +104,7 @@ public static class BakeLighting
             // probe cell had no valid probe left (the strip's last column beside the outside air) showed the raw outdoor light: bright
             // dithered bands by day and dark ones by night along the front rooms' walls and ceilings (walk note 18:10, Buzz; Kevin's room).
             // Checked: the ground floor's front rooms read the same (spec/captures/buzz2/lighting/)
-            bool overhang = r.renderingLayerMask == SpecGreybox.LayerFilmFront;
+            bool overhang = (r.renderingLayerMask & ~SpecGreybox.LayerOutside) == SpecGreybox.LayerFilmFront;   // the exterior skin's upper storey too (SpecGreybox.Shell; the backdrop adds LayerOutside)
             var flags = GameObjectUtility.GetStaticEditorFlags(r.gameObject);
             GameObjectUtility.SetStaticEditorFlags(r.gameObject, clear || overhang ? flags & ~StaticEditorFlags.ContributeGI : flags | StaticEditorFlags.ContributeGI);
             r.receiveGI = ReceiveGI.LightProbes;

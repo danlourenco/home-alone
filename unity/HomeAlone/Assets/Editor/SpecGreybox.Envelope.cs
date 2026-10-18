@@ -347,6 +347,8 @@ public static partial class SpecGreybox
             }
         if (wallOpenings != null)
             foreach (var o in wallOpenings) { var w = SpecSlab(o, gy); var h = new Slab(w.lo - new Vector3(0.45f, 0, 0), w.hi + new Vector3(0.45f, 0, 0)); skins = skins.SelectMany(q => Minus(q, h)).ToList(); }
+        // the exterior skin's upper storey (SpecGreybox.Shell, Oct 18) is the film's front now, as real geometry on this layer: no stand-in
+        if (System.IO.File.Exists("Assets/Models/Foyer/Exterior.glb")) skins.Clear();
         var g = Child(root, "FilmFront"); float fySave = FloorY; FloorY = 0f;
         foreach (var q in skins)
         {

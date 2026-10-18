@@ -1556,7 +1556,7 @@ public static partial class SpecGreybox
                 foreach (var t in lamps.GetComponentsInChildren<Transform>(true).Where(t => t.name == n).ToList()) Object.DestroyImmediate(t.gameObject);
         }
         WindowBackdrop(dayLayer, lamps != null ? lamps.gameObject : null, groundY);   // SpecGreybox.Backdrop.cs: winter backdrop outside the windows (overnight5)
-        var mode = new GameObject("Day and night - press N").AddComponent<HouseNightMode>(); mode.transform.parent = day.transform; mode.glowRenderers = glow;
+        var mode = new GameObject("Day and night - press N").AddComponent<HouseNightMode>(); mode.transform.parent = day.transform; mode.glowRenderers = glow.Concat(ShellGlow).ToArray();
         mode.nightLayer = lamps != null ? lamps.gameObject : null; mode.dayLayer = dayLayer; mode.interiorLights = new Light[0]; mode.daytimeEnabled = new bool[0];
         if (lamps != null)   // night sky (user, Oct 16: "when it's nighttime i still see the daylight streaming from outside")
         {
@@ -1609,6 +1609,8 @@ public static partial class SpecGreybox
         // the neighbourhood keeps its plan; up 0.396 m so its street (top -0.39 local) sits just over the registered front yard (-4.33
         // world): left at the old height the yard slabs buried half the street (DEVIATIONS 93)
         hood.transform.localPosition = Vector3.up * 0.396f;
+        // the reference scene's facade shutters were fitted to the GLB shell's windows: the exterior skin has the film's own (SpecGreybox.Shell)
+        foreach (var t in hood.GetComponentsInChildren<Transform>(true).Where(t => t.name == "Front facade shutters").ToList()) Object.DestroyImmediate(t.gameObject);
         EditorSceneManager.CloseScene(src, true);
         Yard(ext, gy, site.GetComponentsInChildren<MeshRenderer>().FirstOrDefault(r => r.name == "object251")?.sharedMaterial ?? mFloor);
         // nothing from outside may stand inside the measured house: the reference scene's facade shutters were fitted to the GLB shell
@@ -1630,6 +1632,7 @@ public static partial class SpecGreybox
         }
         Debug.Log($"Exterior: {kept} site meshes and {prop} property parts (garage, driveway) from the GLB, {hood.GetComponentsInChildren<Renderer>().Length} neighborhood renderers; " +
                   $"{inside.Count} inside the rooms removed ({string.Join(", ", inside.GroupBy(n => n).Select(q => $"{q.Count()} x {q.Key}"))})");
+        Shell(ext, gy);   // SpecGreybox.Shell.cs: the house's exterior skin (after the cull above: its upper storey crosses Marina's rooms by design)
     }
 
     // The GLB's garage and driveway (registered with the site): triangles of a GLB renderer whose registered centroid lies in the
@@ -1644,7 +1647,9 @@ public static partial class SpecGreybox
         {
             var w = site.TransformPoint(a); float x = w.x, z = -w.z;
             if (x > -8.3f && x < -0.3f && z > 19.55f && z < 28.2f) return true;
-            return drive && !(x > -5.6f && x < 10.6f && z > -1.4f && z < 20.2f);
+            // the driveway beside the den end to the garage only: the GLB's loop across the front lawn (z < 20.2) runs where the film's
+            // terraced beds are (4382) and stood 0.41 m over the front walk (yard trial 1)
+            return drive && z >= 20.2f;
         }
         var map = new Dictionary<int, int>(); var subs = new List<List<int>>();
         for (int s = 0; s < m.subMeshCount; s++)
@@ -1686,9 +1691,7 @@ public static partial class SpecGreybox
         ("Grade_RearE", -0.13f, 1.44f, 11.57f, 20.6f, -3.39f), ("Grade_RearF", 1.44f, 2.21f, 16.21f, 20.6f, -3.39f),
         ("Grade_DenSide", 2.21f, 9.41f, 20.06f, 20.6f, -4.32f), ("Grade_DenFront", 9.41f, 10.40f, 16.37f, 20.6f, -4.32f),
         ("Grade_Front", 10.40f, 22.5f, -5.4f, 25.0f, -4.32f),                                                           // the GLB's front-yard slab, off the foundation
-        ("Terrace_L", 10.27f, 11.70f, 3.71f, 8.31f, -3.27f), ("Terrace_R", 10.27f, 11.70f, 11.20f, 15.82f, -3.27f),     // fill to the GLB's terrace (-3.28)
-        ("Stoop_Front", 10.27f, 11.70f, 8.31f, 11.20f, -3.09f),                                                         // to the GLB's stoop (-3.10): 0.10 under the sill
-        ("Path_Front", 15.60f, 24.40f, 8.97f, 10.47f, -4.30f),                                                          // to the neighbourhood's walk
+        // the stoop, front steps, terraced beds and walk: SpecGreybox.Shell's FrontBeds (exterior shell, Oct 18)
         ("Stoop_Back", -6.43f, -5.33f, 1.75f, 3.25f, -3.127f), ("Step_Back", -6.73f, -6.43f, 1.75f, 3.25f, -3.259f),   // sill -2.996: 3 risers of 0.131
     };
 
@@ -1701,10 +1704,10 @@ public static partial class SpecGreybox
         foreach (var b in YardBoxes)
             Box(g, b.n, b.x0, b.x1, -b.z1, -b.z0, b.n.StartsWith("Grade") ? b.top + d - 0.30f : b.x0 > 0 ? -4.35f + d : b.top + d - 0.40f, b.top + d,   // front pieces stand on the front yard
                 b.n.StartsWith("Grade") || b.n.StartsWith("Terrace") ? snow : b.n.StartsWith("Path") ? walk : stone);
-        for (int k = 1; k <= 6; k++)   // front steps: from the GLB stoop's lower level (-3.17, x 13.80) down to the front yard, 7 risers of 0.164
-            Box(g, $"Step_Front{k}", 13.80f + 0.30f * (k - 1), 13.80f + 0.30f * k, -10.47f, -8.97f, -4.35f + d, -3.17f - 0.164f * k + d, stone);
-        for (int k = 1; k <= 3; k++)   // front yard (-4.32) up to the side yard (-3.59, GLB slab edge x ~10.46): 4 risers of 0.1825, rising -x
-            Box(g, $"Step_Side{k}", k == 3 ? 10.25f : 10.85f + 0.30f * (2 - k), 10.85f + 0.30f * (3 - k), 1.3f, 2.6f, -4.35f + d, -4.32f + 0.1825f * k + d, stone);
+        FrontBeds(g, d, snow, walk);   // SpecGreybox.Shell.cs
+        for (int k = 1; k <= 3; k++)   // front yard (-4.32) up to the side yard (-3.59, GLB slab edge x ~10.46): 4 risers of 0.1825, rising -x;
+            // past the sun porch and greenhouse (spec z -3.65..-4.95; SpecGreybox.Shell)
+            Box(g, $"Step_Side{k}", k == 3 ? 10.25f : 10.85f + 0.30f * (2 - k), 10.85f + 0.30f * (3 - k), 3.65f, 4.95f, -4.35f + d, -4.32f + 0.1825f * k + d, stone);
     }
 
     // the outside routes (spec x, world y, spec z): Marv from the street round the left side to the areaway, then the basement path
@@ -1714,12 +1717,13 @@ public static partial class SpecGreybox
     {
         float d = gy + 2.996f;
         List<Vector3> W(params float[] q) => Enumerable.Range(0, q.Length / 3).Select(i => new Vector3(q[3 * i], q[3 * i + 1] + d, -q[3 * i + 2])).ToList();
-        var marv = W(34.0f, -4.30f, -2.0f, 12.0f, -4.32f, -1.95f, 9.9f, -3.59f, -1.95f, -8.0f, -3.59f, -1.95f, -10.14f, -3.40f, -0.85f);
+        // round the sun porch (spec z -3.0..-1.16, x 5.4..9.3) and greenhouse: up the side steps at z -4.3, back to z -1.95 behind the porch
+        var marv = W(34.0f, -4.30f, -4.3f, 12.0f, -4.32f, -4.3f, 9.9f, -3.59f, -4.3f, 4.6f, -3.59f, -4.3f, 4.6f, -3.59f, -1.95f, -8.0f, -3.59f, -1.95f, -10.14f, -3.40f, -0.85f);
         marv.AddRange(Enumerable.Reverse(basementPath));
         return new List<(string, List<Vector3>)> {
             ("MARV (street -> left side -> areaway -> basement door -> basement -> stair -> Kevin's door -> kitchen)", marv),
-            ("FRONT WALK (street -> walk -> steps -> stoop at the front door; the door is shut by design)", W(34.0f, -4.30f, 9.716f, 20.0f, -4.30f, 9.716f, 15.75f, -4.30f, 9.716f, 13.6f, -3.17f, 9.716f, 10.65f, -3.09f, 9.716f)),
-            ("BACK DOOR (yard -> step -> stoop at the back door; DoorStop_BackDoor keeps it shut by design)", W(-8.5f, -3.39f, 2.5f, -6.9f, -3.39f, 2.5f, -5.75f, -3.127f, 2.5f)),
+            ("FRONT WALK (street -> walk -> steps -> stoop at the front door; the door is shut by design)", W(34.0f, -4.30f, 9.716f, 20.0f, -4.30f, 9.716f, 14.5f, -4.30f, 9.716f, 10.65f, -3.09f, 9.716f)),
+            ("BACK DOOR (yard -> step -> stoop at the back door; DoorStop_BackDoor keeps it shut by design)", W(-8.5f, -3.39f, 2.5f, -7.3f, -3.39f, 2.5f, -5.75f, -3.127f, 2.5f)),
         };
     }
 
@@ -2047,8 +2051,10 @@ public static partial class SpecGreybox
             if (lid) OpenTrunkLid(lid, (float)v["trunk_lid"]);   // "trunk_lid": degrees open for this view only (SpecGreybox.Trunk)
             go.transform.position = V(v["pos"]); go.transform.LookAt(V(v["look_at"])); cam.fieldOfView = (float)v["vfov"];
             cam.nearClipPlane = v["near"] != null ? (float)v["near"] : 0.05f;   // film cameras stood outside the front door (long lens)
+            var split = Object.FindFirstObjectByType<HouseSplit>(); split?.ApplyFor(go.transform.position);   // the split, as the player would see it from here
             cam.Render(); cam.Render();   // warm-up frames, always: HDRP's first frame has no sky ambient yet
             Shot(cam, rt, Path.Combine("views", (string)v["name"]));
+            split?.RestoreAll();
             hidden.ForEach(o => o.SetActive(true));
             if (lid) lid.rotation = lidRot;
         }

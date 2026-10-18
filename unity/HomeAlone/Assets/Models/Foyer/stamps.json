@@ -43,6 +43,10 @@
   "models": "0124111d024c1391",
   "sources": "f2136306b9008259"
  },
+ "tools/house/hifi_exterior.py": {
+  "models": "deaeda11a821cbb8",
+  "sources": "f1c7784e6dd3a9ad"
+ },
  "tools/house/hifi_foyer.py": {
   "models": "a6fdca1b253d5160",
   "sources": "45cec028419ad80c"
@@ -66,6 +70,10 @@
  "tools/house/hifi_hall_arches.py": {
   "models": "92290ce88850ddb3",
   "sources": "82fd49ac0ce3f5e9"
+ },
+ "tools/house/hifi_kevin.py": {
+  "models": "bf28e341c922eca7",
+  "sources": "dbfc0ced1f6df72d"
  },
  "tools/house/hifi_kitchen.py": {
   "models": "98ab235e28f66103",
@@ -124,11 +132,7 @@
   "sources": "2136d459057f6237"
  },
  "tools/house/hifi_treehouse.py": {
-  "sources": "7aca47292624edaa",
-  "models": "03d12bfc07e48b43"
- },
- "tools/house/hifi_kevin.py": {
-  "models": "bf28e341c922eca7",
-  "sources": "dbfc0ced1f6df72d"
+  "models": "03d12bfc07e48b43",
+  "sources": "7aca47292624edaa"
  }
 }
