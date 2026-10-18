@@ -9,7 +9,7 @@
  },
  "tools/house/hifi_buzz_curtains.py": {
   "models": "356da5161781ccee",
-  "sources": "0dcf8db804e6b3b1"
+  "sources": "11991c636551cf71"
  },
  "tools/house/hifi_den.py": {
   "models": "f14b4236380eb069",
@@ -61,7 +61,7 @@
  },
  "tools/house/hifi_landing_window.py": {
   "models": "c19bb98c7077b7fe",
-  "sources": "ff734f7f58b31fd5"
+  "sources": "812dd5d4e21bd408"
  },
  "tools/house/hifi_lights.py": {
   "models": "039d900b97254c67",

@@ -1,6 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8285282625747898871
+--- !u!114 &-6030013783075352224
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a7ff42a8c5be6646ad3975f3a54c1eb, type: 3}
+  m_Name: DiffusionProfileList
+  m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.DiffusionProfileList
+  active: 1
+  diffusionProfiles:
+    m_OverrideState: 1
+    m_Value:
+    - {fileID: 11400000, guid: aad27cf634d349d6bfd48a8b0bf3aa66, type: 2}
+--- !u!114 &-4261718701779377410
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,7 +160,7 @@ MonoBehaviour:
   horizonZenithShift:
     m_OverrideState: 1
     m_Value: 0
---- !u!114 &-5246375455079599730
+--- !u!114 &-4087676838979834963
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,63 +169,53 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bd486065ce11414fa40e631affc4900, type: 3}
-  m_Name: ProbeVolumesOptions
-  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.ProbeVolumesOptions
+  m_Script: {fileID: 11500000, guid: 56b145d2b9ee1ac4f846968484e7485a, type: 3}
+  m_Name: ContactShadows
+  m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.ContactShadows
   active: 1
-  normalBias:
-    m_OverrideState: 1
-    m_Value: 0.25
-  viewBias:
-    m_OverrideState: 1
-    m_Value: 0.1
-  scaleBiasWithMinProbeDistance:
-    m_OverrideState: 1
-    m_Value: 0
-  samplingNoise:
-    m_OverrideState: 1
-    m_Value: 0.1
-  animateSamplingNoise:
-    m_OverrideState: 1
-    m_Value: 1
-  leakReductionMode:
+  quality:
     m_OverrideState: 1
     m_Value: 2
-  minValidDotProductValue:
-    m_OverrideState: 1
-    m_Value: 0.1
-  occlusionOnlyReflectionNormalization:
+  enable:
     m_OverrideState: 1
     m_Value: 1
-  intensityMultiplier:
+  directionalOnly:
+    m_OverrideState: 1
+    m_Value: 0
+  halfResolution:
+    m_OverrideState: 1
+    m_Value: 0
+  length:
+    m_OverrideState: 1
+    m_Value: 0.12
+  opacity:
     m_OverrideState: 1
     m_Value: 1
-  skyOcclusionIntensityMultiplier:
+  distanceScaleFactor:
     m_OverrideState: 1
-    m_Value: 1
-  worldOffset:
+    m_Value: 0.5
+  maxDistance:
     m_OverrideState: 1
-    m_Value: {x: 0, y: 0, z: 0}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: GreyboxVolume
-  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.VolumeProfile
-  components:
-  - {fileID: 7816976341864008692}
-  - {fileID: -8285282625747898871}
-  - {fileID: 1681148494063073187}
-  - {fileID: -5246375455079599730}
-  - {fileID: 5596552121449717081}
-  - {fileID: 6079863857721350109}
---- !u!114 &1681148494063073187
+    m_Value: 12
+  minDistance:
+    m_OverrideState: 1
+    m_Value: 0
+  fadeDistance:
+    m_OverrideState: 1
+    m_Value: 3
+  fadeInDistance:
+    m_OverrideState: 1
+    m_Value: 0
+  rayBias:
+    m_OverrideState: 1
+    m_Value: 0.2
+  thicknessScale:
+    m_OverrideState: 1
+    m_Value: 0.15
+  m_SampleCount:
+    m_OverrideState: 1
+    m_Value: 10
+--- !u!114 &-1722157998141403194
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -359,7 +366,26 @@ MonoBehaviour:
   proceduralSoftness:
     m_OverrideState: 1
     m_Value: 0.5
---- !u!114 &5596552121449717081
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
+  m_Name: GreyboxVolume
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.VolumeProfile
+  components:
+  - {fileID: 3927630373294834233}
+  - {fileID: -4261718701779377410}
+  - {fileID: -1722157998141403194}
+  - {fileID: 648104659009294049}
+  - {fileID: -6030013783075352224}
+  - {fileID: -4087676838979834963}
+--- !u!114 &648104659009294049
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -368,70 +394,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a7ff42a8c5be6646ad3975f3a54c1eb, type: 3}
-  m_Name: DiffusionProfileList
-  m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.DiffusionProfileList
+  m_Script: {fileID: 11500000, guid: 6bd486065ce11414fa40e631affc4900, type: 3}
+  m_Name: ProbeVolumesOptions
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.ProbeVolumesOptions
   active: 1
-  diffusionProfiles:
+  normalBias:
     m_OverrideState: 1
-    m_Value:
-    - {fileID: 11400000, guid: aad27cf634d349d6bfd48a8b0bf3aa66, type: 2}
---- !u!114 &6079863857721350109
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56b145d2b9ee1ac4f846968484e7485a, type: 3}
-  m_Name: ContactShadows
-  m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.ContactShadows
-  active: 1
-  quality:
+    m_Value: 0.25
+  viewBias:
+    m_OverrideState: 1
+    m_Value: 0.1
+  scaleBiasWithMinProbeDistance:
+    m_OverrideState: 1
+    m_Value: 0
+  samplingNoise:
+    m_OverrideState: 1
+    m_Value: 0.1
+  animateSamplingNoise:
+    m_OverrideState: 1
+    m_Value: 1
+  leakReductionMode:
     m_OverrideState: 1
     m_Value: 2
-  enable:
+  minValidDotProductValue:
+    m_OverrideState: 1
+    m_Value: 0.1
+  occlusionOnlyReflectionNormalization:
     m_OverrideState: 1
     m_Value: 1
-  directionalOnly:
-    m_OverrideState: 1
-    m_Value: 0
-  halfResolution:
-    m_OverrideState: 1
-    m_Value: 0
-  length:
-    m_OverrideState: 1
-    m_Value: 0.12
-  opacity:
+  intensityMultiplier:
     m_OverrideState: 1
     m_Value: 1
-  distanceScaleFactor:
+  skyOcclusionIntensityMultiplier:
     m_OverrideState: 1
-    m_Value: 0.5
-  maxDistance:
+    m_Value: 1
+  worldOffset:
     m_OverrideState: 1
-    m_Value: 12
-  minDistance:
-    m_OverrideState: 1
-    m_Value: 0
-  fadeDistance:
-    m_OverrideState: 1
-    m_Value: 3
-  fadeInDistance:
-    m_OverrideState: 1
-    m_Value: 0
-  rayBias:
-    m_OverrideState: 1
-    m_Value: 0.2
-  thicknessScale:
-    m_OverrideState: 1
-    m_Value: 0.15
-  m_SampleCount:
-    m_OverrideState: 1
-    m_Value: 10
---- !u!114 &7816976341864008692
+    m_Value: {x: 0, y: 0, z: 0}
+--- !u!114 &3927630373294834233
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}

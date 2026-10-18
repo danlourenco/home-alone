@@ -408,20 +408,26 @@
    "floor": "ground",
    "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Piano_01.prefab",
    "x": [
-    8.107,
-    9.7
+    7.62,
+    9.62
    ],
    "z": [
-    13.634,
-    15.62
+    13.19,
+    15.43
    ],
    "y0": 0.0,
    "height": 0.996,
-   "yaw": 0,
+   "yaw": 341.0,
    "back": "",
    "hides": [],
    "collide": true,
-   "source": "PROP, user Oct 17: the pack grand (with its stool) stands in for the film's console upright (DEVIATIONS 58). Marina's grand sits before the front wall's den-side window: long side along the front wall, keyboard and stool toward the foyer side (the film's keyboard side), tail toward the den wall. Box: the pack's concert grand (2.72 m case, 3.31 m with the stool) shortened front to back to x0.6, a 1.63 m baby grand at full keyboard width (user Oct 17: \"that piano is too big ... resize\"), placed by eye; the user adjusts with Home Alone > Save Prop Placement"
+   "source": "PROP, user Oct 17: the pack grand (with its stool) stands in for the film's console upright (DEVIATIONS 58). Marina's grand sits before the front wall's den-side window: long side along the front wall, keyboard and stool toward the foyer side (the film's keyboard side), tail toward the den wall. Box: the pack's concert grand (2.72 m case, 3.31 m with the stool) shortened front to back to x0.6, a 1.63 m baby grand at full keyboard width (user Oct 17: \"that piano is too big ... resize\"), placed by eye; the user adjusts with Home Alone > Save Prop Placement",
+   "placed_by": "user",
+   "scale": [
+    1.0,
+    1.0,
+    0.6
+   ]
   }
  ]
 }

@@ -39,6 +39,12 @@ public static class SavePropPlacement
 
     public static string Save(bool dialog = false)
     {
+        if (EditorApplication.isPlaying)
+        {   // in Play, moves are thrown away on Stop and runtime scripts hide parts (a false "move", Oct 17): place props with Play stopped
+            const string m = "Stop Play first: moves made while playing are lost, and saving now would record the game's state.";
+            if (dialog) EditorUtility.DisplayDialog("Save Prop Placement", m, "OK");
+            return m;
+        }
         var log = new System.Text.StringBuilder(); int n = 0;
         var sp = JObject.Parse(File.ReadAllText(Spec("store_props.json")));
         foreach (var pp in Object.FindObjectsByType<PlacedProp>(FindObjectsSortMode.None))
@@ -54,7 +60,7 @@ public static class SavePropPlacement
             {
                 var e = sp["pieces"].FirstOrDefault(q => (string)q["name"] == pp.name) as JObject;
                 if (e == null) continue;
-                if (turn != 0) { e["x"] = Pair(b.min.x, b.max.x); e["z"] = Pair(-b.max.z, -b.min.z); e["yaw"] = Mathf.Round(Mathf.Repeat(pp.yaw + turn, 360f)); e["back"] = ""; }
+                if (turn != 0) { e["x"] = Pair(b.min.x, b.max.x); e["z"] = Pair(-b.max.z, -b.min.z); e["yaw"] = Mathf.Round(Mathf.Repeat(pp.yaw + turn, 360f)); e["back"] = ""; var ls = pp.transform.localScale; e["scale"] = new JArray(System.Math.Round(ls.x, 3), System.Math.Round(ls.y, 3), System.Math.Round(ls.z, 3)); }
                 else { e["x"] = Shift(e["x"], dx); e["z"] = Shift(e["z"], dz); }
                 e["placed_by"] = "user";
                 log.AppendLine($"{pp.name}: x {e["x"][0]}..{e["x"][1]} z {e["z"][0]}..{e["z"][1]}" + (turn != 0 ? $" yaw {e["yaw"]}" : "")); n++;
