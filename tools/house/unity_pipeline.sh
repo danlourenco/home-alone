@@ -121,7 +121,11 @@ load)
   # HA_START="x,y,z,yaw" (world feet, Unity coords): start the walk in the room under review (user Oct 17), not at the spawn
   if [ -n "${HA_START:-}" ]; then sleep 5; IFS=, read -r sx sy sz syaw <<< "$HA_START"
     ev "var f=UnityEngine.Object.FindFirstObjectByType<FpsController>(); var cc=f.GetComponent<UnityEngine.CharacterController>(); cc.enabled=false; f.transform.SetPositionAndRotation(new UnityEngine.Vector3(${sx}f,${sy}f,${sz}f), UnityEngine.Quaternion.Euler(0,${syaw}f,0)); f.cam.localRotation=UnityEngine.Quaternion.identity; cc.enabled=true; return \"start \"+f.transform.position;"; fi
-  "$0" nightcheck;;   # night lit at 3 room poses (shots use a camera clone: the player is not moved)
+  nc=0; "$0" nightcheck || nc=$?   # night lit at 3 room poses (shots use a camera clone)
+  # the player came back at the spawn after the night check (user Oct 17): put the walk start back in the reviewed room
+  if [ -n "${HA_START:-}" ]; then IFS=, read -r sx sy sz syaw <<< "$HA_START"
+    ev "var f=UnityEngine.Object.FindFirstObjectByType<FpsController>(); var cc=f.GetComponent<UnityEngine.CharacterController>(); cc.enabled=false; f.transform.SetPositionAndRotation(new UnityEngine.Vector3(${sx}f,${sy}f,${sz}f), UnityEngine.Quaternion.Euler(0,${syaw}f,0)); f.cam.localRotation=UnityEngine.Quaternion.identity; cc.enabled=true; return \"start \"+f.transform.position;"; fi
+  exit $nc;;
 nightcheck)   # night must be lit: mean luminance of night shots at 3 room poses >= a floor (user Oct 17 "why are all the lights off at night?")
   # broken state it catches: a Scene-view search filter ("piano") made HDRP force fixed exposure from the physical camera (EV 14.6):
   # night means were 0.011 / 0.001 / 0.000; fixed (SceneFilterExposureGuard) 0.339 / 0.311 / 0.290. Floor 0.10 each. load runs it last.
