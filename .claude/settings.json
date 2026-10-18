@@ -7,5 +7,6 @@
         ]
       }
     ]
-  }
+  },
+  "statusLine": { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/tools/house/slow_jobs.py\" eta --line" }
 }
