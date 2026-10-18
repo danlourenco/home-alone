@@ -120,10 +120,10 @@
    "hides": [
     "Casing"
    ],
-   "open": 0,
+   "open": 90,
    "hinge": "lo",
    "swing": "out",
-   "source": "user, Oct 16: 'use that same door in the attic door casing and both girls rooms' (Door_3 White, as the linen closet). Walk-through doorway, the leaf is CLOSED for now (user, Oct 16: 'close the doors to the girls' rooms and attic for now'; was open 90 deg; set open back to 90 to reopen; hinge kept); the pack frame (outer = leaf x 1.124 wide, x 1.027 tall) replaces the generated casing on the hall face (its renderer hidden, collider kept), 0.5 cm proud, 6 cm deep. Hinge side and swing are ASSUMED (nearest room corner; no frame shows them): hinge at x 6.112, swings OUT into hall_corridor_south: into the stair it would hit the first step (z 14.082, 0.42 m past the wall). Opening x 6.112-6.874."
+   "source": "user, Oct 16: 'use that same door in the attic door casing and both girls rooms' (Door_3 White, as the linen closet). Walk-through doorway; OPEN 90 again (Oct 18, attic shell TRIAL: the attic is built behind it; the user had closed it Oct 16 'for now': set open 0 to close); the pack frame (outer = leaf x 1.124 wide, x 1.027 tall) replaces the generated casing on the hall face (its renderer hidden, collider kept), 0.5 cm proud, 6 cm deep. Hinge side and swing are ASSUMED (nearest room corner; no frame shows them): hinge at x 6.112, swings OUT into hall_corridor_south: into the stair it would hit the first step (z 14.082, 0.42 m past the wall). Opening x 6.112-6.874."
   },
   {
    "name": "buzz_door",

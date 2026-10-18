@@ -1,0 +1,218 @@
+{
+ "change": "Attic shell (TRIAL): the attic over the attic stair, fitted to our house: floor at 15 risers (2.670), Marina's 5.20 x 8.50 m room with 1.25 m vertical-board knee walls, a 40 deg gable roof (exposed rafters, collar ties, ridge board), the house's chimney (living-room flue) with a wood stove at the rear knee wall, a log balustrade round the well, the zipline dormer in the rear slope centred over the landing window (pediment, outward 3-lite casement pair hung on hinges and shown open, cream curtains) and a placeholder sofa bed against the balustrade (film). Generated: reconcile.py attic_stair (walk/envelope boxes) + tools/house/hifi_attic.py -> Attic.glb (SpecGreybox.Attic.cs); the flight goes 14 -> 15 risers, going 0.178 -> 0.172.",
+ "target": "House_WallGrid",
+ "premise": "Marina's attic room (her 476 ft2 label, knee walls, the stair well in its middle) can be laid over our upper floor on the traced attic well, and the film's two key elements (the sofa bed at the balustrade; the zipline dormer on the rear roof centred over the arched landing window) placed in it, with the house deciding what Marina's set does not (the end wall, the chimney).",
+ "claim": {
+  "value": {
+   "room_w": 5.2,
+   "room_l": 8.5,
+   "floor_y": 2.67,
+   "knee_h": 1.25,
+   "pitch_deg": 40.0,
+   "ridge_over_floor": 3.43,
+   "dormer_opening": [
+    0.61,
+    0.91
+   ],
+   "dormer_z": 9.6745,
+   "dormer_face_x": 3.158,
+   "dormer_sill_over_floor": 0.7
+  },
+  "data": [
+   "marina-frame:841",
+   "film:9435"
+  ],
+  "scale": [
+   "marina-label:476ft2",
+   "landing-window:9435"
+  ],
+  "upstream": [
+   "marina-frame:312",
+   "stairs-rise:0.178"
+  ],
+  "risks": [
+   "scale"
+  ],
+  "applies_to": [
+   "attic"
+  ],
+  "measured_in": [
+   "attic"
+  ],
+  "alternatives": [
+   "current build: no attic (the well walled and capped 2.03 m over a 2.49 m landing that does not exist)",
+   "Marina-faithful: the room runs 1.86 m past the house's end wall so the flight's top lands ahead (rejected: the roof cannot pass the end wall; user: fit the actual house)",
+   "this: fitted inside the house, step off sideways at the end wall"
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-10-15",
+   "what": "attic stair located behind the hall-end door, 14 risers, attic not built (DEVIATIONS 21)",
+   "outcome": "pending"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "dormer opening from human rulers on the film's close-up set: 10950 Kevin's head (~0.20 m) -> 0.73 x 1.04 m; 11090 Marv's head -> 0.55 x 0.81, Harry's -> 0.64 x 0.95; the claim 0.61 x 0.91 lies inside every range (aspect 1.43-1.49 in all)",
+   "agrees": true,
+   "data": [
+    "film:10950",
+    "film:11090"
+   ],
+   "scale": [
+    "head-human:10950"
+   ],
+   "tests": [
+    "scale"
+   ],
+   "crop": "spec/captures/picks/attic/f10950_dormer_kevin.png"
+  },
+  {
+   "what": "room width from the sofa bed's queen sleeper mattress (60 in) in Marina 845: 147 px -> 5.21 m (claim 5.20, +0.2%); the label read gives 5.08-5.18",
+   "agrees": true,
+   "data": [
+    "marina-frame:845"
+   ],
+   "scale": [
+    "mattress-queen:845"
+   ],
+   "tests": [
+    "scale"
+   ],
+   "crop": "spec/captures/picks/attic/m845_overhead.png"
+  },
+  {
+   "what": "knee wall from the crib's side rail (0.90 m) against it in Marina 929: 1.25 m",
+   "agrees": true,
+   "data": [
+    "marina-frame:929"
+   ],
+   "scale": [
+    "crib-rail:929"
+   ],
+   "tests": [
+    "scale"
+   ],
+   "crop": "spec/captures/picks/attic/m929_crib_knee.png"
+  },
+  {
+   "what": "pitch: the film-matched exterior shell's main roof, area-weighted slope histogram, peak 40-42 deg",
+   "agrees": true,
+   "type": "angular",
+   "data": [
+    "exterior-glb:HomeAloneExterior"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": []
+  },
+  {
+   "what": "the dormer is centred over the arched landing window in the frontal treehouse view (both at 1500 px in film 9435) and over it again in 11162",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "film:9435",
+    "film:11162"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": []
+  },
+  {
+   "what": "Marina's stair top lands 1.86 m from the far end wall (841/845 overhead; 853 looks up the flight at a dresser on that wall); ours meets the house's end wall",
+   "agrees": false,
+   "data": [
+    "marina-frame:845",
+    "marina-frame:853"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological",
+   "disposition": "kept: the traced well ends at the house's end wall and the roof cannot run past it (user Oct 18: fit the actual house as long as the bed and the zipline window are kept); step-off sideways, logged DEVIATIONS 90 (a)"
+  },
+  {
+   "what": "Marina's chimney is centred on an end wall; the house's flue (living-room fireplace, rear wall z 13.82; film exterior's tall rear chimney right of the dormer) is at the rear",
+   "agrees": false,
+   "data": [
+    "marina-frame:845",
+    "film:11162"
+   ],
+   "scale": [
+    "none"
+   ],
+   "type": "topological",
+   "disposition": "the house's position (film exterior first); logged DEVIATIONS 90 (c)"
+  },
+  {
+   "what": "attic floor 15 x 0.178 = 2.670 clears the upper ceilings' tops (2.55; parents' 2.65); 14 risers (2.49) was inside the ceiling slab",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "spec:geometry"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": []
+  },
+  {
+   "what": "unity:walk-test (build 2, Oct 18 09:41, walk-test-wallgrid.txt): KEVIN walks hall -> up the flight -> steps off sideways onto the attic floor -> along the front strip -> to the dormer, and back down: every leg ok except the intermediate step-off waypoint, where he stood on the floor 0.19 m above the waypoint's tread height (waypoint corrected to the floor in the spec; not re-run: build budget 2). BANDIT stops at step 9-10 and PLAYER (adult, 1.8 m) stalls at step 1-2: the flight is 47 deg (14 x 0.1907 rise on a 0.178 going) and the adult capsules do not climb it; build 1 (15 x 0.178, going 0.172, run-in 0.327) stopped them at the door head instead",
+   "agrees": false,
+   "type": "topological",
+   "data": [
+    "unity:walk-test"
+   ],
+   "scale": [
+    "none"
+   ],
+   "disposition": "open, reported: the 2.735 m traced well cannot hold a 45 deg flight to a 2.670 floor AND the 0.42 m run-in the door head needs; options for the user: (1) controller slope limit ~48 deg, (2) extend the well ~0.18 m past the house's end wall, (3) a thinner ceiling slab under the attic (floor ~2.58); the user walks as Kevin by default (Kevin mode), who passes"
+  },
+  {
+   "what": "unity:build gates (build 2): Z-fight 0, Clash 0, Seam 0/0/0, Envelope check 0 thin (2075 points), orientation (glb_orientation) 0 inward; Trim 1 gap as before",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "unity:build"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": []
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/attic/before/marina929.png",
+   "spec/captures/views/attic/before/film1418.png",
+   "spec/captures/views/attic/before/film10922.png",
+   "spec/captures/views/attic/before/dormer_close.png",
+   "spec/captures/views/attic/before/stair_up.png",
+   "spec/captures/views/attic/before/rear_9435.png",
+   "spec/captures/views/attic/before/overhead.png"
+  ],
+  "after": [
+   "spec/captures/views/attic/after/marina929.png",
+   "spec/captures/views/attic/after/film1418.png",
+   "spec/captures/views/attic/after/film10922.png",
+   "spec/captures/views/attic/after/dormer_close.png",
+   "spec/captures/views/attic/after/stair_up.png",
+   "spec/captures/views/attic/after/rear_9435.png",
+   "spec/captures/views/attic/after/overhead.png",
+   "spec/captures/views/attic/after/live_start_day.png"
+  ],
+  "compare": [
+   "spec/captures/views/attic/compare/film1418.png",
+   "spec/captures/views/attic/compare/film10922.png",
+   "spec/captures/views/attic/compare/marina929.png",
+   "spec/captures/views/attic/compare/marina841_overhead.png",
+   "spec/captures/views/attic/compare/film9435_rear.png",
+   "spec/captures/views/attic/compare/film10932_dormer.png"
+  ]
+ },
+ "user_walk": "pending"
+}

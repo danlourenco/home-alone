@@ -106,3 +106,7 @@
 {"time": "2026-10-18T08:58:20", "cmd": "build", "job": "parents-fireplace", "why": "", "wall_s": 86, "exit": 1}
 {"time": "2026-10-18T09:00:52", "cmd": "build", "job": "parents-fireplace", "why": "", "wall_s": 115, "exit": 0}
 {"time": "2026-10-18T09:03:59", "cmd": "bake", "job": "", "why": "auto: load of an unbaked build", "wall_s": 154, "exit": 0}
+{"time": "2026-10-18T09:35:51", "cmd": "build", "job": "attic-shell", "why": "attic shell trial build 1", "wall_s": 117, "exit": 0}
+{"time": "2026-10-18T09:39:17", "cmd": "build", "job": "attic-shell", "why": "attic shell trial build 2 (14 risers, 0.42 run-in)", "wall_s": 3, "exit": 1}
+{"time": "2026-10-18T09:41:43", "cmd": "build", "job": "attic-shell", "why": "attic shell trial build 2 (14 risers, 0.42 run-in)", "wall_s": 121, "exit": 0}
+{"time": "2026-10-18T09:46:50", "cmd": "bake", "job": "attic-shell", "why": "auto: load of an unbaked build", "wall_s": 151, "exit": 0}

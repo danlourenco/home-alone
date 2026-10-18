@@ -1,0 +1,96 @@
+{
+  "room": "attic",
+  "note": "The attic shell (Oct 18 2026, TRIAL; changes/2026-10-18-attic-shell.json, DEVIATIONS 90). Read by tools/house/reconcile.py (attic_stair_spec -> spec/house_spec.json attic_stair.attic + boxes), tools/house/hifi_attic.py (Attic.glb) and SpecGreybox.Attic.cs. Spec frame: x toward the front, z along the house, y up from the upper floor.",
+  "measured": {
+    "floor_y": {
+      "value": 2.67,
+      "method": "the attic floor sits on the upper ceilings' tops (2.55, parents' 2.65): 15 x the main stair's measured 0.178 rise = 2.670 clears both (structure 0.27 m over a 2.40 ceiling: a 2x8 joist + subfloor + ceiling); the old 14 x 0.178 = 2.49 was inside the 15 cm ceiling slab",
+      "kind": "constructed from the measured rise"
+    },
+    "risers": {
+      "value": 14,
+      "method": "14 risers of 0.1907 m (7.5 in) with the old 0.42 m run-in and 0.178 going: the run-in keeps a 1.85 m body clear of the 80 in door head's casing before its first step (build 1 with 15 risers and a 0.327 run-in: bandit and player stopped at step 1, walk-test-wallgrid.txt Oct 18 09:35); 15 risers at 0.178 leave no room for both",
+      "kind": "constructed",
+      "was": 14
+    },
+    "room_w": {
+      "value": 5.2,
+      "range": [
+        5.08,
+        5.21
+      ],
+      "method": "Marina p2 841/845 overhead: floor inside the knee walls 505 x 865 px (aspect 1.713), scaled to her on-screen 476 ft2 label: 5.08 x 8.70 m (outer wall tops 580 x 955 px: 5.18 x 8.53). Second ruler: the sofa bed's queen sleeper mattress (60 in) 147 px -> 5.21 m",
+      "kind": "measured (label + mattress)"
+    },
+    "room_l": {
+      "value": 8.5,
+      "range": [
+        8.53,
+        8.7
+      ],
+      "method": "same overhead and label; 8.50 so the area is the label's 476 ft2 at the 5.20 width (44.2 m2)",
+      "kind": "measured (label)"
+    },
+    "knee_h": {
+      "value": 1.25,
+      "range": [
+        1.2,
+        1.25
+      ],
+      "method": "Marina p2 929: knee-wall top 360 px over the floor at the crib against it; the crib's side rail (0.90 m, standard) 260 px at the same wall -> 1.25 m",
+      "kind": "measured (crib rail)"
+    },
+    "pitch_deg": {
+      "value": 40.0,
+      "range": [
+        40,
+        42
+      ],
+      "method": "the film-matched exterior shell's main roof (HomeAloneExterior.glb): area-weighted slope histogram over roof triangles, peak 40-42 deg (427 m2 at 40). Marina's rafters look 40-45 (oblique views only: not measured)",
+      "kind": "angular (exterior model)"
+    },
+    "dormer_opening": {
+      "value": [
+        0.61,
+        0.91
+      ],
+      "range": [
+        [
+          0.51,
+          0.73
+        ],
+        [
+          0.73,
+          1.04
+        ]
+      ],
+      "method": "film 9435 (from the treehouse, frontal): glazed pair 154 x 213 px beside the arched landing window's frame 365 px = our 1.25 m opening, +9% for the dormer standing ~1.5 m behind the rear wall: 0.56 x 0.80. Close-up set, human rulers: 10950 Kevin's head (0.20 m) 0.73 x 1.04; 11090 Marv's head 0.55 x 0.81, Harry's 0.64 x 0.95. Built at a stock 2'0\" x 3'0\" (0.61 x 0.91), inside every ruler's range",
+      "kind": "measured (two ruler kinds)"
+    },
+    "dormer_body_w": {
+      "value": 1.24,
+      "method": "film 9435: cheek-to-cheek 308 px = 2.0 x the glazed pair -> 2.0 x 0.61 (+ the 14 cm walls rounded)",
+      "kind": "ratio"
+    },
+    "dormer_cornice_w": {
+      "value": 1.48,
+      "method": "film 9435: cornice 374 px = 2.43 x the glazed pair",
+      "kind": "ratio"
+    },
+    "dormer_pitch_deg": {
+      "value": 39.0,
+      "method": "film 9435: pediment rise 150 px over a 187 px half-width",
+      "kind": "angular"
+    },
+    "dormer_sill_h": {
+      "value": 0.7,
+      "method": "ASSUMED: film 10932-10936 (inside) show the sill at Kevin's knee with boards under it and 10950 shows the sill a short way above the shingles; no ruler",
+      "kind": "assumed"
+    },
+    "dormer_z": {
+      "value": 9.6745,
+      "method": "film 9435: the dormer is centred over the arched landing window (both at x 1500 px); our landing window's z_centre (spec/house_spec.ground.json)",
+      "kind": "alignment (film)"
+    }
+  }
+}

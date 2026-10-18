@@ -131,6 +131,11 @@ public static partial class SpecGreybox
                 var s = SpecSlab(o, gy);
                 holes.Add(new Slab(s.lo - new Vector3(0.45f, 0f, 0f), s.hi + new Vector3(0.45f, 0f, 0f)));   // x: the wall's thickness (face at x)
             }
+        foreach (var o in atticBoxes.Where(b => (string)b["kind"] == "opening"))   // the attic dormer's window (its wall faces x)
+        {
+            var s = SpecSlab(o, 0f);
+            holes.Add(new Slab(s.lo - new Vector3(0.45f, 0f, 0f), s.hi + new Vector3(0.45f, 0f, 0f)));
+        }
         foreach (var h in holes) skins = skins.SelectMany(s => Minus(s, h)).ToList();
         // never inside a room: corner turns and lid overhangs are clipped to the rooms' volumes (an invisible caster in a room is a shadow)
         var cells = new List<Slab>();
@@ -166,9 +171,10 @@ public static partial class SpecGreybox
         return new[] { ((JObject)geo["upstairs"], 0f), ((JObject)geo["ground"], gy) }.SelectMany(s => s.Item1["rooms"].Select(r =>
         {
             var pts = r["poly"].Select(q => new Vector2((float)q[0], -(float)q[1])).ToList(); float y1 = s.Item2 + (float)r["ceil"];
-            foreach (var c in cap) if (s.Item2 == 0f && Inside(pts, new Vector2((c.lo.x + c.hi.x) / 2, (c.lo.z + c.hi.z) / 2))) y1 = Mathf.Max(y1, c.lo.y);
+            if (s.Item2 == 0f && (string)r["name"] == "attic_stair") foreach (var c in cap) y1 = Mathf.Max(y1, c.lo.y);   // the shaft runs up into the attic
             return ((string)r["name"], pts, y0: (string)r["opens"] == "down" ? gy : s.Item2, y1);   // a stair well is one space from the floor below (as SeamRooms)
-        })).ToList();
+        })).Concat(atticBoxes.Where(b => (string)b["kind"] == "room").Select(b =>   // the attic itself (SpecGreybox.Attic)
+            ((string)b["name"], b["poly"].Select(q => new Vector2((float)q[0], -(float)q[1])).ToList(), (float)b["y"][0], (float)b["y"][1]))).ToList();
     }
 
     // Envelope check: from points just inside every room's wall-ceiling joint and wall foot, rays toward the sky (elevations 5-70 deg,
