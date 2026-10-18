@@ -95,3 +95,8 @@
 {"time": "2026-10-18T04:46:54", "cmd": "build", "job": "overnight12", "why": "rugs fit + door hinges", "wall_s": 111, "exit": 0}
 {"time": "2026-10-18T04:49:18", "cmd": "build", "job": "overnight12", "why": "z-fight check honours mirrored parts", "wall_s": 108, "exit": 0}
 {"time": "2026-10-18T04:52:14", "cmd": "bake", "job": "overnight12", "why": "final load", "wall_s": 161, "exit": 0}
+{"time": "2026-10-18T07:48:24", "cmd": "build", "job": "", "why": "", "wall_s": 102, "exit": 0}
+{"time": "2026-10-18T07:50:46", "cmd": "bake", "job": "", "why": "auto: load of an unbaked build", "wall_s": 142, "exit": 0}
+{"time": "2026-10-18T07:52:34", "cmd": "build", "job": "", "why": "", "wall_s": 3, "exit": 1}
+{"time": "2026-10-18T07:55:04", "cmd": "build", "job": "", "why": "", "wall_s": 108, "exit": 0}
+{"time": "2026-10-18T07:57:48", "cmd": "bake", "job": "", "why": "auto: load of an unbaked build", "wall_s": 164, "exit": 0}

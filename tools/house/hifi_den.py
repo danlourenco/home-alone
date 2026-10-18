@@ -186,14 +186,8 @@ def bookcase(wood, white, black, book_parts):
     rows = [(19.12, eb1 - 0.02, 0.80), (eb0 + 0.03, eb1 - 0.25, 1.208), (eb0 + 0.20, eb1 - 0.03, 1.617),
             (lb0 + 0.02, lb1 - 0.35, 0.17), (lb0 + 0.15, lb1 - 0.03, 0.452), (17.08, lb1 - 0.03, 0.80), (17.02, lb1 - 0.05, 1.208),
             (lb0 + 0.04, lb1 - 0.40, 1.617), (cb0 + 0.03, B["lower_divider"][0] - 0.02, 0.17)]
-    for za, zb, shelf in rows:
-        z = za
-        while z < zb - 0.02:
-            w = rng.uniform(0.018, 0.045); h = rng.uniform(0.18, min(0.30, 0.36)); dep = rng.uniform(0.14, 0.22)
-            if shelf == 0.17 or shelf == 0.452: h = min(h, 0.24)
-            part = rng.choice(book_parts)
-            part.box(x1 - 0.015 - dep, x1 - 0.015, shelf + 0.001, shelf + h, z, min(z + w, zb))
-            z += w + (0.004 if rng.random() > 0.15 else 0.03)
+    # the books themselves are the Fadnn pack's SM_Book models on these rows: tools/house/den_books.py -> store_props den_book_*
+    del rows, rng
 
 
 def lbox(body, lab, x0, x1, y0, y1, z0, z1, uv):

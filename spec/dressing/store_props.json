@@ -1372,6 +1372,2229 @@
    ],
    "collide": false,
    "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White over the basement door's plain slab (house_spec.ground.json stair boxes basement_PropDoor x -1.284..-0.445, 0.84 m: a 33 in leaf, tools/house/reconcile.py). The frame takes the generated casing's outline (x -1.354..-0.375, to 2.10 m: casing legs 7 cm, head to 2.10) and replaces it (casings and the slab's knob hidden); the slab itself stays drawn behind the leaf, 0.5 cm off the frame's back (z 6.322), so the door still reads shut from every side. Closed (the basement is not built)."
+  },
+  {
+   "name": "den_book_001",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_06.prefab",
+   "x": [
+    2.5763,
+    2.755
+   ],
+   "z": [
+    19.12,
+    19.1708
+   ],
+   "y0": 0.801,
+   "height": 0.2442,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_002",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.5774,
+    2.755
+   ],
+   "z": [
+    19.1728,
+    19.2106
+   ],
+   "y0": 0.801,
+   "height": 0.2184,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_003",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5877,
+    2.755
+   ],
+   "z": [
+    19.2126,
+    19.2602
+   ],
+   "y0": 0.801,
+   "height": 0.2057,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_004",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5845,
+    2.755
+   ],
+   "z": [
+    19.2622,
+    19.3106
+   ],
+   "y0": 0.801,
+   "height": 0.2096,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_005",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_03.prefab",
+   "x": [
+    2.5524,
+    2.755
+   ],
+   "z": [
+    19.3126,
+    19.3702
+   ],
+   "y0": 0.801,
+   "height": 0.2491,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_006",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5605,
+    2.755
+   ],
+   "z": [
+    19.3722,
+    19.4275
+   ],
+   "y0": 0.801,
+   "height": 0.2392,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_007",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5984,
+    2.755
+   ],
+   "z": [
+    19.4295,
+    19.474
+   ],
+   "y0": 0.801,
+   "height": 0.1925,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_008",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_10.prefab",
+   "x": [
+    2.5665,
+    2.755
+   ],
+   "z": [
+    19.476,
+    19.5244
+   ],
+   "y0": 0.801,
+   "height": 0.2318,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_009",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_08.prefab",
+   "x": [
+    2.5699,
+    2.755
+   ],
+   "z": [
+    19.5544,
+    19.6201
+   ],
+   "y0": 0.801,
+   "height": 0.2529,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_010",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.5608,
+    2.755
+   ],
+   "z": [
+    19.6221,
+    19.6635
+   ],
+   "y0": 0.801,
+   "height": 0.2388,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_011",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    2.5605,
+    2.755
+   ],
+   "z": [
+    19.6655,
+    19.7208
+   ],
+   "y0": 0.801,
+   "height": 0.2657,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_012",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    2.5739,
+    2.755
+   ],
+   "z": [
+    19.7228,
+    19.7742
+   ],
+   "y0": 0.801,
+   "height": 0.2474,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_013",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_10.prefab",
+   "x": [
+    2.585,
+    2.755
+   ],
+   "z": [
+    19.7762,
+    19.8199
+   ],
+   "y0": 0.801,
+   "height": 0.2091,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_014",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5736,
+    2.755
+   ],
+   "z": [
+    18.767,
+    18.8185
+   ],
+   "y0": 1.209,
+   "height": 0.223,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_015",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_03.prefab",
+   "x": [
+    2.5842,
+    2.755
+   ],
+   "z": [
+    18.8205,
+    18.8691
+   ],
+   "y0": 1.209,
+   "height": 0.21,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_016",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_08.prefab",
+   "x": [
+    2.5962,
+    2.755
+   ],
+   "z": [
+    18.8711,
+    18.9275
+   ],
+   "y0": 1.209,
+   "height": 0.2169,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_017",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5775,
+    2.755
+   ],
+   "z": [
+    18.9295,
+    18.9799
+   ],
+   "y0": 1.209,
+   "height": 0.2183,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_018",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5541,
+    2.755
+   ],
+   "z": [
+    18.9819,
+    19.039
+   ],
+   "y0": 1.209,
+   "height": 0.2471,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_019",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.577,
+    2.755
+   ],
+   "z": [
+    19.041,
+    19.0916
+   ],
+   "y0": 1.209,
+   "height": 0.2188,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_020",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_08.prefab",
+   "x": [
+    2.5671,
+    2.755
+   ],
+   "z": [
+    19.0936,
+    19.1603
+   ],
+   "y0": 1.209,
+   "height": 0.2567,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_021",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.554,
+    2.755
+   ],
+   "z": [
+    19.1623,
+    19.2052
+   ],
+   "y0": 1.209,
+   "height": 0.2471,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_022",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5728,
+    2.755
+   ],
+   "z": [
+    19.2072,
+    19.259
+   ],
+   "y0": 1.209,
+   "height": 0.224,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_023",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    2.5696,
+    2.755
+   ],
+   "z": [
+    19.261,
+    19.3136
+   ],
+   "y0": 1.209,
+   "height": 0.2533,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_024",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.5882,
+    2.755
+   ],
+   "z": [
+    19.3156,
+    19.363
+   ],
+   "y0": 1.209,
+   "height": 0.2051,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_025",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.5727,
+    2.755
+   ],
+   "z": [
+    19.393,
+    19.4448
+   ],
+   "y0": 1.209,
+   "height": 0.2242,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_026",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    2.5685,
+    2.755
+   ],
+   "z": [
+    19.4468,
+    19.4998
+   ],
+   "y0": 1.209,
+   "height": 0.2547,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_027",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.563,
+    2.755
+   ],
+   "z": [
+    19.5018,
+    19.5564
+   ],
+   "y0": 1.209,
+   "height": 0.2361,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_028",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5876,
+    2.755
+   ],
+   "z": [
+    18.937,
+    18.9846
+   ],
+   "y0": 1.618,
+   "height": 0.2058,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_029",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.5735,
+    2.755
+   ],
+   "z": [
+    18.9866,
+    19.0252
+   ],
+   "y0": 1.618,
+   "height": 0.2232,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_030",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.5678,
+    2.755
+   ],
+   "z": [
+    19.0272,
+    19.0804
+   ],
+   "y0": 1.618,
+   "height": 0.2302,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_031",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    2.5975,
+    2.755
+   ],
+   "z": [
+    19.0824,
+    19.1272
+   ],
+   "y0": 1.618,
+   "height": 0.2151,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_032",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_08.prefab",
+   "x": [
+    2.5767,
+    2.755
+   ],
+   "z": [
+    19.1292,
+    19.1925
+   ],
+   "y0": 1.618,
+   "height": 0.2436,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_033",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5645,
+    2.755
+   ],
+   "z": [
+    19.2225,
+    19.2767
+   ],
+   "y0": 1.618,
+   "height": 0.2342,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_034",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5537,
+    2.755
+   ],
+   "z": [
+    19.2787,
+    19.3358
+   ],
+   "y0": 1.618,
+   "height": 0.2474,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_035",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.5593,
+    2.755
+   ],
+   "z": [
+    19.3378,
+    19.3934
+   ],
+   "y0": 1.618,
+   "height": 0.2406,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_036",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.5854,
+    2.755
+   ],
+   "z": [
+    19.4234,
+    19.4716
+   ],
+   "y0": 1.618,
+   "height": 0.2085,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_037",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_03.prefab",
+   "x": [
+    2.5579,
+    2.755
+   ],
+   "z": [
+    19.4736,
+    19.5296
+   ],
+   "y0": 1.618,
+   "height": 0.2423,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_038",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_03.prefab",
+   "x": [
+    2.5562,
+    2.755
+   ],
+   "z": [
+    19.5316,
+    19.5881
+   ],
+   "y0": 1.618,
+   "height": 0.2445,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_039",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.5799,
+    2.755
+   ],
+   "z": [
+    19.5901,
+    19.6274
+   ],
+   "y0": 1.618,
+   "height": 0.2153,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_040",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_08.prefab",
+   "x": [
+    2.5587,
+    2.755
+   ],
+   "z": [
+    19.6294,
+    19.6992
+   ],
+   "y0": 1.618,
+   "height": 0.2682,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_041",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.5669,
+    2.755
+   ],
+   "z": [
+    19.7012,
+    19.7413
+   ],
+   "y0": 1.618,
+   "height": 0.2312,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_042",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_08.prefab",
+   "x": [
+    2.5844,
+    2.755
+   ],
+   "z": [
+    19.7433,
+    19.8039
+   ],
+   "y0": 1.618,
+   "height": 0.2331,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_043",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5663,
+    2.755
+   ],
+   "z": [
+    16.265,
+    16.3186
+   ],
+   "y0": 0.171,
+   "height": 0.232,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_044",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_08.prefab",
+   "x": [
+    2.5891,
+    2.755
+   ],
+   "z": [
+    16.3206,
+    16.3795
+   ],
+   "y0": 0.171,
+   "height": 0.2266,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_045",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_03.prefab",
+   "x": [
+    2.5752,
+    2.755
+   ],
+   "z": [
+    16.3815,
+    16.4326
+   ],
+   "y0": 0.171,
+   "height": 0.221,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_046",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.5663,
+    2.755
+   ],
+   "z": [
+    16.4626,
+    16.5162
+   ],
+   "y0": 0.171,
+   "height": 0.232,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_047",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_08.prefab",
+   "x": [
+    2.5955,
+    2.755
+   ],
+   "z": [
+    16.5182,
+    16.5749
+   ],
+   "y0": 0.171,
+   "height": 0.2179,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_048",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5741,
+    2.755
+   ],
+   "z": [
+    16.5769,
+    16.6283
+   ],
+   "y0": 0.171,
+   "height": 0.2224,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_049",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.5663,
+    2.755
+   ],
+   "z": [
+    16.6303,
+    16.6839
+   ],
+   "y0": 0.171,
+   "height": 0.232,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_050",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    2.5962,
+    2.755
+   ],
+   "z": [
+    16.6859,
+    16.731
+   ],
+   "y0": 0.171,
+   "height": 0.2169,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_051",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.5663,
+    2.755
+   ],
+   "z": [
+    16.733,
+    16.7733
+   ],
+   "y0": 0.171,
+   "height": 0.232,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_052",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.583,
+    2.755
+   ],
+   "z": [
+    16.7753,
+    16.8119
+   ],
+   "y0": 0.171,
+   "height": 0.2115,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_053",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.5967,
+    2.755
+   ],
+   "z": [
+    16.8139,
+    16.8476
+   ],
+   "y0": 0.171,
+   "height": 0.1946,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_054",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5804,
+    2.755
+   ],
+   "z": [
+    16.8496,
+    16.8993
+   ],
+   "y0": 0.171,
+   "height": 0.2147,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_055",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_09.prefab",
+   "x": [
+    2.5852,
+    2.755
+   ],
+   "z": [
+    16.9293,
+    16.9738
+   ],
+   "y0": 0.171,
+   "height": 0.232,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_056",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_09.prefab",
+   "x": [
+    2.5852,
+    2.755
+   ],
+   "z": [
+    16.9758,
+    17.0204
+   ],
+   "y0": 0.171,
+   "height": 0.232,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_057",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_09.prefab",
+   "x": [
+    2.5852,
+    2.755
+   ],
+   "z": [
+    17.0224,
+    17.0669
+   ],
+   "y0": 0.171,
+   "height": 0.232,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_058",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5741,
+    2.755
+   ],
+   "z": [
+    17.0689,
+    17.1203
+   ],
+   "y0": 0.171,
+   "height": 0.2225,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_059",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_08.prefab",
+   "x": [
+    2.5708,
+    2.755
+   ],
+   "z": [
+    16.395,
+    16.4604
+   ],
+   "y0": 0.453,
+   "height": 0.2517,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_060",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_08.prefab",
+   "x": [
+    2.5625,
+    2.755
+   ],
+   "z": [
+    16.4624,
+    16.5308
+   ],
+   "y0": 0.453,
+   "height": 0.263,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_061",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.5901,
+    2.755
+   ],
+   "z": [
+    16.5328,
+    16.5797
+   ],
+   "y0": 0.453,
+   "height": 0.2028,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_062",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_06.prefab",
+   "x": [
+    2.5634,
+    2.755
+   ],
+   "z": [
+    16.6097,
+    16.6641
+   ],
+   "y0": 0.453,
+   "height": 0.2618,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_063",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.5918,
+    2.755
+   ],
+   "z": [
+    16.6661,
+    16.7125
+   ],
+   "y0": 0.453,
+   "height": 0.2007,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_064",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_10.prefab",
+   "x": [
+    2.5654,
+    2.755
+   ],
+   "z": [
+    16.7145,
+    16.7632
+   ],
+   "y0": 0.453,
+   "height": 0.2331,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_065",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.5824,
+    2.755
+   ],
+   "z": [
+    16.7652,
+    16.802
+   ],
+   "y0": 0.453,
+   "height": 0.2122,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_066",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.5905,
+    2.755
+   ],
+   "z": [
+    16.804,
+    16.8507
+   ],
+   "y0": 0.453,
+   "height": 0.2023,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_067",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.5558,
+    2.755
+   ],
+   "z": [
+    16.8807,
+    16.9373
+   ],
+   "y0": 0.453,
+   "height": 0.2449,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_068",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_03.prefab",
+   "x": [
+    2.5659,
+    2.755
+   ],
+   "z": [
+    16.9393,
+    16.9931
+   ],
+   "y0": 0.453,
+   "height": 0.2325,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_069",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.5788,
+    2.755
+   ],
+   "z": [
+    16.9951,
+    17.0326
+   ],
+   "y0": 0.453,
+   "height": 0.2166,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_070",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.5657,
+    2.755
+   ],
+   "z": [
+    17.0346,
+    17.0884
+   ],
+   "y0": 0.453,
+   "height": 0.2327,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_071",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5934,
+    2.755
+   ],
+   "z": [
+    17.0904,
+    17.1363
+   ],
+   "y0": 0.453,
+   "height": 0.1987,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_072",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.582,
+    2.755
+   ],
+   "z": [
+    17.1383,
+    17.1752
+   ],
+   "y0": 0.453,
+   "height": 0.2127,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_073",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    2.5986,
+    2.755
+   ],
+   "z": [
+    17.1772,
+    17.2216
+   ],
+   "y0": 0.453,
+   "height": 0.2136,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_074",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_02.prefab",
+   "x": [
+    2.5889,
+    2.755
+   ],
+   "z": [
+    17.2236,
+    17.2708
+   ],
+   "y0": 0.453,
+   "height": 0.2042,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_075",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5701,
+    2.755
+   ],
+   "z": [
+    17.2728,
+    17.3254
+   ],
+   "y0": 0.453,
+   "height": 0.2273,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_076",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_09.prefab",
+   "x": [
+    2.5826,
+    2.755
+   ],
+   "z": [
+    17.3274,
+    17.3726
+   ],
+   "y0": 0.453,
+   "height": 0.2356,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_077",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    2.5822,
+    2.755
+   ],
+   "z": [
+    17.3746,
+    17.4237
+   ],
+   "y0": 0.453,
+   "height": 0.236,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_078",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    2.5878,
+    2.755
+   ],
+   "z": [
+    17.4257,
+    17.4732
+   ],
+   "y0": 0.453,
+   "height": 0.2284,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_079",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5566,
+    2.755
+   ],
+   "z": [
+    17.08,
+    17.1364
+   ],
+   "y0": 0.801,
+   "height": 0.244,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_080",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_08.prefab",
+   "x": [
+    2.5673,
+    2.755
+   ],
+   "z": [
+    17.1384,
+    17.2051
+   ],
+   "y0": 0.801,
+   "height": 0.2565,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_081",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5912,
+    2.755
+   ],
+   "z": [
+    17.2351,
+    17.2816
+   ],
+   "y0": 0.801,
+   "height": 0.2014,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_082",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.5665,
+    2.755
+   ],
+   "z": [
+    17.2836,
+    17.3238
+   ],
+   "y0": 0.801,
+   "height": 0.2317,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_083",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_10.prefab",
+   "x": [
+    2.5791,
+    2.755
+   ],
+   "z": [
+    17.3258,
+    17.371
+   ],
+   "y0": 0.801,
+   "height": 0.2163,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_084",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5937,
+    2.755
+   ],
+   "z": [
+    17.373,
+    17.4188
+   ],
+   "y0": 0.801,
+   "height": 0.1984,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_085",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_09.prefab",
+   "x": [
+    2.5994,
+    2.755
+   ],
+   "z": [
+    17.4208,
+    17.4616
+   ],
+   "y0": 0.801,
+   "height": 0.2126,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_086",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_10.prefab",
+   "x": [
+    2.5731,
+    2.755
+   ],
+   "z": [
+    17.02,
+    17.0667
+   ],
+   "y0": 1.209,
+   "height": 0.2237,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_087",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_10.prefab",
+   "x": [
+    2.5782,
+    2.755
+   ],
+   "z": [
+    17.0687,
+    17.1141
+   ],
+   "y0": 1.209,
+   "height": 0.2173,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_088",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_10.prefab",
+   "x": [
+    2.5596,
+    2.755
+   ],
+   "z": [
+    17.1161,
+    17.1663
+   ],
+   "y0": 1.209,
+   "height": 0.2402,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_089",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_03.prefab",
+   "x": [
+    2.569,
+    2.755
+   ],
+   "z": [
+    17.1683,
+    17.2212
+   ],
+   "y0": 1.209,
+   "height": 0.2287,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_090",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5672,
+    2.755
+   ],
+   "z": [
+    17.2232,
+    17.2765
+   ],
+   "y0": 1.209,
+   "height": 0.2309,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_091",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_06.prefab",
+   "x": [
+    2.5958,
+    2.755
+   ],
+   "z": [
+    17.2785,
+    17.3238
+   ],
+   "y0": 1.209,
+   "height": 0.2175,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_092",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5808,
+    2.755
+   ],
+   "z": [
+    17.3258,
+    17.3753
+   ],
+   "y0": 1.209,
+   "height": 0.2142,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_093",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_10.prefab",
+   "x": [
+    2.5606,
+    2.755
+   ],
+   "z": [
+    17.3773,
+    17.4272
+   ],
+   "y0": 1.209,
+   "height": 0.239,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_094",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    2.586,
+    2.755
+   ],
+   "z": [
+    16.285,
+    16.333
+   ],
+   "y0": 1.618,
+   "height": 0.2309,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_095",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5582,
+    2.755
+   ],
+   "z": [
+    16.335,
+    16.391
+   ],
+   "y0": 1.618,
+   "height": 0.242,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_096",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.576,
+    2.755
+   ],
+   "z": [
+    16.393,
+    16.4438
+   ],
+   "y0": 1.618,
+   "height": 0.2201,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_097",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.5563,
+    2.755
+   ],
+   "z": [
+    16.4738,
+    16.5162
+   ],
+   "y0": 1.618,
+   "height": 0.2443,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_098",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_03.prefab",
+   "x": [
+    2.5522,
+    2.755
+   ],
+   "z": [
+    16.5182,
+    16.5758
+   ],
+   "y0": 1.618,
+   "height": 0.2494,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_099",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_06.prefab",
+   "x": [
+    2.5793,
+    2.755
+   ],
+   "z": [
+    16.5778,
+    16.6277
+   ],
+   "y0": 1.618,
+   "height": 0.2401,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_100",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5516,
+    2.755
+   ],
+   "z": [
+    16.6297,
+    16.6875
+   ],
+   "y0": 1.618,
+   "height": 0.2501,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_101",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5838,
+    2.755
+   ],
+   "z": [
+    16.6895,
+    16.7382
+   ],
+   "y0": 1.618,
+   "height": 0.2105,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_102",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    2.5704,
+    2.755
+   ],
+   "z": [
+    16.7402,
+    16.7926
+   ],
+   "y0": 1.618,
+   "height": 0.2521,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_103",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.5917,
+    2.755
+   ],
+   "z": [
+    16.7946,
+    16.8295
+   ],
+   "y0": 1.618,
+   "height": 0.2008,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_104",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_09.prefab",
+   "x": [
+    2.5975,
+    2.755
+   ],
+   "z": [
+    16.8315,
+    16.8728
+   ],
+   "y0": 1.618,
+   "height": 0.2152,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_105",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_01.prefab",
+   "x": [
+    2.5645,
+    2.755
+   ],
+   "z": [
+    16.9028,
+    16.9569
+   ],
+   "y0": 1.618,
+   "height": 0.2342,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_106",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5898,
+    2.755
+   ],
+   "z": [
+    16.9589,
+    17.0058
+   ],
+   "y0": 1.618,
+   "height": 0.2031,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_107",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_08.prefab",
+   "x": [
+    2.5818,
+    2.755
+   ],
+   "z": [
+    17.0358,
+    17.0974
+   ],
+   "y0": 1.618,
+   "height": 0.2366,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_108",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    2.5852,
+    2.755
+   ],
+   "z": [
+    17.585,
+    17.6333
+   ],
+   "y0": 0.171,
+   "height": 0.232,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_109",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_10.prefab",
+   "x": [
+    2.5755,
+    2.755
+   ],
+   "z": [
+    17.6353,
+    17.6813
+   ],
+   "y0": 0.171,
+   "height": 0.2206,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_110",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_10.prefab",
+   "x": [
+    2.5895,
+    2.755
+   ],
+   "z": [
+    17.6833,
+    17.7259
+   ],
+   "y0": 0.171,
+   "height": 0.2035,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_111",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_03.prefab",
+   "x": [
+    2.5909,
+    2.755
+   ],
+   "z": [
+    17.7279,
+    17.7745
+   ],
+   "y0": 0.171,
+   "height": 0.2018,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_112",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_06.prefab",
+   "x": [
+    2.5852,
+    2.755
+   ],
+   "z": [
+    17.7765,
+    17.8247
+   ],
+   "y0": 0.171,
+   "height": 0.232,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_113",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_04.prefab",
+   "x": [
+    2.5663,
+    2.755
+   ],
+   "z": [
+    17.8267,
+    17.867
+   ],
+   "y0": 0.171,
+   "height": 0.232,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_114",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_07.prefab",
+   "x": [
+    2.595,
+    2.755
+   ],
+   "z": [
+    17.869,
+    17.9144
+   ],
+   "y0": 0.171,
+   "height": 0.2186,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_115",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_05.prefab",
+   "x": [
+    2.5663,
+    2.755
+   ],
+   "z": [
+    17.9164,
+    17.97
+   ],
+   "y0": 0.171,
+   "height": 0.232,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_116",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_06.prefab",
+   "x": [
+    2.5852,
+    2.755
+   ],
+   "z": [
+    17.972,
+    18.0203
+   ],
+   "y0": 0.171,
+   "height": 0.232,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "den_book_117",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Book_06.prefab",
+   "x": [
+    2.5871,
+    2.755
+   ],
+   "z": [
+    18.0223,
+    18.07
+   ],
+   "y0": 0.171,
+   "height": 0.2294,
+   "back": "-x",
+   "hides": [],
+   "collide": false,
+   "yaw": 90,
+   "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
   }
  ]
 }
