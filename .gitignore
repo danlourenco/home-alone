@@ -32,6 +32,8 @@ unity/HomeAlone/Assets/VTC_AV-2062s/
 unity/HomeAlone/Assets/VTC_AV-2062s.meta
 unity/HomeAlone/Assets/Tarantula/
 unity/HomeAlone/Assets/Tarantula.meta
+unity/HomeAlone/Assets/BankersLamp/
+unity/HomeAlone/Assets/BankersLamp.meta
 
 # CGTrader purchases (user-bought Oct 16; Royalty Free, no AI: use OK, NO redistribution): the fitted models built from them
 # by tools/house/purchased_plants.py. The raw downloads stay in sfm-work/purchased/ (also ignored).
