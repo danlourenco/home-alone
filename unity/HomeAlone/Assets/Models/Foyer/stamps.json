@@ -48,12 +48,12 @@
   "sources": "f2136306b9008259"
  },
  "tools/house/hifi_ext_plants.py": {
-  "models": "bacbc63ad07dfa73",
-  "sources": "c08cc97ef0bc0a4f"
+  "models": "f510832234d6ad84",
+  "sources": "2804c516077172f6"
  },
  "tools/house/hifi_exterior.py": {
-  "models": "cb50260c03de3d62",
-  "sources": "5007f6047bf3f028"
+  "models": "1f952846c3280bb9",
+  "sources": "b3b64441a576e190"
  },
  "tools/house/hifi_foyer.py": {
   "models": "a6fdca1b253d5160",

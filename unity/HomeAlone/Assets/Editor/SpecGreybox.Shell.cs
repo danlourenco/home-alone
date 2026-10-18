@@ -31,6 +31,9 @@ public static partial class SpecGreybox
         var holder = new GameObject("HouseShell"); holder.transform.SetParent(ext.transform, false);
         holder.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         var shade = AtticGlow("HiFi_ShadeExterior", new Color(0.88f, 0.83f, 0.70f), 25f, 0.15f);
+        // the sealed sunroom's windows (sunroom fix, Oct 18): sheers seen through glass, greyer and glossier than the shades (sun-lit they
+        // read flat against the white sashes), lit at night (film 10)
+        var sheer = AtticGlow("HiFi_SheerExterior", new Color(0.70f, 0.69f, 0.66f), 25f, 0.75f);
         var glass = Mat("HiFi_ExtGlass", new Color(0.035f, 0.045f, 0.055f)); glass.SetFloat("_Smoothness", 0.93f);
         var g = PlaceHiFi(holder, 0f, "Exterior", new Dictionary<string, Material> {
             ["EX_Brick"] = TexMat("HiFi_ExtBrick", "red_brick_03", new Color(0.80f, 0.60f, 0.53f), 1.90f, 0.12f),   // 28 courses a tile: 68 mm (2 5/8 in) courses
@@ -38,7 +41,7 @@ public static partial class SpecGreybox
             ["EX_Shutter"] = Mat("HiFi_ExtShutter", new Color(0.022f, 0.026f, 0.026f)),
             ["EX_Roof"] = TexMat("HiFi_ExtRoof", "concrete_floor_worn_001", new Color(0.14f, 0.12f, 0.11f), 1.6f, 0.08f),   // polish: lifted from 0.10/0.095/0.095 (read near-black in sun; film 4382 dark brown-grey)
             ["EX_Snow"] = Mat("HiFi_ExtRoofSnow", new Color(0.80f, 0.82f, 0.86f)),
-            ["EX_Glass"] = glass, ["EX_Shade"] = shade,
+            ["EX_Glass"] = glass, ["EX_Shade"] = shade, ["EX_Sheer"] = sheer,
             ["EX_Stone"] = Mat("HiFi_ExtStone", new Color(0.74f, 0.70f, 0.62f)),
             ["EX_Gutter"] = Mat("HiFi_ExtGutter", new Color(0.84f, 0.84f, 0.82f)),
             ["EX_Pot"] = Mat("HiFi_ExtPot", new Color(0.50f, 0.25f, 0.16f)),
@@ -57,9 +60,9 @@ public static partial class SpecGreybox
             r.gameObject.isStatic = true;
             r.renderingLayerMask = u ? LayerFilmFront : LayerHouse;
             bool lit = r.sharedMaterial.name.StartsWith("HiFi_XmasBulb") || r.sharedMaterial.name.StartsWith("HiFi_ExtLanternGlow");
-            r.shadowCastingMode = r.sharedMaterial == shade || r.sharedMaterial == mGlass || lit ? ShadowCastingMode.Off : ShadowCastingMode.TwoSided;
+            r.shadowCastingMode = r.sharedMaterial == shade || r.sharedMaterial == sheer || r.sharedMaterial == mGlass || lit ? ShadowCastingMode.Off : ShadowCastingMode.TwoSided;
             if (u) upper.Add(r);
-            if (r.sharedMaterial == shade || lit) ShellGlow.Add(r);   // Christmas lights and the porch lantern: dark by day
+            if (r.sharedMaterial == shade || r.sharedMaterial == sheer || lit) ShellGlow.Add(r);   // Christmas lights and the porch lantern: dark by day
         }
         var pl = S["porch_lantern"];   // film 10/714: the portico's lantern lit at night (no shadows: perf; a short range)
         if (pl != null) ShellLights.Add(NightLight(holder, "PorchLantern", new Vector3((float)pl["x"], (float)pl["y"], -(float)pl["z"]), 60f, 4.5f));

@@ -1,0 +1,100 @@
+{
+ "change": "Exterior sunroom fix TRIAL 1 (on exterior shell + polish TRIAL 1): the glass sun porch and lean-to greenhouse past the right end removed (with their floor slab; the side steps stay, they carry the side yard and Marv's route); the right section's ground storey is the sunroom room, so its street window and a new end-wall window (under the upper end window) are the film's 4-unit mulled sashes with full-height sheers in the panes (no dark glass, no opening into the sealed room); 2 clipped shrubs past the right corner",
+ "target": "House_WallGrid exterior (Exterior/HouseShell, Exterior/Yard/ExteriorPolish)",
+ "premise": "User Oct 18: 'The extra sunroom on the right in the exterior is non existent in real life; the sunroom is just the room beyond the dining room closed by the French doors'. The right section's ground storey is that room (spec sunroom x 2.456-9.407, z -0.915-2.864); from outside it shows the film's 4-unit window with drawn sheers (4382 day, 10 night lit) on the street face and a window under the upper end window on the end face (1890).",
+ "claim": {
+  "value": {
+   "removed": "sun_porch(): porch x 5.40-9.30 z -3.00..-1.155 (floor slab, knee walls, posts, glass, 18 deg hip roof), greenhouse x 9.30-10.35 z -2.85..-1.45",
+   "right_front_ground": "4 units z -0.411..2.221, y GF+0.41..GF+2.086 (the den's mirror, unchanged position), sheers full height in the panes, sash 0.025 behind the brick face (in front of the grey-box wall face 9.547)",
+   "right_end_ground": "4 units x 4.534..7.166 on the end face z -1.155 (under the upper end window), y GF+0.41..GF+2.086, sheers, stone sill + label block",
+   "interior": "none: no plan opening; the sunroom stays sealed (DEVIATIONS 33)"
+  },
+  "data": [
+   "film:4382"
+  ],
+  "scale": [
+   "none"
+  ],
+  "upstream": [],
+  "type": "topological",
+  "applies_to": [
+   "exterior"
+  ],
+  "measured_in": [
+   "exterior"
+  ],
+  "pick": {
+   "crop": "spec/captures/picks/exterior/f4382_right_ground.png",
+   "confirmed_by": "the same window found in a second frame (film 10 night, crop f10_right_section.png: right section ground window of mulled sashes, white sheers lit behind every pane, shrubs before it)"
+  },
+  "note": "Window sizes are the den end's (measured openings 0.41-2.086, 2.632 m), mirrored; not re-measured on the film. The end windows' place along the end wall is the shell's (upper end window x 4.53-7.17); film 1890 hints it sits nearer the front corner (not solved, DEVIATIONS row)."
+ },
+ "history": [
+  {
+   "date": "2026-10-18",
+   "what": "exterior shell TRIAL 1 (changes/2026-10-18-exterior-shell.json): sun porch + greenhouse past the right end from film 1890/6122; the right section's ground front a blind 4-unit window (dark glass behind the grey-box wall face: read as red/dark panes)",
+   "outcome": "porch rejected by the user (Oct 18, quoted in premise); blind window reworked here"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "film 10 (night, wide): right section ground window of mulled sashes with white sheers lit behind all panes; shrubs lit before it and past the corner. Crop spec/captures/picks/exterior/f10_right_section.png",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:10"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [],
+   "tests": [
+    "model-fidelity"
+   ]
+  },
+  {
+   "what": "film 1890 (oblique from the right): the right section's end face shows a mulled window on each storey, the ground one directly under the upper one. Crop spec/captures/picks/exterior/f1890_right_end.png",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:1890"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [],
+   "tests": [
+    "model-fidelity"
+   ]
+  },
+  {
+   "what": "film 1890 / 6122 also show a white glazed one-storey structure past the right end and a green-framed greenhouse (the shell's source for the porch)",
+   "agrees": false,
+   "type": "topological",
+   "data": [
+    "film:1890",
+    "film:6122"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [],
+   "tests": [],
+   "disposition": "removed on the user's word (premise): the room past the dining room is the right section's ground storey; DEVIATIONS row logs the departure from 1890/6122 and how to revisit"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/sunroom-fix/before/street.png",
+   "spec/captures/views/sunroom-fix/before/sunroom_end.png",
+   "spec/captures/views/sunroom-fix/before/oblique_1890.png"
+  ],
+  "after": [
+   "spec/captures/views/sunroom-fix/after/street.png",
+   "spec/captures/views/sunroom-fix/after/sunroom_end.png",
+   "spec/captures/views/sunroom-fix/after/oblique_1890.png"
+  ]
+ },
+ "user_walk": "pending"
+}

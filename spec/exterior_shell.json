@@ -177,27 +177,6 @@
    "eave": 0.1440000000000003,
    "tan": 0.0,
    "walls": []
-  },
-  {
-   "name": "sunporch",
-   "kind": "hip",
-   "x": [
-    5.15,
-    9.55
-   ],
-   "z": [
-    -3.25,
-    -0.855
-   ],
-   "eave": -0.5,
-   "tan": 0.3249196962329063,
-   "keep": true,
-   "walls": [
-    5.4,
-    9.3,
-    -3.0,
-    -1.155
-   ]
   }
  ],
  "dormers": [
@@ -379,9 +358,21 @@
   {
    "face": "right_front_ground",
    "axis": "x",
+   "s": 1,
    "d": 9.647,
    "a0": -0.41100000000000003,
    "a1": 2.221,
+   "y0": -2.6159999999999997,
+   "y1": -0.94,
+   "units": 4
+  },
+  {
+   "face": "right_end_ground",
+   "axis": "z",
+   "s": -1,
+   "d": -1.155,
+   "a0": 4.534,
+   "a1": 7.1659999999999995,
    "y0": -2.6159999999999997,
    "y1": -0.94,
    "units": 4
@@ -391,7 +382,7 @@
   "L_Brick": {
    "layer": "L",
    "mat": "EX_Brick",
-   "faces": 187
+   "faces": 194
   },
   "U_Brick": {
    "layer": "U",
@@ -416,7 +407,7 @@
   "L_Roof": {
    "layer": "L",
    "mat": "EX_Roof",
-   "faces": 5
+   "faces": 1
   },
   "L_Cornice": {
    "layer": "L",
@@ -461,27 +452,32 @@
   "L_Sash": {
    "layer": "L",
    "mat": "EX_Trim",
-   "faces": 258
+   "faces": 516
   },
   "L_Glass": {
    "layer": "L",
    "mat": "EX_Glass",
-   "faces": 38
+   "faces": 14
   },
   "L_Shade": {
    "layer": "L",
    "mat": "EX_Shade",
-   "faces": 24
+   "faces": 0
+  },
+  "L_Sheer": {
+   "layer": "L",
+   "mat": "EX_Sheer",
+   "faces": 48
   },
   "L_Mould": {
    "layer": "L",
    "mat": "EX_Trim",
-   "faces": 306
+   "faces": 324
   },
   "L_Stone": {
    "layer": "L",
    "mat": "EX_Stone",
-   "faces": 144
+   "faces": 156
   },
   "L_Shutter": {
    "layer": "L",
@@ -536,21 +532,6 @@
   "L_Bow": {
    "layer": "L",
    "mat": "EX_Bow",
-   "faces": 6
-  },
-  "L_Porch": {
-   "layer": "L",
-   "mat": "EX_Trim",
-   "faces": 114
-  },
-  "L_PorchGlass": {
-   "layer": "L",
-   "mat": "EX_PorchGlass",
-   "faces": 22
-  },
-  "L_PorchFloor": {
-   "layer": "L",
-   "mat": "EX_Stone",
    "faces": 6
   },
   "L_Oculus": {

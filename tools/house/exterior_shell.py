@@ -12,7 +12,8 @@ Massing (spec x front +, z; world y; ground floor -3.026, upper floor 0):
   den section  x 2.215-9.406 z 16.21-20.057  two storeys, set back 0.86 m (film 6400: one flush face over the den, 4-unit windows)
   right section x 2.316-9.547 z -1.055-2.864 two storeys, set back 0.72 m (film 4382/9512: 4-unit windows, mirror of the den end)
   kitchen wing, back stair, back hall: one storey, hip / lean-to roofs (film 4575, 6810)
-  sun porch + greenhouse past the right end (film 1890, 6122), portico, terraced beds (SpecGreybox.Yard)
+  portico, terraced beds (SpecGreybox.Yard). No sun porch past the right end (user Oct 18: the sunroom is the right section's
+  ground storey; changes/2026-10-18-sunroom-fix.json)
 Every ground-floor exterior opening of spec/geometry.json is left open in the brick (veneer 0.10 m on the measured outer faces);
 the upper storey's windows are the film's (aligned over the ground bays), not Marina's.
 
@@ -199,7 +200,10 @@ def upper_windows():
 
 
 UPW_LIST = upper_windows()
-BLIND = [dict(face="right_front_ground", axis="x", d=RIGHT["x"][1] + V, a0=0.905 - 1.316, a1=0.905 + 1.316, y0=GF + 0.41, y1=GF + 2.086, units=4)]
+# the right section's ground storey is the sealed sunroom (DEVIATIONS 33): its windows are drawn on the skin only, sheers in the panes
+# (film 4382 day, 10 night lit), on the street face and under the upper end window (film 1890); the den's openings mirrored
+BLIND = [dict(face="right_front_ground", axis="x", s=1, d=RIGHT["x"][1] + V, a0=0.905 - 1.316, a1=0.905 + 1.316, y0=GF + 0.41, y1=GF + 2.086, units=4),
+         dict(face="right_end_ground", axis="z", s=-1, d=RIGHT["z"][0] - V, a0=5.85 - 1.316, a1=5.85 + 1.316, y0=GF + 0.41, y1=GF + 2.086, units=4)]
 
 
 # ---------------------------------------------------------------- walls
@@ -387,10 +391,11 @@ def lean(name, axis, hi_d, lo_d, a0, a1, over, y_hi, y_lo_eave, layer, ends=(Tru
 
 
 # ---------------------------------------------------------------- window units, trim, shutters
-def sash_unit(face_axis, d, s, a0, a1, y0, y1, layer, recess=0.07, rows=(3, 3), cols=2, shade=True):
+def sash_unit(face_axis, d, s, a0, a1, y0, y1, layer, recess=0.07, rows=(3, 3), cols=2, shade=True, sheer=False):
     """A double-hung unit set 'recess' behind the brick face d (outward s): white frame, two sashes with muntins, dark glass and a
     drawn shade behind (glows at night, SpecGreybox.Shell adds it to the night mode's glow list)."""
     T = part("Sash", "EX_Trim", layer); Gl = part("Glass", "EX_Glass", layer); Sh = part("Shade", "EX_Shade", layer)
+    if sheer: Gl, shade = part("Sheer", "EX_Sheer", layer), False   # a sealed room behind: sheers behind glossy glass fill the panes (glow at night)
     df = d - s * recess
     fw = 0.055
     def bx(F, a_0, a_1, y_0, y_1, t0, t1):
@@ -413,15 +418,15 @@ def sash_unit(face_axis, d, s, a0, a1, y0, y1, layer, recess=0.07, rows=(3, 3), 
         bx(Sh, ia0, ia1, y1 - fw - (y1 - y0) * 0.62, y1 - fw, -0.09, -0.085)
 
 
-def mulled(face_axis, d, s, a0, a1, y0, y1, n, layer, shade=True):
+def mulled(face_axis, d, s, a0, a1, y0, y1, n, layer, shade=True, recess=0.07, sheer=False):
     w = (a1 - a0 - 0.064 * (n - 1)) / n
     T = part("Sash", "EX_Trim", layer)
     for k in range(n):
         u0 = a0 + k * (w + 0.064)
-        sash_unit(face_axis, d, s, u0, u0 + w, y0, y1, layer, shade=shade)
+        sash_unit(face_axis, d, s, u0, u0 + w, y0, y1, layer, recess=recess, shade=shade, sheer=sheer)
         if k:
-            if face_axis == "x": box(T, d - s * 0.07, d - s * 0.01, y0, y1, u0 - 0.064, u0)
-            else: box(T, u0 - 0.064, u0, y0, y1, d - s * 0.07, d - s * 0.01)
+            if face_axis == "x": box(T, d - s * recess, d - s * 0.01, y0, y1, u0 - 0.064, u0)
+            else: box(T, u0 - 0.064, u0, y0, y1, d - s * recess, d - s * 0.01)
 
 
 def surround(face_axis, d, s, a0, a1, y0, y1, layer, sill=True, key=False, head=True):
@@ -472,10 +477,11 @@ def build_windows():
         surround(w["axis"], w["d"], s, w["a0"], w["a1"], w["y0"], w["y1"], "U")
         if w.get("shutters"):
             shutters(w["axis"], w["d"], s, w["a0"], w["a1"], w["y0"], w["y1"], "U")
-    # the right section's ground front: a blind 4-unit window (the sunroom has no opening; film 4382/9512 show one), L
+    # the sunroom's windows (no opening: the room is sealed), L; the sash 2.5 cm behind the brick so its sheers stand in front of the
+    # grey-box wall's outer face (veneer 0.10: sheers 7 cm in, the wall face 10 cm)
     for w in BLIND:
-        mulled(w["axis"], w["d"], 1, w["a0"], w["a1"], w["y0"], w["y1"], 4, "L")
-        surround(w["axis"], w["d"], 1, w["a0"], w["a1"], w["y0"], w["y1"], "L", key=True)
+        mulled(w["axis"], w["d"], w["s"], w["a0"], w["a1"], w["y0"], w["y1"], 4, "L", recess=0.025, sheer=True)
+        surround(w["axis"], w["d"], w["s"], w["a0"], w["a1"], w["y0"], w["y1"], "L", key=True)
     # ground openings: brick mould, sills, label blocks (front), shutters on the main block's front French windows (film)
     for o in OPEN:
         if o["room"] in ("landing", "front_door"):
@@ -648,46 +654,6 @@ def door_face(layer):
     box(Rb, xw + 0.10, xw + 0.13, wc_y - wr - 0.10, wc_y - wr + 0.04, (z0 + z1) / 2 - 0.10, (z0 + z1) / 2 + 0.10)
 
 
-def sun_porch(layer_lo, layer_hi):
-    """Past the right end (film 1890, 6122): a one-storey white glazed sun porch and a small lean-to greenhouse in front of it."""
-    T = part("Porch", "EX_Trim", layer_lo); Gl = part("PorchGlass", "EX_PorchGlass", layer_lo); Fl = part("PorchFloor", "EX_Stone", layer_lo)
-    x0, x1, z0, z1 = 5.40, 9.30, -3.00, RIGHT["z"][0] - V
-    yb, yt = -3.45, -0.75
-    box(Fl, x0, x1, GRADE["side"] - 0.02, yb, z0, z1)
-    box(T, x0, x1, yb, yb + 0.45, z0, z0 + 0.12)                                  # knee walls
-    box(T, x1 - 0.12, x1, yb, yb + 0.45, z0 + 0.12, z1)
-    box(T, x0, x0 + 0.12, yb, yb + 0.45, z0 + 0.12, z1)
-    for (xa, za) in ((x0, z0), (x1 - 0.12, z0), (x0, z1 - 0.12), (x1 - 0.12, z1 - 0.12)):
-        box(T, xa, xa + 0.12, yb, yt, za, za + 0.12)
-    n = 5
-    for k in range(1, n):
-        xm = x0 + (x1 - x0) * k / n
-        box(T, xm - 0.04, xm + 0.04, yb + 0.45, yt, z0, z0 + 0.10)
-    for k in range(1, 3):
-        zm = z0 + (z1 - z0) * k / 3
-        box(T, x1 - 0.10, x1, yb + 0.45, yt, zm - 0.04, zm + 0.04)
-        box(T, x0, x0 + 0.10, yb + 0.45, yt, zm - 0.04, zm + 0.04)
-    box(Gl, x0 + 0.12, x1 - 0.12, yb + 0.45, yt, z0 + 0.04, z0 + 0.05)
-    box(Gl, x1 - 0.06, x1 - 0.05, yb + 0.45, yt, z0 + 0.12, z1 - 0.12)
-    box(Gl, x0 + 0.05, x0 + 0.06, yb + 0.45, yt, z0 + 0.12, z1 - 0.12)
-    box(T, x0 - 0.05, x1 + 0.05, yt, yt + 0.25, z0 - 0.05, z1)                    # entablature / roof edge
-    tp = math.tan(math.radians(18.0))
-    R = part("Roof", "EX_Roof", layer_hi)
-    facets, h = hip_facets(x0 - 0.25, x1 + 0.25, z0 - 0.25, z1 + 0.3, yt + 0.25, tp)
-    roof_from(facets, h, R, keep=Polygon([(x0 - 0.3, z0 - 0.3), (x1 + 0.3, z0 - 0.3), (x1 + 0.3, z1), (x0 - 0.3, z1)]))
-    ROOFS.append(dict(name="sunporch", kind="hip", x=[x0 - 0.25, x1 + 0.25], z=[z0 - 0.25, z1 + 0.3], eave=yt + 0.25, tan=tp, keep=True, walls=[x0, x1, z0, z1]))
-    # the greenhouse (film 1890: a small dark-glazed lean-to in front of the porch, low)
-    gx0, gx1, gz0, gz1 = 9.30, 10.35, -2.85, -1.45
-    box(T, gx0, gx1, GRADE["side"], GRADE["side"] + 0.35, gz0, gz1)
-    gh = GRADE["side"] + 0.35
-    for (xa, za) in ((gx1 - 0.05, gz0), (gx1 - 0.05, gz1 - 0.05)):
-        box(T, xa, xa + 0.05, gh, gh + 1.20, za, za + 0.05)
-    face(Gl, [(gx1, gh, gz0), (gx1, gh, gz1), (gx1, gh + 1.20, gz1), (gx1, gh + 1.20, gz0)], (1, 0, 0))
-    face(Gl, [(gx0, gh + 2.0, gz0), (gx1, gh + 1.20, gz0), (gx1, gh + 1.20, gz1), (gx0, gh + 2.0, gz1)], (0.6, 1, 0))
-    for zz, sg in ((gz0, -1), (gz1, 1)):
-        face(Gl, [(gx0, gh, zz), (gx1, gh, zz), (gx1, gh + 1.20, zz), (gx0, gh + 2.0, zz)], (0, 0, sg))
-
-
 def garage_oculus(layer):
     """Film 6399/2515: a round window with spokes in the detached garage's street gable, under its cupola (the old GLB's garage has the
     cupola and no oculus). On the registered GLB gable face (x -0.45, apex y 0.99, z 19.65-26.87): centre z 23.26, y 0.05."""
@@ -758,7 +724,7 @@ def xmas_lights(D):
     for w in UPW_LIST:
         if w["face"] in ("front", "den_front", "right_front"):
             bulb_loop(BU, "x", w["d"], 1, w["a0"] - out, w["a1"] + out, w["y0"] - lo, w["y1"] + out)
-    for w in BLIND:
+    for w in BLIND[:1]:   # the street face only (film 10)
         bulb_loop(BL, "x", w["d"], 1, w["a0"] - out, w["a1"] + out, w["y0"] - lo, w["y1"] + out)
     for o in OPEN:
         if o["axis"] == "x" and o["c"] > 9.0 and o["room"] in ("den", "dining_room", "living_room"):
@@ -873,7 +839,6 @@ def main():
     chimney(0.64, MAIN["x"][0] - V, 13.32, 14.32, GRADE["rear"], 6.75, "U")
     portico("U")
     door_face("L")
-    sun_porch("L", "L")
     garage_oculus("L")
     downpipes("U")
     for o in OPEN:   # the dining room's French windows have no leaves inside: the film's from the street
