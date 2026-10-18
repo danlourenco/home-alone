@@ -305,15 +305,16 @@ ATTIC = ROOT / "measurements/rooms/attic.json"
 def attic_stair_spec(final, o, ceil):
     """The attic stair and the attic over it (Oct 18 2026, TRIAL; changes/2026-10-18-attic-shell.json, DEVIATIONS 21 and 90).
     Stair: a straight flight rising away from the hall-end door (film, f_00015-24 of sfm-work/attic) across the overhead's well, at the
-    attic floor (measurements/rooms/attic.json: floor 2.670 = 15 main-stair rises, over the upper ceilings) in 14 risers of 0.1907
-    with the old 0.42 m run-in (a 1.85 m body clears the door head's casing before step 1) and a 0.178 going (47 deg).
-    Attic: Marina's room (5.20 x 8.50, 1.25 m knee walls) centred on the well across the house (the well sits on the house's centre
-    line, under the ridge) and running back from the house's end wall over the upper rooms; the flight arrives at that end wall and you
-    step off sideways (front side), the house's chimney (the living room's flue, rear wall z 13.82) stands at the rear knee wall, the
-    zipline dormer is in the rear slope centred on the landing window (film 9435). Boxes here are the walk/envelope layer (renderers
-    hidden by SpecGreybox.Attic, which places the look: tools/house/hifi_attic.py)."""
+    attic floor (measurements/rooms/attic.json: 2.62, on the upper ceilings' tops) in 15 risers of 0.1747 (under the walk's 0.20 step
+    offset) with the proven 0.42 m run-in (a 1.85 m body clears the door head's casing before step 1) and a 0.165 going (46.6 deg).
+    Attic (trial 2, after the user's poster IMG_4295): the main block's length, from a partition past the parents' fireplace flue
+    (the bed end, poster bed 26 beside the chimney) to a hipped end over the den (the room the user calls hidden), Marina's 5.20 m
+    width and 1.25 m knee walls centred on the well (the house's centre line, under the ridge); the flight arrives into open floor
+    2-3 m short of the hip, its well wrapped by the balustrade on three sides; the zipline dormer in the rear slope over the landing
+    window (film 9435). Boxes here are the walk/envelope layer (renderers hidden by SpecGreybox.Attic, which places the look:
+    hifi_attic.py)."""
     A = {k: v["value"] for k, v in json.loads(ATTIC.read_text())["measured"].items()}
-    n, yf = A["risers"], A["floor_y"]; r = yf / n           # 14 x 0.1907 (attic.json risers)
+    n, yf = A["risers"], A["floor_y"]; r = yf / n           # 15 x 0.1747 (attic.json)
     P = np.c_[final["attic_stair"][:, 1] - o[1], final["attic_stair"][:, 0] - o[0]]
     x0, x1, z0, z1 = P[:, 0].min(), P[:, 0].max(), P[:, 1].min(), P[:, 1].max()
     s0 = 0.42                                  # run-in inside the door: a 1.85 m body clears the door head's casing before step 1
@@ -324,13 +325,14 @@ def attic_stair_spec(final, o, ceil):
     box = lambda name, kind, xa, xb, ya, yb, za, zb, **kw: B.append({"name": name, "kind": kind, "x": [rd(xa), rd(xb)], "y": [rd(ya), rd(yb)], "z": [rd(za), rd(zb)], **kw})
     for k in range(1, n):
         box(f"attic_step{k:02d}", "step", x0, x1, 0.0, k * r, z0 + s0 + (k - 1) * g, z0 + s0 + k * g)
-    for name, xa, xb, za, zb in (("attic_wall_w", x0 - t, x0, z0 - t, z1 + t), ("attic_wall_e", x1, x1 + t, z0 - t, z1 + t),
-                                 ("attic_wall_door", x0, x1, z0 - t, z0), ("attic_wall_end", x0, x1, z1, z1 + t)):
+    for name, xa, xb, za, zb in (("attic_wall_w", x0 - t, x0, z0 - t, z1), ("attic_wall_e", x1, x1 + t, z0 - t, z1),
+                                 ("attic_wall_door", x0, x1, z0 - t, z0)):
         box(name, "wall", xa, xb, ceil, yf, za, zb)       # the well's framing up to the attic floor (the builder stops them at its ceiling)
+    box("attic_wall_end", "wall", x0 - t, x1 + t, ceil, yf - 0.12, z1, z1 + t)   # under the floor at the stair head
     # ---- the attic: room, floor, knee walls, end walls, lid (a box envelope round the sloped look)
-    xc, W, L, kh, tp = (x0 + x1) / 2, A["room_w"], A["room_l"], A["knee_h"], np.tan(np.radians(A["pitch_deg"]))
-    ax0, ax1, az1 = xc - W / 2, xc + W / 2, z1
-    az0, ridge = az1 - L, yf + kh + W / 2 * tp
+    xc, W, kh, tp = (x0 + x1) / 2, A["room_w"], A["knee_h"], np.tan(np.radians(A["pitch_deg"]))
+    ax0, ax1, az0, az1 = xc - W / 2, xc + W / 2, A["end_lo_z"], A["end_hi_z"]
+    L, ridge = az1 - az0, yf + kh + W / 2 * tp
     top = ridge + 0.15                                   # over the ridge board and the roof boards
     dz, dsill, (dw, dh) = A["dormer_z"], A["dormer_sill_h"], A["dormer_opening"]
     di = A["dormer_body_w"] / 2 - t                      # cheeks' inner faces
@@ -340,11 +342,12 @@ def attic_stair_spec(final, o, ceil):
     box("attic_floor_rear", "floor", ax0 - t, x0 - t, yf - 0.12, yf, az0 - t, az1 + t)
     box("attic_floor_front", "floor", x1 + t, ax1 + t, yf - 0.12, yf, az0 - t, az1 + t)
     box("attic_floor_mid", "floor", x0 - t, x1 + t, yf - 0.12, yf, az0 - t, z0 - t)
+    box("attic_floor_head", "floor", x0 - t, x1 + t, yf - 0.12, yf, z1, az1 + t)   # from the top riser on, past the stair head (over the den)
     box("attic_floor_dormer", "floor", dface - t, ax0 - t, yf - 0.12, yf, dz - di - t, dz + di + t)
     box("attic_knee_front", "wall", ax1, ax1 + t, yf, top, az0 - t, az1 + t)
     box("attic_knee_rear_a", "wall", ax0 - t, ax0, yf, top, az0 - t, dz - di - t)
     box("attic_knee_rear_b", "wall", ax0 - t, ax0, yf, top, dz + di + t, az1 + t)
-    box("attic_gable_end", "wall", ax0, ax1, yf, top, az1, az1 + t)
+    box("attic_hip_end", "wall", ax0, ax1, yf, top, az1, az1 + t)
     box("attic_gable_back", "wall", ax0, ax1, yf, top, az0 - t, az0)
     box("attic_dormer_cheek_a", "wall", dface - t, ax0, yf, top, dz - di - t, dz - di)
     box("attic_dormer_cheek_b", "wall", dface - t, ax0, yf, top, dz + di, dz + di + t)
@@ -355,31 +358,33 @@ def attic_stair_spec(final, o, ceil):
     box("attic_dormer_jamb_b", "wall", dface - t, dface, ys, yh, dz + dw / 2, dz + di)
     box("attic_dormer_opening", "opening", dface - t, dface, ys, yh, dz - dw / 2, dz + dw / 2)   # cut out of the envelope; no collider (the zipline)
     box("attic_lid", "ceiling", ax0 - t if dface > ax0 else dface - t, ax1 + t, top, top + 0.1, az0 - t, az1 + t)
-    # balustrade round the well (colliders; the look is the model's): rear side, the end over the flight's foot, the front side open
-    # for its last 0.95 m (the step-off: the flight meets the end wall)
+    # balustrade round the well on three sides (colliders; the look is the model's); the head end is open: you step off ahead
     rh, rt, ro = 0.90, 0.06, 0.05
-    gap = z1 - 0.95
     box("attic_rail_rear", "rail", x0 - ro - rt / 2, x0 - ro + rt / 2, yf, yf + rh, z0 - ro - rt / 2, z1)
     box("attic_rail_foot", "rail", x0 - ro - rt / 2, x1 + ro + rt / 2, yf, yf + rh, z0 - ro - rt / 2, z0 - ro + rt / 2)
-    box("attic_rail_front", "rail", x1 + ro - rt / 2, x1 + ro + rt / 2, yf, yf + rh, z0 - ro - rt / 2, gap)
-    # the sofa bed (film 1403-1447: against the balustrade's end, its head at the chimney; placeholder walk box)
-    bed = {"x": [rd(xc - 2.0065), rd(xc - 0.0065)], "z": [rd(z0 - ro - rt / 2 - 0.03 - 2.10), rd(z0 - ro - rt / 2 - 0.03)], "top": 0.45, "back": 0.85, "back_d": 0.30}
-    box("attic_bed", "furniture", bed["x"][0], bed["x"][1], yf, yf + bed["top"], bed["z"][0], bed["z"][1])
-    box("attic_bed_back", "furniture", bed["x"][0], bed["x"][1], yf + bed["top"], yf + bed["back"], bed["z"][0], bed["z"][0] + bed["back_d"])
-    chim = {"x": [rd(ax0 + 0.01), rd(ax0 + 0.66)], "z": [13.32, 14.32]}   # the living-room flue (spec/dressing/living.json fireplace z 13.82)
+    box("attic_rail_front", "rail", x1 + ro - rt / 2, x1 + ro + rt / 2, yf, yf + rh, z0 - ro - rt / 2, z1)
+    # the parents' fireplace flue rises through the attic at the rear knee wall (poster: the chimney beside the bed)
+    PF = json.loads((ROOT / "spec/dressing/parents_fireplace.json").read_text())
+    chim = {"x": [rd(ax0 + 0.016), rd(PF["centre_x"] + 0.47)], "z": [rd(az0 + 0.016), rd(az0 + 0.82)]}   # against the partition, over the flue (PF wall_z)
     box("attic_chimney", "furniture", chim["x"][0], chim["x"][1], yf, yf + kh, chim["z"][0], chim["z"][1])
-    stove = {"x": [rd(chim["x"][1] + 0.04), rd(chim["x"][1] + 0.59)], "z": [13.58, 14.08], "h": 0.75}
+    stove = {"x": [rd(chim["x"][1] + 0.04), rd(chim["x"][1] + 0.59)], "z": [rd(chim["z"][0] + 0.15), rd(chim["z"][0] + 0.65)], "h": 0.75}
     box("attic_stove", "furniture", stove["x"][0], stove["x"][1], yf, yf + stove["h"], stove["z"][0], stove["z"][1])
+    # the sofa bed (look: the film's fold-out, 1403-1447; place: the poster's bed 26, its back to the rear knee wall beside the chimney)
+    bz0 = chim["z"][1] + 0.10
+    bed = {"x": [rd(ax0 + 0.016), rd(ax0 + 0.016 + 2.10)], "z": [rd(bz0), rd(bz0 + 2.0)], "top": 0.45, "back": 0.85, "back_d": 0.30, "back_side": "x0"}
+    box("attic_bed", "furniture", bed["x"][0], bed["x"][1], yf, yf + bed["top"], bed["z"][0], bed["z"][1])
+    box("attic_bed_back", "furniture", bed["x"][0], bed["x"][0] + bed["back_d"], yf + bed["top"], yf + bed["back"], bed["z"][0], bed["z"][1])
+    ext_chim = {"x": [1.0, 1.6], "z": [13.32, 14.32]}   # the living-room flue outside the rear knee wall (exterior only; film 11162)
     xm = (x0 + x1) / 2
-    path = [[xm, 0.0, z0 - 0.6], [xm, (n - 1) * r, z1 - 0.20], [x1 - 0.08, yf, z1 - 0.20], [x1 + 0.62, yf, z1 - 0.30], [x1 + 0.62, yf, az0 + 3.1], [ax0 + 1.45, yf, dz + 0.75]]
+    path = [[xm, 0.0, z0 - 0.6], [xm, yf, z1 + 0.55], [x1 + 0.07, yf, z1 + 0.60], [x1 + 0.62, yf, z0 - 0.66], [bed["x"][1] + 0.93, yf, bed["z"][1] - 0.6], [ax0 + 1.45, yf, dz + 0.75]]
     attic = {"x": [rd(ax0), rd(ax1)], "z": [rd(az0), rd(az1)], "floor_y": rd(yf), "ridge_y": rd(ridge), "knee_h": kh, "pitch_deg": A["pitch_deg"],
              "ridge_x": rd(xc), "wall_t": t, "top_y": rd(top), "well": {"x": [rd(x0), rd(x1)], "z": [rd(z0), rd(z1)]},
-             "rail": {"h": rh, "t": rt, "off": ro, "gap_z": rd(gap)},
+             "rail": {"h": rh, "t": rt, "off": ro}, "hip_z": rd(az1), "ext_chimney": ext_chim,
              "dormer": {"z": dz, "face_x": rd(dface), "inner_half": rd(di), "opening": [dw, dh], "sill_y": rd(ys), "head_y": rd(yh),
                         "ceiling_y": rd(yf + 1.76), "cornice_w": A["dormer_cornice_w"], "pitch_deg": A["dormer_pitch_deg"], "open_deg": 95},
              "bed": bed, "chimney": chim, "stove": stove, "collar_y": rd(yf + 2.30)}
     return {"rise_m": round(r, 4), "going_m": round(float(g), 3), "risers": n, "boxes": B, "attic": attic, "walk_path": [[rd(v) for v in q] for q in path],
-            "authored": f"{n} risers of {r:.4f} to the attic floor {yf:.3f}, going {g:.3f}, first riser {s0:.3f} m inside the door; full well width; attic {W} x {L} m, ridge {ridge:.2f}"}
+            "authored": f"{n} risers of {r:.4f} to the attic floor {yf:.3f}, going {g:.3f}, first riser {s0:.3f} m inside the door; full well width; attic {W} x {L:.2f} m (z {az0}-{az1}, hipped at the high end), ridge {ridge:.2f}"}
 
 
 def stair_spec(final, o):

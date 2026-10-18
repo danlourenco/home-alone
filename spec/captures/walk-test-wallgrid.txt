@@ -53,37 +53,37 @@ ok      player down leg 2: ended 0.01 m from waypoint, 0.03 m off its floor heig
 ok      player down leg 3: ended 0.02 m from waypoint, 0.03 m off its floor height, 40 frames (clean walk 40)
 ok      player down leg 4: ended 0.04 m from waypoint, 0.03 m off its floor height, 78 frames (clean walk 75)
 ok      player down leg 5: ended 0.02 m from waypoint, 0.03 m off its floor height, 8 frames (clean walk 8)
-Stair walk test (both bodies, up and down): 30 legs, 15 blocked
-BLOCKED bandit up leg 1: ended 0.80 m from waypoint, 0.77 m off its floor height by AtticStair/attic_step10 at (6.56, 1.71, 15.40) spec x,y,z
-BLOCKED bandit up leg 2: ended 0.82 m from waypoint, 0.77 m off its floor height by AtticStair/attic_step10 at (7.04, 1.71, 15.40) spec x,y,z
-BLOCKED bandit up leg 3: ended 1.14 m from waypoint, 0.96 m off its floor height by AtticStair/attic_wall_e at (7.04, 1.71, 15.41) spec x,y,z
-BLOCKED bandit up leg 4: ended 3.09 m from waypoint, 2.49 m off its floor height by Walls/Wall at (7.05, 0.18, 13.96) spec x,y,z
-BLOCKED bandit up leg 5: ended 1.45 m from waypoint, 2.65 m off its floor height by HallColliders/HallCollider_ficus at (6.09, 0.02, 11.70) spec x,y,z
+Stair walk test (both bodies, up and down): 30 legs, 0 blocked
+ok      bandit up leg 1: ended 0.05 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 2: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 3: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 4: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 5: ended 0.04 m from waypoint, 0.02 m off its floor height
 ok      bandit down leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
-ok      bandit down leg 2: ended 0.03 m from waypoint, 0.02 m off its floor height
-BLOCKED bandit down leg 3: ended 0.08 m from waypoint, 0.20 m off its floor height by AtticStair/attic_gable_end at (7.25, 2.68, 16.12) spec x,y,z
-ok      bandit down leg 4: ended 0.08 m from waypoint, 0.00 m off its floor height
-ok      bandit down leg 5: ended 0.01 m from waypoint, 0.02 m off its floor height
-ok      kevin up leg 1: ended 0.04 m from waypoint, 0.01 m off its floor height
-BLOCKED kevin up leg 2: ended 0.00 m from waypoint, 0.19 m off its floor height by AtticStair/attic_gable_end at (7.25, 2.67, 16.19) spec x,y,z
-ok      kevin up leg 3: ended 0.01 m from waypoint, 0.02 m off its floor height
-ok      kevin up leg 4: ended 0.03 m from waypoint, 0.02 m off its floor height
-ok      kevin up leg 5: ended 0.05 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 3: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 4: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 5: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 2: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 3: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 4: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 5: ended 0.04 m from waypoint, 0.02 m off its floor height
 ok      kevin down leg 1: ended 0.04 m from waypoint, 0.02 m off its floor height
-ok      kevin down leg 2: ended 0.03 m from waypoint, 0.02 m off its floor height
-BLOCKED kevin down leg 3: ended 0.01 m from waypoint, 0.20 m off its floor height by AtticStair/attic_gable_end at (7.27, 2.68, 16.19) spec x,y,z
-ok      kevin down leg 4: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 3: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 4: ended 0.03 m from waypoint, 0.02 m off its floor height
 ok      kevin down leg 5: ended 0.04 m from waypoint, 0.02 m off its floor height
-BLOCKED player up leg 1: ended 2.23 m from waypoint, 2.30 m off its floor height by AtticStair/attic_step02 at (6.56, 0.18, 13.96) spec x,y,z, 1500 frames (clean walk 54) STALLED
-BLOCKED player up leg 2: ended 2.24 m from waypoint, 2.30 m off its floor height by AtticStair/attic_step02 at (7.03, 0.18, 13.97) spec x,y,z, 1500 frames (clean walk 40) STALLED
-BLOCKED player up leg 3: ended 2.32 m from waypoint, 2.49 m off its floor height by AtticStair/attic_step02 at (7.03, 0.18, 13.97) spec x,y,z, 1500 frames (clean walk 40) STALLED
-BLOCKED player up leg 4: ended 3.11 m from waypoint, 2.47 m off its floor height by Openings/Casing at (7.03, 0.20, 13.97) spec x,y,z, 1500 frames (clean walk 53) STALLED
-BLOCKED player up leg 5: ended 1.46 m from waypoint, 2.64 m off its floor height by HallColliders/HallCollider_ficus at (6.10, 0.03, 11.71) spec x,y,z, 1500 frames (clean walk 67) STALLED
-ok      player down leg 1: ended 0.04 m from waypoint, 0.03 m off its floor height, 44 frames (clean walk 45)
-ok      player down leg 2: ended 0.03 m from waypoint, 0.03 m off its floor height, 87 frames (clean walk 88)
-BLOCKED player down leg 3: ended 0.08 m from waypoint, 0.21 m off its floor height by AtticStair/attic_gable_end at (7.25, 2.69, 16.12) spec x,y,z, 1500 frames (clean walk 12) STALLED
-BLOCKED player down leg 4: ended 0.08 m from waypoint, 0.01 m off its floor height by AtticStair/attic_gable_end at (6.56, 2.49, 16.12) spec x,y,z, 1500 frames (clean walk 12) STALLED
-ok      player down leg 5: ended 0.01 m from waypoint, 0.03 m off its floor height, 61 frames (clean walk 52)
+ok      player up leg 1: ended 0.04 m from waypoint, 0.03 m off its floor height, 66 frames (clean walk 67)
+ok      player up leg 2: ended 0.03 m from waypoint, 0.03 m off its floor height, 14 frames (clean walk 15)
+ok      player up leg 3: ended 0.00 m from waypoint, 0.03 m off its floor height, 78 frames (clean walk 69)
+ok      player up leg 4: ended 0.05 m from waypoint, 0.03 m off its floor height, 90 frames (clean walk 91)
+ok      player up leg 5: ended 0.01 m from waypoint, 0.03 m off its floor height, 52 frames (clean walk 52)
+ok      player down leg 1: ended 0.04 m from waypoint, 0.03 m off its floor height, 52 frames (clean walk 53)
+ok      player down leg 2: ended 0.01 m from waypoint, 0.03 m off its floor height, 90 frames (clean walk 90)
+ok      player down leg 3: ended 0.01 m from waypoint, 0.03 m off its floor height, 71 frames (clean walk 69)
+ok      player down leg 4: ended 0.03 m from waypoint, 0.03 m off its floor height, 14 frames (clean walk 15)
+ok      player down leg 5: ended 0.02 m from waypoint, 0.03 m off its floor height, 72 frames (clean walk 67)
 Stair walk test (both bodies, up and down): 12 legs, 1 blocked
 ok      bandit up leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
 ok      bandit up leg 2: ended 0.09 m from waypoint, 0.02 m off its floor height
@@ -98,7 +98,7 @@ BLOCKED player up leg 2: ended 0.07 m from waypoint, 0.06 m off its floor height
 ok      player down leg 1: ended 0.02 m from waypoint, 0.09 m off its floor height, 18 frames (clean walk 20)
 ok      player down leg 2: ended 0.00 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 7)
 Render check (outward faces, ServiceStair): 97 parts, 0 inside-out
-Seam check: 792 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
+Seam check: 793 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
 Leak and headroom check: 1383 points, 0 leaks, 17 low-headroom points (ground floor, outside flight 1)
 LOW     den at (2.6, 18.2): 0.83 m clear under StoreProps/den_tv_Collider
 LOW     den at (6.1, 17.7): 0.37 m clear under DenColliders/DenCollider_coffee_table_top
@@ -112,7 +112,7 @@ LOW     kitchen at (1.1, 5.4): 0.57 m clear under KitchenColliders/KitchenCollid
 LOW     kitchen at (1.1, 4.9): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
 LOW     kitchen at (1.1, 4.4): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
 LOW     kitchen at (1.6, 5.4): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
-Peek check: 564144 rays from rooms you can walk in, 0 into closed spaces
+Peek check: 563472 rays from rooms you can walk in, 0 into closed spaces
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 80 legs, 2 blocked
 BLOCKED bandit parents_bedroom via parents_bedroom/parents_bath: ended 1.34 m short
 skip    bandit buzz_room: no cell to stand in (its floor is a stair)
@@ -131,15 +131,15 @@ skip    kevin dining_room: no cell to stand in (its floor is a stair)
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin back_stair: no cell to stand in (its floor is a stair)
-Z-fight check: 2081259 triangles, 1841 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
-Clash check: 2398685 triangles, 0 parts passing through another (20 allowed joints) (every visible mesh checked)
+Z-fight check: 2082067 triangles, 1842 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
+Clash check: 2399493 triangles, 0 parts passing through another (20 allowed joints) (every visible mesh checked)
 Casing check: 0 casings placed apart from their opening
 Opening face check: 22 door faces, 0 without a head casing, 0 showing the other room's finish within the casing width
 Arch fit: 1 generated arches on their cuts, 0 joints off by more than 1 mm (worst 0.00 mm)
 Props check: 181 store models, 119 problems (landing_table: back -0.5 cm from the drawn wall (want 0-3); den_banker: material Glass_HDRP has no base colour map; den_book_001: back 19.1 cm from the drawn wall (want 0-3); den_book_002: back 19.2 cm from the drawn wall (want 0-3); den_book_003: back 20.3 cm from the drawn wall (want 0-3); den_book_004: back 19.9 cm from the drawn wall (want 0-3); den_book_005: back 16.7 cm from the drawn wall (want 0-3); den_book_006: back 17.5 cm from the drawn wall (want 0-3); den_book_007: back 21.3 cm from the drawn wall (want 0-3); den_book_008: back 18.1 cm from the drawn wall (want 0-3))
 Props triangle budget: 4 models over 150k triangles (Assets/Purchased/PurchasedPlants.glb 411k, Assets/Purchased/HallPlants.glb 296k, Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Models/ChristmasTree.fbx 259k, Assets/Models/Foyer/HallDressing.glb 201k)
 Trim check: 77 face runs (3 on the stair and landings, 0 panelled by a window model), 124.9 m, 10328 samples, 1 gaps in the baseboard, wainscot or cap rail; run ends: corner 75, opening 75, outside-corner 4
-GAP     0.06 m of bare wall 0.42 above the line of the room:hall_corridor run at spec (7.35, 0.42, 9.91)
-Envelope check: 2075 points at room joints, 0 see the sky through < 0.3 m of shadow caster
+GAP     0.08 m of bare wall 0.42 above the line of the room:hall_corridor run at spec (7.34, 0.42, 9.91)
+Envelope check: 2076 points at room joints, 0 see the sky through < 0.3 m of shadow caster
 Quality check: 2 pipeline models of 36 generated (the rest predate the artist pipeline), 0 problems
 

@@ -1,12 +1,12 @@
 {
- "change": "Attic shell (TRIAL): the attic over the attic stair, fitted to our house: floor at 15 risers (2.670), Marina's 5.20 x 8.50 m room with 1.25 m vertical-board knee walls, a 40 deg gable roof (exposed rafters, collar ties, ridge board), the house's chimney (living-room flue) with a wood stove at the rear knee wall, a log balustrade round the well, the zipline dormer in the rear slope centred over the landing window (pediment, outward 3-lite casement pair hung on hinges and shown open, cream curtains) and a placeholder sofa bed against the balustrade (film). Generated: reconcile.py attic_stair (walk/envelope boxes) + tools/house/hifi_attic.py -> Attic.glb (SpecGreybox.Attic.cs); the flight goes 14 -> 15 risers, going 0.178 -> 0.172.",
+ "change": "Attic shell TRIAL 2 (trial 1 rejected): the attic runs the main block's length after the user's poster (IMG_4295): z 5.47-19.92 (14.44 x 5.20 m), hipped at the high end over the den, a partition at the bed end just past the parents' hall wall, the parents' fireplace flue rising against it; the stair's head now arrives into open floor (2-3 m short of the hip), its well wrapped by the balustrade on three sides; the bed (look: the film's fold-out; place: poster bed 26) has its back to the rear knee wall beside the parents' chimney (stove in front); the living-room flue is outside the rear knee wall (exterior); the zipline dormer stays over the landing window. Attic floor 2.62 in 15 risers of 0.1747 (under the walk's 0.20 step offset), going 0.165, run-in 0.42.",
  "target": "House_WallGrid",
- "premise": "Marina's attic room (her 476 ft2 label, knee walls, the stair well in its middle) can be laid over our upper floor on the traced attic well, and the film's two key elements (the sofa bed at the balustrade; the zipline dormer on the rear roof centred over the arched landing window) placed in it, with the house deciding what Marina's set does not (the end wall, the chimney).",
+ "premise": "The user's poster (an isometric cutaway the user says 'appears to be right') gives the attic's LAYOUT: long along the main block, stair near one end with floor past its head, bed at the other end by a chimney; our house fixes where (the traced attic well at the high-z end, the parents' fireplace flue at the low end, the den's end wall); Marina's room (476 ft2) is a check, not the size.",
  "claim": {
   "value": {
    "room_w": 5.2,
-   "room_l": 8.5,
-   "floor_y": 2.67,
+   "room_l": 14.44,
+   "floor_y": 2.62,
    "knee_h": 1.25,
    "pitch_deg": 40.0,
    "ridge_over_floor": 3.43,
@@ -16,15 +16,35 @@
    ],
    "dormer_z": 9.6745,
    "dormer_face_x": 3.158,
-   "dormer_sill_over_floor": 0.7
+   "dormer_sill_over_floor": 0.7,
+   "z": [
+    5.474,
+    19.917
+   ],
+   "hip_end": "high z",
+   "bed": {
+    "x": [
+     3.972,
+     6.072
+    ],
+    "z": [
+     6.394,
+     8.394
+    ],
+    "back": "rear knee wall"
+   },
+   "chimney": "parents' flue at x 3.97-4.91, z 5.49-6.29 (against the partition)",
+   "risers": "15 x 0.1747, going 0.165, run-in 0.42"
   },
   "data": [
+   "poster:IMG_4295",
    "marina-frame:841",
    "film:9435"
   ],
   "scale": [
    "marina-label:476ft2",
-   "landing-window:9435"
+   "landing-window:9435",
+   "house:geometry"
   ],
   "upstream": [
    "marina-frame:312",
@@ -40,9 +60,8 @@
    "attic"
   ],
   "alternatives": [
-   "current build: no attic (the well walled and capped 2.03 m over a 2.49 m landing that does not exist)",
-   "Marina-faithful: the room runs 1.86 m past the house's end wall so the flight's top lands ahead (rejected: the roof cannot pass the end wall; user: fit the actual house)",
-   "this: fitted inside the house, step off sideways at the end wall"
+   "trial 1 (rejected Oct 18: 'the orientation of the bed looks off, and the steps lead directly into a wall'): Marina's 5.20 x 8.50 room ending at the house's end wall",
+   "this: the poster's long attic over the main block and the den, stair head into open floor, bed at the far end by the parents' chimney"
   ]
  },
  "history": [
@@ -50,6 +69,12 @@
    "date": "2026-10-15",
    "what": "attic stair located behind the hall-end door, 14 risers, attic not built (DEVIATIONS 21)",
    "outcome": "pending"
+  },
+  {
+   "date": "2026-10-18",
+   "what": "attic shell trial 1: Marina's 5.20 x 8.50 room, flight arriving at the end wall, sofa bed against the balustrade's foot end",
+   "outcome": "rejected",
+   "user": "the orientation of the bed looks off, and the steps lead directly into a wall. this isn't correct. take a look at this exploded view ... does the wall end because you're not accounting for that hidden room on the second floor behind the other girls room?"
   }
  ],
  "premise_reviewed": "",
@@ -123,33 +148,45 @@
    "tests": []
   },
   {
-   "what": "Marina's stair top lands 1.86 m from the far end wall (841/845 overhead; 853 looks up the flight at a dresser on that wall); ours meets the house's end wall",
-   "agrees": false,
+   "what": "layout: the poster (IMG_4295 attic level) shows the stair with a balustrade on three sides near the high-z end and open floor between its head and the hipped end; the bed with pillows to the rear knee wall beside a chimney at the low-z end near the perpendicular hipped wing (the parents' wing); a small room (25) on the rear side between them (where our zipline dormer alcove is); boxes, a dresser at the well's foot, table and chairs near the stair end",
+   "agrees": true,
+   "type": "topological",
    "data": [
-    "marina-frame:845",
-    "marina-frame:853"
+    "poster:IMG_4295"
    ],
    "scale": [
     "none"
    ],
-   "type": "topological",
-   "disposition": "kept: the traced well ends at the house's end wall and the roof cannot run past it (user Oct 18: fit the actual house as long as the bed and the zipline window are kept); step-off sideways, logged DEVIATIONS 90 (a)"
+   "tests": [],
+   "crop": "spec/captures/picks/attic/poster_attic.jpg"
   },
   {
-   "what": "Marina's chimney is centred on an end wall; the house's flue (living-room fireplace, rear wall z 13.82; film exterior's tall rear chimney right of the dormer) is at the rear",
+   "what": "Marina's attic (476 ft2, 5.1-5.2 x 8.5-8.7) is half the length: her stair lands 1.86 m short of a wall and her chimney is on an end wall",
    "agrees": false,
+   "type": "topological",
    "data": [
-    "marina-frame:845",
-    "film:11162"
+    "marina-frame:845"
+   ],
+   "scale": [
+    "marina-label:476ft2"
+   ],
+   "disposition": "width and knee height kept (5.20, 1.25); length from the poster fitted to the house (user ranked the poster as right; film first, poster above Marina for layout); logged DEVIATIONS 90"
+  },
+  {
+   "what": "the poster shows two dormers on the FRONT slope (not built) and none of our rear zipline dormer's slope (cut away); the film's rear view 9435/11162 shows the zipline dormer over the arched landing window",
+   "agrees": false,
+   "type": "topological",
+   "data": [
+    "poster:IMG_4295",
+    "film:9435"
    ],
    "scale": [
     "none"
    ],
-   "type": "topological",
-   "disposition": "the house's position (film exterior first); logged DEVIATIONS 90 (c)"
+   "disposition": "film first for the zipline dormer; the front dormers are logged as not built (DEVIATIONS 90)"
   },
   {
-   "what": "attic floor 15 x 0.178 = 2.670 clears the upper ceilings' tops (2.55; parents' 2.65); 14 risers (2.49) was inside the ceiling slab",
+   "what": "attic floor 2.62 clears the upper ceilings' tops under the attic (2.55; hall_corridor_south 2.44); the parents' 2.65 slab is outside it (the attic starts at z 5.47, past their hall wall)",
    "agrees": true,
    "type": "topological",
    "data": [
@@ -161,19 +198,31 @@
    "tests": []
   },
   {
-   "what": "unity:walk-test (build 2, Oct 18 09:41, walk-test-wallgrid.txt): KEVIN walks hall -> up the flight -> steps off sideways onto the attic floor -> along the front strip -> to the dormer, and back down: every leg ok except the intermediate step-off waypoint, where he stood on the floor 0.19 m above the waypoint's tread height (waypoint corrected to the floor in the spec; not re-run: build budget 2). BANDIT stops at step 9-10 and PLAYER (adult, 1.8 m) stalls at step 1-2: the flight is 47 deg (14 x 0.1907 rise on a 0.178 going) and the adult capsules do not climb it; build 1 (15 x 0.178, going 0.172, run-in 0.327) stopped them at the door head instead",
-   "agrees": false,
+   "what": "stair_arrival.py: the attic stair's 0.90 m arrival zone (x 5.83-7.28, z 16.41-17.30) stands on the attic floor and is clear to 2.0 m",
+   "agrees": true,
    "type": "topological",
    "data": [
-    "unity:walk-test"
+    "spec:house_spec"
    ],
    "scale": [
     "none"
    ],
-   "disposition": "open, reported: the 2.735 m traced well cannot hold a 45 deg flight to a 2.670 floor AND the 0.42 m run-in the door head needs; options for the user: (1) controller slope limit ~48 deg, (2) extend the well ~0.18 m past the house's end wall, (3) a thinner ceiling slab under the attic (floor ~2.58); the user walks as Kevin by default (Kevin mode), who passes"
+   "tests": []
   },
   {
-   "what": "unity:build gates (build 2): Z-fight 0, Clash 0, Seam 0/0/0, Envelope check 0 thin (2075 points), orientation (glb_orientation) 0 inward; Trim 1 gap as before",
+   "what": "the old model (HOME ALONE FINAL.glb, the exterior shell's source, scaled 0.83 about the front door): its attic runs the main block (to z ~20.7 against our 19.92), its stair runs along the house near the high-z end (z ~14.1-18.6, x ~5.4) arriving into floor, and a rear dormer box sits near z ~10.1 (ours 9.67)",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "old-glb:HOME ALONE FINAL"
+   ],
+   "scale": [
+    "glb-0.83:frontdoor"
+   ],
+   "tests": []
+  },
+  {
+   "what": "unity:build (trial 2 build 2, Oct 18 10:12): attic stair walk 30 legs 0 blocked (bandit, Kevin, player: hall -> up the flight -> onto the floor past the head -> along the front strip -> to the bed -> to the dormer, and back); the 7 BLOCKED lines elsewhere are the pre-existing ones; Z-fight 0, Clash 0, Seam 0, Envelope 0 thin. The floor past the stair head was missing from the model in that build (walk colliders were there): added in hifi_attic.py after the build and checked live (Floor mesh 5 boxes; live_headfloor.png), not re-gated",
    "agrees": true,
    "type": "topological",
    "data": [
@@ -187,31 +236,36 @@
  ],
  "renders": {
   "before": [
-   "spec/captures/views/attic/before/marina929.png",
-   "spec/captures/views/attic/before/film1418.png",
-   "spec/captures/views/attic/before/film10922.png",
-   "spec/captures/views/attic/before/dormer_close.png",
-   "spec/captures/views/attic/before/stair_up.png",
-   "spec/captures/views/attic/before/rear_9435.png",
-   "spec/captures/views/attic/before/overhead.png"
+   "spec/captures/views/attic/before2/film1418_stairhead.png",
+   "spec/captures/views/attic/before2/bed_close.png",
+   "spec/captures/views/attic/before2/film10922_dormer.png",
+   "spec/captures/views/attic/before2/stair_up.png",
+   "spec/captures/views/attic/before2/stair_top.png",
+   "spec/captures/views/attic/before2/rear_9435.png",
+   "spec/captures/views/attic/before2/poster_oblique.png",
+   "spec/captures/views/attic/before2/overhead.png"
   ],
   "after": [
-   "spec/captures/views/attic/after/marina929.png",
-   "spec/captures/views/attic/after/film1418.png",
-   "spec/captures/views/attic/after/film10922.png",
-   "spec/captures/views/attic/after/dormer_close.png",
-   "spec/captures/views/attic/after/stair_up.png",
-   "spec/captures/views/attic/after/rear_9435.png",
-   "spec/captures/views/attic/after/overhead.png",
-   "spec/captures/views/attic/after/live_start_day.png"
+   "spec/captures/views/attic/after2/film1418_stairhead.png",
+   "spec/captures/views/attic/after2/bed_close.png",
+   "spec/captures/views/attic/after2/film10922_dormer.png",
+   "spec/captures/views/attic/after2/stair_up.png",
+   "spec/captures/views/attic/after2/stair_top.png",
+   "spec/captures/views/attic/after2/rear_9435.png",
+   "spec/captures/views/attic/after2/poster_oblique.png",
+   "spec/captures/views/attic/after2/overhead.png",
+   "spec/captures/views/attic/after2/live_stairhead.png",
+   "spec/captures/views/attic/after2/live_headfloor.png",
+   "spec/captures/views/attic/after2/live_bed.png"
   ],
   "compare": [
-   "spec/captures/views/attic/compare/film1418.png",
-   "spec/captures/views/attic/compare/film10922.png",
-   "spec/captures/views/attic/compare/marina929.png",
-   "spec/captures/views/attic/compare/marina841_overhead.png",
-   "spec/captures/views/attic/compare/film9435_rear.png",
-   "spec/captures/views/attic/compare/film10932_dormer.png"
+   "spec/captures/views/attic/compare2/poster_oblique.png",
+   "spec/captures/views/attic/compare2/poster_overhead.png",
+   "spec/captures/views/attic/compare2/film1418_stairhead.png",
+   "spec/captures/views/attic/compare2/film10922_dormer.png",
+   "spec/captures/views/attic/compare2/marina929_bed.png",
+   "spec/captures/views/attic/compare2/film9435_rear.png",
+   "spec/captures/views/attic/compare2/marina853_stair_top.png"
   ]
  },
  "user_walk": "pending"

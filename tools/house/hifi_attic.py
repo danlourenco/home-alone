@@ -4,8 +4,8 @@ Every number comes from spec/house_spec.json attic_stair.attic (tools/house/reco
 Marina's room (p2 775-935 s) fitted over our upper floor: floor, vertical-board knee walls and end walls, exposed rafters with collar
 ties and a ridge board, roof boards (shingle outside), the house's chimney (the living-room flue) with a wood stove, a log-style
 balustrade round the stair well (open at its top, where the flight meets the end wall), the zipline dormer in the rear slope (film
-9435, 10950, 11090: pedimented gable, a pair of 3-lite casements opening outward, cream curtains) and a placeholder sofa bed in the
-film's place (1403-1447). The casement leaves are their own objects (CasementL_*, CasementR_*): SpecGreybox.Attic hangs them on
+9435, 10950, 11090: pedimented gable, a pair of 3-lite casements opening outward, cream curtains) and a placeholder sofa bed
+(the film's fold-out, 1403-1447) where the user's poster puts the bed (IMG_4295: bed 26 at the far end beside the chimney). The casement leaves are their own objects (CasementL_*, CasementR_*): SpecGreybox.Attic hangs them on
 hinges and opens them. Faces via Part.face (zfight-check); y is above the upper floor.
 
   /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup -P tools/house/hifi_attic.py
@@ -86,84 +86,105 @@ def lathe_y(part, x, z, y0, y1, r, n=10):
 
 
 # ---------------------------------------------------------------- floor (around the well; the dormer alcove)
-for x0_, x1_, z0_, z1_ in ((ax0, wx0, az0, az1), (wx1, ax1, az0, az1), (wx0, wx1, az0, wz0), (dface, ax0, dz - di, dz + di)):
+for x0_, x1_, z0_, z1_ in ((ax0, wx0, az0, az1), (wx1, ax1, az0, az1), (wx0, wx1, az0, wz0), (wx0, wx1, wz1, az1), (dface, ax0, dz - di, dz + di)):
     box(floor, x0_, x1_, yf, F, z0_, z1_)
 
 # ---------------------------------------------------------------- knee walls (vertical boards), end walls (gables to the eaves)
 box(boards, ax1 - PB, ax1, F, yf + kh, az0 + PB, az1 - PB)
 box(boards, ax0, ax0 + PB, F, yf + kh, az0 + PB, dz - di - T)
 box(boards, ax0, ax0 + PB, F, yf + kh, dz + di + T, az1 - PB)
-for zf, zb in ((az1 - PB, az1), (az0, az0 + PB)):
-    pts = [(XE0 + FB / tp, F, zf), (XE1 - FB / tp, F, zf), (xc, ridge, zf)]
-    prism(boards, pts, (0, 0, zb - zf))
+box(boards, ax0, ax1, F, yf + kh, az1 - PB, az1)                 # the hip end's knee wall (poster: hipped)
+prism(boards, [(XE0 + FB / tp, F, az0), (XE1 - FB / tp, F, az0), (xc, ridge, az0)], (0, 0, PB))   # the partition at the bed end
 
-# ---------------------------------------------------------------- roof boards: rear slope round the dormer and the chimney
+# ---------------------------------------------------------------- roof boards: rear slope round the chimney and the dormer, hip end
+zh = az1 - (xc - ax0)                                   # where the hip lines meet the ridge
+NE = (0.0, cs, sn)
+def he(z):  # hip-end slope underside
+    return yf + kh + (az1 - z) * tp
 cz0, cz1 = A["chimney"]["z"]; cx1 = A["chimney"]["x"][1]
 xd = ax0 + (yc - yf - kh) / tp                          # where the dormer's ceiling meets the rear slope
 dza, dzb = dz - di - T, dz + di + T
-za_, zb_ = az0 - OVER, az1 + OVER
-for xa, za, zb in ((ax0, za_, dza), (xd, dza, dzb), (ax0, dzb, cz0), (cx1, cz0, cz1), (ax0, cz1, zb_)):
+za_ = az0 - OVER
+for xa, za, zb in ((ax0, za_, cz0), (cx1, cz0, cz1), (ax0, cz1, dza), (xd, dza, dzb), (ax0, dzb, zh)):
     slope(xa, xc, za, zb, rear=True)
-slope(xc, ax1, za_, zb_, rear=False)
+slope(xc, ax1, za_, zh, rear=False)
+prism(boards, [(ax0, hr(ax0), zh), (xc, hr(xc), zh), (ax0, hr(ax0), az1)], mul(NR, RB), roofout)
+prism(boards, [(xc, hf(xc), zh), (ax1, hf(ax1), zh), (ax1, hf(ax1), az1)], mul(NF, RB), roofout)
+prism(boards, [(ax0, he(az1), az1), (ax1, he(az1), az1), (xc, he(zh), zh)], mul(NE, RB), roofout)
 # outside the knee walls the roof runs on down to the eaves (the "short roof" under the dormer, film 10950/11162)
-for xa, xb, za, zb in ((XE0, ax0, za_, dza), (XE0, ax0, dzb, zb_), (XE0, dface - T, dza, dzb)):
+for xa, xb, za, zb in ((XE0, ax0, za_, dza), (XE0, ax0, dzb, az1), (XE0, dface - T, dza, dzb)):
     slope(xa, xb, za, zb, rear=True)
-slope(ax1, XE1, za_, zb_, rear=False)
-# ridge board
-box(rafter, xc - 0.02, xc + 0.02, ridge - 0.22, ridge - 0.02, az0 + PB, az1 - PB)
+slope(ax1, XE1, za_, az1, rear=False)
+box(rafter, xc - 0.02, xc + 0.02, ridge - 0.22, ridge - 0.02, az0 + PB, zh)   # ridge board
 
-# ---------------------------------------------------------------- rafters (0.05 x 0.14 at 0.61 m) and collar ties
+# ---------------------------------------------------------------- rafters (0.05 x 0.14 at 0.61 m), hip and jack rafters, collar ties
 RW, RD = 0.05, 0.14
 cy = A["collar_y"]
 zs, z = [], az0 + PB + 0.03
-while z + RW < az1 - PB - 0.03:
+while z + RW < az1 - PB - 0.06:
     zs.append(z); z += 0.61
 def rafter_piece(xa, xb, z0_, rear):
     h, n = (hr, NR) if rear else (hf, NF)
     pts = [(xa, h(xa), z0_), (xb, h(xb), z0_), (xb, h(xb), z0_ + RW), (xa, h(xa), z0_ + RW)]
-    prism(rafter, pts, mul(n, -RD / 1.0))
-for k, z0_ in enumerate(zs):
+    prism(rafter, pts, mul(n, -RD))
+for z0_ in zs:
     zm = z0_ + RW / 2
     xa = ax0 + PB + 0.002
     if dza - 0.02 < zm < dzb + 0.02:
         xa = xd + 0.01                                   # cut at the dormer (a header carries it)
     if cz0 - 0.03 < zm < cz1 + 0.03:
         xa = cx1 + 0.01
-    rafter_piece(xa, xc - 0.02, z0_, True)
-    rafter_piece(xc + 0.02, ax1 - PB - 0.002, z0_, False)
+    if z0_ + RW < zh - 0.03:                             # common rafters to the ridge
+        rafter_piece(xa, xc - 0.02, z0_, True); rafter_piece(xc + 0.02, ax1 - PB - 0.002, z0_, False)
+    elif z0_ > zh + 0.06:                                # jack rafters up to the hip lines
+        reach = az1 - (z0_ + RW) - 0.04
+        rafter_piece(xa, ax0 + reach, z0_, True); rafter_piece(ax1 - reach, ax1 - PB - 0.002, z0_, False)
 headers = [(dza - 0.02, dzb + 0.02, xd), (cz0 - 0.03, cz1 + 0.03, cx1)]
 for z0_, z1_, x in headers:   # a doubled header across each cut, under the boards
     pts = [(x + 0.01, hr(x + 0.01), z0_), (x + 0.11, hr(x + 0.11), z0_), (x + 0.11, hr(x + 0.11), z1_), (x + 0.01, hr(x + 0.01), z1_)]
     prism(rafter, pts, mul(NR, -RD))
-# collar ties beside every other rafter, and beside the one over the stair head (film 10922-10926: the zipline's rope loops over it)
-head = min(range(len(zs)), key=lambda i: abs(zs[i] - (wz1 - 0.35)))
-ties = sorted(set(range(0, len(zs), 2)) | {head})
+for xh in (ax0, ax1):                                    # the two hip rafters, under the hip lines
+    rafter.sweep([(xh + (0.25 if xh == ax0 else -0.25), yf + kh + 0.25 * tp - 0.02, az1 - 0.25), (xc, ridge - 0.02, zh)],
+                 [(-0.025, -0.14), (0.025, -0.14), (0.025, 0.0), (-0.025, 0.0)])
+x = ax0 + 0.40
+while x + RW < ax1 - 0.40:                               # jack rafters on the hip end
+    if abs(x + RW / 2 - xc) > 0.06:
+        reach = min(x - ax0, ax1 - x - RW) - 0.04
+        pts = [(x, he(az1 - PB - 0.002), az1 - PB - 0.002), (x + RW, he(az1 - PB - 0.002), az1 - PB - 0.002), (x + RW, he(az1 - reach), az1 - reach), (x, he(az1 - reach), az1 - reach)]
+        prism(rafter, pts, mul(NE, -RD))
+    x += 0.61
+# collar ties beside every other common rafter, and beside the one over the stair head (film 10922-10926: the zipline's rope loops over it)
+common = [i for i, z0_ in enumerate(zs) if z0_ + RW < zh - 0.03]
+head = min(common, key=lambda i: abs(zs[i] - (wz1 - 0.35)))
+ties = sorted(set(common[::2]) | {head})
 xt0, xt1 = ax0 + (cy + 0.07 - yf - kh) / tp, ax1 - (cy + 0.07 - yf - kh) / tp
 for i in ties:
-    zt = zs[i] + RW if zs[i] + RW + 0.05 < az1 - PB else zs[i] - 0.05
+    zt = zs[i] + RW
     box(rafter, xt0 + 0.01, xt1 - 0.01, cy - 0.07, cy + 0.07, zt, zt + 0.05)
 
-# ---------------------------------------------------------------- chimney (brick, through the rear slope) and the wood stove
-C = A["chimney"]; cx0 = ax0 + PB + 0.002
-pts = [(cx0, F, cz0), (cx1, F, cz0), (cx1, ridge + 0.9, cz0), (cx0, ridge + 0.9, cz0)]
-prism(brick, pts, (0, 0, cz1 - cz0))
+# ---------------------------------------------------------------- chimneys (the parents' flue through the rear slope; the living room's outside) and the stove
+cx0 = ax0 + PB + 0.002
+prism(brick, [(cx0, F, cz0), (cx1, F, cz0), (cx1, ridge + 0.9, cz0), (cx0, ridge + 0.9, cz0)], (0, 0, cz1 - cz0))
+EC = A["ext_chimney"]
+prism(brick, [(EC["x"][0], yf, EC["z"][0]), (EC["x"][1], yf, EC["z"][0]), (EC["x"][1], ridge + 0.9, EC["z"][0]), (EC["x"][0], ridge + 0.9, EC["z"][0])], (0, 0, EC["z"][1] - EC["z"][0]))
 S_ = A["stove"]; (sx0, sx1), (sz0, sz1), sh = S_["x"], S_["z"], S_["h"]
 box(iron, sx0, sx1, F + 0.12, F + sh, sz0, sz1)
 for lx in (sx0 + 0.04, sx1 - 0.08):
     for lz in (sz0 + 0.04, sz1 - 0.08):
         box(iron, lx, lx + 0.04, F, F + 0.12, lz, lz + 0.04)
-px, pz, py = (sx0 + sx1) / 2, (cz0 + cz1) / 2, F + 1.45
+px, pz, py = (sx0 + sx1) / 2, (sz0 + sz1) / 2, F + 1.45
 lathe_y(iron, px, pz, F + sh, py + 0.075, 0.075)
 oct_ = [(0.075 * math.cos(2 * math.pi * k / 10), 0.075 * math.sin(2 * math.pi * k / 10)) for k in range(10)]
 iron.sweep([(px, py, pz), (cx1, py, pz)], oct_)
 
 # ---------------------------------------------------------------- balustrade round the well (log style)
 R = A["rail"]; ro, rh = R["off"], R["h"]
-xr, xf, zfoot, zgap, zend = wx0 - ro, wx1 + ro, wz0 - ro, R["gap_z"], az1 - PB - 0.055
-posts = [(xr, zfoot), (xf, zfoot), (xr, zend), (xf, zgap), (xr, (zfoot + zend) / 2)]
+xr, xf, zfoot, zend = wx0 - ro, wx1 + ro, wz0 - ro, wz1 - 0.05
+zmid = (zfoot + zend) / 2
+posts = [(xr, zfoot), (xf, zfoot), (xr, zend), (xf, zend), (xr, zmid), (xf, zmid)]
 for x, z in posts:
     rail.lathe(x, z, F, [(0.0, 0.05), (rh + 0.06, 0.05), (rh + 0.06, 0.055), (rh + 0.10, 0.055), (rh + 0.12, 0.03)], 12)
-runs = [((xr, zfoot), (xr, (zfoot + zend) / 2)), ((xr, (zfoot + zend) / 2), (xr, zend)), ((xr, zfoot), (xf, zfoot)), ((xf, zfoot), (xf, zgap))]
+runs = [((xr, zfoot), (xr, zmid)), ((xr, zmid), (xr, zend)), ((xr, zfoot), (xf, zfoot)), ((xf, zfoot), (xf, zmid)), ((xf, zmid), (xf, zend))]
 for (xa, za), (xb, zb) in runs:
     L = math.hypot(xb - xa, zb - za); ux, uz = (xb - xa) / L, (zb - za) / L
     a, b = (xa + ux * 0.04, za + uz * 0.04), (xb - ux * 0.04, zb - uz * 0.04)   # ends inside the posts
@@ -228,10 +249,12 @@ for sgn in (-1, 1):
         box(curtain, x, x + 0.012, yf + 0.25, yh + 0.06, min(zs_[k], zs_[k + 1]), max(zs_[k], zs_[k + 1]))
 
 # ---------------------------------------------------------------- the sofa bed (placeholder in the film's place)
-Bd = A["bed"]; (bx0, bx1), (bz0, bz1) = Bd["x"], Bd["z"]
+Bd = A["bed"]; (bx0, bx1), (bz0, bz1) = Bd["x"], Bd["z"]; bd = Bd["back_d"]
 box(sofa, bx0, bx1, F, F + Bd["top"] - 0.12, bz0, bz1)
-box(sofa, bx0, bx1, F + Bd["top"], F + Bd["back"], bz0, bz0 + Bd["back_d"])
-box(mattress, bx0 + 0.03, bx1 - 0.03, F + Bd["top"] - 0.12, F + Bd["top"], bz0 + Bd["back_d"] + 0.01, bz1 - 0.02)
+box(sofa, bx0, bx0 + bd, F + Bd["top"], F + Bd["back"], bz0, bz1)                 # its back to the rear knee wall (poster bed 26)
+box(mattress, bx0 + bd + 0.01, bx1 - 0.02, F + Bd["top"] - 0.12, F + Bd["top"], bz0 + 0.03, bz1 - 0.03)
+for za, zb in ((bz0 + 0.12, bz0 + 0.92), (bz1 - 0.92, bz1 - 0.12)):                 # two pillows against the back
+    box(mattress, bx0 + bd + 0.03, bx0 + bd + 0.45, F + Bd["top"], F + Bd["top"] + 0.12, za, zb)
 
 # ---------------------------------------------------------------- export
 for ob in list(bpy.data.objects):

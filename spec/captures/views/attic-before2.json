@@ -1,0 +1,134 @@
+[
+ {
+  "name": "attic/before2/film1418_stairhead",
+  "pos": [
+   6.556,
+   4.25,
+   -16.9
+  ],
+  "look_at": [
+   5.0,
+   3.1,
+   -7.5
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "attic/before2/bed_close",
+  "pos": [
+   7.6,
+   4.0,
+   -9.6
+  ],
+  "look_at": [
+   4.6,
+   3.2,
+   -6.6
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "attic/before2/film10922_dormer",
+  "pos": [
+   8.2,
+   4.0,
+   -12.2
+  ],
+  "look_at": [
+   3.6,
+   3.7,
+   -9.7
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "attic/before2/stair_up",
+  "pos": [
+   6.556,
+   1.55,
+   -12.4
+  ],
+  "look_at": [
+   6.556,
+   3.6,
+   -16.2
+  ],
+  "vfov": 62,
+  "near": 0.05
+ },
+ {
+  "name": "attic/before2/stair_top",
+  "pos": [
+   6.556,
+   3.3,
+   -15.2
+  ],
+  "look_at": [
+   6.556,
+   3.6,
+   -19.0
+  ],
+  "vfov": 62,
+  "near": 0.05
+ },
+ {
+  "name": "attic/before2/rear_9435",
+  "pos": [
+   -14.0,
+   6.5,
+   -9.67
+  ],
+  "look_at": [
+   2.0,
+   4.3,
+   -9.67
+  ],
+  "vfov": 30,
+  "near": 0.05
+ },
+ {
+  "name": "attic/before2/poster_oblique",
+  "pos": [
+   19.0,
+   16.5,
+   -11.8
+  ],
+  "look_at": [
+   6.5,
+   2.7,
+   -11.8
+  ],
+  "vfov": 46,
+  "near": 0.05,
+  "hide": [
+   "Upstairs/Attic_HiFi/Boards",
+   "Upstairs/Attic_HiFi/Shingle",
+   "Upstairs/Attic_HiFi/Rafters",
+   "Upstairs/Envelope"
+  ]
+ },
+ {
+  "name": "attic/before2/overhead",
+  "pos": [
+   6.55,
+   17.0,
+   -11.8
+  ],
+  "look_at": [
+   6.551,
+   2.6,
+   -11.8
+  ],
+  "vfov": 58,
+  "near": 0.05,
+  "hide": [
+   "Upstairs/Attic_HiFi/Boards",
+   "Upstairs/Attic_HiFi/Shingle",
+   "Upstairs/Attic_HiFi/Rafters",
+   "Upstairs/Envelope"
+  ]
+ }
+]
