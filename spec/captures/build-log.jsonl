@@ -117,3 +117,13 @@
 {"time": "2026-10-18T11:43:10", "cmd": "build", "job": "basement-shell", "why": "basement trial 1 build 1 (preflight retry: stale stamps)", "wall_s": 134, "exit": 0}
 {"time": "2026-10-18T11:47:16", "cmd": "build", "job": "basement-shell", "why": "basement trial 1 build 2 (wall/joist finish, railings, room-walk floor check)", "wall_s": 125, "exit": 0}
 {"time": "2026-10-18T11:51:55", "cmd": "bake", "job": "basement-shell", "why": "load basement trial 1", "wall_s": 187, "exit": 0}
+{"time": "2026-10-18T12:09:56", "cmd": "build", "job": "guest-room", "why": "guest room trial 1 build 1 (+ attic bed group, lights, Buzz set window)", "wall_s": 127, "exit": 0}
+{"time": "2026-10-18T12:14:40", "cmd": "bake", "job": "guest-room", "why": "load guest room trial 1", "wall_s": 182, "exit": 0}
+{"time": "2026-10-18T12:19:52", "cmd": "build", "job": "guest-room", "why": "guest room trial 1 build 2 (attic brick texture; extra views)", "wall_s": 138, "exit": 0}
+{"time": "2026-10-18T12:23:08", "cmd": "bake", "job": "guest-room", "why": "load guest room trial 1 (build 2)", "wall_s": 166, "exit": 0}
+{"time": "2026-10-18T12:26:53", "cmd": "build", "job": "guest-room", "why": "guest room build 3 (coordinator: StoreProps.Orient by back AREA, walk note 12:18 headboard)", "wall_s": 124, "exit": 0}
+{"time": "2026-10-18T12:28:41", "cmd": "build", "job": "guest-room", "why": "guest room build 4 (yaw pins after the Orient change: guest/attic beds, clock)", "wall_s": 2, "exit": 1}
+{"time": "2026-10-18T12:31:31", "cmd": "build", "job": "guest-room", "why": "guest room build 4 (yaw pins after the Orient change: guest/attic beds, clock)", "wall_s": 122, "exit": 0}
+{"time": "2026-10-18T12:33:06", "cmd": "build", "job": "guest-room", "why": "guest room build 5 (guest nightstand box/yaw)", "wall_s": 3, "exit": 1}
+{"time": "2026-10-18T12:35:42", "cmd": "build", "job": "guest-room", "why": "guest room build 5 (guest nightstand box/yaw)", "wall_s": 120, "exit": 0}
+{"time": "2026-10-18T12:39:37", "cmd": "bake", "job": "guest-room", "why": "load guest room trial 1 (build 5)", "wall_s": 192, "exit": 0}

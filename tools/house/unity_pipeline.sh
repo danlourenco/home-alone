@@ -140,7 +140,7 @@ nightcheck)   # night must be lit: mean luminance of night shots at 3 room poses
   # broken state it catches: a Scene-view search filter ("piano") made HDRP force fixed exposure from the physical camera (EV 14.6):
   # night means were 0.011 / 0.001 / 0.000; fixed (SceneFilterExposureGuard) 0.339 / 0.311 / 0.290. Floor 0.10 each. load runs it last.
   fails=0
-  for p in "foyer 1.5 -3.0 -10.0 90 0.10" "living 6.5 -3.0 -13.8 180 0.10" "buzz 8.45 0.03 -13.0 340 0.10"; do
+  for p in "foyer 1.5 -3.0 -10.0 90 0.10" "living 6.5 -3.0 -13.8 180 0.10" "buzz 8.45 0.03 -13.0 340 0.10" "attic 6.556 2.65 -16.95 0 0.05"; do   # attic (Oct 18): one bedside lamp + two bare bulbs, attic-dim by design: half the floor
     set -- $p; f=$("$0" shot "nightcheck-$1" "$2" "$3" "$4" "$5" 0 night)
     m=$(uv run -q --with pillow python -I -c "import sys; from PIL import Image, ImageStat; print('%.3f'%(ImageStat.Stat(Image.open(sys.argv[1]).convert('L')).mean[0]/255))" "$f")
     ok=$(python3 -c "print(1 if $m >= $6 else 0)"); [ "$ok" = 1 ] && echo "ok   night $1 mean $m (floor $6)" || { echo "FAIL night $1 mean $m < floor $6: $f"; fails=1; }

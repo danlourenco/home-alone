@@ -49,6 +49,9 @@ NR, NF = (-sn, cs, 0.0), (sn, cs, 0.0)     # outward normals of the rear / front
 boards, roofout, rafter, floor = Part("Boards", "AT_Boards"), Part("Shingle", "AT_Shingle"), Part("Rafters", "AT_Rafter"), Part("Floor", "AT_Floor")
 brick, iron, rail, paint = Part("Chimney", "AT_Brick"), Part("Stove", "AT_Iron"), Part("Balustrade", "AT_Rail"), Part("DormerTrim", "AT_Paint")
 curtain, sofa, mattress = Part("Curtains", "AT_Curtain"), Part("SofaBed", "AT_Sofa"), Part("Mattress", "AT_Mattress")
+crib, ltable, lglass, shade, bulb, porcelain = (Part("Crib", "AT_Wood"), Part("LampTable", "AT_Wood"), Part("LampBase", "AT_LampGlass"),
+                                                Part("LampShade", "AT_Shade"), Part("Bulbs", "AT_Bulb"), Part("BulbFixtures", "AT_Porcelain"))
+cribmat = Part("CribMattress", "AT_Mattress")
 leaves = {s: (Part(f"Casement{s}_Frame", "AT_Paint"), Part(f"Casement{s}_Glass", "AT_Glass")) for s in "LR"}
 
 
@@ -102,6 +105,7 @@ NE = (0.0, cs, sn)
 def he(z):  # hip-end slope underside
     return yf + kh + (az1 - z) * tp
 cz0, cz1 = A["chimney"]["z"]; cx1 = A["chimney"]["x"][1]
+lz0, lz1 = A["chimney_living"]["z"]; lx0, lx1 = A["chimney_living"]["x"]   # the living-room flue's breast (Oct 18)
 xd = ax0 + (yc - yf - kh) / tp                          # where the dormer's ceiling meets the rear slope
 dza, dzb = dz - di - T, dz + di + T
 za_ = az0 - OVER
@@ -134,12 +138,14 @@ for z0_ in zs:
         xa = xd + 0.01                                   # cut at the dormer (a header carries it)
     if cz0 - 0.03 < zm < cz1 + 0.03:
         xa = cx1 + 0.01
+    if lz0 - 0.03 < zm < lz1 + 0.03:
+        xa = lx1 + 0.01
     if z0_ + RW < zh - 0.03:                             # common rafters to the ridge
         rafter_piece(xa, xc - 0.02, z0_, True); rafter_piece(xc + 0.02, ax1 - PB - 0.002, z0_, False)
     elif z0_ > zh + 0.06:                                # jack rafters up to the hip lines
         reach = az1 - (z0_ + RW) - 0.04
         rafter_piece(xa, ax0 + reach, z0_, True); rafter_piece(ax1 - reach, ax1 - PB - 0.002, z0_, False)
-headers = [(dza - 0.02, dzb + 0.02, xd), (cz0 - 0.03, cz1 + 0.03, cx1)]
+headers = [(dza - 0.02, dzb + 0.02, xd), (cz0 - 0.03, cz1 + 0.03, cx1), (lz0 - 0.03, lz1 + 0.03, lx1)]
 for z0_, z1_, x in headers:   # a doubled header across each cut, under the boards
     pts = [(x + 0.01, hr(x + 0.01), z0_), (x + 0.11, hr(x + 0.11), z0_), (x + 0.11, hr(x + 0.11), z1_), (x + 0.01, hr(x + 0.01), z1_)]
     prism(rafter, pts, mul(NR, -RD))
@@ -165,6 +171,9 @@ for i in ties:
 # ---------------------------------------------------------------- chimneys (the parents' flue through the rear slope; the living room's outside) and the stove
 cx0 = ax0 + PB + 0.002
 prism(brick, [(cx0, F, cz0), (cx1, F, cz0), (cx1, ridge + 0.9, cz0), (cx0, ridge + 0.9, cz0)], (0, 0, cz1 - cz0))
+# the living-room flue's breast against the rear knee wall, up to 1 cm under the roof boards (it continues out of sight to the stack
+# outside, ext_chimney): the stove's pipe goes into it (film 1410/1418)
+prism(brick, [(lx0 + PB + 0.002, F, lz0), (lx1, F, lz0), (lx1, hr(lx1) - 0.01, lz0), (lx0 + PB + 0.002, hr(lx0 + PB + 0.002) - 0.01, lz0)], (0, 0, lz1 - lz0))
 EC = A["ext_chimney"]
 prism(brick, [(EC["x"][0], yf, EC["z"][0]), (EC["x"][1], yf, EC["z"][0]), (EC["x"][1], ridge + 0.9, EC["z"][0]), (EC["x"][0], ridge + 0.9, EC["z"][0])], (0, 0, EC["z"][1] - EC["z"][0]))
 S_ = A["stove"]; (sx0, sx1), (sz0, sz1), sh = S_["x"], S_["z"], S_["h"]
@@ -175,7 +184,7 @@ for lx in (sx0 + 0.04, sx1 - 0.08):
 px, pz, py = (sx0 + sx1) / 2, (sz0 + sz1) / 2, F + 1.45
 lathe_y(iron, px, pz, F + sh, py + 0.075, 0.075)
 oct_ = [(0.075 * math.cos(2 * math.pi * k / 10), 0.075 * math.sin(2 * math.pi * k / 10)) for k in range(10)]
-iron.sweep([(px, py, pz), (cx1, py, pz)], oct_)
+iron.sweep([(px, py, pz), (lx1, py, pz)], oct_)
 
 # ---------------------------------------------------------------- balustrade round the well (log style)
 R = A["rail"]; ro, rh = R["off"], R["h"]
@@ -256,6 +265,37 @@ box(mattress, bx0 + bd + 0.01, bx1 - 0.02, F + Bd["top"] - 0.12, F + Bd["top"], 
 for za, zb in ((bz0 + 0.12, bz0 + 0.92), (bz1 - 0.92, bz1 - 0.12)):                 # two pillows against the back
     box(mattress, bx0 + bd + 0.03, bx0 + bd + 0.45, F + Bd["top"], F + Bd["top"] + 0.12, za, zb)
 
+# ---------------------------------------------------------------- the crib beyond the bed, the lamp table and the film's lamp (1410/1418)
+Cb = A["crib"]; (kx0, kx1), (kz0, kz1), kh_ = Cb["x"], Cb["z"], Cb["h"]
+for x in (kx0, kx1 - 0.05):
+    for z in (kz0, kz1 - 0.05):
+        box(crib, x, x + 0.05, F, F + kh_, z, z + 0.05)                            # corner posts
+for z in (kz0, kz1 - 0.05):                                                       # long sides: rails and slats
+    box(crib, kx0 + 0.05, kx1 - 0.05, F + kh_ - 0.06, F + kh_ - 0.02, z + 0.01, z + 0.04)
+    box(crib, kx0 + 0.05, kx1 - 0.05, F + 0.25, F + 0.29, z + 0.01, z + 0.04)
+    n = int((kx1 - kx0 - 0.10) / 0.075)
+    for k in range(1, n):
+        x = kx0 + 0.05 + k * (kx1 - kx0 - 0.10) / n
+        box(crib, x - 0.0125, x + 0.0125, F + 0.29, F + kh_ - 0.06, z + 0.015, z + 0.035)
+for x in (kx0, kx1 - 0.05):                                                       # end panels
+    box(crib, x + 0.01, x + 0.04, F + 0.25, F + kh_ - 0.02, kz0 + 0.05, kz1 - 0.05)
+box(cribmat, kx0 + 0.05, kx1 - 0.05, F + 0.29, F + 0.41, kz0 + 0.04, kz1 - 0.04)
+Lt = A["lamp_table"]; (tx0, tx1), (tz0, tz1), th_ = Lt["x"], Lt["z"], Lt["h"]
+box(ltable, tx0, tx1, F + th_ - 0.03, F + th_, tz0, tz1)
+for x in (tx0 + 0.03, tx1 - 0.07):
+    for z in (tz0 + 0.03, tz1 - 0.07):
+        box(ltable, x, x + 0.04, F, F + th_ - 0.03, z, z + 0.04)
+Lp = A["lamp"]; (lpx, lpy, lpz), (rt_, rb_, s0, s1) = Lp["at"], Lp["shade"]
+yb = F + lpy
+lglass.lathe(lpx, lpz, yb, [(0.0, 0.07), (0.03, 0.07), (0.05, 0.03), (0.12, 0.085), (0.24, 0.07), (0.30, 0.025), (s0 + 0.04, 0.012)], 16)
+shade.lathe(lpx, lpz, yb + s0, [(0.0, rb_), (s1 - s0, rt_)], 24)
+# bare-bulb pull-chain fixtures under the collar ties (porcelain lamp holder, a clear bulb, a chain)
+for b in A["bulbs"]:
+    bx, bz = b["at"]; yt_ = b["tie_y"]                                            # reconcile.py snapped it to a collar tie
+    porcelain.lathe(bx, bz, yt_ - 0.07, [(0.0, 0.035), (0.04, 0.04), (0.06, 0.055), (0.07, 0.055)], 16)
+    bulb.lathe(bx, bz, yt_ - 0.20, [(0.0, 0.01), (0.03, 0.03), (0.07, 0.032), (0.11, 0.015), (0.13, 0.013)], 16)
+    box(porcelain, bx + 0.03, bx + 0.034, yt_ - 0.35, yt_ - 0.06, bz - 0.002, bz + 0.002)   # pull chain
+
 # ---------------------------------------------------------------- export
 for ob in list(bpy.data.objects):
     bpy.data.objects.remove(ob)
@@ -264,9 +304,11 @@ mats = {n: material(n, c, r) for n, c, r in (
     ("AT_Boards", (0.55, 0.36, 0.20), 0.7), ("AT_Shingle", (0.10, 0.11, 0.12), 0.9), ("AT_Rafter", (0.45, 0.28, 0.15), 0.7),
     ("AT_Floor", (0.35, 0.30, 0.26), 0.8), ("AT_Brick", (0.16, 0.05, 0.03), 0.9), ("AT_Iron", (0.06, 0.06, 0.06), 0.6),
     ("AT_Rail", (0.70, 0.50, 0.28), 0.6), ("AT_Paint", (0.88, 0.87, 0.82), 0.5), ("AT_Glass", (0.8, 0.85, 0.9), 0.05),
-    ("AT_Curtain", (0.86, 0.80, 0.66), 0.9), ("AT_Sofa", (0.20, 0.12, 0.06), 0.9), ("AT_Mattress", (0.60, 0.60, 0.58), 0.9))}
+    ("AT_Curtain", (0.86, 0.80, 0.66), 0.9), ("AT_Sofa", (0.20, 0.12, 0.06), 0.9), ("AT_Mattress", (0.60, 0.60, 0.58), 0.9),
+    ("AT_Wood", (0.22, 0.12, 0.06), 0.6), ("AT_LampGlass", (0.75, 0.22, 0.06), 0.15), ("AT_Shade", (0.90, 0.86, 0.74), 0.9),
+    ("AT_Bulb", (1.0, 0.95, 0.85), 0.1), ("AT_Porcelain", (0.92, 0.91, 0.88), 0.3))}
 root = bpy.data.objects.new("Attic_HiFi", None); coll.objects.link(root)
-for p in [boards, roofout, rafter, floor, brick, iron, rail, paint, curtain, sofa, mattress] + [q for pair in leaves.values() for q in pair]:
+for p in [boards, roofout, rafter, floor, brick, iron, rail, paint, curtain, sofa, mattress, crib, cribmat, ltable, lglass, shade, bulb, porcelain] + [q for pair in leaves.values() for q in pair]:
     if p.f:
         p.build(coll, mats).parent = root
 OUT.parent.mkdir(parents=True, exist_ok=True)

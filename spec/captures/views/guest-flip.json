@@ -1,0 +1,77 @@
+[
+ {
+  "name": "guest/flip/clock",
+  "pos": [
+   7.2,
+   -1.6,
+   -5.7
+  ],
+  "look_at": [
+   10.0,
+   -2.0,
+   -5.72
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "guest/flip/sideboard",
+  "pos": [
+   5.6,
+   -1.5,
+   -6.3
+  ],
+  "look_at": [
+   5.6,
+   -2.3,
+   -3.2
+  ],
+  "vfov": 62,
+  "near": 0.05
+ },
+ {
+  "name": "guest/flip/guest_bed_side",
+  "pos": [
+   4.446,
+   1.13,
+   -18.02
+  ],
+  "look_at": [
+   7.0,
+   0.6,
+   -19.0
+  ],
+  "vfov": 70,
+  "near": 0.05
+ },
+ {
+  "name": "guest/flip/guest_bed_foot",
+  "pos": [
+   6.72,
+   1.5,
+   -16.6
+  ],
+  "look_at": [
+   6.72,
+   0.7,
+   -19.9
+  ],
+  "vfov": 70,
+  "near": 0.05
+ },
+ {
+  "name": "guest/flip/guest_nightstand",
+  "pos": [
+   7.72,
+   1.2,
+   -18.6
+  ],
+  "look_at": [
+   7.72,
+   0.4,
+   -19.9
+  ],
+  "vfov": 55,
+  "near": 0.05
+ }
+]

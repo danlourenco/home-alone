@@ -1,0 +1,167 @@
+[
+ {
+  "name": "guest/after/street_6400",
+  "pos": [
+   36,
+   -1.3,
+   -9.5
+  ],
+  "look_at": [
+   10.0,
+   0.4,
+   -16.8
+  ],
+  "vfov": 16,
+  "near": 0.05
+ },
+ {
+  "name": "guest/after/street_10_night",
+  "pos": [
+   24,
+   -1.2,
+   -33
+  ],
+  "look_at": [
+   10.0,
+   0.6,
+   -17.5
+  ],
+  "vfov": 28,
+  "near": 0.05
+ },
+ {
+  "name": "guest/after/street_wide_6399",
+  "pos": [
+   42,
+   -1.4,
+   -6
+  ],
+  "look_at": [
+   8,
+   0.5,
+   -10
+  ],
+  "vfov": 38,
+  "near": 0.05
+ },
+ {
+  "name": "guest/after/guest_wide",
+  "pos": [
+   4.0,
+   1.6,
+   -16.45
+  ],
+  "look_at": [
+   9.6,
+   0.9,
+   -19.4
+  ],
+  "vfov": 72,
+  "near": 0.05
+ },
+ {
+  "name": "guest/after/guest_bed",
+  "pos": [
+   9.9,
+   1.55,
+   -16.7
+  ],
+  "look_at": [
+   6.7,
+   0.8,
+   -19.6
+  ],
+  "vfov": 68,
+  "near": 0.05
+ },
+ {
+  "name": "guest/after/guest_door_from_girlsB",
+  "pos": [
+   4.53,
+   1.6,
+   -13.2
+  ],
+  "look_at": [
+   4.53,
+   1.1,
+   -17.0
+  ],
+  "vfov": 62,
+  "near": 0.05
+ },
+ {
+  "name": "guest/after/attic_stairhead_1410",
+  "pos": [
+   6.556,
+   4.25,
+   -16.9
+  ],
+  "look_at": [
+   5.0,
+   3.1,
+   -7.5
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "guest/after/attic_plan_841",
+  "pos": [
+   6.556,
+   5.9,
+   -12.0
+  ],
+  "look_at": [
+   6.556,
+   2.6,
+   -11.99
+  ],
+  "vfov": 100,
+  "near": 0.05
+ },
+ {
+  "name": "guest/after/attic_bed_close",
+  "pos": [
+   7.4,
+   4.1,
+   -14.2
+  ],
+  "look_at": [
+   4.4,
+   3.2,
+   -11.8
+  ],
+  "vfov": 62,
+  "near": 0.05
+ },
+ {
+  "name": "guest/after/buzz_desk_window",
+  "pos": [
+   10.4,
+   1.25,
+   -14.2
+  ],
+  "look_at": [
+   10.557,
+   1.45,
+   -16.1
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "guest/after/street_corner_oblique",
+  "pos": [
+   16.5,
+   0.6,
+   -24.0
+  ],
+  "look_at": [
+   10.3,
+   0.8,
+   -16.5
+  ],
+  "vfov": 50,
+  "near": 0.05
+ }
+]

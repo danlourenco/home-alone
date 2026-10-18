@@ -50,16 +50,28 @@ public static partial class SpecGreybox
         card.transform.localScale = new Vector3(w, h, 1f);
         Quiet(card.GetComponent<MeshRenderer>(), Glow("Backdrop_NightHouse", Tex("card_night.png", 2048, true), CardNightNits, true));
 
-        // Buzz's desk-wall window (user Oct 18; night only for this one): the film's own POV out of it, Marley shovelling by the trash can (film 546), a
-        // card 2.5 m outside the window (spec wall z 15.998, window x 10.197-10.917, sill 0.81 / head 2.15, upper floor = world 0), sized
-        // so the window shows its middle from the desk; looking down as the film does (its centre below the sill)
+        // Buzz's desk-wall window (user Oct 18): the film's own POV out of it, Marley shovelling by the trash can (film 546) at night,
+        // Christmas morning (film 12510) by day. Since the guest room over the den (Oct 18, TRIAL; changes/2026-10-18-guest-room.json,
+        // DEVIATIONS 92) stands behind this wall, it is a SET window: the card fills the opening just behind the glass (the middle third of
+        // each still, u 0.34-0.66: what the desk saw of the old 7 m card 2.5 m out), with a closed panel behind it, so the guest room and the
+        // street see a flat wall. Spec: wall z 15.998-16.138, window x 10.197-10.917, sill 0.81 / head 2.15, glass at z 16.062-16.074
+        const float bx0 = 10.197f, bx1 = 10.917f, by0 = 0.81f, by1 = 2.15f, bCard = 16.105f, bPanel0 = 16.115f, bPanel1 = 16.125f;
+        var setRoot = GameObject.Find("Upstairs") ?? nightLayer.transform.root.gameObject;
+        var panel = GameObject.CreatePrimitive(PrimitiveType.Cube); panel.name = "BuzzSetWindow_Panel"; panel.transform.SetParent(setRoot.transform, false);
+        panel.transform.position = new Vector3((bx0 + bx1) / 2f, (by0 + by1) / 2f, -(bPanel0 + bPanel1) / 2f);
+        panel.transform.localScale = new Vector3(bx1 - bx0 - 0.004f, by1 - by0 - 0.004f, bPanel1 - bPanel0);   // 2 mm inside the reveal: no coplanar faces
+        panel.GetComponent<MeshRenderer>().sharedMaterial = mWall; panel.isStatic = true;
         var pov = GameObject.CreatePrimitive(PrimitiveType.Quad); pov.name = "WinterBackdrop_BuzzPOV";
         Object.DestroyImmediate(pov.GetComponent<Collider>()); pov.transform.SetParent(nightLayer.transform, false);
-        float pw = 7f, ph = pw * 1058f / 1920f;
-        pov.transform.SetPositionAndRotation(new Vector3(10.557f, 0.9f, -(15.998f + 2.5f)), Quaternion.Euler(0, 180f, 0));   // faces +z (the room)
-        pov.transform.localScale = new Vector3(pw, ph, 1f);
+        {
+            string mp = "Assets/Materials/Greybox/BuzzPOVCard.asset"; AssetDatabase.DeleteAsset(mp);
+            var mesh = Object.Instantiate(pov.GetComponent<MeshFilter>().sharedMesh); mesh.name = "BuzzPOVCard";
+            mesh.uv = mesh.uv.Select(u => new Vector2(0.34f + 0.32f * u.x, u.y)).ToArray();
+            AssetDatabase.CreateAsset(mesh, mp); pov.GetComponent<MeshFilter>().sharedMesh = mesh;
+        }
+        pov.transform.SetPositionAndRotation(new Vector3((bx0 + bx1) / 2f, (by0 + by1) / 2f, -bCard), Quaternion.Euler(0, 180f, 0));   // faces +z (the room)
+        pov.transform.localScale = new Vector3(bx1 - bx0, by1 - by0, 1f);
         Quiet(pov.GetComponent<MeshRenderer>(), Glow("Backdrop_BuzzPOV", Tex("buzz_pov_night.jpg", 2048, false), CardNightNits, false));
-        // by day the same card shows Christmas morning out of a window: Marley and his son's family in the snow (film 12510, user Oct 18)
         var povDay = Object.Instantiate(pov, dayLayer.transform, true); povDay.name = "WinterBackdrop_BuzzPOVDay";
         Quiet(povDay.GetComponent<MeshRenderer>(), Glow("Backdrop_BuzzPOVDay", Tex("buzz_pov_day.jpg", 2048, false), DomeDayNits, false));
 

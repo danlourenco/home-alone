@@ -1530,7 +1530,7 @@ public static partial class SpecGreybox
         // the foyer's fixtures are lamps too: their lights join the night layer and their bulbs and shades go dark by day (user, Oct 16: "shut
         // off the sconces and foyer lighting during the day so i can get a read on it"; they were lit by day and in the day bake)
         Renderer[] glow = new Renderer[0];
-        foreach (var fxName in new[] { "Upstairs/FoyerFixtures", "Upstairs/KitchenFixtures", "Upstairs/DenFixtures", "Upstairs/DenBuiltins_HiFi", "Upstairs/LivingFixtures", "Upstairs/LivingBuiltins_HiFi", "Upstairs/DiningFixtures", "Upstairs/HallFixtures", "Upstairs/HallDressing_HiFi" })   // the kitchen's, the den's and the living room's lamps too
+        foreach (var fxName in new[] { "Upstairs/FoyerFixtures", "Upstairs/KitchenFixtures", "Upstairs/DenFixtures", "Upstairs/DenBuiltins_HiFi", "Upstairs/LivingFixtures", "Upstairs/LivingBuiltins_HiFi", "Upstairs/DiningFixtures", "Upstairs/HallFixtures", "Upstairs/HallDressing_HiFi", "Upstairs/AtticFixtures", "Upstairs/Attic_HiFi" })   // the kitchen's, the den's and the living room's lamps too
         {
             var fixtures = GameObject.Find(fxName);
             if (lamps == null || fixtures == null) continue;

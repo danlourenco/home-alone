@@ -1,7 +1,7 @@
 {
  "tools/house/hifi_attic.py": {
-  "models": "3c3e7cfc92ab19d6",
-  "sources": "319c4457111291b4"
+  "models": "2c8273830f319609",
+  "sources": "0608a382ce8e2385"
  },
  "tools/house/hifi_back_door.py": {
   "models": "0d4291972387f8cb",
@@ -17,7 +17,7 @@
  },
  "tools/house/hifi_buzz_curtains.py": {
   "models": "356da5161781ccee",
-  "sources": "248babd8b477c7a2"
+  "sources": "1e2ea5badb2b69c0"
  },
  "tools/house/hifi_buzz_props.py": {
   "models": "2d758557410006f8",
@@ -45,11 +45,11 @@
  },
  "tools/house/hifi_foyer.py": {
   "models": "23211846bb897ee2",
-  "sources": "f35d0c46db7c3522"
+  "sources": "8d73debad074e1cf"
  },
  "tools/house/hifi_foyer_arch.py": {
   "models": "58773c07b2d399cd",
-  "sources": "0fe360fbba974686"
+  "sources": "3f34824e7318af69"
  },
  "tools/house/hifi_foyer_props.py": {
   "models": "243ccb57234f13fc",
@@ -57,15 +57,15 @@
  },
  "tools/house/hifi_french_doors.py": {
   "models": "734c05b759ab6c96",
-  "sources": "45a472f65b8dc45c"
+  "sources": "89e346ade3b637c8"
  },
  "tools/house/hifi_hall.py": {
-  "models": "92b5ef533c0b2c6d",
-  "sources": "363bd17cb832070d"
+  "models": "a71da266c9f08af7",
+  "sources": "0e2a9b06f6f5fca0"
  },
  "tools/house/hifi_hall_arches.py": {
-  "models": "f8b6ae10beb76723",
-  "sources": "4aba97c1e2669c8a"
+  "models": "1e0111b23162548c",
+  "sources": "e7616704ed0fa41e"
  },
  "tools/house/hifi_kitchen.py": {
   "models": "98ab235e28f66103",
@@ -81,7 +81,7 @@
  },
  "tools/house/hifi_landing_window.py": {
   "models": "c19bb98c7077b7fe",
-  "sources": "2226a0ea5a429ef9"
+  "sources": "8b7208c17f728e93"
  },
  "tools/house/hifi_lights.py": {
   "models": "039d900b97254c67",
@@ -105,7 +105,7 @@
  },
  "tools/house/hifi_parents_dressing.py": {
   "models": "342c1948f1ea8eeb",
-  "sources": "edfeabd2a664be0d"
+  "sources": "97b3e8ab0ababe96"
  },
  "tools/house/hifi_parents_fireplace.py": {
   "models": "784e462dec45d619",
@@ -121,6 +121,6 @@
  },
  "tools/house/hifi_swing_door.py": {
   "models": "f7e1a4cdfc07a73c",
-  "sources": "bdc9dc0d8b235b8a"
+  "sources": "2136d459057f6237"
  }
 }

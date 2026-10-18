@@ -141,6 +141,16 @@
    "wall_axis": "y",
    "near": -0.71,
    "source": "stair head: flight 2 arrives on the gallery; measurements/rooms/stairs.json (user decisions Oct 13-14; head at -2.275 for flight 2's 3 treads); Oct 15: head at -0.710 (landing 1.40 m deep from the corrected rear wall, going 0.295)"
+  },
+  {
+   "a": "guest_room",
+   "b": "girls_room_b",
+   "kind": "door",
+   "span": [
+    -0.428,
+    0.334
+   ],
+   "source": "Oct 18 (changes/2026-10-18-guest-room.json): the real-house plan (art/home_alone/references/dimensional-baseline/dimensioned-second-floor.png, 'OFFICE/UNKNOWN') has a door from this room into the rear bedroom (= girls_room_b) at 1.06 m (centre) from the room's rear inner face, 0.75 m wide: stock 30 x 80 in (0.762) centred there (spec x 4.15-4.91). Its second door, into Buzz's room near the front, is NOT built: Buzz's desk-wall window (film 530) and desk stand there (DEVIATIONS 92). Never seen in the film or Marina"
   }
  ],
  "unresolved": []

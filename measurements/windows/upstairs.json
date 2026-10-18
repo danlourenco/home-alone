@@ -148,6 +148,45 @@
    "width_source": "ASSUMED = Buzz window",
    "source": "overhead sfm-work/rooms/girls/all/images/f_00041.jpg (Part 2 0:50): rod y 904-981 / glass 928-956 (centre 942) on the same face. sill/head assumed = Buzz measured (0.81/2.15)",
    "confidence": "medium-low"
+  },
+  {
+   "room": "guest_room",
+   "name": "front",
+   "side": "x_max",
+   "centre_frac": 0.5748,
+   "width_m": 2.632,
+   "sill_m": 0.81,
+   "head_m": 2.15,
+   "kind": "window",
+   "width_source": "= the den's 4-unit window below (stacked)",
+   "source": "real-house plan: 4-unit windows on the front and rear walls and a long window on the end wall; film 6400: the upper window is the same 4 units as the den's front window below (unit pitch 165 vs 162 crop px, one frame, one plane) and its head at the eave; stacked over the den's windows (DEVIATIONS 52: four 24 x 66 in units, 2.632 m). sill/head = Buzz's measured 0.81/2.15 (film 6400: upper height 114 px vs the den window's 145 px = 1.676 m on the same plane -> 1.32 m)",
+   "confidence": "medium (front), low (rear, end: real-house plan only)"
+  },
+  {
+   "room": "guest_room",
+   "name": "rear",
+   "side": "x_min",
+   "centre_frac": 0.5748,
+   "width_m": 2.632,
+   "sill_m": 0.81,
+   "head_m": 2.15,
+   "kind": "window",
+   "width_source": "= the den's 4-unit window below (stacked)",
+   "source": "real-house plan: 4-unit windows on the front and rear walls and a long window on the end wall; film 6400: the upper window is the same 4 units as the den's front window below (unit pitch 165 vs 162 crop px, one frame, one plane) and its head at the eave; stacked over the den's windows (DEVIATIONS 52: four 24 x 66 in units, 2.632 m). sill/head = Buzz's measured 0.81/2.15 (film 6400: upper height 114 px vs the den window's 145 px = 1.676 m on the same plane -> 1.32 m)",
+   "confidence": "medium (front), low (rear, end: real-house plan only)"
+  },
+  {
+   "room": "guest_room",
+   "name": "end",
+   "side": "z_max",
+   "centre_frac": 0.4698,
+   "width_m": 2.632,
+   "sill_m": 0.81,
+   "head_m": 2.15,
+   "kind": "window",
+   "width_source": "= the den's 4-unit window below (stacked)",
+   "source": "real-house plan: 4-unit windows on the front and rear walls and a long window on the end wall; film 6400: the upper window is the same 4 units as the den's front window below (unit pitch 165 vs 162 crop px, one frame, one plane) and its head at the eave; stacked over the den's windows (DEVIATIONS 52: four 24 x 66 in units, 2.632 m). sill/head = Buzz's measured 0.81/2.15 (film 6400: upper height 114 px vs the den window's 145 px = 1.676 m on the same plane -> 1.32 m)",
+   "confidence": "medium (front), low (rear, end: real-house plan only)"
   }
  ],
  "inventory_note": "Non-Buzz windows (Oct 15 inventory): positions from Marina's overheads (fractions of a wall face between its corners at window height) cross-checked against tour frames where a room is filmed facing the wall. 'confidence' and 'source' say which; ASSUMED values are marked. Not added: attic-stair/hall (no windows seen); girls_room_b side wall (none visible)."

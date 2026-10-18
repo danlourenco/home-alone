@@ -710,6 +710,19 @@
    "independent": true,
    "independent_why": "passage wall planes of a clip never used for the plan",
    "source": "hall-s4 passage walls 0.845 / -0.375 (1.22 m). The overhead trace gives 1.07: its walls here are too thick; the thinned build (user decision) matches"
+  },
+  {
+   "name": "guest room depth (registered old GLB)",
+   "type": "dimension",
+   "space": "guest_room",
+   "axis": "y",
+   "stage": "spec",
+   "expect_m": 6.82,
+   "tol_pct": 4,
+   "independent": true,
+   "independent_why": "the room's depth was taken from the real-house plan (6.92); the GLB section never built anything (tools/house/guest_room_measure.py: over-den inner wall planes, registration from facade features)",
+   "source": "tools/house/guest_room_measure.py: GLB over-den front inner face pre x 8.58, rear inner -0.42, x 0.7572 = 6.82 m. The den below is 6.91 (Marina ground trace)",
+   "caught": "Oct 18 2026: added with the guest room (not a tracing fix): keeps the room over the den at the den's/GLB's depth if the trace is edited"
   }
  ]
 }

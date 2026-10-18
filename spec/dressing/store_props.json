@@ -35,8 +35,9 @@
    "height": 2.069,
    "hides": [],
    "collide": true,
-   "source": "Marina 1124-1130 s: a grandfather clock on the dining room's front wall, centred on the pier between the two French windows (1128 s: clock centre 298 px vs pier centre 295 px of a 100 px pier = +4 cm, within the read). Pier z 5.117-6.327 (spec/house_spec.ground.json front_french_* spans); back 4 cm off the wall face x 10.13 (wainscot cap 3 cm proud + 1 cm). Model at native size 0.552 x 0.330 x 2.069 m (Marina's reads ~2.0 m).",
-   "back": "+x"
+   "source": "Marina 1124-1130 s: a grandfather clock on the dining room's front wall, centred on the pier between the two French windows (1128 s: clock centre 298 px vs pier centre 295 px of a 100 px pier = +4 cm, within the read). Pier z 5.117-6.327 (spec/house_spec.ground.json front_french_* spans); back 4 cm off the wall face x 10.13 (wainscot cap 3 cm proud + 1 cm). Model at native size 0.552 x 0.330 x 2.069 m (Marina's reads ~2.0 m). yaw pinned 270 (Oct 18): the area-scored auto turn (StoreProps.Orient) put its plain back panel to the room.",
+   "back": "+x",
+   "yaw": 270
   },
   {
    "name": "linen_door",
@@ -3607,8 +3608,8 @@
     5.93
    ],
    "z": [
-    6.674,
-    8.114
+    11.241,
+    12.681
    ],
    "y0": 2.62,
    "height": 1.24,
@@ -3618,7 +3619,59 @@
     "Mattress"
    ],
    "collide": false,
-   "source": "props lane (user Oct 18: 'replace the bed in the attic with an actual bed we might have as an asset'): Fadnn SM_Bed_01 (owned; 1.69 x 2.28 x 1.46) at 0.85 uniform (1.44 x 1.94 x 1.24, about a full, like the film's 54x75 fold-out) so the headboard clears the 1.25 m knee wall's slope; head to the rear knee wall in attic trial 2's bed spot (the placeholder SofaBed/Mattress hidden; its walk collider stays). The film's bed is a plaid fold-out sofa bed (1403-1447): no owned match."
+   "source": "props lane (user Oct 18: 'replace the bed in the attic with an actual bed we might have as an asset'): Fadnn SM_Bed_01 (owned; 1.69 x 2.28 x 1.46) at 0.85 uniform (1.44 x 1.94 x 1.24, about a full, like the film's 54x75 fold-out) so the headboard clears the 1.25 m knee wall's slope; head to the rear knee wall in attic trial 2's bed spot (the placeholder SofaBed/Mattress hidden; its walk collider stays). The film's bed is a plaid fold-out sofa bed (1403-1447): no owned match. Moved Oct 18 (guest-room job, user: 'do whatever looks most faithful to the film...'): with the bed group to just past the well's foot-end rail (film 1410/1418, Marina 841), near edge 0.90 m short of the rail, head still to the rear knee wall (reconcile.py attic bed box = this box). yaw pinned 90 (Oct 18): the auto turn (270) had the same flip as the guest bed: pillows and tall head posts toward the well rail.",
+   "yaw": 90
+  },
+  {
+   "name": "guest_bed",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Bed_01.prefab",
+   "x": [
+    6.0,
+    7.44
+   ],
+   "z": [
+    17.91,
+    19.85
+   ],
+   "y0": 0.0,
+   "height": 1.24,
+   "back": "+z",
+   "collide": true,
+   "tint": [
+    0.62,
+    0.78,
+    0.36
+   ],
+   "tint_only": [
+    "M_Cloth",
+    "M_Pillow"
+   ],
+   "source": "props lane (guest room TRIAL Oct 18, changes/2026-10-18-guest-room.json): the poster's corner bedroom (IMG_4295 second-floor close-up) has a green double bed, head to the end wall, a nightstand beside it. Owned Fadnn SM_Bed_01 at 0.85 (1.44 x 1.94 x 1.24, as the attic's), head 6.7 cm off the end wall (clear of the window stool, 0.79 m) under its window (the poster's bed stands against the windowed end wall), centred on the window; bedding tinted the poster's green (frame untouched). The film never shows this room. collide: one walk box (nothing hides under it in the film). yaw pinned 0 (walk note 12:18 'the headboard is facing the wrong way'): the auto turn (180, vertex- and area-scored alike) put the pillows/tall posts away from the end wall.",
+   "yaw": 0
+  },
+  {
+   "name": "guest_nightstand",
+   "floor": "upper",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/BEDSIDE_CAB_01.prefab",
+   "x": [
+    7.47,
+    7.97
+   ],
+   "z": [
+    19.507,
+    19.907
+   ],
+   "y0": 0.0,
+   "height": 0.66,
+   "back": "+z",
+   "tint": [
+    0.62,
+    0.4,
+    0.34
+   ],
+   "source": "props lane (guest room, Oct 18): the poster's nightstand beside the bed (its window side); the parents' BEDSIDE_CAB_01 at their size (0.50 wide x 0.40 deep) and stain; 1 cm off the end wall, under the window (sill 0.81). yaw pinned 180 (= buzz_nightstand's 0 turned to face -z): the first box had width and depth swapped, which turned its drawers to the side.",
+   "yaw": 180
   }
  ]
 }

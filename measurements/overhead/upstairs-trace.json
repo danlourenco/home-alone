@@ -331,7 +331,24 @@
    ],
    "notes": "door from the south corridor on its right wall (open leaf visible ~y 772-780)",
    "authored": {
-    "m": [[10.902, -2.995], [10.898, 0.96], [15.277, 1.066], [15.293, -2.995]],
+    "m": [
+     [
+      10.902,
+      -2.995
+     ],
+     [
+      10.898,
+      0.96
+     ],
+     [
+      15.277,
+      1.066
+     ],
+     [
+      15.293,
+      -2.995
+     ]
+    ],
     "why": "DEVIATIONS 32 (user Oct 15: never seen in the film, license to resize): rear wall moved forward to plan y -2.995 (spec x 1.583), flush with the living room's rear wall below; depth 5.24 -> ~4.05 m (real-house plan: 12'10\" = 3.92 m)"
    }
   },
@@ -411,6 +428,45 @@
     ]
    ],
    "notes": "grey strip between the parents' bedroom and girls_room_a in the overhead; never seen from the hall. Sealed shallow built-in, no door (same treatment as the linen closet, user decision Oct 13)"
+  },
+  {
+   "name": "guest_room",
+   "kind": "room",
+   "m": [
+    [
+     15.434,
+     -1.108
+    ],
+    [
+     15.434,
+     1.0
+    ],
+    [
+     15.832,
+     1.0
+    ],
+    [
+     15.832,
+     2.895
+    ],
+    [
+     15.434,
+     2.895
+    ],
+    [
+     15.434,
+     5.812
+    ],
+    [
+     19.213,
+     5.812
+    ],
+    [
+     19.213,
+     -1.108
+    ]
+   ],
+   "notes": "Oct 18 2026 (TRIAL; changes/2026-10-18-guest-room.json, DEVIATIONS 92): the upstairs room over the den, NOT in Marina's model (she never shows it; the film shows it from outside: 6399/6400, 10; the poster's corner bedroom; the real-house plan's 'OFFICE/UNKNOWN'; the old GLB). Polygon authored in plan metres from: front inner face 0.77 m behind Buzz's (real-house plan, tools/house/guest_room_measure.py; GLB 1.05 disagrees, see the record), depth 6.92 m (plan 6.92, GLB 6.81, den below 6.91), end wall stacked on the den's (z 19.917), side against Buzz/girls B; the room steps round the attic stair's head (the real-house plan's stair also runs into this room). The notch's x is entered at plan y 1.00, the girls_room_b / main-stair line it aligns onto, so the line (and the rooms on it) do not move; the reconciler and wall_graph put the notch face on girls B's (one 14 cm wall past the stair head)."
   }
  ],
  "outline_px": [

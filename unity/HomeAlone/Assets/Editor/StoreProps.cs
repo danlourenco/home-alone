@@ -61,6 +61,7 @@ public static partial class SpecGreybox
                     r.sharedMaterials = r.sharedMaterials.Select(m =>
                     {
                         if (m == null || !m.HasProperty("_BaseColor")) return m;
+                        if (p["tint_only"] is JArray only && !only.Any(o => m.name.StartsWith((string)o))) return m;   // "tint_only": just these materials (a bed's spread, not its frame)
                         var path = $"Assets/Materials/Greybox/Tint_{name}_{m.name.Replace(' ', '_')}.mat";
                         var t = AssetDatabase.LoadAssetAtPath<Material>(path);
                         if (t == null) { t = new Material(m); AssetDatabase.CreateAsset(t, path); } else t.CopyPropertiesFromMaterial(m);
@@ -173,8 +174,10 @@ public static partial class SpecGreybox
     // "+x" / "-x" / "+z" / "-z" in SPEC axes -> the Unity direction the piece's flat back must face (Unity z = -spec z)
     static Vector3 Back(string s) => s switch { "+x" => Vector3.right, "-x" => Vector3.left, "+z" => Vector3.back, "-z" => Vector3.forward, _ => Vector3.zero };
 
-    // the turn (0/90/180/270) that lays the model's long horizontal side along the box's long side and puts its flattest side
-    // (most vertices within 2 cm of that extreme: a demilune's straight back, a clock's back board) toward `back`
+    // the turn (0/90/180/270) that lays the model's long horizontal side along the box's long side and puts its flattest side toward
+    // `back`: the most triangle AREA lying within 2 cm of that extreme and facing it (a demilune's straight back, a clock's back
+    // board, a headboard). Oct 18: it counted VERTICES, and pack fronts are vertex-dense (knobs, carving, door panels) while backs
+    // are one plain quad, so it kept putting fronts to the wall (the parents' armoire, the guest bed: "always rotating furniture 180")
     static float Orient(GameObject go, bool longAlongX, Vector3 back)
     {
         var mfs = go.GetComponentsInChildren<MeshFilter>().Where(m => m.sharedMesh != null).ToArray();
@@ -188,7 +191,17 @@ public static partial class SpecGreybox
             if (back != Vector3.zero)
             {
                 float ext = v.Max(q => Vector3.Dot(q, back));
-                score += v.Count(q => ext - Vector3.Dot(q, back) < 0.02f);
+                foreach (var m in mfs)
+                {
+                    var mv = m.sharedMesh.vertices.Select(m.transform.TransformPoint).ToArray(); var t = m.sharedMesh.triangles;
+                    for (int i = 0; i < t.Length; i += 3)
+                    {
+                        Vector3 a = mv[t[i]], b = mv[t[i + 1]], c = mv[t[i + 2]];
+                        if (ext - Vector3.Dot(a, back) > 0.02f || ext - Vector3.Dot(b, back) > 0.02f || ext - Vector3.Dot(c, back) > 0.02f) continue;
+                        var n = Vector3.Cross(b - a, c - a);   // |n| = 2 x area; count it when it faces `back` (either winding: packs vary)
+                        if (Mathf.Abs(Vector3.Dot(n.normalized, back)) > 0.7f) score += 0.5f * n.magnitude * 1e4f;   // cm^2: stays under the 1e6 long-side term for a 1 m^2 back
+                    }
+                }
             }
             if (score > bestScore) { bestScore = score; best = yaw; }
         }

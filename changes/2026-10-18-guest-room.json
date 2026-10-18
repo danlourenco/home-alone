@@ -1,0 +1,228 @@
+{
+ "change": "Guest room over the den (upstairs), TRIAL 1; with it: Buzz's desk-wall window becomes a set window, and the attic's bed group moves to the stair well's foot (film 1410) with a living-flue chimney breast, a crib, the film's bedside lamp and two bare-bulb fixtures",
+ "target": "upstairs guest_room (new); buzz_room desk_wall window (set); attic bed group, chimney, lights",
+ "premise": "The den end of the house is a two-storey section set back from the main front (film 6399/6400, 10), so an upstairs room stands over the den, its front face behind Buzz's front by the real house's setback and its size the den's footprint.",
+ "claim": {
+  "value": {
+   "front_inner_x": 10.39,
+   "front_setback_inner_m": 0.77,
+   "rear_inner_x": 3.47,
+   "depth_m": 6.92,
+   "z": [
+    16.133,
+    19.917
+   ],
+   "length_m": 3.78,
+   "door": {
+    "between": [
+     "guest_room",
+     "girls_room_b"
+    ],
+    "x": [
+     4.15,
+     4.912
+    ],
+    "width_in": 30
+   },
+   "windows": "front / rear / end: 2.632 m (4 x 24 in), sill 0.81, head 2.15, stacked over the den's",
+   "buzz_desk_window": "set window (guest front wall outer face 10.53 crosses the opening x 10.197-10.917)",
+   "attic_bed": {
+    "x": [
+     3.99,
+     5.93
+    ],
+    "z": [
+     11.241,
+     12.681
+    ],
+    "near_edge_to_foot_rail_m": 0.9
+   },
+   "attic_chimney_living": {
+    "x": [
+     3.972,
+     4.556
+    ],
+    "z": [
+     13.32,
+     14.32
+    ]
+   }
+  },
+  "data": [
+   "eric-plan:dimensioned-second-floor",
+   "poster:IMG_4295",
+   "film:1410",
+   "film:1418",
+   "marina-frame:841"
+  ],
+  "scale": [
+   "eric-plan:buzz-14ft11"
+  ],
+  "upstream": [
+   "eric-plan:labels"
+  ],
+  "risks": [
+   "scale"
+  ],
+  "applies_to": [
+   "guest_room",
+   "buzz_room",
+   "attic"
+  ],
+  "measured_in": [
+   "guest_room",
+   "attic"
+  ],
+  "pick": {
+   "crop": "spec/captures/picks/guest/plan_front.png",
+   "confirmed_by": "the same faces drawn on spec/captures/picks/guest/plan_rear.png and plan_doors.png; the office's labels (22'6\" depth) agree with the drawn depth to 0.9%"
+  },
+  "assumed": {
+   "buzz_room": "DEVIATIONS 92 (d): the desk-wall window becomes a set window (no new measurement in Buzz's room)"
+  },
+  "layout_note": "film 6400/10 (set-back two-storey section with a window over the den's) are topological support, not the number"
+ },
+ "history": [
+  {
+   "when": "Oct 14",
+   "what": "sept_census.py found the September model had an upstairs room over the den that Marina's plan doesn't have (STATUS: 'Extra: an upstairs room over the den')",
+   "outcome": "not built (Marina is the authority)"
+  },
+  {
+   "when": "Oct 18",
+   "what": "attic trial 2 (changes/2026-10-18-attic-shell.json) hipped the attic over the den and listed the upper room there as open (DEVIATIONS 90 (a): the user's 'hidden room')",
+   "outcome": "accepted (attic); room open"
+  },
+  {
+   "when": "Oct 18",
+   "what": "Buzz's closet door (DEVIATIONS 86) was built as a fake on the desk wall because nothing stood behind it; option C (a reach-in over the den roof) was not taken",
+   "outcome": "prop, not walked"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "front setback from the registered old GLB (tools/house/guest_room_measure.py): over-den front outer face pre x 8.91 vs main front 10.32, x 0.7572 = 1.07 m (inner faces 1.05); the claim 0.77-0.79 is 0.28 m less",
+   "agrees": false,
+   "data": [
+    "glb:HomeAloneExterior"
+   ],
+   "scale": [
+    "glb-registration:23-features"
+   ],
+   "tests": [
+    "scale"
+   ],
+   "disposition": "not averaged; the plan (own labels, weight 2-3 for the real house's arrangement) and our ground den (below) agree within 0.1 m, the GLB (weight 2; its ground front face is 1.4 m off our house in the same registration) is the odd one out. All three put the room's front wall across Buzz's desk-wall window (it would need >= 1.2 m outer), so the window case is the same: set window. Logged DEVIATIONS 92 (a)"
+  },
+  {
+   "what": "front setback from our ground floor: the den's front inner face 9.266 vs the living room's 9.954 = 0.69 m (Marina's ground trace, her own scale chain), carried up because film 6400 shows ONE flush brick face over both storeys of the den section (the upper 4-unit window directly over the den's, unit pitch 165 vs 162 px); claim 0.77 (-0.08 m)",
+   "agrees": true,
+   "data": [
+    "overhead-trace:ground",
+    "film:6400"
+   ],
+   "scale": [
+    "marina-overhead:ground-calibration"
+   ],
+   "tests": [
+    "scale",
+    "model-fidelity"
+   ],
+   "crop": "spec/captures/picks/guest/f6400_den.png"
+  },
+  {
+   "what": "depth from the registered old GLB: over-den inner faces pre 8.58 / -0.42 -> 6.82 m (claim 6.92, +1.5%); the den below is 6.91 (Marina ground). verify_plan checkpoint 'guest room depth (registered old GLB)' (tol 4%; proven: an 8.03 m room FAILs at +17.7%)",
+   "agrees": true,
+   "data": [
+    "glb:HomeAloneExterior"
+   ],
+   "scale": [
+    "glb-registration:23-features"
+   ],
+   "tests": [
+    "scale"
+   ]
+  },
+  {
+   "what": "layout: the poster (second-floor close-up) shows a corner bedroom past Buzz's room beyond the attic stair, windows on its end and front walls, its front set back from Buzz's, a green double bed head to the end wall with nightstands; the real-house plan shows the attic stair running INTO this room's footprint (our stair head likewise pokes 0.40 m in: the room steps round it) and doors into the rear bedroom and Buzz's room",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "poster:IMG_4295",
+    "eric-plan:dimensioned-second-floor"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": [],
+   "crop": "spec/captures/picks/guest/poster_guest.jpg"
+  },
+  {
+   "what": "film 6400 / 10: the upper window over the den is 4 units, the same width as the den's 2.632 m window below (unit pitch 165 vs 162 crop px on one plane) and 114 vs 145 px tall (1.32 m vs the den's 1.676): Buzz's 0.81/2.15 (1.34)",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "film:6400"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": [],
+   "crop": "spec/captures/picks/guest/f6400_den.png"
+  },
+  {
+   "what": "attic bed group: film 1410/1418 (from the stair head, over the well's rail: the bed right there past the far rail, lamp table with the lit cream-shade lamp, crib behind, brick chimney with stovepipe and stove) and Marina 841 (~0.8-0.9 m past the well's closed end) vs trial 2's poster position 5.3 m away; bed near edge now 0.90 m from the foot rail",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:1410",
+    "film:1418",
+    "marina-frame:841"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": [],
+   "crop": "spec/captures/picks/guest/attic_film.jpg"
+  },
+  {
+   "what": "stair_arrival.py: the attic flight still arrives onto floor with a clear 0.90 m zone; walk test legs to the bed side, round the crib to the dormer",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "spec:house_spec"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": []
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/guest/before/street_6400.png",
+   "spec/captures/views/guest/before/street_10_night.png",
+   "spec/captures/views/guest/before/street_wide_6399.png",
+   "spec/captures/views/guest/before/guest_wide.png",
+   "spec/captures/views/guest/before/buzz_desk_window.png",
+   "spec/captures/views/guest/before/attic_stairhead_1410.png",
+   "spec/captures/views/guest/before/attic_plan_841.png",
+   "spec/captures/views/guest/before/attic_bed_close.png"
+  ],
+  "after": [
+   "spec/captures/views/guest/after/street_6400.png",
+   "spec/captures/views/guest/after/street_10_night.png",
+   "spec/captures/views/guest/after/street_wide_6399.png",
+   "spec/captures/views/guest/after/guest_wide.png",
+   "spec/captures/views/guest/after/guest_bed.png",
+   "spec/captures/views/guest/after/guest_door_from_girlsB.png",
+   "spec/captures/views/guest/after/buzz_desk_window.png",
+   "spec/captures/views/guest/after/attic_stairhead_1410.png",
+   "spec/captures/views/guest/after/attic_plan_841.png",
+   "spec/captures/views/guest/after/attic_bed_close.png",
+   "spec/captures/views/guest/after/street_corner_oblique.png"
+  ]
+ },
+ "user_walk": "pending"
+}

@@ -493,26 +493,52 @@ def attic_stair_spec(final, o, ceil):
     box("attic_rail_rear", "rail", x0 - ro - rt / 2, x0 - ro + rt / 2, yf, yf + rh, z0 - ro - rt / 2, z1)
     box("attic_rail_foot", "rail", x0 - ro - rt / 2, x1 + ro + rt / 2, yf, yf + rh, z0 - ro - rt / 2, z0 - ro + rt / 2)
     box("attic_rail_front", "rail", x1 + ro - rt / 2, x1 + ro + rt / 2, yf, yf + rh, z0 - ro - rt / 2, z1)
-    # the parents' fireplace flue rises through the attic at the rear knee wall (poster: the chimney beside the bed)
+    # the parents' fireplace flue rises through the attic at the rear knee wall against the partition: plain brick (no stove: Oct 18)
     PF = json.loads((ROOT / "spec/dressing/parents_fireplace.json").read_text())
     chim = {"x": [rd(ax0 + 0.016), rd(PF["centre_x"] + 0.47)], "z": [rd(az0 + 0.016), rd(az0 + 0.82)]}   # against the partition, over the flue (PF wall_z)
     box("attic_chimney", "furniture", chim["x"][0], chim["x"][1], yf, yf + kh, chim["z"][0], chim["z"][1])
-    stove = {"x": [rd(chim["x"][1] + 0.04), rd(chim["x"][1] + 0.59)], "z": [rd(chim["z"][0] + 0.15), rd(chim["z"][0] + 0.65)], "h": 0.75}
+    # bed group (Oct 18, guest-room job; user: "do whatever looks most faithful to the film but keeping harmony with structural and
+    # architectural elements"): film 1410/1418 and Marina 841 put the bed just past the well's FOOT-end rail (seen over the rail from the
+    # stair head), crib beyond it, brick chimney with the wood stove and stovepipe by it. The chimney stands on the living-room flue's z
+    # (ext_chim, our living fireplace z 13.82), against the rear knee wall (the flue ASSUMED corbelled in under the roof: DEVIATIONS 90)
+    ext_chim = {"x": [1.0, 1.6], "z": [13.32, 14.32]}   # the living-room flue outside the rear knee wall (exterior; film 11162)
+    chim_l = {"x": [rd(ax0 + 0.016), rd(ax0 + 0.60)], "z": ext_chim["z"]}
+    box("attic_chimney_living", "furniture", chim_l["x"][0], chim_l["x"][1], yf, yf + kh, chim_l["z"][0], chim_l["z"][1])
+    zc_ = (chim_l["z"][0] + chim_l["z"][1]) / 2
+    stove = {"x": [rd(chim_l["x"][1] + 0.04), rd(chim_l["x"][1] + 0.49)], "z": [rd(zc_ - 0.25), rd(zc_ + 0.25)], "h": 0.75}
     box("attic_stove", "furniture", stove["x"][0], stove["x"][1], yf, yf + stove["h"], stove["z"][0], stove["z"][1])
-    # the sofa bed (look: the film's fold-out, 1403-1447; place: the poster's bed 26, its back to the rear knee wall beside the chimney)
-    bz0 = chim["z"][1] + 0.10
-    bed = {"x": [rd(ax0 + 0.016), rd(ax0 + 0.016 + 2.10)], "z": [rd(bz0), rd(bz0 + 2.0)], "top": 0.45, "back": 0.85, "back_d": 0.30, "back_side": "x0"}
+    # the bed (store_props attic_bed, Fadnn SM_Bed_01 at 0.85: 1.94 x 1.44) head to the rear knee wall, its near edge 0.90 m short of the foot rail
+    rail_foot = z0 - ro - rt / 2
+    bz1 = rail_foot - 0.90
+    bed = {"x": [rd(ax0 + 0.033), rd(ax0 + 1.973)], "z": [rd(bz1 - 1.44), rd(bz1)], "top": 0.45, "back": 0.85, "back_d": 0.30, "back_side": "x0"}
     box("attic_bed", "furniture", bed["x"][0], bed["x"][1], yf, yf + bed["top"], bed["z"][0], bed["z"][1])
     box("attic_bed_back", "furniture", bed["x"][0], bed["x"][0] + bed["back_d"], yf + bed["top"], yf + bed["back"], bed["z"][0], bed["z"][1])
-    ext_chim = {"x": [1.0, 1.6], "z": [13.32, 14.32]}   # the living-room flue outside the rear knee wall (exterior only; film 11162)
+    # the crib beyond the bed (film 1418-1447), its end against the knee wall, clear of the zipline dormer's alcove
+    crib = {"x": [rd(ax0 + 0.03), rd(ax0 + 1.43)], "z": [rd(bed["z"][0] - 0.10 - 0.78), rd(bed["z"][0] - 0.10)], "h": 1.00}
+    box("attic_crib", "furniture", crib["x"][0], crib["x"][1], yf, yf + crib["h"], crib["z"][0], crib["z"][1])
+    # the lamp table at the bed's head on the stair side, with the film's lamp (1410/1418: cream drum shade, red/orange glass base)
+    ltab = {"x": [rd(ax0 + 0.033), rd(ax0 + 0.533)], "z": [rd(bz1 + 0.05), rd(bz1 + 0.55)], "h": 0.60}
+    box("attic_lamp_table", "furniture", ltab["x"][0], ltab["x"][1], yf, yf + ltab["h"], ltab["z"][0], ltab["z"][1])
+    lamp = {"at": [rd((ltab["x"][0] + ltab["x"][1]) / 2), rd(ltab["h"]), rd((ltab["z"][0] + ltab["z"][1]) / 2)], "shade": [0.16, 0.13, 0.40, 0.68],
+            "lumens": 450, "kelvin": 2700}   # shade: top r, bottom r, y0, y1 above the table top (film 1418: shade ~ as tall as the base)
+    # bare-bulb pull-chain fixtures (attic utility light, Oct 18): under the collar tie nearest the stair head and mid-room. The ties are
+    # hifi_attic.py's: rafters every 0.61 m from the partition, a tie beside every other common rafter and the one over the stair head
+    zs_ = [az0 + 0.015 + 0.03 + 0.61 * k for k in range(60)]; zs_ = [z for z in zs_ if z + 0.05 < az1 - 0.015 - 0.06]
+    common = [i for i, z in enumerate(zs_) if z + 0.05 < az1 - (xc - ax0) - 0.03]
+    ties = sorted(set(common[::2]) | {min(common, key=lambda i: abs(zs_[i] - (z1 - 0.35)))})
+    tz = [zs_[i] + 0.075 for i in ties]; ty = yf + 2.30 - 0.07
+    bulbs = [{"name": nm, "at": [rd(xc), rd(min(tz, key=lambda t: abs(t - zt)))], "tie_y": rd(ty), "bulb_y": rd(ty - 0.15), "lumens": 450, "kelvin": 2700}
+             for nm, zt in (("stair_head", z1 + 0.45), ("mid", (az0 + z0) / 2))]
     xm = (x0 + x1) / 2
-    path = [[xm, 0.0, z0 - 0.6], [xm, yf, z1 + 0.55], [x1 + 0.07, yf, z1 + 0.60], [x1 + 0.62, yf, z0 - 0.66], [bed["x"][1] + 0.93, yf, bed["z"][1] - 0.6], [ax0 + 1.45, yf, dz + 0.75]]
+    path = [[xm, 0.0, z0 - 0.6], [xm, yf, z1 + 0.55], [x1 + 0.07, yf, z1 + 0.60], [x1 + 0.62, yf, z0 - 0.66], [bed["x"][1] + 0.93, yf, bed["z"][1] - 0.6], [crib["x"][1] + 0.80, yf, crib["z"][0] - 0.35], [ax0 + 1.05, yf, dz - 0.25]]   # round the crib to the dormer
     attic = {"x": [rd(ax0), rd(ax1)], "z": [rd(az0), rd(az1)], "floor_y": rd(yf), "ridge_y": rd(ridge), "knee_h": kh, "pitch_deg": A["pitch_deg"],
              "ridge_x": rd(xc), "wall_t": t, "top_y": rd(top), "well": {"x": [rd(x0), rd(x1)], "z": [rd(z0), rd(z1)]},
              "rail": {"h": rh, "t": rt, "off": ro}, "hip_z": rd(az1), "ext_chimney": ext_chim,
              "dormer": {"z": dz, "face_x": rd(dface), "inner_half": rd(di), "opening": [dw, dh], "sill_y": rd(ys), "head_y": rd(yh),
                         "ceiling_y": rd(yf + 1.76), "cornice_w": A["dormer_cornice_w"], "pitch_deg": A["dormer_pitch_deg"], "open_deg": 95},
-             "bed": bed, "chimney": chim, "stove": stove, "collar_y": rd(yf + 2.30)}
+             "bed": bed, "chimney": chim, "chimney_living": chim_l, "stove": stove, "crib": crib, "lamp_table": ltab, "lamp": lamp,
+             "bulbs": bulbs,
+             "collar_y": rd(yf + 2.30)}
     return {"rise_m": round(r, 4), "going_m": round(float(g), 3), "risers": n, "boxes": B, "attic": attic, "walk_path": [[rd(v) for v in q] for q in path],
             "authored": f"{n} risers of {r:.4f} to the attic floor {yf:.3f}, going {g:.3f}, first riser {s0:.3f} m inside the door; full well width; attic {W} x {L:.2f} m (z {az0}-{az1}, hipped at the high end), ridge {ridge:.2f}"}
 
