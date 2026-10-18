@@ -1,0 +1,957 @@
+{
+ "what": "similarity registration of the OLD reference model (HomeAloneExterior.glb) to our spec frame; tools/house/register_glb.py",
+ "pre_frame": "pre x = 7.67 - scene z, pre z = 11.616 - scene x, pre y = scene y - 4.306 (scene = glTF (gx, gy, -gz)): SpecGreybox.Exterior's placement as of Oct 18",
+ "plan": {
+  "scale": 0.7572410717311008,
+  "yaw_deg": 0.810620725734224,
+  "tx": 3.931043411208722,
+  "tz": 2.267975660823219,
+  "formula": "spec_x = s*(cos*px - sin*pz) + tx ; spec_z = s*(sin*px + cos*pz) + tz  (p = pre x,z)",
+  "drop_threshold_m": 0.6,
+  "kept": [
+   "front_door",
+   "front_dining_win1",
+   "front_dining_win2",
+   "front_living_win1",
+   "front_living_win2",
+   "front_kevin_jeff_room_win1",
+   "front_kevin_jeff_room_win2",
+   "front_hall_bath_win1",
+   "front_buzz_room_win1",
+   "front_buzz_room_win2",
+   "rear_living_win1",
+   "rear_living_win2",
+   "rear_girls_b_win1",
+   "rear_girls_b_win2",
+   "rear_parents_bath_win",
+   "end_buzz_wall",
+   "stair_bottom_nosing",
+   "stair_top_nosing",
+   "front_face_upper_kevin_jeff_room",
+   "front_face_upper_hall_bath",
+   "front_face_upper_buzz_room",
+   "rear_face_ground_living",
+   "rear_face_upper_girls_b"
+  ],
+  "dropped": [
+   "end_parents_wall",
+   "front_face_ground_living",
+   "front_face_ground_vestibule",
+   "front_face_ground_dining",
+   "rear_face_upper_parents_bath"
+  ],
+  "rms_kept": 0.22733551357474582
+ },
+ "residuals": {
+  "front_door": {
+   "group": "front",
+   "storey": "ground",
+   "residual_m": 0.034,
+   "kept": true,
+   "spec": "z=9.716 (line)",
+   "glb_pre": [
+    10.32,
+    9.735
+   ]
+  },
+  "front_dining_win1": {
+   "group": "front",
+   "storey": "ground",
+   "residual_m": 0.024,
+   "kept": true,
+   "spec": "z=4.742 (line)",
+   "glb_pre": [
+    10.32,
+    3.09
+   ]
+  },
+  "front_dining_win2": {
+   "group": "front",
+   "storey": "ground",
+   "residual_m": 0.257,
+   "kept": true,
+   "spec": "z=6.702 (line)",
+   "glb_pre": [
+    10.32,
+    5.37
+   ]
+  },
+  "front_living_win1": {
+   "group": "front",
+   "storey": "ground",
+   "residual_m": 0.117,
+   "kept": true,
+   "spec": "z=12.938 (line)",
+   "glb_pre": [
+    10.32,
+    14.1
+   ]
+  },
+  "front_living_win2": {
+   "group": "front",
+   "storey": "ground",
+   "residual_m": 0.164,
+   "kept": true,
+   "spec": "z=14.643 (line)",
+   "glb_pre": [
+    10.32,
+    16.415
+   ]
+  },
+  "front_kevin_jeff_room_win1": {
+   "group": "front",
+   "storey": "upper",
+   "residual_m": 0.051,
+   "kept": true,
+   "spec": "z=4.637 (line)",
+   "glb_pre": [
+    10.32,
+    3.05
+   ]
+  },
+  "front_kevin_jeff_room_win2": {
+   "group": "front",
+   "storey": "upper",
+   "residual_m": 0.135,
+   "kept": true,
+   "spec": "z=6.576 (line)",
+   "glb_pre": [
+    10.32,
+    5.365
+   ]
+  },
+  "front_hall_bath_win1": {
+   "group": "front",
+   "storey": "upper",
+   "residual_m": 0.059,
+   "kept": true,
+   "spec": "z=9.691 (line)",
+   "glb_pre": [
+    10.32,
+    9.735
+   ]
+  },
+  "front_buzz_room_win1": {
+   "group": "front",
+   "storey": "upper",
+   "residual_m": 0.218,
+   "kept": true,
+   "spec": "z=12.840 (line)",
+   "glb_pre": [
+    10.32,
+    14.105
+   ]
+  },
+  "front_buzz_room_win2": {
+   "group": "front",
+   "storey": "upper",
+   "residual_m": 0.272,
+   "kept": true,
+   "spec": "z=15.057 (line)",
+   "glb_pre": [
+    10.32,
+    16.385
+   ]
+  },
+  "rear_living_win1": {
+   "group": "rear",
+   "storey": "ground",
+   "residual_m": 0.355,
+   "kept": true,
+   "spec": "z=12.220 (line)",
+   "glb_pre": [
+    -3.34,
+    13.66
+   ]
+  },
+  "rear_living_win2": {
+   "group": "rear",
+   "storey": "ground",
+   "residual_m": 0.308,
+   "kept": true,
+   "spec": "z=15.420 (line)",
+   "glb_pre": [
+    -3.34,
+    17.01
+   ]
+  },
+  "rear_girls_b_win1": {
+   "group": "rear",
+   "storey": "upper",
+   "residual_m": 0.041,
+   "kept": true,
+   "spec": "z=12.650 (line)",
+   "glb_pre": [
+    -3.45,
+    13.815
+   ]
+  },
+  "rear_girls_b_win2": {
+   "group": "rear",
+   "storey": "upper",
+   "residual_m": 0.368,
+   "kept": true,
+   "spec": "z=15.361 (line)",
+   "glb_pre": [
+    -3.45,
+    16.855
+   ]
+  },
+  "rear_parents_bath_win": {
+   "group": "rear",
+   "storey": "upper",
+   "residual_m": 0.06,
+   "kept": true,
+   "spec": "z=3.356 (line)",
+   "glb_pre": [
+    -3.45,
+    1.565
+   ]
+  },
+  "end_buzz_wall": {
+   "group": "end",
+   "storey": "upper",
+   "residual_m": 0.062,
+   "kept": true,
+   "spec": "z=16.138 (line)",
+   "glb_pre": [
+    10.32,
+    18.09
+   ]
+  },
+  "end_parents_wall": {
+   "group": "end",
+   "storey": "upper",
+   "residual_m": 3.563,
+   "kept": false,
+   "spec": "z=-0.140 (line)",
+   "glb_pre": [
+    10.32,
+    1.38
+   ]
+  },
+  "stair_bottom_nosing": {
+   "group": "stair",
+   "storey": "ground",
+   "residual_m": 0.192,
+   "kept": true,
+   "spec": [
+    6.525,
+    10.83
+   ],
+   "glb_pre": [
+    3.524,
+    11.503
+   ]
+  },
+  "stair_top_nosing": {
+   "group": "stair",
+   "storey": "ground",
+   "residual_m": 0.539,
+   "kept": true,
+   "spec": [
+    2.985,
+    10.83
+   ],
+   "glb_pre": [
+    -0.4,
+    11.503
+   ]
+  },
+  "front_face_ground_vestibule": {
+   "group": "face",
+   "storey": "ground",
+   "residual_m": 1.371,
+   "kept": false,
+   "spec": "z=10.270 (line)",
+   "glb_pre": [
+    10.32,
+    9.735
+   ]
+  },
+  "front_face_ground_dining": {
+   "group": "face",
+   "storey": "ground",
+   "residual_m": 1.43,
+   "kept": false,
+   "spec": "z=10.270 (line)",
+   "glb_pre": [
+    10.32,
+    4.23
+   ]
+  },
+  "front_face_ground_living": {
+   "group": "face",
+   "storey": "ground",
+   "residual_m": 1.488,
+   "kept": false,
+   "spec": "z=10.094 (line)",
+   "glb_pre": [
+    10.32,
+    15.258
+   ]
+  },
+  "front_face_upper_kevin_jeff_room": {
+   "group": "face",
+   "storey": "upper",
+   "residual_m": 0.104,
+   "kept": true,
+   "spec": "z=11.804 (line)",
+   "glb_pre": [
+    10.32,
+    4.208
+   ]
+  },
+  "front_face_upper_hall_bath": {
+   "group": "face",
+   "storey": "upper",
+   "residual_m": 0.163,
+   "kept": true,
+   "spec": "z=11.804 (line)",
+   "glb_pre": [
+    10.32,
+    9.735
+   ]
+  },
+  "front_face_upper_buzz_room": {
+   "group": "face",
+   "storey": "upper",
+   "residual_m": 0.284,
+   "kept": true,
+   "spec": "z=11.298 (line)",
+   "glb_pre": [
+    10.32,
+    15.245
+   ]
+  },
+  "rear_face_ground_living": {
+   "group": "face",
+   "storey": "ground",
+   "residual_m": 0.202,
+   "kept": true,
+   "spec": "z=1.440 (line)",
+   "glb_pre": [
+    -3.34,
+    15.335
+   ]
+  },
+  "rear_face_upper_girls_b": {
+   "group": "face",
+   "storey": "upper",
+   "residual_m": 0.285,
+   "kept": true,
+   "spec": "z=1.440 (line)",
+   "glb_pre": [
+    -3.45,
+    15.335
+   ]
+  },
+  "rear_face_upper_parents_bath": {
+   "group": "face",
+   "storey": "upper",
+   "residual_m": 1.099,
+   "kept": false,
+   "spec": "z=0.203 (line)",
+   "glb_pre": [
+    -3.45,
+    1.565
+   ]
+  }
+ },
+ "holdout": {
+  "train": "front windows + front faces + stair; test = rear windows, rear faces, end walls",
+  "train_fit": {
+   "scale": 0.7606142530282314,
+   "yaw_deg": 2.7003423142811713,
+   "tx": 4.077994543908612,
+   "tz": 1.9957350526758322
+  },
+  "train_dropped": [
+   "front_face_ground_dining",
+   "front_face_ground_vestibule",
+   "front_face_ground_living"
+  ],
+  "test_errors_m": {
+   "rear_living_win1": 0.035,
+   "rear_living_win2": 0.62,
+   "rear_girls_b_win1": 0.282,
+   "rear_girls_b_win2": 0.683,
+   "rear_parents_bath_win": 0.295,
+   "end_buzz_wall": 0.028,
+   "end_parents_wall": 3.554,
+   "rear_face_ground_living": 0.449,
+   "rear_face_upper_girls_b": 0.533,
+   "rear_face_upper_parents_bath": 1.198
+  },
+  "test_rms_m": 1.2478484282956803,
+  "leave_one_out_m": {
+   "front_door": 0.037,
+   "front_dining_win1": 0.029,
+   "front_dining_win2": 0.296,
+   "front_living_win1": 0.129,
+   "front_living_win2": 0.187,
+   "front_kevin_jeff_room_win1": 0.061,
+   "front_kevin_jeff_room_win2": 0.155,
+   "front_hall_bath_win1": 0.064,
+   "front_buzz_room_win1": 0.242,
+   "front_buzz_room_win2": 0.31,
+   "rear_living_win1": 0.424,
+   "rear_living_win2": 0.385,
+   "rear_girls_b_win1": 0.049,
+   "rear_girls_b_win2": 0.459,
+   "rear_parents_bath_win": 0.084,
+   "end_buzz_wall": 0.073,
+   "stair_bottom_nosing": 0.205,
+   "stair_top_nosing": 0.644,
+   "front_face_upper_kevin_jeff_room": 0.143,
+   "front_face_upper_hall_bath": 0.205,
+   "front_face_upper_buzz_room": 0.36,
+   "rear_face_ground_living": 0.262,
+   "rear_face_upper_girls_b": 0.372
+  }
+ },
+ "per_storey_plan": {
+  "ground": {
+   "scale": 0.6941616611100906,
+   "yaw_deg": -0.9620527687193012,
+   "tx": 3.10260496035715,
+   "tz": 3.0813614845445874,
+   "dropped": [
+    "stair_bottom_nosing"
+   ],
+   "rms": 0.297570655981073
+  },
+  "upper": {
+   "scale": 0.7587246760554719,
+   "yaw_deg": 0.6488076540278009,
+   "tx": 3.964334197766422,
+   "tz": 2.3089515177201902,
+   "dropped": [
+    "end_parents_wall",
+    "rear_face_upper_parents_bath"
+   ],
+   "rms": 0.18621739445712834
+  }
+ },
+ "vertical": {
+  "ground": {
+   "a": 0.7683258493114313,
+   "b": -0.7248023525609203,
+   "pairs": [
+    {
+     "name": "floor",
+     "pre_y": -3.0,
+     "spec_y": -3.026,
+     "residual": -0.0037799004952145943
+    },
+    {
+     "name": "ceiling",
+     "pre_y": 0.15,
+     "spec_y": -0.5879999999999996,
+     "residual": -0.021553475164205915
+    },
+    {
+     "name": "front_window_head",
+     "pre_y": -0.32,
+     "spec_y": -0.996,
+     "residual": 0.02533337565942162
+    }
+   ]
+  },
+  "upper": {
+   "a": 0.7806788618384248,
+   "b": -0.5244843598760074,
+   "pairs": [
+    {
+     "name": "floor",
+     "pre_y": 0.91,
+     "spec_y": 0.0,
+     "residual": 0.18593340439695927
+    },
+    {
+     "name": "ceiling",
+     "pre_y": 4.05,
+     "spec_y": 2.4,
+     "residual": 0.23726503056961334
+    },
+    {
+     "name": "front_window_sill",
+     "pre_y": 1.57,
+     "spec_y": 0.82,
+     "residual": -0.1188185467896804
+    },
+    {
+     "name": "front_window_head",
+     "pre_y": 3.1,
+     "spec_y": 2.2,
+     "residual": -0.30437988817689066
+    }
+   ],
+   "holdout": {
+    "name": "attic_floor",
+    "pre_y": 4.25,
+    "spec_y": 2.62,
+    "error": 0.17340080293729798
+   }
+  },
+  "basement": {
+   "note": "no measured basement: mapped with the ground storey's (a, b)",
+   "a": 0.7683258493114313,
+   "b": -0.7248023525609203
+  },
+  "attic": {
+   "note": "mapped with the upper storey's (a, b)",
+   "a": 0.7806788618384248,
+   "b": -0.5244843598760074
+  }
+ },
+ "detectors": {
+  "front_face": 10.32,
+  "rear_face_upper": -3.45,
+  "rear_face_ground": -3.34,
+  "stair_treads": 15
+ },
+ "landed": {
+  "basement_floor": {
+   "glb_pre": {
+    "x": [
+     -13.300778721788008,
+     8.407219610610614
+    ],
+    "z": [
+     -4.415169891357422,
+     18.874286476135254
+    ],
+    "y": [
+     -6.538306823751765,
+     -6.482927495387419
+    ]
+   },
+   "spec": {
+    "x": [
+     -6.34,
+     10.34
+    ],
+    "z": [
+     -1.22,
+     16.65
+    ],
+    "y": [
+     -5.75,
+     -5.71
+    ],
+    "centre": [
+     2.0,
+     7.72
+    ]
+   },
+   "storey_map": "basement"
+  },
+  "basement_stair": {
+   "glb_pre": {
+    "x": [
+     -5.019121079455369,
+     -2.83912834825232
+    ],
+    "z": [
+     5.104782882690429,
+     6.956548515319824
+    ],
+    "y": [
+     -6.338465658733907,
+     -4.570670639303062
+    ]
+   },
+   "spec": {
+    "x": [
+     0.06,
+     1.73
+    ],
+    "z": [
+     6.08,
+     7.5
+    ],
+    "y": [
+     -5.59,
+     -4.24
+    ],
+    "centre": [
+     0.89,
+     6.79
+    ]
+   },
+   "storey_map": "basement"
+  },
+  "outside_basement_stairwell": {
+   "glb_pre": {
+    "x": [
+     -17.7479471945702,
+     -10.94688894008283
+    ],
+    "z": [
+     -3.1806518402099613,
+     -1.0914871063232425
+    ],
+    "y": [
+     -6.538306823751765,
+     -3.00113334660454
+    ]
+   },
+   "spec": {
+    "x": [
+     -9.5,
+     -4.32
+    ],
+    "z": [
+     -0.33,
+     1.32
+    ],
+    "y": [
+     -5.75,
+     -3.03
+    ],
+    "centre": [
+     -6.91,
+     0.5
+    ]
+   },
+   "storey_map": "basement"
+  },
+  "attic_floor": {
+   "glb_pre": {
+    "x": [
+     -3.787926186874534,
+     10.898893194497107
+    ],
+    "z": [
+     -4.523726638793946,
+     23.59870606994629
+    ],
+    "y": [
+     4.238425736917741,
+     4.256006238449388
+    ]
+   },
+   "spec": {
+    "x": [
+     0.81,
+     12.23
+    ],
+    "z": [
+     -1.2,
+     20.25
+    ],
+    "y": [
+     2.78,
+     2.8
+    ],
+    "centre": [
+     6.52,
+     9.53
+    ]
+   },
+   "storey_map": "attic"
+  },
+  "attic_stair": {
+   "glb_pre": {
+    "x": [
+     3.1739055644653815,
+     6.138195134768736
+    ],
+    "z": [
+     14.723516527175903,
+     20.78493768310547
+    ],
+    "y": [
+     1.1052981404377222,
+     4.053023574923576
+    ]
+   },
+   "spec": {
+    "x": [
+     6.11,
+     8.42
+    ],
+    "z": [
+     13.45,
+     18.07
+    ],
+    "y": [
+     0.34,
+     2.64
+    ],
+    "centre": [
+     7.27,
+     15.76
+    ]
+   },
+   "storey_map": "upper"
+  },
+  "dormer_front_south": {
+   "glb_pre": {
+    "x": [
+     6.223936667002669,
+     10.845439503654825
+    ],
+    "z": [
+     4.32134610748291,
+     6.505399528503418
+    ],
+    "y": [
+     4.249951446183176,
+     8.499866663898214
+    ]
+   },
+   "spec": {
+    "x": [
+     8.57,
+     12.1
+    ],
+    "z": [
+     5.61,
+     7.31
+    ],
+    "y": [
+     2.79,
+     6.11
+    ],
+    "centre": [
+     10.34,
+     6.46
+    ]
+   },
+   "storey_map": "attic"
+  },
+  "dormer_front_north": {
+   "glb_pre": {
+    "x": [
+     6.638043806933598,
+     10.234154584707492
+    ],
+    "z": [
+     13.057857814788818,
+     15.147022787094116
+    ],
+    "y": [
+     4.249951452889484,
+     8.499866663898214
+    ]
+   },
+   "spec": {
+    "x": [
+     8.79,
+     11.54
+    ],
+    "z": [
+     12.23,
+     13.85
+    ],
+    "y": [
+     2.79,
+     6.11
+    ],
+    "centre": [
+     10.17,
+     13.04
+    ]
+   },
+   "storey_map": "attic"
+  },
+  "dormer_rear": {
+   "glb_pre": {
+    "x": [
+     -3.9753546865141036,
+     0.5614018843381476
+    ],
+    "z": [
+     8.689596954345703,
+     10.778758827209472
+    ],
+    "y": [
+     4.246304120594272,
+     8.495168783540876
+    ]
+   },
+   "spec": {
+    "x": [
+     0.81,
+     4.26
+    ],
+    "z": [
+     8.8,
+     10.44
+    ],
+    "y": [
+     2.79,
+     6.11
+    ],
+    "centre": [
+     2.53,
+     9.62
+    ]
+   },
+   "storey_map": "attic"
+  },
+  "chimney_rear": {
+   "glb_pre": {
+    "x": [
+     -4.194547471693463,
+     -3.0611778867601718
+    ],
+    "z": [
+     14.530220333099365,
+     16.144573513031006
+    ],
+    "y": [
+     4.246229757413036,
+     9.477675626553658
+    ]
+   },
+   "spec": {
+    "x": [
+     0.58,
+     1.46
+    ],
+    "z": [
+     13.22,
+     14.46
+    ],
+    "y": [
+     2.79,
+     6.87
+    ],
+    "centre": [
+     1.02,
+     13.84
+    ]
+   },
+   "storey_map": "attic"
+  },
+  "treehouse": {
+   "glb_pre": {
+    "x": [
+     -22.806039173387866,
+     -19.318236489486637
+    ],
+    "z": [
+     8.167301002502441,
+     10.921202960968017
+    ],
+    "y": [
+     0.9244682553379615,
+     3.3814479154454906
+    ]
+   },
+   "spec": {
+    "x": [
+     -13.45,
+     -10.78
+    ],
+    "z": [
+     8.21,
+     10.33
+    ],
+    "y": [
+     0.2,
+     2.12
+    ],
+    "centre": [
+     -12.12,
+     9.27
+    ]
+   },
+   "storey_map": "upper"
+  }
+ },
+ "checks": {
+  "attic_stair": {
+   "glb": {
+    "bottom_tread": [
+     [
+      6.37,
+      14.13
+     ],
+     [
+      7.81,
+      14.37
+     ]
+    ],
+    "top_tread": [
+     [
+      6.32,
+      17.15
+     ],
+     [
+      7.77,
+      17.39
+     ]
+    ],
+    "risers": 16
+   },
+   "ours": {
+    "x": [
+     5.78,
+     7.333
+    ],
+    "bottom_z": 14.081,
+    "top_z": 16.396,
+    "risers": 14
+   }
+  },
+  "basement_stair": {
+   "glb": {
+    "bottom_tread": [
+     [
+      1.22,
+      6.1
+     ],
+     [
+      1.71,
+      7.5
+     ]
+    ],
+    "top_tread": [
+     [
+      0.07,
+      6.28
+     ],
+     [
+      0.22,
+      7.29
+     ]
+    ],
+    "risers": 10
+   },
+   "ours_basement_door": {
+    "x": [
+     -1.28,
+     -0.45
+    ],
+    "z": 6.32
+   }
+  }
+ },
+ "unity_exterior_transform": {
+  "note": "SpecGreybox.Exterior: put the GLB-derived renderers (Site, and later basement/attic/treehouse) under one container with this WORLD transform instead of the current (7.67, gy-1.31, -11.616), yaw -90, scale 1. Leave WinterNeighborhood (not from the GLB) where it is. Uniform scale is justified: the per-storey vertical fits give a = 0.768 / 0.781 vs plan s = 0.757. y offset puts the GLB ground floor (pre -3.00) on ours (-3.026); valid for gy = -2.996 (the pre frame).",
+  "position": [
+   9.6141,
+   -4.015,
+   -11.1454
+  ],
+  "euler_y_deg": -89.1894,
+  "scale": 0.7572,
+  "lands": {
+   "glb_ground_floor": -3.026,
+   "glb_upper_floor": -0.065,
+   "glb_attic_floor": 2.464,
+   "glb_basement_floor": -5.707
+  }
+ },
+ "plots": [
+  "spec/captures/glb_registration/ground.png",
+  "spec/captures/glb_registration/upper.png",
+  "spec/captures/glb_registration/basement.png",
+  "spec/captures/glb_registration/attic.png",
+  "spec/captures/glb_registration/site.png"
+ ]
+}
