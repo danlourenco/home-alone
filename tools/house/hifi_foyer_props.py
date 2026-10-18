@@ -5,7 +5,8 @@
 - CHAIRS (2): mahogany side chairs, red slip seat, vase splat, shaped crest rail, square legs with an H stretcher
 - MIRROR: tall rectangular gilt pier mirror with a scrolled crest and a small apron
 - BENCH: green velvet bench with scrolled (rolled) arms on cabriole legs (Marina M01; film 2677/3888 green)
-- RUGS: the runner and the front rug, a slab with an invented pattern (foyer_textures.py) and cotton fringes at the ends
+- RUGS: the runner and the front rug, a slab with an invented pattern (foyer_textures.py) and cotton fringes at the ends; the front
+  rug is the fallback when the user's bought Nain is absent (tools/house/purchased_rugs.py, SpecGreybox.PurchasedRug)
 - PICTURES: the stair gallery (10), the picture under the landing, the landing print: gilt / dark / black / oval frames, mats, art
   from the public-domain atlas spec/dressing/foyer_art.png (foyer_textures.py)
 - PLANTS: red poinsettia on the console, white under it, red + a green plant on the landing table, crinkled gold-foil pots
@@ -43,7 +44,7 @@ def part(name, mat):
 
 wood, red, green, gilt, black, glass, brass = (part("Wood", "FP_Wood"), part("Seat", "FP_Red"), part("Velvet", "FP_Green"), part("Gilt", "FP_Gilt"),
                                                part("BlackFrame", "FP_Black"), part("Glass", "FP_Glass"), part("Brass", "FP_Brass"))
-art, mat_c, mat_b, fringe = part("Art", "FP_Art"), part("Mat", "FP_Mat"), part("MatBurgundy", "FP_MatBurgundy"), part("Fringe", "FP_Fringe")
+art, mat_c, mat_b = part("Art", "FP_Art"), part("Mat", "FP_Mat"), part("MatBurgundy", "FP_MatBurgundy")
 wicker = part("Wicker", "FP_Wicker")
 poin_foil, poin_leaf = part("PoinFoil", "FP_Foil"), part("PoinLeaf", "FP_Leaf")   # the poinsettias' own parts: hidden when the bought model is placed
 foil, leaf, bract_r, bract_w = part("Foil", "FP_Foil"), part("Leaf", "FP_Leaf"), part("BractRed", "FP_BractRed"), part("BractWhite", "FP_BractWhite")
@@ -178,6 +179,7 @@ def rug(r, along, tex):
     p.face([(x0, 0.002, z0), (x1, 0.002, z0), (x1, 0.002, z1), (x0, 0.002, z1)], (0, -1, 0))
     for (a, b, n) in (((x0, z0), (x1, z0), (0, 0, -1)), ((x1, z0), (x1, z1), (1, 0, 0)), ((x1, z1), (x0, z1), (0, 0, 1)), ((x0, z1), (x0, z0), (-1, 0, 0))):
         p.face([(a[0], 0.002, a[1]), (b[0], 0.002, b[1]), (b[0], y, b[1]), (a[0], y, a[1])], n)
+    fringe = part("Fringe_" + tex, "FP_Fringe")   # per rug: SpecGreybox hides the front rug's (body + fringe) under the bought one
     random.seed(len(tex))
     ends = ((x0, -1), (x1, 1)) if along == "x" else ((z0, -1), (z1, 1))
     span = (z0, z1) if along == "x" else (x0, x1)

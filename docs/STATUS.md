@@ -88,7 +88,7 @@ Gameplay ideas (parked, user's words): [docs/GAMEPLAY-IDEAS.md](GAMEPLAY-IDEAS.m
    the foyer in the movie suggest it's a little taller and the bottom sill starts a bit higher up. we're also missing the matching
    table on the other side of the window" (DEVIATIONS 29: landing window head ASSUMED 72 in sash). Measure sill/head from film with
    solved cameras + a second ruler; add the pair table (film).
-8r. [PAUSED by the user Oct 17, same branch; the Nain (628k tris) hung the build's triangle checks: decimate to ~30-60k + normal map before fitting] Foyer rugs (user Oct 17; next agent job after the arch/tree load): FRONT RUG = mfb64 'Persian Nain' (CC BY 4.0, credit
+8r. [FRONT RUG DONE Oct 18 overnight11 (prop, not walked): tools/house/purchased_rugs.py thins+decimates both downloads to ~32k tris, pile normal from the photo; Nain on the front rug, Heriz on the living rug (DEVIATIONS 87). Runner from the film still on wip/foyer-rugs-stair] Foyer rugs (user Oct 17; next agent job after the arch/tree load): FRONT RUG = mfb64 'Persian Nain' (CC BY 4.0, credit
    required; Assets/Purchased/Rugs/persian_nain_carpet.glb, gitignored) fitted to foyer_props front_rug (cream field per film 1616/1690;
    squash 1.88 x 2.18: crop instead if motifs read squashed), purchased_plants.py-style fit, generated rug stays the fallback.
    RUNNER = the FILM'S OWN pattern (user pick): rectify from 2677/1616 like film_wallpaper.py (red field, hooked-lozenge chain, navy

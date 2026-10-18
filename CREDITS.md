@@ -13,3 +13,8 @@ Third-party assets used by the Unity build. The model files themselves are not i
 - "Framed Corkboard | Crafted by jerovdl" by Jerovdl (https://sketchfab.com/Jerovdl), https://sketchfab.com/3d-models/framed-corkboard-crafted-by-jerovdl-b8285b2078f04afe87abd1f1ead48a66, CC BY 4.0. Buzz's bulletin board.
 - "Hershey's Chocolate Bar Unwrapped" by Anthony Yanez (https://sketchfab.com/paulyanez), https://sketchfab.com/3d-models/hersheys-chocolate-bar-unwrapped-32e0201d12be42b3b15557f2f576ea3e, CC BY 4.0.
 - "Coffee Table (Astro)" by Domingos Studios (https://sketchfab.com/domingos), https://sketchfab.com/3d-models/coffee-table-astro-7dfe3fd68cbe4c45b58ea47697e69113, CC BY 4.0. The den's glass-top table (film 2850).
+- "Persian Nain Carpet" by mfb64 (https://sketchfab.com/mfb64), https://sketchfab.com/3d-models/persian-nain-carpet-dc98944361654db191422c91e685371a,
+  CC BY 4.0. Modified: fringe thinned to every 4th strand and decimated (628k to 32k triangles), a pile normal map derived from its
+  photo, scaled non-uniformly to the measured box, matte (`tools/house/purchased_rugs.py`). The foyer's front rug.
+- "Fine Persian Heriz Carpet" by mfb64 (https://sketchfab.com/mfb64), https://sketchfab.com/3d-models/fine-persian-heriz-carpet-e198f1099ac34274ae2c867226adde79,
+  CC BY 4.0. Modified as the Nain (628k to 33k triangles), scaled to the measured box (`tools/house/purchased_rugs.py`). The living room's rug.

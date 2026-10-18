@@ -30,6 +30,26 @@ public static partial class SpecGreybox
             if (r.transform.parent != null && r.transform.parent.name == "Dressing" && pre.Any(p => r.name.StartsWith(p))) { r.enabled = false; hidden++; }
         Debug.Log($"FoyerProps: placed, hid {hidden} dressing boxes");
         PurchasedPlants(root, gy);
+        PurchasedRug(root, gy);
+    }
+
+    // The user's two Sketchfab rugs (mfb64, CC BY 4.0: CREDITS.md), decimated to ~32k triangles each and fitted by
+    // tools/house/purchased_rugs.py into the gitignored Assets/Purchased/PurchasedRug.glb: FrontRug (the Nain) on the foyer's
+    // front-rug box, LivingRug (the Heriz) on the living room's. Absent (a clone of the public repo): the generated rugs stay.
+    // Runs after Living() (SpecGreybox.cs: Living is placed before FoyerProps), so both generated rugs exist to hide.
+    static void PurchasedRug(GameObject root, float gy)
+    {
+        var a = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Purchased/PurchasedRug.glb");
+        if (a == null) { Debug.Log("PurchasedRug: not present, generated rugs kept"); return; }
+        var g = (GameObject)Object.Instantiate(a, root.transform); g.name = "PurchasedRug_HiFi"; g.transform.localPosition = new Vector3(0, gy, 0);
+        foreach (var c in g.GetComponentsInChildren<Collider>()) Object.DestroyImmediate(c);
+        foreach (var r in g.GetComponentsInChildren<MeshRenderer>()) r.gameObject.isStatic = true;
+        var hide = new Dictionary<string, string[]> { ["FoyerProps_HiFi"] = new[] { "Rug_RugFront", "Fringe_RugFront" }, ["LivingBuiltins_HiFi"] = new[] { "Rug" } };
+        int n = 0;
+        foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
+            for (var t = r.transform.parent; t != null; t = t.parent)
+                if (hide.TryGetValue(t.name, out var names)) { if (names.Contains(r.name)) { r.enabled = false; n++; } break; }
+        Debug.Log($"PurchasedRug: placed {g.GetComponentsInChildren<MeshRenderer>().Length} renderers, hid {n} generated rug renderers");
     }
 
     // The user's CGTrader plants (Royalty Free, no redistribution: Assets/Purchased/ is gitignored), fitted by
