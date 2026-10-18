@@ -93,9 +93,9 @@
     "landing": 0.9,
     "going": 0.25,
     "stone_t": 0.3,
-    "grade_y": 0.0
+    "grade_y": -0.394
    },
-   "source": "inner width 1.07 m from FILM 9930 (the door leaf, a 32 in stock leaf, as the ruler: leaf 393 px, stone faces at the door plane 515 px -> 1.07; 9952 nearer gives more, as its walls stand in front of the door plane); centred on the door; GLB outside stairwell registered x -9.50..-4.32, z -0.33..1.32 (outer z -0.365..1.305 here), top at -3.03 world = our ground floor: grade_y 0.0, rising toward -x behind the kitchen wing; film 9900/9924/9930: rough stone walls, an iron handrail on posts down each side, snow and ice on the steps"
+   "source": "inner width 1.07 m from FILM 9930 (the door leaf, a 32 in stock leaf, as the ruler: leaf 393 px, stone faces at the door plane 515 px -> 1.07; 9952 nearer gives more, as its walls stand in front of the door plane); centred on the door; GLB outside stairwell registered x -9.50..-4.32, z -0.33..1.32 (outer z -0.365..1.305 here), top at -3.03 world = our ground floor: grade_y 0.0, rising toward -x behind the kitchen wing; film 9900/9924/9930: rough stone walls, an iron handrail on posts down each side, snow and ice on the steps; grade_y -0.394 (Oct 18, changes/2026-10-18-yard-registration.json): the registered GLB yard behind the house (its rear slabs' top -3.40 world, 0.40 below our ground floor -2.996; the GLB's own areaway top tread -3.18..-3.23 sits on it) +1 cm, so the apron is flush with the yard and the stone walls stand 0.15 proud as a curb"
   },
   "chimney": {
    "value": {

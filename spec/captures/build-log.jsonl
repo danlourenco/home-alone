@@ -127,3 +127,6 @@
 {"time": "2026-10-18T12:33:06", "cmd": "build", "job": "guest-room", "why": "guest room build 5 (guest nightstand box/yaw)", "wall_s": 3, "exit": 1}
 {"time": "2026-10-18T12:35:42", "cmd": "build", "job": "guest-room", "why": "guest room build 5 (guest nightstand box/yaw)", "wall_s": 120, "exit": 0}
 {"time": "2026-10-18T12:39:37", "cmd": "bake", "job": "guest-room", "why": "load guest room trial 1 (build 5)", "wall_s": 192, "exit": 0}
+{"time": "2026-10-18T13:13:26", "cmd": "build", "job": "yard-registration", "why": "yard build 1 (registered site, grade ring, steps, routes)", "wall_s": 3, "exit": 1}
+{"time": "2026-10-18T13:15:56", "cmd": "build", "job": "yard-registration", "why": "yard build 1 (registered site, grade ring, steps, routes)", "wall_s": 126, "exit": 0}
+{"time": "2026-10-18T13:23:09", "cmd": "build", "job": "yard-registration", "why": "yard build 2 (areaway slab, garage/driveway, torch z, routes end at the shut doors)", "wall_s": 130, "exit": 0}

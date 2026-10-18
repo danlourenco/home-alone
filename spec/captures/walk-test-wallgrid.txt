@@ -142,6 +142,114 @@ ok      player down leg 3: ended 0.05 m from waypoint, 0.03 m off its floor heig
 ok      player down leg 4: ended 0.02 m from waypoint, 0.03 m off its floor height, 27 frames (clean walk 27)
 ok      player down leg 5: ended 0.00 m from waypoint, 0.03 m off its floor height, 64 frames (clean walk 64)
 ok      player down leg 6: ended 0.03 m from waypoint, 0.03 m off its floor height, 23 frames (clean walk 23)
+MARV (street -> left side -> areaway -> basement door -> basement -> stair -> Kevin's door -> kitchen)
+Stair walk test (both bodies, up and down): 66 legs, 0 blocked
+ok      bandit up leg 1: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 3: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 4: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 5: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 6: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 7: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 8: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 9: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 10: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 11: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 3: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 4: ended 0.05 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 5: ended 0.05 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 6: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 7: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 8: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 9: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 10: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 11: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 1: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 3: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 4: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 5: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 6: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 7: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 8: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 9: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 10: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 11: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 1: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 2: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 3: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 4: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 5: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 6: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 7: ended 0.04 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 8: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 9: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 10: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 11: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      player up leg 1: ended 0.01 m from waypoint, 0.03 m off its floor height, 377 frames (clean walk 377)
+ok      player up leg 2: ended 0.01 m from waypoint, 0.03 m off its floor height, 36 frames (clean walk 36)
+ok      player up leg 3: ended 0.00 m from waypoint, 0.03 m off its floor height, 307 frames (clean walk 307)
+ok      player up leg 4: ended 0.01 m from waypoint, 0.03 m off its floor height, 41 frames (clean walk 41)
+ok      player up leg 5: ended 0.04 m from waypoint, 0.03 m off its floor height, 22 frames (clean walk 23)
+ok      player up leg 6: ended 0.01 m from waypoint, 0.03 m off its floor height, 71 frames (clean walk 71)
+ok      player up leg 7: ended 0.00 m from waypoint, 0.03 m off its floor height, 24 frames (clean walk 24)
+ok      player up leg 8: ended 0.05 m from waypoint, 0.03 m off its floor height, 157 frames (clean walk 157)
+ok      player up leg 9: ended 0.02 m from waypoint, 0.03 m off its floor height, 27 frames (clean walk 27)
+ok      player up leg 10: ended 0.00 m from waypoint, 0.03 m off its floor height, 64 frames (clean walk 64)
+ok      player up leg 11: ended 0.03 m from waypoint, 0.03 m off its floor height, 23 frames (clean walk 23)
+ok      player down leg 1: ended 0.02 m from waypoint, 0.03 m off its floor height, 23 frames (clean walk 23)
+ok      player down leg 2: ended 0.01 m from waypoint, 0.03 m off its floor height, 68 frames (clean walk 64)
+ok      player down leg 3: ended 0.00 m from waypoint, 0.03 m off its floor height, 27 frames (clean walk 27)
+ok      player down leg 4: ended 0.05 m from waypoint, 0.03 m off its floor height, 157 frames (clean walk 157)
+ok      player down leg 5: ended 0.04 m from waypoint, 0.03 m off its floor height, 24 frames (clean walk 25)
+ok      player down leg 6: ended 0.04 m from waypoint, 0.03 m off its floor height, 71 frames (clean walk 72)
+ok      player down leg 7: ended 0.04 m from waypoint, 0.03 m off its floor height, 22 frames (clean walk 23)
+ok      player down leg 8: ended 0.03 m from waypoint, 0.03 m off its floor height, 41 frames (clean walk 42)
+ok      player down leg 9: ended 0.02 m from waypoint, 0.03 m off its floor height, 307 frames (clean walk 307)
+ok      player down leg 10: ended 0.02 m from waypoint, 0.03 m off its floor height, 36 frames (clean walk 36)
+ok      player down leg 11: ended 0.03 m from waypoint, 0.03 m off its floor height, 377 frames (clean walk 377)
+FRONT WALK (street -> walk -> steps -> stoop at the front door; the door is shut by design)
+Stair walk test (both bodies, up and down): 24 legs, 6 blocked
+ok      bandit up leg 1: ended 0.00 m from waypoint, 0.02 m off its floor height
+BLOCKED bandit up leg 2: ended 0.02 m from waypoint, 0.41 m off its floor height by Yard/Step_Front4 at (15.77, -3.92, 9.72) spec x,y,z
+ok      bandit up leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 4: ended 0.05 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
+BLOCKED bandit down leg 2: ended 0.03 m from waypoint, 0.41 m off its floor height
+ok      bandit down leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 4: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 1: ended 0.00 m from waypoint, 0.02 m off its floor height
+BLOCKED kevin up leg 2: ended 0.03 m from waypoint, 0.41 m off its floor height by Yard/Step_Front4 at (15.78, -3.92, 9.72) spec x,y,z
+ok      kevin up leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 4: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
+BLOCKED kevin down leg 2: ended 0.03 m from waypoint, 0.41 m off its floor height
+ok      kevin down leg 3: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 4: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      player up leg 1: ended 0.00 m from waypoint, 0.03 m off its floor height, 240 frames (clean walk 240)
+BLOCKED player up leg 2: ended 0.03 m from waypoint, 0.42 m off its floor height by Yard/Step_Front4 at (15.78, -3.91, 9.72) spec x,y,z, 73 frames (clean walk 73)
+ok      player up leg 3: ended 0.02 m from waypoint, 0.03 m off its floor height, 37 frames (clean walk 37)
+ok      player up leg 4: ended 0.00 m from waypoint, 0.03 m off its floor height, 51 frames (clean walk 51)
+ok      player down leg 1: ended 0.03 m from waypoint, 0.03 m off its floor height, 50 frames (clean walk 51)
+BLOCKED player down leg 2: ended 0.02 m from waypoint, 0.42 m off its floor height, 37 frames (clean walk 37)
+ok      player down leg 3: ended 0.02 m from waypoint, 0.03 m off its floor height, 73 frames (clean walk 73)
+ok      player down leg 4: ended 0.02 m from waypoint, 0.03 m off its floor height, 240 frames (clean walk 240)
+BACK DOOR (yard -> step -> stoop at the back door; DoorStop_BackDoor keeps it shut by design)
+Stair walk test (both bodies, up and down): 12 legs, 3 blocked
+ok      bandit up leg 1: ended 0.03 m from waypoint, 0.07 m off its floor height
+ok      bandit up leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+BLOCKED bandit down leg 1: ended 0.04 m from waypoint, 0.12 m off its floor height
+ok      bandit down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+BLOCKED kevin down leg 1: ended 0.04 m from waypoint, 0.10 m off its floor height
+ok      kevin down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      player up leg 1: ended 0.02 m from waypoint, 0.08 m off its floor height, 27 frames (clean walk 27)
+ok      player up leg 2: ended 0.01 m from waypoint, 0.03 m off its floor height, 20 frames (clean walk 20)
+BLOCKED player down leg 1: ended 0.04 m from waypoint, 0.13 m off its floor height, 19 frames (clean walk 20)
+ok      player down leg 2: ended 0.01 m from waypoint, 0.03 m off its floor height, 28 frames (clean walk 28)
 Render check (outward faces, ServiceStair): 100 parts, 0 inside-out
 Seam check: 873 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
 Leak and headroom check: 1491 points, 0 leaks, 17 low-headroom points (ground floor, outside flight 1)

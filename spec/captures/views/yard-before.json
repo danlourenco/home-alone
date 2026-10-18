@@ -1,0 +1,197 @@
+[
+ {
+  "name": "yard/before/areaway_from_yard",
+  "pos": [
+   -13.5,
+   -1.75,
+   -3.2
+  ],
+  "look_at": [
+   -7.0,
+   -4.0,
+   -0.5
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "yard/before/film4575_rear",
+  "pos": [
+   -14.0,
+   -1.6,
+   -1.0
+  ],
+  "look_at": [
+   -5.3,
+   -2.6,
+   -2.0
+  ],
+  "vfov": 45,
+  "near": 0.05
+ },
+ {
+  "name": "yard/before/back_steps",
+  "pos": [
+   -8.5,
+   -1.5,
+   -4.8
+  ],
+  "look_at": [
+   -5.5,
+   -3.0,
+   -2.5
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "yard/before/film4382_front_walk",
+  "pos": [
+   30.0,
+   -2.6,
+   -9.716
+  ],
+  "look_at": [
+   10.3,
+   -1.0,
+   -9.716
+  ],
+  "vfov": 50,
+  "near": 0.05
+ },
+ {
+  "name": "yard/before/front_steps",
+  "pos": [
+   19.0,
+   -2.5,
+   -6.5
+  ],
+  "look_at": [
+   12.0,
+   -3.4,
+   -9.7
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "yard/before/side_steps",
+  "pos": [
+   16.5,
+   -2.6,
+   5.5
+  ],
+  "look_at": [
+   10.4,
+   -3.8,
+   1.9
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "yard/before/aerial_rear",
+  "pos": [
+   -22.0,
+   14.0,
+   12.0
+  ],
+  "look_at": [
+   2.0,
+   -3.5,
+   -6.0
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "yard/before/aerial_front",
+  "pos": [
+   40.0,
+   18.0,
+   -30.0
+  ],
+  "look_at": [
+   8.0,
+   -3.5,
+   -8.0
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "yard/before/torch_film10357",
+  "pos": [
+   -2.4,
+   -1.55,
+   -1.0
+  ],
+  "look_at": [
+   -5.0,
+   -1.2,
+   -2.3
+  ],
+  "vfov": 50,
+  "near": 0.05
+ },
+ {
+  "name": "yard/before/torch_film10354",
+  "pos": [
+   -4.0,
+   -1.55,
+   -2.35
+  ],
+  "look_at": [
+   -4.85,
+   -1.15,
+   -1.85
+  ],
+  "vfov": 50,
+  "near": 0.05
+ },
+ {
+  "name": "yard/before/garage_aerial",
+  "pos": [
+   -22,
+   8,
+   -38
+  ],
+  "look_at": [
+   -4,
+   -3,
+   -23
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "yard/before/garage_from_rear_yard",
+  "pos": [
+   -18,
+   -1.6,
+   -12
+  ],
+  "look_at": [
+   -4,
+   -2.2,
+   -23
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "yard/before/film2515_drive",
+  "pos": [
+   25,
+   -2.6,
+   -30
+  ],
+  "look_at": [
+   -4,
+   -2.5,
+   -23
+  ],
+  "vfov": 50,
+  "near": 0.05
+ }
+]

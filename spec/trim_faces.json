@@ -3,10 +3,10 @@
 "inputs": {
 "spec/geometry.json": "fe9be6044fa7bebc6a4c76be20053f4abbcade8de1a1f8ff2c149bae7bcecd56",
 "spec/house_spec.json": "aa13c8ba63825b984b8fec9d3d9e0a94b75ce00158b842fe54949ec7900a05eb",
-"spec/house_spec.ground.json": "4ed2c9fbf51adcbd69418f04396458a1b9485c00a8c6efd3625b6d38104bb44f",
+"spec/house_spec.ground.json": "b2202c1e6656e5f08dccf8c5a2836afd2a9aaf8a7d2b300ab8cb65f0f4ed7286",
 "spec/dressing/foyer.json": "ddc26402b9a3aab46412955dd1c9a0f8ea1d7f39150543c1f91ed2f981c5c7d3",
 "spec/dressing/finishes.json": "74ce77dd18f489364cbbd162b335c2e015787bdddf7ec290fe9fc7b4a0e6177f",
-"spec/openings.json": "02b539e58537d3d33d52d9fa3bb1fc59ae812f033386f313e9fb2653b588b38f",
+"spec/openings.json": "5630fb7150bbdd3a6b7e7461170ce04b2c234b2279a52f8290585a8fdc3c506c",
 "tools/house/trim_faces.py": "0f8a81795c619094f45e3c9aa87da0fce9fe95e058432c36a34730ffff54b76a"
 },
 "own_trim": true,

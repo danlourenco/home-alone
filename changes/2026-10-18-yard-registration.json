@@ -1,0 +1,176 @@
+{
+ "change": "Yard registration TRIAL 1: the old GLB's site slabs placed with the registered transform (spec/glb_registration.json unity_exterior_transform) instead of the front-door alignment at scale 1; the areaway's grade lowered to the registered rear yard; grade ring, front stoop/steps/walk, side steps and back-door stoop where the GLB leaves holes or drops; neighbourhood lifted 0.396 m (plan unchanged)",
+ "target": "House_WallGrid",
+ "premise": "The registration that placed the basement (similarity s 0.757, rms 0.23 m on 23 facade/stair features) also places the GLB's yard levels round our house: rear yard 0.40 m below our ground floor, left side 0.59, front yard 1.33 with the GLB's terrace and stoop in front of the door.",
+ "claim": {
+  "value": {
+   "unity_exterior_transform": {
+    "position": [
+     9.6141,
+     -4.015,
+     -11.1454
+    ],
+    "euler_y_deg": -89.1894,
+    "scale": 0.7572
+   },
+   "areaway_grade_y": -0.394,
+   "rear_yard_y": -3.39,
+   "side_yard_y": -3.59,
+   "front_yard_y": -4.32,
+   "front_steps": "stoop -3.09 (0.10 under the sill), GLB stoop -3.10/-3.17, then 7 risers of 0.164 to the front yard",
+   "back_steps": "stoop -3.127, step -3.259, yard -3.39 (3 risers of 0.131 from the sill)"
+  },
+  "data": [
+   "glb-registration:23-features"
+  ],
+  "scale": [
+   "glb-registration:similarity"
+  ],
+  "upstream": [
+   "spec:geometry"
+  ],
+  "risks": [
+   "registration"
+  ],
+  "applies_to": [
+   "yard",
+   "basement_areaway"
+  ],
+  "measured_in": [
+   "yard",
+   "basement_areaway"
+  ],
+  "note": "levels are the registered GLB's (its slabs' tops); the ring boxes, the front steps, the side steps and the back stoop are AUTHORED (DEVIATIONS 93); WinterNeighborhood keeps its plan and moves up 0.396 m"
+ },
+ "history": [
+  {
+   "date": "2026-10-16",
+   "what": "Exterior(): the GLB's ground-level site + WinterNeighborhood at the front-door alignment, scale 1 (user: 'use the previous models outside snow and background')",
+   "outcome": "superseded"
+  },
+  {
+   "date": "2026-10-18",
+   "what": "Basement shell (changes/2026-10-18-basement-shell.json, accepted): areaway grade at the ground floor (GLB stairwell top); the unregistered yard lay ~2.6 m lower round the house (DEVIATIONS 91 (7))",
+   "outcome": "accepted"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "FILM 4575 (day, rear): the areaway's concrete apron lies flush with the yard's snow and its stone coping stands a curb's height proud; the back door is reached by a small stoop one or two steps above that grade, beside the areaway. Built: apron flush with the ring (-3.39), coping 0.15 proud, stoop + one step (3 risers of 0.131 from the sill)",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:4575"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "none"
+   ],
+   "tests": [
+    "registration"
+   ]
+  },
+  {
+   "what": "FILM 4382 (day, front straight-on): the front door stands on a stoop above a flight of red steps (6-7 risers) that runs down through two terraced brick beds to the front walk; the registered GLB puts the front yard 1.33 m under the floor with a terrace (-3.28) and stoop (-3.10) at the door. Built: stoop, terrace fill, 7 risers of 0.164 to the yard, walk to the street. Counts agree (ratio: risers x a 0.16-0.18 riser = 1.1-1.3 m)",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:4382"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "none"
+   ],
+   "tests": [
+    "registration"
+   ]
+  },
+  {
+   "what": "registered GLB's own areaway: its top tread -3.18..-3.23 sits 0.2 m over its rear yard slabs (-3.40), i.e. the stairwell meets the yard; our apron at -3.39 keeps that relation (the old grade_y 0.0 came from the stairwell walls' tops, not the yard)",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "glb-registration:23-features"
+   ],
+   "scale": [
+    "glb-registration:similarity"
+   ],
+   "upstream": [
+    "spec:geometry"
+   ],
+   "tests": []
+  },
+  {
+   "what": "build gates (build 2, ~/.cache/home-alone-2): MARV route street -> left side -> areaway -> basement door -> basement -> flight -> Kevin's door -> kitchen 66 legs 0 blocked (bandit, Kevin, player, both ways); BASEMENT walk 36 legs 0 blocked (build 1 had 3: GLB slab object257 over the areaway's top steps, now replaced); FRONT WALK 24 legs, 6 'blocked' and BACK DOOR 12 legs, 3 'blocked', every one arriving within 0.04 m of its waypoint but 0.10-0.42 m off the expected floor (the GLB driveway loop crossing the walk at x ~20 stands 0.41 m over it; the back walker rests on the step's edge); both doors are shut by design (DoorStop_BackDoor; the front door is a model in a closed wall); seam 0; clash 0; z-fight 2 pairs (living gifts vs rug, pre-existing); envelope 0 thin; 68 exterior renderers removed inside rooms (GLB areaway pieces, its front-yard slab, a driveway part, neighbourhood shutters)",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "build"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": []
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/yard/before/areaway_from_yard.png",
+   "spec/captures/views/yard/before/film4575_rear.png",
+   "spec/captures/views/yard/before/back_steps.png",
+   "spec/captures/views/yard/before/film4382_front_walk.png",
+   "spec/captures/views/yard/before/front_steps.png",
+   "spec/captures/views/yard/before/side_steps.png",
+   "spec/captures/views/yard/before/aerial_rear.png",
+   "spec/captures/views/yard/before/aerial_front.png"
+  ],
+  "after": [
+   "spec/captures/views/yard/after/areaway_from_yard.png",
+   "spec/captures/views/yard/after/film4575_rear.png",
+   "spec/captures/views/yard/after/back_steps.png",
+   "spec/captures/views/yard/after/film4382_front_walk.png",
+   "spec/captures/views/yard/after/front_steps.png",
+   "spec/captures/views/yard/after/side_steps.png",
+   "spec/captures/views/yard/after/aerial_rear.png",
+   "spec/captures/views/yard/after/aerial_front.png",
+   "spec/captures/views/yard/after/garage_aerial.png",
+   "spec/captures/views/yard/after/garage_from_rear_yard.png",
+   "spec/captures/views/yard/after/film2515_drive.png",
+   "spec/captures/views/yard/after/torch_film10357.png",
+   "spec/captures/views/yard/after/torch_film10354.png"
+  ],
+  "compare": [
+   "spec/captures/views/yard/compare/film2515_drive_vs_film2515.png",
+   "spec/captures/views/yard/compare/film4382_front_walk_vs_film4382.png",
+   "spec/captures/views/yard/compare/film4575_rear_vs_film4575.png",
+   "spec/captures/views/yard/compare/garage_from_rear_yard_vs_film6815.png",
+   "spec/captures/views/yard/compare/torch_film10354_vs_film10354.png",
+   "spec/captures/views/yard/compare/torch_film10357_vs_film10357.png"
+  ]
+ },
+ "user_walk": "pending",
+ "property": {
+  "garage": {
+   "x": [
+    -8.0,
+    -0.5
+   ],
+   "z": [
+    19.7,
+    26.7
+   ],
+   "eave_above_yard_m": 2.7,
+   "cupola_top_above_yard_m": 5.4,
+   "doors": "+x gable, toward the street",
+   "vs_film": "2515 shows two doors under an OCULUS gable (GLB: cupola); 6815 a lower hipped roof"
+  },
+  "driveway": "object161: side drive to the garage + a loop across the front lawn (not in film 4382)",
+  "treehouse": "registered x -13.45..-10.78, z 8.21..10.33: NOT built here (own job)",
+  "not_in_glb": "trees, fences, lamp posts, tire-swing tree"
+ }
+}

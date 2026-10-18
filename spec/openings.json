@@ -4,8 +4,8 @@
 "inputs": {
 "spec/geometry.json": "fe9be6044fa7bebc6a4c76be20053f4abbcade8de1a1f8ff2c149bae7bcecd56",
 "spec/house_spec.json": "aa13c8ba63825b984b8fec9d3d9e0a94b75ce00158b842fe54949ec7900a05eb",
-"spec/house_spec.ground.json": "4ed2c9fbf51adcbd69418f04396458a1b9485c00a8c6efd3625b6d38104bb44f",
-"spec/dressing/store_props.json": "0093ecd3ceae5b62886558c6d15170e775532f8629d6d40b12225fea59d8b941",
+"spec/house_spec.ground.json": "b2202c1e6656e5f08dccf8c5a2836afd2a9aaf8a7d2b300ab8cb65f0f4ed7286",
+"spec/dressing/store_props.json": "64c4e10d143bf8e549a2bb23edf29bae9c25a1f25540b5159b9e816aae481d41",
 "spec/dressing/french_doors.json": "a5da39a702d68886d0f0a1e4ea5c20e62ca81435868ce73d253eaa209c3b4663",
 "spec/dressing/buzz.json": "adbe2e533194393922314595597d1404a3c1496c4d02da480ba9cb955d53eb7a",
 "tools/house/hifi_door.py": "43caa8e4502f58c7b108e6a1e623e15b7f158f7aac7dd50510b2abaf2d739788",

@@ -359,7 +359,7 @@ public static partial class SpecGreybox
         Step("WalkTest ground");
         FloorY = gy; report += "GROUND\n" + WalkTest(gspaces, gdoors); FloorY = 0f;
         Step("StairWalk");
-        report += StairWalk(stairPath) + StairWalk(atticPath) + StairWalk(servicePath) + (basementPath.Count > 1 ? "BASEMENT (kitchen -> landing -> flight -> outside door -> areaway to grade)\n" + StairWalk(basementPath) : "");
+        report += StairWalk(stairPath) + StairWalk(atticPath) + StairWalk(servicePath) + (basementPath.Count > 1 ? "BASEMENT (kitchen -> landing -> flight -> outside door -> areaway to grade)\n" + StairWalk(basementPath) : "") + string.Concat(YardRoutes(gy, basementPath).Select(r => r.name + "\n" + StairWalk(r.pts)));
         Step("RenderCheck");
         report += RenderCheck(groot.transform.Find("ServiceStair"));
         var dressing = GameObject.Find("Ground/Dressing"); dressing?.SetActive(false); Physics.SyncTransforms();
@@ -1570,20 +1570,36 @@ public static partial class SpecGreybox
         var src = EditorSceneManager.OpenScene("Assets/Scenes/IntactHouseReference.unity", OpenSceneMode.Additive);
         var ext = new GameObject("Exterior");
         ext.transform.SetPositionAndRotation(new Vector3(10.27f - 2.6f, gy - 1.31f, -9.716f - 1.9f), Quaternion.Euler(0, -90f, 0));
+        // the GLB's site, REGISTERED to our house (Oct 18, TRIAL; changes/2026-10-18-yard-registration.json): tools/house/register_glb.py's
+        // similarity (s 0.757, 23 facade/stair features) as a world transform; its y was solved for gy -2.996, so it moves with gy
+        var reg = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/glb_registration.json"))))["unity_exterior_transform"];
         var site = new GameObject("Site"); site.transform.SetParent(ext.transform, false);
+        site.transform.SetPositionAndRotation(new Vector3((float)reg["position"][0], (float)reg["position"][1] + gy + 2.996f, (float)reg["position"][2]), Quaternion.Euler(0, (float)reg["euler_y_deg"], 0));
+        site.transform.localScale = Vector3.one * (float)reg["scale"];
         var glb = src.GetRootGameObjects().First(g => g.name == "IntactGLB");
         if (PrefabUtility.IsPartOfPrefabInstance(glb)) PrefabUtility.UnpackPrefabInstance(glb, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
         var house = new Bounds(new Vector3(2.7f, 0, 8.2f), new Vector3(28.7f, 100f, 21.9f));   // the GLB house's footprint (its window assemblies' extent)
-        int kept = 0;
+        int kept = 0, prop = 0;
         foreach (var r in glb.GetComponentsInChildren<MeshRenderer>().ToList())
         {
-            if (!r.enabled || r.bounds.max.y > 1.35f || house.Contains(new Vector3(r.bounds.center.x, 0, r.bounds.center.z))) continue;   // ground-level site only
+            if (!r.enabled || r.name == "object183") continue;   // object183: the treehouse (built to the film by its own job, at the registered GLB position)
+            if (r.name == "object257") continue;                 // a rear-yard slab that ran over the areaway's top steps: SpecGreybox.Yard's Grade_RearW
+            if (r.bounds.max.y > 1.35f || house.Contains(new Vector3(r.bounds.center.x, 0, r.bounds.center.z)))
+            {   // the property beyond the house (user Oct 18: "a good layout of the property, including the standalone garage"): the GLB
+                // merges parts by material, so the garage shares meshes with the house shell; its triangles are cut out by region
+                if (PropertyPart(r, site.transform) != null) prop++;
+                continue;
+            }
             r.transform.SetParent(null, true); UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(r.gameObject, here);
             r.transform.SetParent(site.transform, false); kept++;
         }
         var hood = src.GetRootGameObjects().First(g => g.name == "WinterNeighborhood");
         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(hood, here); hood.transform.SetParent(ext.transform, false);
+        // the neighbourhood keeps its plan; up 0.396 m so its street (top -0.39 local) sits just over the registered front yard (-4.33
+        // world): left at the old height the yard slabs buried half the street (DEVIATIONS 93)
+        hood.transform.localPosition = Vector3.up * 0.396f;
         EditorSceneManager.CloseScene(src, true);
+        Yard(ext, gy, site.GetComponentsInChildren<MeshRenderer>().FirstOrDefault(r => r.name == "object251")?.sharedMaterial ?? mFloor);
         // nothing from outside may stand inside the measured house: the reference scene's facade shutters were fitted to the GLB shell
         // (dropped above), and its upper ones hung 0.8 m inside Buzz's and Kevin's rooms as black boxes (walk note Oct 17 18:10). Every
         // exterior renderer with any of 27 points of its bounds inside a room volume (SpecGreybox.EnvelopeRooms) is removed.
@@ -1601,8 +1617,99 @@ public static partial class SpecGreybox
             }
             if (hit) { inside.Add(r.transform.parent.name + "/" + r.name); Object.DestroyImmediate(r.gameObject); }
         }
-        Debug.Log($"Exterior: {kept} site meshes from the GLB, {hood.GetComponentsInChildren<Renderer>().Length} neighborhood renderers; " +
+        Debug.Log($"Exterior: {kept} site meshes and {prop} property parts (garage, driveway) from the GLB, {hood.GetComponentsInChildren<Renderer>().Length} neighborhood renderers; " +
                   $"{inside.Count} inside the rooms removed ({string.Join(", ", inside.GroupBy(n => n).Select(q => $"{q.Count()} x {q.Key}"))})");
+    }
+
+    // The GLB's garage and driveway (registered with the site): triangles of a GLB renderer whose registered centroid lies in the
+    // garage's plot (spec x -8.3..-0.3, z 19.55..28.2: the detached garage behind the den end, film 2515/6810) or, for the driveway
+    // meshes (object161/192), anywhere outside our house's footprint, become a new mesh under the Site (same local pose, collider).
+    static GameObject PropertyPart(MeshRenderer r, Transform site)
+    {
+        var mf = r.GetComponent<MeshFilter>(); if (mf == null || mf.sharedMesh == null) return null;
+        var m = mf.sharedMesh; var vs = m.vertices; var tr = r.transform;   // tr: the GLB's pose in the reference scene = the Site's local space
+        bool drive = r.name == "object161" || r.name == "object192";
+        bool Keep(Vector3 a)
+        {
+            var w = site.TransformPoint(a); float x = w.x, z = -w.z;
+            if (x > -8.3f && x < -0.3f && z > 19.55f && z < 28.2f) return true;
+            return drive && !(x > -5.6f && x < 10.6f && z > -1.4f && z < 20.2f);
+        }
+        var map = new Dictionary<int, int>(); var subs = new List<List<int>>();
+        for (int s = 0; s < m.subMeshCount; s++)
+        {
+            var t = m.GetTriangles(s); var keep = new List<int>();
+            for (int i = 0; i < t.Length; i += 3)
+                if (Keep(tr.TransformPoint((vs[t[i]] + vs[t[i + 1]] + vs[t[i + 2]]) / 3f)))
+                    for (int k = 0; k < 3; k++) { if (!map.TryGetValue(t[i + k], out int j)) map[t[i + k]] = j = map.Count; keep.Add(j); }
+            subs.Add(keep);
+        }
+        if (map.Count == 0) return null;
+        var order = map.OrderBy(q => q.Value).Select(q => q.Key).ToArray();
+        var nm = new Mesh { name = r.name + "_property", indexFormat = UnityEngine.Rendering.IndexFormat.UInt32 };
+        nm.vertices = order.Select(i => vs[i]).ToArray();
+        if (m.normals.Length > 0) { var n = m.normals; nm.normals = order.Select(i => n[i]).ToArray(); }
+        if (m.uv.Length > 0) { var u = m.uv; nm.uv = order.Select(i => u[i]).ToArray(); }
+        if (m.tangents.Length > 0) { var tg = m.tangents; nm.tangents = order.Select(i => tg[i]).ToArray(); }
+        var mats = new List<Material>(); nm.subMeshCount = subs.Count(q => q.Count > 0); int si = 0;
+        for (int s = 0; s < subs.Count; s++) if (subs[s].Count > 0) { nm.SetTriangles(subs[s], si++); mats.Add(r.sharedMaterials[Mathf.Min(s, r.sharedMaterials.Length - 1)]); }
+        nm.RecalculateBounds();
+        var go = new GameObject(r.name + "_property"); go.transform.SetParent(site, false);
+        go.transform.localPosition = tr.position; go.transform.localRotation = tr.rotation; go.transform.localScale = tr.lossyScale;
+        go.AddComponent<MeshFilter>().sharedMesh = nm; go.AddComponent<MeshRenderer>().sharedMaterials = mats.ToArray();
+        go.AddComponent<MeshCollider>().sharedMesh = nm; go.isStatic = true;
+        return go;
+    }
+
+    // Yard grade round the house (Oct 18, TRIAL; changes/2026-10-18-yard-registration.json, DEVIATIONS 93). The registered GLB site
+    // is a few snow slabs at three levels: rear yard -3.40, left side -3.59, front yard -4.33 (world; our ground floor -2.996). Its
+    // slabs that ran under the house (and the front yard's, which touches the basement) are dropped, so these boxes close the ring
+    // between the house and the slabs at the GLB's levels (+1 cm, no coplanar faces), outside every foundation wall; plus what the
+    // GLB lacks: the stoop and terrace fill against our front wall, the front steps (film 4382: red steps down through the terraced
+    // beds) and walk, steps from the front yard up to the side yard, and the back-door stoop (film 4575). Spec x, z; world y.
+    static readonly (string n, float x0, float x1, float z0, float z1, float top)[] YardBoxes = {
+        ("Grade_RearA", -9.642f, -5.33f, -1.0f, -0.365f, -3.39f), ("Grade_RearB", -9.642f, -5.33f, 1.305f, 20.6f, -3.39f),   // either side of the areaway
+        ("Grade_RearA2", -9.642f, -9.06f, -6.3f, -1.0f, -3.39f),
+        ("Grade_RearW", -21.85f, -9.642f, -6.3f, 3.10f, -3.40f),   // replaces the GLB's slab object257, which ran 0.7 m over the areaway's top steps (head height)
+        ("Grade_RearC", -5.33f, -1.65f, 4.22f, 20.6f, -3.39f), ("Grade_RearD", -1.65f, -0.13f, 7.78f, 20.6f, -3.39f),
+        ("Grade_RearE", -0.13f, 1.44f, 11.57f, 20.6f, -3.39f), ("Grade_RearF", 1.44f, 2.21f, 16.21f, 20.6f, -3.39f),
+        ("Grade_DenSide", 2.21f, 9.41f, 20.06f, 20.6f, -4.32f), ("Grade_DenFront", 9.41f, 10.40f, 16.37f, 20.6f, -4.32f),
+        ("Grade_Front", 10.40f, 22.5f, -5.4f, 25.0f, -4.32f),                                                           // the GLB's front-yard slab, off the foundation
+        ("Terrace_L", 10.27f, 11.70f, 3.71f, 8.31f, -3.27f), ("Terrace_R", 10.27f, 11.70f, 11.20f, 15.82f, -3.27f),     // fill to the GLB's terrace (-3.28)
+        ("Stoop_Front", 10.27f, 11.70f, 8.31f, 11.20f, -3.09f),                                                         // to the GLB's stoop (-3.10): 0.10 under the sill
+        ("Path_Front", 15.60f, 24.40f, 8.97f, 10.47f, -4.30f),                                                          // to the neighbourhood's walk
+        ("Stoop_Back", -6.43f, -5.33f, 1.75f, 3.25f, -3.127f), ("Step_Back", -6.73f, -6.43f, 1.75f, 3.25f, -3.259f),   // sill -2.996: 3 risers of 0.131
+    };
+
+    static void Yard(GameObject ext, float gy, Material snow)
+    {
+        var g = new GameObject("Yard"); g.transform.SetParent(ext.transform, false); g.transform.rotation = Quaternion.identity;
+        float d = gy + 2.996f;   // the levels are the registered GLB's at gy -2.996
+        var stone = Mat("Yard_Steps", new Color(0.50f, 0.22f, 0.18f));   // film 4382: red steps
+        var walk = Mat("Yard_Walk", new Color(0.45f, 0.43f, 0.40f));
+        foreach (var b in YardBoxes)
+            Box(g, b.n, b.x0, b.x1, -b.z1, -b.z0, b.n.StartsWith("Grade") ? b.top + d - 0.30f : b.x0 > 0 ? -4.35f + d : b.top + d - 0.40f, b.top + d,   // front pieces stand on the front yard
+                b.n.StartsWith("Grade") || b.n.StartsWith("Terrace") ? snow : b.n.StartsWith("Path") ? walk : stone);
+        for (int k = 1; k <= 6; k++)   // front steps: from the GLB stoop's lower level (-3.17, x 13.80) down to the front yard, 7 risers of 0.164
+            Box(g, $"Step_Front{k}", 13.80f + 0.30f * (k - 1), 13.80f + 0.30f * k, -10.47f, -8.97f, -4.35f + d, -3.17f - 0.164f * k + d, stone);
+        for (int k = 1; k <= 3; k++)   // front yard (-4.32) up to the side yard (-3.59, GLB slab edge x ~10.46): 4 risers of 0.1825, rising -x
+            Box(g, $"Step_Side{k}", k == 3 ? 10.25f : 10.85f + 0.30f * (2 - k), 10.85f + 0.30f * (3 - k), 1.3f, 2.6f, -4.35f + d, -4.32f + 0.1825f * k + d, stone);
+    }
+
+    // the outside routes (spec x, world y, spec z): Marv from the street round the left side to the areaway, then the basement path
+    // backwards (down the areaway, through the door, across, up the flight, through Kevin's door into the kitchen); the front walk
+    // to the front door; the back steps into the kitchen
+    static List<(string name, List<Vector3> pts)> YardRoutes(float gy, List<Vector3> basementPath)
+    {
+        float d = gy + 2.996f;
+        List<Vector3> W(params float[] q) => Enumerable.Range(0, q.Length / 3).Select(i => new Vector3(q[3 * i], q[3 * i + 1] + d, -q[3 * i + 2])).ToList();
+        var marv = W(34.0f, -4.30f, -2.0f, 12.0f, -4.32f, -1.95f, 9.9f, -3.59f, -1.95f, -8.0f, -3.59f, -1.95f, -10.14f, -3.40f, -0.85f);
+        marv.AddRange(Enumerable.Reverse(basementPath));
+        return new List<(string, List<Vector3>)> {
+            ("MARV (street -> left side -> areaway -> basement door -> basement -> stair -> Kevin's door -> kitchen)", marv),
+            ("FRONT WALK (street -> walk -> steps -> stoop at the front door; the door is shut by design)", W(34.0f, -4.30f, 9.716f, 20.0f, -4.30f, 9.716f, 15.75f, -4.30f, 9.716f, 13.6f, -3.17f, 9.716f, 10.65f, -3.09f, 9.716f)),
+            ("BACK DOOR (yard -> step -> stoop at the back door; DoorStop_BackDoor keeps it shut by design)", W(-8.5f, -3.39f, 2.5f, -6.9f, -3.39f, 2.5f, -5.75f, -3.127f, 2.5f)),
+        };
     }
 
     static void Volume(GameObject root)
