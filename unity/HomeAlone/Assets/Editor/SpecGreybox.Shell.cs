@@ -25,7 +25,8 @@ public static partial class SpecGreybox
 
     static void Shell(GameObject ext, float gy)
     {
-        ShellGlow.Clear(); ShellLights.Clear();
+        // (ShellGlow / ShellLights are cleared in ExteriorPlants, which runs first: clearing here dropped the yard's lights from the
+        // night switch, so they glowed by day; build 4)
         var S = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/exterior_shell.json"))));
         var holder = new GameObject("HouseShell"); holder.transform.SetParent(ext.transform, false);
         holder.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
@@ -173,7 +174,7 @@ public static partial class SpecGreybox
             foreach (var i in F) tris.Add(b + i);
         }
         var mesh = new Mesh { name = n, indexFormat = IndexFormat.UInt32 }; mesh.SetVertices(vs); mesh.SetTriangles(tris, 0); mesh.RecalculateNormals(); mesh.RecalculateBounds();
-        Directory.CreateDirectory("Assets/Models/Generated"); AssetDatabase.DeleteAsset($"Assets/Models/Generated/{n}.asset"); AssetDatabase.CreateAsset(mesh, $"Assets/Models/Generated/{n}.asset");
+        // the mesh is saved inside the scene (as PropertyPart's): an asset made in the scratch copy is missing from the project after a load
         var g = new GameObject(n); g.transform.SetParent(parent.transform, false); g.isStatic = true;
         g.AddComponent<MeshFilter>().sharedMesh = mesh; var r = g.AddComponent<MeshRenderer>(); r.sharedMaterial = m; r.shadowCastingMode = ShadowCastingMode.Off;
         ShellGlow.Add(r); return g;
@@ -184,6 +185,7 @@ public static partial class SpecGreybox
     // (film 10, 1470: the shrubs and terraces lit at night), and lamp posts at the street (film 10 left, 1470 right).
     static void ExteriorPlants(GameObject yard, float d)
     {
+        ShellGlow.Clear(); ShellLights.Clear();   // the exterior's night set starts here (Shell adds to it after)
         var a = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Models/Foyer/ExteriorPlants.glb");
         if (a == null) { Debug.LogWarning("ExteriorPlants: missing ExteriorPlants.glb"); return; }
         // a holder at the WORLD origin: the yard's parent (the registered site) is offset, and every position below is world
@@ -213,10 +215,10 @@ public static partial class SpecGreybox
             else Debug.LogWarning($"ExteriorPlants: no bed under {p.name} at {o}");
             if (p.name.Contains("urn") || p.name.Contains("fir")) continue;
             foreach (var r in p.GetComponentsInChildren<MeshRenderer>())
-            {   // mini-lights on the shrub's ellipsoid, upper 80%, ~45 a square metre
+            {   // mini-lights on the shrub's ellipsoid, upper 80%, ~32 a square metre
                 if (r.name.Contains("stem")) continue;
-                var b = r.bounds; var c = b.center; var e = b.extents + Vector3.one * 0.05f;   // just outside the leaf cards
-                int n = Mathf.RoundToInt(4f * Mathf.PI * Mathf.Pow((e.x * e.y + e.x * e.z + e.y * e.z) / 3f, 1f) * 45f);
+                var b = r.bounds; var c = b.center; var e = b.extents + Vector3.one * 0.035f;   // at the leaf cards' tips
+                int n = Mathf.RoundToInt(4f * Mathf.PI * Mathf.Pow((e.x * e.y + e.x * e.z + e.y * e.z) / 3f, 1f) * 32f);
                 for (int k = 0; k < n; k++)
                 {
                     var v = new Vector3((float)(rnd.NextDouble() * 2 - 1), (float)(rnd.NextDouble() * 2 - 1), (float)(rnd.NextDouble() * 2 - 1));
@@ -253,5 +255,15 @@ public static partial class SpecGreybox
             ShellLights.Add(NightLight(posts, "LampPostLight", new Vector3(x, y0 + 3.48f, -z), 1200f, 12f));
         }
         Debug.Log($"ExteriorPlants: {g.transform.childCount} plants ({dropped} on a bed), {pts.Count} mini-lights, {ShellLights.Count} night lights");
+    }
+
+    // every exterior mini-light / lantern glow must switch with N (build 4 shipped the yard's glowing by day): logged per build
+    static void NightSetCheck(HouseNightMode mode)
+    {
+        var set = new HashSet<Renderer>(mode.glowRenderers);
+        int miss = Object.FindObjectsByType<MeshRenderer>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+            .Count(r => r.sharedMaterial != null && (r.sharedMaterial.name.StartsWith("HiFi_Xmas") || r.sharedMaterial.name.StartsWith("HiFi_ExtLampGlobe")) && !set.Contains(r));
+        int day = ShellLights.Count(l => l != null && !l.transform.IsChildOf(mode.nightLayer.transform));
+        Debug.Log(miss == 0 && day == 0 ? $"Night set check: exterior glows and {ShellLights.Count} lights switch with N" : $"Night set check FAIL: {miss} glow renderers not switched, {day} exterior lights outside the night layer");
     }
 }

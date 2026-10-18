@@ -1559,6 +1559,7 @@ public static partial class SpecGreybox
         WindowBackdrop(dayLayer, lamps != null ? lamps.gameObject : null, groundY);   // SpecGreybox.Backdrop.cs: winter backdrop outside the windows (overnight5)
         var mode = new GameObject("Day and night - press N").AddComponent<HouseNightMode>(); mode.transform.parent = day.transform; mode.glowRenderers = glow.Concat(ShellGlow).ToArray();
         mode.nightLayer = lamps != null ? lamps.gameObject : null; mode.dayLayer = dayLayer; mode.interiorLights = new Light[0]; mode.daytimeEnabled = new bool[0];
+        if (lamps != null) NightSetCheck(mode);   // SpecGreybox.Shell.cs
         if (lamps != null)   // night sky (user, Oct 16: "when it's nighttime i still see the daylight streaming from outside")
         {
             string np = "Assets/Settings/NightSky.asset"; AssetDatabase.DeleteAsset(np);
