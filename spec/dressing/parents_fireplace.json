@@ -1,0 +1,99 @@
+{
+ "note": "The parents' bedroom fireplace (Oct 18 2026, TRIAL; changes/2026-10-18-parents-fireplace.json). Written by tools/house/parents_fireplace_measure.py --write from Marina p2 195.25 s (door 80 in ruler; check 200 s at the switch plate). Spec metres: x along the hall wall, d = metres out of the wall face (z = wall_z - d), y above the upper floor. Read by tools/house/hifi_parents_fireplace.py (ParentsFireplace.glb) and SpecGreybox.ParentsFireplace.cs (colliders).",
+ "wall_z": 5.3239,
+ "centre_x": 4.436,
+ "built_gap": 2.497,
+ "marina_gap": 2.223,
+ "shelf": {
+  "w": 1.27,
+  "top": 1.12,
+  "depth": 0.2,
+  "t": 0.035
+ },
+ "case": {
+  "w": 1.18,
+  "depth": 0.11,
+  "frieze_bottom": 0.74
+ },
+ "slate": {
+  "w": 0.85,
+  "top": 0.74,
+  "face": 0.09
+ },
+ "firebox": {
+  "w": 0.6,
+  "top": 0.62,
+  "back": 0.025
+ },
+ "hearth": {
+  "w": 1.46,
+  "depth": 0.5,
+  "h": 0.033
+ },
+ "painting": {
+  "frame_w": 0.73,
+  "frame_h": 0.63,
+  "bottom": 1.355,
+  "opening": [
+   0.49,
+   0.39
+  ],
+  "art": "spec/dressing/parents_roses.png"
+ },
+ "colliders": [
+  {
+   "name": "parents_fireplace",
+   "x": [
+    3.844,
+    5.028
+   ],
+   "y": [
+    0.0,
+    1.12
+   ],
+   "z": [
+    5.124,
+    5.3239
+   ]
+  }
+ ],
+ "measured": {
+  "claim": {
+   "camera_rms_px": 0.91,
+   "camera": [
+    0.695,
+    1.299,
+    4.063
+   ],
+   "yaw_deg": -16.3,
+   "leaf_width_free": 0.812,
+   "crown_bottom_h": 2.274,
+   "casing_R_to_corner": 2.223,
+   "shelf_w": 1.271,
+   "shelf_top": 1.124,
+   "case_w": 1.184,
+   "slate_w": 0.853,
+   "slate_top": 0.74,
+   "frieze_bottom": 0.767,
+   "box_w": 0.6,
+   "box_top": 0.616,
+   "hearth_h": 0.033,
+   "hearth_w": 1.462,
+   "hearth_depth": 0.503,
+   "centre_from_casing_R": 1.132,
+   "centre_to_corner": 1.091,
+   "case_foot": 0.004
+  },
+  "check": {
+   "camera_rms_px": 0.18,
+   "f_px": 1390,
+   "camera_rel_plate": [
+    -0.507,
+    0.121,
+    1.985
+   ],
+   "yaw_deg": -43.6,
+   "slate_w": 0.905
+  }
+ }
+}

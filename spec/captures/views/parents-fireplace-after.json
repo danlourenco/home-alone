@@ -1,0 +1,5 @@
+[
+ {"name": "parents_fireplace/after/marina195", "pos": [5.789, 1.299, -1.261], "look_at": [4.945, 1.247, -4.139], "vfov": 41.4},
+ {"name": "parents_fireplace/after/frontal", "pos": [4.436, 1.10, -3.4], "look_at": [4.436, 0.95, -5.32], "vfov": 60},
+ {"name": "parents_fireplace/after/kevin_eye_leg", "pos": [5.25, 1.10, -4.75], "look_at": [4.95, 0.6, -5.3], "vfov": 60}
+]

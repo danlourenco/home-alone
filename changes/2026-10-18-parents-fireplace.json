@@ -1,0 +1,129 @@
+{
+ "gate": 8,
+ "change": "Parents' bedroom fireplace (TRIAL): a white Federal mantel (legs with pilaster strips, capitals, frieze with tablet and two beads, shelf), black slate surround and hearth, a 6.5 cm firebox with grate and logs, brass-framed arched screen and tool stand, generated to measurement (tools/house/hifi_parents_fireplace.py -> ParentsFireplace.glb, placed by SpecGreybox.ParentsFireplace.cs) on the hall wall between the bath-side corner and the hall door; a walk collider over the mantel's body (spec/dressing/parents_fireplace.json); over it a gilt-framed roses still life (public-domain Fantin-Latour), photographs and a gingerbread house on the shelf (props lane).",
+ "target": "House_WallGrid",
+ "premise": "Marina's fireplace (her only view of this wall; the film never shows it) can be sized in one calibrated frame at the hall door's 80 in leaf, and placed at the same fraction of our (longer) casing-to-corner gap",
+ "claim": {
+  "value": {
+   "shelf_w": 1.27,
+   "shelf_top": 1.12,
+   "case_w": 1.18,
+   "slate_w": 0.85,
+   "slate_top": 0.74,
+   "firebox": [
+    0.6,
+    0.62
+   ],
+   "hearth": [
+    1.46,
+    0.5,
+    0.033
+   ],
+   "centre_x": 4.436
+  },
+  "data": [
+   "marina-frame:195"
+  ],
+  "scale": [
+   "door-80in:parents195"
+  ],
+  "upstream": [
+   "f1428:marina-foyer-cameras"
+  ],
+  "risks": [
+   "scale"
+  ],
+  "applies_to": [
+   "parents_bedroom"
+  ],
+  "measured_in": [
+   "parents_bedroom"
+  ],
+  "pick": {
+   "crop": "spec/captures/picks/parents_fireplace/f195_slate_L.png",
+   "confirmed_by": "blind subagent (crops only, 4x): f195_leaf_TL/TR/BL/BR 'corner/edge of a light door panel' (0-1 crop px = <=0.25 source px); f195_slate_L/R 'corner of a black region' (1-2 crop px); f195_box_L 'top-left corner of a black recess' (2 crop px); f195_shelf_L 'top-left corner' (1); f195_hearth_back 'cream surface meets a dark edge' (1); f195_crown_corner 'faint vertical shading line' (low confidence; the corner is not used for any size, only the casing-to-corner gap)"
+  },
+  "alternatives": [
+   "current build: no fireplace (the parents' TRIAL 1 left it out)",
+   "this: Marina 195.25 at the door-leaf ruler, placed at her proportion of the casing-to-corner gap"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "fireplace on the hall wall between the hall door and the bath-side corner",
+     "observed_in": [
+      "marina-frame:176",
+      "marina-frame:194",
+      "marina-frame:195",
+      "marina-frame:198"
+     ]
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-18",
+   "what": "parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json) logged the fireplace as not built",
+   "outcome": "pending"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Marina 200 s (close oblique view) at a stock 2.75 x 4.5 in single toggle plate: a second camera solved from the plate's corners and two horizontal mantel lines with its focal length FREE (best f 1390 px vs the claim's 1428; rms 0.18 px): slate surround 0.905 m vs the claim's 0.853 (+6.1%; at f 1428 0.887, +4.0%; a 1 px plate pick moves it ~1.7%)",
+   "agrees": true,
+   "data": [
+    "marina-frame:200"
+   ],
+   "scale": [
+    "plate-4.5in:200"
+   ],
+   "tests": [
+    "scale"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/parents_fireplace/m200_plate_TL.png",
+    "confirmed_by": "blind subagent (crops only, 4x): m200_plate_TL 'top-left corner of a brown rectangle' (1 crop px), m200_plate_BR 'bottom-right corner of a brown rectangle' (0-1); m200_slate_TL/TR 'corner of a black area / dark block' (1-2, low confidence)"
+   }
+  },
+  {
+   "what": "the claim's own camera leaves the door leaf's WIDTH free: it comes out 0.812 m = a stock 32 in leaf (0.813), camera height 1.299 m; crown foot 2.274 m (a 2.43-2.50 ceiling less a ~0.15-0.2 crown)",
+   "agrees": true,
+   "data": [
+    "marina-frame:195"
+   ],
+   "scale": [
+    "door-80in:parents195"
+   ],
+   "tests": [
+    "scale"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/parents_fireplace/f195_leaf_TL.png",
+    "confirmed_by": "blind subagent (crops only, 4x): f195_leaf_TL/TR/BL/BR 'corner/edge of a light door panel' (0-1 crop px = <=0.25 source px); f195_slate_L/R 'corner of a black region' (1-2 crop px); f195_box_L 'top-left corner of a black recess' (2 crop px); f195_shelf_L 'top-left corner' (1); f195_hearth_back 'cream surface meets a dark edge' (1); f195_crown_corner 'faint vertical shading line' (low confidence; the corner is not used for any size, only the casing-to-corner gap)"
+   }
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/parents_fireplace/before/marina195.png"
+  ],
+  "after": [
+   "spec/captures/views/parents_fireplace/after/marina195.png",
+   "spec/captures/views/parents_fireplace/after/frontal.png",
+   "spec/captures/views/parents_fireplace/after/kevin_eye_leg.png",
+   "spec/captures/views/parents_fireplace/after/marina195_live.png"
+  ],
+  "live": [
+   "~/.cache/home-alone-2/captures/parents-fireplace-sheet.png (Marina 195.25 / 200 beside the live clone camera at the solved pose and a frontal view)"
+  ]
+ },
+ "user_walk": "pending",
+ "user_words": "user (via coordinator, Oct 18): accepted the parents' bedroom trial and asked for 'the fireplace'",
+ "notes": [
+  "Position: Marina's casing-to-corner is 2.22 m, ours 2.50 (the room's, not the fireplace's): centre at her fraction of our gap (x 4.436): DEVIATIONS 89.",
+  "Depths are stock (case 0.11, slate face 0.09, shelf 0.20); the firebox is 6.5 cm deep (the hall behind a 14 cm wall). Sconces, plant and fire not built.",
+  "Gates (build 5, ~/.cache/home-alone-2): Z-fight 0, Clash 0, Seam 0/0/0, Peek 0; room walk unchanged (the parents' BLOCKED bath-door leg and the living/service-stair lines are pre-existing, same distances). After build 5 only the five photo frames were turned to face the room (props lane, glb rebuilt, loaded; not re-gated in a build). Build 3 found the photos' glass 0.8 mm off the photo (glass faces removed) and the screen mesh along its tubes (inset 1.2 cm)."
+ ]
+}

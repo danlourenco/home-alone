@@ -99,6 +99,10 @@
   "models": "547d8eec7e54b438",
   "sources": "4adb0cbee12035de"
  },
+ "tools/house/hifi_parents_fireplace.py": {
+  "models": "784e462dec45d619",
+  "sources": "1a03cde73ba2f754"
+ },
  "tools/house/hifi_props.py": {
   "models": "7e1090fca9cf172e",
   "sources": "4a3300f33ed75356"
