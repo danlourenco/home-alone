@@ -1,0 +1,522 @@
+{
+ "note": "The parents' bedroom furniture (Oct 18 2026, TRIAL 1; changes/2026-10-18-parents-room.json). Written by tools/house/parents_layout.py --write: do not edit 'boxes' by hand. 'pieces' are the spec boxes the store models fit into (store_props.json parents_*); 'boxes' are the walk layer (spec x, y above the upper floor, z) drawn by SpecGreybox.Parents, hidden where a store model replaces them.",
+ "room": {
+  "built": [
+   5.281,
+   5.324
+  ],
+  "door_80in": [
+   5.23,
+   5.23
+  ],
+  "rig": [
+   5.11,
+   5.08
+  ]
+ },
+ "marina_250": {
+  "px_per_m": 343.0,
+  "camera_to_wall_m": 4.16,
+  "posts_z": [
+   2.788,
+   0.891
+  ]
+ },
+ "pieces": [
+  {
+   "name": "parents_bed",
+   "x": [
+    3.225,
+    5.425
+   ],
+   "z": [
+    0.8386,
+    2.8402
+   ],
+   "h": [
+    0.0,
+    2.15
+   ],
+   "store": "Assets/Purchased/ParentsBed/ParentsBed.glb",
+   "yaw": 90,
+   "back": "",
+   "source": "Marina 250 s head posts at z 0.891 / 2.788 (spacing 1.898; film 1610 at the 21 in paper roll: 1.90), headboard on the bath-door wall; length 2.20 ASSUMED (king); finial tops 2.15 on all four posts ASSUMED (film 1602/2648: tall rice-carved posts, ~0.35 m under the ceiling); mattress top 0.72 ASSUMED; rails' underside 0.48 (kid Kevin's crouch 0.45 + 0.02 fits under)",
+   "collide": false,
+   "foot_h": 2.15,
+   "mattress_top": 0.72,
+   "post": 0.104
+  },
+  {
+   "name": "parents_nightstand_window",
+   "x": [
+    3.22,
+    3.62
+   ],
+   "z": [
+    0.275,
+    0.8086
+   ],
+   "h": [
+    0.0,
+    0.66
+   ],
+   "store": "Assets/Classic Wooden Furniture Pack/Prefabs/BEDSIDE_CAB_01.prefab",
+   "yaw": null,
+   "back": "-x",
+   "source": "Marina 250 s (outer edge at its front-face depth; inner edge 3 cm off the bed post); film 1578/2648: dark mahogany chest with brass pulls, top about level with the mattress (0.66 ASSUMED); depth 0.40 to clear the etagere",
+   "collide": false,
+   "tint": [
+    0.62,
+    0.4,
+    0.34
+   ]
+  },
+  {
+   "name": "parents_nightstand_bath",
+   "x": [
+    3.22,
+    3.62
+   ],
+   "z": [
+    2.8702,
+    3.373
+   ],
+   "h": [
+    0.0,
+    0.66
+   ],
+   "store": "Assets/Classic Wooden Furniture Pack/Prefabs/BEDSIDE_CAB_01.prefab",
+   "yaw": null,
+   "back": "-x",
+   "source": "Marina 250 s (outer edge at its front-face depth; inner edge 3 cm off the bed post); film 1578/2648: dark mahogany chest with brass pulls, top about level with the mattress (0.66 ASSUMED); depth 0.40 to clear the etagere",
+   "collide": false,
+   "tint": [
+    0.62,
+    0.4,
+    0.34
+   ]
+  },
+  {
+   "name": "parents_etagere",
+   "x": [
+    3.63,
+    4.12
+   ],
+   "z": [
+    0.01,
+    0.34
+   ],
+   "h": [
+    0.0,
+    1.45
+   ],
+   "store": "Assets/Classic Wooden Furniture Pack/Prefabs/SHELVES_01.prefab",
+   "yaw": null,
+   "back": "-z",
+   "source": "film 2648/2663 (open dark etagere with books and a hat box at the window corner, left of the side window) and Marina 244/250 (its front-left corner about 0.43 m off the headboard wall at z 0.35 in 250); SHELVES_01 squeezed to 0.49 x 0.33 x 1.45 (film's is a slim turned-post stand)",
+   "collide": false
+  },
+  {
+   "name": "parents_armoire",
+   "x": [
+    7.28,
+    8.43
+   ],
+   "z": [
+    3.121,
+    3.711
+   ],
+   "h": [
+    0.0,
+    2.05
+   ],
+   "store": "Assets/Classic Wooden Furniture Pack/Prefabs/WARDROBE_01.prefab",
+   "yaw": null,
+   "back": "+z",
+   "source": "Marina 180/188/184: dark armoire right of the front windows, against the notch wall (z 3.721) in the front corner; the film never shows it clearly (Marina only). WARDROBE_01 fitted to 1.15 x 0.59 x 2.05 (her bonnet top ~2.1), stained dark (tint: the pack's oak read light beside her dark armoire)",
+   "collide": false,
+   "tint": [
+    0.36,
+    0.24,
+    0.21
+   ]
+  },
+  {
+   "name": "parents_window_table",
+   "x": [
+    8.021,
+    8.471
+   ],
+   "z": [
+    1.888,
+    2.688
+   ],
+   "h": [
+    0.0,
+    0.7
+   ],
+   "store": "Assets/Classic Wooden Furniture Pack/Prefabs/SIDE_TABLE_01.prefab",
+   "yaw": null,
+   "back": "+x",
+   "source": "Marina 238/188: a demilune writing table under the front windows (film 104 s clip: a dressing table on the window wall); SIDE_TABLE_01 0.80 x 0.45 x 0.70 (centred under the window, clear of the side panels), under the 0.81 sill",
+   "collide": false
+  },
+  {
+   "name": "parents_window_chair",
+   "x": [
+    6.85,
+    7.37
+   ],
+   "z": [
+    0.55,
+    1.04
+   ],
+   "h": [
+    0.0,
+    0.97
+   ],
+   "store": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "yaw": 180,
+   "back": "",
+   "source": "Marina 238/244: green upholstered armchair at the side window beside the floor lamp (film 104/130 s clips: green stool and chair); CHAIR_01 at native size as a stand-in, facing the room",
+   "collide": true
+  },
+  {
+   "name": "parents_floor_lamp",
+   "x": [
+    7.45,
+    7.78
+   ],
+   "z": [
+    0.25,
+    0.63
+   ],
+   "h": [
+    0.0,
+    1.45
+   ],
+   "store": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Lamp_02.prefab",
+   "yaw": 180,
+   "back": "",
+   "source": "Marina 238/244 and film 130 s clip: a tall floor lamp with a dark green shade by the window chair; Fadnn SM_Lamp_02 fitted to 1.45",
+   "collide": false
+  },
+  {
+   "name": "parents_door_chair",
+   "x": [
+    6.391,
+    6.891
+   ],
+   "z": [
+    3.85,
+    4.35
+   ],
+   "h": [
+    0.0,
+    0.97
+   ],
+   "store": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "yaw": 270,
+   "back": "",
+   "source": "Marina 176/180: a maroon armchair by the hall-door wall under two pictures; against the notch wall x 6.921, clear of the hall door's open leaf (80 deg reaches z ~4.56)",
+   "collide": true
+  },
+  {
+   "name": "parents_door",
+   "x": [
+    5.7373,
+    6.6028
+   ],
+   "z": [
+    5.4689,
+    5.5289
+   ],
+   "h": [
+    0.0,
+    2.087
+   ],
+   "store": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "yaw": null,
+   "back": "-z",
+   "source": "openings audit: opening 0.770 x 2.032 (stock 30 x 80 in; Marina's slab 0.762 at her 80 in ruler); Door_3 White as girls_a/girls_b/attic/linen/Buzz (the film's are white six-panel: logged with the hall's DEVIATIONS 63h); the pack frame (leaf x 1.124 wide, x 1.027 tall) replaces the generated casing on the hall face, 0.5 cm proud. Hinge at the notch end (hi): Marina 180 s shows the knob at the fireplace-side edge; swings into the room. Open 80 deg AUTHORED (closed in every Marina frame), clear of the door-wall armchair",
+   "collide": false,
+   "nobox": true,
+   "open": 80,
+   "hinge": "hi"
+  }
+ ],
+ "boxes": [
+  {
+   "name": "parents_bed_post_head_W",
+   "x": [
+    3.225,
+    3.329
+   ],
+   "y": [
+    0.0,
+    2.15
+   ],
+   "z": [
+    0.8386,
+    0.9426
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_bed_post_foot_W",
+   "x": [
+    5.321,
+    5.425
+   ],
+   "y": [
+    0.0,
+    2.15
+   ],
+   "z": [
+    0.8386,
+    0.9426
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_bed_post_head_B",
+   "x": [
+    3.225,
+    3.329
+   ],
+   "y": [
+    0.0,
+    2.15
+   ],
+   "z": [
+    2.7362,
+    2.8402
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_bed_post_foot_B",
+   "x": [
+    5.321,
+    5.425
+   ],
+   "y": [
+    0.0,
+    2.15
+   ],
+   "z": [
+    2.7362,
+    2.8402
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_bed_headboard",
+   "x": [
+    3.255,
+    3.285
+   ],
+   "y": [
+    0.16,
+    1.25
+   ],
+   "z": [
+    0.8886,
+    2.7902
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_bed_footboard",
+   "x": [
+    5.365,
+    5.395
+   ],
+   "y": [
+    0.16,
+    0.7
+   ],
+   "z": [
+    0.8886,
+    2.7902
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_bed_rail_W",
+   "x": [
+    3.329,
+    5.321
+   ],
+   "y": [
+    0.48,
+    0.56
+   ],
+   "z": [
+    0.8756,
+    0.9056
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_bed_rail_B",
+   "x": [
+    3.329,
+    5.321
+   ],
+   "y": [
+    0.48,
+    0.56
+   ],
+   "z": [
+    2.7732,
+    2.8032
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_bed_mattress",
+   "x": [
+    3.285,
+    5.365
+   ],
+   "y": [
+    0.56,
+    0.72
+   ],
+   "z": [
+    0.9426,
+    2.7362
+   ],
+   "mat": "quilt"
+  },
+  {
+   "name": "parents_nightstand_window",
+   "x": [
+    3.22,
+    3.62
+   ],
+   "y": [
+    0.0,
+    0.66
+   ],
+   "z": [
+    0.275,
+    0.8086
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_nightstand_bath",
+   "x": [
+    3.22,
+    3.62
+   ],
+   "y": [
+    0.0,
+    0.66
+   ],
+   "z": [
+    2.8702,
+    3.373
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_etagere",
+   "x": [
+    3.63,
+    4.12
+   ],
+   "y": [
+    0.0,
+    1.45
+   ],
+   "z": [
+    0.01,
+    0.34
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_armoire",
+   "x": [
+    7.28,
+    8.43
+   ],
+   "y": [
+    0.0,
+    2.05
+   ],
+   "z": [
+    3.121,
+    3.711
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_window_table",
+   "x": [
+    8.021,
+    8.471
+   ],
+   "y": [
+    0.0,
+    0.7
+   ],
+   "z": [
+    1.888,
+    2.688
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_window_chair",
+   "x": [
+    6.85,
+    7.37
+   ],
+   "y": [
+    0.0,
+    0.97
+   ],
+   "z": [
+    0.55,
+    1.04
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_floor_lamp",
+   "x": [
+    7.45,
+    7.78
+   ],
+   "y": [
+    0.0,
+    1.45
+   ],
+   "z": [
+    0.25,
+    0.63
+   ],
+   "mat": "wood"
+  },
+  {
+   "name": "parents_door_chair",
+   "x": [
+    6.391,
+    6.891
+   ],
+   "y": [
+    0.0,
+    0.97
+   ],
+   "z": [
+    3.85,
+    4.35
+   ],
+   "mat": "wood"
+  }
+ ]
+}

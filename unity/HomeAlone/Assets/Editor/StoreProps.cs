@@ -55,6 +55,17 @@ public static partial class SpecGreybox
                 r.sharedMaterials = r.sharedMaterials.Select(HdrpOrConvert).ToArray();
                 r.shadowCastingMode = ShadowCastingMode.On;
             }
+            if (p["tint"] is JArray tint)   // "tint": [r, g, b] multiplies the base colour (a pack piece stained darker, maps kept): one material asset per piece
+                foreach (var r in rs)
+                    r.sharedMaterials = r.sharedMaterials.Select(m =>
+                    {
+                        if (m == null || !m.HasProperty("_BaseColor")) return m;
+                        var path = $"Assets/Materials/Greybox/Tint_{name}_{m.name.Replace(' ', '_')}.mat";
+                        var t = AssetDatabase.LoadAssetAtPath<Material>(path);
+                        if (t == null) { t = new Material(m); AssetDatabase.CreateAsset(t, path); } else t.CopyPropertiesFromMaterial(m);
+                        var c = m.GetColor("_BaseColor"); t.SetColor("_BaseColor", new Color(c.r * (float)tint[0], c.g * (float)tint[1], c.b * (float)tint[2], c.a));
+                        EditorUtility.SetDirty(t); return t;
+                    }).ToArray();
             foreach (var t in go.GetComponentsInChildren<Transform>()) t.gameObject.isStatic = true;
             if (p["collide"] != null && (bool)p["collide"])
             {   // one box for the walk layer, the size of what is drawn

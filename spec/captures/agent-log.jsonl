@@ -8,3 +8,14 @@
 {"time": "2026-10-17T22:57:02", "kind": "render", "job": "board-den", "s": 59.0, "tools": 12}
 {"time": "2026-10-17T23:07:05", "kind": "search", "job": "needed-pieces", "s": 75.0, "tools": 12}
 {"time": "2026-10-17T23:12:44", "kind": "prop", "job": "living2", "s": 1198.0, "tools": 76}
+{"time": "2026-10-18T00:01:41", "kind": "prop", "job": "overnight1", "s": 1741.0, "tools": 95}
+{"time": "2026-10-18T00:10:33", "kind": "fixture", "job": "overnight1b", "s": 1500.0, "tools": 35}
+{"time": "2026-10-18T00:31:08", "kind": "prop", "job": "overnight2", "s": 1196.0, "tools": 62}
+{"time": "2026-10-18T00:56:44", "kind": "fixture", "job": "overnight3", "s": 1478.0, "tools": 95}
+{"time": "2026-10-18T01:31:13", "kind": "fixture", "job": "overnight3b", "s": 3300.0, "tools": 75}
+{"time": "2026-10-18T01:38:45", "kind": "fixture", "job": "overnight4", "s": 382.0, "tools": 30}
+{"time": "2026-10-18T02:22:57", "kind": "fixture", "job": "overnight5", "s": 2615.0, "tools": 95}
+{"time": "2026-10-18T02:26:50", "kind": "render", "job": "board-parents", "s": 101.0, "tools": 20}
+{"time": "2026-10-18T02:55:36", "kind": "prop", "job": "overnight6", "s": 1500.0, "tools": 40}
+{"time": "2026-10-18T02:55:36", "kind": "prop", "job": "overnight7", "s": 3300.0, "tools": 70}
+{"time": "2026-10-18T03:51:33", "kind": "fixture", "job": "overnight8", "s": 5700.0, "tools": 150}

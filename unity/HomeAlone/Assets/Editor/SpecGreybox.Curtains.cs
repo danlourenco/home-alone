@@ -50,7 +50,10 @@ public static partial class SpecGreybox
         // modelled above the UPPER floor (placed at 0, not gy)
         var grey = Cloth("HiFi_DrapeGrey", new Color(0.35f, 0.355f, 0.35f), false, 0.8f, null);   // film 530: neutral grey (linear ~0.10)
         var bz = PlaceHiFi(root, 0f, "BuzzCurtains", new Dictionary<string, Material> { ["SH_Hem"] = hem, ["SH_Voile"] = voile, ["BZ_Drape"] = grey, ["BZ_Brass"] = BrassMat() });
-        foreach (var gg in new[] { g, bz })
+        // the parents' bedroom (tools/house/hifi_parents_dressing.py; TRIAL 1, Oct 18): film 2648's slate damask panels and swag valance over a lace sheer
+        var damask = Cloth("HiFi_DrapeDamask", new Color(0.42f, 0.43f, 0.45f), false, 0.8f, null);   // film 2648 slate grey-blue; build 1 (0.55/0.58/0.64) read sky blue, build 2 (0.36/0.39/0.45) royal blue
+        var pc = PlaceHiFi(root, 0f, "ParentsDressing", new Dictionary<string, Material> { ["SH_Hem"] = hem, ["SH_Voile"] = voile, ["PB_Damask"] = damask, ["PB_Brass"] = BrassMat(), ["PB_Shade"] = Mat("ParentsLampShade", new Color(0.03f, 0.03f, 0.03f)) });
+        foreach (var gg in new[] { g, bz, pc })
             if (gg != null)
                 foreach (var r in gg.GetComponentsInChildren<MeshRenderer>())
                 {

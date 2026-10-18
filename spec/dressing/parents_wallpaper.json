@@ -1,0 +1,14 @@
+{
+ "source": "film 1610 headboard wall: per-pixel median over the clean patches on the measured half-drop lattice (200.2, 143.2) / (1.1, 286.4) px",
+ "repeat_m": [
+  1.066,
+  0.762
+ ],
+ "ruler": "ASSUMED 21 in roll width = one column pair (half-drop match); check: 1610 head posts 1.90 m apart at this scale vs Marina 250 1.92 m (built bath doorway ruler)",
+ "holes_filled_pct": 0.0,
+ "ground_linear": [
+  0.72,
+  0.684,
+  0.605
+ ]
+}

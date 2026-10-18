@@ -244,6 +244,80 @@ def buzz():
     print(out, [w_m, round(w_m * TILE_H, 4)], "check: sfm-work/buzz_wallpaper_tiled.png")
 
 
+def parents():
+    """The parents' bedroom paper (Oct 18, overnight8, changes/2026-10-18-parents-room.json): cream ground, thin dark double
+    stripes every 100 px and, between them, meandering vines with red, rose and blue flowers (film 1594-1610, 2639-2663; Marina's
+    paper is a paler sprig stripe: film first). Film 1610 (packing morning, frontal on the headboard wall, nobody in front of the
+    paper). Masked 2-D autocorrelation over the clean wall patches (between the posts, the portraits and the swag): peaks at
+    (dy, dx) = (0, 200.8), (142.7, 199.7), (286.4, 1.1) and (0, 399.3): a HALF-DROP lattice, basis (200.2 across, 143.2 down) and
+    (1.1, 286.4); the straight repeat across is 399.3 px (= 2 x 200.2 - 1.1, measured independently). That is the standard
+    half-drop roll match: one roll width = 200.2 px, the next roll dropped half a repeat.
+    Cell = the per-pixel MEDIAN of every lattice-equivalent sample inside the clean mask (nothing copied or patched; phases no patch
+    reaches are filled from the wrapped neighbourhood and logged), light flattened from the ground; tile = cell | cell dropped 143.
+    Metric size ASSUMED: roll width 21 in (0.533 m, standard American roll) -> tile 1.066 x 0.762 m. Check (not proof): at that
+    scale the head posts in 1610 (centres x 577 / 1290 px, 713 px) stand 1.90 m apart; Marina 250's posts read 1.92 m against the
+    built bath doorway (a different ruler). Ground level ASSUMED 0.72 (max channel), chroma the film's."""
+    from scipy.ndimage import map_coordinates
+    src = ROOT / "0-homealone/full/homealone-movie-screencaps.com-1610.jpg"
+    out = ROOT / "spec/dressing/parents_wallpaper.png"
+    A, B = (200.2, 143.2), (1.1, 286.4)
+    im = np.asarray(Image.open(src).convert("RGB"), float)
+    m = np.zeros(im.shape[:2], bool)
+    for x0, x1, y0, y1 in [(600, 662, 0, 118), (700, 1180, 0, 118), (1220, 1265, 0, 118), (700, 1180, 250, 430), (1310, 1378, 0, 460),
+                           (1625, 1685, 0, 430), (196, 258, 0, 540), (494, 556, 0, 440), (276, 476, 0, 112), (1396, 1604, 0, 92)]:
+        m[max(y0, 4):y1, x0:x1] = True                  # rows 0-3: the frame's dark edge
+    from scipy.ndimage import distance_transform_edt
+    feather = np.clip(distance_transform_edt(m) / 14.0, 0, 1)   # samples near a patch edge weigh less: no block seams
+    lum = im.mean(2); gm = (m & (lum > np.percentile(lum[m], 45))).astype(float)
+    flat = np.empty_like(im)
+    for k in range(3):
+        bg = gaussian_filter(im[..., k] * gm, 40) / np.maximum(gaussian_filter(gm, 40), 1e-3)
+        flat[..., k] = im[..., k] / np.maximum(bg, 1)
+    TW, TH = 200, 286
+    r, c = np.mgrid[0:TH, 0:TW].astype(float); r *= B[1] / TH; c *= A[0] / TW
+    samples, weights = [], []
+    for i in range(-3, 6):
+        for j in range(-2, 14):
+            xx = c + i * B[0] + j * A[0] + 180; yy = r + i * B[1] + j * A[1]
+            ok = map_coordinates(m.astype(float), [yy, xx], order=0, cval=0) > 0.5
+            vals = np.dstack([map_coordinates(flat[..., k], [yy, xx], order=1) for k in range(3)])
+            vals[~ok] = np.nan; samples.append(vals); weights.append(np.where(ok, map_coordinates(feather, [yy, xx], order=1, cval=0), 0) + 1e-4 * ok)
+    S = np.array(samples); Wt = np.array(weights); n = np.sum(~np.isnan(S[..., 0]), 0); hole = n == 0
+    import warnings
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore"); med = np.nanmedian(S, 0)
+    # robust feathered mean: drop samples far from the median (an object edge inside a patch), weigh by distance to the patch edge
+    dev = np.nanmean(np.abs(S - med[None]), -1); mad = np.nanmedian(dev, 0)
+    Wt = np.where(np.isnan(dev) | (dev > 2.5 * mad[None] + 0.02), 0, Wt)
+    cell = np.nansum(np.nan_to_num(S) * Wt[..., None], 0) / np.maximum(Wt.sum(0), 1e-9)[..., None]
+    hole = Wt.sum(0) < 1e-6
+    print("samples per cell pixel: median", int(np.median(n)), "holes", round(float(hole.mean()) * 100, 1), "%")
+    for k in range(3):   # phases no clean patch reaches: filled from the wrapped neighbourhood (a blur of the valid pixels)
+        v = np.where(hole, 0, cell[..., k]); w = (~hole).astype(float)
+        fill = gaussian_filter(v, 4, mode="wrap") / np.maximum(gaussian_filter(w, 4, mode="wrap"), 1e-3)
+        cell[..., k] = np.where(hole, fill, cell[..., k])
+    drop = int(round(A[1] / B[1] * TH))
+    tile = np.concatenate([cell, np.roll(cell, drop, axis=0)], axis=1)   # the next roll, half a repeat down
+    g = np.median(tile.reshape(-1, 3)[tile.mean(2).reshape(-1) > np.percentile(tile.mean(2), 60)], 0)
+    rel = np.minimum(tile / g, 1.06)                    # nothing on the paper is whiter than its ground (glints off the frames)
+    # build 1 (ground chroma from 1610's warm grade, motif contrast rel^2.2) read pink-red and dense in the live room beside 1610's cream
+    # paper: the ground is the house's cream (ASSUMED, as the living room's) and the motifs keep the photo's own ratio to the ground, in its own
+    # (gamma) encoding: the tile's mean / ground then matches 1610's wall (mean / brightest decile 0.69/0.61/0.56)
+    ground = 0.72 * np.array([1.0, 0.95, 0.84])
+    g_srgb = np.where(ground <= 0.0031308, ground * 12.92, 1.055 * ground ** (1 / 2.4) - 0.055)
+    srgb = np.clip(rel * g_srgb, 0, 1)   # rel is a ratio of the (gamma-encoded) photo: applied in the same encoding, the paper keeps 1610's density
+    W2 = 1024; H2 = round(W2 * B[1] / (2 * A[0] - B[0]))
+    Image.fromarray((srgb * 255 + 0.5).astype(np.uint8)).resize((W2, H2), Image.LANCZOS).save(out)
+    rep = [1.066, round(0.533 * B[1] / A[0], 3)]
+    out.with_suffix(".json").write_text(json.dumps({"source": "film 1610 headboard wall: per-pixel median over the clean patches on the measured half-drop lattice (200.2, 143.2) / (1.1, 286.4) px",
+        "repeat_m": rep, "ruler": "ASSUMED 21 in roll width = one column pair (half-drop match); check: 1610 head posts 1.90 m apart at this scale vs Marina 250 1.92 m (built bath doorway ruler)",
+        "holes_filled_pct": round(float(hole.mean()) * 100, 1), "ground_linear": [round(float(v), 3) for v in ground]}, indent=1) + "\n")
+    big = np.tile(np.asarray(Image.open(out)), (3, 2, 1)); Image.fromarray(big).save(ROOT / "sfm-work/parents_wallpaper_tiled.png")
+    print(out, rep, "check: sfm-work/parents_wallpaper_tiled.png")
+
+
+if "--parents" in sys.argv:
+    parents(); sys.exit()
 if "--buzz" in sys.argv:
     buzz(); sys.exit()
 if "--kitchen" in sys.argv:

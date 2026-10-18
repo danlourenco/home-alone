@@ -332,6 +332,7 @@ public static partial class SpecGreybox
         HiFiLights(root, gy);
         Hall(root);                    // SpecGreybox.Hall.cs: the upstairs hall's dressing, sconces and plants (spec/dressing/hall.json)
         Trunk(root);                   // SpecGreybox.Trunk.cs: Buzz's footlocker, bought scan rebuilt hollow (spec/dressing/buzz_trunk.json)
+        Parents(root);                 // SpecGreybox.Buzz.cs: the parents' bedroom furniture boxes (spec/dressing/parents.json; changes/2026-10-18-parents-room.json)
         Buzz(root);                    // SpecGreybox.Buzz.cs: Buzz's furniture against the faces (spec/dressing/buzz.json; changes/2026-10-17-buzz-layout.json)
         BuzzProps(root);               // SpecGreybox.BuzzProps.cs: Buzz's hero props (props lane; hifi_buzz_props.py -> BuzzProps.glb, the Tarantula pack, the bat)
         SwingDoors(groot, gy, geo["ground"]);

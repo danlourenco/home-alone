@@ -82,10 +82,23 @@ def chintz(objs, new_name, keep=None, repeats=6):
 
 q = D["red_chair"]; o = load("ArmChair_01", "redchair"); recolour(o, "LP_ChairRed", (0.42, 0.05, 0.06), keep=frame)
 fit(o, q["x"], q["z"], [0.0, q["h"]], q["front"])
+def turn(o, deg):
+    """turn a fitted piece about its own centre (spec "turn_deg", + = counter-clockwise seen from above in spec x/z): kitty-corner pieces"""
+    import mathutils
+    if not deg:
+        return
+    objs = o if isinstance(o, (list, tuple)) else [o]   # load() returns the model's objects: turn them together about their joint centre
+    bpy.context.view_layer.update()
+    pts = [ob.matrix_world @ mathutils.Vector(v) for ob in objs if hasattr(ob, "bound_box") for v in ob.bound_box]
+    c = sum(pts, mathutils.Vector()) / len(pts)
+    R = mathutils.Matrix.Translation(c) @ mathutils.Matrix.Rotation(np.radians(-deg), 4, "Z") @ mathutils.Matrix.Translation(-c)
+    for ob in objs:
+        if ob.parent not in objs:   # children follow their parent
+            ob.matrix_world = R @ ob.matrix_world
 q = D["floral_chair"]; o = load("ArmChair_01", "floralchair"); chintz(o, "LP_ChairChintz", keep=frame)
-fit(o, q["x"], q["z"], [0.0, q["h"]], q["front"])
+fit(o, q["x"], q["z"], [0.0, q["h"]], q["front"]); turn(o, q.get("turn_deg", 0))
 q = D["ottoman"]; o = load("Ottoman_01", "ottoman"); chintz(o, "LP_OttomanChintz", repeats=5)
-fit(o, q["x"], q["z"], [0.0, q["h"]], q["front"])
+fit(o, q["x"], q["z"], [0.0, q["h"]], q["front"]); turn(o, q.get("turn_deg", 0))
 q = D["curio"]; o = load("vintage_cabinet_01", "curio")   # its grey-brown stain read slate in the build: Marina 458's warm brown, brass kept
 recolour(o, "LP_CurioBrown", (0.20, 0.11, 0.065), keep=lambda rgb: (rgb[..., 0] > 0.3) & (rgb[..., 1] > 0.2) & (rgb[..., 2] < 0.7 * rgb[..., 1]))   # Oct 18: was (0.26, 0.12, 0.06), read red-mahogany; Marina 458 a darker, browner wood
 for ob in o:   # Oct 18 (user: "reads slate-blue"): its near-mirror lacquer reflected the windows' sky; satin like Marina 458 (roughness 0.45 + 0.55 r)

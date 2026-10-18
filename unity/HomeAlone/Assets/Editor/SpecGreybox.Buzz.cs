@@ -8,17 +8,23 @@ using UnityEngine;
 // (store_props.json buzz_*) hide the box of the same name and keep its collider.
 public static partial class SpecGreybox
 {
-    static void Buzz(GameObject root)
+    static void Buzz(GameObject root) => RoomBoxes(root, "buzz.json", "BuzzFurniture", "BuzzCollider_");
+
+    // The parents' bedroom (Oct 18, TRIAL 1; changes/2026-10-18-parents-room.json): tools/house/parents_layout.py -> spec/dressing/parents.json
+    static void Parents(GameObject root) => RoomBoxes(root, "parents.json", "ParentsFurniture", "ParentsCollider_");
+
+    static void RoomBoxes(GameObject root, string file, string group, string colliderPrefix)
     {
-        var fp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/buzz.json"));
+        var fp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/" + file));
         if (!File.Exists(fp)) return;
         var mats = new System.Collections.Generic.Dictionary<string, Material> {
             ["wood"] = Mat("BuzzWood", new Color(0.36f, 0.24f, 0.15f)),
             ["mattress"] = Mat("BuzzMattress", new Color(0.86f, 0.85f, 0.80f)),
             ["blanket"] = Mat("BuzzBlanket", new Color(0.20f, 0.33f, 0.24f)),
             ["glass"] = Mat("BuzzTank", new Color(0.30f, 0.33f, 0.33f)),
+            ["quilt"] = Mat("ParentsQuilt", new Color(0.45f, 0.03f, 0.06f)),
         };
-        var g = Child(root, "BuzzFurniture"); float keep = FloorY; FloorY = 0f;   // the upper floor
+        var g = Child(root, group); float keep = FloorY; FloorY = 0f;   // the upper floor
         foreach (var b in JObject.Parse(File.ReadAllText(fp))["boxes"])
         {
             float V(string k, int i) => (float)b[k][i];
@@ -26,7 +32,7 @@ public static partial class SpecGreybox
             // the walk layer on its own object named "*Collider_*", as the den's and living room's: RoomWalk then stands a body at the
             // free point nearest the room's centre instead of skipping a room whose centre holds furniture (build buzz1 #1: skipped)
             var box = g.transform.GetChild(g.transform.childCount - 1); Object.DestroyImmediate(box.GetComponent<Collider>());
-            var col = new GameObject("BuzzCollider_" + (string)b["name"]); col.transform.SetParent(g.transform, false); col.isStatic = true;
+            var col = new GameObject(colliderPrefix + (string)b["name"]); col.transform.SetParent(g.transform, false); col.isStatic = true;
             col.transform.SetPositionAndRotation(box.position, box.rotation); col.transform.localScale = box.localScale; col.AddComponent<BoxCollider>();
         }
         FloorY = keep;

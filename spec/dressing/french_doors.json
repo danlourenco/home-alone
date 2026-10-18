@@ -2,7 +2,6 @@
  "note": "Glazed French door pairs (tools/house/hifi_french_doors.py -> FrenchDoors.glb; changes/2026-10-16-french-doors.json). Each entry names an opening in spec/geometry.json (ground) by the rooms it joins; 'room' is the side the leaves stand on, 'open_deg' 0 = closed in the opening plane, 90 = standing perpendicular to the wall in that room. 'surface': true = no opening cut (the sunroom's prop): the pair is mounted on the wall face with sheers behind the glass. Leaf: stiles 0.10, top rail 0.10, bottom rail 0.20 (Marina 1136/1150: the bottom rail about twice the stiles), muntins 0.022, 2 x 5 lites, 35 mm thick, brass knob at 0.91 m on the meeting stile, three brass hinges. Sources: Marina Part 1 1124, 1132, 1136, 1142, 1150 s; film 12138.",
  "leaf": {"stile": 0.10, "top_rail": 0.10, "bottom_rail": 0.20, "muntin": 0.022, "cols": 2, "rows": 5, "t": 0.035, "knob_h": 0.91, "jamb_t": 0.019, "gap": 0.003, "floor_gap": 0.01, "head": 2.065},
  "pairs": [
-  {"between": ["foyer", "dining_room"], "room": "dining_room", "open_deg": 90},
   {"between": ["den", "living_room"], "room": "living_room", "open_deg": 175, "why": "user Oct 17: keep the french doors completely open between the living room and den (folded back against the living-room wall)"},
   {"between": ["dining_room", "sunroom"], "room": "dining_room", "open_deg": 0, "surface": true}
  ]

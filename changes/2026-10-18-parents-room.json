@@ -1,0 +1,174 @@
+{
+ "gate": 8,
+ "change": "Parents' bedroom TRIAL 1 (overnight8): furniture placed against the built faces (spec/dressing/parents.json via tools/house/parents_layout.py, drawn by SpecGreybox.Parents; store models in store_props.json parents_*): the owned BED_01 reworked into a dark-mahogany four-poster with red bedding (purchased_bed.py --parents: widened to 2.002 m over the posts, all four posts to 2.15 m, rails' underside 0.48), two BEDSIDE_CAB_01 nightstands with Fadnn table lamps, a SHELVES_01 etagere at the window corner, a WARDROBE_01 armoire on the notch wall, a SIDE_TABLE_01 writing table under the front windows, two CHAIR_01 chairs, a floor lamp; the hall door's leaf (Door_3 White, 30 x 80 in, open 80); the film's wallpaper (film_wallpaper.py --parents, film 1610) and slate damask curtains + lace sheers (hifi_parents_curtains.py, film 2648). Room shape and openings unchanged (openings audit: hall door 0.770 and bath door 0.760 clear = stock 30 in within 1 cm).",
+ "target": "House_WallGrid",
+ "premise": "The built room (5.281 x 5.324 m with Kevin's notch) is within 5% of Marina's room on both axes at two rulers of different kinds, so her headboard-wall layout measured in one frontal frame at the built bath doorway's position fits by construction, and the film's bed matches hers in width",
+ "claim": {
+  "value": {
+   "room_kept": [
+    5.281,
+    5.324
+   ],
+   "bed_head_posts_z": [
+    0.891,
+    2.788
+   ],
+   "bed_outer_width": 2.002,
+   "nightstands_z": [
+    [
+     0.275,
+     0.809
+    ],
+    [
+     2.87,
+     3.373
+    ]
+   ],
+   "hiding_clearance_under_rails_m": 0.48
+  },
+  "data": [
+   "marina-frame:250"
+  ],
+  "scale": [
+   "casing:250"
+  ],
+  "upstream": [
+   "door-80in:parents"
+  ],
+  "risks": [
+   "scale"
+  ],
+  "applies_to": [
+   "parents_bedroom"
+  ],
+  "measured_in": [
+   "parents_bedroom"
+  ],
+  "pick": {
+   "crop": "spec/captures/picks/parents1/m250_post_L.png",
+   "confirmed_by": "blind subagent (crops only): m250_post_L/R 'the middle of a thin dark brown vertical post' (<=3 crop px); m250_corner 'the ceiling/wall corner' (<=5 px); m250_casing_out read 12 crop px LEFT of the casing's outer edge -> re-picked u 183 -> 189; m250_floor 'baseboard bottom edge meets the wood floor' (2 px)"
+  },
+  "alternatives": [
+   "current build: an empty room (no parents' furniture in the wall-grid house)",
+   "this: Marina 250's headboard wall at the bath-casing ruler, film 1610 for the bed's width check, the other walls by eye from Marina 180/188/238/244 + film 2648"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "bed on the bath-door wall (headboard), etagere at the side-window corner",
+     "observed_in": [
+      "marina-frame:250",
+      "marina-frame:244",
+      "film-frame:1610",
+      "film-frame:2648"
+     ]
+    },
+    {
+     "part": "armoire right of the front windows on the notch wall",
+     "observed_in": [
+      "marina-frame:180",
+      "marina-frame:188",
+      "marina-frame:184"
+     ]
+    },
+    {
+     "part": "fireplace on the hall wall between the bath corner and the hall door (NOT built in trial 1)",
+     "observed_in": [
+      "marina-frame:176",
+      "marina-frame:194"
+     ]
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-14",
+   "what": "September model census: parents' bedroom -12/+19% vs Marina's trace (old model, not this grey-box)",
+   "outcome": "failed"
+  },
+  {
+   "date": "2026-10-13",
+   "what": "grey-box room from the parents SfM at the 80 in hall door (measurements/rooms/parents.json); the dressed room was never built",
+   "outcome": "pending"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "room size at the 80 in hall door (Marina's parents clip, VGGT, measurements/rooms/parents.json): 5.23 x 5.23 m; built +1.0% / +1.8%",
+   "agrees": true,
+   "data": [
+    "vggt:parents"
+   ],
+   "scale": [
+    "door-80in:parents"
+   ],
+   "tests": [
+    "scale"
+   ]
+  },
+  {
+   "what": "room size at Marina's camera-height rig (measurements/rig/rooms.json; tools/house/rig_check.py): 5.11 x 5.08 m; built +3.3% / +4.8% (inside the 5% 'notably different' line; logged DEVIATIONS)",
+   "agrees": true,
+   "data": [
+    "vggt:parents"
+   ],
+   "scale": [
+    "rig:parents"
+   ],
+   "tests": [
+    "scale"
+   ]
+  },
+  {
+   "what": "film 1610 (frontal on the headboard wall) at the wallpaper's roll width: the head posts' centres 713 px apart = 3.56 roll widths of the measured half-drop lattice (200.2 px) = 1.90 m at a 21 in roll, vs the claim's 1.898 m (0.1%). The 21 in roll is a stock size (a known-size-object ruler like the twin mattress); the half-drop match identifies the roll edge",
+   "agrees": true,
+   "data": [
+    "film-frame:1610"
+   ],
+   "scale": [
+    "roll-21in:1610"
+   ],
+   "tests": [
+    "scale"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/parents1/f1610_post_L.png",
+    "confirmed_by": "blind subagent: f1610_post_L 'middle of a dark reddish-brown twisted vertical post, on its centreline' (high); f1610_post_R 'middle of a dark vertical post' (medium, dark)"
+   }
+  },
+  {
+   "what": "Marina 250 wall height (crown top v 110 after the pick check, to baseboard foot v 940) at the built 2.50 m ceiling: 332.0 px/m vs 343.0 from the casing (-3.2%); at the rig's 2.43 m ceiling 341.6 (-0.4%)",
+   "agrees": true,
+   "data": [
+    "marina-frame:250"
+   ],
+   "scale": [
+    "ceiling:250"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/parents1/m250_ceiling.png",
+    "confirmed_by": "blind subagent: m250_ceiling read 20 crop px (10 source px) ABOVE the crown's top edge -> re-picked v 100 -> 110; m250_floor on the baseboard/floor line (high)"
+   }
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/parents1/before"
+  ],
+  "after": [
+   "spec/captures/views/parents1/after"
+  ],
+  "live": [
+   "~/.cache/home-alone-2/captures/overnight8-sheet.png (film/Marina frame matches side by side, live clone camera)"
+  ]
+ },
+ "user_walk": "pending",
+ "user_words": "user (overnight8 brief): 'if you have time after buzz, i'd love for you to get started on the parents bedroom'",
+ "notes": [
+  "Gates (build 4, ~/.cache/home-alone-2): Z-fight 0, Clash 0, Seam 0/0/0, Peek 0, Props check unchanged (2 pre-existing). Room walk: 'BLOCKED bandit/kevin parents_bedroom via parents_bath' is the test's straight leg from the bath door to the L-room's largest-cell centre crossing the bed's foot corner; around the foot the passage bed side -> bath casing is 0.685 m (adult 0.59).",
+  "Hiding: the bed's rails, slats and mattress underside stand 0.48-0.51 m up (kid Kevin's crouch 0.45 + skin 0.02 fits under from the long sides; the pack's footboard reaches the floor); the walk layer keeps the floor under the rails free.",
+  "One iteration on the worst miss (live sheet): build 3's paper read pink-red and dense with the quilt's bounce tinting the walls and ceiling; build 4: paper ground the house's cream with 1610's own motif ratio, quilt red 0.75 -> 0.55."
+ ]
+}

@@ -345,12 +345,12 @@
   {
    "name": "floral_chair",
    "x": [
-    1.8,
-    2.52
+    1.82,
+    2.54
    ],
    "z": [
-    11.8,
-    12.6
+    11.76,
+    12.56
    ],
    "y": [
     0.0,
@@ -360,12 +360,12 @@
   {
    "name": "ottoman",
    "x": [
-    2.65,
-    3.15
+    2.53,
+    3.03
    ],
    "z": [
-    11.92,
-    12.42
+    12.51,
+    13.01
    ],
    "y": [
     0.0,
@@ -433,29 +433,33 @@
  },
  "floral_chair": {
   "x": [
-   1.8,
-   2.52
+   1.82,
+   2.54
   ],
   "z": [
-   11.8,
-   12.6
+   11.76,
+   12.56
   ],
   "h": 1.0,
   "front": "+x",
-  "source": "Marina 418/466 (the film never shows this spot): floral armchair right (foyer side) of the fireplace before the rear window; Poly Haven ArmChair_01 (CC0) re-skinned with fabric sampled from Marina 418 (green ground, cream/pink flowers)"
+  "source": "Marina 418/466 (the film never shows this spot): floral armchair right (foyer side) of the fireplace before the rear window; Poly Haven ArmChair_01 (CC0) re-skinned with fabric sampled from Marina 418 (green ground, cream/pink flowers)",
+  "turn_deg": 45,
+  "note": "user walk note Oct 18 03:13: \"this chair and ottoman should be kitty cornered\": turned 45 deg into the corner (back wall / foyer-side wall), ottoman in front on the diagonal"
  },
  "ottoman": {
   "x": [
-   2.65,
-   3.15
+   2.53,
+   3.03
   ],
   "z": [
-   11.92,
-   12.42
+   12.51,
+   13.01
   ],
   "h": 0.42,
   "front": "+x",
-  "source": "Marina 418/466: matching floral ottoman in front of the chair; Poly Haven Ottoman_01 (CC0) re-skinned like the chair; kept off the rug (z < 12.45)"
+  "source": "Marina 418/466: matching floral ottoman in front of the chair; Poly Haven Ottoman_01 (CC0) re-skinned like the chair; kept off the rug (z < 12.45)",
+  "turn_deg": 45,
+  "note": "user walk note Oct 18 03:13: \"this chair and ottoman should be kitty cornered\": turned 45 deg into the corner (back wall / foyer-side wall), ottoman in front on the diagonal"
  },
  "curio": {
   "x": [

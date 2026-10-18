@@ -19,6 +19,7 @@ changes/2026-10-18-buzz-bed.json.
   /Applications/Blender.app/Contents/MacOS/Blender -b --disable-autoexec -P tools/house/purchased_bed.py
 """
 import json
+import sys
 from pathlib import Path
 
 import bmesh
@@ -27,10 +28,20 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 PACK = ROOT / "unity/HomeAlone/Assets/Classic Wooden Furniture Pack"
-OUT = ROOT / "unity/HomeAlone/Assets/Purchased/BuzzBed/BuzzBed.glb"
-PIECE = next(p for p in json.loads((ROOT / "spec/dressing/buzz.json").read_text())["pieces"] if p["name"] == "buzz_bed")
-W_OUT = PIECE["along"][1] - PIECE["along"][0]        # outer width over the posts (finial centres + one post)
-L_OUT = PIECE["off"][1] - PIECE["off"][0]            # head posts' back to the footboard's face
+# --parents (Oct 18, overnight8, changes/2026-10-18-parents-room.json): the parents' four-poster from the same pack bed, WIDENED
+# (the boards stretched across their middles, posts moved out rigidly) to the film/Marina post spacing, all four post shafts
+# lengthened to the four-poster's finial height, the headboard/footboard kept at the pack's height (not raised with the posts),
+# dark mahogany wood, the film's deep red quilt and pillows (1594-1610). Rice carving is NOT modelled (turned pack shafts).
+PARENTS = "--parents" in sys.argv
+NAME = "ParentsBed" if PARENTS else "BuzzBed"
+OUT = ROOT / f"unity/HomeAlone/Assets/Purchased/{NAME}/{NAME}.glb"
+PIECE = next(p for p in json.loads((ROOT / ("spec/dressing/parents.json" if PARENTS else "spec/dressing/buzz.json")).read_text())["pieces"]
+             if p["name"] == ("parents_bed" if PARENTS else "buzz_bed"))
+if PARENTS:   # parents.json pieces are spec boxes: the headboard wall is x = const, the width runs along z
+    W_OUT, L_OUT = PIECE["z"][1] - PIECE["z"][0], PIECE["x"][1] - PIECE["x"][0]
+else:
+    W_OUT = PIECE["along"][1] - PIECE["along"][0]    # outer width over the posts (finial centres + one post)
+    L_OUT = PIECE["off"][1] - PIECE["off"][0]        # head posts' back to the footboard's face
 HEAD, FOOT, TOP = PIECE["h"][1], PIECE["foot_h"], PIECE["mattress_top"]
 
 FLOOR = 0.144                 # pack: the posts' feet
@@ -95,6 +106,10 @@ assert [len(G[k]) for k in ("post_h", "post_f", "fin_h", "fin_f", "rail", "headb
 
 lo_p, hi_p = bbox(G["post_h"][0] + G["post_h"][1])
 W0 = hi_p[0] - lo_p[0]; CUT = W0 - W_OUT; XC1 = XC - CUT / 2
+WIDEN = CUT < 0
+if WIDEN:
+    XC1 = XC                                                # both halves move out by -CUT/2: the centre stays
+    BHALF = (bbox(G["headboard"][0])[1][0] - bbox(G["headboard"][0])[0][0]) / 2 - 0.12   # board half span stretched (ends ride with the posts)
 L0 = bbox(G["post_h"][0])[1][1] - bbox(G["post_f"][0])[0][1]
 DY = L_OUT - L0
 yf_in = bbox(G["footboard"][0])[1][1]                        # footboard's inner face
@@ -117,7 +132,14 @@ def soft_x(x):
 
 
 def rigid_x(x):
+    if WIDEN:
+        return x + (-CUT / 2) * (1 if x > XC else -1)
     return x - CUT if x > XC else x
+
+
+def board_x(x):   # widening: the boards' middles stretch, their ends move with the posts
+    d = x - XC; a = abs(d); s = 1 if d >= 0 else -1
+    return XC + s * (a * (BHALF - CUT / 2) / BHALF if a <= BHALF else a - CUT / 2)
 
 
 def deck_y(y):
@@ -151,6 +173,13 @@ MAPS = {  # group -> (x, y, z) per vertex
     "pillow": (lambda x, d=XC1 - (bbox(G["pillow"][0])[0][0] + bbox(G["pillow"][0])[1][0]) / 2: x + d, lambda y: y, lambda z: z + MAT_TOP - mhi[2]),
 }
 CUT_GROUPS = {"headboard", "footboard"}        # the boards span the middle: cut, slide, weld
+BOARD_DZ = 0.0 if PARENTS else None            # parents: the boards keep the pack's height; Buzz: raised with the posts
+if PARENTS:
+    MAPS["headboard"] = (board_x, lambda y: y, lambda z: z)
+    MAPS["footboard"] = (board_x, lambda y: y - DY, lambda z: z)
+    MAPS["rail"] = (board_x, deck_y, MAPS["rail"][2])
+    MAPS["post_f"] = (rigid_x, lambda y: y - DY, post_z(DF, 0.55))
+    CUT_GROUPS = set()
 
 
 Y_BLANKET = deck_y((clo[1] + chi[1]) / 2 - 0.05)   # the green blanket covers the cover's foot side of this line (Marina 561: ~ the foot half)
@@ -211,6 +240,13 @@ soft_bm, soft_mats = build(["mattress", "cover", "pillow"])
 T = PACK / "Textures/HDRP"
 OUT.parent.mkdir(parents=True, exist_ok=True)
 alb = bpy.data.images.load(str(T / "BED_01_ALBEDO.png"))
+if PARENTS:   # dark mahogany (film 1610/2648: near-black red-brown posts) and the film's deep red quilt; one atlas, so two copies
+    wood_img = alb.copy(); px = np.array(wood_img.pixels[:]).reshape(-1, 4); px[:, :3] *= (0.42, 0.20, 0.15)
+    wood_img.pixels[:] = px.ravel(); wood_img.filepath_raw = str(OUT.parent / "ParentsBed_Wood.png"); wood_img.file_format = "PNG"
+    red_img = alb.copy(); px = np.array(red_img.pixels[:]).reshape(-1, 4); lum = px[:, :3].mean(1, keepdims=True)
+    px[:, :3] = lum * np.array([0.50, 0.025, 0.07]) / max(float(np.median(lum)), 1e-3) * 0.55   # 0.75 in build 1-3: a bright red that tinted the walls pink by bounce; film 1610 deep crimson
+    red_img.pixels[:] = np.clip(px, 0, 1).ravel(); red_img.filepath_raw = str(OUT.parent / "ParentsBed_Red.png"); red_img.file_format = "PNG"
+    OUT.parent.mkdir(parents=True, exist_ok=True); wood_img.save(); red_img.save()
 nrm = bpy.data.images.load(str(T / "BED_01_NORMAL.png")); nrm.colorspace_settings.name = "Non-Color"
 grn = alb.copy(); px = np.array(grn.pixels[:]).reshape(-1, 4)
 px[:, :3] *= (0.30, 0.48, 0.36)          # pack's beige cover -> Marina 553/561's green blanket (sRGB-space multiply)
@@ -226,10 +262,15 @@ def mat(name, img, rough):
     return m
 
 
-root = bpy.data.objects.new("BuzzBed", None); bpy.context.scene.collection.objects.link(root)
-wood_me = bpy.data.meshes.new("BuzzBedFrame"); wood_bm.to_mesh(wood_me); wood_me.materials.append(mat("BB_Wood", alb, 0.55))
-soft_me = bpy.data.meshes.new("BuzzBedBedding"); soft_bm.to_mesh(soft_me)
-soft_me.materials.append(mat("BB_Sheet", alb, 0.9)); soft_me.materials.append(mat("BB_Blanket", grn, 0.95))
+root = bpy.data.objects.new(NAME, None); bpy.context.scene.collection.objects.link(root)
+wood_me = bpy.data.meshes.new(NAME + "Frame"); wood_bm.to_mesh(wood_me)
+soft_me = bpy.data.meshes.new(NAME + "Bedding"); soft_bm.to_mesh(soft_me)
+if PARENTS:
+    wood_me.materials.append(mat("PB_Wood", wood_img, 0.45))
+    soft_me.materials.append(mat("PB_Quilt", red_img, 0.85)); soft_me.materials.append(mat("PB_Quilt2", red_img, 0.85))
+else:
+    wood_me.materials.append(mat("BB_Wood", alb, 0.55))
+    soft_me.materials.append(mat("BB_Sheet", alb, 0.9)); soft_me.materials.append(mat("BB_Blanket", grn, 0.95))
 for p, mi in zip(soft_me.polygons, soft_mats):
     p.material_index = mi
 for nme, me in (("BedFrame", wood_me), ("Bedding", soft_me)):

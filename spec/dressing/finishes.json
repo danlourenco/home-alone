@@ -82,6 +82,18 @@
    "source": "film 2766 (daylight, frontal close-up beside the BB gun): a white ground with lines every quarter period, red / grey / tan / grey, each with short staggered gaps; cut by tools/house/film_wallpaper.py --buzz (one period, the median of every clean period below the sling; ground albedo set to the house's off-white trim, ASSUMED: DEVIATIONS 75). Metric repeat 0.1124 m: the gun as the ruler (Daisy lever BB gun 0.90 m, 8.01 periods butt to muzzle); check film 480's growth-chart ticks: >= 0.120 (frontal assumed), DEVIATIONS 82. Was film 530's colourway on Marina's 0.0853 m (her own paper). A white baseboard only (0.14 = the baseboard; Marina 545 s shows a plain white board). 'upper' is the fallback colour (the paper's ground). Not built yet: the film's crown moulding and the red sports-print frieze under it (film 488-522; DEVIATIONS)",
    "floor": "wood",
    "floor_source": "Marina Part 2 543-562 s: dark stained strip hardwood (the foyer's wood); the film's floor (498, 526) is warm wood, partly under a rug and clutter"
+  },
+  "parents_bedroom": {
+   "paper": "spec/dressing/parents_wallpaper.png",
+   "upper": [
+    0.86,
+    0.83,
+    0.76
+   ],
+   "wainscot_m": 0.14,
+   "source": "film 1610 (packing morning, frontal on the headboard wall): cream ground, thin dark double stripes, red/rose/blue flowering vines; cut by tools/house/film_wallpaper.py --parents (per-pixel median over the clean wall patches on the measured half-drop lattice; repeat 1.066 x 0.762 m at an ASSUMED 21 in roll width, check: film 1610's head posts 1.90 m apart vs Marina 250's 1.89 at the bath doorway ruler). Marina's paper is a paler sprig stripe (film first). A white baseboard only (Marina 250: plain board; the film's and Marina's crown moulding is not built yet). 'upper' is the fallback colour. Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json)",
+   "floor": "wood",
+   "floor_source": "Marina 176/250 and the film's 104/130 s clips: dark stained strip hardwood (the house's wood); the film's oriental rug is not built"
   }
  }
 }

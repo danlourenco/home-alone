@@ -930,6 +930,245 @@
    "hides": [],
    "collide": true,
    "source": "Dining room (overnight Oct 18, prop, not walked): the film's sideboard (246/252: under the gilt still life, left of the sunroom French doors, a brass tea service on it; 10548 its brass chafing dish beside the kitchen door). Owned DRAWER_CAB_01 (1.14 x 0.39 x 0.70 native) fitted to 1.50 x 0.48 x 0.86 (x1.32/1.23/1.23; sideboard standard 34 in), back 4 cm off the sunroom wall (wainscot cap 3 cm proud + 1), its rear end 0.59 m from the kitchen wall"
+  },
+  {
+   "name": "parents_bed",
+   "floor": "upper",
+   "prefab": "Assets/Purchased/ParentsBed/ParentsBed.glb",
+   "x": [
+    3.225,
+    5.425
+   ],
+   "z": [
+    0.8386,
+    2.8402
+   ],
+   "y0": 0.0,
+   "height": 2.15,
+   "hides": [
+    "parents_bed_post_head_W",
+    "parents_bed_post_foot_W",
+    "parents_bed_post_head_B",
+    "parents_bed_post_foot_B",
+    "parents_bed_headboard",
+    "parents_bed_footboard",
+    "parents_bed_rail_W",
+    "parents_bed_rail_B",
+    "parents_bed_mattress"
+   ],
+   "collide": false,
+   "back": "",
+   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): Marina 250 s head posts at z 0.891 / 2.788 (spacing 1.898; film 1610 at the 21 in paper roll: 1.90), headboard on the bath-door wall; length 2.20 ASSUMED (king); finial tops 2.15 on all four posts ASSUMED (film 1602/2648: tall rice-carved posts, ~0.35 m under the ceiling); mattress top 0.72 ASSUMED; rails' underside 0.48 (kid Kevin's crouch 0.45 + 0.02 fits under)",
+   "yaw": 90
+  },
+  {
+   "name": "parents_nightstand_window",
+   "floor": "upper",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/BEDSIDE_CAB_01.prefab",
+   "x": [
+    3.22,
+    3.62
+   ],
+   "z": [
+    0.275,
+    0.8086
+   ],
+   "y0": 0.0,
+   "height": 0.66,
+   "hides": [
+    "parents_nightstand_window"
+   ],
+   "collide": false,
+   "back": "-x",
+   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): Marina 250 s (outer edge at its front-face depth; inner edge 3 cm off the bed post); film 1578/2648: dark mahogany chest with brass pulls, top about level with the mattress (0.66 ASSUMED); depth 0.40 to clear the etagere",
+   "tint": [
+    0.62,
+    0.4,
+    0.34
+   ]
+  },
+  {
+   "name": "parents_nightstand_bath",
+   "floor": "upper",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/BEDSIDE_CAB_01.prefab",
+   "x": [
+    3.22,
+    3.62
+   ],
+   "z": [
+    2.8702,
+    3.373
+   ],
+   "y0": 0.0,
+   "height": 0.66,
+   "hides": [
+    "parents_nightstand_bath"
+   ],
+   "collide": false,
+   "back": "-x",
+   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): Marina 250 s (outer edge at its front-face depth; inner edge 3 cm off the bed post); film 1578/2648: dark mahogany chest with brass pulls, top about level with the mattress (0.66 ASSUMED); depth 0.40 to clear the etagere",
+   "tint": [
+    0.62,
+    0.4,
+    0.34
+   ]
+  },
+  {
+   "name": "parents_etagere",
+   "floor": "upper",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/SHELVES_01.prefab",
+   "x": [
+    3.63,
+    4.12
+   ],
+   "z": [
+    0.01,
+    0.34
+   ],
+   "y0": 0.0,
+   "height": 1.45,
+   "hides": [
+    "parents_etagere"
+   ],
+   "collide": false,
+   "back": "-z",
+   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): film 2648/2663 (open dark etagere with books and a hat box at the window corner, left of the side window) and Marina 244/250 (its front-left corner about 0.43 m off the headboard wall at z 0.35 in 250); SHELVES_01 squeezed to 0.49 x 0.33 x 1.45 (film's is a slim turned-post stand)"
+  },
+  {
+   "name": "parents_armoire",
+   "floor": "upper",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/WARDROBE_01.prefab",
+   "x": [
+    7.28,
+    8.43
+   ],
+   "z": [
+    3.121,
+    3.711
+   ],
+   "y0": 0.0,
+   "height": 2.05,
+   "hides": [
+    "parents_armoire"
+   ],
+   "collide": false,
+   "back": "+z",
+   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): Marina 180/188/184: dark armoire right of the front windows, against the notch wall (z 3.721) in the front corner; the film never shows it clearly (Marina only). WARDROBE_01 fitted to 1.15 x 0.59 x 2.05 (her bonnet top ~2.1), stained dark (tint: the pack's oak read light beside her dark armoire)",
+   "tint": [
+    0.36,
+    0.24,
+    0.21
+   ]
+  },
+  {
+   "name": "parents_window_table",
+   "floor": "upper",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/SIDE_TABLE_01.prefab",
+   "x": [
+    8.021,
+    8.471
+   ],
+   "z": [
+    1.888,
+    2.688
+   ],
+   "y0": 0.0,
+   "height": 0.7,
+   "hides": [
+    "parents_window_table"
+   ],
+   "collide": false,
+   "back": "+x",
+   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): Marina 238/188: a demilune writing table under the front windows (film 104 s clip: a dressing table on the window wall); SIDE_TABLE_01 0.80 x 0.45 x 0.70 (centred under the window, clear of the side panels), under the 0.81 sill"
+  },
+  {
+   "name": "parents_window_chair",
+   "floor": "upper",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    6.85,
+    7.37
+   ],
+   "z": [
+    0.55,
+    1.04
+   ],
+   "y0": 0.0,
+   "height": 0.97,
+   "hides": [
+    "parents_window_chair"
+   ],
+   "collide": true,
+   "back": "",
+   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): Marina 238/244: green upholstered armchair at the side window beside the floor lamp (film 104/130 s clips: green stool and chair); CHAIR_01 at native size as a stand-in, facing the room",
+   "yaw": 180
+  },
+  {
+   "name": "parents_floor_lamp",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Lamp_02.prefab",
+   "x": [
+    7.45,
+    7.78
+   ],
+   "z": [
+    0.25,
+    0.63
+   ],
+   "y0": 0.0,
+   "height": 1.45,
+   "hides": [
+    "parents_floor_lamp"
+   ],
+   "collide": false,
+   "back": "",
+   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): Marina 238/244 and film 130 s clip: a tall floor lamp with a dark green shade by the window chair; Fadnn SM_Lamp_02 fitted to 1.45",
+   "yaw": 180
+  },
+  {
+   "name": "parents_door_chair",
+   "floor": "upper",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    6.391,
+    6.891
+   ],
+   "z": [
+    3.85,
+    4.35
+   ],
+   "y0": 0.0,
+   "height": 0.97,
+   "hides": [
+    "parents_door_chair"
+   ],
+   "collide": true,
+   "back": "",
+   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): Marina 176/180: a maroon armchair by the hall-door wall under two pictures; against the notch wall x 6.921, clear of the hall door's open leaf (80 deg reaches z ~4.56)",
+   "yaw": 270
+  },
+  {
+   "name": "parents_door",
+   "floor": "upper",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    5.7373,
+    6.6028
+   ],
+   "z": [
+    5.4689,
+    5.5289
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "hides": [
+    "Casing"
+   ],
+   "collide": false,
+   "back": "-z",
+   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): openings audit: opening 0.770 x 2.032 (stock 30 x 80 in; Marina's slab 0.762 at her 80 in ruler); Door_3 White as girls_a/girls_b/attic/linen/Buzz (the film's are white six-panel: logged with the hall's DEVIATIONS 63h); the pack frame (leaf x 1.124 wide, x 1.027 tall) replaces the generated casing on the hall face, 0.5 cm proud. Hinge at the notch end (hi): Marina 180 s shows the knob at the fireplace-side edge; swings into the room. Open 80 deg AUTHORED (closed in every Marina frame), clear of the door-wall armchair",
+   "open": 80,
+   "hinge": "hi"
   }
  ]
 }

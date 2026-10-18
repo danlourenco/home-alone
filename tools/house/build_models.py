@@ -38,6 +38,7 @@ BUILDS = {
     "tools/house/hifi_den_props.py": (["DenProps.glb"], ["spec/dressing/den.json"]),
     "tools/house/hifi_foyer_props.py": (["FoyerProps.glb"], [LIB, "spec/dressing/foyer_props.json", "spec/dressing/foyer_art.json", "spec/dressing/foyer_art.png", "spec/dressing/rug_runner.png", "spec/dressing/rug_front.png"]),
     "tools/house/hifi_paint_can.py": (["PaintCan.glb", "PaintCanSatin.glb"], [LIB]),
+    "tools/house/hifi_parents_dressing.py": (["ParentsDressing.glb"], [LIB, "tools/house/hifi_sheers.py", "spec/dressing/parents.json", "spec/openings.json", "spec/geometry.json"]),
     "tools/house/hifi_buzz_curtains.py": (["BuzzCurtains.glb"], [LIB, "tools/house/hifi_sheers.py", "spec/dressing/buzz_curtains.json", "spec/dressing/buzz.json", "spec/openings.json", "spec/geometry.json"]),
     "tools/house/hifi_living.py": (["LivingWindows.glb", "LivingBuiltins.glb"], [LIB, "spec/house_spec.ground.json", "spec/dressing/living.json", "tools/house/hifi_sheers.py"]),
     "tools/house/hifi_living_props.py": (["LivingProps.glb"], ["spec/dressing/living.json", "tools/house/hifi_den_props.py"]),

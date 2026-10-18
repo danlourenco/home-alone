@@ -1,0 +1,142 @@
+[
+ {
+  "name": "parents1/after/film1610",
+  "pos": [
+   6.4,
+   1.3,
+   -1.83
+  ],
+  "look_at": [
+   3.21,
+   1.15,
+   -1.83
+  ],
+  "vfov": 52
+ },
+ {
+  "name": "parents1/after/marina250",
+  "pos": [
+   7.36,
+   1.19,
+   -2.156
+  ],
+  "look_at": [
+   3.21,
+   1.19,
+   -2.156
+  ],
+  "vfov": 41.4
+ },
+ {
+  "name": "parents1/after/marina238",
+  "pos": [
+   4.9,
+   1.35,
+   -2.7
+  ],
+  "look_at": [
+   8.3,
+   1.0,
+   -0.25
+  ],
+  "vfov": 62
+ },
+ {
+  "name": "parents1/after/marina180",
+  "pos": [
+   4.4,
+   1.35,
+   -0.9
+  ],
+  "look_at": [
+   7.6,
+   1.15,
+   -4.6
+  ],
+  "vfov": 62
+ },
+ {
+  "name": "parents1/after/film2648",
+  "pos": [
+   5.7,
+   0.75,
+   -2.5
+  ],
+  "look_at": [
+   3.3,
+   1.45,
+   -0.35
+  ],
+  "vfov": 70
+ },
+ {
+  "name": "parents1/after/kevin-door",
+  "pos": [
+   6.16,
+   1.1,
+   -4.85
+  ],
+  "look_at": [
+   4.0,
+   0.7,
+   -1.8
+  ],
+  "vfov": 62
+ },
+ {
+  "name": "parents1/after/close-underbed",
+  "pos": [
+   6.05,
+   0.32,
+   -1.83
+  ],
+  "look_at": [
+   4.6,
+   0.28,
+   -1.83
+  ],
+  "vfov": 70
+ },
+ {
+  "name": "parents1/after/close-headpost",
+  "pos": [
+   4.25,
+   1.1,
+   -0.45
+  ],
+  "look_at": [
+   3.3,
+   0.75,
+   -0.86
+  ],
+  "vfov": 55
+ },
+ {
+  "name": "parents1/after/door",
+  "pos": [
+   4.6,
+   1.3,
+   -2.9
+  ],
+  "look_at": [
+   6.3,
+   1.0,
+   -5.2
+  ],
+  "vfov": 62
+ },
+ {
+  "name": "parents1/after/close-lamp",
+  "pos": [
+   4.0,
+   1.1,
+   -3.6
+  ],
+  "look_at": [
+   3.42,
+   0.85,
+   -3.12
+  ],
+  "vfov": 55
+ }
+]

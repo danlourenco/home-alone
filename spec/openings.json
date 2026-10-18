@@ -5,8 +5,8 @@
 "spec/geometry.json": "ab2ccb47a12f2c69a70ff411c4bff1a310383226d333050107c97e0b96718ccf",
 "spec/house_spec.json": "00563e5d3f64bf825efb3a3ba8b19e1a641a1cd7331aa03dda68a1883215dd89",
 "spec/house_spec.ground.json": "c61d3732d53e46b7b76a94886088d26d2fb1a8989a8519b216b5b0f0c5fa9394",
-"spec/dressing/store_props.json": "90ea1e215e2a539ddfa7f3fb0f470e6f357191f7db3b46ec84fbf9eef34aef50",
-"spec/dressing/french_doors.json": "4deca1173b27e2e02f2bdf61d69ff1b9ff46ba4805b94891e7318ff2a3feb312",
+"spec/dressing/store_props.json": "de483df2ff593eb3125c746a2d737cd8dd72a678f5b552d369db797087a05ae9",
+"spec/dressing/french_doors.json": "a5da39a702d68886d0f0a1e4ea5c20e62ca81435868ce73d253eaa209c3b4663",
 "spec/dressing/buzz.json": "adbe2e533194393922314595597d1404a3c1496c4d02da480ba9cb955d53eb7a",
 "tools/house/hifi_door.py": "43caa8e4502f58c7b108e6a1e623e15b7f158f7aac7dd50510b2abaf2d739788",
 "tools/house/openings.py": "83eec06b884ed468f0cf1458436d65e6db0f37f02630d81677afb946792ba1d1"
@@ -81,21 +81,32 @@
 ]
 },
 {
+"part": "frame",
+"face": [
+"x",
+5.4639,
+1
+],
+"by": "store_props:parents_door",
+"box": [
+5.7373,
+6.6028,
+5.4689,
+5.5289,
+0.0,
+2.087
+]
+}
+],
+"dropped": [
+{
 "part": "leg_lo",
 "face": [
 "x",
 5.4639,
 1
 ],
-"by": null,
-"box": [
-5.7073,
-5.7773,
-5.4639,
-5.4839,
-0.0,
-2.102
-]
+"reason": "replaced by the store prop parents_door's door frame (store_props.json)"
 },
 {
 "part": "leg_hi",
@@ -104,15 +115,7 @@
 5.4639,
 1
 ],
-"by": null,
-"box": [
-6.5473,
-6.6173,
-5.4639,
-5.4839,
-0.0,
-2.102
-]
+"reason": "replaced by the store prop parents_door's door frame (store_props.json)"
 },
 {
 "part": "head",
@@ -121,18 +124,9 @@
 5.4639,
 1
 ],
-"by": null,
-"box": [
-5.7073,
-6.6173,
-5.4639,
-5.4839,
-2.032,
-2.102
-]
+"reason": "replaced by the store prop parents_door's door frame (store_props.json)"
 }
 ],
-"dropped": [],
 "limits": [
 {
 "rule": "head-under-header",
@@ -152,12 +146,17 @@
 {
 "rule": "under-ceiling",
 "ok": true,
-"detail": "head + casing 2.102 under hall_end's ceiling 2.400"
+"detail": "head 2.032 under hall_end's ceiling 2.400"
 },
 {
 "rule": "head-cased",
 "ok": true,
-"detail": "hall_end face: head by SpecGreybox"
+"detail": "hall_end face: frame by store_props:parents_door"
+},
+{
+"rule": "swing-room",
+"ok": true,
+"detail": "store door parents_door: 0.75 m leaf swings clear to 90 deg"
 }
 ],
 "header": {
@@ -173,7 +172,15 @@
 "parents_bedroom": 2.5,
 "hall_end": 2.4
 }
+},
+"swings": [
+{
+"what": "store door parents_door",
+"hinge_s": 6.5473,
+"toward_n": -1,
+"width": 0.75
 }
+]
 },
 {
 "id": "upstairs:door:parents_bath|parents_bedroom:3.584",
@@ -3598,16 +3605,6 @@
 "rule": "under-ceiling",
 "ok": true,
 "detail": "head + casing 2.135 under foyer's ceiling 2.820"
-},
-{
-"rule": "swing-room",
-"ok": true,
-"detail": "French pair foyer|dining_room lo leaf: 0.83 m leaf swings clear to 90 deg"
-},
-{
-"rule": "swing-room",
-"ok": true,
-"detail": "French pair foyer|dining_room hi leaf: 0.83 m leaf swings clear to 90 deg"
 }
 ],
 "header": {
@@ -3623,21 +3620,7 @@
 "dining_room": 2.438,
 "foyer": 2.82
 }
-},
-"swings": [
-{
-"what": "French pair foyer|dining_room lo leaf",
-"hinge_s": 6.972,
-"toward_n": -1,
-"width": 0.833
-},
-{
-"what": "French pair foyer|dining_room hi leaf",
-"hinge_s": 8.641,
-"toward_n": -1,
-"width": 0.833
 }
-]
 },
 {
 "id": "ground:arch:foyer|vestibule:8.794",
