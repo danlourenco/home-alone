@@ -87,34 +87,50 @@
    0.01,
    0.05
   ],
-  "source": "Plain crimson wool runner on dark strip hardwood, the borders bare (film 10819, 2687, 2296, 10828, 410). Width: film 10819 at v 1040 the runner spans 0.61 of the floor between the walls (710 / 1160 px) -> 0.74 m in a 1.214 m hall; built 0.70 m (a stock 28 in runner), one fitted piece: x 5.86-6.56 in the vestibule (clear of the table, front x 6.591) and x 6.03-6.73 from the arch to the attic end (clear of the ficus by the rail and the urns and table on the +x walls), so it jogs 0.17 m under the first arch, where the film's runs straight (its hall is narrower): DEVIATIONS 63. Colour: runner / white wainscot in the same frame x 0.85, linear (0.19-0.26, 0.00-0.04, 0.04-0.07) over 10819/2687/2296/10828 -> (0.23, 0.01, 0.05). Gallery: film 2687 (from the stair top) shows the red carpet wide across the top of the stairs, from the balustrade to near the far wall: a rectangle over the gallery floor 13 cm off the rail line (z 9.16) and 4 cm off the stair's top edge (x 3.938).",
+  "source": "Plain crimson wool runner on dark strip hardwood, the borders bare (film 10819, 2687, 2296, 10828, 410). Width: film 10819 at v 1040 the runner spans 0.61 of the floor between the walls (710 / 1160 px) -> 0.74 m in our 1.214 m vestibule; built 0.70 m (a stock 28 in runner; one read, no second ruler: DEVIATIONS 63). CENTRED ON THE WALKING LINE, each leg in its own corridor (user Oct 18: 'rug doesn't seem to line up centrally from walkways from attic stairs to parents bed'; changes/2026-10-18-upstairs-hall-polish.json): vestibule (hall_end) x 5.812-6.512, centre 6.162 = the parents' doorway's centre (5.777-6.547) and the clear floor between the wall (5.707) and the hall table (front 6.591); the corridor by the rail x 6.085-6.785, centre 6.435 between the rail (5.637) and the closet wall (7.233); the attic end (hall_corridor_south) x 6.199-6.899, centre 6.549 between its walls (5.764 / 7.333; the attic door's centre is 6.493). It turns (jogs 0.27 m and 0.11 m) on the arches' centre lines (z 7.708, 11.5), where the film's straight runner has a narrower hall: DEVIATIONS 63. Clear of the table (8 cm), urns (7.5 cm), ficus pot (5.5 cm), the attic table (10 cm) and every door frame; the open attic leaf (hinge x 6.112) stands 5 cm outside it. Colour: runner / white wainscot in the same frame x 0.85, linear (0.19-0.26, 0.00-0.04, 0.04-0.07) over 10819/2687/2296/10828 -> (0.23, 0.01, 0.05). Gallery: film 2687 (from the stair top) shows the red carpet wide across the top of the stairs, from the balustrade to near the far wall: a rectangle over the gallery floor to the corridor leg, 14 cm off the rail line (z 9.20) and 5 cm off the stair's top edge.",
   "outline": [
    [
-    5.86,
+    5.812,
     5.53
    ],
    [
-    6.56,
+    6.512,
     5.53
    ],
    [
-    6.56,
+    6.512,
     7.708
    ],
    [
-    6.73,
+    6.785,
     7.708
    ],
    [
-    6.73,
+    6.785,
+    11.5
+   ],
+   [
+    6.899,
+    11.5
+   ],
+   [
+    6.899,
     13.45
    ],
    [
-    6.03,
+    6.199,
     13.45
    ],
    [
-    6.03,
+    6.199,
+    11.5
+   ],
+   [
+    6.085,
+    11.5
+   ],
+   [
+    6.085,
     9.06
    ],
    [
@@ -126,15 +142,15 @@
     7.93
    ],
    [
-    6.03,
+    6.085,
     7.93
    ],
    [
-    6.03,
+    6.085,
     7.708
    ],
    [
-    5.86,
+    5.812,
     7.708
    ]
   ]

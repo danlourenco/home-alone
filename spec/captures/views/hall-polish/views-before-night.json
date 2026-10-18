@@ -1,0 +1,47 @@
+[
+ {
+  "name": "hall-polish/before-banister_note2246",
+  "pos": [
+   6.241,
+   1.13,
+   -8.906
+  ],
+  "look_at": [
+   5.481,
+   0.715,
+   -9.407
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/before-moulding_note2244",
+  "pos": [
+   7.044,
+   1.13,
+   -10.597
+  ],
+  "look_at": [
+   7.277,
+   0.844,
+   -11.526
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/before-moulding_note2245",
+  "pos": [
+   7.044,
+   1.13,
+   -10.597
+  ],
+  "look_at": [
+   6.164,
+   0.783,
+   -10.922
+  ],
+  "vfov": 60,
+  "near": 0.05
+ }
+]

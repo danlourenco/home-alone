@@ -44,7 +44,10 @@ OUT = ROOT / "spec/openings.json"
 INPUTS = ["spec/geometry.json", "spec/house_spec.json", "spec/house_spec.ground.json", "spec/dressing/store_props.json",
           "spec/dressing/french_doors.json", "spec/dressing/buzz.json", "tools/house/hifi_door.py", "tools/house/openings.py"]
 CASING_W, CASING_PROUD, STOOL_PROUD, STOOL_T, HALF, PROP_T = 0.07, 0.02, 0.04, 0.025, 0.07, 0.03   # SpecGreybox consts
-ARCH_MODELS = {"foyer|rear_passage": "FoyerArch"}   # SpecGreybox.Arch.cs ArchModels: plain (film), no casing
+ARCH_MODELS = {"foyer|rear_passage": "FoyerArch",   # SpecGreybox.Arch.cs ArchModels: plain (film), no casing
+               # the hall's plastered arches (hifi_hall_arches.py, film 410/2296/10828: no casing); the legs to the spring that
+               # stood here were the "random vertical stripe" of walk note 2026-10-17T08:28:50
+               "hall_corridor|hall_end": "HallArches", "hall_corridor|hall_corridor_south": "HallArches"}
 
 
 def load(p):

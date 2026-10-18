@@ -114,6 +114,10 @@ public static partial class SpecGreybox
             float c = (float)o["c"], lo = (float)o["lo"], hi = (float)o["hi"];
             var box = new Bounds(new Vector3((lo + hi) / 2, 2.2f, -c), new Vector3(hi - lo + 0.02f, 1.0f, 0.3f));
             foreach (var r in root.GetComponentsInChildren<MeshRenderer>().Where(r => r.name == "Arch_Spandrel" && box.Intersects(r.bounds))) { r.enabled = false; hid++; }
+            // the floor under the arch (a plain plate cell in the wall's thickness, grey between the runner's legs): the hall's wood
+            var wood = root.GetComponentsInChildren<MeshRenderer>().FirstOrDefault(r => r.name == "Floor_hall_corridor")?.sharedMaterial;
+            var under = new Bounds(new Vector3((lo + hi) / 2, -0.1f, -c), new Vector3(hi - lo - 0.01f, 0.1f, 0.12f));
+            if (wood != null) foreach (var r in root.GetComponentsInChildren<MeshRenderer>().Where(r => r.name == "FloorPlate" && under.Intersects(r.bounds))) r.sharedMaterial = wood;
         }
         // the gallery's back wall is the stair well's (film 2085 / 2687: damask over the white wainscot), not the hall's teal
         int papered = 0; var a = D["arch_a"];

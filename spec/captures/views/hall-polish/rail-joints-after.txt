@@ -1,0 +1,1 @@
+Rail joints: 5 rails (5 in the stair model, 0 grey-box), 6 newels, 0 loose ends (tolerance 5 mm)

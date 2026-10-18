@@ -1,0 +1,5 @@
+Rail joints: 5 rails (3 in the stair model, 2 grey-box), 3 newels, 4 loose ends (tolerance 5 mm)
+LOOSE   flight2 end at spec (3.721, 0.692, 9.200): no newel or wall, nearest rail end 27.4 cm
+LOOSE   greybox rail:x:5.647 start at spec (5.647, 0.920, 9.230): no newel or wall, nearest rail end 9.9 cm
+LOOSE   greybox rail:z:9.16 start at spec (3.868, 0.920, 9.160): no newel or wall, nearest rail end 27.4 cm
+LOOSE   greybox rail:z:9.16 end at spec (5.577, 0.920, 9.160): no newel or wall, nearest rail end 9.9 cm

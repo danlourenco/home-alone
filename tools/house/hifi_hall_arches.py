@@ -6,7 +6,7 @@ changes/2026-10-17-upstairs-arches.json, DEVIATIONS 64).
   arc soffit through the 14 cm wall with a 5 mm round on both edges, and the painted spandrel faces on both sides (material AR_Paint:
   SpecGreybox.Hall gives them the hall's paint). The grey-box's stepped slices (SpecGreybox.ArchTop) stay as colliders only.
 - A (the gallery arch, film 2080-2100 / 2085: a wide, shallow HALF-ELLIPSE between the stair well's gallery and the hall, papered with
-  the stair well's damask on both faces and the soffit): a 10 cm header in the plane x 5.547-5.647 from the gallery's back wall
+  the stair well's damask on its well face and the soffit, painted on its hall face: Oct 18): a 10 cm header in the plane x 5.547-5.647 from the gallery's back wall
   (z 7.778) to the wall at z 11.43, springing at 2.04 (film 2085, refcam film-2085: 2.029 / 2.060) to a crown of 2.30 under our 2.40
   ceiling (film: 2.39 under a ~2.6 m set ceiling; DEVIATIONS 64). It is dressing above head height (no wall in the spec: the wall
   graph has no header over a rail, and the arch spans the gallery's open side and the balustrade): hall.json "arch_a".
@@ -116,7 +116,9 @@ for name, pair in (("B", ("hall_corridor", "hall_corridor_south")), ("C", ("hall
     cuts[name] = [((o["lo"], 0.0, o["c"]), (-1, 0, 0)), ((o["hi"], 0.0, o["c"]), (1, 0, 0)), ((o["lo"], o["height"], o["c"]), (0, 1, 0))]
     lows.append((name, lo_m)); highs.append(hi_m); flat += papers
 a = HALL["arch_a"]
-sofA, papersA = build("A", ellipse, (a["z"][0], a["z"][1], a["spring"], a["crown"]), tuple(a["x"]), ("AR_Paper", "AR_Paper"), a["top"], False, "AR_Paper")
+# A's faces: the stair well's damask on the well side (x 5.547; film 2084), the hall's paint on the hall side (x 5.647; film 10828, the
+# header over the ficus reads teal; walk note 2026-10-17T08:28:20 "the wallpaper should actually be paint on this side of the arch")
+sofA, papersA = build("A", ellipse, (a["z"][0], a["z"][1], a["spring"], a["crown"]), tuple(a["x"]), ("AR_Paper", "AR_Paint"), a["top"], False, "AR_Paper")
 flat += papersA
 
 hs = {n: hp.pack([m], PPM) for n, m in lows}

@@ -72,6 +72,9 @@ def stale(stamps):
 
 stamps = json.loads(STAMPS.read_text()) if STAMPS.exists() else {}
 todo = stale(stamps)
+if "--only" in sys.argv:   # rebuild just these scripts' models (others' work in progress stays as it is): --only hifi_hall,hifi_foyer
+    want = sys.argv[sys.argv.index("--only") + 1].split(",")
+    todo = [s for s in todo if Path(s).stem in want]
 if "--check" in sys.argv:
     for s in todo:
         print(f"stale model: {', '.join(BUILDS[s][0])} (from {s}); run python3 tools/house/build_models.py")

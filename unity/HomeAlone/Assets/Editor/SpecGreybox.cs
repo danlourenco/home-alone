@@ -990,6 +990,16 @@ public static partial class SpecGreybox
             if (!r.transform.IsChildOf(go.transform) && r.transform.parent != null && (r.transform.parent.name == "MainStair" || r.transform.parent.name == "Dressing")
                 && pre.Any(p => r.name.StartsWith(p))) { r.enabled = false; hidden++; }
         Debug.Log($"HiFiStair: hid {hidden} grey-box/dressing stair renderers");
+        // the gallery's grey-box rails (SpecGreybox.Rail: "Rail"/"Spindle" boxes): the model draws the gallery balustrade now
+        // (hifi_foyer.py, main_stair_rails.json "covers"); their colliders stay for walking
+        int gal = 0;
+        foreach (var r in root.GetComponentsInChildren<MeshRenderer>())
+        {
+            var c = r.bounds.center;
+            if ((r.name == "Rail" || r.name == "Spindle") && r.transform.parent != null && r.transform.parent.name == "Rail"
+                && c.x > 3.80f && c.x < 5.75f && c.z > -11.50f && c.z < -9.10f) { r.enabled = false; gal++; }
+        }
+        Debug.Log($"HiFiStair: hid {gal} grey-box gallery rail renderers");
     }
 
     // The kitchen's cabinets, counters, appliances, seats and island (KitchenCabinets.glb), with their walk-layer colliders: invisible

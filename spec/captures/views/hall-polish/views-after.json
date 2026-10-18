@@ -1,0 +1,212 @@
+[
+ {
+  "name": "hall-polish/after-archC_note0828",
+  "pos": [
+   6.969,
+   1.13,
+   -9.737
+  ],
+  "look_at": [
+   6.481,
+   1.168,
+   -8.865
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/after-archA_note0828",
+  "pos": [
+   7.691,
+   1.13,
+   -11.173
+  ],
+  "look_at": [
+   6.838,
+   1.24,
+   -10.663
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/after-runner_parents_adult",
+  "pos": [
+   6.162,
+   1.6,
+   -5.75
+  ],
+  "look_at": [
+   6.45,
+   0.3,
+   -11.5
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/after-runner_attic_adult",
+  "pos": [
+   6.549,
+   1.6,
+   -13.3
+  ],
+  "look_at": [
+   6.3,
+   0.3,
+   -7.5
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/after-runner_mid_kid",
+  "pos": [
+   6.435,
+   1.13,
+   -11.2
+  ],
+  "look_at": [
+   6.25,
+   0.45,
+   -6.5
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/after-rail_corner_kid",
+  "pos": [
+   6.05,
+   1.13,
+   -9.75
+  ],
+  "look_at": [
+   5.607,
+   0.85,
+   -9.2
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/after-rail_head_adult",
+  "pos": [
+   5.0,
+   1.6,
+   -8.3
+  ],
+  "look_at": [
+   3.9,
+   0.8,
+   -9.2
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/after-rail_wall_kid",
+  "pos": [
+   6.25,
+   1.13,
+   -10.6
+  ],
+  "look_at": [
+   5.62,
+   0.5,
+   -11.43
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/after-archC_jamb_kid",
+  "pos": [
+   6.45,
+   1.13,
+   -8.35
+  ],
+  "look_at": [
+   5.72,
+   0.45,
+   -7.75
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/after-archB_jamb_kid",
+  "pos": [
+   6.45,
+   1.13,
+   -10.75
+  ],
+  "look_at": [
+   7.3,
+   0.45,
+   -11.5
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/after-film2085",
+  "pos": [
+   1.388,
+   1.244,
+   -9.507
+  ],
+  "look_at": [
+   2.388,
+   1.244,
+   -9.492
+  ],
+  "vfov": 38.67,
+  "near": 0.3
+ },
+ {
+  "name": "hall-polish/after-film2687",
+  "pos": [
+   6.2,
+   1.6,
+   -10.2
+  ],
+  "look_at": [
+   6.2,
+   1.6,
+   -5.4
+  ],
+  "vfov": 42,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/after-film410",
+  "pos": [
+   6.3,
+   1.25,
+   -6.3
+  ],
+  "look_at": [
+   6.5,
+   1.25,
+   -13.5
+  ],
+  "vfov": 45,
+  "near": 0.05
+ },
+ {
+  "name": "hall-polish/after-film10828",
+  "pos": [
+   6.55,
+   1.45,
+   -13.35
+  ],
+  "look_at": [
+   6.3,
+   0.95,
+   -5.4
+  ],
+  "vfov": 45,
+  "near": 0.05
+ }
+]

@@ -55,7 +55,7 @@ LEADS = ("user-summary", "ai", "summary", "web-summary", "recollection", "standa
 NOT_RULERS = {"count", "none"}   # a count has no scale to share
 # self-consistency gates: they check the model against itself (mesh topology, overlaps, plan rules, trim runs), never against the
 # house, so they can't be R1's independent ruler (Oct 17 Codex review: R1 passed the arch record on tools:model_quality alone)
-SELF_GATES = ("model_quality", "zfight", "clash", "verify_plan", "trim_faces", "unity:build", "unity:walk-test")
+SELF_GATES = ("model_quality", "zfight", "clash", "verify_plan", "trim_faces", "rail_joints", "unity:build", "unity:walk-test")
 
 
 def kind(i):

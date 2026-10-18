@@ -197,8 +197,8 @@ for st, fy, _ in STOREYS:
 class Run:
     """A support's line along one face: pts [(s, y)] ascending in s; label ('room', name, fin) or ('stair', id, lower room, fin);
     corner: for a room edge, (s of its start vertex, +1 convex / -1 reflex, direction of travel) (SpecGreybox's corner rule)."""
-    def __init__(self, key, pts, label, corner=None, kind="floor"):
-        self.key, self.pts, self.label, self.corner, self.kind = key, sorted(pts), label, corner, kind
+    def __init__(self, key, pts, label, corner=None, kind="floor", ext=()):
+        self.key, self.pts, self.label, self.corner, self.kind, self.ext = key, sorted(pts), label, corner, kind, ext
 
     @property
     def s0(self): return self.pts[0][0]
@@ -236,6 +236,29 @@ def room_runs():
             else:
                 print(f"trim_faces: {name} edge {i} not axis-aligned: skipped"); continue
             runs.append(Run(key, [(sa, fy), (sb, fy)], ("room", name, fin), (sa, 1 if turn > 1e-3 else -1 if turn < -1e-3 else 0, math.copysign(1, sb - sa))))
+    return runs
+
+
+def reveal_runs():
+    """The jambs of a plain (uncased) arch between two painted rooms (the hall's arches): the baseboard and cap rail carry on through
+    the wall's thickness, round the outside corner onto the far face (walk notes 2026-10-17T22:44: "molding disjointed", "baseboard and
+    trim ending abruptly": they stopped square at every jamb). A jamb is flush with one room's side wall, so its run merges with that
+    wall's; at the far end ('ext') each member reaches past the corner by its own depth, closing the corner square (a carpenter's return)."""
+    runs = []
+    for st, fy, _ in STOREYS:
+        for o in G[st]["openings"]:
+            if o["kind"] != "arch" or o.get("cased") or not all(b in FIN for b in o["between"]):
+                continue
+            ax = "z" if o["axis"] == "z" else "x"      # the jambs run across the wall: along z for a wall in the plane z = c
+            ends = (o["c"] - HALF, o["c"] + HALF)
+            for jamb_s, n in ((o["lo"], 1), (o["hi"], -1)):
+                key = (ax, round(jamb_s, 4), n)
+                def touches(e):                         # a room's outline has a corner on this jamb's plane at this end
+                    return next((nm for s_, f_, nm, poly, fin in ROOMS if nm in o["between"] and any(
+                        abs((q[0] if ax == "z" else q[1]) - jamb_s) < 1e-3 and abs((q[1] if ax == "z" else q[0]) - e) < 1e-3 for q in poly)), None)
+                name = touches(ends[0]) or touches(ends[1]) or o["between"][0]
+                lab = ("room", name, finish_of(st, name, set()))
+                runs.append(Run(key, [(ends[0], fy), (ends[1], fy)], lab, kind="reveal", ext=tuple(e for e in ends if not touches(e))))
     return runs
 
 
@@ -504,6 +527,9 @@ def build(chains):
                             # SpecGreybox's corner rule at a room edge's start vertex: convex -> start past the depth, reflex -> reach back
                             if corner[2] > 0: iv[0] = corner[0] + corner[1] * d
                             else: iv[1] = corner[0] - corner[1] * d
+                        for e in (e for sg in pc["srcs"] for e in sg.ext):   # an arch jamb's return round its outside corner
+                            if abs(iv[1] - e) < 2e-3: iv[1] = e + d
+                            elif abs(iv[0] - e) < 2e-3: iv[0] = e - d
                         strips.append(strip(key, line, sfun, iv, mem, lab, pts))
                     if OWN and mem[0] == "panel":
                         for a2, b2, y0, y1 in covers(key, line, sfun, pc["s0"], pc["s1"], mem):
@@ -604,7 +630,7 @@ def lab_str(lab):
 
 def write():
     byface = {}
-    for r in room_runs() + stair_runs():
+    for r in room_runs() + reveal_runs() + stair_runs():
         byface.setdefault(r.key, []).append(r)
     chains = [c for k in sorted(byface, key=str) for c in merge(byface[k])]
     out_runs, strips = build(chains)

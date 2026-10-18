@@ -53,7 +53,7 @@ setup)
   echo "scratch copy at $S (first open imports the Library: minutes)";;
 preflight)   # cheap gates before any Unity launch (STATUS 8p f); runs them all, then fails if any failed
   cd "$REPO"; bad=0
-  for g in "python3 tools/house/build_models.py --check" "python3 tools/house/openings.py --check" "python3 tools/house/trim_faces.py --check" "python3 tools/house/stair_arrival.py" \
+  for g in "python3 tools/house/build_models.py --check" "python3 tools/house/openings.py --check" "python3 tools/house/trim_faces.py --check" "python3 tools/house/stair_arrival.py" "uv run -q --with trimesh --with numpy python -I tools/house/rail_joints.py" \
            "uv run -q --with numpy --with matplotlib --with pillow python -I tools/house/verify_plan.py" \
            "uv run -q --with numpy --with pillow python -I tools/house/model_quality.py --report" \
            "env HA_PREBUILD=1 uv run -q python -I tools/house/change_gate.py $(grep -L '"user_walk": "rejected"' changes/*.json | tr '\n' ' ')"; do

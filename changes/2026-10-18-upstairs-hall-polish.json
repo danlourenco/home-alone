@@ -1,0 +1,240 @@
+{
+ "gate": 7,
+ "change": "Upstairs hall polish (Oct 18, TRIAL; user Oct 18: 'bannister corners don't connect, moulding in some sections seems too thick, rug doesn't seem to line up centrally from walkways from attic stairs to parents bed, arch work upstairs unfinished'): (1) the main stair's balustrade carried round the gallery in the stair model (hifi_foyer.py: newels at the stair head and corner, half newel on the end wall, flight 2's rail into the head newel, turned balusters; grey-box gallery rails hidden, colliders kept) with a joint check (rail_joints.py, in preflight); (2)+(4) the hall arches' casing legs removed (openings.py ARCH_MODELS: plain arches), baseboard and cap rail returned through the arch jambs (trim_faces.py reveal_runs), arch A's hall face painted; (3) the runner centred on each corridor's walking line (hall.json outline)",
+ "target": "House_WallGrid",
+ "premise": "The film's gallery balustrade continues the stair's (turned balusters, dark rail, newels at the head and the corner) and the hall's arches are plain plaster with no casing; trim meets every joint by construction",
+ "claim": {
+  "value": {
+   "gallery_rail": {
+    "lines": {
+     "x": 5.607,
+     "z": 9.2
+    },
+    "top": 0.95,
+    "newels": [
+     [
+      3.913,
+      9.2
+     ],
+     [
+      5.607,
+      9.2
+     ]
+    ],
+    "half_newel": [
+     5.607,
+     11.4075
+    ]
+   },
+   "runner_centres": {
+    "hall_end": 6.162,
+    "hall_corridor": 6.435,
+    "hall_corridor_south": 6.549,
+    "width": 0.7
+   },
+   "arch_casing": "none (B, C)",
+   "archA_hall_face": "paint"
+  },
+  "data": [
+   "film:2084",
+   "film:2687",
+   "film:2296",
+   "film:10828"
+  ],
+  "scale": [
+   "none"
+  ],
+  "upstream": [
+   "overhead-trace:upstairs"
+  ],
+  "how": "Layout and joints only, no new length: the rail lines are the stair well's edge strips in spec/house_spec.json (rail doors 5.607 / 9.20 = flight 2's rail band), the runner legs the midpoints of spec/geometry.json's corridor walls (and the parents' doorway / the clear floor beside the hall table), the trim returns the arch jambs' own faces. tools/house/rail_joints.py: every rail end within 5 mm of a rail end, inside a newel or in a wall; it read 4 loose ends on the build before (spec/captures/views/hall-polish/rail-joints-before.txt), 0 after",
+  "applies_to": [
+   "hall_end",
+   "hall_corridor",
+   "hall_corridor_south",
+   "main_stair_opening"
+  ],
+  "measured_in": [
+   "hall_end",
+   "hall_corridor",
+   "hall_corridor_south",
+   "main_stair_opening"
+  ],
+  "alternatives": [
+   "grey-box gallery rails (square boxes, 4 cm apart at the corner, flight 2's rail ending in the air): the build before",
+   "the stair's balustrade continued round the gallery with newels at the head and corner (built)",
+   "the rail run into the end wall with no half newel (the film's look; the trim ends would then stop in the air at the floor's edge)",
+   "arch C with casing legs to the spring (the build before) / no casing (built)",
+   "runner one straight piece on a single line (the film's; our hall's legs are offset 0.39 m) / each leg centred, jogging at the arches (built)"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "the gallery balustrade has the stair's turned white balusters and dark rail",
+     "observed_in": [
+      "film:2084",
+      "film:2687",
+      "film:10828"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "a newel where the stair rail meets the gallery rail / at the top of the stairs",
+     "observed_in": [
+      "film:2687",
+      "film:10741"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "the hall arches are plain, no casing",
+     "observed_in": [
+      "film:10828",
+      "film:2296",
+      "film:410"
+     ],
+     "extrapolated": false
+    },
+    {
+     "part": "the runner runs down the middle of the hall with bare wood either side",
+     "observed_in": [
+      "film:10828",
+      "film:2296",
+      "film:2687"
+     ],
+     "extrapolated": false
+    }
+   ]
+  },
+  "assumed": {
+   "main_stair_opening": "DEVIATIONS 96 (rail top 0.95 kept from the grey-box; film 2085 reads 0.89-0.91; half newel authored)",
+   "hall_corridor": "DEVIATIONS 96 (runner jogs at the arches; trim returns through the jambs)"
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-13",
+   "what": "gallery rails from the plan's shared walls as grey-box boxes (SpecGreybox.Rail)",
+   "outcome": "superseded"
+  },
+  {
+   "date": "2026-10-17",
+   "what": "upstairs hall TRIAL (changes/2026-10-17-upstairs-hall.json, -upstairs-arches.json): runner 0.70 jogging 0.17 m under arch C, arch C legs from openings.py, arch A papered both faces; walk notes 22:44-22:46 'molding disjointed... too thick', 'baseboard and trim ending abruptly', 'bannisters don't connect', 08:28 'random vertical stripe', 'wallpaper should be paint on this side of the arch'",
+   "outcome": "pending"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Marina Part 2 9 s (her CG model, another source; spec/captures/views/hall-polish/marina-p2-9s.jpg): the gallery balustrade beside the hall has white turned balusters under a dark rail and a dark turned newel at its end, as the stair's; her hall arches are plain (no casing)",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "marina-frame:p2-9"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "none"
+   ]
+  },
+  {
+   "what": "Film 2084 (another camera than 2687): flight 2's handrail rises from the lower left and meets the gallery rail at the stair head, one rail line round the well into the end wall",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:2084"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "none"
+   ]
+  },
+  {
+   "what": "Film 2085 solved camera (refcam, 80 in ruler): the gallery handrail top reads 0.89-0.91 m; built 0.95 (the grey-box rail height the walk layer keeps)",
+   "agrees": false,
+   "type": "metric",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:2085"
+   ],
+   "scale": [
+    "door-80in:film2085-linen"
+   ],
+   "upstream": [
+    "spec:door-80in"
+   ],
+   "disposition": "kept 0.95 until a second ruler kind agrees with the film's 0.89-0.91 (one door ruler only); DEVIATIONS 96 says how to revisit (lower the model and SpecGreybox.RailHeight together)"
+  },
+  {
+   "what": "tools/house/rail_joints.py on the stair model + grey-box gallery rails: 4 loose ends before (flight 2's end 27 cm from the gallery rail; the gallery corner 9.9 cm apart), 0 after (self-consistency, not evidence)",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "construction"
+   ],
+   "data": [
+    "rail_joints"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "none"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/hall-polish/before-banister_note2246.jpg",
+   "spec/captures/views/hall-polish/before-moulding_note2244.jpg",
+   "spec/captures/views/hall-polish/before-moulding_note2245.jpg",
+   "spec/captures/views/hall-polish/before-archC_note0828.jpg",
+   "spec/captures/views/hall-polish/before-archA_note0828.jpg",
+   "spec/captures/views/hall-polish/before-runner_parents_adult.jpg",
+   "spec/captures/views/hall-polish/before-runner_attic_adult.jpg",
+   "spec/captures/views/hall-polish/before-runner_mid_kid.jpg",
+   "spec/captures/views/hall-polish/before-rail_corner_kid.jpg",
+   "spec/captures/views/hall-polish/before-rail_head_adult.jpg",
+   "spec/captures/views/hall-polish/before-rail_wall_kid.jpg",
+   "spec/captures/views/hall-polish/before-archC_jamb_kid.jpg",
+   "spec/captures/views/hall-polish/before-archB_jamb_kid.jpg",
+   "spec/captures/views/hall-polish/before-film2085.jpg",
+   "spec/captures/views/hall-polish/before-film2687.jpg",
+   "spec/captures/views/hall-polish/before-film410.jpg",
+   "spec/captures/views/hall-polish/before-film10828.jpg"
+  ],
+  "after": [
+   "spec/captures/views/hall-polish/after-banister_note2246.jpg",
+   "spec/captures/views/hall-polish/after-moulding_note2244.jpg",
+   "spec/captures/views/hall-polish/after-moulding_note2245.jpg",
+   "spec/captures/views/hall-polish/after-archC_note0828.jpg",
+   "spec/captures/views/hall-polish/after-archA_note0828.jpg",
+   "spec/captures/views/hall-polish/after-runner_parents_adult.jpg",
+   "spec/captures/views/hall-polish/after-runner_attic_adult.jpg",
+   "spec/captures/views/hall-polish/after-runner_mid_kid.jpg",
+   "spec/captures/views/hall-polish/after-rail_corner_kid.jpg",
+   "spec/captures/views/hall-polish/after-rail_head_adult.jpg",
+   "spec/captures/views/hall-polish/after-rail_wall_kid.jpg",
+   "spec/captures/views/hall-polish/after-archC_jamb_kid.jpg",
+   "spec/captures/views/hall-polish/after-archB_jamb_kid.jpg",
+   "spec/captures/views/hall-polish/after-film2085.jpg",
+   "spec/captures/views/hall-polish/after-film2687.jpg",
+   "spec/captures/views/hall-polish/after-film410.jpg",
+   "spec/captures/views/hall-polish/after-film10828.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "outcome": null
+}

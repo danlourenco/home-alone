@@ -102,7 +102,8 @@ def newel_post(cx, cz, y0, h):
     """Turned dark newel (Marina 193.5 s): square base, turned shaft with rings, square cap block, ball finial."""
     s = 0.045
     newel.box(cx - s, cx + s, y0, y0 + 0.45, cz - s, cz + s)
-    prof = [(0.45, 0.034), (0.48, 0.042), (0.52, 0.03), (0.75, 0.026), (0.85, 0.036), (0.90, 0.026), (h - 0.30, 0.03), (h - 0.26, 0.04)]
+    prof = [q for q in [(0.45, 0.034), (0.48, 0.042), (0.52, 0.03), (0.75, 0.026), (0.85, 0.036), (0.90, 0.026)] if q[0] < h - 0.31] \
+        + [(h - 0.30, 0.03), (h - 0.26, 0.04)]   # rings above the cap block's foot dropped (they folded back inside the block)
     newel.lathe(cx, cz, y0, prof, n=20)
     newel.box(cx - s, cx + s, y0 + h - 0.26, y0 + h - 0.06, cz - s, cz + s)
     newel.lathe(cx, cz, y0 + h - 0.06, [(0, 0.03), (0.02, 0.04), (0.06, 0.045), (0.10, 0.035), (0.13, 0.0)], n=16)
@@ -200,7 +201,23 @@ rail.sweep(p1, RAIL_PROF)
 rail.sweep([(lx, ly, 10.20), (lx, ly, 9.20)], RAIL_PROF)
 dy2 = p2[1][1] - p2[0][1]; sx2 = abs(p2[1][0] - p2[0][0])
 p2 = [(lx, p2[0][1] - dy2 * (p2[0][0] - lx) / sx2, p2[0][2])] + p2
+# the upstairs gallery's balustrade (walk note 2026-10-17T22:46:06 "bannisters don't connect": the grey-box gallery rails stopped 4 cm
+# short of each other and flight 2's rail stopped 27 cm short of them). Film 2084/2687/2296: the stair's white turned balusters and dark
+# handrail carry on round the well, a newel at the stair head and at the corner, the rail dying into the end wall. Lines: the well's edge
+# strips (house_spec rail doors: x 5.607, z 9.20 = flight 2's rail band), so the flight's rail and the gallery's share one plane.
+# Handrail top 0.95: the grey-box rail it replaces (SpecGreybox.RailHeight, which the walk layer keeps); film 2085 reads 0.89-0.91 on one
+# 80 in ruler, not built until a second kind of ruler agrees (DEVIATIONS). Every run ends at a newel's centre.
+GAL_DOOR = next(d for d in json.loads((ROOT / "spec/house_spec.json").read_text())["doors"] if d.get("kind") == "rail" and d.get("spec_axis") == "x")
+GAL_X, GAL_Z = GAL_DOOR["wall_coord_spec"], p2[0][2]                 # 5.607, 9.20
+WALL_Z = B["well_wall_south"]["z"][0]                                # 11.43: the wall the gallery rail runs into
+HEAD_X = B["flight2_step03"]["x"][1] + 0.045                         # stair-head newel on the gallery floor, its face on the top step's back
+GAL_Y = 0.95 - RAIL_PROF[4][1]                                       # path height: rail top 0.95
+NEWEL_H = 1.02                                                       # its cap block (h-0.26..h-0.06 = 0.76..0.96) takes both rails at the head
+p2 = p2 + [(HEAD_X, p2[-1][1] + dy2 * (HEAD_X - p2[-1][0]) / sx2, GAL_Z)]   # flight 2's rail on up its pitch into the head newel
 rail.sweep(p2, RAIL_PROF)
+gal_a = [(HEAD_X, GAL_Y, GAL_Z), (GAL_X, GAL_Y, GAL_Z)]
+gal_b = [(GAL_X, GAL_Y, GAL_Z), (GAL_X, GAL_Y, WALL_Z - 0.0225)]     # into the half newel on the wall
+rail.sweep(gal_a, RAIL_PROF); rail.sweep(gal_b, RAIL_PROF)
 
 # balusters: every grey-box spindle position, each ending at the handrail's underside where it stands (the rail slopes: the
 # grey-box caps were flat per tread, and baluster tops stuck up through the rail; user note Oct 15 23:18)
@@ -237,9 +254,40 @@ for n, b in B.items():
 
 
 # newels (NEWELS above)
-newel_post(NEWEL1[0], NEWEL1[1], by1, p1[0][1] - by1 + 0.20)
-newel_post(lx, 10.20, ly1, ly - ly1 + 0.20)
-newel_post(lx, 9.20, ly1, p2[0][1] - ly1 + 0.20)
+RAIL_RUNS, NEWEL_AT, COVERS = {}, {}, []
+NEWEL_AT["foot"] = (NEWEL1[0], NEWEL1[1], by1, p1[0][1] - by1 + 0.20)
+NEWEL_AT["landing_corner"] = (lx, 10.20, ly1, ly - ly1 + 0.20)
+NEWEL_AT["flight2_foot"] = (lx, 9.20, ly1, p2[0][1] - ly1 + 0.20)
+NEWEL_AT["gallery_head"] = (HEAD_X, GAL_Z, 0.0, NEWEL_H)
+NEWEL_AT["gallery_corner"] = (GAL_X, GAL_Z, 0.0, NEWEL_H)
+for _n in NEWEL_AT.values():
+    newel_post(*_n)
+# the half newel where the gallery rail meets the wall (z 11.43): a flat pilaster on the wall face, so the rail and the hall's
+# baseboard and cap rail (which stop at the floor's edge, x 5.637) all end inside it instead of in the air
+hx0, hx1, hz0 = GAL_X - 0.045, GAL_X + 0.045, WALL_Z - 0.045
+newel.box(hx0, hx1, 0.0, 0.25, hz0, WALL_Z)
+newel.box(GAL_X - 0.035, GAL_X + 0.035, 0.25, NEWEL_H - 0.26, WALL_Z - 0.035, WALL_Z)
+newel.box(hx0, hx1, NEWEL_H - 0.26, NEWEL_H - 0.06, hz0, WALL_Z)
+newel.box(hx0 - 0.005, hx1 + 0.005, NEWEL_H - 0.06, NEWEL_H - 0.03, hz0 - 0.005, WALL_Z)
+NEWEL_AT_HALF = {"gallery_wall": (GAL_X, WALL_Z - 0.0225, 0.0, NEWEL_H)}
+# gallery balusters: the flight's turned baluster at <= 0.10 m centres between the newels' faces, on the gallery floor, up to the rail
+BAL_TOP = GAL_Y - RAIL_BOTTOM
+for a, b, fixed, along_x in ((HEAD_X + 0.045, GAL_X - 0.045, GAL_Z, True), (GAL_Z + 0.045, hz0, GAL_X, False)):
+    k = math.ceil((b - a) / 0.10)
+    for i in range(1, k):
+        s = a + (b - a) * i / k
+        baluster(s, fixed, 0.0, BAL_TOP) if along_x else baluster(fixed, s, 0.0, BAL_TOP)
+RAIL_RUNS.update({"gallery_front": gal_a, "gallery_side": gal_b})
+COVERS += ["rail:x:5.647", "rail:z:9.16"]   # the grey-box gallery rails (SpecGreybox.HiFiStair hides their renderers; colliders stay)
+
+# ---------------------------------------------------------------- rail manifest (tools/house/rail_joints.py checks every end meets)
+RAIL_RUNS.update({"flight1": p1, "landing": [(lx, ly, 10.20), (lx, ly, 9.20)], "flight2": p2})
+(ROOT / "spec/captures/main_stair_rails.json").write_text(json.dumps({
+    "note": "written by tools/house/hifi_foyer.py: MainStair.glb's handrail runs (spec) and newels; checked by tools/house/rail_joints.py",
+    "runs": [{"name": k, "pts": [[round(c, 5) for c in p] for p in v]} for k, v in RAIL_RUNS.items()],
+    "newels": [{"name": k, "x": round(v[0], 5), "z": round(v[1], 5), "hx": 0.045, "hz": 0.045 if k not in NEWEL_AT_HALF else 0.0225, "y0": round(v[2], 5),
+                "y1": round(v[2] + v[3], 5)} for k, v in {**NEWEL_AT, **NEWEL_AT_HALF}.items()],
+    "covers": COVERS}, indent=1) + "\n")
 
 # ---------------------------------------------------------------- write
 bpy.ops.wm.read_factory_settings(use_empty=True)

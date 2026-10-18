@@ -9,7 +9,7 @@
 "spec/dressing/french_doors.json": "a5da39a702d68886d0f0a1e4ea5c20e62ca81435868ce73d253eaa209c3b4663",
 "spec/dressing/buzz.json": "adbe2e533194393922314595597d1404a3c1496c4d02da480ba9cb955d53eb7a",
 "tools/house/hifi_door.py": "43caa8e4502f58c7b108e6a1e623e15b7f158f7aac7dd50510b2abaf2d739788",
-"tools/house/openings.py": "678c7f928d11ad4adedf30d08fae98dfa7f971950d90e10d5baba943dee1de1f"
+"tools/house/openings.py": "d023bdd33dfb0edd08553dc8809420794f71ee075a171851e83fa5d113e6e85b"
 },
 "openings": [
 {
@@ -1615,43 +1615,27 @@
 "sill": null,
 "spring": 1.86,
 "model": null,
-"pieces": [
+"pieces": [],
+"dropped": [
 {
-"part": "leg_lo",
+"part": "casing",
 "face": [
 "x",
-7.778,
-1
+7.638,
+-1
 ],
-"by": null,
-"box": [
-5.6373,
-5.7073,
-7.778,
-7.798,
-0.0,
-1.86
-]
+"reason": "plain arch: HallArches model, no casing (film)"
 },
 {
-"part": "leg_hi",
+"part": "casing",
 "face": [
 "x",
 7.778,
 1
 ],
-"by": null,
-"box": [
-6.921,
-6.991,
-7.778,
-7.798,
-0.0,
-1.86
-]
+"reason": "plain arch: HallArches model, no casing (film)"
 }
 ],
-"dropped": [],
 "limits": [
 {
 "rule": "head-under-header",
@@ -1708,22 +1692,22 @@
 "pieces": [],
 "dropped": [
 {
-"part": "leg_lo",
+"part": "casing",
 "face": [
 "x",
-11.57,
-1
+11.43,
+-1
 ],
-"reason": "no room for it: a wall or floor stands where it would go (the next room is no wider than the opening)"
+"reason": "plain arch: HallArches model, no casing (film)"
 },
 {
-"part": "leg_hi",
+"part": "casing",
 "face": [
 "x",
 11.57,
 1
 ],
-"reason": "no room for it: a wall or floor stands where it would go (the next room is no wider than the opening)"
+"reason": "plain arch: HallArches model, no casing (film)"
 }
 ],
 "limits": [
