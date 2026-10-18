@@ -69,3 +69,14 @@ layer of models generated from the same spec, plus real textures, props and ligh
 3. A render of each changed element from a camera in the open room, and a matched Marina/film view, looked at.
    Plus a CLOSE-UP at Kevin's eye (1.10 m, ~0.5 m away) of one joint of every kind the change touched (inside and outside corner, run-to-casing, run-to-stair), looked at full size. Oct 17: a cap-rail inside corner overshot by mm; renders from metres away and half-size thumbnails hid it, the user found it at Kevin's eye.
 4. Load into the user's editor (memory load-scene-for-walk) and say what changed and what is still authored.
+5. NEW SPACES (attic, basement, any room not yet built) and any LAYOUT decision (Oct 18: the attic trial was centred on its stair
+   well, so the steps ran into the end wall and the bed faced the wrong way; the user's cutaway poster and the old reference model
+   both showed the right arrangement and neither was read):
+   - Read EVERY layout source before choosing one, and write a one-line agree/disagree table in the report: the film, the user's
+     references (art/home_alone/references/poster/ cutaway: strong for the attic/upstairs layout), the old reference model
+     (IntactHouseReference GLB: basement, attic, treehouse, yard; ~19% oversize, register it to our house before reading positions)
+     and Marina. Film first, then the source the user named, then Marina; a single source's numbers (e.g. Marina's 476 ft2) are a
+     check, not the layout.
+   - `tools/house/stair_arrival.py` passes (preflight runs it): every stair arrives onto floor with a clear 0.90 m zone.
+   - Arrival renders: first person at adult eye (1.60 m) from the top of every stair and each doorway into the space, and a plan-view
+     render beside the layout source (poster/overhead) showing the hero pieces' ORIENTATION (bed head, stair direction), looked at.
