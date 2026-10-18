@@ -49,7 +49,7 @@ XC = -0.106                   # pack: the frame's mirror plane
 YH = 0.958                    # pack: the headboard's front face (deck stretch anchor)
 UNDER_Z = 0.48                # rails' and slats' underside above the floor
 MAT_TOP = TOP - 0.02          # mattress top under the blanket
-DRAPE_Z = 0.46                # the cover's hem
+DRAPE_Z = 0.08                # the cover's hem: near the floor (user Oct 18: hang down the sides, not tucked; was 0.46)
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.fbx(filepath=str(PACK / "Meshes/BED_01.fbx"))

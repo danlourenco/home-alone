@@ -100,3 +100,9 @@
 {"time": "2026-10-18T07:52:34", "cmd": "build", "job": "", "why": "", "wall_s": 3, "exit": 1}
 {"time": "2026-10-18T07:55:04", "cmd": "build", "job": "", "why": "", "wall_s": 108, "exit": 0}
 {"time": "2026-10-18T07:57:48", "cmd": "bake", "job": "", "why": "auto: load of an unbaked build", "wall_s": 164, "exit": 0}
+{"time": "2026-10-18T08:53:05", "cmd": "build", "job": "", "why": "", "wall_s": 2, "exit": 1}
+{"time": "2026-10-18T08:54:14", "cmd": "build", "job": "", "why": "", "wall_s": 32, "exit": 1}
+{"time": "2026-10-18T08:56:04", "cmd": "build", "job": "", "why": "", "wall_s": 93, "exit": 0}
+{"time": "2026-10-18T08:58:20", "cmd": "build", "job": "parents-fireplace", "why": "", "wall_s": 86, "exit": 1}
+{"time": "2026-10-18T09:00:52", "cmd": "build", "job": "parents-fireplace", "why": "", "wall_s": 115, "exit": 0}
+{"time": "2026-10-18T09:03:59", "cmd": "bake", "job": "", "why": "auto: load of an unbaked build", "wall_s": 154, "exit": 0}

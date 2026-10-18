@@ -23,3 +23,6 @@
 {"time": "2026-10-18T04:22:30", "kind": "prop", "job": "overnight10", "s": 4800.0, "tools": 75}
 {"time": "2026-10-18T04:55:36", "kind": "prop", "job": "overnight11", "s": 2700.0, "tools": 70}
 {"time": "2026-10-18T04:55:36", "kind": "prop", "job": "overnight12", "s": 2700.0, "tools": 60}
+{"time": "2026-10-18T07:58:57", "kind": "prop", "job": "parents-sashes+den-books", "s": 2400.0, "tools": 60}
+{"time": "2026-10-18T09:02:13", "kind": "search", "job": "attic-evidence", "s": 563.0, "tools": 44}
+{"time": "2026-10-18T09:09:31", "kind": "fixture", "job": "parents-fireplace", "s": 2045.0, "tools": 120}

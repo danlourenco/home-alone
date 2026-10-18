@@ -50,6 +50,19 @@ public static partial class SpecGreybox
         card.transform.localScale = new Vector3(w, h, 1f);
         Quiet(card.GetComponent<MeshRenderer>(), Glow("Backdrop_NightHouse", Tex("card_night.png", 2048, true), CardNightNits, true));
 
+        // Buzz's desk-wall window (user Oct 18; night only for this one): the film's own POV out of it, Marley shovelling by the trash can (film 546), a
+        // card 2.5 m outside the window (spec wall z 15.998, window x 10.197-10.917, sill 0.81 / head 2.15, upper floor = world 0), sized
+        // so the window shows its middle from the desk; looking down as the film does (its centre below the sill)
+        var pov = GameObject.CreatePrimitive(PrimitiveType.Quad); pov.name = "WinterBackdrop_BuzzPOV";
+        Object.DestroyImmediate(pov.GetComponent<Collider>()); pov.transform.SetParent(nightLayer.transform, false);
+        float pw = 7f, ph = pw * 1058f / 1920f;
+        pov.transform.SetPositionAndRotation(new Vector3(10.557f, 0.9f, -(15.998f + 2.5f)), Quaternion.Euler(0, 180f, 0));   // faces +z (the room)
+        pov.transform.localScale = new Vector3(pw, ph, 1f);
+        Quiet(pov.GetComponent<MeshRenderer>(), Glow("Backdrop_BuzzPOV", Tex("buzz_pov_night.jpg", 2048, false), CardNightNits, false));
+        // by day the same card shows Christmas morning out of a window: Marley and his son's family in the snow (film 12510, user Oct 18)
+        var povDay = Object.Instantiate(pov, dayLayer.transform, true); povDay.name = "WinterBackdrop_BuzzPOVDay";
+        Quiet(povDay.GetComponent<MeshRenderer>(), Glow("Backdrop_BuzzPOVDay", Tex("buzz_pov_day.jpg", 2048, false), DomeDayNits, false));
+
         // moonlight on the yard's snow only (rendering layer 8, which only the exterior carries): without it the lawn under the lower
         // sashes was black at night (film 5546: the snow reads blue-grey). No shadows (cheap); it never reaches a room
         var moon = new GameObject("Moonlight").AddComponent<Light>(); moon.transform.SetParent(nightLayer.transform, false);

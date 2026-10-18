@@ -80,7 +80,7 @@ for nm, zz in (("parents_nightstand_window", nsR), ("parents_nightstand_bath", n
 piece("parents_etagere", (3.63, 4.12), (Z0 + 0.01, Z0 + 0.34), 1.45, "Assets/Classic Wooden Furniture Pack/Prefabs/SHELVES_01.prefab", back="-z",
       source="film 2648/2663 (open dark etagere with books and a hat box at the window corner, left of the side window) and Marina "
              "244/250 (its front-left corner about 0.43 m off the headboard wall at z 0.35 in 250); SHELVES_01 squeezed to 0.49 x 0.33 x 1.45 (film's is a slim turned-post stand)")
-piece("parents_armoire", (7.28, 8.43), (ZN - 0.60, ZN - 0.01), 2.05, "Assets/Classic Wooden Furniture Pack/Prefabs/WARDROBE_01.prefab", back="+z", tint=[0.36, 0.24, 0.21],
+piece("parents_armoire", (7.28, 8.43), (ZN - 0.60, ZN - 0.01), 2.05, "Assets/Classic Wooden Furniture Pack/Prefabs/WARDROBE_01.prefab", back="+z", yaw=0, tint=[0.36, 0.24, 0.21],
       source="Marina 180/188/184: dark armoire right of the front windows, against the notch wall (z 3.721) in the front corner; the film never "
              "shows it clearly (Marina only). WARDROBE_01 fitted to 1.15 x 0.59 x 2.05 (her bonnet top ~2.1), stained dark (tint: the pack's oak read light beside her dark armoire)")
 piece("parents_window_table", (X1 - 0.47, X1 - 0.02), (1.888, 2.688), 0.70, "Assets/Classic Wooden Furniture Pack/Prefabs/SIDE_TABLE_01.prefab", back="+x",

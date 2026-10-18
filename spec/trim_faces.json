@@ -6,7 +6,7 @@
 "spec/house_spec.ground.json": "c61d3732d53e46b7b76a94886088d26d2fb1a8989a8519b216b5b0f0c5fa9394",
 "spec/dressing/foyer.json": "ddc26402b9a3aab46412955dd1c9a0f8ea1d7f39150543c1f91ed2f981c5c7d3",
 "spec/dressing/finishes.json": "74ce77dd18f489364cbbd162b335c2e015787bdddf7ec290fe9fc7b4a0e6177f",
-"spec/openings.json": "447c6de425bf4754b342f9b190942402fd2d2a85a86c16de9789c989a7ce4275",
+"spec/openings.json": "854e9a326772e6435a2bfa300dbbfd93e4bbe24ce6dc8d0f6a709733837d4292",
 "tools/house/trim_faces.py": "0f8a81795c619094f45e3c9aa87da0fce9fe95e058432c36a34730ffff54b76a"
 },
 "own_trim": true,

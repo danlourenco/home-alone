@@ -149,5 +149,10 @@ public static partial class SpecGreybox
         if (Sketchfab(g, "coffee_table_astro", "den_astro_table", Quaternion.identity, 0.80f, new Vector3(5.98f, gy, 17.83f)) == null)
             foreach (var r in den != null ? den.GetComponentsInChildren<MeshRenderer>(true).Where(r => r.name.StartsWith("coffee_table")) : Enumerable.Empty<MeshRenderer>()) r.enabled = true;
         Debug.Log($"Sketchfab: den pedestal table hidden ({hid} renderers)");
+
+        // --- parents' bedroom (user Oct 18: "the mannequin and other hero items"; Marina p2 184-188, 238): the treadle sewing table under
+        // the side window (wall z 0), machine head up, 1.05 m tall; the 1900s dress form in front of the window corner, 1.45 m
+        Sketchfab(g, "sewing_machine", "parents_sewing_table", turn, 1.05f, new Vector3(5.75f, 0f, 0.33f));
+        Sketchfab(g, "mannequin_1900s_m_size", "parents_dress_form", Quaternion.Euler(0, -90, 0), 1.45f, new Vector3(7.95f, 0f, 1.0f));
     }
 }

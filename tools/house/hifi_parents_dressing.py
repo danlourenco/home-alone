@@ -113,6 +113,37 @@ for o in WINS:
                 for c in range(COLS):
                     bx(P, b0 + c * (cw + MUN), b0 + c * (cw + MUN) + cw, yy, yy + MUN, *SD)
 
+# the folding screen (Marina p2 184-188, 238; the film never shows it): four dark-framed panels zigzagging across the window corner
+# (front wall x 8.491, side wall z 0), each 0.48 x 1.85 (by eye against the window heads), the panel art cut from Marina 238
+# (spec/dressing/parents_screen.png, one panel repeated as hers is) on both faces, inset 3 cm in the frame
+frame_w, art = Part("ScreenFrame", "PB_ScreenWood"), Part("ScreenArt", "PB_Screen")
+SW, SH, ST, SI, FEET = 0.48, 1.85, 0.025, 0.03, 0.03
+pts = [(7.66, 0.06), None, None, None, (8.43, 0.83)]
+for i in (1, 2, 3):   # hinge points along the corner's diagonal, alternately 6 cm in and out (the zigzag that stands it up)
+    t = i / 4; ox = 0.06 * (1 if i % 2 else -1) / math.sqrt(2)
+    pts[i] = (pts[0][0] + t * (pts[4][0] - pts[0][0]) - ox, pts[0][1] + t * (pts[4][1] - pts[0][1]) + ox)
+def oriented(part, a, b, y0, y1, th, inset=0.0, uv=False):
+    ax, az = b[0] - a[0], b[1] - a[1]; L = math.hypot(ax, az); ux, uz = ax / L, az / L; nx, nz = -uz, ux
+    a2 = (a[0] + ux * inset, a[1] + uz * inset); b2 = (b[0] - ux * inset, b[1] - uz * inset)
+    if not uv:
+        c = [(p[0] + s * nx * th / 2, y, p[1] + s * nz * th / 2) for s in (-1, 1) for p in (a2, b2) for y in (y0, y1)]
+        # c: [s-,a,y0],[s-,a,y1],[s-,b,y0],[s-,b,y1],[s+,a,y0],[s+,a,y1],[s+,b,y0],[s+,b,y1]
+        for q in ((0, 1, 3, 2), (4, 6, 7, 5), (0, 4, 5, 1), (2, 3, 7, 6), (1, 5, 7, 3), (0, 2, 6, 4)):
+            part.quad(*[c[k] for k in q])
+        return
+    for s in (-1, 1):   # the art: a quad 1 mm proud of each face
+        off = s * (th / 2 + 0.001)
+        P = lambda p, y: (p[0] + nx * off, y, p[1] + nz * off)
+        quad = [P(a2, y0), P(b2, y0), P(b2, y1), P(a2, y1)]
+        uvs = [(0, 0), (1, 0), (1, 1), (0, 1)] if s > 0 else [(1, 0), (0, 0), (0, 1), (1, 1)]
+        art.face_uv(quad if s > 0 else quad[::-1], uvs if s > 0 else uvs[::-1], (nx * s, 0, nz * s))
+for i in range(4):
+    a, b = pts[i], pts[i + 1]
+    oriented(frame_w, a, b, FEET, FEET + SH, ST)
+    oriented(art, a, b, FEET + SI, FEET + SH - SI, ST, inset=SI, uv=True)
+    for p in (a, b):   # little feet under the stiles
+        frame_w.box(p[0] - 0.015, p[0] + 0.015, 0.0, FEET, p[1] - 0.015, p[1] + 0.015)
+
 # the bedside lamps (film 1610/2648: a brass candlestick base with an urn, a black drum shade; Marina 250 dark shades): turned, on each
 # nightstand box's top (spec/dressing/parents.json), centred; overall 0.60 m (shade 0.36-0.58)
 brass, shade = Part("LampBrass", "PB_Brass"), Part("LampShade", "PB_Shade")
@@ -125,10 +156,11 @@ for bx in BOXES:
 bpy.ops.wm.read_factory_settings(use_empty=True)
 M = {"PB_Damask": material("PB_Damask", (0.26, 0.29, 0.36), 0.85), "PB_Brass": material("PB_Brass", (0.75, 0.56, 0.25), 0.3), "PB_Shade": material("PB_Shade", (0.02, 0.02, 0.02), 0.6),
      "SH_Voile": material("SH_Voile", (0.95, 0.94, 0.91), 0.8), "SH_Hem": material("SH_Hem", (0.95, 0.94, 0.91), 0.8),
-     "PB_Sash": material("PB_Sash", (0.88, 0.87, 0.83), 0.35)}
+     "PB_Sash": material("PB_Sash", (0.88, 0.87, 0.83), 0.35),
+     "PB_ScreenWood": material("PB_ScreenWood", (0.03, 0.02, 0.015), 0.5), "PB_Screen": material("PB_Screen", (0.3, 0.2, 0.1), 0.7)}
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("ParentsDressing_HiFi", None); coll.objects.link(root)
-for p in (drape, valance, rod, voile, vhem, brass, shade, sash):
+for p in (drape, valance, rod, voile, vhem, brass, shade, sash, frame_w, art):
     ob = p.build(coll, M); ob.parent = root
     if p in SMOOTH:
         for poly in ob.data.polygons:

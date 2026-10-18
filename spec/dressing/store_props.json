@@ -1077,12 +1077,13 @@
    ],
    "collide": false,
    "back": "+z",
-   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): Marina 180/188/184: dark armoire right of the front windows, against the notch wall (z 3.721) in the front corner; the film never shows it clearly (Marina only). WARDROBE_01 fitted to 1.15 x 0.59 x 2.05 (her bonnet top ~2.1), stained dark (tint: the pack's oak read light beside her dark armoire)",
+   "source": "Parents' bedroom TRIAL 1 (changes/2026-10-18-parents-room.json; tools/house/parents_layout.py): Marina 180/188/184: dark armoire right of the front windows, against the notch wall (z 3.721) in the front corner; the film never shows it clearly (Marina only). WARDROBE_01 fitted to 1.15 x 0.59 x 2.05 (her bonnet top ~2.1), stained dark (tint: the pack's oak read light beside her dark armoire); yaw 0 pinned (user walk Oct 18: the auto turn's 180 put the doors to the wall)",
    "tint": [
     0.36,
     0.24,
     0.21
-   ]
+   ],
+   "yaw": 0
   },
   {
    "name": "parents_window_table",
