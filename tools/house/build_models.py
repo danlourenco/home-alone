@@ -42,6 +42,7 @@ BUILDS = {
     "tools/house/hifi_buzz_curtains.py": (["BuzzCurtains.glb"], [LIB, "tools/house/hifi_sheers.py", "spec/dressing/buzz_curtains.json", "spec/dressing/buzz.json", "spec/openings.json", "spec/geometry.json"]),
     "tools/house/hifi_parents_fireplace.py": (["ParentsFireplace.glb"], [LIB, "tools/house/hifi_den_props.py", "spec/dressing/parents_fireplace.json"]),
     "tools/house/hifi_attic.py": (["Attic.glb"], [LIB, "spec/house_spec.json"]),
+    "tools/house/hifi_basement.py": (["Basement.glb"], [LIB, "spec/house_spec.ground.json"]),
     "tools/house/hifi_living.py": (["LivingWindows.glb", "LivingBuiltins.glb"], [LIB, "spec/house_spec.ground.json", "spec/dressing/living.json", "tools/house/hifi_sheers.py"]),
     "tools/house/hifi_living_props.py": (["LivingProps.glb"], ["spec/dressing/living.json", "tools/house/hifi_den_props.py"]),
     "tools/house/hifi_dining_props.py": (["DiningProps.glb"], ["spec/dressing/dining.json", "tools/house/hifi_den_props.py"]),   # props lane (Oct 18 overnight)

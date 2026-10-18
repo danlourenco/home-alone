@@ -88,17 +88,55 @@ Stair walk test (both bodies, up and down): 12 legs, 1 blocked
 ok      bandit up leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
 ok      bandit up leg 2: ended 0.09 m from waypoint, 0.02 m off its floor height
 ok      bandit down leg 1: ended 0.03 m from waypoint, 0.09 m off its floor height
-ok      bandit down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 2: ended 0.00 m from waypoint, 0.02 m off its floor height
 ok      kevin up leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
 ok      kevin up leg 2: ended 0.01 m from waypoint, 0.09 m off its floor height
 ok      kevin down leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
 ok      kevin down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
 ok      player up leg 1: ended 0.03 m from waypoint, 0.03 m off its floor height, 6 frames (clean walk 7)
 BLOCKED player up leg 2: ended 0.07 m from waypoint, 0.06 m off its floor height by ServiceStair/service_winder2_tread at (2.29, -2.41, 6.81) spec x,y,z, 1500 frames (clean walk 20) STALLED
-ok      player down leg 1: ended 0.02 m from waypoint, 0.09 m off its floor height, 18 frames (clean walk 20)
-ok      player down leg 2: ended 0.00 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 7)
-Render check (outward faces, ServiceStair): 97 parts, 0 inside-out
-Seam check: 793 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
+ok      player down leg 1: ended 0.02 m from waypoint, 0.08 m off its floor height, 18 frames (clean walk 20)
+ok      player down leg 2: ended 0.05 m from waypoint, 0.03 m off its floor height, 6 frames (clean walk 7)
+BASEMENT (kitchen -> landing -> flight -> outside door -> areaway to grade)
+Stair walk test (both bodies, up and down): 36 legs, 0 blocked
+ok      bandit up leg 1: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 3: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 4: ended 0.05 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 5: ended 0.05 m from waypoint, 0.02 m off its floor height
+ok      bandit up leg 6: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 1: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 2: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 3: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 4: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 5: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      bandit down leg 6: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 1: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 2: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 3: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 4: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 5: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin up leg 6: ended 0.02 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 1: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 2: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 3: ended 0.03 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 4: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 5: ended 0.00 m from waypoint, 0.02 m off its floor height
+ok      kevin down leg 6: ended 0.01 m from waypoint, 0.02 m off its floor height
+ok      player up leg 1: ended 0.02 m from waypoint, 0.03 m off its floor height, 23 frames (clean walk 23)
+ok      player up leg 2: ended 0.01 m from waypoint, 0.03 m off its floor height, 68 frames (clean walk 64)
+ok      player up leg 3: ended 0.00 m from waypoint, 0.03 m off its floor height, 27 frames (clean walk 27)
+ok      player up leg 4: ended 0.05 m from waypoint, 0.03 m off its floor height, 157 frames (clean walk 157)
+ok      player up leg 5: ended 0.04 m from waypoint, 0.03 m off its floor height, 24 frames (clean walk 25)
+ok      player up leg 6: ended 0.04 m from waypoint, 0.03 m off its floor height, 71 frames (clean walk 72)
+ok      player down leg 1: ended 0.01 m from waypoint, 0.03 m off its floor height, 71 frames (clean walk 71)
+ok      player down leg 2: ended 0.00 m from waypoint, 0.03 m off its floor height, 24 frames (clean walk 24)
+ok      player down leg 3: ended 0.05 m from waypoint, 0.03 m off its floor height, 157 frames (clean walk 157)
+ok      player down leg 4: ended 0.02 m from waypoint, 0.03 m off its floor height, 27 frames (clean walk 27)
+ok      player down leg 5: ended 0.00 m from waypoint, 0.03 m off its floor height, 64 frames (clean walk 64)
+ok      player down leg 6: ended 0.03 m from waypoint, 0.03 m off its floor height, 23 frames (clean walk 23)
+Render check (outward faces, ServiceStair): 100 parts, 0 inside-out
+Seam check: 841 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
 Leak and headroom check: 1383 points, 0 leaks, 17 low-headroom points (ground floor, outside flight 1)
 LOW     den at (2.6, 18.2): 0.83 m clear under StoreProps/den_tv_Collider
 LOW     den at (6.1, 17.7): 0.37 m clear under DenColliders/DenCollider_coffee_table_top
@@ -112,11 +150,13 @@ LOW     kitchen at (1.1, 5.4): 0.57 m clear under KitchenColliders/KitchenCollid
 LOW     kitchen at (1.1, 4.9): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
 LOW     kitchen at (1.1, 4.4): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
 LOW     kitchen at (1.6, 5.4): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
-Peek check: 563472 rays from rooms you can walk in, 0 into closed spaces
-UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 80 legs, 2 blocked
+Peek check: 565152 rays from rooms you can walk in, 0 into closed spaces
+UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 76 legs, 2 blocked
 BLOCKED bandit parents_bedroom via parents_bedroom/parents_bath: ended 1.34 m short
+skip    bandit hall_corridor via main_stair_opening/hall_corridor: the other side is all stair
 skip    bandit buzz_room: no cell to stand in (its floor is a stair)
 BLOCKED kevin parents_bedroom via parents_bedroom/parents_bath: ended 1.16 m short
+skip    kevin hall_corridor via main_stair_opening/hall_corridor: the other side is all stair
 skip    kevin buzz_room: no cell to stand in (its floor is a stair)
 GROUND Room walk test (both bodies, every doorway to room centre and back): 52 legs, 4 blocked
 BLOCKED bandit living_room via living_room/foyer: ended 2.52 m short
@@ -131,15 +171,17 @@ skip    kevin dining_room: no cell to stand in (its floor is a stair)
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin back_stair: no cell to stand in (its floor is a stair)
-Z-fight check: 2082067 triangles, 1842 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
-Clash check: 2399493 triangles, 0 parts passing through another (20 allowed joints) (every visible mesh checked)
+Z-fight check: 2091167 triangles, 1912 surfaces, 2 coplanar pairs seen from rooms (every visible mesh checked)
+ZFIGHT  Upstairs/LivingBuiltins_HiFi/Gift_Red [LV_GiftRed] vs PurchasedRug_HiFi/LivingRug/PR_LivingRug [PR_LivingRug]: 1.0 mm apart, 0.077 m2, at spec (3.60, -3.01, 15.17)
+ZFIGHT  Upstairs/LivingBuiltins_HiFi/Gift_Gold [LV_GiftGold] vs PurchasedRug_HiFi/LivingRug/PR_LivingRug [PR_LivingRug]: 1.0 mm apart, 0.050 m2, at spec (3.15, -3.01, 14.72)
+Clash check: 2408595 triangles, 0 parts passing through another (20 allowed joints) (every visible mesh checked)
 Casing check: 0 casings placed apart from their opening
 Opening face check: 22 door faces, 0 without a head casing, 0 showing the other room's finish within the casing width
 Arch fit: 1 generated arches on their cuts, 0 joints off by more than 1 mm (worst 0.00 mm)
-Props check: 181 store models, 119 problems (landing_table: back -0.5 cm from the drawn wall (want 0-3); den_banker: material Glass_HDRP has no base colour map; den_book_001: back 19.1 cm from the drawn wall (want 0-3); den_book_002: back 19.2 cm from the drawn wall (want 0-3); den_book_003: back 20.3 cm from the drawn wall (want 0-3); den_book_004: back 19.9 cm from the drawn wall (want 0-3); den_book_005: back 16.7 cm from the drawn wall (want 0-3); den_book_006: back 17.5 cm from the drawn wall (want 0-3); den_book_007: back 21.3 cm from the drawn wall (want 0-3); den_book_008: back 18.1 cm from the drawn wall (want 0-3))
+Props check: 182 store models, 121 problems (landing_table: back -0.5 cm from the drawn wall (want 0-3); den_banker: material Glass_HDRP has no base colour map; basement_door: back 4.9 cm from the drawn wall (want 0-3); den_book_001: back 19.1 cm from the drawn wall (want 0-3); den_book_002: back 19.2 cm from the drawn wall (want 0-3); den_book_003: back 20.3 cm from the drawn wall (want 0-3); den_book_004: back 19.9 cm from the drawn wall (want 0-3); den_book_005: back 16.7 cm from the drawn wall (want 0-3); den_book_006: back 17.5 cm from the drawn wall (want 0-3); den_book_007: back 21.3 cm from the drawn wall (want 0-3))
 Props triangle budget: 4 models over 150k triangles (Assets/Purchased/PurchasedPlants.glb 411k, Assets/Purchased/HallPlants.glb 296k, Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Models/ChristmasTree.fbx 259k, Assets/Models/Foyer/HallDressing.glb 201k)
 Trim check: 77 face runs (3 on the stair and landings, 0 panelled by a window model), 124.9 m, 10328 samples, 1 gaps in the baseboard, wainscot or cap rail; run ends: corner 75, opening 75, outside-corner 4
-GAP     0.08 m of bare wall 0.42 above the line of the room:hall_corridor run at spec (7.34, 0.42, 9.91)
-Envelope check: 2076 points at room joints, 0 see the sky through < 0.3 m of shadow caster
-Quality check: 2 pipeline models of 36 generated (the rest predate the artist pipeline), 0 problems
+GAP     0.06 m of bare wall 0.42 above the line of the room:hall_corridor run at spec (7.35, 0.42, 9.91)
+Envelope check: 2102 points at room joints, 0 see the sky through < 0.3 m of shadow caster
+Quality check: 2 pipeline models of 37 generated (the rest predate the artist pipeline), 0 problems
 

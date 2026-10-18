@@ -174,7 +174,8 @@ public static partial class SpecGreybox
             if (s.Item2 == 0f && (string)r["name"] == "attic_stair") foreach (var c in cap) y1 = Mathf.Max(y1, c.lo.y);   // the shaft runs up into the attic
             return ((string)r["name"], pts, y0: (string)r["opens"] == "down" ? gy : s.Item2, y1);   // a stair well is one space from the floor below (as SeamRooms)
         })).Concat(atticBoxes.Where(b => (string)b["kind"] == "room").Select(b =>   // the attic itself (SpecGreybox.Attic)
-            ((string)b["name"], b["poly"].Select(q => new Vector2((float)q[0], -(float)q[1])).ToList(), (float)b["y"][0], (float)b["y"][1]))).ToList();
+            ((string)b["name"], b["poly"].Select(q => new Vector2((float)q[0], -(float)q[1])).ToList(), (float)b["y"][0], (float)b["y"][1])))
+            .Concat(BasementRooms(gy)).ToList();   // the basement, its stair slot and the areaway (SpecGreybox.Basement)
     }
 
     // Envelope check: from points just inside every room's wall-ceiling joint and wall foot, rays toward the sky (elevations 5-70 deg,

@@ -1,0 +1,152 @@
+[
+ {
+  "name": "basement/after/stair_top",
+  "pos": [
+   -0.95,
+   -1.6159999999999997,
+   -7.1
+  ],
+  "look_at": [
+   2.3,
+   -4.6,
+   -7.16
+  ],
+  "vfov": 62,
+  "near": 0.05
+ },
+ {
+  "name": "basement/after/film2466_foot_furnace",
+  "pos": [
+   3.0,
+   -4.606999999999999,
+   -8.1
+  ],
+  "look_at": [
+   3.0,
+   -4.95,
+   -12.6
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "basement/after/film2490_foot_up",
+  "pos": [
+   3.7,
+   -4.606999999999999,
+   -7.6
+  ],
+  "look_at": [
+   -0.5,
+   -3.3,
+   -7.16
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "basement/after/film2430_laundry",
+  "pos": [
+   -3.5,
+   -4.557,
+   -1.9
+  ],
+  "look_at": [
+   -3.7,
+   -4.95,
+   -4.085
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "basement/after/film10120_entry",
+  "pos": [
+   1.4,
+   -4.0,
+   -2.9
+  ],
+  "look_at": [
+   -5.2,
+   -4.9,
+   -0.47
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "basement/after/film9912_areaway_top",
+  "pos": [
+   -10.4,
+   -1.5,
+   -0.47
+  ],
+  "look_at": [
+   -5.3,
+   -4.8,
+   -0.47
+  ],
+  "vfov": 55,
+  "near": 0.05
+ },
+ {
+  "name": "basement/after/film9952_areaway_door",
+  "pos": [
+   -6.25,
+   -4.257,
+   -0.47
+  ],
+  "look_at": [
+   -5.2,
+   -4.606999999999999,
+   -0.47
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "basement/after/kitchen_door",
+  "pos": [
+   -0.86,
+   -1.4259999999999997,
+   -4.7
+  ],
+  "look_at": [
+   -0.86,
+   -2.626,
+   -7.2
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "basement/after/plan",
+  "pos": [
+   2.4,
+   18.0,
+   -7.6
+  ],
+  "look_at": [
+   2.4,
+   -5.7,
+   -7.5
+  ],
+  "vfov": 52,
+  "near": 0.05,
+  "hide": [
+   "Upstairs",
+   "Ground/Walls",
+   "Ground/Floor",
+   "Ground/Ceilings",
+   "Ground/Openings",
+   "Ground/Dressing",
+   "Ground/ServiceStair",
+   "Ground/Lights",
+   "Ground/KitchenFixtures",
+   "Ground/Furniture",
+   "Exterior",
+   "Ground/Basement_HiFi/Basement_HiFi/Joists",
+   "Ground/Basement_HiFi/Joists"
+  ]
+ }
+]

@@ -312,6 +312,8 @@ public static partial class SpecGreybox
         var groot = new GameObject("Ground");
         if (gj["stair"]?["ceiling_openings"] is JArray holes)   // the back stair rises through its ceiling (spec ceiling_openings)
             geo["ground"]["ceilings"] = CutHoles((JArray)geo["ground"]["ceilings"], holes);
+        if (gj["basement"]?["floor_openings"] is JArray fholes)   // the basement stair goes down through the ground plate (SpecGreybox.Basement)
+            geo["ground"]["floor"] = CutHoles((JArray)geo["ground"]["floor"], fholes);
         var (gspaces, gdoors) = Storey(groot, (JObject)geo["ground"], paper, false);
         LayCasings(root, groot);   // step 2: every opening's casing from its own record (the per-case Trim() calls are off then)
         FloorY = 0f;
@@ -323,6 +325,7 @@ public static partial class SpecGreybox
         if (gj["stair"] != null && gj["stair"].Type != JTokenType.Null)   // service stair: its solid steps read as the papered wall under it
             servicePath = Stair(groot, gj["stair"], false, "ServiceStair", dress: false, stairOnly: true, stepMat: KitchenPaper())
                 .Select(q => q + Vector3.up * gy).ToList();
+        var basementPath = Basement(groot, gj, gy);   // SpecGreybox.Basement.cs: the basement shell (hifi_basement.py; changes/2026-10-18-basement-shell.json)
         Dressing(groot, gy);
         FloorY = 0f;
         Lights(root, spaces); FloorY = gy; Lights(groot, gspaces); FloorY = 0f;
@@ -356,7 +359,7 @@ public static partial class SpecGreybox
         Step("WalkTest ground");
         FloorY = gy; report += "GROUND\n" + WalkTest(gspaces, gdoors); FloorY = 0f;
         Step("StairWalk");
-        report += StairWalk(stairPath) + StairWalk(atticPath) + StairWalk(servicePath);
+        report += StairWalk(stairPath) + StairWalk(atticPath) + StairWalk(servicePath) + (basementPath.Count > 1 ? "BASEMENT (kitchen -> landing -> flight -> outside door -> areaway to grade)\n" + StairWalk(basementPath) : "");
         Step("RenderCheck");
         report += RenderCheck(groot.transform.Find("ServiceStair"));
         var dressing = GameObject.Find("Ground/Dressing"); dressing?.SetActive(false); Physics.SyncTransforms();
@@ -375,6 +378,7 @@ public static partial class SpecGreybox
         Step("RoomWalk ground");
         FloorY = gy; report += "GROUND " + RoomWalk(gspaces, gdoors); FloorY = 0f;
         dressing?.SetActive(true); Physics.SyncTransforms();
+        SeamRooms.AddRange(BasementRooms(gy).Select(r => (r.pts, r.y0, r.y1)));   // the surface gates see the basement too
         Step("ZFightCheck");
         report += ZFightCheck(root, groot);
         Step("ClashCheck");
@@ -1750,7 +1754,8 @@ public static partial class SpecGreybox
             cc.radius = r; cc.height = h; cc.center = new Vector3(0, h / 2, 0); cc.stepOffset = StepOffset; cc.skinWidth = 0.02f;
             // spaces whose floor is all stair (the back stair): reached by its foot, not sideways through its balustrades
             Vector3 M0((float, float, float, float) q) => new Vector3((q.Item1 + q.Item2) / 2, FloorY, (q.Item3 + q.Item4) / 2);
-            bool Free(Vector3 p) => !Physics.CheckCapsule(p + Vector3.up * (r + 0.06f), p + Vector3.up * (h - r), r);
+            // free = room for the body AND floor under it (Oct 18: the basement stair's opening under the back stair let Kevin 'stand' over the hole)
+            bool Free(Vector3 p) => !Physics.CheckCapsule(p + Vector3.up * (r + 0.06f), p + Vector3.up * (h - r), r) && Physics.Raycast(p + Vector3.up * 0.05f, Vector3.down, 0.15f);
             // where a body stands in a cell: its centre, or, when only FURNITURE stands there (walk-layer colliders "*Collider_*": the den's
             // and living room's furniture took their centres, Oct 16), the free point nearest the centre on a 0.25 m grid. A stair still blocks.
             Vector3? Stand((float, float, float, float) q)

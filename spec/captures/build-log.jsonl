@@ -113,3 +113,7 @@
 {"time": "2026-10-18T10:05:59", "cmd": "build", "job": "attic-shell", "why": "attic trial 2 build 1 (poster layout, step offset 0.24)", "wall_s": 122, "exit": 2}
 {"time": "2026-10-18T10:12:59", "cmd": "build", "job": "attic-shell", "why": "attic trial 2 build 2 (floor 2.62, 15 risers, step offset 0.20)", "wall_s": 120, "exit": 0}
 {"time": "2026-10-18T10:16:59", "cmd": "bake", "job": "attic-shell", "why": "auto: load of an unbaked build", "wall_s": 175, "exit": 0}
+{"time": "2026-10-18T11:40:31", "cmd": "build", "job": "basement-shell", "why": "basement trial 1 build 1", "wall_s": 2, "exit": 1}
+{"time": "2026-10-18T11:43:10", "cmd": "build", "job": "basement-shell", "why": "basement trial 1 build 1 (preflight retry: stale stamps)", "wall_s": 134, "exit": 0}
+{"time": "2026-10-18T11:47:16", "cmd": "build", "job": "basement-shell", "why": "basement trial 1 build 2 (wall/joist finish, railings, room-walk floor check)", "wall_s": 125, "exit": 0}
+{"time": "2026-10-18T11:51:55", "cmd": "bake", "job": "basement-shell", "why": "load basement trial 1", "wall_s": 187, "exit": 0}

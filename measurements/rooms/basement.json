@@ -1,0 +1,253 @@
+{
+ "what": "The basement (Oct 18 2026, TRIAL; changes/2026-10-18-basement-shell.json, DEVIATIONS 91). Layout from the OLD reference model registered to our house (spec/glb_registration.json, tools/house/register_glb.py: similarity s 0.757, yaw 0.81 deg, rms 0.23 m on 23 features), the film first for the hero items. Spec frame (x across, z along, y up from the GROUND floor). Read by tools/house/reconcile.py basement_spec (the ground run) -> house_spec.ground.json basement + basement_areaway.",
+ "measured": {
+  "floor_y": {
+   "value": -2.681,
+   "source": "registered GLB basement floor -5.707 world vs our ground floor -3.026 (glb_registration landed.basement_floor, the ground storey's vertical fit a 0.768 b -0.725: floor/ceiling/window-head residuals 0.4-2.5 cm). Not measured from the film: AUTHORED depth (DEVIATIONS 91); 14 risers of 0.1915 (7.5 in)"
+  },
+  "risers": {
+   "value": 14,
+   "source": "floor_y / 0.1915 (7.5 in, the common basement riser)"
+  },
+  "going": {
+   "value": 0.235,
+   "source": "AUTHORED 9.25 in (39 deg): 12 treads from the landing to the floor; the flight must clear the back stair's soffit above it and pass the floor opening before the winders (headroom in reconcile.py); film 2490/10300: steep open-riser flight"
+  },
+  "top_riser_x": {
+   "value": -0.5,
+   "source": "the landing's edge: the landing behind Kevin's door (x -1.505..-0.50, 1.0 m) sits ONE RISER below the kitchen floor (a step down inside the door, common in old basements; the ground plate is cut under it), so an adult (1.85 m) clears the back stair's soffit over the landing and the flight's head (headroom solved in reconcile.py; a landing at floor level hit the soffit of back-stair step 06 at 1.79 m)"
+  },
+  "plate_y": {
+   "value": -0.2,
+   "source": "the ground floor plate's underside (spec/geometry.json ground floor y -0.20..0)"
+  },
+  "joist_d": {
+   "value": 0.235,
+   "source": "2x10 joists (9.25 in) under the plate, 16 in centres (film 2394/2466/10300: exposed joists); look only, no collider"
+  },
+  "wall_t": {
+   "value": 0.3,
+   "source": "12 in foundation wall (block, painted; film 2466/10104 brick piers and painted walls)"
+  },
+  "footprint": {
+   "value": [
+    [
+     -5.192,
+     -0.915
+    ],
+    [
+     10.13,
+     -0.915
+    ],
+    [
+     10.13,
+     16.07
+    ],
+    [
+     1.58,
+     16.07
+    ],
+    [
+     1.58,
+     11.43
+    ],
+    [
+     0.008,
+     11.43
+    ],
+    [
+     0.008,
+     7.778
+    ],
+    [
+     -1.505,
+     7.778
+    ],
+    [
+     -1.505,
+     4.085
+    ],
+    [
+     -5.192,
+     4.085
+    ]
+   ],
+   "source": "the ground storey's outer room faces (spec/geometry.json ground rooms: kitchen wing, back stair, back hall, living room, sunroom, dining, vestibule), den EXCLUDED: the registered GLB basement floor spans x -6.34..10.34, z -1.22..16.65 (its rear wall at x -4.4 in the kitchen wing, front 10.3, far end 16.65 = the living room's end wall + wall); foundation walls stand under the exterior walls by construction"
+  },
+  "door": {
+   "value": {
+    "z": [
+     0.065,
+     0.875
+    ],
+    "h": 2.032
+   },
+   "source": "the GLB's half-glazed door (object2941, registered x -4.45, z 0.06-0.88) moved onto OUR kitchen wing's rear wall x -5.192 (the GLB's wing is 0.8 m short); 32 in x 80 in stock leaf; film 9952/10000: half-glazed, gingham curtain"
+  },
+  "areaway": {
+   "value": {
+    "inner_z": [
+     -0.065,
+     1.005
+    ],
+    "landing": 0.9,
+    "going": 0.25,
+    "stone_t": 0.3,
+    "grade_y": 0.0
+   },
+   "source": "inner width 1.07 m from FILM 9930 (the door leaf, a 32 in stock leaf, as the ruler: leaf 393 px, stone faces at the door plane 515 px -> 1.07; 9952 nearer gives more, as its walls stand in front of the door plane); centred on the door; GLB outside stairwell registered x -9.50..-4.32, z -0.33..1.32 (outer z -0.365..1.305 here), top at -3.03 world = our ground floor: grade_y 0.0, rising toward -x behind the kitchen wing; film 9900/9924/9930: rough stone walls, an iron handrail on posts down each side, snow and ice on the steps"
+  },
+  "chimney": {
+   "value": {
+    "x": [
+     1.58,
+     2.28
+    ],
+    "z": [
+     13.22,
+     14.42
+    ]
+   },
+   "source": "the living room's fireplace flue (rear wall x 1.58, axis z 13.82: spec/dressing/living.json) carried down as a brick base; the GLB's furnace box (object198, registered x 6.4-7.8, z 15.3-16.6) stands at ITS living-room chimney"
+  },
+  "furnace": {
+   "value": {
+    "x": [
+     2.25,
+     3.75
+    ],
+    "z": [
+     12.05,
+     13.15
+    ],
+    "body_h": 1.18,
+    "front": "-z"
+   },
+   "source": "film 2466 (frontal, Kevin's view from the stair foot): body w:h 585:455 px = 1.29, grate panel 360 px of 585; the octopus gravity furnace's 1.5 m width AUTHORED (no ruler in 2466 at its depth); green, riveted hood, 14-bar grate, gauges on top, two silver ducts rising in a V to the joists; Marina's prop photo ~990 s"
+  },
+  "laundry": {
+   "value": {
+    "wall_z": 4.085,
+    "sink_x": [
+     -5.13,
+     -4.03
+    ],
+    "washer_x": [
+     -3.97,
+     -3.284
+    ],
+    "dryer_x": [
+     -3.22,
+     -2.534
+    ],
+    "depth": 0.7,
+    "deck_h": 0.88,
+    "sink_h": 0.88,
+    "shelf_h": 1.16
+   },
+   "source": "FILM 2430 (frontal) with the washer's 27 in (0.686 m) front as the ruler (405 px -> 590 px/m): washer deck 0.88 m, a DARK double utility tub 1.11 m wide and 0.88 m tall, a shelf 1.16 m up over the tub, the small window 0.49 m wide with its sill 1.47 m up, centred 0.53 m into the tub from its washer side; left to right in the frame: dryer, washer, tub (the tub takes the wing's corner); along the kitchen wing's north exterior wall (z 4.085)"
+  },
+  "light": {
+   "value": {
+    "x": 0.3,
+    "z": 2.15,
+    "bulb_y": -0.7,
+    "more": [
+     [
+      2.95,
+      7.9
+     ],
+     [
+      3.0,
+      10.6
+     ]
+    ]
+   },
+   "source": "film 10114-10126: a bare bulb on a cord with a pull string, hanging where Marv stops a few metres inside the outside door (10120: about head height); 60 W (800 lm) 2700 K; two more bare bulbs where film 2490 shows them (by the stair foot, toward the furnace)"
+  },
+  "chute": {
+   "value": {
+    "x": [
+     0.55,
+     0.9
+    ],
+    "z": [
+     1.55,
+     1.895
+    ]
+   },
+   "source": "film 10127-10150: the laundry chute's foot opens in the ceiling right by the pull-cord light (the iron falls onto Marv as he pulls it); its TOP must be a hatch in the upstairs green hall (10128): OPEN, our plan has no hall over this spot (upstairs here: the parents' bath); between two joists (16 in centres from z -0.915)"
+  },
+  "posts": {
+   "value": [
+    [
+     8.4,
+     2.1
+    ],
+    [
+     8.4,
+     6.8
+    ],
+    [
+     8.4,
+     10.6
+    ],
+    [
+     8.4,
+     13.7
+    ],
+    [
+     5.2,
+     10.6
+    ]
+   ],
+   "source": "the GLB's posts (object207, registered), the three at x 1.3 dropped (two stand in our stair)"
+  },
+  "windows": {
+   "value": [
+    {
+     "wall": "z",
+     "at": 4.085,
+     "x": [
+      -4.805,
+      -4.315
+     ],
+     "sill_over_floor": 1.47
+    },
+    {
+     "wall": "x",
+     "at": 1.58,
+     "z": [
+      12.0,
+      12.8
+     ]
+    },
+    {
+     "wall": "x",
+     "at": 10.13,
+     "z": [
+      4.6,
+      5.4
+     ]
+    },
+    {
+     "wall": "x",
+     "at": 10.13,
+     "z": [
+      13.0,
+      13.8
+     ]
+    },
+    {
+     "wall": "z",
+     "at": -0.915,
+     "x": [
+      5.4,
+      6.2
+     ]
+    }
+   ],
+   "source": "film 2394/2466/2490: small high horizontal windows (one with a half-round head) just under the joists; 0.80 x 0.40 m AUTHORED (basement hopper stock 32 x 16 in); look only (no opening: no window wells built)"
+  }
+ }
+}

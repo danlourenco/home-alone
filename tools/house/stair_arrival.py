@@ -4,7 +4,7 @@ it (an adult): no wall, ceiling, rail or furniture box of the stair's own spec, 
 Why (Oct 18): the attic shell trial put the attic's end wall at the attic stair's top step ("the steps lead directly into a wall");
 no check looked at what is in front of you when you step off a stair.
 
-  python3 tools/house/stair_arrival.py         # PASS/FAIL per stair in spec/house_spec.json (stair, attic_stair, ...); exit 1 on FAIL
+  python3 tools/house/stair_arrival.py         # PASS/FAIL per stair in spec/house_spec.json (stair, attic_stair, ...) and the ground spec's basement*; exit 1 on FAIL
   python3 tools/house/stair_arrival.py demo    # self-check
 """
 import json
@@ -94,6 +94,11 @@ def demo():
 if __name__ == "__main__":
     if sys.argv[1:] == ["demo"]:
         demo(); sys.exit(0)
-    ok, lines = check(json.loads((ROOT / "spec/house_spec.json").read_text()), json.loads((ROOT / "spec/geometry.json").read_text()))
+    spec = json.loads((ROOT / "spec/house_spec.json").read_text())
+    ground = json.loads((ROOT / "spec/house_spec.ground.json").read_text())
+    for key in [k for k in ground if k.startswith("basement")]:   # the basement's stairs (ground frame: y above the ground floor) -> world y
+        fy, st = ground["floor_y_m"], ground[key]
+        spec[key] = dict(st, boxes=[dict(b, y=[b["y"][0] + fy, b["y"][1] + fy]) for b in st["boxes"]])
+    ok, lines = check(spec, json.loads((ROOT / "spec/geometry.json").read_text()))
     print("\n".join(lines))
     sys.exit(0 if ok else 1)

@@ -1,0 +1,240 @@
+{
+ "change": "Basement shell TRIAL 1: a basement under the ground storey (less the den) from the OLD reference model registered to our house, the film's hero items (open stair under the back stair from Kevin's door, green furnace, laundry, pull-cord bulb, chute foot, stone areaway with a half-glazed door)",
+ "target": "House_WallGrid",
+ "premise": "The old reference model, registered to our spec (spec/glb_registration.json: similarity s 0.757, rms 0.23 m on 23 features), places the basement (footprint, depth, interior stair under the back stair rising -x, outside stairwell behind the kitchen wing) well enough for a plain shell; the film decides the hero items and any size it shows with a known-size object.",
+ "claim": {
+  "value": {
+   "floor_y_below_ground": 2.681,
+   "risers": 14,
+   "rise": 0.1915,
+   "going": 0.235,
+   "landing": "one riser below the kitchen floor behind Kevin's door, x -1.505..-0.50",
+   "flight_x": [
+    -0.5,
+    2.32
+   ],
+   "flight_z": [
+    6.687,
+    7.638
+   ],
+   "footprint": "ground storey's rooms less the den: x -5.192..10.13, z -0.915..16.07 (stepped rear)",
+   "areaway": {
+    "inner_width": 1.07,
+    "x": [
+     -9.642,
+     -5.492
+    ],
+    "door_z": [
+     0.065,
+     0.875
+    ],
+    "grade_y": 0.0
+   },
+   "washer_deck_h": 0.88,
+   "tub_w": 1.1,
+   "laundry_window": {
+    "w": 0.49,
+    "sill": 1.47
+   },
+   "furnace": {
+    "w": 1.5,
+    "body_h": 1.18,
+    "front": "-z, toward the stair foot"
+   }
+  },
+  "data": [
+   "film:2430",
+   "film:9930",
+   "film:2466"
+  ],
+  "scale": [
+   "washer-27in:2430",
+   "door-32in:9930"
+  ],
+  "upstream": [
+   "none"
+  ],
+  "risks": [
+   "registration",
+   "scale"
+  ],
+  "applies_to": [
+   "basement"
+  ],
+  "measured_in": [
+   "basement"
+  ],
+  "alternatives": [
+   "the GLB's own stair (x 0.06..1.73, 10 risers in 1.67 m: 58 deg, not walkable) kept as drawn",
+   "this: the GLB's stair position and direction, 14 risers at 39 deg, landing one riser down so an adult clears the back stair's soffit",
+   "SurveyBuilder's Sept basement (a flight under the main stair from the foyer): no film or GLB support"
+  ],
+  "note": "the film-ruled sizes are the claim (areaway width, laundry, furnace proportions); the GLB-placed footprint, depth and stair position are layout from the registered old model, logged as AUTHORED in DEVIATIONS 91 and checked against the film rulers where they overlap"
+ },
+ "history": [
+  {
+   "date": "2026-09-14",
+   "what": "SurveyBuilder authored basement under the main block (Marina shows none), retired with the Godot/survey builds",
+   "outcome": "superseded"
+  },
+  {
+   "date": "2026-10-15",
+   "what": "Kevin's basement door built closed in the back stair's front wall (DEVIATIONS 30); basement not built",
+   "outcome": "pending"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "the registered OLD model (spec/glb_registration.json: similarity s 0.757 on 23 features of our spec, rms 0.23 m, held-out rear/end rms 1.25 m with one outlier, leave-one-out 0.03-0.64 m) gives the outside stairwell outer z -0.33..1.32 (1.65 m) -> 1.05 m inside two 0.30 stone walls vs the film-ruled 1.07 (-2%), and its basement stair under the back stair rising -x where the film's flight is (2490: wall at its head, rail on the open side)",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "glb-registration:23-features"
+   ],
+   "scale": [
+    "glb-registration:similarity"
+   ],
+   "upstream": [
+    "spec:geometry"
+   ],
+   "tests": [
+    "registration",
+    "scale"
+   ]
+  },
+  {
+   "what": "areaway width: FILM 9930, the door leaf (32 in stock) 393 px, the stone faces at the door plane 515 px -> 1.07 m inner width; built 1.07 (the GLB's outer width 1.65 less two 0.30 stone walls gives 1.05, -2%)",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "film:9930"
+   ],
+   "scale": [
+    "door-32in:9930"
+   ],
+   "tests": [
+    "scale",
+    "registration"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/basement/f9930_areaway_door.png",
+    "confirmed_by": "second frame: film 9952/9956 shows the same leaf, 3x2 lites, the knob and the stone walls either side of the jamb strip"
+   }
+  },
+  {
+   "what": "laundry sizes: FILM 2430 frontal, the washer front (27 in stock, 405 px -> 590 px/m) gives the deck 0.88 m (stock 36 in = 0.91, -3%), the dark tub 1.11 m wide, 0.88 m tall, the window 0.49 m wide with its sill 1.47 m up and a shelf at 1.16 m: built to these",
+   "agrees": true,
+   "type": "metric",
+   "data": [
+    "film:2430"
+   ],
+   "scale": [
+    "washer-27in:2430"
+   ],
+   "tests": [
+    "scale"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/basement/f2430_laundry.png",
+    "confirmed_by": "the frame itself shows the washer with its kick panel and the tub's rim; the same washer/top-loader is seen close in film 6728 (Kevin's red cap on the agitator)"
+   }
+  },
+  {
+   "what": "furnace proportions: FILM 2466 frontal, body w:h 585:455 px = 1.29 (built 1.50:1.18 = 1.27), grate 360/585 of the width (built the same), 14 bars (built 14), two ducts rising in a V (built)",
+   "agrees": true,
+   "type": "ratio",
+   "data": [
+    "film:2466"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": []
+  },
+  {
+   "what": "stair: FILM 2490 and 10300 show a straight open-riser flight with a handrail on the right going up (south, kitchen side: built) and boards above (beadboard north wall: built), its head under a wall; the GLB's stair runs the same way under the back stair (top x 0.06, bottom 1.73)",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:2490",
+    "film:10300",
+    "glb-registration:23-features"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": []
+  },
+  {
+   "what": "depth: no film ruler reaches the basement's height; 2.681 m is the GLB's (ground storey's vertical fit, residuals 0.4-2.5 cm on floor/ceiling/window heads): AUTHORED, DEVIATIONS 91",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "glb-registration:23-features"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": []
+  },
+  {
+   "what": "walk gates: stair_arrival ok for both new stairs; verify-plan 0 FAIL",
+   "agrees": true,
+   "data": [
+    "build"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": [],
+   "type": "topological"
+  },
+  {
+   "what": "build gates (build 2, ~/.cache/home-alone-2): basement walk kitchen -> landing -> flight -> outside door -> areaway to grade 36 legs 0 blocked (bandit, Kevin, player, up and down); seam 0; clash 0; z-fight 2 pairs, both Living gifts vs the bought living rug (not the basement; STATUS item 6); envelope 0 thin; RoomWalk unchanged from the attic build",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "build"
+   ],
+   "scale": [
+    "none"
+   ],
+   "tests": []
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/basement/before/stair_top.png",
+   "spec/captures/views/basement/before/film2466_foot_furnace.png",
+   "spec/captures/views/basement/before/film2490_foot_up.png",
+   "spec/captures/views/basement/before/film2430_laundry.png",
+   "spec/captures/views/basement/before/film10120_entry.png",
+   "spec/captures/views/basement/before/film9912_areaway_top.png",
+   "spec/captures/views/basement/before/film9952_areaway_door.png",
+   "spec/captures/views/basement/before/kitchen_door.png",
+   "spec/captures/views/basement/before/plan.png"
+  ],
+  "after": [
+   "spec/captures/views/basement/after/stair_top.png",
+   "spec/captures/views/basement/after/film2466_foot_furnace.png",
+   "spec/captures/views/basement/after/film2490_foot_up.png",
+   "spec/captures/views/basement/after/film2430_laundry.png",
+   "spec/captures/views/basement/after/film10120_entry.png",
+   "spec/captures/views/basement/after/film9912_areaway_top.png",
+   "spec/captures/views/basement/after/film9952_areaway_door.png",
+   "spec/captures/views/basement/after/kitchen_door.png",
+   "spec/captures/views/basement/after/plan.png",
+   "spec/captures/views/basement/after/front_yard.png",
+   "spec/captures/views/basement/after/rear_areaway.png"
+  ],
+  "compare": [
+   "spec/captures/views/basement/compare/film2466_furnace.png",
+   "spec/captures/views/basement/compare/film2490_stair.png",
+   "spec/captures/views/basement/compare/film2430_laundry.png",
+   "spec/captures/views/basement/compare/film10120_entry.png",
+   "spec/captures/views/basement/compare/film9930_areaway.png"
+  ]
+ },
+ "user_walk": "pending"
+}

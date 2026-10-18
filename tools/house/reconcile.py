@@ -299,6 +299,136 @@ def service_stair_spec(final, o):
             "authored": f"measured: {NS} straight steps + {NW} winders around the tall post (x {XL}), {k} flight steps (going {g}, rise {r}) to x {xt:.2f}; straight steps' fronts square (film: rounded)"}
 
 
+BASEMENT = ROOT / "measurements/rooms/basement.json"
+
+
+def basement_spec(svc):
+    """The basement (Oct 18 2026, TRIAL; changes/2026-10-18-basement-shell.json, DEVIATIONS 91), from measurements/rooms/basement.json
+    (the OLD reference model registered to our house; the film for the hero items). y above the GROUND floor (built under Ground like
+    the service stair). Interior flight: from a landing behind Kevin's basement door (under the back stair's slabbed top) down toward +x
+    under the back stair, as the registered GLB's stair (x 0.06 top -> 1.73 bottom, rising -x), 14 risers; the back stair's steps over
+    the flight become 0.22 m slabs (its winders 0.22 too) with papered spandrels on the kitchen side; the ground floor plate is cut over
+    the flight. Basement: the ground storey's footprint less the den, 12 in foundation walls to the plate, slab floor. Outside: the
+    stone areaway behind the kitchen wing (GLB), its door in the wing's rear wall. Boxes are the walk/envelope layer; the look is
+    tools/house/hifi_basement.py (SpecGreybox.Basement). Mutates svc (the service stair) for the slabs, spandrels and the open door."""
+    A = {k: v["value"] for k, v in json.loads(BASEMENT.read_text())["measured"].items()}
+    rd = lambda v: round(float(v), 3)
+    FY, n, g, XS, PL, T = A["floor_y"], A["risers"], A["going"], A["top_riser_x"], A["plate_y"], A["wall_t"]
+    r = -FY / n
+    s1 = next(b for b in svc["boxes"] if b["name"] == "service_step01")
+    Z0, Z1 = s1["z"]                                       # the back stair's flight: its kitchen-side face and the back hall wall
+    X0 = next(b for b in svc["boxes"] if b["name"] == "basement_wall_front_l")["x"][0]
+    SP = 0.03                                              # papered spandrel on the kitchen side (inside the flight)
+    ZA, XB = Z0 + SP, XS + (n - 2) * g                     # our flight's south edge; its bottom riser (12 treads, the landing is the 13th)
+    YL = FY + (n - 1) * r                                  # the landing: one riser below the kitchen floor, inside the door
+    # the plate cut over the landing and the flight (to the back stair space's end: headroom at step 2), and the pocket behind the door
+    HOLES = [{"x": [rd(X0), 2.369], "z": [rd(ZA), rd(Z1)]}, {"x": [rd(X0), -0.62], "z": [6.357, rd(ZA)]}]
+    HOLE = HOLES[0]
+    # ---- the back stair over it: every step over the hole a 0.22 m slab, spandrels on the kitchen side, the door open
+    kept = []
+    for b in svc["boxes"]:
+        nm = b["name"]
+        if nm in ("basement_PropDoor", "basement_PropDoor_knob"):
+            continue                                       # the leaf stands open (store_props basement_door open 90)
+        if nm.endswith("_spandrel") and b["x"][1] <= -0.62 + 1e-6:
+            continue                                       # over the landing: the pocket behind the door opens into it
+        if b["kind"] == "step" and (nm.startswith("service_step") or nm.startswith("service_winder")) and b["x"][0] < HOLE["x"][1] and b["y"][0] == 0.0:
+            b["y"][0] = rd(b["y"][1] - 0.22)
+            if nm.startswith("service_step"):
+                kept.append({"name": nm + "_spandrel", "kind": "spandrel", "x": list(b["x"]), "y": [0.0, b["y"][0]], "z": [rd(Z0), rd(ZA)]})
+        kept.append(b)
+    w = {b["name"]: b for b in kept}
+    for nm, za, zb in (("service_winder1", Z0, None), ("service_winder2", None, Z1)):   # the winders' open end (x 2.64): closed under them
+        wb = w[nm]; z_a = za if za is not None else w["service_winder1"]["z"][1]; z_b = zb if zb is not None else w["service_winder1"]["z"][1]
+        kept.append({"name": nm + "_spandrel_e", "kind": "spandrel", "x": [rd(wb["x"][1] - 0.03), wb["x"][1]], "y": [0.0, wb["y"][0]], "z": [rd(z_a), rd(z_b)]})
+    svc["boxes"] = kept
+    B = []
+    box = lambda name, kind, xa, xb, ya, yb, za, zb, **kw: B.append({"name": name, "kind": kind, "x": [rd(min(xa, xb)), rd(max(xa, xb))],
+                                                                    "y": [rd(ya), rd(yb)], "z": [rd(min(za, zb)), rd(max(za, zb))], **kw})
+    # ---- the flight (solid steps: the look is open treads), rising -x; tread k (1 = lowest) at FY + k r
+    for k in range(1, n - 1):
+        xa = XS + (n - 2 - k) * g
+        box(f"bsmt_step{k:02d}", "step", xa, xa + g, FY, FY + k * r, ZA, Z1)
+    box("bsmt_landing", "landing", X0, XS, YL - 0.15, YL, ZA, Z1)
+    box("bsmt_landing_pocket", "landing", X0, -0.62, YL - 0.15, YL, 6.357, ZA)
+    for k in range(1, n - 1):                              # the open (south) side: balustrade to the rail or up to the plate's edge
+        xa = XS + (n - 2 - k) * g; top = FY + k * r
+        if top + 0.05 < PL: box(f"bsmt_rail{k:02d}", "rail", xa, xa + g, top, min(top + 0.90, PL), ZA - 0.05, ZA)
+    box("bsmt_newel", "rail", XB - 0.09, XB, FY, FY + r + 0.95, ZA - 0.09, ZA)
+    box("bsmt_stairwall_n", "wall", X0, XB + 0.10, FY, PL, Z1, Z1 + 0.14)   # stud wall, beadboard (film 10300), under the back hall wall
+    # ---- the basement: slab, foundation walls round the footprint (door cut in the wing's rear wall)
+    P = A["footprint"]
+    rects = [(-5.192, 10.13, -0.915, 4.085), (-1.505, 10.13, 4.085, 7.778), (0.008, 10.13, 7.778, 11.43), (1.58, 10.13, 11.43, 16.07)]
+    for i, (xa, xb, za, zb) in enumerate(rects):
+        box(f"bsmt_floor{i}", "floor", xa, xb, FY - 0.15, FY, za, zb)
+    sh = sum(P[i][0] * P[(i + 1) % len(P)][1] - P[(i + 1) % len(P)][0] * P[i][1] for i in range(len(P)))   # shoelace: > 0 counter-clockwise
+    D, m = A["door"], len(P)
+
+    def convex(j):
+        a, b, c = (np.array(P[(j + o) % m], float) for o in (-1, 0, 1))
+        u, v = b - a, c - b
+        return float(u[0] * v[1] - u[1] * v[0]) * sh > 0
+
+    for i in range(m):
+        p, q = np.array(P[i], float), np.array(P[(i + 1) % m], float)
+        d = (q - p) / np.linalg.norm(q - p); nrm = np.array([d[1], -d[0]]) * (1 if sh > 0 else -1)   # outward
+        a0, a1 = p, q + d * (T if convex((i + 1) % m) else -T)   # each wall takes its END corner: past a convex one, short of a reflex one
+        c0, c1 = a0 + nrm * T, a1 + nrm * T
+        xs, zs = sorted([a0[0], a1[0], c0[0], c1[0]]), sorted([a0[1], a1[1], c0[1], c1[1]])
+        xa, xb, za, zb = xs[0], xs[-1], zs[0], zs[-1]
+        if abs(p[0] - (-5.192)) < 1e-6 and abs(q[0] - p[0]) < 1e-6:   # the wing's rear wall: the areaway door
+            dz0, dz1 = D["z"]
+            box("bsmt_wall_rear_a", "wall", xa, xb, FY - 0.15, PL, za, dz0)
+            box("bsmt_wall_rear_b", "wall", xa, xb, FY - 0.15, PL, dz1, zb)
+            box("bsmt_wall_rear_head", "wall", xa, xb, FY + D["h"], PL, dz0, dz1)
+            continue
+        box(f"bsmt_wall{i}", "wall", xa, xb, FY - 0.15, PL, za, zb)
+    # ---- chimney base, posts, laundry, furnace (walk boxes; the look is the model's)
+    C = A["chimney"]; box("bsmt_chimney", "furniture", *C["x"], FY, PL, *C["z"])
+    for i, (px, pz) in enumerate(A["posts"]):
+        box(f"bsmt_post{i}", "furniture", px - 0.07, px + 0.07, FY, PL - A["joist_d"], pz - 0.07, pz + 0.07)   # up to the joists' underside
+    F = A["furnace"]; box("bsmt_furnace", "furniture", *F["x"], FY, FY + F["body_h"], *F["z"])
+    L = A["laundry"]; wz, dp = L["wall_z"], L["depth"]
+    for nm in ("sink", "washer", "dryer"):
+        box(f"bsmt_{nm}", "furniture", *L[nm + "_x"], FY, FY + (L["sink_h"] if nm == "sink" else L["deck_h"]), wz - dp, wz)
+    xd0, xd1 = -5.192, -5.192 + (D["z"][1] - D["z"][0])     # the outside door's leaf, open 90 deg into the basement, along the wall
+    box("bsmt_door_leaf", "door_prop", xd0 + 0.01, xd1 + 0.01, FY, FY + D["h"] - 0.01, D["z"][1] + 0.003, D["z"][1] + 0.048)
+    room = [[rd(a), rd(b)] for a, b in P]
+    box("bsmt_room", "room", min(q[0] for q in P), max(q[0] for q in P), FY, PL, min(q[1] for q in P), max(q[1] for q in P), poly=room)
+    well = [[rd(X0), 6.357], [-0.62, 6.357], [-0.62, rd(ZA)], [2.369, rd(ZA)], [2.369, rd(Z1)], [rd(X0), rd(Z1)]]
+    box("bsmt_stairwell", "room", X0, 2.369, PL, 0.0, 6.357, Z1, poly=well)   # the slot through the plate over the landing and flight
+    # walk: kitchen -> door -> landing -> down the flight -> round its foot -> across to the outside door -> up the areaway to grade
+    Q = A["areaway"]; (az0, az1), AL, AG, ST, GY = Q["inner_z"], Q["landing"], Q["going"], Q["stone_t"], Q["grade_y"]
+    ax0 = -5.192 - T                                        # the areaway's inner end: the foundation wall's outer face
+    zm, dm = (az0 + az1) / 2, (D["z"][0] + D["z"][1]) / 2
+    path = [[-0.865, 0.0, 5.75], [-0.865, YL, 7.10], [XB + 0.55, FY, 7.16], [XB + 0.75, FY, 5.6],
+            [-4.55, FY, dm], [ax0 - AL / 2, FY, zm], [ax0 - AL - (n - 1) * AG - 0.45, GY, zm]]
+    bsmt = {"floor_y": rd(FY), "plate_y": PL, "joist_d": A["joist_d"], "wall_t": T, "footprint": room, "flight": {"x": [rd(XS), rd(XB)], "z": [rd(ZA), rd(Z1)],
+            "going": g, "rise": rd(r)}, "hole": HOLE, "landing_y": rd(YL), "door": D, "chimney": C, "furnace": F, "laundry": L, "light": A["light"], "chute": A["chute"],
+            "posts": A["posts"], "windows": A["windows"]}
+    # ---- the areaway: landing at the door, 13 stone steps rising -x to grade, stone walls, iron rails, an apron at the top
+    AB = []
+    abox = lambda name, kind, xa, xb, ya, yb, za, zb, **kw: AB.append({"name": name, "kind": kind, "x": [rd(min(xa, xb)), rd(max(xa, xb))],
+                                                                     "y": [rd(ya), rd(yb)], "z": [rd(min(za, zb)), rd(max(za, zb))], **kw})
+    xl = ax0 - AL                                           # the landing's outer edge = the first riser
+    abox("area_landing", "floor", xl, ax0, FY - 0.15, FY, az0, az1)
+    for k in range(1, n):
+        abox(f"area_step{k:02d}", "step", xl - k * AG, xl - (k - 1) * AG, FY - 0.15, FY + k * (GY - FY) / n, az0, az1)
+    xt = xl - (n - 1) * AG                                  # the top riser: grade beyond it
+    abox("area_apron", "floor", xt - 1.0, xt, GY - 0.20, GY, az0 - ST, az1 + ST)
+    for nm, za, zb in (("s", az0 - ST, az0), ("n", az1, az1 + ST)):
+        abox(f"area_wall_{nm}", "wall", xt, ax0, FY - 0.15, GY + 0.15, za, zb)
+        zc = (za + zb) / 2
+        abox(f"area_rail_{nm}", "rail", xt, ax0, GY + 0.15, GY + 1.05, zc - 0.02, zc + 0.02)
+    abox("area_room", "room", xt, ax0, FY, GY, az0, az1, poly=[[rd(xt), rd(az0)], [rd(ax0), rd(az0)], [rd(ax0), rd(az1)], [rd(xt), rd(az1)]])
+    bsmt["areaway"] = {"x": [rd(xt), rd(ax0)], "z": [az0, az1], "landing_x": rd(xl), "going": AG, "rise": rd((GY - FY) / n), "stone_t": ST, "grade_y": GY}
+    return ({"rise_m": rd(r), "going_m": g, "risers": n, "boxes": B, "basement": bsmt, "floor_openings": HOLES,
+             "walk_path": [[rd(v) for v in q] for q in path],
+             "authored": f"{n} risers of {r:.4f} down to {FY} (registered GLB): a step down inside the door to a landing at {YL:.4f}, then 12 treads of {g} from x {XS}; footprint = ground storey less the den"},
+            {"rise_m": rd((GY - FY) / n), "going_m": AG, "risers": n, "boxes": AB, "walk_path": [],
+             "authored": f"stone areaway: {n} risers, going {AG}, inner width {az1 - az0:.2f}, landing {AL} at the door (registered GLB stairwell)"})
+
+
 ATTIC = ROOT / "measurements/rooms/attic.json"
 
 
@@ -686,6 +816,8 @@ def main():
         "floor_y_m": 0.0 if FLOOR == "upstairs" else -round(json.loads((ROOT / f"spec/house_spec{'.' + VARIANT if VARIANT else ''}.json").read_text())["stair"]["floor_to_floor_m"], 3),
         "sources": {"plan": str(PLAN.relative_to(ROOT)), "doors": str(DOORS.relative_to(ROOT)), "anchors": ANCHORS},
     }
+    if FLOOR != "upstairs" and spec["stair"] and not MEASURED:   # the basement under the ground floor (measurements/rooms/basement.json)
+        spec["basement"], spec["basement_areaway"] = basement_spec(spec["stair"])
     spec["windows"] = windows_spec(spec["spaces"])
     wf = ROOT / f"measurements/windows/{FLOOR}.json"   # openings cut through walls of both storeys (the landing window), placed in spec metres
     spec["wall_openings"] = json.loads(wf.read_text()).get("wall_openings", []) if wf.exists() else []

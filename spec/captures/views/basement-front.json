@@ -1,0 +1,2 @@
+[{"name": "basement/after/front_yard", "pos": [24.0, 1.5, -9.7], "look_at": [8.0, -4.0, -9.7], "vfov": 60, "near": 0.05},
+ {"name": "basement/after/rear_areaway", "pos": [-14.0, 2.0, 3.0], "look_at": [-6.0, -3.5, -1.0], "vfov": 60, "near": 0.05}]
