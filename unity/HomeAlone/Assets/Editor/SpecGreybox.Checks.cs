@@ -368,7 +368,7 @@ public static partial class SpecGreybox
             || (a.name.Contains("newel") && b.name.StartsWith("service_") && !b.name.Contains("spindle"))               // a post stands through the steps it carries
             || (a.transform.parent != null && a.transform.parent == b.transform.parent && a.transform.parent.name != "MainStair_HiFi"
                 && (a.transform.parent.parent?.name == "FoyerFixtures"                                                    // a fixture's own parts (candles in their cups)
-                    || a.transform.parent.parent?.name == "StoreProps"));                                                 // a bought model's own parts (the wreath's bow through its fir tips)
+                    || a.transform.parent.parent?.name == "StoreProps" || a.transform.parent.parent?.name == "SketchfabProps"));   // ...or a Sketchfab download's (the rifle's tube through its receiver)                                                 // a bought model's own parts (the wreath's bow through its fir tips)
         // each triangle pair once, in the first cell both boxes share (no pair set), only when the boxes meet (a crossing lies in both),
         // never within one renderer (its run is skipped by index); the same pairs as testing every pair of a cell (check speed, Oct 17)
         var found = new Dictionary<(int, int), (int n, Vector3 at)>(); long examined = 0, hits = 0; int cells = 0;

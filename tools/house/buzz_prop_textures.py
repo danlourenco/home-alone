@@ -11,6 +11,7 @@ Inputs: the film screencaps in 0-homealone/full (untracked; the PNGs are committ
   girlfriend film 2752, the photo inside the frame mat rectified (5 x 7 in)
   chips      film 2724, the yellow Crunch Tators bag face
   jordan     the poster photo cropped to the sheet, the four tape squares painted over with the colour beside them
+  cork_*     film 530, the corkboard over the desk: six pinned papers cut out (calendar, couple photo, comic, card, basketball card, note)
 """
 from pathlib import Path
 
@@ -80,3 +81,12 @@ for box, c in (((92, 52, 168, 132), yellow), ((536, 40, 612, 122), median(j, (50
     d.rectangle(box, fill=c)
 j.crop((95, 58, 604, 1546)).save(OUT.format("jordan"))
 print("jordan", yellow)
+
+# ---- the corkboard's pinned papers (film 530, over the desk; lamp-lit, brightened as the chip bag): the calendar under the Bulls
+# photo, the couple photo, the comic, the red-framed card, the basketball card, an "IDIOTS!" note. Boxes in film pixels.
+CORK = {"calendar": (1570, 15, 1760, 312), "couple": (1405, 62, 1472, 156), "comic": (1357, 172, 1447, 332),
+        "card": (1480, 8, 1568, 128), "bball": (1800, 20, 1860, 192), "idiots": (1764, 203, 1822, 290)}
+f = film(530)
+for k, box in CORK.items():
+    im = Image.fromarray(np.clip(np.asarray(f.crop(box)) * 1.4, 0, 255).astype(np.uint8))
+    im.resize((im.width * 2, im.height * 2), Image.BICUBIC).save(OUT.format("cork_" + k))

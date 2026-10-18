@@ -87,3 +87,7 @@
 {"time": "2026-10-18T03:32:57", "cmd": "bake", "job": "overnight8", "why": "parents trial 1: bake for the walk", "wall_s": 155, "exit": 0}
 {"time": "2026-10-18T03:37:59", "cmd": "build", "job": "overnight8", "why": "parents trial 1 build 4: worst miss = pink-red paper (film density + cream ground), deeper quilt red", "wall_s": 115, "exit": 0}
 {"time": "2026-10-18T03:40:39", "cmd": "bake", "job": "overnight8", "why": "parents trial 1: bake for the walk (build 4)", "wall_s": 138, "exit": 0}
+{"time": "2026-10-18T04:08:33", "cmd": "build", "job": "overnight9", "why": "closet door + Sketchfab props", "wall_s": 115, "exit": 0}
+{"time": "2026-10-18T04:13:50", "cmd": "build", "job": "overnight10", "why": "fixes: hooks raycast, restyle names, cork cards", "wall_s": 109, "exit": 0}
+{"time": "2026-10-18T04:16:58", "cmd": "build", "job": "overnight10", "why": "trunk contents ride with trunk, helmet out", "wall_s": 104, "exit": 0}
+{"time": "2026-10-18T04:19:26", "cmd": "bake", "job": "overnight10", "why": "auto: load of an unbaked build", "wall_s": 142, "exit": 0}

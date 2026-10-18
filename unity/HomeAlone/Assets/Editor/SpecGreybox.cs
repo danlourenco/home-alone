@@ -339,6 +339,7 @@ public static partial class SpecGreybox
         FrenchDoors(root, groot, gy, geo["ground"]);   // FrenchDoors.cs: the glazed French door pairs (changes/2026-10-16-french-doors.json)
         StoreProps(root, groot, gy);   // StoreProps.cs: Asset Store furniture in measured boxes (spec/dressing/store_props.json)
         DenScreenPatch();              // SpecGreybox.Den.cs: the video screen over the bought TV's glass (after StoreProps placed it)
+        SketchfabProps(root, gy);      // SpecGreybox.Sketchfab.cs: the user's Sketchfab downloads (BB gun, glove, helmet, trophies, corkboard, Hershey, den table)
         if (TrimFromFaces) FaceTrim(groot); else LayTrim(groot, new[] { "PropDoor", "Casing", "FrontDoor_HiFi", "MainStair_HiFi" });   // SpecGreybox.Trim.cs
         Envelope(root, geo, j["attic_stair"]["boxes"], gj["wall_openings"], gj["stair"]?["ceiling_openings"], gy);
         FilmFront(root, geo, gj["wall_openings"], gy);

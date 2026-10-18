@@ -19,3 +19,5 @@
 {"time": "2026-10-18T02:55:36", "kind": "prop", "job": "overnight6", "s": 1500.0, "tools": 40}
 {"time": "2026-10-18T02:55:36", "kind": "prop", "job": "overnight7", "s": 3300.0, "tools": 70}
 {"time": "2026-10-18T03:51:33", "kind": "fixture", "job": "overnight8", "s": 5700.0, "tools": 150}
+{"time": "2026-10-18T04:22:30", "kind": "prop", "job": "overnight9", "s": 3000.0, "tools": 55}
+{"time": "2026-10-18T04:22:30", "kind": "prop", "job": "overnight10", "s": 4800.0, "tools": 75}

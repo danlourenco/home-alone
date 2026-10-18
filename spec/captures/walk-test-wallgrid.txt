@@ -74,7 +74,7 @@ BLOCKED player up leg 2: ended 0.07 m from waypoint, 0.06 m off its floor height
 ok      player down leg 1: ended 0.02 m from waypoint, 0.09 m off its floor height, 18 frames (clean walk 20)
 ok      player down leg 2: ended 0.00 m from waypoint, 0.03 m off its floor height, 7 frames (clean walk 7)
 Render check (outward faces, ServiceStair): 97 parts, 0 inside-out
-Seam check: 776 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
+Seam check: 788 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
 Leak and headroom check: 1383 points, 0 leaks, 17 low-headroom points (ground floor, outside flight 1)
 LOW     den at (2.6, 18.2): 0.83 m clear under StoreProps/den_tv_Collider
 LOW     den at (6.1, 17.7): 0.37 m clear under DenColliders/DenCollider_coffee_table_top
@@ -107,15 +107,15 @@ skip    kevin dining_room: no cell to stand in (its floor is a stair)
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin back_stair: no cell to stand in (its floor is a stair)
-Z-fight check: 1893759 triangles, 1640 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
-Clash check: 2162374 triangles, 0 parts passing through another (14 allowed joints) (every visible mesh checked)
+Z-fight check: 1982104 triangles, 1678 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
+Clash check: 2271150 triangles, 0 parts passing through another (17 allowed joints) (every visible mesh checked)
 Casing check: 0 casings placed apart from their opening
 Opening face check: 22 door faces, 0 without a head casing, 0 showing the other room's finish within the casing width
 Arch fit: 1 generated arches on their cuts, 0 joints off by more than 1 mm (worst 0.00 mm)
-Props check: 55 store models, 2 problems (landing_table: back -0.5 cm from the drawn wall (want 0-3); den_banker: material Glass_HDRP has no base colour map)
+Props check: 56 store models, 2 problems (landing_table: back -0.5 cm from the drawn wall (want 0-3); den_banker: material Glass_HDRP has no base colour map)
 Props triangle budget: 4 models over 150k triangles (Assets/Purchased/PurchasedPlants.glb 411k, Assets/Purchased/HallPlants.glb 296k, Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Models/ChristmasTree.fbx 259k, Assets/Models/Foyer/HallDressing.glb 201k)
-Trim check: 76 face runs (3 on the stair and landings, 0 panelled by a window model), 125.8 m, 10386 samples, 1 gaps in the baseboard, wainscot or cap rail; run ends: corner 75, opening 73, outside-corner 4
+Trim check: 77 face runs (3 on the stair and landings, 0 panelled by a window model), 125.0 m, 10341 samples, 1 gaps in the baseboard, wainscot or cap rail; run ends: corner 75, opening 75, outside-corner 4
 GAP     0.08 m of bare wall 0.42 above the line of the room:hall_corridor run at spec (7.34, 0.42, 9.91)
-Envelope check: 2091 points at room joints, 0 see the sky through < 0.3 m of shadow caster
+Envelope check: 2087 points at room joints, 0 see the sky through < 0.3 m of shadow caster
 Quality check: 2 pipeline models of 34 generated (the rest predate the artist pipeline), 0 problems
 
