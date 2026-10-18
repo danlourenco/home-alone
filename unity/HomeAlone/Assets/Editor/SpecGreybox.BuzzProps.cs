@@ -17,7 +17,7 @@ public static partial class SpecGreybox
     {
         // the modelled terrarium replaces the opaque buzz_tank box (its walk collider, a separate object, stays)
         foreach (var r in root.GetComponentsInChildren<MeshRenderer>().Where(r => r.name == "buzz_tank")) r.enabled = false;
-        var g = PlaceHiFi(root, 0f, "BuzzProps", new Dictionary<string, Material> { ["BZP_Glass"] = mGlass });
+        var g = PlaceHiFi(root, 0f, "BuzzProps", new Dictionary<string, Material> { ["BZP_Glass"] = mGlass, ["BZP_Brass"] = BrassMat() });
         if (g != null)
             foreach (var r in g.GetComponentsInChildren<MeshRenderer>()) { r.shadowCastingMode = ShadowCastingMode.On; r.gameObject.isStatic = true; }
         BuzzTarantula(root);

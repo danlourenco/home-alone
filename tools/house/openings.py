@@ -197,6 +197,26 @@ def openings():
     out += [landing_window(o) for o in SG.get("wall_openings", []) if o["name"] == "landing_window"]
     out.append(front_door())
     store_frames(out)
+    out += surface_doors()
+    return out
+
+
+def surface_doors():
+    """A store-prop door hung ON a wall face, no opening cut (store_props.json "surface": true, e.g. Buzz's fake closet door): its box
+    is a mounted frame on the face its `back` is against, so the trim stops at it. kind fake_door: no header or swing limits."""
+    out = []
+    for p in PROPS:
+        if not isinstance(p, dict) or not p.get("surface"):
+            continue
+        st, fy = ("upstairs", 0.0) if p.get("floor") == "upper" else ("ground", GY)
+        b = p["back"]; ax = "z" if b.endswith("z") else "x"   # the axis of the plane the face lies in (openings' "axis")
+        span, depth = (p["x"], p["z"]) if ax == "z" else (p["z"], p["x"])
+        plane, n = (depth[1], -1) if b.startswith("+") else (depth[0], 1)
+        face = ["x" if ax == "z" else "z", round(plane, 4), n]
+        out.append({"id": f"{st}:surface_door:{p['name']}", "storey": st, "kind": "fake_door", "between": [], "axis": ax, "c": plane,
+                    "lo": span[0], "hi": span[1], "head": p["height"], "sill": None, "spring": None, "model": None,
+                    "pieces": [{"part": "frame", "face": face, "by": "store_props:" + p["name"], "box": [round(v, 5) for v in B(p["x"], p["z"], [p["y0"], p["y0"] + p["height"]], fy)]}],
+                    "dropped": [], "limits": []})
     return out
 
 

@@ -5,11 +5,11 @@
 "spec/geometry.json": "ab2ccb47a12f2c69a70ff411c4bff1a310383226d333050107c97e0b96718ccf",
 "spec/house_spec.json": "00563e5d3f64bf825efb3a3ba8b19e1a641a1cd7331aa03dda68a1883215dd89",
 "spec/house_spec.ground.json": "c61d3732d53e46b7b76a94886088d26d2fb1a8989a8519b216b5b0f0c5fa9394",
-"spec/dressing/store_props.json": "de483df2ff593eb3125c746a2d737cd8dd72a678f5b552d369db797087a05ae9",
+"spec/dressing/store_props.json": "5c2f67823a8c40c3690e3cd66d59f0b14feb66b71439403fcb918130f5593843",
 "spec/dressing/french_doors.json": "a5da39a702d68886d0f0a1e4ea5c20e62ca81435868ce73d253eaa209c3b4663",
 "spec/dressing/buzz.json": "adbe2e533194393922314595597d1404a3c1496c4d02da480ba9cb955d53eb7a",
 "tools/house/hifi_door.py": "43caa8e4502f58c7b108e6a1e623e15b7f158f7aac7dd50510b2abaf2d739788",
-"tools/house/openings.py": "83eec06b884ed468f0cf1458436d65e6db0f37f02630d81677afb946792ba1d1"
+"tools/house/openings.py": "678c7f928d11ad4adedf30d08fae98dfa7f971950d90e10d5baba943dee1de1f"
 },
 "openings": [
 {
@@ -6312,6 +6312,41 @@
 "detail": "top 1.930 under the ceiling 2.438"
 }
 ]
+},
+{
+"id": "upstairs:surface_door:buzz_closet_door",
+"storey": "upstairs",
+"kind": "fake_door",
+"between": [],
+"axis": "z",
+"c": 15.998,
+"lo": 7.7558,
+"hi": 8.6122,
+"head": 2.087,
+"sill": null,
+"spring": null,
+"model": null,
+"pieces": [
+{
+"part": "frame",
+"face": [
+"x",
+15.998,
+-1
+],
+"by": "store_props:buzz_closet_door",
+"box": [
+7.7558,
+8.6122,
+15.938,
+15.998,
+0.0,
+2.087
+]
+}
+],
+"dropped": [],
+"limits": []
 }
 ],
 "problems": []

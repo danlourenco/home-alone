@@ -1,9 +1,14 @@
 """hifi_buzz_props: Buzz's hero props (props lane: placed by eye from the film, Marina where the film doesn't show it; real-world sizes;
 no change record). One GLB in spec coordinates above the UPPER floor (SpecGreybox.BuzzProps places it at 0).
 
-  the Jordan "Measure Up" poster   film 478/480/524: on a closet door right of the desk lamp, by the shelves corner. No closet door is
-                                   built yet: flat on the desk wall there (Marina's spot, 529-537 s), 1.2 cm proud, bottom over the
-                                   0.14 m baseboard. Sheet 0.735 x 2.15 m from its own ruler (1 ft = 211 px)
+  the Jordan "Measure Up" poster   film 478/480/524/526: on Buzz's (fake) closet door by the shelves corner (store_props.json
+                                   buzz_closet_door, a pack Door_3 leaf, 30 x 80 in, leaf x 7.803-8.565, its room face at z 15.9704),
+                                   ruler edge 5 mm in from the latch edge. Sheet 0.735 wide from its own ruler (1 ft = 211 px), bottom
+                                   1.2 cm up (the chart's 0 near the floor: the knob reads ~2.9 ft, film 480); the sheet's top 0.14 m is
+                                   cut off at the leaf's head (a 2.15 m sheet on a 2.03 m leaf; above Jordan's head)
+  the closet door's brass knob     36 in up, 6 cm in from the latch edge, through the poster's yellow ruler strip (film 480/526)
+  the corkboard papers             film 530 cut-outs (buzz_props_cork_*.png) pinned (1 cm cards) on the framed corkboard over the desk (the board is
+                                   the Sketchfab model, SpecGreybox.Sketchfab.cs: x 8.95-9.85, y 1.15-1.743, front z 15.9813)
   the Bulls wastebasket            film 2720/530, Marina 541/545: on the floor at the chest's desk-side end. 0.40 tall, 0.23-0.25 dia
                                    (film 2720, one ruler: the chest's drawer pitch ~0.24 m; the can spans >= 1.6 drawers, further back)
   the terrarium                    buzz_tank box (buzz.json): black base and rim, four glass panes, soil; the tarantula is the owned
@@ -56,7 +61,8 @@ M = {"BZP_Black": material("BZP_Black", (0.012, 0.012, 0.012), 0.35), "BZP_Glass
      "BZP_StixGreen": material("BZP_StixGreen", (0.10, 0.45, 0.08), 0.7),
      "BZP_Can": tex_material("BZP_Can", "buzz_props_can.png", 0.35), "BZP_Jordan": tex_material("BZP_Jordan", "buzz_props_jordan.png", 0.6),
      "BZP_Playboy": tex_material("BZP_Playboy", "buzz_props_playboy.png", 0.4), "BZP_Photo": tex_material("BZP_Photo", "buzz_props_girlfriend.png", 0.3),
-     "BZP_Chips": tex_material("BZP_Chips", "buzz_props_chips.png", 0.55)}
+     "BZP_Chips": tex_material("BZP_Chips", "buzz_props_chips.png", 0.55),
+     "BZP_Brass": material("BZP_Brass", (0.80, 0.60, 0.28), 0.4)}
 M["BZP_Silver"].node_tree.nodes["Principled BSDF"].inputs["Metallic"].default_value = 0.8
 
 
@@ -104,17 +110,53 @@ def disc(p, cx, cz, y, r, n, up, uv=None):
     p.face(pts, (0, 1 if up else -1, 0), [uv] * n if uv else None)
 
 
-# ---------------------------------------------------------------- the Jordan poster (desk wall, face z 15.998)
-WALL_Z, PH_W, PH_H, P_Y0, P_CX = 15.998, 0.735, 2.15, 0.16, 8.20
-p = Part("BZP_JordanPoster", "BZP_Jordan"); x0, x1, y0, y1, z0, z1 = P_CX - PH_W / 2, P_CX + PH_W / 2, P_Y0, P_Y0 + PH_H, WALL_Z - 0.012, WALL_Z
+# ---------------------------------------------------------------- the Jordan poster on the closet door leaf (room face z 15.9704)
+LEAF_Z, PH_W, PH_H, P_Y0, P_Y1, P_X1 = 15.9704, 0.735, 2.15, 0.012, 2.022, 8.56   # P_X1: the ruler edge, 5 mm in from the latch edge 8.565
+p = Part("BZP_JordanPoster", "BZP_Jordan"); x0, x1, y0, y1, z0, z1 = P_X1 - PH_W, P_X1, P_Y0, P_Y1, LEAF_Z - 0.0044, LEAF_Z + 0.0001
+vt = (y1 - y0) / PH_H   # the sheet's top cut at the leaf's head
 e = [(0.02, 0.5)] * 4   # the ruler's yellow edge on the sheet's thin sides
 # seen from the room (looking +z, spec -x on the right): the image's left (u 0, the ruler) at x1, its right at x0
-p.face([(x1, y0, z0), (x0, y0, z0), (x0, y1, z0), (x1, y1, z0)], (0, 0, -1), [(0, 0), (1, 0), (1, 1), (0, 1)])
+p.face([(x1, y0, z0), (x0, y0, z0), (x0, y1, z0), (x1, y1, z0)], (0, 0, -1), [(0, 0), (1, 0), (1, vt), (0, vt)])
 for pts, n in (([(x0, y1, z0), (x1, y1, z0), (x1, y1, z1), (x0, y1, z1)], (0, 1, 0)), ([(x0, y0, z0), (x1, y0, z0), (x1, y0, z1), (x0, y0, z1)], (0, -1, 0)),
                ([(x0, y0, z0), (x0, y0, z1), (x0, y1, z1), (x0, y1, z0)], (-1, 0, 0)), ([(x1, y0, z0), (x1, y0, z1), (x1, y1, z1), (x1, y1, z0)], (1, 0, 0)),
                ([(x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)], (0, 0, 1))):
     p.face(pts, n, e)
 build(p)
+# the knob through the ruler strip: rose (54 mm, 8 mm), neck, ball knob (56 mm), turned about a horizontal axis toward the room (-z)
+KX, KY, KZ = 8.505, 0.914, z0 + 0.0005
+p = Part("BZP_ClosetKnob", "BZP_Brass")
+prof = [(0.0, 0.027), (0.006, 0.027), (0.008, 0.022), (0.010, 0.009), (0.030, 0.009), (0.034, 0.020), (0.042, 0.027), (0.056, 0.026), (0.066, 0.016), (0.070, 0.0)]
+N = 24
+ring = lambda d, r: [(KX + r * math.cos(2 * math.pi * k / N), KY + r * math.sin(2 * math.pi * k / N), KZ - d) for k in range(N)]
+rings = [ring(d, r) for d, r in prof]
+for a, b in zip(rings, rings[1:]):   # every band's true normal leans outward from the axis, so the radial direction orients it
+    for k in range(N):
+        k2 = (k + 1) % N; am = 2 * math.pi * (k + 0.5) / N
+        p.face([a[k], a[k2], b[k]] if b[k] == b[k2] else [a[k], a[k2], b[k2], b[k]], (math.cos(am), math.sin(am), 0))
+p.face(rings[0], (0, 0, 1))
+build(p, smooth=True)
+
+# ---------------------------------------------------------------- the corkboard's pinned papers (film 530), on the cork face
+CK_X0, CK_X1, CK_Y0, CK_Y1, CK_Z = 8.9934, 9.8066, 1.1934, 1.6992, 15.9813
+FPX = 740.0   # film px per metre (the film's cork 60..660 px wide across our 0.813 m)
+CORK = {"calendar": (1570, 15, 1760, 312), "couple": (1405, 62, 1472, 156), "comic": (1357, 172, 1447, 332),
+        "card": (1480, 8, 1568, 128), "bball": (1800, 20, 1860, 192), "idiots": (1764, 203, 1822, 290)}   # buzz_prop_textures.py
+for i, (k, (a, b, c, d)) in enumerate(CORK.items()):
+    M["BZP_Cork_" + k] = tex_material("BZP_Cork_" + k, f"buzz_props_cork_{k}.png", 0.8)
+    xa, xb = CK_X1 - (c - 1260) / FPX, CK_X1 - (a - 1260) / FPX   # film left = spec +x (looking +z)
+    ya, yb = CK_Y1 - (d - 8) / FPX, CK_Y1 - (b - 8) / FPX
+    ua, ub = (max(xa, CK_X0) - xa) / (xb - xa), (min(xb, CK_X1) - xa) / (xb - xa)   # clipped to the cork, the image cut to match
+    va, vb = (max(ya, CK_Y0) - ya) / (yb - ya), (min(yb, CK_Y1) - ya) / (yb - ya)
+    xa, xb, ya, yb = max(xa, CK_X0), min(xb, CK_X1), max(ya, CK_Y0), min(yb, CK_Y1)
+    # a 1 cm card on the cork (zfight-check rule 2: an overlay stands >= 1 cm proud), its back 0.5 mm into the board; no two overlap
+    zf, zb = CK_Z - 0.010, CK_Z + 0.0005
+    p = Part("BZP_CorkPaper_" + k, "BZP_Cork_" + k); ed = [((1 - ub + 1 - ua) / 2, (va + vb) / 2)] * 4
+    # u runs with film x (spec -x): image left at xb
+    p.face([(xb, ya, zf), (xa, ya, zf), (xa, yb, zf), (xb, yb, zf)], (0, 0, -1), [(1 - ub, va), (1 - ua, va), (1 - ua, vb), (1 - ub, vb)])
+    for pts, n in (([(xa, yb, zf), (xb, yb, zf), (xb, yb, zb), (xa, yb, zb)], (0, 1, 0)), ([(xa, ya, zf), (xb, ya, zf), (xb, ya, zb), (xa, ya, zb)], (0, -1, 0)),
+                   ([(xa, ya, zf), (xa, yb, zf), (xa, yb, zb), (xa, ya, zb)], (-1, 0, 0)), ([(xb, ya, zf), (xb, yb, zf), (xb, yb, zb), (xb, ya, zb)], (1, 0, 0))):
+        p.face(pts, n, ed)
+    build(p)
 
 # ---------------------------------------------------------------- the Bulls wastebasket
 CX, CZ, H, RB, RT, N = 10.97, 14.73, 0.40, 0.115, 0.125, 48
@@ -221,6 +263,10 @@ place(wm, (math.radians(-90), 0, 0), 9.72, 15.74, DESK_TOP, yaw=15)
 place(load("baseball_01", "BZP_ShelfBall"), (0.3, 0.8, 0.2), 7.63, 13.65, BOX["buzz_shelves_board1"]["y"][1])
 
 # ---------------------------------------------------------------- the footlocker contents (liner x 9.207-10.037, z 13.823-14.246)
+# authored for the trunk at x 9.192-10.054; the trunk moved with the bed (buzz_trunk.json x, Oct 18 bed nudge) and the contents
+# stayed behind (the Playboy poked through its end wall): they ride with it now (DX, applied to every footlocker object below)
+DX = json.loads((ROOT / "spec/dressing/buzz_trunk.json").read_text())["x"][0] - 9.192
+_before_trunk = set(bpy.data.objects)
 F = 0.016
 place(load("baseball_01", "BZP_TrunkBall"), (1.1, 0.2, 2.0), 9.40, 14.18, F)
 # Playboy, front right: 8.5 x 11 in, cover top toward +x (film 2700)
@@ -258,6 +304,10 @@ p = Part("BZP_TrunkPhoto", "BZP_Photo"); y = fy + 0.006
 p.face([(fx0 + B - 0.003, y, fz0 + B - 0.003), (fx1 - B + 0.003, y, fz0 + B - 0.003), (fx1 - B + 0.003, y, fz1 - B + 0.003), (fx0 + B - 0.003, y, fz1 - B + 0.003)],
        (0, 1, 0), [(0, 1), (1, 1), (1, 0), (0, 0)])
 build(p)
+
+for o in set(bpy.data.objects) - _before_trunk:   # spec +x is Blender -x
+    o.location.x -= DX
+print(f"  footlocker contents moved {DX:+.3f} m in x with the trunk")
 
 OUT.parent.mkdir(parents=True, exist_ok=True)
 bpy.ops.export_scene.gltf(filepath=str(OUT), export_format="GLB", export_yup=True, export_apply=True)

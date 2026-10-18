@@ -148,6 +148,30 @@
    "source": "user Oct 17 (in Buzz's room facing its door): 'please place a real door like we have in other rooms upstairs in this opening, widening it if necessary' (changes/2026-10-17-buzz-door.json). Door_3 White as girls_a/girls_b/attic/linen. Opening x 7.507-8.320 (stock 32 x 80 in leaf; Marina's leaf 0.798 solve / 0.800 at the 560 s door ruler); the pack frame (outer = leaf x 1.124 wide, x 1.027 tall) replaces the generated casing on the hall face (z 11.43; 0.5 cm proud, 6 cm deep), its hi side 0.6 mm short of the hall corridor's east wall (x 8.371). Hinge at the shelves end (lo, x 7.507): Marina 560/563 s show the knob at the bed-side edge (blind pick check). Swings into the room (her leaf sits by the room-side casing; standard; DEVIATIONS 73). Open 80 deg AUTHORED (her door is closed in every frame): toward the shelves wall, not flat against it"
   },
   {
+   "name": "buzz_closet_door",
+   "floor": "upper",
+   "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
+   "x": [
+    7.7558,
+    8.6122
+   ],
+   "z": [
+    15.938,
+    15.998
+   ],
+   "y0": 0.0,
+   "height": 2.087,
+   "yaw": 180,
+   "back": "+z",
+   "surface": true,
+   "hide_parts": [
+    "Knob"
+   ],
+   "hides": [],
+   "collide": false,
+   "source": "props lane (overnight 9, Oct 18, not walked; user chose 'a, fake door that leads nowhere'): Buzz's closet door, film 478/480/524/526 (changes/2026-10-18-buzz-closet-options.md option A). The pack's Door_3 White (frame = the casing, as buzz_door) hung ON the desk wall's face, no opening cut: a stock 30 x 80 in leaf (box 1.124 x 0.762 of the prefab's width) at x 7.803-8.565 = 0.33-1.09 m from the shelves corner (film 526, poster ruler), 6 cm deep so the leaf's room face is z 15.9704 (yaw 180: the prefab's leaf half toward the wall). The pack's lever handle and hinges are left out (hide_parts Knob): the film's brass knob is hifi_buzz_props.py's, through the Jordan poster's ruler at 36 in. surface: openings.py makes it a mounted frame so the baseboard stops at it. Leads nowhere (the wall is exterior): DEVIATIONS."
+  },
+  {
    "name": "den_desk",
    "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Desk_01.prefab",
    "x": [
