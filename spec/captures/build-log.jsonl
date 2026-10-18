@@ -130,3 +130,4 @@
 {"time": "2026-10-18T13:13:26", "cmd": "build", "job": "yard-registration", "why": "yard build 1 (registered site, grade ring, steps, routes)", "wall_s": 3, "exit": 1}
 {"time": "2026-10-18T13:15:56", "cmd": "build", "job": "yard-registration", "why": "yard build 1 (registered site, grade ring, steps, routes)", "wall_s": 126, "exit": 0}
 {"time": "2026-10-18T13:23:09", "cmd": "build", "job": "yard-registration", "why": "yard build 2 (areaway slab, garage/driveway, torch z, routes end at the shut doors)", "wall_s": 130, "exit": 0}
+{"time": "2026-10-18T13:28:44", "cmd": "bake", "job": "yard-registration", "why": "load yard trial 1", "wall_s": 173, "exit": 0}
