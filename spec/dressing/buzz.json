@@ -66,6 +66,8 @@
     0.0,
     1.257
    ],
+   "store": "Assets/Purchased/BuzzChest/BuzzChest.glb",
+   "yaw": 270,
    "source": "top's front corners triangulated (left: frames 16/20/22/26/28, right: 16/20/22), front face dense depth (frames 16/20/22/26, IQR 0.5-0.8 cm)"
   },
   {

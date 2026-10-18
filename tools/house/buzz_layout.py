@@ -354,7 +354,7 @@ def layout(pl, fr, pts, fc, cams_g):
                   h=[0.0, r3(sp["ns_front_R"][1])], store="Assets/Classic Wooden Furniture Pack/Prefabs/BEDSIDE_CAB_01.prefab", back="-z",
                   source="top's front-right corner (frames 44/30/32) on the front face's plane (dense depth, frames 44/30); width 0.55 from Marina 563 s (left end hidden by the pillow in the solved frames)"))
     P.append(dict(name="buzz_chest", wall="front", corner="door", along=[r3(sp["chest_TL"][2] - Z0), r3(sp["chest_TR"][2] - Z0)], off=[0.015, r3(X1 - fc["chest_front"][0])],
-                  h=[0.0, r3((sp["chest_TL"][1] + sp["chest_TR"][1]) / 2)],
+                  h=[0.0, r3((sp["chest_TL"][1] + sp["chest_TR"][1]) / 2)], store="Assets/Purchased/BuzzChest/BuzzChest.glb", yaw=270,   # film 2718's chest (tools/house/purchased_chest.py); yaw 270: drawers to the room (Orient took the pulls for the flat back: yaw 90, build overnight2 #2)
                   source="top's front corners triangulated (left: frames 16/20/22/26/28, right: 16/20/22), front face dense depth (frames 16/20/22/26, IQR 0.5-0.8 cm)"))
     P.append(dict(name="buzz_desk", wall="desk", corner="front", along=[r3(X1 - sp["desk_back_L"][0]), r3(X1 - sp["desk_back_R"][0])], off=[0.015, 0.50],
                   h=[0.0, r3((sp["desk_back_L"][1] + sp["desk_back_R"][1] + sp["desk_front_L"][1] + sp["desk_front_R"][1]) / 4)],

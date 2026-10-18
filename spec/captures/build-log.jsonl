@@ -55,3 +55,8 @@
 {"time": "2026-10-17T23:52:57", "cmd": "build", "job": "overnight1", "why": "Buzz hero props batch", "wall_s": 93, "exit": 0}
 {"time": "2026-10-17T23:57:45", "cmd": "build", "job": "overnight1", "why": "Buzz props fixes: spider pivot, book spines, trunk frame z-fight", "wall_s": 90, "exit": 0}
 {"time": "2026-10-18T00:08:24", "cmd": "bake", "job": "overnight1b", "why": "day flat: 3 builds since the last bake left the scene without APV/lighting data", "wall_s": 108, "exit": 0}
+{"time": "2026-10-18T00:18:04", "cmd": "build", "job": "overnight2", "why": "buzz chest GLB", "wall_s": 96, "exit": 0}
+{"time": "2026-10-18T00:20:15", "cmd": "build", "job": "overnight2", "why": "buzz chest: glTF material to HDRP/Lit", "wall_s": 90, "exit": 0}
+{"time": "2026-10-18T00:21:55", "cmd": "bake", "job": "overnight2", "why": "auto: load of an unbaked build", "wall_s": 94, "exit": 0}
+{"time": "2026-10-18T00:26:46", "cmd": "build", "job": "overnight2", "why": "buzz chest: yaw 270, glTF textures", "wall_s": 96, "exit": 0}
+{"time": "2026-10-18T00:28:24", "cmd": "bake", "job": "overnight2", "why": "auto: load of an unbaked build", "wall_s": 90, "exit": 0}

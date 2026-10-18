@@ -189,10 +189,11 @@ public static partial class SpecGreybox
     static readonly System.Collections.Generic.Dictionary<Material, Material> Converted = new();
     static Material HdrpOrConvert(Material m)
     {
+        if (m != null && m.name.StartsWith("BC_Brass")) return BrassMat();   // purchased_chest.py's pulls: the house brass
         if (m == null || m.shader.name.StartsWith("HDRP/")) return m;
         if (Converted.TryGetValue(m, out var done)) return done;
         // saved beside the source material, inside the pack's (gitignored) folder
-        string src = AssetDatabase.GetAssetPath(m), dst = Path.ChangeExtension(src, null) + "_HDRP.mat";
+        string src = AssetDatabase.GetAssetPath(m), dst = Path.ChangeExtension(src, null) + (src.EndsWith(".glb") ? "_" + m.name : "") + "_HDRP.mat";   // a GLB holds several materials
         AssetDatabase.DeleteAsset(dst);   // rebuilt every build: a stale copy (e.g. saved before its textures were found) must not linger
         var n = new Material(Shader.Find("HDRP/Lit")) { name = m.name + "_HDRP" };
         var envs = new SerializedObject(m).FindProperty("m_SavedProperties.m_TexEnvs");
@@ -209,10 +210,11 @@ public static partial class SpecGreybox
             }
             return null;
         }
-        var albedo = T("_BaseMap", "_MainTex"); if (albedo) n.SetTexture("_BaseColorMap", albedo);
-        if (m.HasProperty("_BaseColor")) n.SetColor("_BaseColor", m.GetColor("_BaseColor")); else if (m.HasProperty("_Color")) n.SetColor("_BaseColor", m.GetColor("_Color"));
-        var nrm = T("_BumpMap", "_NormalMap"); if (nrm) n.SetTexture("_NormalMap", nrm);
-        n.SetFloat("_Smoothness", m.HasProperty("_Smoothness") ? m.GetFloat("_Smoothness") : 0.4f);
+        var albedo = m.HasProperty("baseColorTexture") ? m.GetTexture("baseColorTexture") : T("_BaseMap", "_MainTex");   // baseColorTexture/normalTexture/baseColorFactor: a glTFast GLB (purchased_chest.py)
+        if (albedo) n.SetTexture("_BaseColorMap", albedo);
+        if (m.HasProperty("_BaseColor")) n.SetColor("_BaseColor", m.GetColor("_BaseColor")); else if (m.HasProperty("_Color")) n.SetColor("_BaseColor", m.GetColor("_Color")); else if (m.HasProperty("baseColorFactor")) n.SetColor("_BaseColor", m.GetColor("baseColorFactor"));
+        var nrm = m.HasProperty("normalTexture") ? m.GetTexture("normalTexture") : T("_BumpMap", "_NormalMap"); if (nrm) n.SetTexture("_NormalMap", nrm);
+        n.SetFloat("_Smoothness", m.HasProperty("_Smoothness") ? m.GetFloat("_Smoothness") : m.HasProperty("roughnessFactor") ? 1f - m.GetFloat("roughnessFactor") : 0.4f);
         // alpha-tested foliage (Built-in Standard "Cutout", or an alpha-clip keyword): keep the cut-out and draw both sides (the tree's needle cards)
         if (m.IsKeywordEnabled("_ALPHATEST_ON") || (m.HasProperty("_Mode") && Mathf.Approximately(m.GetFloat("_Mode"), 1f)) || m.renderQueue == 2450)
         {

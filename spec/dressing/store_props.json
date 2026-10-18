@@ -688,6 +688,28 @@
    "collide": false,
    "source": "props lane (Oct 17 overnight, not walked): film 486/496 (a row of books on Buzz's shelves); Fadnn SM_Book at its own size, standing on board 2 of buzz_shelves (spec/dressing/buzz.json), spine to the room (yaw 90: build 1's auto turn, 270, put the spine to the wall)",
    "yaw": 90
+  },
+  {
+   "name": "buzz_chest",
+   "floor": "upper",
+   "prefab": "Assets/Purchased/BuzzChest/BuzzChest.glb",
+   "x": [
+    10.72,
+    11.143
+   ],
+   "z": [
+    13.53,
+    14.569
+   ],
+   "y0": 0.0,
+   "height": 1.257,
+   "hides": [
+    "buzz_chest"
+   ],
+   "collide": false,
+   "source": "Buzz TRIAL 1 (changes/2026-10-17-buzz-layout.json): box from spec/dressing/buzz.json (tools/house/buzz_layout.py); top's front corners triangulated (left: frames 16/20/22/26/28, right: 16/20/22), front face dense depth (frames 16/20/22/26, IQR 0.5-0.8 cm)",
+   "yaw": 270,
+   "back": ""
   }
  ]
 }
