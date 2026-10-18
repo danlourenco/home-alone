@@ -223,6 +223,11 @@
    "peak": 5.259881623800825
   }
  ],
+ "porch_lantern": {
+  "x": 10.989999999999998,
+  "y": -1.146,
+  "z": 9.716
+ },
  "upper_windows": [
   {
    "face": "front",
@@ -562,6 +567,36 @@
    "layer": "U",
    "mat": "EX_Gutter",
    "faces": 24
+  },
+  "L_FrenchLeaf": {
+   "layer": "L",
+   "mat": "EX_Trim",
+   "faces": 276
+  },
+  "U_XmasBulbs": {
+   "layer": "U",
+   "mat": "EX_Bulb",
+   "faces": 2880
+  },
+  "L_XmasBulbs": {
+   "layer": "L",
+   "mat": "EX_Bulb",
+   "faces": 2208
+  },
+  "U_RoofSnow": {
+   "layer": "U",
+   "mat": "EX_Snow",
+   "faces": 3509
+  },
+  "L_Lantern": {
+   "layer": "L",
+   "mat": "EX_Brass",
+   "faces": 42
+  },
+  "L_LanternGlow": {
+   "layer": "L",
+   "mat": "EX_LampGlow",
+   "faces": 6
   }
  }
 }

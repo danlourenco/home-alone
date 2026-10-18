@@ -483,7 +483,7 @@ def build_windows():
         axis = o["axis"]
         # which veneer plane, outward sign
         if axis == "x":
-            if o["c"] > 9.0: d, s = (FRONT_MAIN + V if o["c"] > 9.9 else o["c"] + 0.07 + V), 1
+            if o["c"] > 9.0: d, s = (FRONT_MAIN if o["c"] > 9.9 else o["c"] + 0.07 + V), 1   # the brick face (was FRONT_MAIN + V: mould 10 cm proud, fixed Oct 18 polish)
             else: d, s = o["c"] - 0.07 - V, -1
         else:
             if o["c"] > 15: d, s = o["c"] + 0.07 + V, 1
@@ -713,6 +713,124 @@ def downpipes(layer):
         box(D, x - 0.04, x + 0.04, g, yt, z - 0.04, z + 0.04)
 
 
+# ---------------------------------------------------------------- polish (Oct 18, exterior polish TRIAL)
+def french_leaves(axis, d, s, a0, a1, y0, y1, layer):
+    """Film 2508/1640/4382: the ground French windows from outside, a pair of white leaves of 2 x 5 lites over a raised panel (the
+    living room's interior model's pattern, hifi_living.french), in the brick reveal 6 cm behind the face d. Only where the room has
+    no leaves of its own (the dining room: grey-box glass and sheers)."""
+    T = part("FrenchLeaf", "EX_Trim", layer)   # no glass of its own: the room's glazing and sheers show through (lit at night)
+    df = d - s * 0.06
+    def bx(F, a_0, a_1, y_0, y_1, t0, t1):
+        box(F, df + s * t0, df + s * t1, y_0, y_1, a_0, a_1) if axis == "x" else box(F, a_0, a_1, y_0, y_1, df + s * t0, df + s * t1)
+    JT, SS, TR, G0, G1, m = 0.04, 0.055, 0.10, y0 + 0.44, y0 + 1.90, 0.018
+    bx(T, a0, a0 + JT, y0, y1, -0.05, 0.0); bx(T, a1 - JT, a1, y0, y1, -0.05, 0.0); bx(T, a0, a1, y1 - JT, y1, -0.05, 0.0)
+    lw = (a1 - a0 - 2 * JT) / 2
+    for k in range(2):
+        b0 = a0 + JT + k * lw; b1 = b0 + lw
+        bx(T, b0, b0 + SS, y0, y1 - JT, -0.045, -0.005); bx(T, b1 - SS, b1, y0, y1 - JT, -0.045, -0.005)
+        bx(T, b0 + SS, b1 - SS, G1, y1 - JT, -0.045, -0.005); bx(T, b0 + SS, b1 - SS, y0, G0, -0.045, -0.005)
+        bx(T, b0 + SS + 0.03, b1 - SS - 0.03, y0 + 0.08, G0 - 0.06, -0.005, 0.005)          # raised panel
+        g0, g1 = b0 + SS, b1 - SS
+        bx(T, (g0 + g1) / 2 - m / 2, (g0 + g1) / 2 + m / 2, G0, G1, -0.035, -0.012)
+        for r in range(1, 5):
+            yy = G0 + (G1 - G0) * r / 5; bx(T, g0, g1, yy - m / 2, yy + m / 2, -0.035, -0.012)
+
+
+BULB, BULB_STEP = 0.018, 0.105
+
+
+def bulb_loop(B, axis, d, s, a0, a1, y0, y1, closed=True):
+    """Film 10/1470/3377: warm mini-lights strung round a window's outline (just outside its mould), 7.5 cm proud of the face d."""
+    q = d + s * 0.075   # in front of the sills and shutters (0.06)
+    corners = [(a0, y0), (a0, y1), (a1, y1), (a1, y0)] + ([(a0, y0)] if closed else [])
+    for (pa, py), (qa, qy) in zip(corners, corners[1:]):
+        L = math.hypot(qa - pa, qy - py); n = max(1, round(L / BULB_STEP))
+        for k in range(n):
+            a = pa + (qa - pa) * k / n; y = py + (qy - py) * k / n; h = BULB / 2
+            box(B, q - h, q + h, y - h, y + h, a - h, a + h) if axis == "x" else box(B, a - h, a + h, y - h, y + h, q - h, q + h)
+
+
+def xmas_lights(D):
+    """The front's Christmas lights: every window of the street side outlined (film 10: both storeys, the den and right sections,
+    both dormers), drawn as emissive bulbs (EX_Bulb: SpecGreybox.Shell lights them at night only, HouseNightMode's glow list)."""
+    out, lo = 0.08, 0.09   # on the mould's outer edge, inside the shutters (they start 0.09 off the opening); under the sill
+    BU = part("XmasBulbs", "EX_Bulb", "U"); BL = part("XmasBulbs", "EX_Bulb", "L")
+    for w in UPW_LIST:
+        if w["face"] in ("front", "den_front", "right_front"):
+            bulb_loop(BU, "x", w["d"], 1, w["a0"] - out, w["a1"] + out, w["y0"] - lo, w["y1"] + out)
+    for w in BLIND:
+        bulb_loop(BL, "x", w["d"], 1, w["a0"] - out, w["a1"] + out, w["y0"] - lo, w["y1"] + out)
+    for o in OPEN:
+        if o["axis"] == "x" and o["c"] > 9.0 and o["room"] in ("den", "dining_room", "living_room"):
+            d = FRONT_MAIN if o["c"] > 9.9 else o["c"] + 0.07 + V
+            bulb_loop(BL, "x", d, 1, o["a0"] - out, o["a1"] + out, max(o["y0"] - lo, GF + 0.15), o["y1"] + out, closed=o["y0"] - GF > 0.05)
+    for dd in D[:2]:
+        bulb_loop(BU, "x", dd["face"] + 0.02, 1, dd["z"] - 0.31 - 0.10, dd["z"] + 0.31 + 0.10, dd["sill"] - 0.04, dd["head"] + 0.10)
+
+
+def porch_lantern(layer):
+    """Film 10/714 (night): a lit lantern hanging in the portico on the door's axis. Brass frame, glowing glass (EX_LampGlow)."""
+    Br = part("Lantern", "EX_Brass", layer); Gw = part("LanternGlow", "EX_LampGlow", layer)
+    xc, zc, top = FRONT_MAIN + 0.62, 9.716, GF + 2.36
+    box(Br, xc - 0.008, xc + 0.008, top - 0.30, top, zc - 0.008, zc + 0.008)                # chain/rod
+    y1 = top - 0.30; y0 = y1 - 0.36
+    box(Br, xc - 0.13, xc + 0.13, y1 - 0.04, y1, zc - 0.13, zc + 0.13)                      # cap
+    box(Br, xc - 0.11, xc + 0.11, y0, y0 + 0.03, zc - 0.11, zc + 0.11)                      # base
+    for sx in (-1, 1):
+        for sz in (-1, 1):
+            box(Br, xc + sx * 0.10 - 0.01, xc + sx * 0.10 + 0.01, y0, y1, zc + sz * 0.10 - 0.01, zc + sz * 0.10 + 0.01)
+    box(Gw, xc - 0.09, xc + 0.09, y0 + 0.03, y1 - 0.04, zc - 0.09, zc + 0.09)
+    return dict(x=xc, y=(y0 + y1) / 2, z=zc)
+
+
+def _vnoise(x, z, seed=0):
+    """smooth value noise (bilinear on a hashed lattice, smoothstep), 0..1"""
+    def hsh(i, j):
+        h = (i * 374761393 + j * 668265263 + seed * 1442695041) & 0xffffffff
+        h = ((h ^ (h >> 13)) * 1274126177) & 0xffffffff
+        return (h ^ (h >> 16)) * 2.3283064365386963e-10
+    i, j = math.floor(x), math.floor(z); fx, fz = x - i, z - j
+    fx, fz = fx * fx * (3 - 2 * fx), fz * fz * (3 - 2 * fz)
+    a, b, c, d = hsh(i, j), hsh(i + 1, j), hsh(i, j + 1), hsh(i + 1, j + 1)
+    return a + (b - a) * fx + (c - a) * fz + (a - b - c + d) * fx * fz
+
+
+def roof_snow(roofs, dormers):
+    """Film 10 / 1470 (night) and 4382: a light, patchy snow on the main and end-section hips. Cells of 0.12 m on each facet, kept where
+    two octaves of noise pass a threshold, 1.5 cm over the covering (never coplanar); none on a hip/ridge line, under a higher roof,
+    round the dormers or the chimney."""
+    Sn = part("RoofSnow", "EX_Snow", "U")
+    C = 0.10
+    def jit(x, z):   # every cell corner moved in plan by a hash of its lattice point (shared by the 4 cells): ragged, unstepped edges
+        i, k = round(x / C), round(z / C)
+        return x + (_vnoise(i * 1.37, k * 1.37, 11) - 0.5) * 0.8 * C, z + (_vnoise(i * 1.37, k * 1.37, 13) - 0.5) * 0.8 * C
+    def facet(r, x, z):
+        x0, x1 = r["x"]; z0, z1 = r["z"]; d = [x - x0, x1 - x, z - z0, z1 - z]; return d.index(min(d))
+    def h(r, x, z): return r["eave"] + r["tan"] * min(x - r["x"][0], r["x"][1] - x, z - r["z"][0], r["z"][1] - z) + RT + 0.015
+    def blocked(x, z):
+        for dd in dormers:
+            if abs(z - dd["z"]) < 1.05 and (dd["face"] - 3.6 < x < dd["face"] + 0.3 if dd["face"] > 5 else dd["face"] - 0.3 < x < dd["face"] + 3.6):
+                return True
+        return 0.35 < x < 1.65 and 13.0 < z < 14.65
+    for r in roofs:
+        others = [o for o in roofs if o is not r]
+        x0, x1 = r["x"]; z0, z1 = r["z"]
+        nx, nz = int((x1 - x0) / C), int((z1 - z0) / C)
+        for i in range(nx):
+            for k in range(nz):
+                xa, za = x0 + i * C, z0 + k * C; xb, zb = xa + C, za + C
+                cs = [(xa, za), (xb, za), (xb, zb), (xa, zb)]
+                if len({facet(r, x, z) for x, z in cs}) > 1: continue
+                xm, zm = xa + C / 2, za + C / 2
+                n = 0.65 * _vnoise(xm / 0.9, zm / 0.9, 3) + 0.35 * _vnoise(xm / 0.3, zm / 0.3, 7)
+                if n < 0.64 or blocked(xm, zm): continue
+                if any(o["x"][0] - 0.1 < xm < o["x"][1] + 0.1 and o["z"][0] - 0.1 < zm < o["z"][1] + 0.1 and h(o, xm, zm) > h(r, xm, zm) - 0.05 for o in others):
+                    continue
+                cj = [jit(x, z) for x, z in cs]
+                if len({facet(r, x, z) for x, z in cj}) > 1: continue
+                face(Sn, [(x, h(r, x, z), z) for x, z in cj], (0, 1, 0))
+
+
 # ---------------------------------------------------------------- checks
 def rooms():
     out = []
@@ -758,6 +876,12 @@ def main():
     sun_porch("L", "L")
     garage_oculus("L")
     downpipes("U")
+    for o in OPEN:   # the dining room's French windows have no leaves inside: the film's from the street
+        if o["room"] == "dining_room" and o["axis"] == "x" and o["c"] > 9.9:
+            french_leaves("x", FRONT_MAIN, 1, o["a0"], o["a1"], o["y0"], o["y1"], "L")
+    xmas_lights(D)
+    roof_snow([q for q in ROOFS if q["name"] in ("main", "den", "right")], D)
+    lantern = porch_lantern("L")
     bad = check()
     out = ROOT / "sfm-work/exterior"; out.mkdir(parents=True, exist_ok=True)
     (out / "shell.json").write_text(json.dumps(parts))
@@ -766,7 +890,7 @@ def main():
         what="the exterior skin (tools/house/exterior_shell.py -> Exterior.glb via hifi_exterior.py); read by SpecGreybox.Shell",
         ground_floor=GF, split_y=SPLIT, eave=EAVE, pitch_deg=math.degrees(PITCH), veneer=V,
         sections=dict(main=MAIN, den=DEN, right=RIGHT), front_main=FRONT_MAIN,
-        roofs=ROOFS, dormers=D, upper_windows=UPW_LIST, blind=BLIND,
+        roofs=ROOFS, dormers=D, porch_lantern=lantern, upper_windows=UPW_LIST, blind=BLIND,
         parts={k: dict(layer=v["layer"], mat=v["mat"], faces=len(v["faces"])) for k, v in parts.items()})
     (ROOT / "spec/exterior_shell.json").write_text(json.dumps(summary, indent=1))
     print(f"exterior_shell: {sum(nf.values())} faces in {len(nf)} parts; dormers " + ", ".join(f"z {d['z']:.2f} sill {d['sill']:.2f} peak {d['peak']:.2f}" for d in D))

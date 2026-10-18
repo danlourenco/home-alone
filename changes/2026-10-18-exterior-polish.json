@@ -1,0 +1,98 @@
+{
+ "change": "Exterior polish TRIAL 1 (on exterior shell TRIAL 1): Christmas mini-lights round every street-side window, the dormers, over the front shrubs and along the terrace caps (night only: HouseNightMode glow list), portico lantern + 2 street lamp posts (2 unshadowed night lights), generated clipped shrubs / ball topiaries / urns + 2 Poly Haven firs in the front beds (decoration), the dining room's front French windows given exterior leaves of 2 x 5 lites over a raised panel (no glass of their own), the ground front windows' brick mould moved onto the brick face (was 0.10 m proud), patchy light roof snow on the main/den/right hips, roof tint lifted. Openings unchanged.",
+ "target": "House_WallGrid exterior (Exterior/HouseShell, Exterior/Yard/ExteriorPolish)",
+ "premise": "The film's ground French windows are pairs of white leaves of 2 x 5 lites each (film 1640, 2508, 4382), seen from the street in the brick reveal; the dining room's openings have no leaves of their own, so the exterior carries them.",
+ "claim": {
+  "value": {
+   "french_leaf_pattern": "2 leaves x (2 cols x 5 rows) over a raised panel, glass 0.44-1.90 m (the living room's interior model hifi_living.french)",
+   "mould_plane": "brick face x 10.37 (FRONT_MAIN), was 10.47"
+  },
+  "data": [
+   "film:2508"
+  ],
+  "scale": [
+   "none"
+  ],
+  "upstream": [],
+  "type": "topological",
+  "applies_to": [
+   "exterior"
+  ],
+  "measured_in": [
+   "exterior"
+  ],
+  "pick": {
+   "crop": "spec/captures/picks/exterior/f2508_french.png",
+   "confirmed_by": "the same leaf pattern found in a second frame (film 1640 crop f1640_french.png: two leaves, two columns of lites, rows to the sill) and in 4382 (f4382_french_dining.png)"
+  },
+  "note": "French window WIDTH not changed (see checks): openings stay 0.75 m inside"
+ },
+ "history": [
+  {
+   "date": "2026-10-18",
+   "what": "exterior shell TRIAL 1 (changes/2026-10-18-exterior-shell.json): ground French windows showed the rooms' glazing only (flat white panels from the street, coordinator review)",
+   "outcome": "pending (this polish builds on it)"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "film 1640 (portico close, daylight): each French window two leaves, two columns of lites, 4+ rows visible above the van; crop spec/captures/picks/exterior/f1640_french.png",
+   "agrees": true,
+   "type": "topological",
+   "data": [
+    "film:1640"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [],
+   "tests": [
+    "model-fidelity"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/exterior/f1640_french.png",
+    "confirmed_by": "same pattern in film 2508 and 4382 crops"
+   }
+  },
+  {
+   "what": "FRENCH WINDOW WIDTH (not built; user decision): outer white frame in the film, ruler 1 = film 4382's camera solved on the plan's window centres (tools/house/exterior_film_fit.py) back-projected on the brick plane: living den-side 1.185, living foyer-side 1.202, dining foyer-side 1.179, dining sunroom-side 1.129 m (picks f4382_french_*.png, 4 px edges); ruler 2 = brick courses (modular 67-70 mm): film 2508 window 535 px / 31.3 px course (autocorrelation 0.88) = 17.1 courses = 1.15-1.20 m. Ours: 0.75 opening + 2 x 0.07 mould = 0.89 m. Film opening (less mould) ~1.0-1.06 m. Marina (interior, set) dining sunroom-side 0.86 m (DEVIATIONS 46, marina-1124)",
+   "agrees": false,
+   "type": "metric",
+   "data": [
+    "film:4382",
+    "film:2508"
+   ],
+   "scale": [
+    "spec:geometry-ground-openings",
+    "brick-course-68mm:film2508"
+   ],
+   "upstream": [
+    "marina-overhead:ground-calibration",
+    "standard"
+   ],
+   "tests": [],
+   "disposition": "not built: the openings are an interior plan question (the living/dining front French windows are TRIAL interiors built at 0.75 m; Marina's set reads 0.86, the real house's exterior ~1.0-1.06 m); widening them moves curtains, sheers, valances, the clock and the piano. Reported to the user for a decision (film exterior vs Marina's set); the exterior leaves follow the built 0.75 m openings"
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/exterior/before/ext-01-street.png",
+   "spec/captures/views/exterior/before/ext-14-dining-windows.png",
+   "spec/captures/views/exterior/before/ext-night-01-street.png",
+   "spec/captures/views/exterior/before/ext-film-4382.png",
+   "spec/captures/views/exterior/before/ext-13-shrubs.png"
+  ],
+  "after": [
+   "spec/captures/views/exterior/after/ext-01-street.png",
+   "spec/captures/views/exterior/after/ext-14-dining-windows.png",
+   "spec/captures/views/exterior/after/ext-night-01-street.png",
+   "spec/captures/views/exterior/after/ext-film-4382.png",
+   "spec/captures/views/exterior/after/ext-13-shrubs.png",
+   "spec/captures/views/exterior/after/ext-15-den-inside.png",
+   "spec/captures/views/exterior/polish/cmp-film4382.jpg",
+   "spec/captures/views/exterior/polish/cmp-film10-night.jpg"
+  ]
+ },
+ "user_walk": "pending"
+}

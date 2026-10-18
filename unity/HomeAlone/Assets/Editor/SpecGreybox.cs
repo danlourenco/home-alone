@@ -1555,6 +1555,7 @@ public static partial class SpecGreybox
             foreach (var n in new[] { "Light_kitchen", "Light_back_stair", "Light_den", "Light_living_room", "Light_dining_room", "Light_kevin_jeff_room" })   // no light without a fixture: the fixtures replace the rooms' generic lamps (the den's: DenLamps)
                 foreach (var t in lamps.GetComponentsInChildren<Transform>(true).Where(t => t.name == n).ToList()) Object.DestroyImmediate(t.gameObject);
         }
+        if (lamps != null) foreach (var l in ShellLights) if (l) l.transform.SetParent(lamps, true);   // the exterior's night lights (SpecGreybox.Shell)
         WindowBackdrop(dayLayer, lamps != null ? lamps.gameObject : null, groundY);   // SpecGreybox.Backdrop.cs: winter backdrop outside the windows (overnight5)
         var mode = new GameObject("Day and night - press N").AddComponent<HouseNightMode>(); mode.transform.parent = day.transform; mode.glowRenderers = glow.Concat(ShellGlow).ToArray();
         mode.nightLayer = lamps != null ? lamps.gameObject : null; mode.dayLayer = dayLayer; mode.interiorLights = new Light[0]; mode.daytimeEnabled = new bool[0];
@@ -1632,6 +1633,8 @@ public static partial class SpecGreybox
         }
         Debug.Log($"Exterior: {kept} site meshes and {prop} property parts (garage, driveway) from the GLB, {hood.GetComponentsInChildren<Renderer>().Length} neighborhood renderers; " +
                   $"{inside.Count} inside the rooms removed ({string.Join(", ", inside.GroupBy(n => n).Select(q => $"{q.Count()} x {q.Key}"))})");
+        ExteriorPlants(ext.transform.Find("Yard").gameObject, gy + 2.996f);   // SpecGreybox.Shell.cs: plants, mini-lights, lamp posts (exterior polish;
+                          // after the cull: the strung lights' one mesh spans the front, and the den-front shrubs' boxes touch the den's volume)
         Shell(ext, gy);   // SpecGreybox.Shell.cs: the house's exterior skin (after the cull above: its upper storey crosses Marina's rooms by design)
     }
 

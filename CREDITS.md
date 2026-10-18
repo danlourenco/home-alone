@@ -24,3 +24,5 @@ Third-party assets used by the Unity build. The model files themselves are not i
 - Poly Haven "Standing Picture Frame 01/02" (CC0, https://polyhaven.com/models). The parents' mantel photo frames.
 - "Rusty Blow Torch" (CGTrader, free download by the user, Oct 18 2026; royalty-free licence, file gitignored). Kevin's blowtorch trap by the kitchen back door (film 10351-10363), re-exported to GLB with 2K maps.
 - "Impact Sounds" by Kenney (https://kenney.nl/assets/impact-sounds), CC0 1.0 (no attribution required, credited anyway). Footsteps (`footstep_wood/carpet/concrete/snow`, plus `impactPlate_light` as `tile_*` and `impactPlank_medium` as `stair_*`) in `unity/HomeAlone/Assets/Audio/Footsteps/` for `FpsController` walking sounds. Licence copy beside them.
+- Poly Haven textures "Bark Willow 02" and "Bark Brown 02" (CC0, https://polyhaven.com/textures). The generated bare winter trees (`tools/house/hifi_bare_trees.py`) and the treehouse trunk.
+- Poly Haven "Fir Sapling" (https://polyhaven.com/a/fir_sapling), CC0. Decimated to 20% and scaled (`tools/house/hifi_ext_plants.py`). The two evergreens at the front corners (exterior polish, Oct 18).
