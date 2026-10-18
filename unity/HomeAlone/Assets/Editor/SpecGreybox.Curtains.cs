@@ -46,11 +46,17 @@ public static partial class SpecGreybox
         var red = Cloth("HiFi_DrapeRed", new Color(0.50f, 0.02f, 0.035f), false, 0.5f, null, 0.45f);   // film 6902/6910: glossy red chintz
         var g = PlaceHiFi(root, gy, "Sheers", new Dictionary<string, Material> { ["SH_Hem"] = hem, ["SH_Voile"] = voile, ["SH_DrapeIvory"] = ivory, ["SH_Red"] = red });
         if (g == null) return;
-        foreach (var r in g.GetComponentsInChildren<MeshRenderer>())
-        {
-            bool clear = r.sharedMaterial == voile || r.sharedMaterial == hem;
-            r.shadowCastingMode = clear ? ShadowCastingMode.Off : ShadowCastingMode.On;
-            r.gameObject.isStatic = !clear;
-        }
+        // Buzz's room (tools/house/hifi_buzz_curtains.py; Buzz TRIAL 2): the film's grey pleated panels over a white sheer on a brass rod,
+        // modelled above the UPPER floor (placed at 0, not gy)
+        var grey = Cloth("HiFi_DrapeGrey", new Color(0.35f, 0.355f, 0.35f), false, 0.8f, null);   // film 530: neutral grey (linear ~0.10)
+        var bz = PlaceHiFi(root, 0f, "BuzzCurtains", new Dictionary<string, Material> { ["SH_Hem"] = hem, ["SH_Voile"] = voile, ["BZ_Drape"] = grey, ["BZ_Brass"] = BrassMat() });
+        foreach (var gg in new[] { g, bz })
+            if (gg != null)
+                foreach (var r in gg.GetComponentsInChildren<MeshRenderer>())
+                {
+                    bool clear = r.sharedMaterial == voile || r.sharedMaterial == hem;
+                    r.shadowCastingMode = clear ? ShadowCastingMode.Off : ShadowCastingMode.On;
+                    r.gameObject.isStatic = !clear;
+                }
     }
 }

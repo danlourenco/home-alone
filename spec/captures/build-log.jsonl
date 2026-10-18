@@ -12,3 +12,11 @@
 {"time": "2026-10-17T17:32:19", "cmd": "bake", "job": "buzz1", "why": "Buzz TRIAL 1 bake", "wall_s": 88, "exit": 0}
 {"time": "2026-10-17T18:24:40", "cmd": "build", "job": "buzzdoor", "why": "Buzz door: stock 32in leaf + pack door (changes/2026-10-17-buzz-door.json)", "wall_s": 70, "exit": 0}
 {"time": "2026-10-17T18:27:05", "cmd": "bake", "job": "buzzdoor", "why": "Buzz door bake", "wall_s": 93, "exit": 0}
+{"time": "2026-10-17T19:04:15", "cmd": "build", "job": "buzz2", "why": "Buzz TRIAL 2: drapes, film paper/baseboard/wood floor, shutters out of rooms, APV dilation", "wall_s": 81, "exit": 0}
+{"time": "2026-10-17T19:05:58", "cmd": "bake", "job": "buzz2", "why": "Buzz TRIAL 2 bake (dilation on)", "wall_s": 91, "exit": 0}
+{"time": "2026-10-17T19:12:03", "cmd": "bake", "job": "buzz2", "why": "Buzz TRIAL 2 bake 2: blacken invalidated probes before dilation", "wall_s": 94, "exit": 0}
+{"time": "2026-10-17T19:15:09", "cmd": "bake", "job": "buzz2", "why": "Buzz TRIAL 2 bake 3 (experiment B: overhang in the bake, FilmFront out)", "wall_s": 13, "exit": 1}
+{"time": "2026-10-17T19:17:12", "cmd": "bake", "job": "buzz2", "why": "Buzz TRIAL 2 bake 4 (experiment B: overhang in the bake, FilmFront out)", "wall_s": 98, "exit": 0}
+{"time": "2026-10-17T19:19:10", "cmd": "bake", "job": "buzz2", "why": "Buzz TRIAL 2 bake 5 (experiment C: overhang in the bake, FilmFront out, no dilation)", "wall_s": 13, "exit": 1}
+{"time": "2026-10-17T19:20:50", "cmd": "bake", "job": "buzz2", "why": "Buzz TRIAL 2 bake 6 (experiment C retry)", "wall_s": 92, "exit": 0}
+{"time": "2026-10-17T19:24:46", "cmd": "bake", "job": "buzz2", "why": "Buzz TRIAL 2 final bake (overhang bakes with its walls; no in-room invalidation)", "wall_s": 96, "exit": 0}

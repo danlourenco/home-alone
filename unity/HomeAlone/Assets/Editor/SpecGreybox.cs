@@ -1559,7 +1559,25 @@ public static partial class SpecGreybox
         var hood = src.GetRootGameObjects().First(g => g.name == "WinterNeighborhood");
         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(hood, here); hood.transform.SetParent(ext.transform, false);
         EditorSceneManager.CloseScene(src, true);
-        Debug.Log($"Exterior: {kept} site meshes from the GLB, {hood.GetComponentsInChildren<Renderer>().Length} neighborhood renderers");
+        // nothing from outside may stand inside the measured house: the reference scene's facade shutters were fitted to the GLB shell
+        // (dropped above), and its upper ones hung 0.8 m inside Buzz's and Kevin's rooms as black boxes (walk note Oct 17 18:10). Every
+        // exterior renderer with any of 27 points of its bounds inside a room volume (SpecGreybox.EnvelopeRooms) is removed.
+        var geoJ = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/geometry.json"))));
+        var hsJ = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/house_spec.json"))));
+        var vols = EnvelopeRooms(geoJ, hsJ["attic_stair"]["boxes"], gy);
+        var inside = new List<string>();
+        foreach (var r in ext.GetComponentsInChildren<Renderer>(true).ToList())
+        {
+            var b = r.bounds; bool hit = false;
+            for (int i = 0; i < 27 && !hit; i++)
+            {
+                var q = new Vector3(Mathf.Lerp(b.min.x, b.max.x, (i % 3) / 2f), Mathf.Lerp(b.min.y, b.max.y, (i / 3 % 3) / 2f), Mathf.Lerp(b.min.z, b.max.z, (i / 9) / 2f));
+                hit = vols.Any(v => q.y > v.y0 && q.y < v.y1 && Inside(v.pts, new Vector2(q.x, q.z)));
+            }
+            if (hit) { inside.Add(r.transform.parent.name + "/" + r.name); Object.DestroyImmediate(r.gameObject); }
+        }
+        Debug.Log($"Exterior: {kept} site meshes from the GLB, {hood.GetComponentsInChildren<Renderer>().Length} neighborhood renderers; " +
+                  $"{inside.Count} inside the rooms removed ({string.Join(", ", inside.GroupBy(n => n).Select(q => $"{q.Count()} x {q.Key}"))})");
     }
 
     static void Volume(GameObject root)

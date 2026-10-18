@@ -12,6 +12,7 @@ standard 21 in damask repeat (no ruler of known size in the panel); the width fo
   -> spec/dressing/wallpaper_film.png and wallpaper_film.json ({"repeat_m": [w, h]}); foyer_dressing.py uses it when present.
   uv run --with numpy --with scipy --with pillow python -I tools/house/film_wallpaper.py --kitchen
   -> spec/dressing/kitchen_wallpaper.png / .json: the kitchen's paper (see kitchen() below)
+  ... film_wallpaper.py --buzz -> spec/dressing/buzz_wallpaper.png / .json: Buzz's paper (see buzz() below)
 """
 import json
 from pathlib import Path
@@ -143,6 +144,61 @@ def living():
     print(out, rep, "3x3 check: sfm-work/living_wallpaper_3x3.png")
 
 
+def buzz():
+    """Buzz's room paper (Buzz TRIAL 2). Film 530 (lamp-lit, frontal on the desk wall, below the bulletin board): a white ground with
+    fine grey pinstripes every 17.85 px and every fourth line red (a major every 71.4 px; autocorrelation of the redness: 72 / 143,
+    of the luminance 18 / 36 / 54 / 72). Line / ground, linear, per channel (cancels the lamp's colour): red 0.94/0.82/0.83, minor
+    0.84/0.82/0.81 (neutral grey, not a blue darkened by the lamp). Marina's paper (Part 2 540 s) has the same layout (a major line
+    every ~70 px at frame 0 with ~17 px minors between) but her majors cycle red / blue / tan: a different colourway, so the film's is
+    built (user, Oct 15: film first where they differ).
+    Tile: ONE period, the median of 4 (x 1236.5-1522.1, rows 400-505, between the board's frame and the desk's clutter), each
+    resampled to exactly one period, averaged down the rows (a printed stripe has no vertical structure; it removes JPEG noise) and
+    divided by its own ground (the lamp's falloff, and a shade over the region's left end). Ground albedo ASSUMED the house's off-white trim (0.71/0.67/0.57 linear, as the living room's; in 530
+    the paper and the white sheer read the same chroma, 1.45/0.94/0.61 vs 1.41/1.00/0.60).
+    Metric size: the major spacing measured on MARINA's desk wall (same layout) in her solved clip (tools/house/buzz_layout.py, frame 0,
+    rays cut with the desk wall plane), at two rulers of different kinds: the growth chart's 3-5 ft marks on that wall (built) and the
+    twin mattress (check)."""
+    from scipy.ndimage import map_coordinates, gaussian_filter1d
+    sys.path.insert(0, str(ROOT / "tools/house"))
+    import buzz_layout as bl
+    cams, world, conf = bl.load(); pl = bl.planes(world, conf, cams); R = bl.rulers(cams, pl)
+    n, c = pl["desk"]; ex = np.cross(pl["floor"][0], n); ex /= np.linalg.norm(ex)
+    MAJ = [583, 655, 724, 798, 867, 935, 1004, 1070, 1137, 1203]          # frame 0, row 650: the coloured majors (red, blue, tan, ...)
+    xs = np.array([bl.cut(cams[0], *bl.F(u, 650), n, c) @ ex for u in MAJ])
+    gap = float(np.mean(np.abs(np.diff(xs)))); spread = float(np.ptp(np.abs(np.diff(xs))))
+    rep = {k: gap * R[k][0] for k in ("chart", "mattress")}
+    print(f"Marina major spacing: chart ruler {rep['chart']:.4f} m, mattress ruler {rep['mattress']:.4f} m (gaps spread {spread / gap * 100:.0f}% of the mean)")
+    src = ROOT / "0-homealone/full/homealone-movie-screencaps.com-530.jpg"
+    out = ROOT / "spec/dressing/buzz_wallpaper.png"
+    PER, K, X0, Y0, Y1 = 71.4, 4, 1236.5, 400, 505
+    im = np.asarray(Image.open(src).convert("RGB"), float)
+    W = 128                                                                   # resampled px per period
+    rr, cc = np.mgrid[Y0:Y1, 0:K * W].astype(float); xx = X0 + cc * (PER / W)
+    strip = np.dstack([map_coordinates(im[..., k], [rr, xx], order=1) for k in range(3)])
+    prof = strip.mean(0)                                                      # one row: the stripe profile
+    lin = np.where(prof / 255 <= 0.04045, prof / 255 / 12.92, ((prof / 255 + 0.055) / 1.055) ** 2.4)
+    # the strip divided by its ground (the lamp's falloff and the shade at the region's left end), then the median of the K periods:
+    # one clean period (a printed stripe repeats exactly)
+    from scipy.ndimage import percentile_filter
+    for k in range(3):   # the ground: a sliding 80th percentile one period wide (lines are dark: it rides on the ground), smoothed
+        g = gaussian_filter1d(percentile_filter(lin[:, k], 80, size=W, mode="nearest"), W / 6, mode="nearest")
+        lin[:, k] = lin[:, k] / g
+    lin = np.median(lin.reshape(K, W, 3), 0)
+    target = np.array([0.71, 0.67, 0.57])
+    lin = np.clip(lin * target, 0, 1)
+    srgb = np.where(lin <= 0.0031308, lin * 12.92, 1.055 * lin ** (1 / 2.4) - 0.055)
+    tile = np.repeat(srgb[None], W, axis=0)
+    Image.fromarray((tile * 255 + 0.5).astype(np.uint8)).resize((512, 512), Image.LANCZOS).save(out)
+    w_m = round(rep["chart"], 4)
+    out.with_suffix(".json").write_text(json.dumps({"source": f"film 530 x {X0}-{X0 + K * PER:.1f}, rows {Y0}-{Y1}: median of {K} periods", "repeat_m": [w_m, w_m],
+                                                     "major_spacing_m": {k: round(v, 4) for k, v in rep.items()}, "ruler": "chart (Marina 540 s, 3-5 ft)",
+                                                     "ground_srgb": [round(float(v), 3) for v in np.median(srgb, 0)]}) + "\n")
+    big = np.tile(np.asarray(Image.open(out)), (1, 8, 1)); Image.fromarray(big).save(ROOT / "sfm-work/buzz_wallpaper_tiled.png")
+    print(out, [w_m, w_m], "check: sfm-work/buzz_wallpaper_tiled.png")
+
+
+if "--buzz" in sys.argv:
+    buzz(); sys.exit()
 if "--kitchen" in sys.argv:
     kitchen(); sys.exit()
 if "--living" in sys.argv:

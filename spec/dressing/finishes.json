@@ -70,6 +70,18 @@
    "source": "film 2687/10741/410/1276/2296 (the hall at night, lamp-lit): flat teal-green PAINT over a white panelled wainscot. Colour = wall / white wainscot ratio in the same light, per column just above / below the cap rail's top edge, the brighter (lit) half of the columns, white albedo 0.85 (tools/house/hall_walls.py --paint): linear 0.128/0.270/0.192 (124 columns; IQR 0.053/0.067/0.049; per-frame spread 0.07/0.12/0.06). Cap top 0.76 m on the 80 in door ruler (film 410 attic door 0.758-0.761, film 10819 parents' doorway 0.759; check on another ruler: the foyer's film cap reads 0.765-0.785 on the stair-nosing cameras, DEVIATIONS 56): wainscot_m 0.73 = the cap's top 3 cm lower (the cap runs h-0.01..h+0.03). Baseboard top 0.105-0.112 m (film 10819, three columns on the receding left wall, local scale from the floor-to-horizon run) -> 0.11. The film's wainscot is panelled (raised panels); built flat like the dining room's: DEVIATIONS 63",
    "floor": "wood",
    "floor_source": "film 2296/410/10741/10819: dark strip hardwood with bare borders either side of the crimson runner (spec/dressing/hall.json runner); the foyer's wood"
+  },
+  "buzz_room": {
+   "paper": "spec/dressing/buzz_wallpaper.png",
+   "upper": [
+    0.84,
+    0.82,
+    0.77
+   ],
+   "wainscot_m": 0.14,
+   "source": "film 530 (lamp-lit, frontal on the desk wall below the bulletin board): a white ground with fine grey pinstripes, every fourth line red (major spacing 71.4 px, minors 17.85 px), cut by tools/house/film_wallpaper.py --buzz (one period, the median of four; ground albedo set to the house's off-white trim, ASSUMED: DEVIATIONS). Metric repeat 0.0853 m: Marina's same-layout paper measured on her desk wall in the solved Buzz clip (frame 0) at the growth chart's 3-5 ft marks; the twin-mattress ruler reads 0.0845 (1% apart). Marina's majors cycle red/blue/tan on a cream ground: a different colourway, the film's is built (user, Oct 15). A white baseboard only (0.14 = the baseboard; Marina 545 s shows a plain white board). 'upper' is the fallback colour (the paper's ground). Not built yet: the film's crown moulding and the red sports-print frieze under it (film 488-522; DEVIATIONS)",
+   "floor": "wood",
+   "floor_source": "Marina Part 2 543-562 s: dark stained strip hardwood (the foyer's wood); the film's floor (498, 526) is warm wood, partly under a rug and clutter"
   }
  }
 }

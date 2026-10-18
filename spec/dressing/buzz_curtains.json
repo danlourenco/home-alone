@@ -1,0 +1,39 @@
+{
+ "note": "Buzz's drapes (decoration; tools/house/buzz_curtains.py). Measured in Marina's solved Buzz clip at the twin-mattress ruler, relative to the window's casing so it applies to all three built windows (Marina dresses all three alike). Built by tools/house/hifi_sheers.py (the Buzz section).",
+ "overhang_m": 0.06,
+ "panel_w_hem_m": 0.291,
+ "hem_below_stool_m": -0.013,
+ "rod_above_head_m": 0.032,
+ "panel_depth_m": 0.09,
+ "panel_depth_source": "AUTHORED 0.09 (not measurable in this clip)",
+ "measured": {
+  "hemL_out": [
+   11.054,
+   0.819,
+   12.489
+  ],
+  "hemL_in": [
+   11.052,
+   0.832,
+   12.787
+  ],
+  "hemR_in": [
+   11.049,
+   0.82,
+   13.184
+  ],
+  "hemR_out": [
+   11.047,
+   0.822,
+   13.468
+  ]
+ },
+ "rod_y": 2.182,
+ "hem_y": 0.823,
+ "spread": {
+  "panel_w_L_vs_R": 0.015,
+  "hem_y_corners": 0.012,
+  "frames_20_27_max_cm": 9.0
+ },
+ "colour_source": "FILM 528/530 (lamp-lit): neutral grey panels over a white sheer (panel / white paper chroma 0.98/1.03/1.00); Marina's are dark green without a sheer (lit folds / white stool linear ~0.07/0.11/0.06): film first where they differ (hifi_buzz_curtains.py)"
+}

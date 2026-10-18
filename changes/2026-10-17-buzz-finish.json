@@ -1,0 +1,165 @@
+{
+  "gate": 8,
+  "change": "Buzz's room finishes (Buzz TRIAL 2): the film's wallpaper (white ground, grey pinstripes, every fourth line red; tools/house/film_wallpaper.py --buzz from film 530, repeat 0.0853 m), a white 0.14 m baseboard and the house's dark wood floor (spec/dressing/finishes.json buzz_room). Finishes only: no wall, opening or furniture moves (the baseboard is laid by trim_faces.py from the finish, as in every finished room). Same trial, not gated here: the drapes (decoration: tools/house/hifi_buzz_curtains.py), the removal of the reference scene's facade shutters from inside the rooms (SpecGreybox.Exterior) and the probe dilation in the bake (BakeLighting).",
+  "target": "House_WallGrid",
+  "premise": "Buzz's paper in the film is a regular pinstripe whose every fourth line is red on a white ground, and Marina's paper has the same line layout (a coloured major every ~70 px with fainter minors between) in another colourway, so her solved desk wall gives its metric spacing",
+  "claim": {
+    "value": {
+      "repeat_m": 0.0853,
+      "layout": "major every 0.0853 m, 3 grey minors between (every 1/4), majors red (film)",
+      "line_to_ground_linear": {
+        "red": [
+          0.94,
+          0.82,
+          0.83
+        ],
+        "minor": [
+          0.84,
+          0.82,
+          0.81
+        ]
+      },
+      "baseboard_m": 0.14,
+      "floor": "wood"
+    },
+    "data": [
+      "film:530",
+      "vggt:real-vggt-buzzall",
+      "marina-frame:540"
+    ],
+    "scale": [
+      "growth-chart-3-5ft:buzz-f0"
+    ],
+    "upstream": [
+      "growth-chart-3-5ft:buzz-f0"
+    ],
+    "risks": [
+      "extraction"
+    ],
+    "how": "film 530 rows 400-505, x 1236.5-1522.1 (desk wall, frontal, below the bulletin board): autocorrelation of luminance 18/36/54/72 px and of redness 72/143 px -> minors 17.85 px, major 71.4 px; one period = the median of four, rows averaged, each divided by its ground. Metric: Marina frame 0 (540.1 s) the ten coloured majors on row 650, rays cut with the solved desk-wall plane: mean gap 0.0853 m at the growth chart's 3-5 ft ruler (same wall), 0.0845 at the twin mattress (gaps spread 8%). Ground albedo ASSUMED the house's off-white (DEVIATIONS 75)",
+    "applies_to": [
+      "buzz_room"
+    ],
+    "measured_in": [
+      "buzz_room"
+    ],
+    "pick": {
+      "crop": "spec/captures/picks/buzz2/paper-f530.png",
+      "confirmed_by": "blind subagent shown only the crop (Oct 17): 'vertically striped surface that reads as wallpaper (high); thin vertical lines regularly spaced (high); every ~4th line a thin reddish line, 3 pale lines between reds, N~4 (medium); no blue line seen (low)'; Marina crop spec/captures/picks/buzz2/marina-f0-majors.png: 'striped wallpaper (high); strong lines cycle red, blue, pale (high), finer spacing about 70 px between strong lines (medium)'"
+    },
+    "alternatives": [
+      "current build: plain grey-box wall, no baseboard, grey-box floor",
+      "Marina's colourway (red/blue/tan majors on cream) at the same spacing",
+      "the film's colourway (red majors, grey minors, white) at Marina's measured spacing (built)"
+    ],
+    "layout": {
+      "decides": [
+        {
+          "part": "every fourth pinstripe red, 3 grey minors between",
+          "observed_in": [
+            "film:530",
+            "film:524"
+          ],
+          "extrapolated": false
+        }
+      ]
+    }
+  },
+  "history": [
+    {
+      "what": "changes/2026-10-13-buzz-resize.json (room size, rejected) and changes/2026-10-17-buzz-layout.json (furniture, accepted): geometry, not the finish; no earlier attempt on Buzz's paper",
+      "outcome": "n/a"
+    }
+  ],
+  "premise_reviewed": "No failed attempt on the finish; the room-size attempts are geometry (R2 history is about walls, which this record does not move).",
+  "checks": [
+    {
+      "what": "Film 524 (the shelves wall, another wall and another shot): pinstripes every 17 px with a redder line every fourth (68 px; luminance autocorrelation 17/34/51/68, redness 68): the same layout and colourway as 530",
+      "agrees": true,
+      "type": "ratio",
+      "tests": [
+        "extraction"
+      ],
+      "data": [
+        "film:524"
+      ],
+      "scale": [
+        "none"
+      ],
+      "pick": {
+        "crop": "spec/captures/picks/buzz2/paper-f524.png",
+        "confirmed_by": "blind subagent: 'faint vertical striping, probably the same wallpaper (medium); no cycle can be read (low)': the crop is dark, the cycle is the autocorrelation's"
+      }
+    },
+    {
+      "what": "Consistency: the twin-mattress ruler (same solve) gives 0.0845 m (-1%)",
+      "agrees": true,
+      "type": "metric",
+      "data": [
+        "vggt:real-vggt-buzzall"
+      ],
+      "scale": [
+        "mattress-39in:buzz-clip"
+      ],
+      "upstream": [
+        "mattress-39in:buzz-clip"
+      ]
+    },
+    {
+      "what": "Marina's majors cycle red / blue / tan on a cream ground (frame 0, blind check high); the film shows every major red on white",
+      "agrees": false,
+      "type": "topological",
+      "data": [
+        "marina-frame:540"
+      ],
+      "scale": [
+        "none"
+      ],
+      "disposition": "the film's colourway is built (user, Oct 15: film first where they differ); her layout gives only the spacing"
+    }
+  ],
+  "renders": {
+    "before": [
+      "spec/captures/buzz2/before/close-chest-panel.png",
+      "spec/captures/buzz2/before/close-corner-desk.png",
+      "spec/captures/buzz2/before/close-corner-front-door.png",
+      "spec/captures/buzz2/before/close-hem.png",
+      "spec/captures/buzz2/before/close-rod.png",
+      "spec/captures/buzz2/before/kevin-door.png",
+      "spec/captures/buzz2/before/kevin-front.png",
+      "spec/captures/buzz2/before/marina-00.png",
+      "spec/captures/buzz2/before/marina-03.png",
+      "spec/captures/buzz2/before/marina-06.png",
+      "spec/captures/buzz2/before/marina-16.png",
+      "spec/captures/buzz2/before/marina-20.png",
+      "spec/captures/buzz2/before/marina-27.png",
+      "spec/captures/buzz2/before/marina-30.png",
+      "spec/captures/buzz2/before/marina-36.png",
+      "spec/captures/buzz2/before/marina-44.png",
+      "spec/captures/buzz2/before/note1810-night.png",
+      "spec/captures/buzz2/before/note1810.png"
+    ],
+    "after": [
+      "spec/captures/views/buzz2/after/marina-00.png",
+      "spec/captures/views/buzz2/after/marina-03.png",
+      "spec/captures/views/buzz2/after/marina-06.png",
+      "spec/captures/views/buzz2/after/marina-16.png",
+      "spec/captures/views/buzz2/after/marina-20.png",
+      "spec/captures/views/buzz2/after/marina-27.png",
+      "spec/captures/views/buzz2/after/marina-30.png",
+      "spec/captures/views/buzz2/after/marina-36.png",
+      "spec/captures/views/buzz2/after/marina-44.png",
+      "spec/captures/views/buzz2/after/note1810.png",
+      "spec/captures/views/buzz2/after/close-corner-front-door.png",
+      "spec/captures/views/buzz2/after/close-corner-desk.png",
+      "spec/captures/views/buzz2/after/close-rod.png",
+      "spec/captures/views/buzz2/after/close-hem.png",
+      "spec/captures/views/buzz2/after/close-chest-panel.png",
+      "spec/captures/views/buzz2/after/kevin-front.png",
+      "spec/captures/views/buzz2/after/kevin-door.png"
+    ],
+    "note": "before: live captures of the loaded trial-1 scene (clone camera, day); after: batch renders of the buzz2 build (spec/captures/views/buzz2.json; colours fair for finishes, lighting judged live); live after captures in spec/captures/buzz2/after"
+  },
+  "user_walk": "accepted",
+  "user_words": "user Oct 17 after walking trial 2: \"i left notes; some minor issues with molding around the door, but otherwise looks good.\" Walk note (8.656,0.03,-13.693): \"what's with the green vertical hands above the door and the missing header casing over the door? otherwise, things look pretty good.\" Door moulding is a follow-up, not part of this change."
+}

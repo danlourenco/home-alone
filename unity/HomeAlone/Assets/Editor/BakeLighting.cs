@@ -57,6 +57,21 @@ public static class BakeLighting
         Debug.Log($"Baked lights: {baked.Count - bad.Count} of {baked.Count} baked");
         var rt = all.Where(l => l.enabled && l.gameObject.activeInHierarchy && !(l.bakingOutput.isBaked && l.bakingOutput.lightmapBakeType == LightmapBakeType.Baked)).Select(l => l.name).ToList();
         Debug.Log($"Realtime lights in the saved state: {rt.Count} ({string.Join(", ", rt.Take(20))})");
+        // Invariant (Oct 17, Buzz trial 2): no probe inside a room is invalidated. A room probe that is invalid can leave a probe cell with no
+        // valid probe at all, and APV then samples the raw (outdoor) values: the overhang strip's bright/dark bands (above)
+        var geo = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/geometry.json"))));
+        var hs = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/house_spec.json"))));
+        var rooms = SpecGreybox.EnvelopeRooms(geo, hs["attic_stair"]["boxes"], (float)geo["ground"]["floor_y"]);
+        foreach (var v in Object.FindObjectsByType<ProbeAdjustmentVolume>(FindObjectsSortMode.None).Where(v => v.mode == ProbeAdjustmentVolume.Mode.InvalidateProbes))
+        {
+            var bb = new Bounds(v.transform.position, v.size); bb.Expand(-0.10f);   // 5 cm in from every face: the boundary is not "inside"
+            bool In(Vector3 q) => rooms.Any(r => q.y > r.y0 && q.y < r.y1 && SpecGreybox.Inside(r.pts, new Vector2(q.x, q.z)));
+            for (int i = 0; i < 27; i++)
+            {
+                var q = new Vector3(Mathf.Lerp(bb.min.x, bb.max.x, (i % 3) / 2f), Mathf.Lerp(bb.min.y, bb.max.y, (i / 3 % 3) / 2f), Mathf.Lerp(bb.min.z, bb.max.z, (i / 9) / 2f));
+                if (bb.size.x > 0 && bb.size.y > 0 && bb.size.z > 0 && In(q)) { bad.Add($"  probes invalidated inside a room: {v.name} at {q}"); break; }
+            }
+        }
         foreach (var b in bad) Debug.LogError("BakeLighting FAIL:" + b);
         return bad;
     }
@@ -80,8 +95,13 @@ public static class BakeLighting
             if (r.GetComponentInParent<SwingDoor>() != null) continue;   // moving parts are not static scenery
             // glass passes light: as a GI contributor the lightmapper treats it as opaque and no sky or sun entered the house in the bake
             bool clear = r.sharedMaterials.Any(m => m != null && m.HasProperty("_SurfaceType") && m.GetFloat("_SurfaceType") > 0.5f);
-            // the upstairs overhang strip does not shade the ground floor in the bake; the film's flush front does (SpecGreybox.FilmFront)
-            bool overhang = r.renderingLayerMask == SpecGreybox.LayerOverhang;
+            // the film's flush front (SpecGreybox.FilmFront, shadows only) stands in for the upper storey's walls in the SUN's shadows while the
+            // player is downstairs (StoreyShadows); it stays out of the bake. The upstairs overhang strip bakes with its own walls: until
+            // Oct 17 it was the other way round, the strip baked open to the sky and its probes were invalidated, and every surface whose
+            // probe cell had no valid probe left (the strip's last column beside the outside air) showed the raw outdoor light: bright
+            // dithered bands by day and dark ones by night along the front rooms' walls and ceilings (walk note 18:10, Buzz; Kevin's room).
+            // Checked: the ground floor's front rooms read the same (spec/captures/buzz2/lighting/)
+            bool overhang = r.renderingLayerMask == SpecGreybox.LayerFilmFront;
             var flags = GameObjectUtility.GetStaticEditorFlags(r.gameObject);
             GameObjectUtility.SetStaticEditorFlags(r.gameObject, clear || overhang ? flags & ~StaticEditorFlags.ContributeGI : flags | StaticEditorFlags.ContributeGI);
             r.receiveGI = ReceiveGI.LightProbes;
@@ -172,13 +192,7 @@ public static class BakeLighting
                 foreach (var q in row) if (!runs.ContainsKey(q)) runs[q] = k;
             }
         }
-        foreach (var ob in SpecGreybox.OverhangVolumes(geo, (float)geo["ground"]["floor_y"]))
-        {   // the overhang strip upstairs: baked without its own walls, so its probes borrow from deeper in their rooms
-            var g = new GameObject("Invalidate_Overhang"); g.transform.SetParent(adj.transform); g.transform.position = ob.center;
-            var v = g.AddComponent<ProbeAdjustmentVolume>(); v.shape = ProbeAdjustmentVolume.Shape.Box; v.mode = ProbeAdjustmentVolume.Mode.InvalidateProbes; v.size = ob.size;
-            boxes++;
-        }
-        Debug.Log($"BakeLighting: {boxes} probe invalidation boxes outside the rooms and over the overhang");
+        Debug.Log($"BakeLighting: {boxes} probe invalidation boxes outside the rooms");
 
         var ls = new LightingSettings { bakedGI = true, realtimeGI = false, lightmapper = LightingSettings.Lightmapper.ProgressiveGPU,
             mixedBakeMode = MixedLightingMode.IndirectOnly, maxBounces = 4, directSampleCount = 32, indirectSampleCount = 256 };

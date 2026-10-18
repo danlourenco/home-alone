@@ -5,7 +5,7 @@
 "spec/house_spec.json": "00563e5d3f64bf825efb3a3ba8b19e1a641a1cd7331aa03dda68a1883215dd89",
 "spec/house_spec.ground.json": "c61d3732d53e46b7b76a94886088d26d2fb1a8989a8519b216b5b0f0c5fa9394",
 "spec/dressing/foyer.json": "ddc26402b9a3aab46412955dd1c9a0f8ea1d7f39150543c1f91ed2f981c5c7d3",
-"spec/dressing/finishes.json": "3879fb6261a238223791f8c1668ff2e421d62d7537743aa83c65091d64662bd0",
+"spec/dressing/finishes.json": "42db35347ab8740557fcc6a8a8d67d6eb682b579d66b1731572bcaa0fa057bab",
 "spec/openings.json": "86c9e692952d95c82328a6fc22e39f16fd19a445d287874d2edb9b08c137cad4",
 "tools/house/trim_faces.py": "0f8a81795c619094f45e3c9aa87da0fce9fe95e058432c36a34730ffff54b76a"
 },
@@ -351,6 +351,58 @@
 ]
 },
 {
+"room": "room:buzz_room",
+"axis": "x",
+"c": -11.57,
+"n": -1,
+"pts": [
+[
+7.473,
+0.0
+],
+[
+7.507,
+0.0
+]
+],
+"samples": [
+{
+"h": 0.07
+}
+],
+"by": null,
+"ends": [
+"corner",
+"opening"
+]
+},
+{
+"room": "room:buzz_room",
+"axis": "x",
+"c": -11.57,
+"n": -1,
+"pts": [
+[
+8.39,
+0.0
+],
+[
+11.158,
+0.0
+]
+],
+"samples": [
+{
+"h": 0.07
+}
+],
+"by": null,
+"ends": [
+"opening",
+"corner"
+]
+},
+{
 "room": "room:hall_corridor_south",
 "axis": "x",
 "c": -13.521,
@@ -413,6 +465,32 @@
 "by": null,
 "ends": [
 "opening",
+"corner"
+]
+},
+{
+"room": "room:buzz_room",
+"axis": "x",
+"c": -15.998,
+"n": 1,
+"pts": [
+[
+7.473,
+0.0
+],
+[
+11.158,
+0.0
+]
+],
+"samples": [
+{
+"h": 0.07
+}
+],
+"by": null,
+"ends": [
+"corner",
 "corner"
 ]
 },
@@ -1304,6 +1382,32 @@
 ]
 },
 {
+"room": "room:buzz_room",
+"axis": "z",
+"c": 11.158,
+"n": -1,
+"pts": [
+[
+-15.998,
+0.0
+],
+[
+-11.57,
+0.0
+]
+],
+"samples": [
+{
+"h": 0.07
+}
+],
+"by": null,
+"ends": [
+"corner",
+"corner"
+]
+},
+{
 "room": "room:den",
 "axis": "z",
 "c": 2.355,
@@ -1755,6 +1859,32 @@
 "by": null,
 "ends": [
 "opening",
+"corner"
+]
+},
+{
+"room": "room:buzz_room",
+"axis": "z",
+"c": 7.473,
+"n": 1,
+"pts": [
+[
+-15.998,
+0.0
+],
+[
+-11.57,
+0.0
+]
+],
+"samples": [
+{
+"h": 0.07
+}
+],
+"by": null,
+"ends": [
+"corner",
 "corner"
 ]
 },
@@ -2919,6 +3049,54 @@
 },
 {
 "name": "baseboard",
+"room": "room:buzz_room",
+"axis": "x",
+"c": -11.57,
+"n": -1,
+"d": [
+0.0,
+0.012
+],
+"flat": true,
+"st": [
+[
+7.485,
+0.0,
+0.14
+],
+[
+7.507,
+0.0,
+0.14
+]
+]
+},
+{
+"name": "baseboard",
+"room": "room:buzz_room",
+"axis": "x",
+"c": -11.57,
+"n": -1,
+"d": [
+0.0,
+0.012
+],
+"flat": true,
+"st": [
+[
+8.39,
+0.0,
+0.14
+],
+[
+11.158,
+0.0,
+0.14
+]
+]
+},
+{
+"name": "baseboard",
 "room": "room:hall_corridor_south",
 "axis": "x",
 "c": -13.521,
@@ -3010,6 +3188,30 @@
 7.303,
 0.72,
 0.76
+]
+]
+},
+{
+"name": "baseboard",
+"room": "room:buzz_room",
+"axis": "x",
+"c": -15.998,
+"n": 1,
+"d": [
+0.0,
+0.012
+],
+"flat": true,
+"st": [
+[
+7.473,
+0.0,
+0.14
+],
+[
+11.146,
+0.0,
+0.14
 ]
 ]
 },
@@ -4564,6 +4766,30 @@
 },
 {
 "name": "baseboard",
+"room": "room:buzz_room",
+"axis": "z",
+"c": 11.158,
+"n": -1,
+"d": [
+0.0,
+0.012
+],
+"flat": true,
+"st": [
+[
+-15.998,
+0.0,
+0.14
+],
+[
+-11.582,
+0.0,
+0.14
+]
+]
+},
+{
+"name": "baseboard",
 "room": "room:den",
 "axis": "z",
 "c": 2.355,
@@ -5212,6 +5438,30 @@
 },
 {
 "name": "baseboard",
+"room": "room:buzz_room",
+"axis": "z",
+"c": 7.473,
+"n": 1,
+"d": [
+0.0,
+0.012
+],
+"flat": true,
+"st": [
+[
+-15.986,
+0.0,
+0.14
+],
+[
+-11.57,
+0.0,
+0.14
+]
+]
+},
+{
+"name": "baseboard",
 "room": "room:hall_corridor",
 "axis": "z",
 "c": 8.371,
@@ -5548,8 +5798,8 @@
 }
 ],
 "ends": {
-"corner": 57,
-"opening": 67,
+"corner": 65,
+"opening": 69,
 "outside-corner": 2
 },
 "problems": []

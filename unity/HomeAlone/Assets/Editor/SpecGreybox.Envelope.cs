@@ -299,7 +299,8 @@ public static partial class SpecGreybox
     //    the roof (0.25 m, corners turned), with a roof over the footprint and every opening of either storey cut out. Rendering layer 2.
     //  - every upstairs piece reaching past the footprint (more than the skin) is moved to rendering layer 1.
     //  - the sun's shadows (StoreyShadows) come from layers 0 + 2 while the player is on the ground floor, and 0 + 1 from the stair up.
-    //  - the bake takes the ground floor's version; the upstairs strip's probes are invalidated (BakeLighting).
+    //  - the bake takes the house as built: the strip with its own walls, this shell left out (BakeLighting; Oct 17: baking the strip
+    //    open and invalidating its probes left probe cells with no valid probe: bands of outdoor light along the front rooms' joints).
     public const uint LayerHouse = 1, LayerOverhang = 2, LayerFilmFront = 4;
 
     static void FilmFront(GameObject root, JObject geo, JToken wallOpenings, float gy)
@@ -364,15 +365,5 @@ public static partial class SpecGreybox
             if (past) { r.renderingLayerMask = LayerOverhang; tagged++; }
         }
         Debug.Log($"FilmFront: {skins.Count} shell pieces; {tagged} upstairs pieces tagged as the overhang");
-    }
-
-    // the upstairs volume past the ground footprint (the overhang strip), world boxes: its probes are invalidated in the bake
-    internal static List<Bounds> OverhangVolumes(JObject geo, float gy)
-    {
-        var fp = GroundFootprint(geo, gy).Select(f => new Slab(new Vector3(f.lo.x, -100f, f.lo.z), new Vector3(f.hi.x, 100f, f.hi.z))).ToList();
-        float top = geo["upstairs"]["ceilings"].Max(c => (float)c["y"][1]);
-        IEnumerable<Slab> rest = geo["upstairs"]["floor"].Select(b => SpecSlab(b, 0f)).Select(f => new Slab(new Vector3(f.lo.x, 0f, f.lo.z), new Vector3(f.hi.x, top, f.hi.z))).ToList();
-        foreach (var f in fp) rest = rest.SelectMany(q => Minus(q, f)).ToList();
-        return rest.Select(q => new Bounds((q.lo + q.hi) / 2, q.hi - q.lo)).ToList();
     }
 }

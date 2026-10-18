@@ -7,6 +7,10 @@
   "models": "9f0d9d2837876295",
   "sources": "b189f44d223c72cc"
  },
+ "tools/house/hifi_buzz_curtains.py": {
+  "models": "356da5161781ccee",
+  "sources": "93a639a3e194f288"
+ },
  "tools/house/hifi_den.py": {
   "models": "f14b4236380eb069",
   "sources": "ddb7e7474c1104ba"
@@ -41,7 +45,7 @@
  },
  "tools/house/hifi_hall_arches.py": {
   "models": "f8b6ae10beb76723",
-  "sources": "9e68c0380f226c74"
+  "sources": "db0fffadd713d188"
  },
  "tools/house/hifi_kitchen.py": {
   "models": "98ab235e28f66103",
