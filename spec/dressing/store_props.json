@@ -1366,13 +1366,14 @@
    "height": 2.1,
    "back": "+z",
    "hides": [
-    "basement_PropDoor_knob",
     "basement_Casing_l",
     "basement_Casing_r",
     "basement_Casing_head"
    ],
    "collide": false,
-   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White over the basement door's plain slab (house_spec.ground.json stair boxes basement_PropDoor x -1.284..-0.445, 0.84 m: a 33 in leaf, tools/house/reconcile.py). The frame takes the generated casing's outline (x -1.354..-0.375, to 2.10 m: casing legs 7 cm, head to 2.10) and replaces it (casings and the slab's knob hidden); the slab itself stays drawn behind the leaf, 0.5 cm off the frame's back (z 6.322), so the door still reads shut from every side. Closed (the basement is not built)."
+   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White over the basement door's plain slab (house_spec.ground.json stair boxes basement_PropDoor x -1.284..-0.445, 0.84 m: a 33 in leaf, tools/house/reconcile.py). The frame takes the generated casing's outline (x -1.354..-0.375, to 2.10 m: casing legs 7 cm, head to 2.10) and replaces it (casings and the slab's knob hidden); the slab itself stays drawn behind the leaf, 0.5 cm off the frame's back (z 6.322), so the door still reads shut from every side. OPEN 90 deg into the basement landing, hinged at its low-x jamb (Oct 18 basement shell TRIAL, changes/2026-10-18-basement-shell.json: the slab and knob boxes are gone, the landing behind it is one riser down; hinge side ASSUMED: the high-x jamb would put the open leaf across the flight's head)",
+   "open": 90,
+   "hinge": "lo"
   },
   {
    "name": "den_book_001",
@@ -3596,6 +3597,28 @@
    "collide": false,
    "yaw": 90,
    "source": "props lane (Oct 18): den_books.py, Fadnn SM_Book spine out on hifi_den.py's book rows (film 2868/2874/2877)"
+  },
+  {
+   "name": "attic_bed",
+   "floor": "upper",
+   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Bed_01.prefab",
+   "x": [
+    3.99,
+    5.93
+   ],
+   "z": [
+    6.674,
+    8.114
+   ],
+   "y0": 2.62,
+   "height": 1.24,
+   "back": "-x",
+   "hides": [
+    "SofaBed",
+    "Mattress"
+   ],
+   "collide": false,
+   "source": "props lane (user Oct 18: 'replace the bed in the attic with an actual bed we might have as an asset'): Fadnn SM_Bed_01 (owned; 1.69 x 2.28 x 1.46) at 0.85 uniform (1.44 x 1.94 x 1.24, about a full, like the film's 54x75 fold-out) so the headboard clears the 1.25 m knee wall's slope; head to the rear knee wall in attic trial 2's bed spot (the placeholder SofaBed/Mattress hidden; its walk collider stays). The film's bed is a plaid fold-out sofa bed (1403-1447): no owned match."
   }
  ]
 }
