@@ -64,5 +64,9 @@ Tiers by player distance; detail follows sightlines (window views, the film's ex
   (Murphys first), manifest draft + a plan map for the user to mark up; (2) Tier 1 upgrade (lock the hero structures, texture job,
   real shrubs/topiary, varied trees at LiDAR positions: the Sereib oak trial was rejected as "too thick and similar"); (3) Tier 2;
   (4) Tier 3 + 4; (5) performance pass (low-detail versions, occlusion; measure standalone with the display awake).
-- **Open questions for the user**: how far Tier 3 reaches (the block, or a couple of streets); whether players may walk onto the street
-  (proposed: yes, Tier 2).
+- **Decided (user, Oct 19)**: Tier 2 is walkable: cross Lincoln Ave and go "one house over" left and right (the McCallister lot, the
+  neighbour on each side, the Murphys across the street and the house on each side of theirs). "The main action happens in the
+  McCallister property." Tier 3 extent is ours to choose for performance without losing feel: the street faces visible from the
+  lot and the Tier 2 sidewalks (both sides of Lincoln, ~150 m each way) as low-detail stand-ins, everything further is the
+  Tier 4 horizon. **Revisit if it ever feels off** (too empty at the street ends, or a frame-time cost).
+- **Step 1 started Oct 19** (evidence pass, no builds): outputs in `art/home_alone/references/neighborhood/` and `spec/neighborhood.json`.
