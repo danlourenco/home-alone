@@ -1005,7 +1005,7 @@ public static partial class SpecGreybox
         KitchenModel(root, gy);   // tools/house/hifi_kitchen.py + spec/dressing/kitchen.json (changes/2026-10-16-kitchen-cabinets.json)
         KitchenSconcesAndGallery(root, gy);   // SpecGreybox.KitchenLights.cs: wall sconces, picture gallery, desk
         {   // tools/house/hifi_breakfast_table.py (changes/2026-10-16-breakfast-table.json): honey oak, Poly Haven oak_veneer_01 tinted to film 2528
-            var t = PlaceHiFi(root, gy, "BreakfastTable", new Dictionary<string, Material> { ["BT_Wood"] = TexMat("HiFi_BreakfastOak", "oak_veneer_01", new Color(1f, 1f, 0.94f), 1.0f, 0.55f) });
+            var t = PlaceHiFi(root, gy, "BreakfastTable", new Dictionary<string, Material> { ["BT_Wood"] = TexMat("HiFi_BreakfastOak", "oak_veneer_01", new Color(0.95f, 0.80f, 0.60f), 1.0f, 0.55f)   /* darker honey pine (user photo IMG_4306, Oct 19) */ });
             if (t != null) foreach (var r in t.GetComponentsInChildren<MeshRenderer>()) r.gameObject.isStatic = true;
         }
         PlaceHiFi(root, gy, "FoyerDressing", new Dictionary<string, Material> {   // tools/house/hifi_dressing.py: stands, poinsettias, prints (film)

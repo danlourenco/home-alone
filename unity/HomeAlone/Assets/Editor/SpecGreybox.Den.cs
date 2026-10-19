@@ -49,9 +49,21 @@ public static partial class SpecGreybox
         DenLamps(root, gy);
         var p = PlaceHiFi(root, gy, "DenProps", null);
         if (p != null)   // Kevin's movie chair: oxblood leather with a leather sheen (user Oct 18; the colour is baked by hifi_den_props.py)
+            // the sheen lives on a saved copy: set on the glTF importer's own material it was lost on every reimport (user Oct 19 08:54,
+            // "what happened to the leather texture ... it looked good last night")
             foreach (var r in p.GetComponentsInChildren<MeshRenderer>())
-                foreach (var m in r.sharedMaterials)
-                    if (m != null && m.name.StartsWith("DP_ChairBurgundy") && m.HasProperty("roughnessFactor")) m.SetFloat("roughnessFactor", 0.45f);
+            {
+                var ms = r.sharedMaterials;
+                for (int i = 0; i < ms.Length; i++)
+                {
+                    if (ms[i] == null || !ms[i].name.StartsWith("DP_ChairBurgundy") || !ms[i].HasProperty("roughnessFactor")) continue;
+                    string path = $"Assets/Materials/Greybox/{ms[i].name.Replace('.', '_')}_Leather.mat";
+                    AssetDatabase.DeleteAsset(path);
+                    var leather = new Material(ms[i]); leather.SetFloat("roughnessFactor", 0.45f);
+                    AssetDatabase.CreateAsset(leather, path); ms[i] = leather;
+                }
+                r.sharedMaterials = ms;
+            }
         foreach (var g in new[] { w, b, p })
             if (g != null) foreach (var r in g.GetComponentsInChildren<MeshRenderer>()) r.gameObject.isStatic = true;
         var fp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/den.json"));

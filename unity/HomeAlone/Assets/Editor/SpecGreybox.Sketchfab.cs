@@ -143,12 +143,8 @@ public static partial class SpecGreybox
 
         // --- den: the Astro table (glass top in a wood ring, four curved legs; film 2850) at the old table's spot (den.json coffee_table,
         // Marina f9), 0.80 m across, 0.425 m high; the Poly Haven pedestal table in DenProps.glb is hidden (its walk collider stays)
-        var den = GameObject.Find("DenProps_HiFi");
-        int hid = 0;
-        if (den != null) foreach (var r in den.GetComponentsInChildren<MeshRenderer>().Where(r => r.name.StartsWith("coffee_table"))) { r.enabled = false; hid++; }
-        if (Sketchfab(g, "coffee_table_astro", "den_astro_table", Quaternion.identity, 0.80f, new Vector3(5.98f, gy, 17.83f)) == null)
-            foreach (var r in den != null ? den.GetComponentsInChildren<MeshRenderer>(true).Where(r => r.name.StartsWith("coffee_table")) : Enumerable.Empty<MeshRenderer>()) r.enabled = true;
-        Debug.Log($"Sketchfab: den pedestal table hidden ({hid} renderers)");
+        // removed Oct 19 (user walk note 08:54: no coffee table for now, so the chair can be sat in; film 2850 has it beside the chair on Kevin's
+        // left, not in front of it; den.json "removed" says how to restore it)
 
         // --- parents' bedroom (user Oct 18: "the mannequin and other hero items"; Marina p2 184-188, 238): the treadle sewing table under
         // the side window (wall z 0), machine head up, 1.05 m tall; the 1900s dress form in front of the window corner, 1.45 m

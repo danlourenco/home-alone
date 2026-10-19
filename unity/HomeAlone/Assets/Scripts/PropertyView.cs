@@ -6,9 +6,10 @@ using UnityEngine;
 /// whose centre lies outside the lot. The house, the window/sky domes and the probes are never touched. Made at scene load, no editor setup.
 public class PropertyView : MonoBehaviour
 {
-    // ponytail: the lot is a world-space box, the registered GLB site (the model's own lot) without its street strip (object248, x > 22).
-    // No parcel survey yet; replace with the Cook County parcel polygon if the edges matter.
-    static readonly Rect Lot = Rect.MinMaxRect(-22f, -38f, 23f, 7f);   // x min/max, z min/max (front = +x, the street side)
+    // ponytail: the lot is a world-space box: front edge = the public sidewalk's inner edge (x 28.87, SpecGreybox.FrontDrive, OSM ways),
+    // sides/rear = the registered GLB site's own lot (its garage fence and treehouse inside). Replace with the Cook County parcel polygon
+    // if the edges matter. (Oct 19: the first box ended at x 23, the GLB's scaled street, and hid the front lawn, piers and drive.)
+    static readonly Rect Lot = Rect.MinMaxRect(-22f, -38f, 28.87f, 7f);   // x min/max, z min/max (world; front = +x, the street side)
     bool hidden;
     readonly List<Renderer> renderers = new List<Renderer>();
     readonly List<Light> lights = new List<Light>();
