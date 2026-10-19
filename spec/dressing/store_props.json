@@ -4157,7 +4157,7 @@
    "name": "kitchen_corner_chest",
    "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/DRAWER_CAB_01.prefab",
    "x": [
-    2.47,
+    2.67,
     3.37
    ],
    "z": [
@@ -4169,15 +4169,15 @@
    "back": "-z",
    "collide": true,
    "hides": [],
-   "source": "props lane (props.py add, Oct 18): film 10508-10512: a low warm-wood chest against the kitchen wall left of the dining swing door (by the corner), a green glass pitcher on a tray on it, two framed fruit prints above (walk note Oct 18 21:20); size: the pack model's real size (one ruler: none needed). Model 1.136 x 0.391 x 0.699 m (DRAWER_CAB_01), native size. Width fitted to 0.90 m (Oct 18): the bandit must stand 0.5 m inside the corner door (room walk test), as the film's gap between the chest and the door (10512).",
+   "source": "props lane (props.py add, Oct 18): film 10508-10512: a low warm-wood chest against the kitchen wall left of the dining swing door (by the corner), a green glass pitcher on a tray on it, two framed fruit prints above (walk note Oct 18 21:20); size: the pack model's real size (one ruler: none needed). Model 1.136 x 0.391 x 0.699 m (DRAWER_CAB_01), native size. Width fitted to 0.90 m (Oct 18): the bandit must stand 0.5 m inside the corner door (room walk test), as the film's gap between the chest and the door (10512). | Oct 19 (walk note 08:42 'can't walk between the breakfast table and the hutch'): 0.90 -> 0.70 m wide (x0.62 of the model), its right end kept 0.75 m off the dining door wall (the door's swing room); the film shows only the chest's right part (10508-10512: the pitcher and the right end up to the door casing), so the width is authored, not measured. With the table's stepped-end colliders (kitchen.json) the gap to the table is 0.64 m (bandit 0.59, kid 0.44).",
    "yaw": 180
   },
   {
    "name": "kitchen_print_lower",
    "prefab": "Assets/Models/PolyHaven/hanging_picture_frame_01.glb",
    "x": [
-    2.64,
-    2.99
+    2.845,
+    3.195
    ],
    "z": [
     3.665,
@@ -4195,8 +4195,8 @@
    "name": "kitchen_print_upper",
    "prefab": "Assets/Models/PolyHaven/hanging_picture_frame_01.glb",
    "x": [
-    2.64,
-    2.99
+    2.845,
+    3.195
    ],
    "z": [
     3.665,
@@ -4209,6 +4209,198 @@
    "hides": [],
    "source": "props lane (Oct 18, decoration): film 10510-10512: two framed fruit prints stacked over the chest left of the dining swing door; Poly Haven hanging_picture_frame_01 (rectangular, matted) scaled to 0.35 x 0.50 (03 was an oval) (CC0)",
    "yaw": 180
+  },
+  {
+   "name": "kitchen_hutch",
+   "prefab": "Assets/Models/PolyHaven/vintage_cabinet_01.glb",
+   "x": [
+    3.61,
+    4.11
+   ],
+   "z": [
+    4.66,
+    6.43
+   ],
+   "y0": 0.0,
+   "height": 2.2,
+   "back": "+x",
+   "collide": true,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 19): film 1024 (glazed white hutch behind the breakfast table, white door to its right), production still 'Breakfast Room' (art/home_alone/references/kitchen/production-breakfast-hutch.jpg), user photo IMG_4305 (film still: white built-in beyond the island, glazed upper doors, open dish shelves, closed lower cabinets), Marina 924 s (best-marina-0924: white built-in on the wall between the dining doorway and the white door, glazed 4-bay upper, open shelf, drawers + doors). It is a BUILT-IN in the film and Marina; placed in the props lane at the user's request (walk note Oct 19 08:42) as a pack china cabinet fitted to the run between the dining doors (wall z 4.50-6.46 inside the casings; the wider wallpaper strip with the switch on the door-1 side, Marina 924): 1.77 x 0.50 x 2.20 m, Poly Haven vintage_cabinet_01 (CC0, 2.02 x 0.67 x 2.24, fitted x0.88/x0.75/x0.98), painted the film's white: \"paint\" [0.80,0.79,0.74] = base map dropped, flat lin colour, smoothness 0.45 (applied LIVE by editor eval Oct 19; StoreProps.cs does not read \"paint\" yet, so a build shows the model's dark wood until it does; a tint can't whiten it: the map is lin 0.04/0.016/0.008 with 6x grain contrast). Deviation: arched carved crown and dark wood grain under the tint; the film's is flat-topped painted white. Revisit with a generated built-in (fixture gate).. Model 2.022 x 0.67 x 2.235 m (vintage_cabinet_01), fitted to 1.77 x 0.5 x 2.2.",
+   "yaw": 270,
+   "paint": [
+    0.8,
+    0.79,
+    0.74
+   ]
+  },
+  {
+   "name": "breakfast_chair_n1",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    0.032,
+    0.568
+   ],
+   "z": [
+    4.18,
+    4.689
+   ],
+   "y0": 0.0,
+   "height": 1.0,
+   "back": "",
+   "yaw": 180,
+   "collide": true,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 19): film IMG_4306 (user photo of a film still) + production still 'Breakfast Room': tall pine vase-back chairs with red patterned seats round the oval table; Classic Wooden Furniture Pack CHAIR_01 (0.52 x 0.49 x 0.97) at 1.0 m, pushed in to the north edge (back 0.07 m outside it, as the film chairs stand); row set 0.15 m west of the table centre so the bandit (0.59 m) passes between the east chair and the wall corner/corner chest (walk note Oct 19 08:42). Model 0.516 x 0.491 x 0.965 m (CHAIR_01), fitted to 0.535 x 0.509 x 1.0. Tinted from the pack's dark stain toward the film's honey pine (x2.6/2.3/1.6, by eye against the film still). Deviation: the pack chair is a ladder back with a wooden seat; the film's are vase-back with red patterned seat pads.",
+   "tint": [
+    2.6,
+    2.3,
+    1.6
+   ]
+  },
+  {
+   "name": "breakfast_chair_s1",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    0.032,
+    0.568
+   ],
+   "z": [
+    5.071,
+    5.58
+   ],
+   "y0": 0.0,
+   "height": 1.0,
+   "back": "",
+   "yaw": 0,
+   "collide": true,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 19): film IMG_4306 (user photo of a film still) + production still 'Breakfast Room': tall pine vase-back chairs with red patterned seats; Classic Wooden Furniture Pack CHAIR_01 at 1.0 m, pushed in to the south edge, in line with the north row. Model 0.516 x 0.491 x 0.965 m (CHAIR_01), fitted to 0.535 x 0.509 x 1.0. Tinted from the pack's dark stain toward the film's honey pine (x2.6/2.3/1.6, by eye against the film still). Deviation: the pack chair is a ladder back with a wooden seat; the film's are vase-back with red patterned seat pads.",
+   "tint": [
+    2.6,
+    2.3,
+    1.6
+   ]
+  },
+  {
+   "name": "breakfast_chair_n2",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    0.733,
+    1.268
+   ],
+   "z": [
+    4.18,
+    4.689
+   ],
+   "y0": 0.0,
+   "height": 1.0,
+   "back": "",
+   "yaw": 180,
+   "collide": true,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 19): film IMG_4306 (user photo of a film still) + production still 'Breakfast Room': tall pine vase-back chairs with red patterned seats round the oval table; Classic Wooden Furniture Pack CHAIR_01 (0.52 x 0.49 x 0.97) at 1.0 m, pushed in to the north edge (back 0.07 m outside it, as the film chairs stand); row set 0.15 m west of the table centre so the bandit (0.59 m) passes between the east chair and the wall corner/corner chest (walk note Oct 19 08:42). Model 0.516 x 0.491 x 0.965 m (CHAIR_01), fitted to 0.535 x 0.509 x 1.0. Tinted from the pack's dark stain toward the film's honey pine (x2.6/2.3/1.6, by eye against the film still). Deviation: the pack chair is a ladder back with a wooden seat; the film's are vase-back with red patterned seat pads.",
+   "tint": [
+    2.6,
+    2.3,
+    1.6
+   ]
+  },
+  {
+   "name": "breakfast_chair_s2",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    0.733,
+    1.268
+   ],
+   "z": [
+    5.071,
+    5.58
+   ],
+   "y0": 0.0,
+   "height": 1.0,
+   "back": "",
+   "yaw": 0,
+   "collide": true,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 19): film IMG_4306 (user photo of a film still) + production still 'Breakfast Room': tall pine vase-back chairs with red patterned seats; Classic Wooden Furniture Pack CHAIR_01 at 1.0 m, pushed in to the south edge, in line with the north row. Model 0.516 x 0.491 x 0.965 m (CHAIR_01), fitted to 0.535 x 0.509 x 1.0. Tinted from the pack's dark stain toward the film's honey pine (x2.6/2.3/1.6, by eye against the film still). Deviation: the pack chair is a ladder back with a wooden seat; the film's are vase-back with red patterned seat pads.",
+   "tint": [
+    2.6,
+    2.3,
+    1.6
+   ]
+  },
+  {
+   "name": "breakfast_chair_n3",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    1.432,
+    1.968
+   ],
+   "z": [
+    4.18,
+    4.689
+   ],
+   "y0": 0.0,
+   "height": 1.0,
+   "back": "",
+   "yaw": 180,
+   "collide": true,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 19): film IMG_4306 (user photo of a film still) + production still 'Breakfast Room': tall pine vase-back chairs with red patterned seats round the oval table; Classic Wooden Furniture Pack CHAIR_01 (0.52 x 0.49 x 0.97) at 1.0 m, pushed in to the north edge (back 0.07 m outside it, as the film chairs stand); row set 0.15 m west of the table centre so the bandit (0.59 m) passes between the east chair and the wall corner/corner chest (walk note Oct 19 08:42). Model 0.516 x 0.491 x 0.965 m (CHAIR_01), fitted to 0.535 x 0.509 x 1.0. Tinted from the pack's dark stain toward the film's honey pine (x2.6/2.3/1.6, by eye against the film still). Deviation: the pack chair is a ladder back with a wooden seat; the film's are vase-back with red patterned seat pads.",
+   "tint": [
+    2.6,
+    2.3,
+    1.6
+   ]
+  },
+  {
+   "name": "breakfast_chair_s3",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    1.432,
+    1.968
+   ],
+   "z": [
+    5.071,
+    5.58
+   ],
+   "y0": 0.0,
+   "height": 1.0,
+   "back": "",
+   "yaw": 0,
+   "collide": true,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 19): film IMG_4306 (user photo of a film still) + production still 'Breakfast Room': tall pine vase-back chairs with red patterned seats; Classic Wooden Furniture Pack CHAIR_01 at 1.0 m, pushed in to the south edge, in line with the north row. Model 0.516 x 0.491 x 0.965 m (CHAIR_01), fitted to 0.535 x 0.509 x 1.0. Tinted from the pack's dark stain toward the film's honey pine (x2.6/2.3/1.6, by eye against the film still). Deviation: the pack chair is a ladder back with a wooden seat; the film's are vase-back with red patterned seat pads.",
+   "tint": [
+    2.6,
+    2.3,
+    1.6
+   ]
+  },
+  {
+   "name": "breakfast_chair_w",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "x": [
+    -0.299,
+    0.21
+   ],
+   "z": [
+    4.612,
+    5.147
+   ],
+   "y0": 0.0,
+   "height": 1.0,
+   "back": "",
+   "yaw": 90,
+   "collide": true,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 19): film IMG_4306 / production still 'Breakfast Room': a chair at the table's end; Classic Wooden Furniture Pack CHAIR_01 at 1.0 m. No chair at the east end: it would close the walk past the corner chest (walk note Oct 19 08:42). Model 0.516 x 0.491 x 0.965 m (CHAIR_01), fitted to 0.535 x 0.509 x 1.0. Tinted from the pack's dark stain toward the film's honey pine (x2.6/2.3/1.6, by eye against the film still). Deviation: the pack chair is a ladder back with a wooden seat; the film's are vase-back with red patterned seat pads.",
+   "tint": [
+    2.6,
+    2.3,
+    1.6
+   ]
   }
  ]
 }

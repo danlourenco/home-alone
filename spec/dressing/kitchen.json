@@ -928,14 +928,14 @@
    ]
   },
   {
-   "name": "breakfast_table_top_endA",
+   "name": "breakfast_table_top_endA1",
    "x": [
-    0.04999999999999982,
-    0.44999999999999996
+    0.25,
+    0.45
    ],
    "z": [
-    4.33,
-    5.43
+    4.333,
+    5.427
    ],
    "y": [
     0.62,
@@ -943,14 +943,74 @@
    ]
   },
   {
-   "name": "breakfast_table_top_endB",
+   "name": "breakfast_table_top_endA2",
    "x": [
-    1.8499999999999999,
+    0.15,
+    0.25
+   ],
+   "z": [
+    4.434,
+    5.326
+   ],
+   "y": [
+    0.62,
+    0.76
+   ]
+  },
+  {
+   "name": "breakfast_table_top_endA3",
+   "x": [
+    0.05,
+    0.15
+   ],
+   "z": [
+    4.528,
+    5.232
+   ],
+   "y": [
+    0.62,
+    0.76
+   ]
+  },
+  {
+   "name": "breakfast_table_top_endB1",
+   "x": [
+    1.85,
+    2.05
+   ],
+   "z": [
+    4.333,
+    5.427
+   ],
+   "y": [
+    0.62,
+    0.76
+   ]
+  },
+  {
+   "name": "breakfast_table_top_endB2",
+   "x": [
+    2.05,
+    2.15
+   ],
+   "z": [
+    4.434,
+    5.326
+   ],
+   "y": [
+    0.62,
+    0.76
+   ]
+  },
+  {
+   "name": "breakfast_table_top_endB3",
+   "x": [
+    2.15,
     2.25
    ],
    "z": [
-    4.33,
-    5.43
+    4.528,
+    5.232
    ],
    "y": [
     0.62,
@@ -973,7 +1033,7 @@
    ]
   }
  ],
- "colliders_note": "Invisible walk-layer boxes (SpecGreybox.KitchenColliders): each piece's footprint incl. counter overhang and edge tile; the angled pantry front as three steps (they cover up to 0.27 m of floor in front of its diagonal); the breakfast table's oval top as three boxes (the middle 1.4 m at full width, each end 0.4 m at the oval's width where it starts: 1.10 m), so its corners don't block the back stair's foot",
+ "colliders_note": "Invisible walk-layer boxes (SpecGreybox.KitchenColliders): each piece's footprint incl. counter overhang and edge tile; the angled pantry front as three steps (they cover up to 0.27 m of floor in front of its diagonal); the breakfast table's oval top as three boxes (the middle 1.4 m at full width, each end 0.4 m at the oval's width where it starts: 1.10 m), so its corners don't block the back stair's foot | Oct 19 (walk note 08:42): each end is now three steps (0.2/0.1/0.1 m) at the oval's width where each starts (1.09/0.89/0.70 m), not one 0.4 m box at 1.10 m: the old box stood 0.2 m proud of the oval's tip corners and closed the walk past the corner chest",
  "under_lights": {
   "note": "a fluorescent strip under every wall upper over a counter (not the one over the fridge): film 9812/10452 (end_A lit), 6042 (end_A and end_B lit), 10448 (sink_S2 lit); sink_S1, seat_U1, seat_U2 assumed the same (DEVIATIONS 48)",
   "inset_front": 0.03,
