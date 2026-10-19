@@ -2,7 +2,7 @@
 
 Goal: a faithful, walkable Unity recreation of the McCallister house. Faithfulness is non-negotiable; do not propose "good enough" geometry.
 
-- **Current state and next step (read first):** [docs/STATUS.md](docs/STATUS.md).
+- **Current state and next step (read first):** [docs/RESUME.md](docs/RESUME.md) (Oct 19 queue, job briefs, neighbourhood plan), then [docs/STATUS.md](docs/STATUS.md).
 - **Every departure from measurement** (stretches, assumptions, authored sizes) goes in [docs/DEVIATIONS.md](docs/DEVIATIONS.md) with its size and how to revisit it. The house must feel authentic: a room of notably different shape or size than Marina's is not acceptable.
 - **How the house gets built:** [docs/RECONCILIATION.md](docs/RECONCILIATION.md). Experiment log: [tasks/sfm-plan.md](tasks/sfm-plan.md). HANDOFF.md below its first entry is history.
 - **Scale the players, not the house:** true-scale house; Kevin is a kid-sized body (can hide under beds), bandits are adults.
