@@ -675,21 +675,14 @@ def portico(layer):
 
 
 def door_face(layer):
-    """The front door's outside (film 4382, 1495, 1830): a black six-panel leaf with a brass knocker and the wreath, white sidelight
-    frames and an elliptical fanlight under the brick arch; on the closed vestibule wall's outer face (x 10.27), in the brick opening."""
-    T = part("DoorTrim", "EX_Trim", layer); D = part("DoorLeaf", "EX_DoorBlack", layer); Gl = part("Glass", "EX_Glass", layer)
-    Br = part("Brass", "EX_Brass", layer); Wr = part("Wreath", "EX_Wreath", layer); Rb = part("Bow", "EX_Bow", layer)
+    """The front door's surround outside (film 4382, 1495, 1830): white sidelight frames and an elliptical fanlight under the brick
+    arch, on the closed vestibule wall's outer face (x 10.27), in the brick opening. The leaf, its brass, the wreath's lights and the
+    lantern are tools/house/hifi_entrance.py (FrontEntrance.glb; the wreath: the store model, SpecGreybox.Shell) since Oct 19."""
+    T = part("DoorTrim", "EX_Trim", layer); Gl = part("Glass", "EX_Glass", layer)
     xw = 10.27
-    z0, z1 = 9.31, 10.121
-    y0, y1 = GF, GF + 1.898
-    box(D, xw, xw + 0.03, y0, y1, z0, z1)
-    for (a, b) in ((0.12, 0.62), (0.72, 1.38), (1.48, 1.80)):
-        for (c, d) in ((z0 + 0.09, (z0 + z1) / 2 - 0.04), ((z0 + z1) / 2 + 0.04, z1 - 0.09)):
-            box(D, xw + 0.03, xw + 0.045, y0 + a, y0 + b, c, d)
-    box(Br, xw + 0.045, xw + 0.07, y0 + 0.95, y0 + 1.05, z1 - 0.12, z1 - 0.08)            # handle
-    box(Br, xw + 0.045, xw + 0.06, y0 + 1.30, y0 + 1.42, (z0 + z1) / 2 - 0.05, (z0 + z1) / 2 + 0.05)   # knocker
+    y0 = GF
     # pilasters and sidelight frames (the sidelight glass is the wall's own opening: hifi_door.py)
-    for (a, b) in ((8.848, 8.978), (9.255, 9.31), (10.121, 10.176), (10.453, 10.583)):   # outer pilasters 1 cm into the brick reveal (coplanar at 8.968/10.463, realism build 4)
+    for (a, b) in ((8.848, 8.978), (9.245, 9.31), (10.121, 10.186), (10.453, 10.583)):   # every pilaster 1 cm into the brick reveal beside it (coplanar at 8.968/10.463, realism build 4; at the sidelights' 9.255/10.176, Oct 19)
         box(T, xw, xw + 0.06, y0, GF + 1.93, a, b)
     for (a, b) in ((8.968, 9.255), (10.176, 10.463)):
         box(T, xw, xw + 0.04, GF + 1.834, GF + 1.93, a, b)   # 1 cm under the brick head reveal (coplanar at 1.844, realism build 3)
@@ -705,13 +698,6 @@ def door_face(layer):
         face(Gl, [(xw + 0.01, GF + 1.93, zc + ua * span), (xw + 0.01, GF + 1.93, zc + ub * span), (xw + 0.01, yb, zc + ub * span), (xw + 0.01, ya, zc + ua * span)], (1, 0, 0))
         if k % 2 == 0:
             box(T, xw + 0.01, xw + 0.03, GF + 1.93, ya, zc + ua * span - 0.008, zc + ua * span + 0.008)
-    # the wreath (film 1495): a ring of boxes and a red bow
-    wc_y, wr = GF + 1.47, 0.22
-    for k in range(16):
-        t = 2 * math.pi * k / 16
-        cz, cy = (z0 + z1) / 2 + wr * math.cos(t), wc_y + wr * math.sin(t)
-        box(Wr, xw + 0.045, xw + 0.11, cy - 0.06, cy + 0.06, cz - 0.06, cz + 0.06)
-    box(Rb, xw + 0.10, xw + 0.13, wc_y - wr - 0.10, wc_y - wr + 0.04, (z0 + z1) / 2 - 0.10, (z0 + z1) / 2 + 0.10)
 
 
 def garage_oculus(layer):
@@ -819,18 +805,9 @@ def xmas_lights(D):
 
 
 def porch_lantern(layer):
-    """Film 10/714 (night): a lit lantern hanging in the portico on the door's axis. Brass frame, glowing glass (EX_LampGlow)."""
-    Br = part("Lantern", "EX_Brass", layer); Gw = part("LanternGlow", "EX_LampGlow", layer)
-    xc, zc, top = FRONT_MAIN + 0.62, 9.716, GF + 2.36
-    box(Br, xc - 0.008, xc + 0.008, top - 0.30, top, zc - 0.008, zc + 0.008)                # chain/rod
-    y1 = top - 0.30; y0 = y1 - 0.36
-    box(Br, xc - 0.13, xc + 0.13, y1 - 0.04, y1, zc - 0.13, zc + 0.13)                      # cap
-    box(Br, xc - 0.11, xc + 0.11, y0, y0 + 0.03, zc - 0.11, zc + 0.11)                      # base
-    for sx in (-1, 1):
-        for sz in (-1, 1):
-            box(Br, xc + sx * 0.10 - 0.01, xc + sx * 0.10 + 0.01, y0, y1, zc + sz * 0.10 - 0.01, zc + sz * 0.10 + 0.01)
-    box(Gw, xc - 0.09, xc + 0.09, y0 + 0.03, y1 - 0.04, zc - 0.09, zc + 0.09)
-    return dict(x=xc, y=(y0 + y1) / 2, z=zc)
+    """Film 10/714 (night): the lit lantern hanging in the portico on the door's axis. Its model is tools/house/hifi_entrance.py
+    (Oct 19); this gives its light's position (the bulb's centre) for SpecGreybox.Shell's night light."""
+    return dict(x=FRONT_MAIN + 0.62, y=GF + 2.02, z=9.716)
 
 
 def _vnoise(x, z, seed=0):

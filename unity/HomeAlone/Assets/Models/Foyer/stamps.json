@@ -47,13 +47,17 @@
   "models": "0124111d024c1391",
   "sources": "75584ecffc4105a3"
  },
+ "tools/house/hifi_entrance.py": {
+  "models": "b89ae6ac2d8d1be2",
+  "sources": "b63314eb1387a97b"
+ },
  "tools/house/hifi_ext_plants.py": {
   "models": "f510832234d6ad84",
   "sources": "2804c516077172f6"
  },
  "tools/house/hifi_exterior.py": {
-  "models": "d06034ccbf753285",
-  "sources": "a4f7d48397261c67"
+  "models": "41092c36c2e81a99",
+  "sources": "37bb41888d8a2447"
  },
  "tools/house/hifi_foyer.py": {
   "models": "f89156cc4b2c1f00",

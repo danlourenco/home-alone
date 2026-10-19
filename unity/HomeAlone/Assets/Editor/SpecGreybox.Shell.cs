@@ -73,6 +73,7 @@ public static partial class SpecGreybox
             if (u) upper.Add(r);
             if (r.sharedMaterial == shade || r.sharedMaterial == sheer || lit) ShellGlow.Add(r);   // Christmas lights and the porch lantern: dark by day
         }
+        FrontEntrance(holder, mGlass);
         var pl = S["porch_lantern"];   // film 10/714: the portico's lantern lit at night (no shadows: perf; a short range)
         if (pl != null) ShellLights.Add(NightLight(holder, "PorchLantern", new Vector3((float)pl["x"], (float)pl["y"], -(float)pl["z"]), 60f, 4.5f));
         // the inside-only set: upstairs/attic renderers (under Upstairs, above the ground storey) with any of 125 bounds points outside every
@@ -123,6 +124,43 @@ public static partial class SpecGreybox
         split.switchY = gy + 2.326f + 0.9f;   // StoreyShadows' switch: the eye 0.9 m over the main stair's landing
         Debug.Log($"Shell: {g.GetComponentsInChildren<MeshRenderer>().Length} skin parts ({upper.Count} upper), {ShellGlow.Count} shades; " +
                   $"{inside.Count} upstairs/attic renderers drawn only upstairs: {string.Join(", ", inside.Take(40).Select(r => r.name))}{(inside.Count > 40 ? " ..." : "")}");
+    }
+
+    // The front door's outside, its brass, the wreath and the portico lantern (walk note Oct 19 07:28 "the lamp and door steel read as
+    // minecraft"; changes/2026-10-19-front-entrance.json, TRIAL): tools/house/hifi_entrance.py (FrontEntrance.glb, world y) and the owned
+    // ChristmasTreeAndGarland wreath (gitignored store pack) at film 714's centre 1.31 m, bow up, 1.1x (0.58 m across); bulbs and the
+    // lantern's bulb glow only at night (ShellGlow)
+    static void FrontEntrance(GameObject holder, Material glass)
+    {
+        var paint = Mat("HiFi_ExtDoorPaint", new Color(0.018f, 0.026f, 0.022f)); paint.SetFloat("_Smoothness", 0.62f);   // film 714/4382: near-black green gloss
+        var g = PlaceHiFi(holder, 0f, "FrontEntrance", new Dictionary<string, Material> {
+            ["EN_Paint"] = paint, ["EN_Brass"] = BrassMat(), ["EN_Glass"] = glass,
+            ["EN_LampGlow"] = AtticGlow("HiFi_ExtLanternGlow", new Color(1f, 0.85f, 0.62f), 1500f, 0.6f),
+            ["EN_Bulb"] = XmasBulb("HiFi_XmasBulbWarm", new Color(1f, 0.66f, 0.38f), 2000f) });
+        if (g == null) return;
+        foreach (var r in g.GetComponentsInChildren<MeshRenderer>())
+        {
+            r.gameObject.isStatic = true; r.renderingLayerMask = LayerHouse;
+            bool lit = r.name.StartsWith("LanternBulb") || r.name.StartsWith("WreathBulbs");
+            r.shadowCastingMode = lit || r.name.StartsWith("LanternGlass") ? ShadowCastingMode.Off : ShadowCastingMode.On;
+            if (lit) ShellGlow.Add(r);
+        }
+        var wp = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Prefabs/Wreath.prefab");
+        if (wp == null) { Debug.LogWarning("FrontEntrance: the store wreath (ChristmasTreeAndGarland) is missing: no wreath"); return; }
+        var w = (GameObject)Object.Instantiate(wp, g.transform); w.name = "FrontWreath";
+        w.transform.position = new Vector3(10.401f, -1.716f, -9.7155f);   // spec x = the leaf's face 10.316 + 0.085 (its back 1 cm off), y = GF + 1.31
+        w.transform.rotation = Quaternion.Euler(0, 90, 180); w.transform.localScale = Vector3.one * 1.1f;   // front (+z) out to +x, bow (-y) up
+        foreach (var r in w.GetComponentsInChildren<Renderer>())
+        {
+            var ms = r.sharedMaterials;
+            for (int i = 0; i < ms.Length; i++)
+            {
+                var h = ms[i] == null ? null : AssetDatabase.LoadAssetAtPath<Material>($"Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Materials/{ms[i].name}_HDRP.mat");
+                if (h != null) ms[i] = h;
+            }
+            r.sharedMaterials = ms; r.renderingLayerMask = LayerHouse; r.gameObject.isStatic = true;
+            foreach (var c in r.GetComponents<Collider>()) Object.DestroyImmediate(c);
+        }
     }
 
     // The front (film 4382, 6399): the stoop under the portico, seven red steps down through two terraced brick beds with stone caps,

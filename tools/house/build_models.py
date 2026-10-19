@@ -55,6 +55,7 @@ BUILDS = {
     "tools/house/hifi_buzz_props.py": (["BuzzProps.glb"], [LIB, "tools/house/hifi_pipeline.py", "spec/dressing/buzz.json", "spec/dressing/buzz_props_can.png", "spec/dressing/buzz_props_jordan.png", "spec/dressing/buzz_props_playboy.png", "spec/dressing/buzz_props_girlfriend.png", "spec/dressing/buzz_props_chips.png"]),   # props lane (Oct 17 overnight)
     "tools/house/hifi_exterior.py": (["Exterior.glb"], [LIB, "tools/house/exterior_shell.py", "spec/geometry.json", "spec/house_spec.json", "spec/house_spec.ground.json"]),   # exterior shell TRIAL 1 (Oct 18)
     "tools/house/hifi_ext_plants.py": (["ExteriorPlants.glb"], ["spec/dressing/exterior_plants.json"]),   # exterior polish (Oct 18), decoration
+    "tools/house/hifi_entrance.py": (["FrontEntrance.glb"], [LIB, "tools/house/hifi_pipeline.py", "spec/geometry.json"]),   # front entrance TRIAL 1 (Oct 19): leaf outside, brass, wreath bulbs, lantern
     "tools/house/hifi_foyer_arch.py": (["FoyerArch.glb"], [LIB, "tools/house/hifi_pipeline.py", "spec/geometry.json", "spec/house_spec.json"]),   # artist pipeline (+ Textures/Generated/FoyerArch)
 }
 

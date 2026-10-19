@@ -1,0 +1,64 @@
+{
+ "change": "Front door outside (walk note Oct 19 07:28 'the lamp and door steel read as minecraft'; TRIAL): the box leaf, box knob/knocker, voxel wreath and box lantern of exterior_shell.door_face/porch_lantern replaced by tools/house/hifi_entrance.py (FrontEntrance.glb): the same leaf (z 9.312-10.119, 1.896 m, 2 mm clear of the reveals) with six bevelled raised panels on the inside's rails, a brass handle plate with a turned knob and deadbolt, the mail slot on the lock rail, 30 warm wreath bulbs, and a glass-paned brass lantern on a rod from the portico's underside (bottom 1.90 m); the owned ChristmasTreeAndGarland wreath (bow up, 1.1x) at 1.31 m (SpecGreybox.Shell FrontEntrance). Also the inner pilasters run 1 cm into the sidelights' brick reveals (the L_Brick/L_DoorTrim z-fight at 9.255/10.176). Opening, wall and walk unchanged",
+ "target": "House_WallGrid",
+ "premise": "The front door's outside is the same six-panel leaf the film shows inside, painted near-black, with brass hardware, a lit wreath with a red bow and a small glass lantern hanging in the portico",
+ "claim": {
+  "value": {"leaf_z": [9.312, 10.119], "leaf_h": 1.896, "rails_m": [[0.0, 0.2], [0.72, 0.87], [1.53, 1.63], [1.8, 1.896]], "mail_slot_m": [0.762, 0.838], "knob_m": 0.92, "deadbolt_m": 1.22, "wreath_centre_m": 1.31, "lantern_bottom_m": 1.90, "lantern_width_m": 0.18},
+  "data": ["film-frame:10248"],
+  "scale": ["door-leaf:marina-203"],
+  "upstream": ["marina-frame:203"],
+  "how": "Leaf size and rails are hifi_door.py's (film 10248 solved by film_solve_10248.py, scaled by foyer.json's leaf from Marina 203 s): the outside is the same leaf. Hardware heights standard (knob 36 in, deadbolt 48 in) and the slot through the door at the inside's height; wreath height, lantern size and height read off film 714 as fractions of the door (DEVIATIONS 102)",
+  "applies_to": ["vestibule"],
+  "measured_in": ["vestibule"]
+ },
+ "history": [
+  {"date": "2026-10-18", "what": "exterior shell door_face (changes/2026-10-18-exterior-shell.json): box leaf, box panels, box knob and knocker, a ring of 16 boxes for the wreath, a box lantern", "outcome": "superseded"}
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 714 (night, street camera) and 5955 (the pizza boy at the steps), outside face (crops spec/captures/views/front-door/film714-door-crop.jpg, film5955-door-crop.jpg): a near-black door with a short top pair of panels and a tall lower pair, a brass mail slot just under the wreath at 0.445 of the door's height (0.84 m; built 0.80), the brass handle plate on the left edge seen from outside (the latch edge, high z), a lit wreath with a red/white bow at its top, ~0.6 m across with its bulbs (0.74-0.80 of the door's width), and a small clear lantern hanging under the portico just over the door head",
+   "agrees": true,
+   "type": "ratio",
+   "tests": ["extraction"],
+   "data": ["film-frame:714", "film-frame:5955"],
+   "scale": ["none"],
+   "upstream": []
+  },
+  {
+   "what": "Free Wood Door Pack (owned, gitignored): its 15 doors share one Wood_Door.FBX (34 kB, a flat slab: panels only in the normal maps), and no door is six-panel (Door_2 is 2+2+1, Door_13 three squares) (contact sheets spec/captures/views/front-door/door-pack-albedos.jpg, door-pack-door2-maps.jpg): the leaf is generated with real panel depth",
+   "agrees": true,
+   "type": "topological",
+   "tests": ["model-fidelity"],
+   "data": ["door-pack"],
+   "scale": ["none"],
+   "upstream": []
+  },
+  {
+   "what": "glb_orientation on FrontEntrance.glb (build_models.py): 0 inward, 0 flipped (self-consistency, not evidence)",
+   "agrees": true,
+   "type": "topological",
+   "tests": ["construction"],
+   "data": ["glb_orientation"],
+   "scale": ["none"],
+   "upstream": []
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/front-door/before/note_day.jpg",
+   "spec/captures/views/front-door/before/note_night.jpg",
+   "spec/captures/views/front-door/before/front_day.jpg",
+   "spec/captures/views/front-door/before/front_night.jpg"
+  ],
+  "after": [
+   "spec/captures/views/front-door/after/note_day.jpg",
+   "spec/captures/views/front-door/after/note_night.jpg",
+   "spec/captures/views/front-door/after/front_day.jpg",
+   "spec/captures/views/front-door/after/front_night.jpg",
+   "spec/captures/views/front-door/after/film714_vs_night.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "outcome": null
+}

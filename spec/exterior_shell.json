@@ -204,7 +204,7 @@
  ],
  "porch_lantern": {
   "x": 10.989999999999998,
-  "y": -1.146,
+  "y": -1.0059999999999998,
   "z": 9.716
  },
  "upper_windows": [
@@ -534,26 +534,6 @@
    "mat": "EX_Trim",
    "faces": 108
   },
-  "L_DoorLeaf": {
-   "layer": "L",
-   "mat": "EX_DoorBlack",
-   "faces": 42
-  },
-  "L_Brass": {
-   "layer": "L",
-   "mat": "EX_Brass",
-   "faces": 12
-  },
-  "L_Wreath": {
-   "layer": "L",
-   "mat": "EX_Wreath",
-   "faces": 96
-  },
-  "L_Bow": {
-   "layer": "L",
-   "mat": "EX_Bow",
-   "faces": 6
-  },
   "L_Oculus": {
    "layer": "L",
    "mat": "EX_Trim",
@@ -618,16 +598,6 @@
    "layer": "U",
    "mat": "EX_Snow",
    "faces": 776
-  },
-  "L_Lantern": {
-   "layer": "L",
-   "mat": "EX_Brass",
-   "faces": 42
-  },
-  "L_LanternGlow": {
-   "layer": "L",
-   "mat": "EX_LampGlow",
-   "faces": 6
   }
  }
 }
