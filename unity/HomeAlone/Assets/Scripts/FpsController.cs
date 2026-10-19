@@ -3,7 +3,7 @@ using UnityEngine;
 /// Minimal first-person controller on the legacy input manager.
 /// WASD move, mouse look, Shift sprint, Space jump, HOLD C or Left Ctrl to crouch/crawl (can't stand under a low ceiling),
 /// Esc/Tab releases cursor, click recaptures, R resets. G toggles Kevin (kid body, the default in Play) / adult;
-/// H toggles the step bob + landing dip (motion-sickness switch; footsteps stay).
+/// H toggles the step bob + landing dip (motion-sickness switch). Footsteps are OFF by default (user Oct 19).
 /// E interacts (each prompts on screen when you are close and looking at it): the front door opens/closes; the den movie chair sits/stands; Buzz's footlocker opens/closes (TrunkLid, within 1.5 m);
 /// at the attic dormer rides the zipline, at the treehouse ladder climbs (ZipLine). N day/night, O cycles the day's weather sunny (film 4382, the default) / morning (film 1890) / overcast (film 6399) (HouseWeather;
 /// it also drives the falling snow: off in sunny/morning, where F is ignored; on when overcast and at night),
@@ -27,7 +27,7 @@ public class FpsController : MonoBehaviour
     public bool headBob = true;
     public float kidStride = 0.65f, adultStride = 0.8f, kidBobAmp = 0.009f, adultBobAmp = 0.015f, kidSwayAmp = 0.006f, adultSwayAmp = 0.011f;
     // Footsteps: Kevin is light and quiet, the bandit heavy and low.
-    public bool footsteps = true;
+    public bool footsteps = false;   // off by default (user, Oct 19: "the walking noise sucks, we should lose it"); the code stays for better clips
     public float kidStepVolume = 0.35f, adultStepVolume = 0.75f;
 
     CharacterController cc;
