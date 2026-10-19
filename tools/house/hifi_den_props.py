@@ -119,6 +119,15 @@ for key, spec in P.items():   # (the TV is generated now: hifi_den.py, the film'
         bpy.context.view_layer.update()
         lo2, hi2 = bounds(objs); assert (((lo2 + hi2) / 2) - c).length < 0.05, "chair turn moved its centre"
 
+# every fitted piece must still stand in its spec box (Oct 19: a turn threw the movie chair 18 m out of the house and nothing noticed)
+for key, spec in P.items():
+    objs = [o for o in bpy.context.scene.objects if o.type == "MESH" and o.name.startswith(key + "_")]
+    if not objs or "x" not in spec:
+        continue
+    lo, hi = bounds(objs); c = (lo + hi) / 2   # Blender (-x, z, y)
+    cx, cz = -c.x, c.y
+    assert spec["x"][0] - 0.3 < cx < spec["x"][1] + 0.3 and spec["z"][0] - 0.3 < cz < spec["z"][1] + 0.3, f"{key} left its box: centre ({cx:.2f}, {cz:.2f})"
+
 # the ficus in its wicker basket (film 2868/2877; the basket is hifi_den.py's): Poly Haven pachira_aquatica_01's tallest tree, fitted
 f = json.loads((ROOT / "spec/dressing/den.json").read_text())["decor"]["ficus"]
 objs = load("pachira_aquatica_01", "ficus")
