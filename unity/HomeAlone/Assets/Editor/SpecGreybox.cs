@@ -354,6 +354,7 @@ public static partial class SpecGreybox
         FilmFill(GameObject.Find("Upstairs/Daylight/DayLayer"), geo, j["attic_stair"]["boxes"], gy);
         var (spawn, spawnYaw) = FrontDoorSpawn(geo["ground"], j["stair"], gy);
         Player(spawn, spawnYaw);
+        ExteriorLook(gy);   // SpecGreybox.ExteriorRealism.cs: outside-only fog/grade/bloom/night exposure, falling snow on the camera
         var player = GameObject.Find("Player"); player.SetActive(false);
         Physics.SyncTransforms();
         stepName = null; BudgetFails.Clear(); Step("WalkTest");
@@ -1669,6 +1670,7 @@ public static partial class SpecGreybox
                           // after the cull: the strung lights' one mesh spans the front, and the den-front shrubs' boxes touch the den's volume)
         Trees(ext);       // SpecGreybox.Trees.cs: generated bare winter trees replace the stick trees (hifi_bare_trees.py)
         Shell(ext, gy);   // SpecGreybox.Shell.cs: the house's exterior skin (after the cull above: its upper storey crosses Marina's rooms by design)
+        ExteriorRealism(ext, gy);   // SpecGreybox.ExteriorRealism.cs: steps, railings, drifts, ground skirt, decals, wet road (changes/2026-10-18-exterior-realism.json)
     }
 
     // The GLB's garage and driveway (registered with the site): triangles of a GLB renderer whose registered centroid lies in the

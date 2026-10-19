@@ -404,6 +404,16 @@
    "mat": "EX_Gutter",
    "faces": 108
   },
+  "U_GutterSnow": {
+   "layer": "U",
+   "mat": "EX_Snow",
+   "faces": 12042
+  },
+  "U_Icicles": {
+   "layer": "U",
+   "mat": "EX_Ice",
+   "faces": 728
+  },
   "L_Roof": {
    "layer": "L",
    "mat": "EX_Roof",
@@ -427,7 +437,7 @@
   "U_Glass": {
    "layer": "U",
    "mat": "EX_Glass",
-   "faces": 198
+   "faces": 43
   },
   "U_Shade": {
    "layer": "U",
@@ -443,6 +453,11 @@
    "layer": "U",
    "mat": "EX_Stone",
    "faces": 90
+  },
+  "U_SillSnow": {
+   "layer": "U",
+   "mat": "EX_Snow",
+   "faces": 2760
   },
   "U_Shutter": {
    "layer": "U",
@@ -467,7 +482,7 @@
   "L_Sheer": {
    "layer": "L",
    "mat": "EX_Sheer",
-   "faces": 48
+   "faces": 8
   },
   "L_Mould": {
    "layer": "L",
@@ -478,6 +493,11 @@
    "layer": "L",
    "mat": "EX_Stone",
    "faces": 156
+  },
+  "L_SillSnow": {
+   "layer": "L",
+   "mat": "EX_Snow",
+   "faces": 2784
   },
   "L_Shutter": {
    "layer": "L",
@@ -557,17 +577,47 @@
   "U_XmasBulbs": {
    "layer": "U",
    "mat": "EX_Bulb",
-   "faces": 2880
+   "faces": 2268
   },
   "L_XmasBulbs": {
    "layer": "L",
    "mat": "EX_Bulb",
-   "faces": 2208
+   "faces": 1818
+  },
+  "U_XmasBulbsWarm": {
+   "layer": "U",
+   "mat": "EX_BulbWarm",
+   "faces": 2892
+  },
+  "U_XmasBulbsDim": {
+   "layer": "U",
+   "mat": "EX_BulbDim",
+   "faces": 360
+  },
+  "U_XmasWire": {
+   "layer": "U",
+   "mat": "EX_Wire",
+   "faces": 947
+  },
+  "L_XmasBulbsWarm": {
+   "layer": "L",
+   "mat": "EX_BulbWarm",
+   "faces": 2088
+  },
+  "L_XmasBulbsDim": {
+   "layer": "L",
+   "mat": "EX_BulbDim",
+   "faces": 270
+  },
+  "L_XmasWire": {
+   "layer": "L",
+   "mat": "EX_Wire",
+   "faces": 710
   },
   "U_RoofSnow": {
    "layer": "U",
    "mat": "EX_Snow",
-   "faces": 3509
+   "faces": 776
   },
   "L_Lantern": {
    "layer": "L",

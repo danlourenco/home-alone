@@ -68,7 +68,18 @@ def part(name, mat, layer):
     return parts[key]["faces"]
 
 
+GROUPS = {}            # id(face list) -> group id per face: the faces of one box/prism/wall share a group (hifi_exterior welds and bevels
+_GID, _CUR = [0], [None]   # within a group only, so touching boxes stay separate closed parts; realism pass Oct 18)
+
+
+class group:
+    def __enter__(self): _GID[0] += 1; _CUR[0] = _GID[0]
+    def __exit__(self, *a): _CUR[0] = None
+
+
 def face(F, pts, toward):
+    if _CUR[0] is None: _GID[0] += 1
+    GROUPS.setdefault(id(F), []).append(_CUR[0] if _CUR[0] is not None else _GID[0])
     n = [0.0, 0.0, 0.0]
     for (ax, ay, az), (bx, by, bz) in zip(pts, pts[1:] + pts[:1]):
         n[0] += (ay - by) * (az + bz); n[1] += (az - bz) * (ax + bx); n[2] += (ax - bx) * (ay + by)
@@ -78,6 +89,10 @@ def face(F, pts, toward):
 
 
 def box(F, x0, x1, y0, y1, z0, z1, skip=()):
+    with group(): _box(F, x0, x1, y0, y1, z0, z1, skip)
+
+
+def _box(F, x0, x1, y0, y1, z0, z1, skip=()):
     x0, x1 = sorted((x0, x1)); y0, y1 = sorted((y0, y1)); z0, z1 = sorted((z0, z1))
     q = {"y1": ([(x0, y1, z0), (x1, y1, z0), (x1, y1, z1), (x0, y1, z1)], (0, 1, 0)),
          "y0": ([(x0, y0, z0), (x1, y0, z0), (x1, y0, z1), (x0, y0, z1)], (0, -1, 0)),
@@ -91,6 +106,10 @@ def box(F, x0, x1, y0, y1, z0, z1, skip=()):
 
 
 def prism(F, pts, e):
+    with group(): _prism(F, pts, e)
+
+
+def _prism(F, pts, e):
     """Convex planar polygon pts extruded by vector e, faces outward."""
     top = [tuple(a + b for a, b in zip(p, e)) for p in pts]
     c = [sum(p[i] for p in pts + top) / (2 * len(pts)) for i in range(3)]
@@ -100,13 +119,47 @@ def prism(F, pts, e):
         q = [pts[i], pts[(i + 1) % len(pts)], top[(i + 1) % len(pts)], top[i]]; face(F, q, out(q))
 
 
+def mound(F, axis, d, s, a0, a1, y, t0, t1, hmax, seed=0, nt=6, step=0.05):
+    """Exterior realism (Oct 18): snow sitting on a ledge: a soft rounded mound on the level top at y between t0..t1 out from the
+    face d (outward s), along a0..a1; height hmax with noise, tapering to nothing at both ends (no flat caps). 2 mm over the ledge."""
+    na = max(2, int((a1 - a0) / step))
+    def pt(i, j):
+        a = a0 + (a1 - a0) * i / na; u = j / nt
+        e = max(0.0, min(1.0, min(a - a0, a1 - a) / 0.08)) ** 0.5
+        h = hmax * e * (0.75 + 0.5 * _vnoise(a * 7.0, seed, seed)) * math.sin(math.pi * u) ** 0.6
+        return P(axis, a, y + 0.002 + h, d + s * (t0 + (t1 - t0) * u))
+    for i in range(na):
+        for j in range(nt):
+            face(F, [pt(i, j), pt(i + 1, j), pt(i + 1, j + 1), pt(i, j + 1)], (0, 1, 0))
+
+
+def icicles(F, axis, d, s, a0, a1, y, t, seed=0, every=0.9):
+    """A few thin icicles hanging from a gutter's lip (film 4382/10: subtle): clusters at hashed spots, 4-26 cm long."""
+    a = a0 + 0.3
+    while a < a1 - 0.3:
+        r = _vnoise(a * 3.1, seed, seed + 5)
+        if r > 0.55:
+            for k in range(1 + int(r * 4)):
+                ak = a + (k - 1.5) * 0.045; L = 0.04 + 0.22 * _vnoise(ak * 11.0, seed, 9) * r; w = 0.008 + 0.006 * r
+                c = P(axis, ak, y, d + s * t); tip = (c[0], y - L, c[2])
+                base = [(c[0] - w, y, c[2] - w), (c[0] + w, y, c[2] - w), (c[0] + w, y, c[2] + w), (c[0] - w, y, c[2] + w)]
+                for q in range(4):
+                    m = [(base[q][i] + base[(q + 1) % 4][i]) / 2 - c[i] for i in range(3)]
+                    face(F, [base[q], base[(q + 1) % 4], tip], (m[0], 0, m[2]))
+        a += every * (0.6 + 0.8 * _vnoise(a, seed, 2))
+
+
 # ---------------------------------------------------------------- walls with holes
 def P(axis, a, y, d):
     """axis 'x': a wall facing along x (runs along z), d = x; axis 'z': facing along z, d = z."""
     return (d, y, a) if axis == "x" else (a, y, d)
 
 
-def wall(F, axis, c, s, a0, a1, y0, y1, t, holes=(), caps=(True, True), top=True, bottom=False):
+def wall(F, *a, **k):
+    with group(): _wall(F, *a, **k)
+
+
+def _wall(F, axis, c, s, a0, a1, y0, y1, t, holes=(), caps=(True, True), top=True, bottom=False):
     """A vertical slab on the plane d = c (our wall's outer face), t thick toward s (+1/-1). Holes: dicts a0 a1 y0 y1 [rise]
     (rise: elliptical head over y1). Emits the outer face, the reveals, caps and top (the inner face is never seen)."""
     n_out = (s, 0, 0) if axis == "x" else (0, 0, s)
@@ -338,11 +391,15 @@ def eave_box(rect, over, ye, layer, frieze, keep=None):
             box(T, d + s * (over - 0.04), d + s * over, ye - fh, ye + RT * 0.5, a0, a1)                        # fascia
             box(T, d, d + s * (over - 0.04), ye - fh, ye - fh + 0.03, a0 + (0.04 if s else 0), a1)             # soffit
             box(G_, d + s * over, d + s * (over + 0.11), ye - fh + 0.05, ye + RT * 0.3, a0, a1)               # gutter
+            mound(part("GutterSnow", "EX_Snow", layer), "x", d, s, a0, a1, ye + RT * 0.3, over - 0.02, over + 0.11, 0.05, seed=int(d * 7))
+            icicles(part("Icicles", "EX_Ice", layer), "x", d, s, a0, a1, ye - fh + 0.05, over + 0.10, seed=int(d * 7))
             if frieze: box(T, d, d + s * 0.025, ye - fh - frieze, ye - fh, a0 + over, a1 - over)
         else:
             box(T, a0, a1, ye - fh, ye + RT * 0.5, d + s * (over - 0.04), d + s * over)
             box(T, a0, a1, ye - fh, ye - fh + 0.03, d, d + s * (over - 0.04))
             box(G_, a0, a1, ye - fh + 0.05, ye + RT * 0.3, d + s * over, d + s * (over + 0.11))
+            mound(part("GutterSnow", "EX_Snow", layer), "z", d, s, a0, a1, ye + RT * 0.3, over - 0.02, over + 0.11, 0.05, seed=int(d * 7))
+            icicles(part("Icicles", "EX_Ice", layer), "z", d, s, a0, a1, ye - fh + 0.05, over + 0.10, seed=int(d * 7))
             if frieze: box(T, a0 + over, a1 - over, ye - fh - frieze, ye - fh, d, d + s * 0.025)
 
 
@@ -404,7 +461,7 @@ def sash_unit(face_axis, d, s, a0, a1, y0, y1, layer, recess=0.07, rows=(3, 3), 
     bx(T, a0, a0 + fw, y0, y1, -0.06, 0.0); bx(T, a1 - fw, a1, y0, y1, -0.06, 0.0)
     bx(T, a0, a1, y1 - fw, y1, -0.06, 0.0); bx(T, a0, a1, y0, y0 + fw, -0.06, 0.0)
     ym = (y0 + y1) / 2
-    bx(T, a0 + fw, a1 - fw, ym - 0.025, ym + 0.025, -0.05, -0.005)              # meeting rail
+    bx(T, a0 + fw, a1 - fw, ym - 0.025, ym + 0.025, -0.04, -0.005)              # meeting rail (its back on the glass's front: 5 mm behind the glass's back face z-fought, realism build 3)
     ia0, ia1 = a0 + fw, a1 - fw
     for k in range(1, cols):
         a = ia0 + (ia1 - ia0) * k / cols
@@ -413,7 +470,9 @@ def sash_unit(face_axis, d, s, a0, a1, y0, y1, layer, recess=0.07, rows=(3, 3), 
         for k in range(1, nr):
             yy = yb + (yt_ - yb) * k / nr
             bx(T, ia0, ia1, yy - 0.011, yy + 0.011, -0.04, -0.01)
-    bx(Gl, ia0, ia1, y0 + fw, y1 - fw, -0.045, -0.04)
+    # glass: one outward face 1 cm behind the muntins (a 5 mm box's back face sat 5 mm from the muntins' backs: z-fight, realism build 4)
+    gp = [(ia0, y0 + fw), (ia1, y0 + fw), (ia1, y1 - fw), (ia0, y1 - fw)]
+    face(Gl, [P(face_axis, a, y, df - s * 0.05) for a, y in gp], (s, 0, 0) if face_axis == "x" else (0, 0, s))
     if shade:   # a shade drawn two thirds down (film 4382: blinds/sheers in most upper sashes)
         bx(Sh, ia0, ia1, y1 - fw - (y1 - y0) * 0.62, y1 - fw, -0.09, -0.085)
 
@@ -440,6 +499,7 @@ def surround(face_axis, d, s, a0, a1, y0, y1, layer, sill=True, key=False, head=
     bx(T, a1, a1 + m, y0, y1 + (m if head else 0), 0.0, 0.025)
     if head: bx(T, a0, a1, y1, y1 + m, 0.0, 0.025)
     if sill: bx(S, a0 - m - 0.05, a1 + m + 0.05, y0 - 0.07, y0 - 0.005, 0.0, 0.06)
+    if sill: mound(part("SillSnow", "EX_Snow", layer), face_axis, d, s, a0 - m - 0.04, a1 + m + 0.04, y0 - 0.005, 0.0, 0.058, 0.028, seed=int(a0 * 10))
     if key:
         ac = (a0 + a1) / 2
         bx(S, ac - 0.11, ac + 0.11, y1 + m + 0.10, y1 + m + 0.24, 0.0, 0.03)
@@ -629,11 +689,11 @@ def door_face(layer):
     box(Br, xw + 0.045, xw + 0.07, y0 + 0.95, y0 + 1.05, z1 - 0.12, z1 - 0.08)            # handle
     box(Br, xw + 0.045, xw + 0.06, y0 + 1.30, y0 + 1.42, (z0 + z1) / 2 - 0.05, (z0 + z1) / 2 + 0.05)   # knocker
     # pilasters and sidelight frames (the sidelight glass is the wall's own opening: hifi_door.py)
-    for (a, b) in ((8.848, 8.968), (9.255, 9.31), (10.121, 10.176), (10.463, 10.583)):
+    for (a, b) in ((8.848, 8.978), (9.255, 9.31), (10.121, 10.176), (10.453, 10.583)):   # outer pilasters 1 cm into the brick reveal (coplanar at 8.968/10.463, realism build 4)
         box(T, xw, xw + 0.06, y0, GF + 1.93, a, b)
     for (a, b) in ((8.968, 9.255), (10.176, 10.463)):
-        box(T, xw, xw + 0.04, GF + 1.844, GF + 1.93, a, b)
-        box(T, xw, xw + 0.04, GF, GF + 0.412, a, b)
+        box(T, xw, xw + 0.04, GF + 1.834, GF + 1.93, a, b)   # 1 cm under the brick head reveal (coplanar at 1.844, realism build 3)
+        box(T, xw, xw + 0.04, GF, GF + 0.422, a, b)   # 1 cm over the brick sill reveal (coplanar at 0.412)
         box(T, xw + 0.04, xw + 0.05, GF + 0.08, GF + 0.33, a + 0.04, b - 0.04)
     box(T, xw, xw + 0.06, GF + 1.898, GF + 1.93, 8.848, 10.583)                            # transom bar
     # fanlight: elliptical, radial muntins
@@ -702,25 +762,49 @@ def french_leaves(axis, d, s, a0, a1, y0, y1, layer):
             yy = G0 + (G1 - G0) * r / 5; bx(T, g0, g1, yy - m / 2, yy + m / 2, -0.035, -0.012)
 
 
-BULB, BULB_STEP = 0.018, 0.105
+BULB, BULB_STEP = 0.024, 0.055   # realism pass: twice the density (Pietro/film 10 read as thick outlines), draped, varied
+_BULBN = [0]
 
 
 def bulb_loop(B, axis, d, s, a0, a1, y0, y1, closed=True):
-    """Film 10/1470/3377: warm mini-lights strung round a window's outline (just outside its mould), 7.5 cm proud of the face d."""
+    """Film 10/1470/3377: warm mini-lights strung round a window's outline (just outside its mould), 7.5 cm proud of the face d.
+    Exterior realism (Oct 18): a real strand: clipped every ~0.30 m, sagging 1-2.5 cm between clips on the level runs (bowing out a
+    little on the verticals), a dark wire along it, bulbs of varied size on short leads in three tints (bright/warm/dim parts)."""
     q = d + s * 0.075   # in front of the sills and shutters (0.06)
+    lay = B["layer"]; parts_ = (B["faces"], part("XmasBulbsWarm", "EX_BulbWarm", lay), part("XmasBulbsDim", "EX_BulbDim", lay))
+    W = part("XmasWire", "EX_Wire", lay)
     corners = [(a0, y0), (a0, y1), (a1, y1), (a1, y0)] + ([(a0, y0)] if closed else [])
+    prev = None
     for (pa, py), (qa, qy) in zip(corners, corners[1:]):
-        L = math.hypot(qa - pa, qy - py); n = max(1, round(L / BULB_STEP))
-        for k in range(n):
-            a = pa + (qa - pa) * k / n; y = py + (qy - py) * k / n; h = BULB / 2
-            box(B, q - h, q + h, y - h, y + h, a - h, a + h) if axis == "x" else box(B, a - h, a + h, y - h, y + h, q - h, q + h)
+        L = math.hypot(qa - pa, qy - py); n = max(1, round(L / BULB_STEP)); nclip = max(1, round(L / 0.30))
+        level = abs(qy - py) < 1e-6
+        for k in range(n + 1):
+            u = k / n; a = pa + (qa - pa) * u; y = py + (qy - py) * u
+            v = (u * nclip) % 1.0; sag = (0.010 + 0.015 * _vnoise(a * 3, y * 3, 4)) * 4 * v * (1 - v)
+            if level: y -= sag
+            off = 0.0 if level else sag * 0.6
+            cur = (a, y, q + s * off)
+            if prev is not None:   # the wire from the last point (4 mm square)
+                (pa_, py_, pq_), (ca, cy, cq) = prev, cur; w = 0.002
+                if axis == "x":
+                    face(W, [(pq_, py_ - w, pa_), (cq, cy - w, ca), (cq, cy + w, ca), (pq_, py_ + w, pa_)], (s, 0, 0))
+                else:
+                    face(W, [(pa_, py_ - w, pq_), (ca, cy - w, cq), (ca, cy + w, cq), (pa_, py_ + w, pq_)], (0, 0, s))
+            prev = cur
+            if k == n: continue
+            _BULBN[0] += 1; r = _vnoise(_BULBN[0] * 0.731, 3.3, 17)
+            h = BULB / 2 * (0.7 + 0.6 * _vnoise(_BULBN[0] * 1.913, 1.1, 5))
+            dy = -0.012 * _vnoise(_BULBN[0] * 0.37, 2.0, 8)   # hangs a little off the wire on its lead
+            F = parts_[0 if r < 0.45 else 1 if r < 0.8 else 2]
+            qq = q + s * (off + 0.006)
+            box(F, qq - h, qq + h, y + dy - h, y + dy + h, a - h, a + h) if axis == "x" else box(F, a - h, a + h, y + dy - h, y + dy + h, qq - h, qq + h)
 
 
 def xmas_lights(D):
     """The front's Christmas lights: every window of the street side outlined (film 10: both storeys, the den and right sections,
     both dormers), drawn as emissive bulbs (EX_Bulb: SpecGreybox.Shell lights them at night only, HouseNightMode's glow list)."""
     out, lo = 0.08, 0.09   # on the mould's outer edge, inside the shutters (they start 0.09 off the opening); under the sill
-    BU = part("XmasBulbs", "EX_Bulb", "U"); BL = part("XmasBulbs", "EX_Bulb", "L")
+    part("XmasBulbs", "EX_Bulb", "U"); part("XmasBulbs", "EX_Bulb", "L"); BU, BL = parts["U_XmasBulbs"], parts["L_XmasBulbs"]
     for w in UPW_LIST:
         if w["face"] in ("front", "den_front", "right_front"):
             bulb_loop(BU, "x", w["d"], 1, w["a0"] - out, w["a1"] + out, w["y0"] - lo, w["y1"] + out)
@@ -789,7 +873,9 @@ def roof_snow(roofs, dormers):
                 if len({facet(r, x, z) for x, z in cs}) > 1: continue
                 xm, zm = xa + C / 2, za + C / 2
                 n = 0.65 * _vnoise(xm / 0.9, zm / 0.9, 3) + 0.35 * _vnoise(xm / 0.3, zm / 0.3, 7)
-                if n < 0.64 or blocked(xm, zm): continue
+                ed = min(xm - x0, x1 - xm, zm - z0, z1 - zm)   # realism pass: 4382 shows a light dusting, more along the eaves
+                n += 0.12 * max(0.0, 1.0 - ed / 0.9)
+                if n < 0.80 or blocked(xm, zm): continue
                 if any(o["x"][0] - 0.1 < xm < o["x"][1] + 0.1 and o["z"][0] - 0.1 < zm < o["z"][1] + 0.1 and h(o, xm, zm) > h(r, xm, zm) - 0.05 for o in others):
                     continue
                 cj = [jit(x, z) for x, z in cs]
@@ -849,6 +935,7 @@ def main():
     lantern = porch_lantern("L")
     bad = check()
     out = ROOT / "sfm-work/exterior"; out.mkdir(parents=True, exist_ok=True)
+    for v in parts.values(): v["groups"] = GROUPS.get(id(v["faces"]), [])
     (out / "shell.json").write_text(json.dumps(parts))
     nf = {k: len(v["faces"]) for k, v in parts.items()}
     summary = dict(

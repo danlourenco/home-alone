@@ -18,9 +18,10 @@ public static partial class SpecGreybox
 {
     static readonly List<Renderer> ShellGlow = new List<Renderer>();   // the upper sashes' drawn shades: lit at night (HouseNightMode)
     static readonly List<Light> ShellLights = new List<Light>();       // porch lantern, lamp posts: moved into the night layer (Daylight)
-    static Material XmasBulb()   // film 10: warm white mini-lights (double-sided: the generated cubes' winding is not checked)
+    static Material XmasBulb() => XmasBulb("HiFi_XmasBulb", new Color(1f, 0.78f, 0.50f), 2500f);
+    static Material XmasBulb(string n, Color c, float nits)   // film 10: warm white mini-lights (double-sided: the generated cubes' winding is not checked)
     {
-        var m = AtticGlow("HiFi_XmasBulb", new Color(1f, 0.78f, 0.50f), 2500f, 0.4f); m.SetFloat("_DoubleSidedEnable", 1f); HDMaterial.ValidateMaterial(m); return m;
+        var m = AtticGlow(n, c, nits, 0.4f); m.SetFloat("_DoubleSidedEnable", 1f); HDMaterial.ValidateMaterial(m); return m;
     }
 
     static void Shell(GameObject ext, float gy)
@@ -30,19 +31,26 @@ public static partial class SpecGreybox
         var S = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/exterior_shell.json"))));
         var holder = new GameObject("HouseShell"); holder.transform.SetParent(ext.transform, false);
         holder.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
-        var shade = AtticGlow("HiFi_ShadeExterior", new Color(0.88f, 0.83f, 0.70f), 25f, 0.15f);
+        // realism pass (Pietro's night frame, film 10): the drawn shades glow brighter, a little blown out under bloom (25 -> 70 nits)
+        var shade = AtticGlow("HiFi_ShadeExterior", new Color(0.88f, 0.83f, 0.70f), 70f, 0.15f);
         // the sealed sunroom's windows (sunroom fix, Oct 18): sheers seen through glass, greyer and glossier than the shades (sun-lit they
         // read flat against the white sashes), lit at night (film 10)
-        var sheer = AtticGlow("HiFi_SheerExterior", new Color(0.70f, 0.69f, 0.66f), 25f, 0.75f);
+        var sheer = AtticGlow("HiFi_SheerExterior", new Color(0.70f, 0.69f, 0.66f), 55f, 0.75f);
         var glass = Mat("HiFi_ExtGlass", new Color(0.035f, 0.045f, 0.055f)); glass.SetFloat("_Smoothness", 0.93f);
         var g = PlaceHiFi(holder, 0f, "Exterior", new Dictionary<string, Material> {
-            ["EX_Brick"] = TexMat("HiFi_ExtBrick", "red_brick_03", new Color(0.80f, 0.60f, 0.53f), 1.90f, 0.12f),   // 28 courses a tile: 68 mm (2 5/8 in) courses
-            ["EX_Trim"] = Mat("HiFi_ExtTrim", new Color(0.86f, 0.85f, 0.81f)),
-            ["EX_Shutter"] = Mat("HiFi_ExtShutter", new Color(0.022f, 0.026f, 0.026f)),
-            ["EX_Roof"] = TexMat("HiFi_ExtRoof", "concrete_floor_worn_001", new Color(0.14f, 0.12f, 0.11f), 1.6f, 0.08f),   // polish: lifted from 0.10/0.095/0.095 (read near-black in sun; film 4382 dark brown-grey)
-            ["EX_Snow"] = Mat("HiFi_ExtRoofSnow", new Color(0.80f, 0.82f, 0.86f)),
+            // realism pass (Oct 18; changes/2026-10-18-exterior-realism.json): PBR sets on the skin's own metric UVs (hifi_exterior.py) with
+            // parallax height on the brick (recessed mortar) and the shingles (rows level on every hip)
+            ["EX_Brick"] = UVMat("HiFi_ExtBrickPBR", "red_brick_03_x", new Color(0.80f, 0.60f, 0.53f), 1.90f, 0.30f, 1.2f, 1f),   // 28 courses a tile: 68 mm (2 5/8 in) courses
+            ["EX_Trim"] = UVMat("HiFi_ExtTrimPBR", "white_plaster_02_x", new Color(0.84f, 0.83f, 0.80f), 1.5f, 0.55f, 0f, 0.35f, false),
+            ["EX_Shutter"] = UVMat("HiFi_ExtShutterPBR", "white_plaster_02_x", new Color(0.024f, 0.027f, 0.027f), 1.5f, 0.55f, 0f, 0.35f, false),
+            ["EX_Roof"] = UVMat("HiFi_ExtRoofPBR", "roof_slates_02_x", new Color(0.42f, 0.38f, 0.44f), 5.3f, 0.30f, 1.5f, 1f),   // film 4382 dark brown-grey (sampled lin 0.088/0.069/0.069 at brick-matched exposure; tint tuned live)
+            ["EX_Snow"] = UVMat("HiFi_ExtSnowPBR", "snow_02_x", new Color(0.95f, 0.97f, 1.0f), 2.0f, 0.45f, 0f, 0.6f),
+            ["EX_Ice"] = IceMat(),
+            ["EX_Wire"] = Mat("HiFi_ExtWire", new Color(0.012f, 0.025f, 0.012f)),
+            ["EX_BulbWarm"] = XmasBulb("HiFi_XmasBulbWarm", new Color(1f, 0.66f, 0.38f), 2000f),   // 2400-3000 K spread (film 10's warm white)
+            ["EX_BulbDim"] = XmasBulb("HiFi_XmasBulbDim", new Color(0.95f, 0.60f, 0.34f), 700f),
             ["EX_Glass"] = glass, ["EX_Shade"] = shade, ["EX_Sheer"] = sheer,
-            ["EX_Stone"] = Mat("HiFi_ExtStone", new Color(0.74f, 0.70f, 0.62f)),
+            ["EX_Stone"] = UVMat("HiFi_ExtStonePBR", "concrete_floor_01_x", new Color(1.0f, 0.95f, 0.85f), 1.0f, 0.35f, 0f, 0.6f),
             ["EX_Gutter"] = Mat("HiFi_ExtGutter", new Color(0.84f, 0.84f, 0.82f)),
             ["EX_Pot"] = Mat("HiFi_ExtPot", new Color(0.50f, 0.25f, 0.16f)),
             ["EX_DoorBlack"] = Mat("HiFi_ExtDoor", new Color(0.02f, 0.025f, 0.025f)),
@@ -60,7 +68,8 @@ public static partial class SpecGreybox
             r.gameObject.isStatic = true;
             r.renderingLayerMask = u ? LayerFilmFront : LayerHouse;
             bool lit = r.sharedMaterial.name.StartsWith("HiFi_XmasBulb") || r.sharedMaterial.name.StartsWith("HiFi_ExtLanternGlow");
-            r.shadowCastingMode = r.sharedMaterial == shade || r.sharedMaterial == sheer || r.sharedMaterial == mGlass || lit ? ShadowCastingMode.Off : ShadowCastingMode.TwoSided;
+            bool tiny = r.sharedMaterial.name.StartsWith("HiFi_ExtWire") || r.sharedMaterial.name.StartsWith("HiFi_ExtIce");   // strands, icicles: no shadow maps (perf)
+            r.shadowCastingMode = r.sharedMaterial == shade || r.sharedMaterial == sheer || r.sharedMaterial == mGlass || lit || tiny ? ShadowCastingMode.Off : ShadowCastingMode.TwoSided;
             if (u) upper.Add(r);
             if (r.sharedMaterial == shade || r.sharedMaterial == sheer || lit) ShellGlow.Add(r);   // Christmas lights and the porch lantern: dark by day
         }
@@ -120,8 +129,8 @@ public static partial class SpecGreybox
     // and the walk to the street. Spec x, z; world y (front yard -4.32, the registered GLB's).
     static void FrontBeds(GameObject yard, float d, Material snow, Material walk)
     {
-        var brick = TexMat("HiFi_ExtBrick", "red_brick_03", new Color(0.80f, 0.60f, 0.53f), 1.90f, 0.12f);
-        var cap = Mat("HiFi_ExtStone", new Color(0.74f, 0.70f, 0.62f));
+        var brick = TexMat("HiFi_ExtBrick", "red_brick_03_x", new Color(0.80f, 0.60f, 0.53f), 1.90f, 0.12f);   // realism pass: the 2k set
+        var cap = TexMat("HiFi_ExtStone", "concrete_floor_01_x", new Color(1.0f, 0.95f, 0.85f), 1.0f, 0.30f);
         var red = Mat("Yard_Steps", new Color(0.50f, 0.22f, 0.18f));
         const float face = 10.37f, zc = 9.716f, sw = 0.95f, cheek = 0.25f;
         const float stoopX = 12.25f, upX = 12.85f, loX = 14.85f, riser = 0.1757f, tread = 0.30f;
@@ -166,12 +175,14 @@ public static partial class SpecGreybox
     }
 
     // one mesh of small cubes (Christmas mini-lights) at the given world points
-    static GameObject Bulbs(GameObject parent, string n, List<Vector3> pts, float size, Material m)
+    static GameObject Bulbs(GameObject parent, string n, List<Vector3> pts, float size, Material m) => Bulbs(parent, n, pts, m, pts.Select(_ => size).ToList());
+    static GameObject Bulbs(GameObject parent, string n, List<Vector3> pts, Material m, List<float> sizes)
     {
-        var vs = new List<Vector3>(); var tris = new List<int>(); float h = size / 2;
+        var vs = new List<Vector3>(); var tris = new List<int>();
         int[] F = { 0, 2, 1, 0, 3, 2, 4, 5, 6, 4, 6, 7, 0, 1, 5, 0, 5, 4, 1, 2, 6, 1, 6, 5, 2, 3, 7, 2, 7, 6, 3, 0, 4, 3, 4, 7 };
-        foreach (var p in pts)
+        for (int pi = 0; pi < pts.Count; pi++)
         {
+            var p = pts[pi]; float h = sizes[pi] / 2;
             int b = vs.Count;
             foreach (var y in new[] { -h, h }) { vs.Add(p + new Vector3(-h, y, -h)); vs.Add(p + new Vector3(h, y, -h)); vs.Add(p + new Vector3(h, y, h)); vs.Add(p + new Vector3(-h, y, h)); }
             foreach (var i in F) tris.Add(b + i);
@@ -181,6 +192,25 @@ public static partial class SpecGreybox
         var g = new GameObject(n); g.transform.SetParent(parent.transform, false); g.isStatic = true;
         g.AddComponent<MeshFilter>().sharedMesh = mesh; var r = g.AddComponent<MeshRenderer>(); r.sharedMaterial = m; r.shadowCastingMode = ShadowCastingMode.Off;
         ShellGlow.Add(r); return g;
+    }
+
+    // thin square tubes along point pairs (a light strand's wire), one mesh, no shadows
+    static GameObject Strand(GameObject parent, string n, List<Vector3> seg, float w, Material m)
+    {
+        var vs = new List<Vector3>(); var tris = new List<int>();
+        for (int i = 0; i + 1 < seg.Count; i += 2)
+        {
+            Vector3 a = seg[i], c = seg[i + 1], t = (c - a).normalized, u = Vector3.Cross(t, Vector3.up).normalized * w, v = Vector3.Cross(u, t).normalized * w;
+            if (u.sqrMagnitude < 1e-12f) { u = Vector3.right * w; v = Vector3.forward * w; }
+            int b = vs.Count;
+            foreach (var p in new[] { a, c }) { vs.Add(p + u + v); vs.Add(p - u + v); vs.Add(p - u - v); vs.Add(p + u - v); }
+            for (int k = 0; k < 4; k++) { int k2 = (k + 1) % 4; tris.AddRange(new[] { b + k, b + 4 + k, b + 4 + k2, b + k, b + 4 + k2, b + k2 }); }
+        }
+        var mesh = new Mesh { name = n, indexFormat = IndexFormat.UInt32 }; mesh.SetVertices(vs); mesh.SetTriangles(tris, 0); mesh.RecalculateNormals(); mesh.RecalculateBounds();
+        var g = new GameObject(n); g.transform.SetParent(parent.transform, false); g.isStatic = true;
+        g.AddComponent<MeshFilter>().sharedMesh = mesh; var r = g.AddComponent<MeshRenderer>(); r.sharedMaterial = m; r.shadowCastingMode = ShadowCastingMode.Off;
+        m.SetFloat("_DoubleSidedEnable", 1f); HDMaterial.ValidateMaterial(m);
+        return g;
     }
 
     // The front beds' plants (exterior polish, Oct 18, TRIAL; decoration): tools/house/hifi_ext_plants.py -> ExteriorPlants.glb, one
@@ -210,7 +240,13 @@ public static partial class SpecGreybox
             r.gameObject.isStatic = true; r.shadowCastingMode = ShadowCastingMode.On;
         }
         Physics.SyncTransforms();
-        var pts = new List<Vector3>(); var rnd = new System.Random(10); int dropped = 0;
+        // realism pass (walk note Oct 18 20:52 "they feel a little fake and one dimensional"): bulbs through the shrub's volume, not on
+        // its shell (deep ones dimmer), sizes and tints varied (bright / warm / dim parts, ~2400-3000 K), ~1.6x denser (Pietro, film 10
+        // 10174), a cheap unshadowed glow light in each lit shrub so the leaves and the snow round it pick up the light
+        var pts = new List<Vector3>(); var sz = new List<float>(); var tint = new List<int>(); var rnd = new System.Random(10); int dropped = 0;
+        var glowAt = new List<(Vector3 c, float r)>();
+        float R() => (float)rnd.NextDouble();
+        void Add(Vector3 p, float depth) { pts.Add(p); sz.Add(0.018f + 0.012f * R()); tint.Add(depth < 0.82f ? 2 : R() < 0.5f ? 0 : 1); }
         foreach (Transform p in g.transform.Cast<Transform>().ToList())
         {
             var o = p.position;
@@ -218,27 +254,50 @@ public static partial class SpecGreybox
             else Debug.LogWarning($"ExteriorPlants: no bed under {p.name} at {o}");
             if (p.name.Contains("urn") || p.name.Contains("fir")) continue;
             foreach (var r in p.GetComponentsInChildren<MeshRenderer>())
-            {   // mini-lights on the shrub's ellipsoid, upper 80%, ~32 a square metre
+            {
                 if (r.name.Contains("stem")) continue;
-                var b = r.bounds; var c = b.center; var e = b.extents + Vector3.one * 0.035f;   // at the leaf cards' tips
-                int n = Mathf.RoundToInt(4f * Mathf.PI * Mathf.Pow((e.x * e.y + e.x * e.z + e.y * e.z) / 3f, 1f) * 32f);
+                var b = r.bounds; var c = b.center; var e = b.extents + Vector3.one * 0.02f;
+                int n = Mathf.RoundToInt(4f * Mathf.PI * ((e.x * e.y + e.x * e.z + e.y * e.z) / 3f) * 52f);
                 for (int k = 0; k < n; k++)
                 {
-                    var v = new Vector3((float)(rnd.NextDouble() * 2 - 1), (float)(rnd.NextDouble() * 2 - 1), (float)(rnd.NextDouble() * 2 - 1));
+                    var v = new Vector3(R() * 2 - 1, R() * 2 - 1, R() * 2 - 1);
                     if (v.sqrMagnitude < 1e-4f || v.sqrMagnitude > 1f) { k--; continue; }
                     v.Normalize(); if (v.y < -0.55f) continue;
-                    pts.Add(c + Vector3.Scale(v, e));
+                    float depth = 0.55f + 0.45f * Mathf.Sqrt(R());   // most near the outside, some deep in the leaves
+                    Add(c + Vector3.Scale(v, e) * depth, depth);
                 }
+                if (e.y > 0.18f) glowAt.Add((c, Mathf.Max(e.x, e.z)));
             }
         }
-        // the terraces' caps (FrontBeds: upper cap x 12.62-12.88 at -3.32, lower 14.62-14.88 at -3.80): a strand along each front edge
+        // the terraces' caps: a strand along each front edge, clipped every ~0.35 m and sagging between clips, a dark wire along it
         const float zc = 9.716f, sw = 0.95f, cheek = 0.25f;
+        var wire = new List<Vector3>();
         foreach (var (x, y) in new[] { (12.90f, -3.32f + d + 0.02f), (14.90f, -3.80f + d + 0.02f) })
             foreach (var (z0, z1) in new[] { (-1.155f, zc - sw - cheek), (zc + sw + cheek, 20.157f) })
-                for (float z = z0 + 0.05f; z < z1; z += 0.12f) pts.Add(new Vector3(x, y, -z));
-        var bulbs = Bulbs(holder, "XmasBulbs_Yard", pts, 0.02f, XmasBulb());
+            {
+                Vector3? last = null;
+                for (float z = z0 + 0.05f; z < z1; z += 0.065f)
+                {
+                    float v = ((z - z0) / 0.35f) % 1f, sag = (0.012f + 0.012f * Mathf.PerlinNoise(z * 2f, x)) * 4f * v * (1 - v);
+                    var q = new Vector3(x + 0.01f + 0.01f * Mathf.PerlinNoise(z * 3f, 1f), y - sag + 0.02f, -z);
+                    if (last != null) { wire.Add(last.Value); wire.Add(q); }
+                    last = q; Add(q + new Vector3(0.006f, -0.008f * R(), 0f), 1f);
+                }
+            }
+        var mats = new[] { XmasBulb(), XmasBulb("HiFi_XmasBulbWarm", new Color(1f, 0.66f, 0.38f), 2000f), XmasBulb("HiFi_XmasBulbDim", new Color(0.95f, 0.60f, 0.34f), 700f) };
+        for (int t = 0; t < 3; t++)
+        {
+            var idx = Enumerable.Range(0, pts.Count).Where(i => tint[i] == t).ToList();
+            Bulbs(holder, "XmasBulbs_Yard" + (t == 0 ? "" : t == 1 ? "_Warm" : "_Dim"), idx.Select(i => pts[i]).ToList(), mats[t], idx.Select(i => sz[i]).ToList());
+        }
+        Strand(holder, "XmasWire_Yard", wire, 0.0025f, Mat("HiFi_ExtWire", new Color(0.012f, 0.025f, 0.012f)));
+        foreach (var (c, r) in glowAt)   // each lit shrub glows a little on its leaves and the snow below (no shadows; short range)
+        {
+            var l = NightLight(holder, "ShrubGlow", c + Vector3.up * 0.1f, 35f + 60f * r, 1.2f + 1.5f * r); l.color = new Color(1f, 0.72f, 0.45f);
+            ShellLights.Add(l);
+        }
         // lamp posts at the street (film 1470: black post, globe lantern; film 10 one at the left)
-        var post = Mat("HiFi_ExtLampPost", new Color(0.02f, 0.025f, 0.025f)); var globe = AtticGlow("HiFi_ExtLampGlobe", new Color(1f, 0.88f, 0.70f), 1200f, 0.6f);
+        var post = Mat("HiFi_ExtLampPost", new Color(0.02f, 0.025f, 0.025f)); var globe = AtticGlow("HiFi_ExtLampGlobe", new Color(1f, 0.88f, 0.70f), 4000f, 0.6f);   // realism pass: a bright globe that blooms (Pietro)
         var posts = new GameObject("LampPosts"); posts.transform.SetParent(holder.transform, false);
         foreach (var (x, z) in new[] { (25.2f, 21.5f), (25.2f, -6.0f) })
         {
@@ -255,9 +314,9 @@ public static partial class SpecGreybox
             Prim(PrimitiveType.Cylinder, "Collar", new Vector3(x, y0 + 3.22f, -z), new Vector3(0.22f, 0.04f, 0.22f), post);
             Prim(PrimitiveType.Sphere, "Globe", new Vector3(x, y0 + 3.48f, -z), new Vector3(0.36f, 0.44f, 0.36f), globe);
             Prim(PrimitiveType.Cylinder, "Finial", new Vector3(x, y0 + 3.74f, -z), new Vector3(0.06f, 0.05f, 0.06f), post);
-            ShellLights.Add(NightLight(posts, "LampPostLight", new Vector3(x, y0 + 3.48f, -z), 1200f, 12f));
+            ShellLights.Add(NightLight(posts, "LampPostLight", new Vector3(x, y0 + 3.48f, -z), 2400f, 14f));
         }
-        Debug.Log($"ExteriorPlants: {g.transform.childCount} plants ({dropped} on a bed), {pts.Count} mini-lights, {ShellLights.Count} night lights");
+        Debug.Log($"ExteriorPlants: {g.transform.childCount} plants ({dropped} on a bed), {pts.Count} mini-lights, {glowAt.Count} shrub glows, {ShellLights.Count} night lights");
     }
 
     // every exterior mini-light / lantern glow must switch with N (build 4 shipped the yard's glowing by day): logged per build

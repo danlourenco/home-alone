@@ -123,7 +123,13 @@ root = bpy.data.objects.new("BackDoor_HiFi", None); coll.objects.link(root)
 parts = (paint, glass, brass, flap, red, sheer, oak)
 for p in parts:
     if p.f:
-        p.build(coll, M).parent = root
+        ob = p.build(coll, M); ob.parent = root
+        if p is paint:   # exterior realism (walk note Oct 18 20:47): chamfered stiles, rails, panels and muntins catch the light
+            import bmesh
+            bm = bmesh.new(); bm.from_mesh(ob.data); bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-4); bm.to_mesh(ob.data); bm.free()
+            for poly in ob.data.polygons: poly.use_smooth = True
+            bv = ob.modifiers.new("Bevel", "BEVEL"); bv.width = 0.003; bv.segments = 2; bv.limit_method = "ANGLE"
+            bv.angle_limit = math.radians(35); bv.use_clamp_overlap = True; bv.harden_normals = True
 OUT.parent.mkdir(parents=True, exist_ok=True)
 bpy.ops.export_scene.gltf(filepath=str(OUT), export_format="GLB", export_yup=True, export_apply=True)
 print("wrote", OUT, {p.name: len(p.f) for p in parts}, "opening z", Z0, Z1, "head", HEAD)
