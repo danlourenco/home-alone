@@ -24,6 +24,11 @@ public static partial class SpecGreybox
             n.SetFloat("_Smoothness", 1f - (m.HasProperty("roughnessFactor") ? m.GetFloat("roughnessFactor") : 0.5f));
             if (m.name == "KP_RedEnamel" || m.name == "KP_Ceramic") { n.SetFloat("_MaterialID", 1f); n.SetFloat("_CoatMask", 1f); }
             if (m.name == "KP_Pine") n = KnottyPine();
+            if (m.name.StartsWith("KP_Fridge"))   // the fridge door's papers (hifi_kitchen_gallery.py fridge_<i>.png; Oct 19 props-quality)
+            {
+                n.SetTexture("_BaseColorMap", AssetDatabase.LoadAssetAtPath<Texture2D>($"Assets/Textures/Kitchen/fridge_{m.name.Substring(9)}.png"));
+                n.SetColor("_BaseColor", Color.white); n.SetFloat("_UVBase", 0f);
+            }
             UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(n); EditorUtility.SetDirty(n);
             remap[m.name] = n;
         }

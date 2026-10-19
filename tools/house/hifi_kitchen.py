@@ -280,6 +280,94 @@ for ib in K["island_bases"]:
 wood.box(l["x"][0] + TR, l["x"][1] - TR, 0.0, TOE, l["z"][0] + TR, l["z"][1] - TR)
 wood.box(s["x"][0] + TR, s["x"][1] - TR, 0.0, TOE, l["z"][1] - TR, s["z"][1] - TR)
 
+# ---------------------------------------------------------------- the stacked knotty-pine cupboard (walk note Oct 19 14:47: "what is
+# that thing in the corner? it looks weird": a plain slab with smeared triplanar grain). IMG_4305 / film 2116: four stacked pine
+# sections, each a face frame round framed raised-panel doors with wooden knobs, a moulded lip between sections, a moulded top.
+# Kept in the measured footprint (kitchen.json talls "pantry": 1.29 m angled front, two doors per section; the film's piece reads
+# narrower, one door per section: DEVIATIONS). Grain on UVs (KT_UVPine, 1 UV = 1 m): up the stiles and panels, along rails and mouldings.
+pineuv = Part("PineUV", "KT_UVPine")   # not "KT_Pine..." (PlaceHiFi remaps by name prefix)
+_MEMBER = [0]
+
+
+def pbox(o, e, n, a0, a1, d0, d1, y0, y1, grain):
+    """obox for the pine with per-face UVs (metres) following the member's grain; each member gets its own grain offset."""
+    _MEMBER[0] += 1; k = _MEMBER[0]; ou, ov = (k * 0.377) % 1.1, (k * 0.613) % 1.1
+    def pt(a, d, y): return (o[0] + a * e[0] + d * n[0], y, o[1] + a * e[1] + d * n[1])
+    def uv(corners, kind):          # corners as (a, d, y); kind: which axis the face is normal to
+        out = []
+        for a, d, y in corners:
+            if kind == "y": u, v = a, d
+            elif kind == "n": u, v = (y, a) if grain == "v" else (a, y)
+            else: u, v = (y, d) if grain == "v" else (d, y)
+            out.append((u + ou, v + ov))
+        return out
+    F = [((a0, d0, y1), (a1, d0, y1), (a1, d1, y1), (a0, d1, y1)), (0, 1, 0), "y"], \
+        [((a0, d0, y0), (a1, d0, y0), (a1, d1, y0), (a0, d1, y0)), (0, -1, 0), "y"], \
+        [((a0, d1, y0), (a1, d1, y0), (a1, d1, y1), (a0, d1, y1)), (n[0], 0, n[1]), "n"], \
+        [((a0, d0, y0), (a1, d0, y0), (a1, d0, y1), (a0, d0, y1)), (-n[0], 0, -n[1]), "n"], \
+        [((a1, d0, y0), (a1, d1, y0), (a1, d1, y1), (a1, d0, y1)), (e[0], 0, e[1]), "e"], \
+        [((a0, d0, y0), (a0, d1, y0), (a0, d1, y1), (a0, d0, y1)), (-e[0], 0, -e[1]), "e"]
+    # shared corners per member (each member a closed box, so the bevel modifier rounds its edges; members are not welded together)
+    idx = {}
+    def vi(c):
+        if c not in idx:
+            idx[c] = len(pineuv.v); pineuv.v.append(pt(*c))
+        return idx[c]
+    for corners, toward, kind in F:
+        pts = [pt(*c) for c in corners]; nn = [0.0, 0.0, 0.0]
+        for (ax_, ay, az_), (bx, by, bz) in zip(pts, pts[1:] + pts[:1]):
+            nn[0] += (ay - by) * (az_ + bz); nn[1] += (az_ - bz) * (ax_ + bx); nn[2] += (ax_ - bx) * (ay + by)
+        cs, us = list(corners), uv(corners, kind)
+        if sum(a * b for a, b in zip(nn, toward)) < 0:
+            cs, us = cs[::-1], us[::-1]
+        pineuv.f.append(tuple(vi(c) for c in cs)); pineuv.uv[len(pineuv.f) - 1] = us
+
+
+def raised_field(o, e, n, a0, a1, y0, y1, d_back, d_base, d_top, bevel):
+    """A door's panel: a thin board (d_back..d_base) and a raised field (d_base -> d_top over 'bevel' of sloped margin), grain up."""
+    pbox(o, e, n, a0, a1, d_back, d_base, y0, y1, "v")
+    k = _MEMBER[0]; ou, ov = (k * 0.377) % 1.1, (k * 0.613) % 1.1
+    def pt(a, d, y): return (o[0] + a * e[0] + d * n[0], y, o[1] + a * e[1] + d * n[1])
+    A = [(a0, y0), (a1, y0), (a1, y1), (a0, y1)]; B = [(a0 + bevel, y0 + bevel), (a1 - bevel, y0 + bevel), (a1 - bevel, y1 - bevel), (a0 + bevel, y1 - bevel)]
+    for i in range(4):                                             # the four sloped margins (from the board's face up to the field)
+        j = (i + 1) % 4; q = [(A[i], d_base + 0.0005), (A[j], d_base + 0.0005), (B[j], d_top), (B[i], d_top)]
+        mid = ((A[i][0] + A[j][0]) / 2 - (a0 + a1) / 2, (A[i][1] + A[j][1]) / 2 - (y0 + y1) / 2)
+        L = math.hypot(*mid) or 1.0; toward = (n[0] + mid[0] / L * e[0], 0.0, n[1] + mid[0] / L * e[1]); toward = (toward[0], mid[1] / L, toward[2])
+        pineuv.face([pt(a, d, y) for (a, y), d in q], toward, [(y + ou, a + ov) for (a, y), d in q])
+    pineuv.face([pt(a, d_top, y) for a, y in B], (n[0], 0, n[1]), [(y + ou, a + ov) for a, y in B])
+
+
+def knob(o, e, n, a, y, base):
+    """A turned wooden knob on a door face (film 2116: small round pine knobs), axis along n."""
+    def circ(r, m=16): return [(r * math.cos(2 * math.pi * i / m), r * math.sin(2 * math.pi * i / m)) for i in range(m)]
+    def P(d): return (o[0] + a * e[0] + d * n[0], y, o[1] + a * e[1] + d * n[1])
+    pine.sweep([P(base - 0.002), P(base + 0.014)], circ(0.008))
+    pine.sweep([P(base + 0.014), P(base + 0.018), P(base + 0.030), P(base + 0.034)], circ(0.019))
+    pine.sweep([P(base + 0.034), P(base + 0.037)], circ(0.013))
+
+
+def stacked_cupboard(poly, pull_in, o, e, n, L, top):
+    prism(pine, pull_in(DT), TOE, top); prism(pine, pull_in(TR), 0.0, TOE)   # carcass (sides against the walls) and toe kick
+    FW, CW, DW, gap = 0.045, 0.04, 0.055, 0.003       # face-frame stile, centre stile, door frame member, door gap
+    db, df = -DT + 0.002, 0.012                       # door frame back and front (12 mm proud of the face frame: 6 mm read flat, build 1)
+    half = L / 2; CROWN = 0.09; tops = [TOE + k * (top - CROWN - TOE) / 4 for k in range(5)]
+    for si, (y0, y1) in enumerate(zip(tops, tops[1:])):
+        for a0, a1 in ((0.0, FW), (L - FW, L), (half - CW / 2, half + CW / 2)):             # face-frame stiles
+            pbox(o, e, n, a0, a1, -DT + 0.002, 0.0, y0, y1, "v")
+        for a0, a1 in ((FW, half - CW / 2), (half + CW / 2, L - FW)):
+            pbox(o, e, n, a0, a1, -DT + 0.002, 0.0, y0, y0 + FW, "h"); pbox(o, e, n, a0, a1, -DT + 0.002, 0.0, y1 - FW, y1, "h")   # rails
+            b0, b1, c0, c1 = a0 + gap, a1 - gap, y0 + FW + gap, y1 - FW - gap               # the door in its opening
+            pbox(o, e, n, b0, b0 + DW, db, df, c0, c1, "v"); pbox(o, e, n, b1 - DW, b1, db, df, c0, c1, "v")
+            pbox(o, e, n, b0 + DW, b1 - DW, db, df, c0, c0 + DW, "h"); pbox(o, e, n, b0 + DW, b1 - DW, db, df, c1 - DW, c1, "h")
+            raised_field(o, e, n, b0 + DW, b1 - DW, c0 + DW, c1 - DW, db, -0.004, 0.006, 0.035)   # field 6 mm under the frame face
+            knob(o, e, n, b1 - 0.03 if a0 < half else b0 + 0.03, (c0 + c1) / 2, df)
+        if si < 3:                                                                          # the lip between sections
+            pbox(o, e, n, 0.004, L - 0.004, -0.003, 0.024, y1 - 0.018, y1 + 0.018, "h"); pbox(o, e, n, 0.008, L - 0.008, 0.024, 0.036, y1 - 0.010, y1 + 0.010, "h")
+    y = top - CROWN                                                                         # moulded top: three steps out
+    for d1, h0, h1 in ((0.02, 0.0, 0.035), (0.04, 0.03, 0.06), (0.06, 0.055, 0.09)):
+        pbox(o, e, n, 0.004, L - 0.004, -0.003, d1, y + h0, y + h1, "h")   # ends 4 mm in from the stiles' (no coplanar end faces)
+
+
 for t in K["talls"]:
     if t["name"] == "tower":
         x0, x1, z0, z1 = *t["x"], *t["z"]; top = t["top"]; o, e, n = front_frame(t["front"], z1)
@@ -302,14 +390,7 @@ for t in K["talls"]:
         cx_, cz_ = sum(p[0] for p in poly) / len(poly), sum(p[1] for p in poly) / len(poly)
         n = (-e[1], e[0]) if (-e[1]) * (ax - cx_) + e[0] * (az - cz_) > 0 else (e[1], -e[0])
         def pull_in(r): return [p if k not in (i, j) else (p[0] - n[0] * r, p[1] - n[1] * r) for k, p in enumerate(poly)]
-        prism(pine, pull_in(DT), TOE, t["top"]); prism(pine, pull_in(TR), 0.0, TOE)
-        g = GAP / 2; half = L / 2; tops = [TOE + k * (t["top"] - TOE) / 4 for k in range(5)]   # four stacked sections (IMG_4305)
-        for y0, y1 in zip(tops, tops[1:]):
-            for a0, a1 in ((g, half - g), (half + g, L - g)):
-                raised(pine, (ax, az), e, n, a0, a1, y0 + g + 0.012, y1 - g - 0.012, 0.06)
-            obox(pine, (ax, az), e, n, 0.0, L, 0.0, 0.012, y1 - g - 0.012, y1 - g)            # the section's lip
-            for a in (half - 0.05, half + 0.05):
-                obox(brass, (ax, az), e, n, a - 0.012, a + 0.012, 0.0, 0.026, (y0 + y1) / 2 - 0.012, (y0 + y1) / 2 + 0.012)   # knob
+        stacked_cupboard(poly, pull_in, (ax, az), e, n, L, t["top"])
 
 for st in K["seats"]:
     x0, x1, z0, z1 = *st["x"], *st["z"]; top = st["seat_top"]; cu = st["cushion"]; o, e, n = front_frame("+z", z1)
@@ -386,13 +467,17 @@ M = {"KT_Wood": material("KT_Wood", (0.36, 0.11, 0.12), 0.45), "KT_Tile": materi
      "KT_Steel": material("KT_Steel", (0.6, 0.6, 0.6), 0.3), "KT_Sink": material("KT_Sink", (0.92, 0.91, 0.88), 0.15),
      "KT_Cushion": material("KT_Cushion", (0.55, 0.06, 0.08), 0.9), "KT_Housing": material("KT_Housing", (0.85, 0.84, 0.8), 0.4),
      "KT_UnderLight": material("KT_UnderLight", (0.95, 0.95, 0.92), 0.5, (1.0, 0.93, 0.8), 5.0),
-     "KT_Pine": material("KT_Pine", (0.72, 0.48, 0.25), 0.4), "KT_Dispenser": material("KT_Dispenser", (0.12, 0.12, 0.13), 0.3)}
+     "KT_Pine": material("KT_Pine", (0.72, 0.48, 0.25), 0.4), "KT_UVPine": material("KT_UVPine", (0.72, 0.48, 0.25), 0.4), "KT_Dispenser": material("KT_Dispenser", (0.12, 0.12, 0.13), 0.3)}
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("KitchenCabinets_HiFi", None); coll.objects.link(root)
-parts = (wood, tile, edge, grout, brass, black, steel, sink, cushion, housing, glow, pine, disp)
+parts = (wood, tile, edge, grout, brass, black, steel, sink, cushion, housing, glow, pine, disp, pineuv)
 for p in parts:
     if p.f:
-        p.build(coll, M).parent = root
+        ob = p.build(coll, M); ob.parent = root
+        if p is pineuv:   # artist-pipeline: 2.5 mm bevels on every member's edges, weighted normals (flat faces stay flat)
+            bv = ob.modifiers.new("bevel", "BEVEL"); bv.width = 0.0025; bv.segments = 2; bv.limit_method = "ANGLE"; bv.angle_limit = math.radians(30)
+            bv.harden_normals = True
+            ob.modifiers.new("wn", "WEIGHTED_NORMAL").keep_sharp = True
 OUT.parent.mkdir(parents=True, exist_ok=True)
-bpy.ops.export_scene.gltf(filepath=str(OUT), export_format="GLB", export_yup=True, export_apply=True, export_texcoords=True)
+bpy.ops.export_scene.gltf(filepath=str(OUT), export_format="GLB", export_yup=True, export_apply=True, export_texcoords=True, export_tangents=True)
 print("wrote", OUT, {p.name: len(p.f) for p in parts})

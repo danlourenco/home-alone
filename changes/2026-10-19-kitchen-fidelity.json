@@ -1,5 +1,5 @@
 {
- "change": "Kitchen fidelity pass (user Oct 19: 'The kitchen is missing a lot of detail ... I want appliances and visual fidelity ... the pans hanging down above the kitchen counters'; 'i want to be able to walk out the kitchen door to the exterior'; TRIAL). FIXTURES (this record): the iron pot rack over the island's long leg with 14 hanging pans (tools/house/hifi_kitchen_props.py, kitchen.json wares.pot_rack); the corner cupboard rebuilt as the film's knotty-pine stacked cupboard (four sections, pine, brass knobs; same footprint), the wall oven's frame black, the fridge's ice/water dispenser (hifi_kitchen.py); the back door made operable (BackDoor.glb split into a fixed frame + threshold and a leaf, the sash curtains moving with the leaf, a hinge on the room face at the hinge edge, the hidden DoorStop collider removed, E opens / locked refuses: SpecGreybox.BackDoor.cs, EntranceDoor.handleLocal/label). PROPS LANE (no gate, listed for the record): four pine bar stools, kettle, knife block, spaghetti canister, salt/pepper, rolling pin, cutting board, fruit bowl, mortar, paper towels, coffee maker, can opener, canisters, toaster, microwave, fridge papers; six more invented snapshots, a calendar and a memo board on the gallery wall",
+ "change": "Kitchen fidelity pass (user Oct 19: 'The kitchen is missing a lot of detail ... I want appliances and visual fidelity ... the pans hanging down above the kitchen counters'; 'i want to be able to walk out the kitchen door to the exterior'; TRIAL). FIXTURES (this record): the iron pot rack over the island's long leg with 14 hanging pans (tools/house/hifi_kitchen_props.py, kitchen.json wares.pot_rack); the corner cupboard rebuilt as the film's knotty-pine stacked cupboard (four sections, pine, brass knobs; same footprint), the wall oven's frame black, the fridge's ice/water dispenser (hifi_kitchen.py); the back door made operable (BackDoor.glb split into a fixed frame + threshold and a leaf, the sash curtains moving with the leaf, a hinge on the room face at the hinge edge, the hidden DoorStop collider removed, E opens / locked refuses: SpecGreybox.BackDoor.cs, EntranceDoor.handleLocal/label). PROPS LANE (no gate, listed for the record): four pine bar stools, kettle, knife block, spaghetti canister, salt/pepper, rolling pin, cutting board, fruit bowl, mortar, paper towels, coffee maker, can opener, canisters, toaster, microwave, fridge papers; six more invented snapshots, a calendar and a memo board on the gallery wall | Oct 19 props-quality refinement (walk note 14:47 'what is that thing in the corner? it looks weird'): the corner cupboard's look rebuilt in the SAME footprint (kitchen.json talls 'pantry' unchanged): face frame, two framed raised-panel doors per section 12 mm proud, turned pine knobs, a moulded lip between sections and a stepped top, 2.5 mm bevels, grain on UVs by member (KT_UVPine, SpecGreybox.KnottyPineUV) instead of triplanar; the pans are now store props (Poly Haven, props lane), the rack's hooks unchanged",
  "target": "House_WallGrid",
  "premise": "The film's kitchen hangs a rectangular rack of red enamel, black and steel pans from the ceiling over the island's long leg, and its back door is an ordinary in-swinging hinged door the bandits and Kevin pass through",
  "claim": {
@@ -55,6 +55,11 @@
    "date": "2026-10-16",
    "what": "kitchen wing / back door (changes/2026-10-16-kitchen-wing.json): the door built fixed (DoorStop collider, 'shut by design')",
    "outcome": "superseded"
+  },
+  {
+   "date": "2026-10-19",
+   "what": "cupboard look refined in place (no size change) after walk note 14:47; build 2 of the props-quality job: z-fight 0, clash 0, walk BLOCKED lines as HEAD",
+   "outcome": "pending"
   }
  ],
  "premise_reviewed": "",
@@ -135,14 +140,20 @@
    "spec/captures/views/kitchen/fidelity/before/6900.jpg",
    "spec/captures/views/kitchen/fidelity/before/6044.jpg",
    "spec/captures/views/kitchen/fidelity/before/1074.jpg",
-   "spec/captures/views/kitchen/fidelity/before/1146.jpg"
+   "spec/captures/views/kitchen/fidelity/before/1146.jpg",
+   "spec/captures/views/kitchen/props-quality/cupboard.jpg",
+   "spec/captures/views/kitchen/props-quality/note1447.jpg"
   ],
   "after": [
    "spec/captures/views/kitchen/fidelity/after/2116.jpg",
    "spec/captures/views/kitchen/fidelity/after/6900.jpg",
    "spec/captures/views/kitchen/fidelity/after/6044.jpg",
    "spec/captures/views/kitchen/fidelity/after/1074.jpg",
-   "spec/captures/views/kitchen/fidelity/after/1146.jpg"
+   "spec/captures/views/kitchen/fidelity/after/1146.jpg",
+   "spec/captures/views/kitchen/props-quality/cupboard.jpg",
+   "spec/captures/views/kitchen/props-quality/note1447.jpg",
+   "spec/captures/views/kitchen/props-quality/rack.jpg",
+   "spec/captures/views/kitchen/props-quality/hooks.jpg"
   ]
  },
  "user_walk": "pending",

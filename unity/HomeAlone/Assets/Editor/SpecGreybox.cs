@@ -1072,6 +1072,7 @@ public static partial class SpecGreybox
             ["KT_Sink"] = Solid("HiFi_SinkEnamel", new Color(0.92f, 0.91f, 0.88f), 0.8f),
             ["KT_Cushion"] = Solid("HiFi_SeatCushion", new Color(0.55f, 0.06f, 0.08f), 0.1f),
             ["KT_Pine"] = KnottyPine(),   // Oct 19: the stacked knotty-pine corner cupboard (film 2116, IMG_4305)
+            ["KT_UVPine"] = KnottyPineUV(),   // Oct 19 walk note 14:47 ("looks weird"): the cupboard's grain laid by member (UVs), not triplanar
             ["KT_Dispenser"] = Solid("HiFi_ApplianceSmoke", new Color(0.10f, 0.10f, 0.11f), 0.9f) });
         if (g != null) foreach (var r in g.GetComponentsInChildren<MeshRenderer>()) r.gameObject.isStatic = true;
         var fp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/kitchen.json"));
@@ -1097,6 +1098,20 @@ public static partial class SpecGreybox
     // knotty pine, honey-toned, satin (film 2116: the corner cupboard, bar stools and desk read a warm orange-honey)
     // the grain only (polyhaven_fetch.py --neutral: the scan's own orange has no blue to tint), coloured to the film's cupboard (film
     // island detail, sRGB 0.72/0.49/0.33 on the lit cupboard face -> tint sRGB 0.88/0.63/0.42 over the 0.8 grain)
+    // the same pine on the model's own UVs (hifi_kitchen.py: 1 UV unit = 1 m, grain along each member: up the stiles and panels, along
+    // the rails and mouldings); triplanar blended two projections on the cupboard's 39-degree front and smeared the grain (walk note
+    // Oct 19 14:47). One repeat = 1.1 m: the scan is 0.74 m, its knots 3-4.5 cm; the film's knots read ~5-7 cm on the cupboard doors
+    static Material KnottyPineUV()
+    {
+        var m = TexMat("HiFi_KnottyPineUV", "coated_pine", new Color(0.88f, 0.63f, 0.42f), 1.1f, 0.45f);
+        var n = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Textures/PolyHaven/coated_pine/albedo_neutral.jpg");
+        if (n) m.SetTexture("_BaseColorMap", n);
+        m.SetFloat("_UVBase", 0f);
+        foreach (var t in new[] { "_BaseColorMap", "_NormalMap" }) m.SetTextureScale(t, new Vector2(1f / 1.1f, 1f / 1.1f));
+        UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(m); EditorUtility.SetDirty(m);
+        return m;
+    }
+
     static Material KnottyPine()
     {
         var m = TexMat("HiFi_KnottyPine", "coated_pine", new Color(0.88f, 0.63f, 0.42f), 1.2f, 0.45f);

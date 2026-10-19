@@ -268,6 +268,9 @@ public static partial class SpecGreybox
         if (m.HasProperty("_BaseColor")) n.SetColor("_BaseColor", m.GetColor("_BaseColor")); else if (m.HasProperty("_Color")) n.SetColor("_BaseColor", m.GetColor("_Color")); else if (m.HasProperty("baseColorFactor")) n.SetColor("_BaseColor", m.GetColor("baseColorFactor"));
         var nrm = m.HasProperty("normalTexture") ? m.GetTexture("normalTexture") : T("_BumpMap", "_NormalMap"); if (nrm) n.SetTexture("_NormalMap", nrm);
         n.SetFloat("_Smoothness", m.HasProperty("_Smoothness") ? m.GetFloat("_Smoothness") : m.HasProperty("roughnessFactor") ? 1f - m.GetFloat("roughnessFactor") : 0.4f);
+        // the kitchen's Poly Haven variants (tools/house/kitchen_ph_props.py) carry constant metallic factors (the kettle's chrome lid and
+        // handle): kept there only; elsewhere a glTF's missing metallic defaults to 1, which would turn plain props to metal
+        if (src.StartsWith("Assets/Models/PolyHaven/Kitchen/") && m.HasProperty("metallicFactor")) n.SetFloat("_Metallic", m.GetFloat("metallicFactor"));
         // alpha-tested foliage (Built-in Standard "Cutout", or an alpha-clip keyword): keep the cut-out and draw both sides (the tree's needle cards)
         if (m.IsKeywordEnabled("_ALPHATEST_ON") || (m.HasProperty("_Mode") && Mathf.Approximately(m.GetFloat("_Mode"), 1f)) || m.renderQueue == 2450)
         {
