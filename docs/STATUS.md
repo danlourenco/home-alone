@@ -10,6 +10,7 @@ Accepted with these noted (exterior shell/polish/sunroom, yard, treehouse+ziplin
 - [ ] 21:13 Kevin's room (10.01,0.03,-4.78) "looks like lamp part isn't aligned with base" — the moved floor lamp's arm/head vs its base (hifi_kevin.py knee change)
 - [ ] 21:13 parents' room (6.75,0.03,-2.12, night) "this light should glow at night too" — another fixture there (floor lamp by the window chair? sconce?) not on the night layer
 - [ ] 21:14 parents' room (4.35,0.03,-3.47, night) "would be great to do parent's ensuite bath" — NEXT ROOM: the parents' ensuite (film 4398-4425 aftershave; Marina p2 206-228)
+- [x] 21:16 parents' room (6.745,0.03,-2.895, night) "why do shadows look so pronounced and harsh?" — the new bedside lamps: 12 cm source, 55% shadow dimmer (05fc330f); true soft edges would need PCSS (punctual filtering High, a global perf cost) — revisit with the perf pass
 - [x] 21:07 foyer "rugs looks great"
 Earlier still-open: yard trees hero swap (user's Sketchfab oaks), French windows ~1.0 m (film) vs 0.75 (Marina), upstairs depth vs film (HouseSplit hide trick), basement clutter density, laundry chute top, brass stair rods, perf speed-ups (bake fills, lamp ranges, cut-outs, sun shadow distance, texture compression), 38 older change records still "walk pending" (Oct 14-17) to batch-accept.
 
