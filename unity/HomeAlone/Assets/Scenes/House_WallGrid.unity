@@ -201432,7 +201432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DenSeat
   screen: {fileID: 1993920237}
   eyePosition: {x: 6.3, y: -2.006, z: -17.06}
-  fieldOfView: 36
+  fieldOfView: 24
   reach: 1.6
 --- !u!1 &700537428
 GameObject:
