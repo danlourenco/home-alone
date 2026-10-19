@@ -70,3 +70,14 @@ Tiers by player distance; detail follows sightlines (window views, the film's ex
   lot and the Tier 2 sidewalks (both sides of Lincoln, ~150 m each way) as low-detail stand-ins, everything further is the
   Tier 4 horizon. **Revisit if it ever feels off** (too empty at the street ends, or a frame-time cost).
 - **Step 1 started Oct 19** (evidence pass, no builds): outputs in `art/home_alone/references/neighborhood/` and `spec/neighborhood.json`.
+
+## 3. Step 1 results (43875efb; tools/house/nb_*.py regenerate)
+- Data in `art/home_alone/references/neighborhood/data/` (Cook County parcels + 2022 lidar building footprints with heights, OSM,
+  ISGS 2022 nDSM: 2516 trees > 6 m, post-1990 canopy). Manifest `spec/neighborhood.json` (18 parcels), `film_index.json`, `boards/`, `plan.png`.
+- True McCallister lot (spec x,z): (-30.16,30.58) (27.38,30.72) (27.36,19.17) (27.30,-3.91) (-34.16,-4.06): front line x ~27.35.
+  PropertyView's box is badly off (should take this polygon). **Open**: the piers (x 28.30-28.80) fall 1-1.5 m outside the parcel:
+  a ~1 m registration error, or they stand in the right-of-way. Decide before PropertyView uses the polygon.
+- Tier 2: lot_B0 = the Murphys (grey-blue clapboard Foursquare, 2.5 storeys, hip dormer, full-width white-column porch; film
+  11551-11636 night), lot_A+1 / lot_A-1 neighbours (edge views only), lot_B+1 / lot_B-1 (no clean frame: style kit). The county
+  height for our own house (9.2 m) is wrong: never use it for the house.
+- Next (step 2+): style kit + generator from the manifest; the Murphys first.
