@@ -7,7 +7,7 @@ using UnityEngine;
 /// E interacts (each prompts on screen when you are close and looking at it): Buzz's footlocker opens/closes (TrunkLid, within 1.5 m);
 /// at the attic dormer rides the zipline, at the treehouse ladder climbs (ZipLine). N day/night, O cycles the day's weather sunny (film 4382, the default) / morning (film 1890) / overcast (film 6399) (HouseWeather;
 /// it also drives the falling snow: off in sunny/morning, where F is ignored; on when overcast and at night),
-/// M marks a walk note (FeelNotes).
+/// M marks a walk note (FeelNotes). K hides everything off the McCallister lot (PropertyView).
 /// Footsteps by floor surface: Surface is read from the material/collider name under the feet (SurfaceFor); clips are Kenney Impact Sounds (CC0).
 [RequireComponent(typeof(CharacterController))]
 public class FpsController : MonoBehaviour
