@@ -80,8 +80,8 @@
   "sources": "1c29b20260dd1dbd"
  },
  "tools/house/hifi_kevin.py": {
-  "models": "7e8366cffcdd5db7",
-  "sources": "b5805c99ee4b48d5"
+  "models": "b452721d9b5bd9c5",
+  "sources": "f4469a66235d6410"
  },
  "tools/house/hifi_kitchen.py": {
   "models": "98ab235e28f66103",
@@ -120,8 +120,8 @@
   "sources": "d95a58aae680811b"
  },
  "tools/house/hifi_parents_dressing.py": {
-  "models": "342c1948f1ea8eeb",
-  "sources": "81d1e63cd7dd49a3"
+  "models": "07cd8f4c0fc1836f",
+  "sources": "aa7ebf2c728dbca1"
  },
  "tools/house/hifi_parents_fireplace.py": {
   "models": "784e462dec45d619",

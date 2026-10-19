@@ -1,3 +1,5 @@
+using System.IO;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -52,14 +54,29 @@ public static partial class SpecGreybox
         var bz = PlaceHiFi(root, 0f, "BuzzCurtains", new Dictionary<string, Material> { ["SH_Hem"] = hem, ["SH_Voile"] = voile, ["BZ_Drape"] = grey, ["BZ_Brass"] = BrassMat() });
         // the parents' bedroom (tools/house/hifi_parents_dressing.py; TRIAL 1, Oct 18): film 2648's slate damask panels and swag valance over a lace sheer
         var damask = Cloth("HiFi_DrapeDamask", new Color(0.42f, 0.43f, 0.45f), false, 0.8f, null);   // film 2648 slate grey-blue; build 1 (0.55/0.58/0.64) read sky blue, build 2 (0.36/0.39/0.45) royal blue
-        var pc = PlaceHiFi(root, 0f, "ParentsDressing", new Dictionary<string, Material> { ["SH_Hem"] = hem, ["SH_Voile"] = voile, ["PB_Damask"] = damask, ["PB_Brass"] = BrassMat(), ["PB_Screen"] = SpecTexMat("HiFi_ParentsScreen", "spec/dressing/parents_screen.png"), ["PB_Shade"] = Mat("ParentsLampShade", new Color(0.03f, 0.03f, 0.03f)) });
+        var pc = PlaceHiFi(root, 0f, "ParentsDressing", new Dictionary<string, Material> { ["SH_Hem"] = hem, ["SH_Voile"] = voile, ["PB_Damask"] = damask, ["PB_Brass"] = BrassMat(), ["PB_Screen"] = SpecTexMat("HiFi_ParentsScreen", "spec/dressing/parents_screen.png"), ["PB_Shade"] = Glow("HiFi_ShadeParentsBlack", new Color(0.03f, 0.03f, 0.03f), 0f, 0.6f), ["PB_ShadeIn"] = Glow("HiFi_ShadeParentsIn", new Color(0.92f, 0.72f, 0.45f), 700f, 0.3f), ["PB_Bulb"] = Glow("HiFi_BulbParents", new Color(1f, 0.92f, 0.80f), 4000f, 0.5f) });
+        // the bedside lamps' light (user walk note Oct 18 20:44): a warm point light in each shade (the black shell blocks it but its open top and bottom, so
+        // it throws up and down like the film's), off by day (Daylight() moves it into the night layer via Upstairs/ParentsFixtures)
+        var pfx = Child(root, "ParentsFixtures");
+        var pj = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/parents.json"));
+        if (File.Exists(pj))
+            foreach (var bx in JObject.Parse(File.ReadAllText(pj))["boxes"])
+                if (((string)bx["name"]).StartsWith("parents_nightstand"))
+                    AddLamp(pfx, "ParentsLamp_" + ((string)bx["name"]).Substring(19), new Vector3(((float)bx["x"][0] + (float)bx["x"][1]) / 2, (float)bx["y"][1] + 0.48f, ((float)bx["z"][0] + (float)bx["z"][1]) / 2), 0f, 450f, 2700f);
         foreach (var gg in new[] { g, bz, pc })
             if (gg != null)
                 foreach (var r in gg.GetComponentsInChildren<MeshRenderer>())
                 {
-                    bool clear = r.sharedMaterial == voile || r.sharedMaterial == hem;
+                    string pmn = r.sharedMaterial != null ? r.sharedMaterial.name : "";
+                    bool clear = r.sharedMaterial == voile || r.sharedMaterial == hem || pmn == "HiFi_ShadeParentsIn" || pmn == "HiFi_BulbParents";   // the lamp's liner and bulb sit round its light
                     r.shadowCastingMode = clear ? ShadowCastingMode.Off : ShadowCastingMode.On;
                     r.gameObject.isStatic = !clear;
                 }
+    }
+
+    static Material Glow(string n, Color c, float nits, float smooth)
+    {   // a lamp shade or bulb: its own light at night (HouseNightMode darkens "HiFi_Shade*"/"HiFi_Bulb*" by day)
+        var m = Mat(n, c); m.SetFloat("_Smoothness", smooth); m.SetColor("_EmissiveColor", c * nits);
+        UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(m); return m;
     }
 }

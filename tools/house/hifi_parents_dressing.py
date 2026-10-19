@@ -147,20 +147,29 @@ for i in range(4):
 # the bedside lamps (film 1610/2648: a brass candlestick base with an urn, a black drum shade; Marina 250 dark shades): turned, on each
 # nightstand box's top (spec/dressing/parents.json), centred; overall 0.60 m (shade 0.36-0.58)
 brass, shade = Part("LampBrass", "PB_Brass"), Part("LampShade", "PB_Shade")
+shade_in, bulb = Part("LampShadeIn", "PB_ShadeIn"), Part("LampBulb", "PB_Bulb")   # Oct 18 (user walk note 20:44): lit lamps. Black shell, warm liner and bulb glow at night
 for bx in BOXES:
     if bx["name"].startswith("parents_nightstand"):
         cx, cz, y0 = (bx["x"][0] + bx["x"][1]) / 2, (bx["z"][0] + bx["z"][1]) / 2, bx["y"][1]
         brass.lathe(cx, cz, y0, [(0, 0.075), (0.012, 0.075), (0.02, 0.05), (0.035, 0.022), (0.06, 0.014), (0.16, 0.016), (0.20, 0.04), (0.24, 0.046),
                                  (0.28, 0.03), (0.30, 0.013), (0.42, 0.011), (0.44, 0.02), (0.46, 0.006), (0.585, 0.004)], n=24)
-        shade.lathe(cx, cz, y0, [(0.36, 0.175), (0.58, 0.125)], n=32)
+        # open drum (no caps) so the top and bottom openings show the warm liner; liner 4 mm inside, faces inward
+        n_, ring = 32, lambda h, r: [(cx + r * math.cos(2 * math.pi * k / 32), y0 + h, cz + r * math.sin(2 * math.pi * k / 32)) for k in range(32)]
+        for (h0, r0), (h1, r1) in [((0.36, 0.175), (0.58, 0.125))]:
+            for rr, part, flip in ((0, shade, False), (-0.004, shade_in, True)):
+                a, b = ring(h0, r0 + rr), ring(h1, r1 + rr)
+                for k in range(n_):
+                    k2 = (k + 1) % n_
+                    part.quad(a[k2], b[k2], b[k], a[k]) if flip else part.quad(a[k], b[k], b[k2], a[k2])
+        bulb.lathe(cx, cz, y0 + 0.44, [(0, 0.0001), (0.01, 0.022), (0.05, 0.03), (0.08, 0.012), (0.08, 0.0)], n=12)
 bpy.ops.wm.read_factory_settings(use_empty=True)
-M = {"PB_Damask": material("PB_Damask", (0.26, 0.29, 0.36), 0.85), "PB_Brass": material("PB_Brass", (0.75, 0.56, 0.25), 0.3), "PB_Shade": material("PB_Shade", (0.02, 0.02, 0.02), 0.6),
+M = {"PB_Damask": material("PB_Damask", (0.26, 0.29, 0.36), 0.85), "PB_Brass": material("PB_Brass", (0.75, 0.56, 0.25), 0.3), "PB_Shade": material("PB_Shade", (0.02, 0.02, 0.02), 0.6), "PB_ShadeIn": material("PB_ShadeIn", (0.9, 0.7, 0.45), 0.4), "PB_Bulb": material("PB_Bulb", (1, 0.9, 0.7), 0.5),
      "SH_Voile": material("SH_Voile", (0.95, 0.94, 0.91), 0.8), "SH_Hem": material("SH_Hem", (0.95, 0.94, 0.91), 0.8),
      "PB_Sash": material("PB_Sash", (0.88, 0.87, 0.83), 0.35),
      "PB_ScreenWood": material("PB_ScreenWood", (0.03, 0.02, 0.015), 0.5), "PB_Screen": material("PB_Screen", (0.3, 0.2, 0.1), 0.7)}
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("ParentsDressing_HiFi", None); coll.objects.link(root)
-for p in (drape, valance, rod, voile, vhem, brass, shade, sash, frame_w, art):
+for p in (drape, valance, rod, voile, vhem, brass, shade, shade_in, bulb, sash, frame_w, art):
     ob = p.build(coll, M); ob.parent = root
     if p in SMOOTH:
         for poly in ob.data.polygons:

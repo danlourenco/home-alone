@@ -127,16 +127,16 @@
  },
  "floor_lamp": {
   "at": [
-   8.25,
-   4.43
+   10.2,
+   3.98
   ],
   "pole_h": 1.12,
   "head": [
-   7.98,
+   10.47,
    1.24,
-   4.28
+   4.13
   ],
-  "source": "film 296/301: a silver swing-arm floor lamp standing in front of the dresser, its pole at ~52% of the dresser's width from its left (x 7.6) end, the arm reaching up-left to a pale rectangular head level with the mirror's bottom (by eye; the dresser as the ruler); pole 7 cm in front of the dresser so the pole leaves 0.60 m to the bunk (adult 0.59); its 3 cm base (r 0.11) is stepped over, no collider"
+  "source": "MOVED Oct 18 (user walk note 20:43: 'why would a light be positioned directly in front of the dresser?'): film 296/301 showed a silver swing-arm floor lamp near the dresser, but a floor lamp belongs by the reading chair (Marina 355/365: chair by the front window). Pole 0.12 m off the dresser-side wall (z 3.861) and 0.19 m from the armchair's left edge (x 10.41), clear of the dresser (ends x 8.9) and the walk path; the arm reaches over the chair arm to a pale rectangular head at 1.24 m. Placement is authored, not measured (props lane); its 3 cm base (r 0.11) is stepped over, no collider"
  },
  "penguin": {
   "at": [

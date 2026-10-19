@@ -224,7 +224,7 @@ steel.lathe(fx_, fz_, 0.0, [(0, 0.11), (0.012, 0.11), (0.022, 0.095), (0.03, 0.0
 tube = lambda r: [(r * math.cos(t), r * math.sin(t)) for t in [2 * math.pi * i / 12 for i in range(12)]]
 steel.sweep([(fx_, 0.025, fz_), (fx_, ph, fz_)], tube(0.011))
 hx_, hy_, hz_ = FL["head"]
-knee = (fx_ - 0.04, ph + 0.03, fz_ - 0.02)
+knee = (fx_ + 0.15 * (hx_ - fx_), ph + 0.03, fz_ + 0.13 * (hz_ - fz_))
 steel.lathe(fx_, fz_, ph - 0.02, [(0, 0.016), (0.05, 0.016)], n=12)                                # the swivel collar
 steel.sweep([(fx_, ph, fz_), knee, (hx_ + 0.10, hy_ + 0.03, hz_ + 0.03)], tube(0.008))
 shade = P("KV_Shade")                                            # the pale rectangular head (film 296), open below
