@@ -96,7 +96,7 @@ public static partial class SpecGreybox
             if (q["shade"] != null) { float s0 = (float)q["shade"][2], s1 = (float)q["shade"][3]; yb = (kv.Key == "floor" ? 0f : y) + (s0 + s1) / 2f - (kv.Key == "floor" ? 0.06f : 0.03f); }
             else yb = y + 0.30f;   // the banker's lamp: under its shade
             var l = new GameObject("DenLamp_" + kv.Key).AddComponent<Light>(); l.transform.SetParent(g.transform, false);
-            l.transform.position = new Vector3(x + ax, gy + yb, -(z + az)); l.type = LightType.Point; l.range = 7f;
+            l.transform.position = new Vector3(x + ax, gy + yb, -(z + az)); l.type = LightType.Point; l.range = q["range"] != null ? (float)q["range"] : 7f;   // "range": a lamp's pool kept local (user Oct 18, the side lamp)
             l.gameObject.AddComponent<HDAdditionalLightData>();
             l.lightUnit = LightUnit.Lumen; l.intensity = (float)q["lumens"] * DenLampScale; l.useColorTemperature = true; l.colorTemperature = (float)q["kelvin"];
             l.shadows = LightShadows.Soft;

@@ -129,19 +129,19 @@
   "armchair": {
    "model": "sofa_02",
    "x": [
-    6.25,
-    7.15
+    6.32,
+    7.22
    ],
    "z": [
-    16.3,
-    17.25
+    16.85,
+    17.8
    ],
    "y": [
     0.0,
     0.92
    ],
    "front": "-x",
-   "source": "Marina f101/M27: the brown leather armchair stands by the living wall facing the bookcase (TV), below the right-hand pictures; position read off f101 against the arch casing (x ~6.3-7.0), NOT camera-solved (f101 shows no room corner). The film's den chair (2856-2941) is a burgundy tufted leather club chair facing the TV: built from sofa_02 narrowed to a chair, burgundy (film)"
+   "source": "Marina f101/M27: the brown leather armchair stands by the living wall facing the bookcase (TV), below the right-hand pictures; position read off f101 against the arch casing (x ~6.3-7.0), NOT camera-solved (f101 shows no room corner). The film's den chair (2856-2941) is a burgundy tufted leather club chair facing the TV: built from sofa_02 narrowed to a chair, burgundy (film) | Oct 18 (user, with Marina's den render): moved 0.55 m off the living-side wall so the side table stands between the wall and the chair; x +0.07 to clear the coffee table"
   },
   "coffee_table": {
    "model": "round_wooden_table_01",
@@ -186,12 +186,12 @@
   {
    "name": "armchair",
    "x": [
-    6.25,
-    7.15
+    6.32,
+    7.22
    ],
    "z": [
-    16.21,
-    17.25
+    16.85,
+    17.8
    ],
    "y": [
     0,
@@ -331,9 +331,9 @@
   },
   "side": {
    "at": [
-    5.845,
+    6.015,
     0.62,
-    16.595
+    16.545
    ],
    "shade": [
     0.17,
@@ -341,10 +341,11 @@
     0.36,
     0.6
    ],
-   "lumens": 250,
+   "lumens": 150,
    "kelvin": 2700,
    "colour": "white",
-   "source": "Marina f101/M27: white drum shade on a turned stem, on the side table by the armchair; 60 W ~700 lm (authored)"
+   "source": "Marina f101/M27: white drum shade on a turned stem, on the side table by the armchair; 60 W ~700 lm (authored) | Oct 18: moved with the side table into the gap between the wall and the chair (user) | then forward to the chair's front corner toward the TV (film 2868), 150 lm with a 3 m range: a local pool, the corner stays dim (user)",
+   "range": 3.0
   },
   "desk": {
    "at": [
