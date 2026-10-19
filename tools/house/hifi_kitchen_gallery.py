@@ -55,37 +55,100 @@ def landscape(h, w, seed, sky0, sky1, hill, field, season):
     return np.clip(img, 0, 1)
 
 
-def still_life(h, w, seed):
-    rng = np.random.default_rng(seed); y = np.linspace(0, 1, h)[:, None]; x = np.linspace(0, 1, w)[None, :]
-    img = np.zeros((h, w, 3)); img[:] = np.array([0.18, 0.12, 0.08]) * (1.1 - 0.4 * y[..., None])
-    img = np.where((y > 0.72)[..., None], np.array([0.45, 0.32, 0.2]), img)                              # table
-    vase = (((x - 0.5) / 0.13) ** 2 + ((y - 0.62) / 0.16) ** 2) < 1
-    img = np.where(vase[..., None], np.array([0.2, 0.3, 0.45]) * (0.8 + 0.3 * (1 - abs(x - 0.47) * 5)).clip(0.6, 1.1)[..., None], img)
-    for k in range(14):                                                                                  # flowers
-        fx, fy, r = rng.uniform(0.3, 0.7), rng.uniform(0.18, 0.46), rng.uniform(0.03, 0.06)
-        col = [np.array([0.75, 0.15, 0.15]), np.array([0.9, 0.85, 0.75]), np.array([0.85, 0.6, 0.2])][k % 3]
-        img = np.where((((x - fx) ** 2 + (y - fy) ** 2) < r * r)[..., None], col * (0.8 + 0.2 * smooth_noise(h, w, 30, rng))[..., None], img)
-    return np.clip(img + 0.02 * smooth_noise(h, w, 40, rng)[..., None], 0, 1)
-
-
-def snapshot(h, w, seed):
-    """An invented family snapshot (Oct 19, film 2116 / IMG_4305: the kitchen wall is a cluster of framed family photos): a soft
-    background and one to three figures as plain shapes (head, shoulders); no face, nobody's likeness."""
-    rng = np.random.default_rng(seed); y = np.linspace(0, 1, h)[:, None]; x = np.linspace(0, 1, w)[None, :]
-    bg = [np.array(c) for c in ([0.55, 0.62, 0.72], [0.62, 0.5, 0.38], [0.45, 0.55, 0.4], [0.75, 0.7, 0.62])][seed % 4]
-    img = np.zeros((h, w, 3)); img[:] = bg * (1.05 - 0.3 * y[..., None]); img += 0.05 * smooth_noise(h, w, 5, rng)[..., None]
-    n = int(rng.integers(1, 4)); aspect = h / w
+def snapshot(h, w, seed, n=None):
+    """An invented 1990 family snapshot (film 2116 / IMG_4305 / IMG_4306: the kitchen wall and the fridge carry colour prints of the
+    family): a flash-lit scene (indoor wall with a Christmas tree, snowy yard, beach, or a school-portrait backdrop), one to five
+    soft-edged figures (head, hair, clothes; no features: nobody's face or likeness), warm print cast, grain and vignette. Drawn at
+    2x and averaged down so edges read photographic, not cut out."""
+    rng = np.random.default_rng(seed); H, W = 2 * h, 2 * w
+    y = np.linspace(0, 1, H)[:, None]; x = np.linspace(0, 1, W)[None, :]; aspect = H / W
+    scene = seed % 4
+    img = np.zeros((H, W, 3))
+    if scene == 0:                                                   # living room: papered wall, the tree's lights behind
+        img[:] = np.array([0.62, 0.52, 0.4]) * (1.0 - 0.25 * y[..., None])
+        tx = rng.uniform(0.15, 0.85); tree = (abs(x - tx) < 0.22 * (y - 0.05)) & (y > 0.05) & (y < 0.8)
+        img = np.where(tree[..., None], np.array([0.1, 0.25, 0.12]) * (0.7 + 0.3 * smooth_noise(H, W, 14, rng))[..., None], img)
+        for k in range(40):
+            lx, ly = tx + rng.uniform(-0.18, 0.18), rng.uniform(0.15, 0.78)
+            if abs(lx - tx) < 0.22 * (ly - 0.05):
+                img = np.where((((x - lx) ** 2 + ((y - ly) / aspect) ** 2) < 0.00012)[..., None], np.array([[1, 0.85, 0.4], [0.95, 0.2, 0.15], [0.3, 0.5, 1.0]][k % 3]), img)
+        img = np.where((y > 0.82)[..., None], np.array([0.42, 0.18, 0.12]), img)            # carpet
+    elif scene == 1:                                                 # the snowy yard, grey winter sky
+        img[:] = np.array([0.78, 0.8, 0.84]) * (1 - 0.1 * y[..., None])
+        img = np.where((y > 0.55 + 0.04 * np.sin(x * 5 + seed))[..., None], np.array([0.92, 0.93, 0.96]) * (0.92 + 0.08 * smooth_noise(H, W, 10, rng))[..., None], img)
+        for k in range(4):
+            tx = rng.uniform(0, 1); img = np.where(((abs(x - tx) < 0.012) & (y < 0.6))[..., None], np.array([0.22, 0.18, 0.15]), img)
+    elif scene == 2:                                                 # summer: sky, sea, sand
+        img[:] = np.array([0.45, 0.65, 0.88]); img = np.where((y > 0.45)[..., None], np.array([0.15, 0.4, 0.55]), img)
+        img = np.where((y > 0.62)[..., None], np.array([0.85, 0.76, 0.58]) * (0.9 + 0.1 * smooth_noise(H, W, 16, rng))[..., None], img)
+    else:                                                            # school-portrait mottled backdrop
+        img[:] = np.array([0.42, 0.5, 0.62]); img *= (0.85 + 0.25 * smooth_noise(H, W, 4, rng))[..., None]
+    n = n or (1 if scene == 3 else int(rng.integers(2, 5)))
     for k in range(n):
-        cx = (k + 0.5) / n + rng.uniform(-0.05, 0.05); r = 0.11 / max(1, n * 0.6)
-        cloth = [np.array(c) for c in ([0.6, 0.1, 0.12], [0.15, 0.2, 0.4], [0.2, 0.35, 0.2], [0.85, 0.82, 0.75])][int(rng.integers(0, 4))]
-        hy = 0.42 + rng.uniform(-0.05, 0.05)
-        body = (((x - cx) / (2.2 * r)) ** 2 + ((y - 1.0) / (0.5 + hy * 0.2)) ** 2) < 1
-        img = np.where(body[..., None], cloth * (0.85 + 0.15 * smooth_noise(h, w, 9, rng))[..., None], img)
+        cx = (k + 0.5) / n + rng.uniform(-0.04, 0.04); r = (0.16 if scene == 3 else 0.10) / max(1, n * 0.55)
+        hy = (0.38 if scene == 3 else 0.42) + rng.uniform(-0.06, 0.06) + (0.08 if rng.random() < 0.4 and scene != 3 else 0)   # kids stand lower
+        cloth = [np.array(c) for c in ([0.65, 0.1, 0.12], [0.14, 0.2, 0.45], [0.18, 0.38, 0.22], [0.88, 0.85, 0.78], [0.5, 0.35, 0.55], [0.85, 0.6, 0.2])][int(rng.integers(0, 6))]
+        body = (((x - cx) / (2.3 * r)) ** 2 + ((y - 1.02) / (0.56 - hy * 0.3)) ** 2) < 1
+        img = np.where(body[..., None], cloth * (0.8 + 0.2 * smooth_noise(H, W, 9, rng))[..., None], img)
+        skin = np.array([[0.88, 0.68, 0.56], [0.8, 0.6, 0.47], [0.9, 0.74, 0.62]][int(rng.integers(0, 3))])
         head = (((x - cx) / r) ** 2 + ((y - hy) / (r * 1.25 / aspect)) ** 2) < 1
-        hair = head & (y < hy - 0.25 * r / aspect)
-        img = np.where(head[..., None], np.array([0.85, 0.66, 0.55]), img)
-        img = np.where(hair[..., None], np.array([[0.35, 0.22, 0.12], [0.75, 0.6, 0.35], [0.15, 0.1, 0.08]][int(rng.integers(0, 3))]), img)
-    return np.clip(img + 0.03 * smooth_noise(h, w, 30, rng)[..., None], 0, 1)
+        img = np.where(head[..., None], skin * (0.95 + 0.05 * smooth_noise(H, W, 30, rng))[..., None], img)
+        hair_c = np.array([[0.32, 0.2, 0.1], [0.78, 0.62, 0.36], [0.14, 0.09, 0.07], [0.55, 0.3, 0.15]][int(rng.integers(0, 4))])
+        hair = (((x - cx) / (r * 1.08)) ** 2 + ((y - hy + 0.35 * r / aspect) / (r * 1.0 / aspect)) ** 2 < 1) & ~(head & (y > hy - 0.2 * r / aspect))
+        img = np.where(hair[..., None], hair_c, img)
+    # flash falloff, warm print cast, vignette, grain; then 2x -> 1x
+    d2 = (x - 0.5) ** 2 + ((y - 0.45) * 0.8) ** 2
+    img = img * (1.12 - 0.9 * d2)[..., None] * np.array([1.04, 0.98, 0.88])
+    img += 0.025 * rng.normal(0, 1, (H, W, 1))
+    img = img.reshape(h, 2, w, 2, 3).mean(axis=(1, 3))
+    return np.clip(img, 0, 1)
+
+
+def crayon_tree(h, w, seed):
+    """A child's crayon Christmas tree on white paper (IMG_4306: on the fridge door): scribbled green triangle, brown trunk, a yellow
+    star, coloured ornaments, a wobbly scrawl along the bottom."""
+    rng = np.random.default_rng(seed); y = np.linspace(0, 1, h)[:, None]; x = np.linspace(0, 1, w)[None, :]
+    img = np.ones((h, w, 3)) * np.array([0.95, 0.95, 0.92]); img += 0.015 * smooth_noise(h, w, 8, rng)[..., None]
+    inside = (abs(x - 0.5) < 0.42 * (y - 0.12) / 0.62) & (y > 0.12) & (y < 0.74)
+    strokes = np.zeros((h, w), bool)
+    for k in range(70):                                               # diagonal crayon strokes clipped to the tree
+        y0 = rng.uniform(0.1, 0.76); s = rng.uniform(-0.6, 0.6)
+        strokes |= abs((y - y0) - s * (x - 0.5)) < 0.006
+    img = np.where((inside & strokes)[..., None], np.array([0.12, 0.55, 0.18]), img)
+    img = np.where(((abs(x - 0.5) < 0.42 * (y - 0.12) / 0.62) & (abs(x - 0.5) > 0.42 * (y - 0.12) / 0.62 - 0.012) & (y > 0.12) & (y < 0.74))[..., None], np.array([0.08, 0.4, 0.12]), img)
+    img = np.where(((abs(x - 0.5) < 0.06) & (y > 0.74) & (y < 0.84))[..., None], np.array([0.45, 0.25, 0.1]), img)
+    sx, sy = 0.5, 0.1; ang = np.arctan2(y - sy, (x - sx) * w / h); rr = np.hypot((x - sx) * w / h, y - sy)
+    img = np.where((rr < 0.045 * (0.6 + 0.4 * np.cos(5 * ang)))[..., None], np.array([0.98, 0.82, 0.1]), img)
+    for k in range(9):
+        oy = rng.uniform(0.25, 0.7); ox = 0.5 + rng.uniform(-1, 1) * 0.36 * (oy - 0.12) / 0.62
+        img = np.where((((x - ox) * w / h) ** 2 + (y - oy) ** 2 < 0.0005)[..., None], np.array([[0.85, 0.1, 0.1], [0.15, 0.3, 0.8], [0.9, 0.6, 0.1]][k % 3]), img)
+    for k in range(6):                                                # the scrawl
+        x0 = 0.15 + 0.12 * k; img = np.where(((abs(y - (0.9 + 0.015 * np.sin((x - x0) * 60))) < 0.006) & (x > x0) & (x < x0 + 0.09))[..., None], np.array([0.75, 0.1, 0.12]), img)
+    return np.clip(img, 0, 1)
+
+
+def notice(h, w, seed):
+    """A typed school notice / lunch menu (IMG_4306: a long white sheet low on the fridge door): a header and rows of type."""
+    rng = np.random.default_rng(seed); img = np.ones((h, w, 3)) * np.array([0.94, 0.94, 0.9])
+    img[int(h * 0.05):int(h * 0.1), int(w * 0.15):int(w * 0.85)] = [0.25, 0.25, 0.35]
+    yy = int(h * 0.16)
+    while yy < h * 0.92:
+        x0 = int(w * 0.08)
+        while x0 < w * 0.9:
+            L = int(rng.integers(w // 30, w // 9)); img[yy:yy + max(1, h // 150), x0:min(int(w * 0.92), x0 + L)] = 0.35; x0 += L + max(2, w // 60)
+        yy += max(4, h // 45)
+    return img
+
+
+def card(h, w, seed):
+    """A small red holiday card: red, a cream border, a holly sprig."""
+    y = np.linspace(0, 1, h)[:, None]; x = np.linspace(0, 1, w)[None, :]
+    img = np.ones((h, w, 3)) * np.array([0.7, 0.08, 0.1])
+    border = (x < 0.05) | (x > 0.95) | (y < 0.07) | (y > 0.93); img = np.where(border[..., None], np.array([0.92, 0.88, 0.75]), img)
+    for cx, cy in ((0.42, 0.5), (0.58, 0.5)):
+        img = np.where(((((x - cx) / 0.12) ** 2 + ((y - cy) / 0.08) ** 2) < 1)[..., None], np.array([0.1, 0.4, 0.15]), img)
+    img = np.where((((x - 0.5) ** 2 + ((y - 0.42) * 0.7) ** 2) < 0.0015)[..., None], np.array([0.9, 0.1, 0.1]), img)
+    return img
 
 
 def calendar(h, w, seed):
@@ -114,10 +177,10 @@ def memo_board(h, w, seed):
     return np.clip(img, 0, 1)
 
 
-PICS = {"p1": lambda h, w: landscape(h, w, 3, [0.62, 0.72, 0.85], [0.9, 0.88, 0.8], [0.45, 0.52, 0.5], [0.55, 0.6, 0.35], [0.2, 0.35, 0.18]),
-        "p2": lambda h, w: still_life(h, w, 7),
-        "p3": lambda h, w: landscape(h, w, 11, [0.85, 0.75, 0.62], [0.95, 0.85, 0.7], [0.55, 0.45, 0.4], [0.85, 0.85, 0.88], [0.25, 0.2, 0.15]),
-        "p4": lambda h, w: landscape(h, w, 19, [0.55, 0.65, 0.8], [0.85, 0.85, 0.82], [0.4, 0.45, 0.48], [0.88, 0.9, 0.92], [0.22, 0.28, 0.22]),
+# Oct 19 props-quality: every frame is a family snapshot, as in the film (2116 / IMG_4305: the wall holds only photos of people);
+# the earlier generated landscapes and still life were invented content the film does not have
+PICS = {"p1": lambda h, w: snapshot(h, w, 4), "p2": lambda h, w: snapshot(h, w, 7, 1), "p3": lambda h, w: snapshot(h, w, 1),
+        "p4": lambda h, w: snapshot(h, w, 8, 5),
         "p5": lambda h, w: snapshot(h, w, 5), "p6": lambda h, w: snapshot(h, w, 6), "p7": lambda h, w: snapshot(h, w, 9),
         "p8": lambda h, w: snapshot(h, w, 12), "p9": lambda h, w: snapshot(h, w, 14), "px": lambda h, w: snapshot(h, w, 17),
         "calendar": lambda h, w: calendar(h, w, 23), "memo": lambda h, w: memo_board(h, w, 29)}
@@ -173,6 +236,11 @@ for f in G["frames"]:
 for f in G["frames"]:                                                                  # the invented pictures
     MO = f.get("moulding", G["moulding"]); z0_, z1_ = f["z"]; y0_, y1_ = f["h"]; w_px = 512; h_px = max(64, round(w_px * (y1_ - y0_ - 2 * MO) / (z1_ - z0_ - 2 * MO)))
     save_png("gallery_" + f["name"], PICS[f["name"]](h_px, w_px))
+
+# the fridge door's papers (kitchen.json wares.items.fridge_papers; placed by hifi_kitchen_props.py, material KP_Fridge<i>)
+FRIDGE = {"tree": crayon_tree, "snap": snapshot, "notice": notice, "card": card}
+for i, (fx0, fy0, fw, fh, kind) in enumerate(K["wares"]["items"]["fridge_papers"]):
+    save_png(f"fridge_{i}", FRIDGE[kind](int(fh * 1600), int(fw * 1600), 41 + i))
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("KitchenGallery", None); coll.objects.link(root)
 for p in [frame, desk, brass, paper, board] + list(pics.values()):

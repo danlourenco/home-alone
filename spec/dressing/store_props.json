@@ -4401,6 +4401,460 @@
     2.3,
     1.6
    ]
+  },
+  {
+   "name": "kitchen_kettle",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/kettle_film.glb",
+   "x": [
+    -3.062,
+    -2.838
+   ],
+   "z": [
+    1.1513,
+    1.4487
+   ],
+   "y0": 0.92,
+   "height": 0.3025,
+   "back": "",
+   "yaw": 90,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19 kitchen props-quality): film 2116/1146, IMG_4305: red enamel stovetop kettle with a chrome lid and tall arched handle on the island cooktop, spout to the stools' side; generated to the film's shape (tools/house/kitchen_ph_props.py kettle_film: squat red enamel body 0.22 m across, chrome lid/knob/whistle cap, tall chrome arched handle to 0.30 m; film body ~1.4 tiles = 0.22 m). The Poly Haven vintage kettle tried in build 1 read as a different (bell, electric-base) kettle"
+  },
+  {
+   "name": "kitchen_stool_0",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/stool_pine.glb",
+   "x": [
+    -2.984,
+    -2.516
+   ],
+   "z": [
+    0.2767,
+    0.7633
+   ],
+   "y0": 0.0,
+   "height": 0.61,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): IMG_4305/film 2116: four honey-pine counter stools on the island's stool side, round seat, turned splayed legs, two rings of stretchers; Poly Haven CC0 wooden_stool_01 recoloured to the film's pine, fitted to 1.1 x its footprint and the 24 in counter-stool seat (0.61, kitchen.json stools.seat_h; x1.40 in height). Walk collider: kitchen.json colliders stool_0"
+  },
+  {
+   "name": "kitchen_stool_1",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/stool_pine.glb",
+   "x": [
+    -2.284,
+    -1.816
+   ],
+   "z": [
+    0.2767,
+    0.7633
+   ],
+   "y0": 0.0,
+   "height": 0.61,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): IMG_4305/film 2116: four honey-pine counter stools on the island's stool side, round seat, turned splayed legs, two rings of stretchers; Poly Haven CC0 wooden_stool_01 recoloured to the film's pine, fitted to 1.1 x its footprint and the 24 in counter-stool seat (0.61, kitchen.json stools.seat_h; x1.40 in height). Walk collider: kitchen.json colliders stool_1"
+  },
+  {
+   "name": "kitchen_stool_2",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/stool_pine.glb",
+   "x": [
+    -1.584,
+    -1.116
+   ],
+   "z": [
+    0.2767,
+    0.7633
+   ],
+   "y0": 0.0,
+   "height": 0.61,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): IMG_4305/film 2116: four honey-pine counter stools on the island's stool side, round seat, turned splayed legs, two rings of stretchers; Poly Haven CC0 wooden_stool_01 recoloured to the film's pine, fitted to 1.1 x its footprint and the 24 in counter-stool seat (0.61, kitchen.json stools.seat_h; x1.40 in height). Walk collider: kitchen.json colliders stool_2"
+  },
+  {
+   "name": "kitchen_stool_3",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/stool_pine.glb",
+   "x": [
+    -0.884,
+    -0.416
+   ],
+   "z": [
+    0.2767,
+    0.7633
+   ],
+   "y0": 0.0,
+   "height": 0.61,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): IMG_4305/film 2116: four honey-pine counter stools on the island's stool side, round seat, turned splayed legs, two rings of stretchers; Poly Haven CC0 wooden_stool_01 recoloured to the film's pine, fitted to 1.1 x its footprint and the 24 in counter-stool seat (0.61, kitchen.json stools.seat_h; x1.40 in height). Walk collider: kitchen.json colliders stool_3"
+  },
+  {
+   "name": "kitchen_pan_00",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/skillet_red_hang.glb",
+   "x": [
+    -2.34,
+    -2.06
+   ],
+   "z": [
+    0.9127,
+    0.9896
+   ],
+   "y0": 1.7017,
+   "height": 0.5186,
+   "back": "",
+   "yaw": 180,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 0 (red_skillet), 0.28 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[0]); Poly Haven CC0 brass_pan_01 (handle shortened) recoloured, x1.46",
+   "hung": true
+  },
+  {
+   "name": "kitchen_pan_01",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/skillet_black_hang.glb",
+   "x": [
+    -2.08,
+    -1.78
+   ],
+   "z": [
+    0.8386,
+    0.9209
+   ],
+   "y0": 1.6359,
+   "height": 0.5556,
+   "back": "",
+   "yaw": 180,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 1 (black_skillet), 0.30 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[1]); Poly Haven CC0 brass_pan_01 (handle shortened) recoloured, x1.57",
+   "hung": true
+  },
+  {
+   "name": "kitchen_pan_02",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/casserole_red_hang.glb",
+   "x": [
+    -1.7503,
+    -1.5097
+   ],
+   "z": [
+    0.8351,
+    1.0105
+   ],
+   "y0": 1.7933,
+   "height": 0.3505,
+   "back": "",
+   "yaw": 180,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 2 (red_casserole), 0.24 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[2]); Poly Haven CC0 pot_enamel_01 (no lid) recoloured, x1.33",
+   "hung": true
+  },
+  {
+   "name": "kitchen_pan_03",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/skillet_black_hang.glb",
+   "x": [
+    -1.47,
+    -1.29
+   ],
+   "z": [
+    0.9331,
+    0.9826
+   ],
+   "y0": 1.8804,
+   "height": 0.3334,
+   "back": "",
+   "yaw": 180,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 3 (saucepan; the film shows red and black pans, no clear stainless one: hung as a black skillet), 0.18 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[3]); Poly Haven CC0 brass_pan_01 (handle shortened) recoloured, x0.94",
+   "hung": true
+  },
+  {
+   "name": "kitchen_pan_04",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/skillet_black_hang.glb",
+   "x": [
+    -1.26,
+    -1.0
+   ],
+   "z": [
+    0.8468,
+    0.9182
+   ],
+   "y0": 1.7174,
+   "height": 0.4815,
+   "back": "",
+   "yaw": 180,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 4 (black_skillet), 0.26 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[4]); Poly Haven CC0 brass_pan_01 (handle shortened) recoloured, x1.36",
+   "hung": true
+  },
+  {
+   "name": "kitchen_pan_05",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/skillet_red_hang.glb",
+   "x": [
+    -0.98,
+    -0.74
+   ],
+   "z": [
+    0.9209,
+    0.9868
+   ],
+   "y0": 1.7332,
+   "height": 0.4445,
+   "back": "",
+   "yaw": 180,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 5 (red_skillet), 0.24 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[5]); Poly Haven CC0 brass_pan_01 (handle shortened) recoloured, x1.26",
+   "hung": true
+  },
+  {
+   "name": "kitchen_pan_06",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/skillet_black_hang.glb",
+   "x": [
+    -0.72,
+    -0.4
+   ],
+   "z": [
+    0.8345,
+    0.9223
+   ],
+   "y0": 1.6302,
+   "height": 0.5926,
+   "back": "",
+   "yaw": 180,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 6 (black_skillet), 0.32 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[6]); Poly Haven CC0 brass_pan_01 (handle shortened) recoloured, x1.67",
+   "hung": true
+  },
+  {
+   "name": "kitchen_pan_07",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/casserole_red_hang.glb",
+   "x": [
+    -2.2903,
+    -2.0497
+   ],
+   "z": [
+    1.4395,
+    1.6149
+   ],
+   "y0": 1.8133,
+   "height": 0.3505,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 7 (red_casserole), 0.24 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[7]); Poly Haven CC0 pot_enamel_01 (no lid) recoloured, x1.33",
+   "hung": true
+  },
+  {
+   "name": "kitchen_pan_08",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/skillet_black_hang.glb",
+   "x": [
+    -1.99,
+    -1.81
+   ],
+   "z": [
+    1.5374,
+    1.5869
+   ],
+   "y0": 1.8804,
+   "height": 0.3334,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 8 (saucepan; the film shows red and black pans, no clear stainless one: hung as a black skillet), 0.18 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[8]); Poly Haven CC0 brass_pan_01 (handle shortened) recoloured, x0.94",
+   "hung": true
+  },
+  {
+   "name": "kitchen_pan_09",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/skillet_black_hang.glb",
+   "x": [
+    -1.77,
+    -1.47
+   ],
+   "z": [
+    1.4591,
+    1.5414
+   ],
+   "y0": 1.6459,
+   "height": 0.5556,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 9 (black_skillet), 0.30 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[9]); Poly Haven CC0 brass_pan_01 (handle shortened) recoloured, x1.57",
+   "hung": true
+  },
+  {
+   "name": "kitchen_pan_10",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/skillet_red_hang.glb",
+   "x": [
+    -1.46,
+    -1.2
+   ],
+   "z": [
+    1.5318,
+    1.6032
+   ],
+   "y0": 1.7374,
+   "height": 0.4815,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 10 (red_skillet), 0.26 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[10]); Poly Haven CC0 brass_pan_01 (handle shortened) recoloured, x1.36",
+   "hung": true
+  },
+  {
+   "name": "kitchen_pan_11",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/skillet_black_hang.glb",
+   "x": [
+    -1.15,
+    -0.99
+   ],
+   "z": [
+    1.4688,
+    1.5128
+   ],
+   "y0": 1.8761,
+   "height": 0.2963,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 11 (saucepan; the film shows red and black pans, no clear stainless one: hung as a black skillet), 0.16 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[11]); Poly Haven CC0 brass_pan_01 (handle shortened) recoloured, x0.84",
+   "hung": true
+  },
+  {
+   "name": "kitchen_pan_12",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/casserole_red_hang.glb",
+   "x": [
+    -0.9102,
+    -0.6898
+   ],
+   "z": [
+    1.5128,
+    1.6737
+   ],
+   "y0": 1.8718,
+   "height": 0.3213,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 12 (red_casserole), 0.22 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[12]); Poly Haven CC0 pot_enamel_01 (no lid) recoloured, x1.22",
+   "hung": true
+  },
+  {
+   "name": "kitchen_pan_13",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/skillet_black_hang.glb",
+   "x": [
+    -0.66,
+    -0.38
+   ],
+   "z": [
+    1.4604,
+    1.5373
+   ],
+   "y0": 1.6717,
+   "height": 0.5186,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 2116/1146/6900, IMG_4305: pot rack pan 13 (black_skillet), 0.28 m across, hung handle-up from its hook (kitchen.json wares.pot_rack.pans[13]); Poly Haven CC0 brass_pan_01 (handle shortened) recoloured, x1.46",
+   "hung": true
+  },
+  {
+   "name": "kitchen_apple_0",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/apple.glb",
+   "x": [
+    -0.1456,
+    -0.0716
+   ],
+   "z": [
+    1.2812,
+    1.3539
+   ],
+   "y0": 0.942,
+   "height": 0.0647,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 6044/2116: red fruit in the red bowl on the green plate (island, near the L); Poly Haven CC0 food_apple_01, 7.4 cm"
+  },
+  {
+   "name": "kitchen_apple_1",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/apple.glb",
+   "x": [
+    -0.2231,
+    -0.1491
+   ],
+   "z": [
+    1.2906,
+    1.3633
+   ],
+   "y0": 0.942,
+   "height": 0.0647,
+   "back": "",
+   "yaw": 140,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 6044/2116: red fruit in the red bowl on the green plate (island, near the L); Poly Haven CC0 food_apple_01, 7.4 cm"
+  },
+  {
+   "name": "kitchen_apple_2",
+   "prefab": "Assets/Models/PolyHaven/Kitchen/apple.glb",
+   "x": [
+    -0.1914,
+    -0.1187
+   ],
+   "z": [
+    1.2183,
+    1.2923
+   ],
+   "y0": 0.942,
+   "height": 0.0647,
+   "back": "",
+   "yaw": 260,
+   "collide": false,
+   "movable": true,
+   "hides": [],
+   "source": "props lane (Oct 19): film 6044/2116: red fruit in the red bowl on the green plate (island, near the L); Poly Haven CC0 food_apple_01, 7.4 cm"
   }
  ]
 }

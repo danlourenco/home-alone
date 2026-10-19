@@ -3,8 +3,10 @@ is missing a lot of detail ... appliances and visual fidelity ... the pans hangi
 coordinates above the ground floor (SpecGreybox.KitchenProps places it at gy); every position is in spec/dressing/kitchen.json
 "wares" (by eye from the film; the one ruler is the counter: 36 in high, 6 in tile pitch 0.158 m).
 
-  pot rack      film 1050/1146/2116/6044/6900, user photo IMG_4305: a ceiling-hung iron rack over the island's long leg, two rows of
-                pans hanging handle-up: red enamel casseroles and skillets, black non-stick skillets with spiral-ringed bottoms,
+  pot rack      film 1050/1146/2116/6044/6900, user photo IMG_4305: a ceiling-hung iron rack over the island's long leg and its hooks
+                (Oct 19 props-quality: the pans, stools, kettle and fruit are store props, Poly Haven models recoloured to the film by
+                tools/house/kitchen_ph_props.py; this file keeps what no model fits). The film's two rows of
+                pans hang handle-up: red enamel casseroles and skillets, black non-stick skillets with spiral-ringed bottoms,
                 stainless saucepans. The old reference GLB's rack (objects 4/5/6/198: an octagonal iron frame on four rods, five
                 256 px pans) confirms the form; its meshes are too coarse to borrow. Full change gate
                 (changes/2026-10-19-kitchen-fidelity.json).
@@ -96,36 +98,6 @@ def rod(p, path, r, n=10):
     p.sweep(path, [(r * math.cos(2 * math.pi * k / n), r * math.sin(2 * math.pi * k / n)) for k in range(n)])
 
 
-# ---------------------------------------------------------------- pans (local: axis +y = the pan's up, handle toward +x)
-def pan_profile(r, h, flare, wall=0.004, rings=0):
-    """Outside bottom (with spiral rings) -> outer wall -> rim -> inside wall -> inside bottom."""
-    rb = r - flare; out = [(0.0, 0.0)]
-    for k in range(rings):                                          # the bottom's concentric rings (film: spiral-ringed bases)
-        rr = rb * (0.35 + 0.6 * k / max(1, rings - 1)); out += [(0.0, rr - 0.003), (-0.0005, rr - 0.0015), (-0.0005, rr), (0.0, rr + 0.0015)]
-    out += [(0.0, rb - 0.01), (0.004, rb), (h, r), (h + 0.002, r + 0.003), (h + 0.004, r - wall), (wall + 0.004, rb - wall), (wall, rb - wall - 0.01), (wall, 0.0)]
-    return out
-
-
-def pan(kind, r, h, tf, n=44):
-    outer, inner = {"red_skillet": ("KP_RedEnamel", "KP_NonStick"), "black_skillet": ("KP_NonStick", "KP_NonStick"),
-                    "red_casserole": ("KP_RedEnamel", "KP_Ceramic"), "saucepan": ("KP_Steel", "KP_Steel")}[kind]
-    prof = pan_profile(r, h, 0.15 * h if "skillet" in kind else 0.02 * h, rings=5 if kind == "black_skillet" else 0)
-    split = next(i for i, (y, rr) in enumerate(prof) if y >= h + 0.002)   # outside up to the rim's top; the inside after it
-    into(P[outer], tf, lambda t: lathe(t, prof[:split + 1], n))
-    into(P[inner], tf, lambda t: lathe(t, prof[split:], n))
-    if kind == "red_casserole":                                     # two loop handles; it hangs from one of them
-        for s in (1, -1):
-            into(P[outer], tf, lambda t, s=s: rod(t, [(s * (r - 0.005), h * 0.75, -0.035), (s * (r + 0.03), h * 0.8, -0.03), (s * (r + 0.035), h * 0.82, 0.0),
-                                                         (s * (r + 0.03), h * 0.8, 0.03), (s * (r - 0.005), h * 0.75, 0.035)], 0.007))
-        return (r + 0.035, h * 0.82)                                 # the hang point (local)
-    L = 0.19 if "skillet" in kind else 0.17                          # long handle with a hanging hole at its end
-    hm = "KP_BlackPlastic" if kind == "black_skillet" else ("KP_Iron" if kind == "red_skillet" else "KP_Steel")
-    ra = (r - (0.15 * h if "skillet" in kind else 0.02 * h)) + 0.7 * (0.15 * h if "skillet" in kind else 0.02 * h)   # outer radius at 0.7 h
-    into(P[hm], tf, lambda t: rod(t, [(ra - 0.002, h * 0.7, 0.0), (r + 0.03, h * 0.85, 0.0), (r + L * 0.6, h * 1.05, 0.0), (r + L, h * 1.15, 0.0)], 0.011))
-    into(P[hm], tf, lambda t: rod(t, [(r + L + math.cos(a) * 0.014, h * 1.15 + math.sin(a) * 0.014, 0.0) for a in [2 * math.pi * k / 12 for k in range(13)]], 0.004))
-    return (r + L + 0.014, h * 1.15)
-
-
 # ---------------------------------------------------------------- the pot rack
 R = W["pot_rack"]; (rx0, rx1), (rz0, rz1), ry, ceil = R["x"], R["z"], R["y"], R["ceiling"]
 B = 0.012                                                            # half the bar (25 mm square iron)
@@ -145,32 +117,11 @@ for pi, (kind, r, h, ax, row, drop, out) in enumerate(R["pans"]):
     zo = z + sgn * (0.03 + out)
     rest = 0.010 if kind == "red_casserole" else 0.021          # the hook's tip rests on the loop / the hanging hole's top, not through it
     rod(P["KP_Iron"], [(ax, ry, z), (ax, ry + B + 0.012, z + sgn * 0.012), (ax, ry + B + 0.012, zo), (ax, hook_y + rest, zo)], 0.003)
-    group(f"Pan{pi:02d}")
-    # hang the pan by its handle's hole (or a casserole's loop): local +x (the handle) -> spec up, local +y (the open side) -> toward
-    # the rack's middle (d = -sgn in z), local z -> d x (a proper rotation: det +1, winding holds); the bottom faces the room
-    zh, d = z + sgn * (0.03 + out), -sgn
-    hx, hy = (r + 0.035, h * 0.82) if kind == "red_casserole" else (r + (0.19 if "skillet" in kind else 0.17) + 0.014, h * 1.15)
-    tf = lambda v, ax=ax, zh=zh, d=d, hx=hx, hy=hy, hk=hook_y: (ax + d * v[2], hk + (v[0] - hx), zh + d * (v[1] - hy))
-    pan(kind, r, h, tf)
+    # Oct 19 props-quality: the pans themselves are store props (spec/dressing/store_props.json kitchen_pan_NN: Poly Haven brass_pan_01 /
+    # pot_enamel_01 recoloured, tools/house/kitchen_ph_props.py), each hung so its hole/loop meets this hook's tip
 
-# ---------------------------------------------------------------- bar stools
-S = W["stools"]; sh = S["seat_h"]
-for si, (cx, cz) in enumerate(S["at"]):
-    group(f"Stool{si}")
-    tf = frame((cx, 0.0, cz))
-    into(P["KP_Pine"], tf, lambda t: lathe(t, [(sh - 0.04, 0.0), (sh - 0.04, 0.155), (sh - 0.032, 0.168), (sh - 0.012, 0.172), (sh - 0.003, 0.166),
-                                                 (sh, 0.15), (sh - 0.006, 0.08), (sh - 0.006, 0.0)], 40))
-    for k in range(4):
-        a = math.pi / 4 + k * math.pi / 2; c, s = math.cos(a), math.sin(a)
-        top, foot = (0.10 * c, sh - 0.04, 0.10 * s), (0.19 * c, 0.0, 0.19 * s)
-        L = math.dist(top, foot); tilt = math.asin((0.09) / L)
-        tl = lambda v, a=a, tilt=tilt: tuple(q + o for q, o in zip(frame((0, 0, 0), yaw=-a, tilt_z=tilt)(v), (cx + 0.19 * c, 0.0, cz + 0.19 * s)))
-        into(P["KP_Pine"], tl, lambda t, L=L: lathe(t, [(0.0, 0.0), (0.0, 0.016), (L * 0.18, 0.019), (L * 0.22, 0.013), (L * 0.3, 0.017), (L * 0.36, 0.015),
-                                                       (L * 0.62, 0.016), (L * 0.7, 0.012), (L * 0.78, 0.017), (L * 0.95, 0.016), (L, 0.014), (L, 0.0)], 14))
-    for hy, rr in ((0.20, 0.168), (0.38, 0.145)):                      # stretchers between neighbouring legs, ends inside the legs
-        for k in range(4):
-            a0, a1 = math.pi / 4 + k * math.pi / 2, math.pi / 4 + (k + 1) * math.pi / 2
-            rod(P["KP_Pine"], [(cx + rr * math.cos(a0), hy, cz + rr * math.sin(a0)), (cx + rr * math.cos(a1), hy, cz + rr * math.sin(a1))], 0.009)
+# bar stools: store props kitchen_stool_N (Poly Haven wooden_stool_01 in the film's pine, Oct 19 props-quality); walk colliders stay in
+# kitchen.json "colliders" (stool_*)
 
 # ---------------------------------------------------------------- counter dressing (each on its counter top, CH)
 def on(x, z, yaw=0.0, y=CH):
@@ -178,11 +129,7 @@ def on(x, z, yaw=0.0, y=CH):
 
 
 A = W["items"]
-group("Kettle"); k = A["kettle"]; tf = on(*k["at"], k.get("yaw", 0), y=CH + 0.006)        # on the cooktop's glass
-into(P["KP_RedEnamel"], tf, lambda t: lathe(t, [(0.0, 0.0), (0.0, 0.095), (0.012, 0.11), (0.08, 0.112), (0.13, 0.095), (0.165, 0.06), (0.175, 0.045), (0.175, 0.0)], 48))
-into(P["KP_BlackPlastic"], tf, lambda t: lathe(t, [(0.175, 0.0), (0.175, 0.012), (0.19, 0.012), (0.2, 0.018), (0.21, 0.0)], 20))
-into(P["KP_RedEnamel"], tf, lambda t: rod(t, [(0.09, 0.06, 0.0), (0.13, 0.1, 0.0), (0.165, 0.15, 0.0), (0.18, 0.18, 0.0)], 0.011, 14))
-into(P["KP_Chrome"], tf, lambda t: rod(t, [(-0.072, 0.13, 0.0), (-0.07, 0.22, 0.0), (-0.02, 0.27, 0.0), (0.04, 0.26, 0.0), (0.045, 0.16, 0.0)], 0.007, 12))
+# the kettle: store prop kitchen_kettle (Poly Haven vintage_electric_kettle recoloured red enamel + chrome, Oct 19 props-quality)
 
 group("KnifeBlock"); k = A["knife_block"]; tf = on(*k["at"], k.get("yaw", 0))                 # a wedge, 0.12 x 0.24 x 0.26, slots on the sloped top
 def wedge(t):
@@ -220,12 +167,7 @@ into(P["KP_Pine"], tf, lambda t: lathe(t, [(0.0, 0.0), (0.0, 0.165), (0.004, 0.1
 group("FruitBowl"); k = A["fruit_bowl"]; tf = on(*k["at"])
 into(P["KP_Green"], tf, lambda t: lathe(t, [(0.0, 0.0), (0.0, 0.08), (0.008, 0.13), (0.02, 0.15), (0.024, 0.145), (0.012, 0.125), (0.008, 0.0)], 40))
 into(P["KP_RedEnamel"], tf, lambda t: lathe(t, [(0.008, 0.0), (0.008, 0.055), (0.03, 0.085), (0.075, 0.105), (0.078, 0.1), (0.032, 0.08), (0.016, 0.0)], 40))
-FR = 0.032
-for i, m in enumerate(("KP_AppleRed", "KP_Orange", "KP_AppleGreen", "KP_Orange", "KP_AppleRed")):
-    group("FruitBowl")
-    a = i * math.pi / 2 + 0.4; fx, fz, y0 = (0.0, 0.0, 0.12) if i == 4 else (0.045 * math.cos(a), 0.045 * math.sin(a), 0.067)
-    into(P[m], frame((k["at"][0] + fx, CH + y0, k["at"][1] + fz)),
-         lambda t: lathe(t, [(FR * math.cos(math.pi * (1 - j / 10)), FR * math.sin(math.pi * j / 10)) for j in range(11)], 20))
+# the fruit: store props kitchen_apple_N (Poly Haven food_apple_01, Oct 19 props-quality); the bowl and plate stay here
 
 group("Mortar"); k = A["mortar"]; tf = on(*k["at"])
 into(P["KP_Marble"], tf, lambda t: lathe(t, [(0.0, 0.0), (0.0, 0.06), (0.08, 0.065), (0.09, 0.066), (0.09, 0.055), (0.03, 0.045), (0.02, 0.0)], 32))
@@ -266,11 +208,11 @@ into(P["KP_BlackPlastic"], tf, lambda t: (t.box(-0.03, 0.035, 0.03, 0.30, 0.17, 
 
 # the fridge's papers (IMG_4306: drawings, a photo and notes under magnets on the doors), 1 cm off the door face
 group("FridgePapers"); F = next(a for a in K["appliances"] if a["type"] == "fridge"); zf = F["z"][0] - 0.03 - 0.010
-for x0, y0, w, h, m in A["fridge_papers"]:
-    P[m].face([(x0, y0, zf), (x0 + w, y0, zf), (x0 + w, y0 + h, zf), (x0, y0 + h, zf)], (0, 0, -1))
+for i, (x0, y0, w, h, kind) in enumerate(A["fridge_papers"]):
+    # the paper: textured (hifi_kitchen_gallery.py fridge_<i>.png, Oct 19 props-quality), UVs across it; seen from -z (the room)
+    m = f"KP_Fridge{i}"; MATS[m] = ((1.0, 1.0, 1.0), 0.75, 0.0)
+    P[m].face([(x0, y0, zf), (x0 + w, y0, zf), (x0 + w, y0 + h, zf), (x0, y0 + h, zf)], (0, 0, -1), [(1, 0), (0, 0), (0, 1), (1, 1)])
     P["KP_BlackPlastic"].box(x0 + w / 2 - 0.012, x0 + w / 2 + 0.012, y0 + h - 0.03, y0 + h - 0.006, zf - 0.008, zf)   # magnet
-    if m == "KP_Paper" and h > 0.2:                                   # a crayon tree on the drawing, 1 cm in front of it
-        cx = x0 + w / 2; P["KP_Crayon"].face([(cx - w * 0.3, y0 + h * 0.25, zf - 0.010), (cx + w * 0.3, y0 + h * 0.25, zf - 0.010), (cx, y0 + h * 0.8, zf - 0.010)], (0, 0, -1))
 
 # ---------------------------------------------------------------- export
 bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -298,6 +240,10 @@ for g, obs in objs.items():
     for poly in ob.data.polygons:
         poly.use_smooth = True
     ob.data.set_sharp_from_angle(angle=math.radians(35))
+    # artist-pipeline (Oct 19 props-quality): 1.5 mm bevels on hard edges (knife block, appliances, rack bars, turned steps) so
+    # edges catch highlights instead of reading as razor-cut primitives; weighted normals keep the big faces flat
+    bv = ob.modifiers.new("bevel", "BEVEL"); bv.width = 0.0015; bv.segments = 2; bv.limit_method = "ANGLE"; bv.angle_limit = math.radians(40)
+    bv.harden_normals = True; ob.modifiers.new("wn", "WEIGHTED_NORMAL").keep_sharp = True
 tris = sum(sum(len(f.vertices) - 2 for f in o.data.polygons) for o in coll.objects if o.type == "MESH")
 assert tris < 150000, tris
 OUT.parent.mkdir(parents=True, exist_ok=True)
