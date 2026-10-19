@@ -70,12 +70,30 @@ public static partial class SpecGreybox
         if (upFacing)   // ground-like sheets: every triangle faces up (Unity's front face: Cross(b - a, c - a))
             for (int i = 0; i < tris.Count; i += 3)
                 if (Vector3.Cross(vs[tris[i + 1]] - vs[tris[i]], vs[tris[i + 2]] - vs[tris[i]]).y < 0) { int t = tris[i + 1]; tris[i + 1] = tris[i + 2]; tris[i + 2] = t; }
-        var mesh = new Mesh { name = n, indexFormat = IndexFormat.UInt32 }; mesh.SetVertices(vs); mesh.SetTriangles(tris, 0);
-        mesh.RecalculateNormals(); mesh.RecalculateBounds();
-        var g = new GameObject(n); g.transform.SetParent(parent.transform, false); g.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity); g.isStatic = true;
-        g.AddComponent<MeshFilter>().sharedMesh = mesh; var r = g.AddComponent<MeshRenderer>(); r.sharedMaterial = m;
-        r.shadowCastingMode = shadows ? ShadowCastingMode.On : ShadowCastingMode.Off;
-        return g;
+        var full = new Mesh { indexFormat = IndexFormat.UInt32 }; full.SetVertices(vs); full.SetTriangles(tris, 0); full.RecalculateNormals();
+        var nrm = full.normals; Object.DestroyImmediate(full);   // normals from the whole sheet: no shading seam where it is split below
+        // split at the lot's edge (PropertyView.Lot; walk note Oct 19 09:04 "this is a mess"): K hides a renderer by its centre, so one
+        // sheet running from the yard to the street (the kerb banks in SnowDrifts, the drive's mouths, the ground skirt) stayed on with
+        // its ground hidden and floated as white strips. Triangles whose centre lies off the lot go to a sibling "<n>_OffLot".
+        GameObject Make(string name, List<int> sel)
+        {
+            var map = new Dictionary<int, int>(); var v2 = new List<Vector3>(); var n2 = new List<Vector3>(); var t2 = new List<int>(sel.Count);
+            foreach (int i in sel) { if (!map.TryGetValue(i, out int j)) { j = v2.Count; map[i] = j; v2.Add(vs[i]); n2.Add(nrm[i]); } t2.Add(j); }
+            var mesh = new Mesh { name = name, indexFormat = IndexFormat.UInt32 }; mesh.SetVertices(v2); mesh.SetNormals(n2); mesh.SetTriangles(t2, 0); mesh.RecalculateBounds();
+            var g = new GameObject(name); g.transform.SetParent(parent.transform, false); g.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity); g.isStatic = true;
+            g.AddComponent<MeshFilter>().sharedMesh = mesh; var r = g.AddComponent<MeshRenderer>(); r.sharedMaterial = m;
+            r.shadowCastingMode = shadows ? ShadowCastingMode.On : ShadowCastingMode.Off;
+            return g;
+        }
+        var on = new List<int>(tris.Count); var off = new List<int>();
+        for (int i = 0; i < tris.Count; i += 3)
+        {
+            var c = (vs[tris[i]] + vs[tris[i + 1]] + vs[tris[i + 2]]) / 3f;
+            (PropertyView.Lot.Contains(new Vector2(c.x, c.z)) ? on : off).AddRange(new[] { tris[i], tris[i + 1], tris[i + 2] });
+        }
+        if (on.Count == 0 || off.Count == 0) return Make(n, tris);
+        Make(n + "_OffLot", off);
+        return Make(n, on);
     }
 
     // a profile in the x-y plane (counter-clockwise seen from +z) extruded from z0 to z1, flat faces (each face its own vertices)
@@ -208,8 +226,16 @@ public static partial class SpecGreybox
             Mound(14.05f, 15.0f, -(zc + s * (sw + 0.02f)), -(zc + s * (sw + 0.55f)), true, 0.22f, wallDrift, yF + 0.5f, 0.25f);
         // shovelled banks along the walk to the street (film 10174, Pietro)
         foreach (float s in new[] { -1f, 1f })
-            foreach (var (xa, xb) in new[] { (15.1f, 18.1f), (22.8f, 24.2f) })   // open where the front drive crosses (x 18.6-22.3: SpecGreybox.FrontDrive)
-                Mound(xa, xb, -(zc + s * 0.80f), -(zc + s * 1.45f), true, 0.24f, bank, yF + 0.5f, 0.6f);
+        {
+            Mound(15.1f, 18.1f, -(zc + s * 0.80f), -(zc + s * 1.45f), true, 0.24f, bank, yF + 0.5f, 0.6f);   // open where the front drive crosses (x 18.6-22.3: SpecGreybox.FrontDrive)
+            // on to the walk piers (x 28.30, SpecGreybox.FrontDrive; was 24.2, the old GLB street): they bury the side faces of the walk's
+            // last 4.5 m, a slab 17 cm proud of the lawn ("Front walk connection", 1.9 m wide; walk note Oct 19 09:04: the ledge round the piers)
+            Mound(22.8f, 28.27f, -(zc + s * 0.80f), -(zc + s * 1.45f), true, 0.24f, bank, yF + 0.5f, 0.3f);
+        }
+        // the sidewalk's lawn edge: the public sidewalk stands 15 cm proud of the front lawn (x 28.87); snow drifted against it, over the
+        // piers' and wings' feet, open at the walk and the drive mouths as the kerb banks below (world z)
+        foreach (var (za, zb) in new[] { (-38f, -23.7f), (-19.1f, -10.9f), (-8.5f, -0.2f), (4.4f, 7f) })
+            Mound(28.86f, 28.20f, za, zb, false, 0.20f, wallDrift, yF + 0.2f, 0.4f);   // the ray starts under the wing tops (inside their colliders: not hit)
         // the kerb: plowed banks at the street's edge on the house side, open at the walk
         var road = ext.GetComponentsInChildren<MeshRenderer>(true).FirstOrDefault(r => r.name.StartsWith("Lincoln"));
         if (road != null)

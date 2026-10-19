@@ -1649,6 +1649,9 @@ public static partial class SpecGreybox
         // the neighbourhood keeps its plan; up 0.396 m so its street (top -0.39 local) sits just over the registered front yard (-4.33
         // world): left at the old height the yard slabs buried half the street (DEVIATIONS 93)
         hood.transform.localPosition = Vector3.up * 0.396f;
+        // the walk's last 4.5 m (sidewalk to x 24.4, between the piers) is the lot's own walk, not the neighbourhood's: out of the hood so
+        // K (PropertyView, which hides the whole hood) keeps it (walk note Oct 19 09:04: the piers stood beside a void)
+        foreach (var t in hood.GetComponentsInChildren<Transform>(true).Where(t => t.name == "Front walk connection").ToList()) t.SetParent(ext.transform, true);
         // the reference scene's facade shutters were fitted to the GLB shell's windows: the exterior skin has the film's own (SpecGreybox.Shell)
         foreach (var t in hood.GetComponentsInChildren<Transform>(true).Where(t => t.name == "Front facade shutters").ToList()) Object.DestroyImmediate(t.gameObject);
         EditorSceneManager.CloseScene(src, true);

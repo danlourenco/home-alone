@@ -4,8 +4,10 @@
                   Its blue cast pulled toward neutral (film 12512, the view out the front window on Christmas morning, reads grey).
   dome_night.jpg  the same panorama as a winter night: sky a dark blue gradient with a faint horizon glow, snow dim blue-grey,
                   trees as silhouettes.
-  dome_day_clear.jpg  Poly Haven "Snowy Cemetery" (CC0, Andreas Mischok), tonemapped 8K: a clear winter day, bare deciduous trees, snow,
-                  deep blue sky (film 4382). Rolled so its sun sits at the film's sun azimuth (tools/house/sun_solve.py, 196.8 deg) on
+  dome_day_clear.jpg  Poly Haven "Horn-koppe Snow" (CC0, Grzegorz Wronkowski), tonemapped 8K: a clear winter day, deep blue sky
+                  (film 4382), an open snowfield to a low wooded horizon: no buildings, no people, no graves. (Was "Snowy Cemetery" until
+                  walk note Oct 19 09:04 "this is a mess": its gravestones, crosses and an office tower stood at eye level.) The bare
+                  trees of film 4382 are our own yard and street trees in front of it. Rolled so its sun sits at the film's sun azimuth (tools/house/sun_solve.py, 196.8 deg) on
                   the dome's mapping (compass = 227.6 + (u - DomeYawU) * 360); the photo's own sun disc is left as shot. The O key
                   (Scripts/HouseWeather.cs) swaps it with dome_day (overcast).
   card_night.png  film 5546: the McCallister front at night with its Christmas lights (the film's own street), mirrored so it reads
@@ -25,7 +27,7 @@ OUT = REPO / "unity/HomeAlone/Assets/Textures/Backdrop"
 FILM = REPO / "0-homealone/full/homealone-movie-screencaps.com-%d.jpg"
 CACHE = pathlib.Path.home() / ".cache/home-alone-backdrop"
 PH = "https://dl.polyhaven.org/file/ph-assets/HDRIs/extra/Tonemapped%20JPG/snowy_park_01.jpg"
-PH_CLEAR = "https://dl.polyhaven.org/file/ph-assets/HDRIs/extra/Tonemapped%20JPG/snowy_cemetery.jpg"
+PH_CLEAR = "https://dl.polyhaven.org/file/ph-assets/HDRIs/extra/Tonemapped%20JPG/horn-koppe_snow.jpg"
 SUN_AZ, FRONT_AZ, DOME_YAW_U = 196.8, 227.6, 0.55     # sun_solve.py; SpecGreybox.cs FrontAzimuth; SpecGreybox.Backdrop.cs DomeYawU
 
 
@@ -40,7 +42,7 @@ def park():
 
 def clear():
     CACHE.mkdir(parents=True, exist_ok=True)
-    p = CACHE / "snowy_cemetery.jpg"
+    p = CACHE / "horn-koppe_snow.jpg"
     if not p.exists():   # no login, no personal data in the request
         req = urllib.request.Request(PH_CLEAR, headers={"User-Agent": "home-alone-build"})
         p.write_bytes(urllib.request.urlopen(req).read())

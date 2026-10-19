@@ -42,7 +42,7 @@ public static partial class SpecGreybox
         var c = new Vector3(DomeCentreXZ.x, gy + 3f, DomeCentreXZ.z);   // between the two storeys' eyes: the photo's horizon at eye level
         var day = Dome(dayLayer.transform, "WinterBackdrop_Day", c, Glow("Backdrop_DomeDay", Tex("dome_day.jpg", 8192, false), DomeDayNits, false));
         Dome(nightLayer.transform, "WinterBackdrop_Night", c, Glow("Backdrop_DomeNight", Tex("dome_night.jpg", 4096, false), DomeNightNits, false));
-        // O: sunny / morning / overcast (Scripts/HouseWeather.cs; user Oct 19). The clear-winter dome (Poly Haven Snowy Cemetery, CC0,
+        // O: sunny / morning / overcast (Scripts/HouseWeather.cs; user Oct 19). The clear-winter dome (Poly Haven Horn-koppe Snow, CC0; Snowy Cemetery until walk note Oct 19 09:04,
         // its sun rolled to the film's azimuth by tools/house/window_backdrop.py) for the sunny states, the Snowy Park one when overcast
         {
             var wx = new GameObject("Weather - press O").AddComponent<HouseWeather>(); wx.transform.SetParent(dayLayer.transform, false);

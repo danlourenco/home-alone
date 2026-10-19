@@ -5,7 +5,7 @@ using UnityEngine.Rendering.HighDefinition;
 // O cycles the day's weather for comparison (user Oct 19: "match the sun direction to the movie and let me toggle between sunny and
 // overcast days"). Built by SpecGreybox.Daylight; lives in the day layer, so N (HouseNightMode) still turns the whole day off.
 //  Sunny   film 4382 (~1 pm): the sun solved from the portico's shadow (tools/house/sun_solve.py: az 196.8, el 35), full strength, crisp
-//          shadows, HDRP's physically based clear sky, and the clear-winter dome (Poly Haven Snowy Cemetery, CC0). The default: the
+//          shadows, HDRP's physically based clear sky, and the clear-winter dome (Poly Haven Horn-koppe Snow, CC0: a clean horizon). The default: the
 //          film's day exteriors are sunny (4382/4444, the departure morning 1560-1890); 6399 is the overcast one.
 //  Morning film 1890 (departure): the SE faces lit, the SW front dark -> a low sun east of SE (az <= ~138: a bound, not a solve);
 //          az 130 el 17 is Feb 15 1990 ~8:45 am CST. Lights the kitchen through its SE windows (user: the breakfast scenes).

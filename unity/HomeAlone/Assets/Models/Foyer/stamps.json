@@ -43,6 +43,10 @@
   "models": "5374361b33a19de4",
   "sources": "e98eee3ccf1e4fd7"
  },
+ "tools/house/hifi_door_lamps.py": {
+  "models": "86bc4c6458e108e0",
+  "sources": "73553cbdb3e16c0b"
+ },
  "tools/house/hifi_dressing.py": {
   "models": "0124111d024c1391",
   "sources": "75584ecffc4105a3"

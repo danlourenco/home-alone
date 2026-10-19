@@ -74,6 +74,7 @@ public static partial class SpecGreybox
             if (r.sharedMaterial == shade || r.sharedMaterial == sheer || lit) ShellGlow.Add(r);   // Christmas lights and the porch lantern: dark by day
         }
         FrontEntrance(holder, mGlass);
+        DoorLamps(holder);
         var pl = S["porch_lantern"];   // film 10/714: the portico's lantern lit at night (no shadows: perf; a short range)
         if (pl != null) ShellLights.Add(NightLight(holder, "PorchLantern", new Vector3((float)pl["x"], (float)pl["y"], -(float)pl["z"]), 60f, 4.5f));
         // the inside-only set: upstairs/attic renderers (under Upstairs, above the ground storey) with any of 125 bounds points outside every
@@ -130,6 +131,28 @@ public static partial class SpecGreybox
     // minecraft"; changes/2026-10-19-front-entrance.json, TRIAL): tools/house/hifi_entrance.py (FrontEntrance.glb, world y) and the owned
     // ChristmasTreeAndGarland wreath (gitignored store pack) at film 714's centre 1.31 m, bow up, 1.1x (0.58 m across); bulbs and the
     // lantern's bulb glow only at night (ShellGlow)
+    // the back doors' wall lanterns (walk note Oct 19 09:03 "missing exterior lights by the basement door and kitchen"; TRIAL,
+    // changes/2026-10-19-exterior-mess-lamps.json, DEVIATIONS 104): tools/house/hifi_door_lamps.py (DoorLamps.glb, world y), the
+    // kitchen's right of the back door (film 10372/10324), the basement's on the areaway's left wall (film 9936/10012). Black metal;
+    // the milky panes glow and each lamp lights only at night (ShellGlow, ShellLights); positions from the model's "lamps" extra
+    static void DoorLamps(GameObject holder)
+    {
+        var black = Mat("HiFi_ExtLampBlack", new Color(0.02f, 0.02f, 0.02f)); black.SetFloat("_Metallic", 0.6f); black.SetFloat("_Smoothness", 0.45f);
+        var milk = AtticGlow("HiFi_ExtLampMilkGlass", new Color(0.92f, 0.89f, 0.80f), 2500f, 0.85f);   // frosted panes: glossy face, warm glow at night
+        var g = PlaceHiFi(holder, 0f, "DoorLamps", new Dictionary<string, Material> { ["DL_Metal"] = black, ["DL_Glass"] = milk });
+        if (g == null) return;
+        foreach (var r in g.GetComponentsInChildren<MeshRenderer>())
+        {
+            r.gameObject.isStatic = true; r.renderingLayerMask = LayerHouse;
+            bool lit = r.name.StartsWith("LampGlass");
+            r.shadowCastingMode = lit ? ShadowCastingMode.Off : ShadowCastingMode.On;
+            if (lit) ShellGlow.Add(r);
+        }
+        // glass centres as hifi_door_lamps.py LAMPS_JSON prints them (spec x, world y, spec z); the light 6 cm in front of the panes' centre
+        foreach (var (n, x, y, z, ox, oz) in new[] { ("Kitchen", -5.537f, -1.186f, 3.354f, -1f, 0f), ("Basement", -6.20f, -3.757f, 0.04f, 0f, 1f) })
+            ShellLights.Add(NightLight(holder, "DoorLamp" + n, new Vector3(x + 0.06f * ox, y, -(z + 0.06f * oz)), 350f, 6f));
+    }
+
     static void FrontEntrance(GameObject holder, Material glass)
     {
         var paint = Mat("HiFi_ExtDoorPaint", new Color(0.018f, 0.026f, 0.022f)); paint.SetFloat("_Smoothness", 0.62f);   // film 714/4382: near-black green gloss
