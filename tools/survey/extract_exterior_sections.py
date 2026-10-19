@@ -2,7 +2,7 @@ import bpy, numpy as np
 from pathlib import Path
 bpy.ops.wm.read_factory_settings(use_empty=True)
 root=Path(__file__).resolve().parents[2]
-bpy.ops.import_scene.gltf(filepath=str(root/'assets/home_alone/online_home_alone/HOME_ALONE_FINAL.glb'))
+bpy.ops.import_scene.gltf(filepath=str(Path.home()/'Downloads/home-alone-final/source/HOME ALONE FINAL.glb'))
 points=[]; edges=[]; segments={str(z):[] for z in [1.5,4.5,6.3]}
 for o in bpy.context.scene.objects:
  if o.type!='MESH': continue
