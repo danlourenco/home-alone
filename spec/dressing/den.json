@@ -141,15 +141,8 @@
     0.92
    ],
    "front": "-x",
-   "source": "Marina f101/M27: the brown leather armchair stands by the living wall facing the bookcase (TV), below the right-hand pictures; position read off f101 against the arch casing (x ~6.3-7.0), NOT camera-solved (f101 shows no room corner). The film's den chair (2856-2941) is a burgundy tufted leather club chair facing the TV: built from sofa_02 narrowed to a chair, burgundy (film) | Oct 18 (user, with Marina's den render): moved 0.55 m off the living-side wall so the side table stands between the wall and the chair; x +0.07 to clear the coffee table"
-  },
-  "coffee_table": {
-   "model": "round_wooden_table_01",
-   "cx": 5.98,
-   "cz": 17.83,
-   "d": 0.66,
-   "h": 0.5,
-   "source": "Marina f9: pedestal foot x 5.983 z 17.829 (floor), top centre x 5.91-6.06 at 0.45-0.5 m; dia from the top's left edge (0.3 m radius). Round pedestal table, Poly Haven round_wooden_table_01 squashed to 0.5 m"
+   "source": "Marina f101/M27: the brown leather armchair stands by the living wall facing the bookcase (TV), below the right-hand pictures; position read off f101 against the arch casing (x ~6.3-7.0), NOT camera-solved (f101 shows no room corner). The film's den chair (2856-2941) is a burgundy tufted leather club chair facing the TV: built from sofa_02 narrowed to a chair, burgundy (film) | Oct 18 (user, with Marina's den render): moved 0.55 m off the living-side wall so the side table stands between the wall and the chair; x +0.07 to clear the coffee table | Oct 19 (user walk note 08:54 'the chair should be angled slightly'): turned 11.1 deg toward the TV (aimed at den_tv's centre, film 2856/2868 see the chair angled to the set from behind)",
+   "yaw_to_tv": 11.1
   }
  },
  "colliders": [
@@ -196,36 +189,6 @@
    "y": [
     0,
     0.92
-   ]
-  },
-  {
-   "name": "coffee_table_top",
-   "x": [
-    5.65,
-    6.31
-   ],
-   "z": [
-    17.5,
-    18.16
-   ],
-   "y": [
-    0.42,
-    0.5
-   ]
-  },
-  {
-   "name": "coffee_table_foot",
-   "x": [
-    5.85,
-    6.11
-   ],
-   "z": [
-    17.7,
-    17.96
-   ],
-   "y": [
-    0,
-    0.42
    ]
   },
   {
@@ -501,9 +464,9 @@
    },
    "remote": {
     "at": [
-     6.58,
+     6.666,
      0.828,
-     17.76
+     17.789
     ],
     "size": [
      0.2,
@@ -511,10 +474,21 @@
      0.05
     ],
     "slope": 0.21,
-    "source": "on the arm's ridge (z 17.76; raycast on the chair: 0.805 at x 6.48 rising to 0.847 at 6.68), tilted to follow it; a 1990 VCR remote ~0.20 x 0.05 x 0.022"
+    "source": "on the arm's ridge (z 17.76; raycast on the chair: 0.805 at x 6.48 rising to 0.847 at 6.68), tilted to follow it; a 1990 VCR remote ~0.20 x 0.05 x 0.022 | Oct 19: moved with the chair's 11.1 deg turn (its arm ridge), box kept axis-aligned"
    },
    "source": "film 2900/2932: the Crunch Tators bag (a 1990 6.5 oz chip bag ~0.20 x 0.29) leaning on the pole, a 12 oz Pepsi can (0.066 x 0.122, standard) in front-right of it on the tray; the TV remote on the chair's arm on Kevin's left (+z) (2868, 2900); art: tools/house/den_textures.py"
   }
  },
- "lamps_calibration": "film 2877 (tools/house/film_light_match.py --den-night), three passes: standard bulbs (bookcase 350, floor 1100, side 700 lm) read the urn lamp's pool -1.5/-1.9 stops vs the wall and the game boxes; 900/550/350 -> -0.7/-1.3; built 1200/300/250 (the floor lamp, out of 2877's frame, lit the game boxes). Desk 350 (not in the frame)"
+ "lamps_calibration": "film 2877 (tools/house/film_light_match.py --den-night), three passes: standard bulbs (bookcase 350, floor 1100, side 700 lm) read the urn lamp's pool -1.5/-1.9 stops vs the wall and the game boxes; 900/550/350 -> -0.7/-1.3; built 1200/300/250 (the floor lamp, out of 2877's frame, lit the game boxes). Desk 350 (not in the frame)",
+ "removed": {
+  "coffee_table": {
+   "model": "round_wooden_table_01",
+   "cx": 5.98,
+   "cz": 17.83,
+   "d": 0.66,
+   "h": 0.5,
+   "source": "Marina f9: pedestal foot x 5.983 z 17.829 (floor), top centre x 5.91-6.06 at 0.45-0.5 m; dia from the top's left edge (0.3 m radius). Round pedestal table, Poly Haven round_wooden_table_01 squashed to 0.5 m",
+   "removed": "Oct 19, user walk note 08:54: 'is the coffee table placed correctly? ... I'd suggest removing the coffee table for the time being so i can sit'. Evidence: Marina f9 (pedestal foot x 5.98 z 17.83); film 2850/2852 show a low glass-topped table on Kevin's LEFT (+z), beside the chair and level with its front (a glass dish on it), not between the chair and the TV. To restore: the Astro table (SpecGreybox.Sketchfab) beside the chair on that side."
+  }
+ }
 }
