@@ -257,9 +257,9 @@ def header_of(r):
 def leaves():
     """Door leaves in the house's data that swing: (opening id match, hinge s, latch direction, face n the leaf swings to, width)."""
     out = []
-    o = max((q for q in G["ground"]["openings"] if q["between"] == ["dining_room", "kitchen"]), key=lambda q: q["hi"])   # SpecGreybox.SwingDoors
-    for n in (-1, 1):   # double-acting
-        out.append(("ground", o, o["hi"] - 0.005, -1, n, o["hi"] - o["lo"] - 0.01, "dining swing door (SwingDoor.glb, double-acting)"))
+    for k, o in enumerate(sorted((q for q in G["ground"]["openings"] if q["between"] == ["dining_room", "kitchen"]), key=lambda q: -q["hi"])):   # SpecGreybox.SwingDoors
+        for n in (-1, 1):   # double-acting
+            out.append(("ground", o, o["hi"] - 0.005, -1, n, o["hi"] - o["lo"] - 0.01, f"dining swing door {k + 1} (SwingDoor.glb, double-acting)"))
     L = FD["leaf"]
     for pr in FD["pairs"]:
         if pr.get("surface"):

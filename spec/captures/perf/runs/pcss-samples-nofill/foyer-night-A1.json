@@ -1,0 +1,1 @@
+{"name":"foyer-night-A1","frames":150,"cpu_ms_median":135.4,"cpu_ms_p95":176.3,"cpu_ms_p99":440.6,"gpu_ms_median":254.5,"gpu_ms_p10":154.6,"rt_lights":98,"rt_shadow_lights":56,"batches":0,"setpass":85,"triangles":2281914,"shadow_casters":0,"draw_calls":0,"sys_mem_mb":6423,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"8.40,-1.72,-9.40 yaw 268"}

@@ -1,0 +1,1 @@
+{"name":"yard-day-A2","frames":150,"cpu_ms_median":2.8,"cpu_ms_p95":26.3,"cpu_ms_p99":29.3,"gpu_ms_median":null,"gpu_ms_p10":null,"rt_lights":13,"rt_shadow_lights":6,"batches":0,"setpass":94,"triangles":1609114,"shadow_casters":700,"draw_calls":0,"sys_mem_mb":6066,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"-4.00,-2.10,-12.00 yaw 288"}

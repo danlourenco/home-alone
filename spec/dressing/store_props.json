@@ -4152,6 +4152,63 @@
    "hides": [],
    "source": "props lane (props.py add, Oct 18): film 2430: a gallon jug on the laundry shelf (by eye). Model 0.166 x 0.126 x 0.274 m (plastic_bottle_gallon), native size.",
    "yaw": 180
+  },
+  {
+   "name": "kitchen_corner_chest",
+   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/DRAWER_CAB_01.prefab",
+   "x": [
+    2.47,
+    3.37
+   ],
+   "z": [
+    3.66,
+    4.051
+   ],
+   "y0": 0.0,
+   "height": 0.699,
+   "back": "-z",
+   "collide": true,
+   "hides": [],
+   "source": "props lane (props.py add, Oct 18): film 10508-10512: a low warm-wood chest against the kitchen wall left of the dining swing door (by the corner), a green glass pitcher on a tray on it, two framed fruit prints above (walk note Oct 18 21:20); size: the pack model's real size (one ruler: none needed). Model 1.136 x 0.391 x 0.699 m (DRAWER_CAB_01), native size. Width fitted to 0.90 m (Oct 18): the bandit must stand 0.5 m inside the corner door (room walk test), as the film's gap between the chest and the door (10512).",
+   "yaw": 180
+  },
+  {
+   "name": "kitchen_print_lower",
+   "prefab": "Assets/Models/PolyHaven/hanging_picture_frame_01.glb",
+   "x": [
+    2.64,
+    2.99
+   ],
+   "z": [
+    3.665,
+    3.685
+   ],
+   "y0": 1.02,
+   "height": 0.5,
+   "back": "-z",
+   "collide": false,
+   "hides": [],
+   "source": "props lane (Oct 18, decoration): film 10510-10512: two framed fruit prints stacked over the chest left of the dining swing door; Poly Haven hanging_picture_frame_01 (rectangular, matted) scaled to 0.35 x 0.50 (03 was an oval) (CC0)",
+   "yaw": 180
+  },
+  {
+   "name": "kitchen_print_upper",
+   "prefab": "Assets/Models/PolyHaven/hanging_picture_frame_01.glb",
+   "x": [
+    2.64,
+    2.99
+   ],
+   "z": [
+    3.665,
+    3.685
+   ],
+   "y0": 1.58,
+   "height": 0.5,
+   "back": "-z",
+   "collide": false,
+   "hides": [],
+   "source": "props lane (Oct 18, decoration): film 10510-10512: two framed fruit prints stacked over the chest left of the dining swing door; Poly Haven hanging_picture_frame_01 (rectangular, matted) scaled to 0.35 x 0.50 (03 was an oval) (CC0)",
+   "yaw": 180
   }
  ]
 }

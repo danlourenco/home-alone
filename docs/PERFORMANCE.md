@@ -97,3 +97,25 @@ cached atlas. Make it a `BUDGET FAIL` once a fix is accepted.
    LivingProps.glb 320 MB, DiningProps.glb 224 MB, mannequin 150 MB, ExteriorPlants.glb 103 MB. Fix: export the GLBs with KTX2/basis
    textures, or move the textures out to compressed PNG/JPG assets with max sizes set.
 5. Editor in Play competing for the GPU: measure with the editor stopped for clean absolute numbers.
+
+## PCSS soft shadows (Oct 18, interior-notes job; user: "can we use HDRP's high-quality soft-shadow mode where necessitated?")
+
+HDRP's PCSS is global for punctual lights: HDRP.asset `punctualShadowFilteringQuality` 1 (Medium, PCF) -> 2 (High, PCSS). Tried and
+measured, **left OFF (1)**: its night cost is not established and the one awake reading was far over the night baseline (below).
+Ready for it: every lamp now has a source size, so switching the asset to 2 is the whole change (and drop the parents' dimmer). Each lamp's source size sets its penumbra (SpecGreybox.Shadows.cs `SourceRadius`: bare bulbs and under-cabinet strips 3 cm,
+sconces/hurricanes/lanterns 4 cm, chandeliers 6 cm, shaded lamps 9 cm, domes and generic room lamps 12 cm; the parents' bedside lamps
+12 cm and floor lamp 10 cm from their builder). The parents' 55% shadow dimmer stays while PCSS is off. Look: `spec/captures/views/interior-notes/
+pcss-*-medium-vs-high.jpg` (left Medium, right High, same build): penumbrae soften (bedposts, shade cones, picture-frame shadows); the
+living room's view through the den door is a little darker.
+
+**Cost: NOT established.** Players Medium.app / PCSS.app built from the same scene (scratch home-alone-3, build 3). The display slept
+through most tours (GPU ms null; CPU ms ~5 then is not a frame time), so the cross-build A/B (`runs/pcss-A1`, `pcss-B1`) is not
+evidence. The one awake tour (PCSS player, in-session `-perfab`, `runs/pcss-samples-nofill`) read night GPU p10 foyer 151, hall 181,
+living 72, parents 68 ms (98 real-time lights now, 56 shadowed; the Oct 18 Medium baseline above, before the exterior's lights, read
+39-60 ms median); one awake Medium sample read parents-night p10 69 ms. Knobs tried in-session: PCSS samples 24/16 -> 8/8 (no change
+measurable), generic `Light_` lamps without shadows (-13..-23% GPU at night, but they then light through walls: not applied).
+Re-measure with the display awake and the editor stopped: `tools/house/perf_probe.sh ab pcss <Medium.app> <PCSS.app>` (build the
+Medium player from the perf clone with punctualShadowFilteringQuality 1). If night GPU is no worse than Medium, set 2 and drop the
+parents' `shadowDimmer = 0.55f` (SpecGreybox.Curtains.cs).
+New PerfProbe knobs: `-perfpcss B,F` (PCSS sample counts in the variant), `-perfnoshadow P1,P2` (lamps by prefix lose shadows), and a
+`parents` pose (the bedside-lamp view of walk note 21:16).

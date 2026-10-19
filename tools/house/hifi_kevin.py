@@ -226,11 +226,21 @@ steel.sweep([(fx_, 0.025, fz_), (fx_, ph, fz_)], tube(0.011))
 hx_, hy_, hz_ = FL["head"]
 knee = (fx_ + 0.15 * (hx_ - fx_), ph + 0.03, fz_ + 0.13 * (hz_ - fz_))
 steel.lathe(fx_, fz_, ph - 0.02, [(0, 0.016), (0.05, 0.016)], n=12)                                # the swivel collar
-steel.sweep([(fx_, ph, fz_), knee, (hx_ + 0.10, hy_ + 0.03, hz_ + 0.03)], tube(0.008))
-shade = P("KV_Shade")                                            # the pale rectangular head (film 296), open below
+# the head lies along the arm (pole -> head in plan) and the arm meets its near end (walk note Oct 18 21:13 "lamp part isn't aligned
+# with base": the head stayed along x with the arm's end at a fixed +x offset after the lamp moved beside the chair)
 L0, W0 = 0.24, 0.08
-shade.box(hx_ - L0 / 2, hx_ + L0 / 2, hy_ - 0.01, hy_ + 0.025, hz_ - W0 / 2, hz_ + W0 / 2)
-P("KV_Bulb").box(hx_ - L0 / 2 + 0.02, hx_ + L0 / 2 - 0.02, hy_ - 0.016, hy_ - 0.010, hz_ - W0 / 2 + 0.012, hz_ + W0 / 2 - 0.012)
+_d = math.hypot(hx_ - fx_, hz_ - fz_); ux, uz = (hx_ - fx_) / _d, (hz_ - fz_) / _d; vx, vz = -uz, ux
+steel.sweep([(fx_, ph, fz_), knee, (hx_ - ux * (L0 / 2 + 0.03), hy_ + 0.0075, hz_ - uz * (L0 / 2 + 0.03)),
+             (hx_ - ux * (L0 / 2 + 0.001), hy_ + 0.0075, hz_ - uz * (L0 / 2 + 0.001))], tube(0.008))   # meets the head's back face, 1 mm off it (a tube end inside a plate reads as a clash)
+def obox(part, l, w, y0, y1):
+    """A box centred on the head, l along the arm (u), w across it (v)."""
+    c = [(hx_ + a * ux * l / 2 + b * vx * w / 2, hz_ + a * uz * l / 2 + b * vz * w / 2) for a, b in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+    part.face([(x, y1, z) for x, z in c], (0, 1, 0)); part.face([(x, y0, z) for x, z in c], (0, -1, 0))
+    for (xa, za), (xb, zb) in zip(c, c[1:] + c[:1]):
+        part.face([(xa, y0, za), (xb, y0, zb), (xb, y1, zb), (xa, y1, za)], ((xa + xb) / 2 - hx_, 0, (za + zb) / 2 - hz_))
+shade = P("KV_Shade")                                            # the pale rectangular head (film 296), open below
+obox(shade, L0, W0, hy_ - 0.01, hy_ + 0.025)
+obox(P("KV_Bulb"), L0 - 0.04, W0 - 0.024, hy_ - 0.016, hy_ - 0.010)
 
 PG = K["penguin"]                                                # film 296: penguin plush in a Santa hat on the dresser
 px_, py_, pz_ = PG["at"]; hh = PG["h"]

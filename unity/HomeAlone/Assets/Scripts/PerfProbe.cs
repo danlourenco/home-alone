@@ -25,6 +25,7 @@ public class PerfProbe : MonoBehaviour
         ("hall", new Vector3(6.893f, 1.31f, -9.487f), 188f, 0f),       // upstairs hall arch (walk note pose)
         ("attic", new Vector3(6.556f, 3.93f, -16.95f), 351f, 0f),      // stair head facing the bed
         ("yard", new Vector3(-4f, -2.1f, -12f), 288f, -10f),           // rear yard looking at the treehouse (-12.1, -9.3)
+        ("parents", new Vector3(6.745f, 1.16f, -2.895f), 276f, -14.6f), // parents' room, the bedside lamps (walk note 21:16 pose; PCSS check)
     };
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -61,10 +62,21 @@ public class PerfProbe : MonoBehaviour
         float rangeK = float.Parse(Arg("-perfrange") ?? "1", System.Globalization.CultureInfo.InvariantCulture);
         var lamps = FindObjectsByType<Light>(FindObjectsInactive.Include).Where(l => l.type != LightType.Directional && !(l.bakingOutput.isBaked && l.bakingOutput.lightmapBakeType == LightmapBakeType.Baked))   // lightmapBakeType is editor-only
             .Select(l => (l, l.range)).ToList();
+        //   -perfpcss B,F         every lamp's PCSS blocker/filter sample counts in the variant (HDRP default 24,16; punctual filtering High)
+        //   -perfnoshadow P1,P2   real-time lights whose name starts with a prefix lose their shadows in the variant
+        var pcss = (Arg("-perfpcss") ?? "").Split(',').Where(v => v.Length > 0).Select(int.Parse).ToArray();
+        var noShadow = (Arg("-perfnoshadow") ?? "").Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
+        var lampHd = lamps.Select(x => (x.l, hd: x.l.GetComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalLightData>(), x.l.shadows)).Where(x => x.hd != null)
+            .Select(x => (x.l, x.hd, x.shadows, b: x.hd.blockerSampleCount, f: x.hd.filterSampleCount)).ToList();
         var switchedOff = new Dictionary<Light, bool>();   // lamp -> its state before the variant (night mode switches lamps too)
         void Apply(bool variant)
         {
             foreach (var (l, range) in lamps) l.range = variant ? range * rangeK : range;
+            foreach (var (l, lhd, sh, b, f) in lampHd)
+            {
+                if (pcss.Length == 2) { lhd.blockerSampleCount = variant ? pcss[0] : b; lhd.filterSampleCount = variant ? pcss[1] : f; }
+                if (noShadow.Any(p => l.name.StartsWith(p))) l.shadows = variant ? LightShadows.None : sh;
+            }
             if (variant) { foreach (var (l, _) in lamps) if (prefixes.Any(p => l.name.StartsWith(p))) { switchedOff[l] = l.enabled; l.enabled = false; } }
             else { foreach (var kv in switchedOff) kv.Key.enabled = kv.Value; switchedOff.Clear(); }
             if (hd != null && off.Count > 0)

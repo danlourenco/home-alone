@@ -170,19 +170,37 @@ rk = [(x, y + WAIN + 0.015, WALL_FACE - 0.03) for x, y in line]
 wall.sweep(rk, [(-0.015, -0.02), (0.015, -0.02), (0.015, 0.02), (-0.015, 0.02)])
 
 
-# the bottom step's bullnose (film 2677, Marina 193.5 s: the first step rounds out past the open side under the newel), replacing
-# the dressing's square box (user note 23:26: "the first riser extends awkwardly")
+# the bottom step's round end (film 1614/1616/1622/1624, walk note Oct 18 21:22 "i think the newel in the movie is curved"): the film's
+# flight starts with a VOLUTE: the handrail curls round level over a ring of white balusters standing on the first step's round end,
+# with a slim dark newel at its centre (no square newel). The step's end is a circle round the volute's centre, clipped at the step's
+# back (the second step's riser) and joined to its straight part; replaces the half-disc bullnose (user note 23:26 "the first riser
+# extends awkwardly" was the dressing's square box)
 b1 = B["flight1_step01"]; (bx0, bx1), (by0, by1), (bz0, bz1) = b1["x"], b1["y"], b1["z"]
-BN_C, BN_R = ((bx0 + bx1) / 2, bz0), (bx1 - bx0) / 2
-arc = [(BN_C[0] + BN_R * math.cos(math.pi * k / 16), BN_C[1] - BN_R * math.sin(math.pi * k / 16)) for k in range(17)]   # front -> back via -z
-for (xa, za), (xb, zb) in zip(arc, arc[1:]):
-    white.face([(xa, by0, za), (xa, by1 - TREAD_T, za), (xb, by1 - TREAD_T, zb), (xb, by0, zb)], ((xa + xb) / 2 - BN_C[0], 0, (za + zb) / 2 - BN_C[1]))
-cap = [(x, z) for x, z in arc]
-tread.face([(x, by1, z) for x, z in cap], (0, 1, 0))                      # top
-tread.face([(x, by1 - TREAD_T, z) for x, z in cap], (0, -1, 0))           # underside
-for (xa, za), (xb, zb) in zip(cap, cap[1:]):                              # tread edge round the arc
-    tread.face([(xa, by1 - TREAD_T, za), (xa, by1, za), (xb, by1, zb), (xb, by1 - TREAD_T, zb)], ((xa + xb) / 2 - BN_C[0], 0, (za + zb) / 2 - BN_C[1]))
-NEWEL1 = (BN_C[0], bz0 - BN_R * 0.45)
+VOL_R = 0.13                                   # the rail's centre line where the curl starts: the flight's rail line (z 10.20) at VOL_C.z + VOL_R
+VOL_C = ((bx0 + bx1) / 2, 10.20 - VOL_R)       # under the first cap's centre (x), so the curl starts where the straight rail ends
+BN_R = 0.20                                    # the step's round end: the rail's outer edge (VOL_R + 3.5 cm) plus a 3.5 cm margin
+def _bn_outline(n=40):
+    """Plan outline (x, z) of the round end, z < bz0 side plus the straight part's front: from the riser line round to the back."""
+    dz = math.sqrt(BN_R ** 2 - (bx1 - VOL_C[0]) ** 2)
+    a0 = math.atan2(dz, bx1 - VOL_C[0])                       # where the circle meets the riser line x = bx1 (z above the centre)
+    a1 = math.atan2(-math.sqrt(BN_R ** 2 - (VOL_C[0] - bx0) ** 2), bx0 - VOL_C[0]) + 2 * math.pi   # where it meets the back x = bx0 (z below)
+    pts = [(bx1, bz0)] + [(VOL_C[0] + BN_R * math.cos(a0 - (a0 - (a1 - 2 * math.pi)) * k / n), VOL_C[1] + BN_R * math.sin(a0 - (a0 - (a1 - 2 * math.pi)) * k / n)) for k in range(n + 1)] + [(bx0, bz0)]
+    return pts
+BN = _bn_outline()
+for (xa, za), (xb, zb) in zip(BN, BN[1:]):     # the white riser round the end (and its back under the second step)
+    out = ((xa + xb) / 2 - VOL_C[0], 0, (za + zb) / 2 - VOL_C[1]) if (xa, za) != (bx0, bz0) and (xb, zb) != (bx0, bz0) else (-1, 0, 0)
+    white.face([(xa, by0, za), (xa, by1 - TREAD_T, za), (xb, by1 - TREAD_T, zb), (xb, by0, zb)], out)
+tread.face([(x, by1, z) for x, z in BN], (0, 1, 0))                       # top
+tread.face([(x, by1 - TREAD_T, z) for x, z in BN], (0, -1, 0))            # underside
+for (xa, za), (xb, zb) in zip(BN[:-1], BN[1:-1]):                         # tread edge round the arc (not along the back)
+    tread.face([(xa, by1 - TREAD_T, za), (xa, by1, za), (xb, by1, zb), (xb, by1 - TREAD_T, zb)], ((xa + xb) / 2 - VOL_C[0], 0, (za + zb) / 2 - VOL_C[1]))
+NEWEL1 = VOL_C
+
+
+def volute_post(cx, cz, y0, h):
+    """The slim turned dark newel at the volute's centre (film 1622/1624: a dark post inside the ring of white balusters)."""
+    newel.lathe(cx, cz, y0, [(0.0, 0.032), (0.12, 0.032), (0.14, 0.024), (0.30, 0.018), (0.50, 0.026), (0.56, 0.018), (h - 0.10, 0.016),
+                              (h - 0.06, 0.024), (h, 0.024)], n=16)
 
 
 # handrail: through the cap tops' midpoints, one continuous run per flight, plus the landing's run
@@ -197,6 +215,19 @@ lc = B["landing_rail_cap"]; ly = (lc["y"][0] + lc["y"][1]) / 2; lx = (lc["x"][0]
 NEWELS = [NEWEL1, (lx, 10.20), (lx, 9.20)]   # the foot of flight 1, the landing corner, the foot of flight 2 (grey-box rail ends)
 # every rail run ends at a newel's centre: inside the post, never through it and out the far side (clash gate, Oct 16)
 p1[-1] = (lx, p1[-1][1], p1[-1][2])
+# the volute: level at the first cap's rail height, from the centre out round 1.15 turns to where the straight rail starts (at +z of the
+# centre, heading +x: the rail's own direction there, so plan tangents match); the inner turn closes on the outer (one solid part)
+VOL_Y = p1[0][1]
+VT = 1.15 * 2 * math.pi; VN = 72
+curl = []
+for k in range(VN + 1):
+    u = k / VN                                  # 0 at the centre, 1 at the start of the straight rail
+    r = VOL_R * u ** 0.6
+    th = math.pi / 2 - VT * (1 - u)             # ends at +90 deg (z = centre + VOL_R) travelling toward -x: on into the straight rail
+    curl.append((VOL_C[0] + r * math.cos(th), VOL_Y, VOL_C[1] + r * math.sin(th)))
+curl[0] = (VOL_C[0], VOL_Y, VOL_C[1])
+assert abs(curl[-1][0] - p1[0][0]) < 1e-6 and abs(curl[-1][2] - p1[0][2]) < 1e-6, (curl[-1], p1[0])
+p1 = curl[:-1] + p1
 rail.sweep(p1, RAIL_PROF)
 rail.sweep([(lx, ly, 10.20), (lx, ly, 9.20)], RAIL_PROF)
 dy2 = p2[1][1] - p2[0][1]; sx2 = abs(p2[1][0] - p2[0][0])
@@ -236,8 +267,8 @@ for n, b in B.items():
         cx, cz = (b["x"][0] + b["x"][1]) / 2, (b["z"][0] + b["z"][1]) / 2
         if any(abs(cx - nx) < BAL_S + NEWEL_S + 0.01 and abs(cz - nz) < BAL_S + NEWEL_S + 0.01 for nx, nz in NEWELS):
             continue   # a newel stands here
-        if n.startswith("flight1") and cx > NEWEL1[0]:
-            continue   # in front of the bottom newel there is no rail to carry it (user note 09:06: "a random baluster")
+        if n.startswith("flight1") and cx > VOL_C[0] - 0.06:
+            continue   # the volute's ring stands here (and in front of it there is no rail: user note 09:06 "a random baluster")
         fl = STEPS.get(n[:7])
         st = next((q for q in fl[0] if q["x"][0] <= cx <= q["x"][1]), None) if fl else None
         y0 = b["y"][0]
@@ -245,7 +276,7 @@ for n, b in B.items():
             cx = max(cx, st["x"][0] + NOSE + BAL_S + 0.005) if fl[1] > 0 else min(cx, st["x"][1] - NOSE - BAL_S - 0.005)
             y0 = st["y"][1]
         if n.startswith("flight1"):
-            top = rail_y(p1, cx) - RAIL_BOTTOM
+            top = rail_y([q for q in p1 if q[1] > VOL_Y - 1e-6 and (q[2] > VOL_C[1] + VOL_R - 1e-6 or q is p1[-1])], cx) - RAIL_BOTTOM
         elif n.startswith("flight2"):
             top = rail_y(p2, cx) - RAIL_BOTTOM
         else:
@@ -253,15 +284,24 @@ for n, b in B.items():
         baluster(cx, cz, y0, top - y0)
 
 
+# the volute's ring: white balusters on the round end, each under the curl's centre line, 6 at 60 deg from the straight rail's start
+# round the outside (film 1622/1624: five or six in a ring), only where the curl is wide enough to clear the centre post
+for k in range(6):
+    th = math.pi / 2 - k * math.pi / 3
+    u = 1 - (k * math.pi / 3) / VT; r = VOL_R * u ** 0.6
+    if r < 0.075:
+        break
+    baluster(VOL_C[0] + r * math.cos(th), VOL_C[1] + r * math.sin(th), by1, VOL_Y - RAIL_BOTTOM - by1)
+
 # newels (NEWELS above)
 RAIL_RUNS, NEWEL_AT, COVERS = {}, {}, []
-NEWEL_AT["foot"] = (NEWEL1[0], NEWEL1[1], by1, p1[0][1] - by1 + 0.20)
+NEWEL_AT["foot"] = (VOL_C[0], VOL_C[1], by1, VOL_Y - by1 + 0.005)   # the volute's centre post (the curl's centre end dies into its top)
 NEWEL_AT["landing_corner"] = (lx, 10.20, ly1, ly - ly1 + 0.20)
 NEWEL_AT["flight2_foot"] = (lx, 9.20, ly1, p2[0][1] - ly1 + 0.20)
 NEWEL_AT["gallery_head"] = (HEAD_X, GAL_Z, 0.0, NEWEL_H)
 NEWEL_AT["gallery_corner"] = (GAL_X, GAL_Z, 0.0, NEWEL_H)
-for _n in NEWEL_AT.values():
-    newel_post(*_n)
+for _k, _n in NEWEL_AT.items():
+    (volute_post if _k == "foot" else newel_post)(*_n)
 # the half newel where the gallery rail meets the wall (z 11.43): a flat pilaster on the wall face, so the rail and the hall's
 # baseboard and cap rail (which stop at the floor's edge, x 5.637) all end inside it instead of in the air
 hx0, hx1, hz0 = GAL_X - 0.045, GAL_X + 0.045, WALL_Z - 0.045

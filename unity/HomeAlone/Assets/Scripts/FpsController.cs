@@ -4,6 +4,8 @@ using UnityEngine;
 /// WASD move, mouse look, Shift sprint, Space jump, HOLD C or Left Ctrl to crouch/crawl (can't stand under a low ceiling),
 /// Esc/Tab releases cursor, click recaptures, R resets. G toggles Kevin (kid body, the default in Play) / adult;
 /// H toggles the step bob + landing dip (motion-sickness switch; footsteps stay).
+/// E interacts (each prompts on screen when you are close and looking at it): Buzz's footlocker opens/closes (TrunkLid, within 1.5 m);
+/// at the attic dormer rides the zipline, at the treehouse ladder climbs (ZipLine). N day/night, M marks a walk note (FeelNotes).
 /// Footsteps by floor surface: Surface is read from the material/collider name under the feet (SurfaceFor); clips are Kenney Impact Sounds (CC0).
 [RequireComponent(typeof(CharacterController))]
 public class FpsController : MonoBehaviour

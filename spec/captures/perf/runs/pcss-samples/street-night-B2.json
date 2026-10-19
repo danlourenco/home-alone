@@ -1,0 +1,1 @@
+{"name":"street-night-B2","frames":150,"cpu_ms_median":6.6,"cpu_ms_p95":41.6,"cpu_ms_p99":42.3,"gpu_ms_median":null,"gpu_ms_p10":null,"rt_lights":98,"rt_shadow_lights":56,"batches":0,"setpass":138,"triangles":5757058,"shadow_casters":0,"draw_calls":0,"sys_mem_mb":6607,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"34.00,-2.70,-9.70 yaw 270"}

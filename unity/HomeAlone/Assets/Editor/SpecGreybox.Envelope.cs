@@ -147,6 +147,10 @@ public static partial class SpecGreybox
                     cells.Add(new Slab(new Vector3(xs[i], r.y0, zs[k]), new Vector3(xs[i + 1], r.y1, zs[k + 1])));
         }
         foreach (var h in cells) { skins = skins.SelectMany(s => Minus(s, h)).ToList(); lids = lids.SelectMany(s => Minus(s, h)).ToList(); }
+        // nor inside a ceiling: the floor framing starts at the lowest ceiling, so over every room at that height it was a 6 mm sheet on
+        // the ceiling's lit face (two casters at one depth: lamps drew its outline as lines, Oct 18 21:21). The ceiling casts there itself
+        foreach (var (st, fy) in storeys)
+            foreach (var c in st["ceilings"]) { var h = SpecSlab(c, fy); lids = lids.SelectMany(s => Minus(s, h)).ToList(); }
 
         var g = Child(root, "Envelope");
         float fySave = FloorY; FloorY = 0f;

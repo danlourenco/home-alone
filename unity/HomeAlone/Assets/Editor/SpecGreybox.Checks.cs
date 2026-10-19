@@ -38,9 +38,12 @@ public static partial class SpecGreybox
             if (InRoom(q)) return true;
             foreach (var d in dirs.Append(n))
                 for (float s = 0.05f; s <= 0.6f; s += 0.05f)
-                    if (InRoom(q + d * s)) { if (!Physics.Raycast(q, d, s, ~0, QueryTriggerInteraction.Ignore)) return true; break; }
+                    if (InRoom(q + d * s)) { if (!Opaque(q, d, s)) return true; break; }
             return false;
         }
+        // glass is seen through (Oct 18 21:21: a sidelight's outer sill z-fought behind its pane and the check called it hidden)
+        bool Opaque(Vector3 q, Vector3 d, float s) => Physics.RaycastAll(q, d, s, ~0, QueryTriggerInteraction.Ignore)
+            .Any(h => !(h.collider.name.Contains("Glass") || (h.collider.TryGetComponent<Renderer>(out var hr) && hr.sharedMaterial is Material m && m.renderQueue >= 3000)));
         var (tris, surf, unreadable) = ZTris(roots);
         // a face is hidden when the point just in front of it is inside a solid: primitive colliders by overlap, meshes (given
         // temporary colliders) by hitting a face from behind
@@ -268,6 +271,19 @@ public static partial class SpecGreybox
                     if (Solid(P(f.ax, f.c - f.n * 0.01f, a, b)) || !Seen(P(f.ax, f.c + f.n * 0.01f, a, b))) continue;
                     gap++; if (gap <= 200) lines.Add($"GAP     {axn[f.ax]}={f.c:F3} ({-Mathf.Min(ou, ov) * 100:F1} cm): {Where(f.box)} | {Where(g.box)}");
                 }
+            }
+        // a shadows-only caster (the Envelope) with a face on a visible structural face: the shadow map holds two surfaces at one
+        // depth and the lamps draw its outline on the face as lines (Oct 18 21:21 foyer ceiling: the floor-framing band, 6 mm thick,
+        // lay on the ceiling's lit face). Reported as overlaps: a caster may touch a face from behind, never share its plane
+        var casters = roots.Where(r => r != null).SelectMany(r => r.GetComponentsInChildren<MeshRenderer>())
+            .Where(m => m.enabled && m.shadowCastingMode == ShadowCastingMode.ShadowsOnly && m.name == "Envelope").Select(m => m.bounds).ToList();
+        foreach (var f in exposed)
+            foreach (var e in casters)
+            {
+                int u = (f.ax + 1) % 3, v = (f.ax + 2) % 3;
+                float face = f.n < 0 ? e.min[f.ax] : e.max[f.ax];
+                if (Mathf.Abs(face - f.c) > 0.003f || Ov(f.lo.x, f.hi.x, e.min[u], e.max[u]) < 0.05f || Ov(f.lo.y, f.hi.y, e.min[v], e.max[v]) < 0.05f) continue;
+                over++; if (over <= 40) lines.Add($"OVERLAP {axn[f.ax]}={f.c:F3}: shadow caster Envelope at ({e.center.x:F2}, {e.center.y:F2}, {-e.center.z:F2}) on the lit face of {Where(f.box)}");
             }
         foreach (var (hp, what) in HoleProbes)   // thresholds and outside corners must be solid (a hole there sees the outdoors)
             if (!Solid(hp)) { gap++; if (gap <= 200) lines.Add($"GAP     hole at {what}: ({hp.x:F2}, {hp.y:F2}, {-hp.z:F2}) is empty"); }

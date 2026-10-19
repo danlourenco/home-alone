@@ -29,6 +29,18 @@ public static partial class SpecGreybox
     static readonly string[] SealedRoomLamps = { "Light_linen_closet", "Light_under_landing", "Light_girls_a_closet" };
     const float UpstairsY = 0.5f;   // world y above which a lamp is upstairs (upstairs floor 0, ground floor -3.0)
 
+    // Soft shadows (user Oct 18: "can we use HDRP's high-quality soft-shadow mode where necessitated?"): with HDRP.asset punctual filtering
+    // High (PCSS; left at Medium until its night cost is measured, docs/PERFORMANCE.md) each lamp's source size sets its penumbra, as a real bulb's does: bare bulbs small, candle sconces and lanterns a little
+    // larger, shaded lamps the size of the lit shade, ceiling domes and the generic room lamps (a dome fixture each) larger still.
+    // -1: keep what the lamp's builder set (the parents' lamps: their shades' own sizes)
+    static float SourceRadius(string n) =>
+        n.StartsWith("ParentsLamp") ? -1f :
+        n.Contains("Bulb") || n.StartsWith("UnderCab") ? 0.03f :
+        n.Contains("Sconce") || n.StartsWith("Hurricane") || n.Contains("Lantern") || n.StartsWith("BasementDoorLamp") ? 0.04f :
+        n.Contains("Chandelier") ? 0.06f :
+        n.Contains("Lamp") ? 0.09f :
+        n.StartsWith("Dome") || n.StartsWith("Light_") ? 0.12f : -1f;
+
     static void LimitShadows(GameObject root)
     {
         var all = Object.FindObjectsByType<Light>(FindObjectsInactive.Include, FindObjectsSortMode.None);
@@ -56,6 +68,7 @@ public static partial class SpecGreybox
             int level = hero ? 2 : (generic && l.transform.position.y > UpstairsY) || small ? 0 : 1;
             hd.shadowUpdateMode = ShadowUpdateMode.OnDemand; hd.onDemandShadowRenderOnPlacement = true; hd.alwaysDrawDynamicShadows = false;
             hd.shadowFadeDistance = 10000f;
+            float sr = SourceRadius(l.name); if (sr > 0f) l.shapeRadius = sr;
             hd.SetShadowResolutionOverride(false); hd.SetShadowResolutionLevel(level);
             if (ContactLamps.Any(c => l.name.StartsWith(c))) { hd.useContactShadow.useOverride = true; hd.useContactShadow.@override = true; contact++; }
             int res = 256 << level; long t = (long)(l.type == LightType.Point ? 6 : 1) * res * res; n++;

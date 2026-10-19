@@ -1,0 +1,95 @@
+{
+ "change": "Second dining-kitchen swing door (Oct 18, TRIAL; walk note 21:20 at (2.31,-3.0,-5.71) yaw 28: 'this entrance should be a swinging door like the neighboring one'): the dining room's double-acting leaf (SwingDoor.glb, hifi_swing_door.py) now hangs in BOTH dining|kitchen doors, the second (spec x 4.19, z 3.719-4.429, by the kitchen's corner) hinged on its foyer-side jamb like the first. SpecGreybox.SwingDoors loops over both openings; openings.py checks both swings (0 broken). No collider: walk gates unchanged",
+ "target": "House_WallGrid",
+ "premise": "In the film the dining-kitchen door Harry comes through before the plastic-wrap and feather trap is a white panelled double-acting door with a brass push plate",
+ "claim": {
+  "value": {
+   "opening": "dining_room|kitchen x 4.19, z 3.719-4.429",
+   "leaf": "SwingDoor.glb 0.70 m, hinge z 4.424 (foyer side), double-acting"
+  },
+  "data": [
+   "film:10534",
+   "film:10536"
+  ],
+  "scale": [
+   "none"
+  ],
+  "upstream": [],
+  "how": "Layout only: the opening is the plan's (spec/geometry.json); the leaf is the existing model at that opening's width less 1 cm. Which door: from the dining side the film (10532) shows the china cabinet left of the door and the server right, as ours from (6.2,-4.6) facing the kitchen (before-swing_dining.jpg); the hinge side from 10512/10536 (push plate on the latch side at the corner)",
+  "applies_to": [
+   "dining_room",
+   "kitchen"
+  ],
+  "measured_in": [
+   "dining_room",
+   "kitchen"
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-10-16",
+   "what": "dining swing door in the dining-kitchen door nearest the foyer (Marina 228 s; user Oct 16 'one of those push doors')",
+   "outcome": "accepted"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 10508-10512 (another camera, the kitchen side): Harry crosses the kitchen to a white panelled door in the corner beside a low cabinet with a green pitcher under two framed fruit prints; the leaf opens away into the dining room",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:10512"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": []
+  },
+  {
+   "what": "Film 10532 (dining side, wide): china cabinet, the door, then the server with the brass chafing dish: the same order as our dining wall (china cabinet z 4.88-6.08 left of this door seen from the room)",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:10532"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": []
+  },
+  {
+   "what": "openings.py swing-room on both leaves, both directions: 0.70 m leaf swings clear to 90 deg (self-consistency, not evidence)",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "construction"
+   ],
+   "data": [
+    "openings"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": []
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/interior-notes/before-swing_note2120.jpg",
+   "spec/captures/views/interior-notes/before-swing_dining.jpg"
+  ],
+  "after": [
+   "spec/captures/views/interior-notes/after-swing_note2120.jpg",
+   "spec/captures/views/interior-notes/after-swing_dining.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "outcome": null
+}

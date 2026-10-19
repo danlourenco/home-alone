@@ -1,0 +1,1 @@
+{"name":"parents-night-B1","frames":150,"cpu_ms_median":53.7,"cpu_ms_p95":61.3,"cpu_ms_p99":63.0,"gpu_ms_median":99.0,"gpu_ms_p10":54.9,"rt_lights":98,"rt_shadow_lights":43,"batches":0,"setpass":68,"triangles":931734,"shadow_casters":0,"draw_calls":0,"sys_mem_mb":6423,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"6.75,1.16,-2.90 yaw 276"}

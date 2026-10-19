@@ -1,0 +1,1 @@
+{"name":"foyer-day","frames":300,"cpu_ms_median":5.9,"cpu_ms_p95":62.6,"cpu_ms_p99":82.9,"gpu_ms_median":null,"gpu_ms_p10":null,"rt_lights":13,"rt_shadow_lights":6,"batches":0,"setpass":210,"triangles":9689678,"shadow_casters":7015,"draw_calls":0,"sys_mem_mb":5674,"gfx_mem_mb":0,"screen":"1920x1080","focused":true,"cam":"8.40,-1.72,-9.40 yaw 268"}

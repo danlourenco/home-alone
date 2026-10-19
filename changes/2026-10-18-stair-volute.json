@@ -1,0 +1,116 @@
+{
+ "change": "Main stair's starting volute (Oct 18, TRIAL; walk note 21:22 at (7.39,-3.0,-9.04) yaw 218: 'i think the newel in the movie is curved'): the square turned newel at the foot of flight 1 replaced by the film's volute: the handrail curls level 1.15 turns over the first step, a ring of five white turned balusters under the curl, a slim dark turned newel at its centre, and the first step's end rounded to a 0.20 m circle round the volute (was a 0.1475 m half-disc). tools/house/hifi_foyer.py -> MainStair.glb; rail_joints.py 0 loose ends",
+ "target": "House_WallGrid",
+ "premise": "The film's main stair starts with a volute handrail over a ring of balusters on a round-ended first step, not a square newel post",
+ "claim": {
+  "value": {
+   "volute_centre_spec": [
+    6.3775,
+    10.07
+   ],
+   "curl_radius_start": 0.13,
+   "turns": 1.15,
+   "ring_balusters": 5,
+   "step_end_radius": 0.2,
+   "rail_height": "unchanged (first cap's rail line)"
+  },
+  "data": [
+   "film:1614",
+   "film:1616",
+   "film:1622",
+   "film:1624"
+  ],
+  "scale": [
+   "none"
+  ],
+  "upstream": [],
+  "how": "Shape only, no new length from the frames: the volute is centred under the first rail cap (spec/house_spec.json flight1_rail01_cap x) on the flight's rail line (z 10.20) less the curl radius; the curl radius, turns and the step end's radius are authored to the standard volute proportions (DEVIATIONS 101); rail height and the steps are unchanged",
+  "applies_to": [
+   "main_stair_opening"
+  ],
+  "measured_in": [
+   "main_stair_opening"
+  ],
+  "assumed": {
+   "main_stair_opening": "DEVIATIONS 101 (volute radius, turns, ring count and the step end's 0.20 m radius authored)"
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-15",
+   "what": "foyer stair model (hifi_foyer.py): square-base turned dark newel at the foot from Marina 193.5 s",
+   "outcome": "superseded"
+  },
+  {
+   "date": "2026-10-16",
+   "what": "bullnose first step as a half disc under the newel (user note 23:26 'the first riser extends awkwardly')",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 2675 and 3888 (other scenes, other camera: Kevin running through the foyer, climbing the stair): the rail's round volute cap over a ring of white turned balusters around a dark turned centre post, the first step's end round and proud of the flight (crops spec/captures/views/interior-notes/film-2675-3888-volute.jpg)",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film:2675",
+    "film:3888"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": []
+  },
+  {
+   "what": "Marina Part 1 193.5 s (her CG model): a square-base turned dark newel at the foot of the flight, no volute",
+   "agrees": false,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "marina-frame:p1-193.5"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [],
+   "disposition": "Film first (AGENTS: the film is the authority for the look; Marina is the fallback): two film scenes from different cameras both show the volute; her model simplifies it"
+  },
+  {
+   "what": "tools/house/rail_joints.py on the rebuilt model: 5 rails, 6 newels, 0 loose ends (the curl's centre end dies into the centre post) (self-consistency, not evidence)",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "construction"
+   ],
+   "data": [
+    "rail_joints"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": []
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/interior-notes/before-newel_note2122.jpg",
+   "spec/captures/views/interior-notes/before-newel_note2122_day.jpg",
+   "spec/captures/views/interior-notes/before-newel_model_a.jpg",
+   "spec/captures/views/interior-notes/before-newel_model_b.jpg"
+  ],
+  "after": [
+   "spec/captures/views/interior-notes/after-newel_model_a.jpg",
+   "spec/captures/views/interior-notes/after-newel_model_b.jpg",
+   "spec/captures/views/interior-notes/after-newel_note2122.jpg",
+   "spec/captures/views/interior-notes/after-newel_note2122_day.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "outcome": null
+}

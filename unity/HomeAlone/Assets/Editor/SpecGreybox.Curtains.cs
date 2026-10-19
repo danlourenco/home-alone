@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using UnityEditor;
@@ -62,13 +63,14 @@ public static partial class SpecGreybox
         if (File.Exists(pj))
             foreach (var bx in JObject.Parse(File.ReadAllText(pj))["boxes"])
                 if (((string)bx["name"]).StartsWith("parents_nightstand"))
+                {
                     AddLamp(pfx, "ParentsLamp_" + ((string)bx["name"]).Substring(19), new Vector3(((float)bx["x"][0] + (float)bx["x"][1]) / 2, (float)bx["y"][1] + 0.48f, ((float)bx["z"][0] + (float)bx["z"][1]) / 2), 0f, 450f, 2700f);
-                    {   // walk note Oct 18 21:16 "why do shadows look so pronounced and harsh?": the opaque drum's cones and the bedposts
-                        // threw black, razor-edged shadows (punctual filtering is Medium, so the source size alone barely softens them):
-                        // a 12 cm bulb and shadows at 55% so the cones read as shading, not cut-outs
-                        var pl = pfx.transform.Find("ParentsLamp_" + ((string)bx["name"]).Substring(19))?.GetComponent<HDAdditionalLightData>();
-                        if (pl != null) { pl.shapeRadius = 0.12f; pl.shadowDimmer = 0.55f; }
-                    }
+                    // walk note Oct 18 21:16 "why do shadows look so pronounced and harsh?": a 12 cm source (the drum's lit liner) and
+                    // shadows at 55%. The source size only softens edges with punctual filtering High (PCSS); PCSS stays off until its night
+                    // cost is measured (docs/PERFORMANCE.md "PCSS soft shadows"): with it on, drop the dimmer
+                    var lt = pfx.transform.Find("ParentsLamp_" + ((string)bx["name"]).Substring(19))?.GetComponent<Light>();
+                    if (lt != null) { lt.shapeRadius = 0.12f; lt.GetComponent<HDAdditionalLightData>().shadowDimmer = 0.55f; }
+                }
         foreach (var gg in new[] { g, bz, pc })
             if (gg != null)
                 foreach (var r in gg.GetComponentsInChildren<MeshRenderer>())
@@ -78,6 +80,28 @@ public static partial class SpecGreybox
                     r.shadowCastingMode = clear ? ShadowCastingMode.Off : ShadowCastingMode.On;
                     r.gameObject.isStatic = !clear;
                 }
+    }
+
+    // the parents' floor lamp by the window chair (store prop parents_floor_lamp, Fadnn SM_Lamp_02; walk note Oct 18 21:13 "this light
+    // should glow at night too"): a warm 400 lm bulb in its shade on the night layer, and the shade glowing through its own texture
+    // (the pack has one material for the whole lamp: its base map as the emission map keeps the dark stem dark). Its renderers cast no
+    // shadow, as the bedside lamps' liners: the opaque shade would otherwise swallow its own bulb. Called after StoreProps
+    static readonly List<Renderer> PropGlow = new();
+    static void ParentsFloorLamp(GameObject root)
+    {
+        PropGlow.Clear();
+        var lamp = Object.FindObjectsByType<Transform>(FindObjectsInactive.Include, FindObjectsSortMode.None).FirstOrDefault(t => t.name == "parents_floor_lamp" && t.childCount > 0 && t.GetComponentInChildren<MeshRenderer>() != null);   // the pack prefab's holder, not the hidden dressing box
+        if (lamp == null) { Debug.LogWarning("ParentsFloorLamp: store prop parents_floor_lamp not placed"); return; }
+        var rs = lamp.GetComponentsInChildren<MeshRenderer>(); var b = rs[0].bounds; foreach (var r in rs) b.Encapsulate(r.bounds);
+        var src = rs[0].sharedMaterial; const string mp = "Assets/Materials/Greybox/HiFi_ShadeParentsFloor.mat";
+        var m = AssetDatabase.LoadAssetAtPath<Material>(mp);
+        if (m == null) { m = new Material(src); AssetDatabase.CreateAsset(m, mp); } else m.CopyPropertiesFromMaterial(src);
+        m.SetTexture("_EmissiveColorMap", src.GetTexture("_BaseColorMap")); m.SetColor("_EmissiveColor", new Color(1f, 0.78f, 0.52f) * 60f);
+        UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(m); EditorUtility.SetDirty(m);
+        foreach (var r in rs) { r.sharedMaterial = m; r.shadowCastingMode = ShadowCastingMode.Off; PropGlow.Add(r); }
+        var pfx = Child(root, "ParentsFixtures");
+        AddLamp(pfx, "ParentsLamp_floor", new Vector3(b.center.x, b.max.y - 0.16f, -b.center.z), 0f, 400f, 2700f);
+        pfx.transform.Find("ParentsLamp_floor").GetComponent<Light>().shapeRadius = 0.10f;
     }
 
     static Material Glow(string n, Color c, float nits, float smooth)

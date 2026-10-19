@@ -5,11 +5,11 @@
 "spec/geometry.json": "fe9be6044fa7bebc6a4c76be20053f4abbcade8de1a1f8ff2c149bae7bcecd56",
 "spec/house_spec.json": "aa13c8ba63825b984b8fec9d3d9e0a94b75ce00158b842fe54949ec7900a05eb",
 "spec/house_spec.ground.json": "b2202c1e6656e5f08dccf8c5a2836afd2a9aaf8a7d2b300ab8cb65f0f4ed7286",
-"spec/dressing/store_props.json": "78a401059905e48a39d1afe641c82c85a8277b1480e339a745fd473f79152667",
+"spec/dressing/store_props.json": "009d345f303104f6a063c90486ebf63cac35d0358b86b71f5788989e65a44e38",
 "spec/dressing/french_doors.json": "a5da39a702d68886d0f0a1e4ea5c20e62ca81435868ce73d253eaa209c3b4663",
 "spec/dressing/buzz.json": "adbe2e533194393922314595597d1404a3c1496c4d02da480ba9cb955d53eb7a",
 "tools/house/hifi_door.py": "43caa8e4502f58c7b108e6a1e623e15b7f158f7aac7dd50510b2abaf2d739788",
-"tools/house/openings.py": "d023bdd33dfb0edd08553dc8809420794f71ee075a171851e83fa5d113e6e85b"
+"tools/house/openings.py": "d168541a48b23c36a7457659dce8abf195b086197a840a48d732b5c4efa2d608"
 },
 "openings": [
 {
@@ -4451,12 +4451,12 @@
 {
 "rule": "swing-room",
 "ok": true,
-"detail": "dining swing door (SwingDoor.glb, double-acting): 0.70 m leaf swings clear to 90 deg"
+"detail": "dining swing door 1 (SwingDoor.glb, double-acting): 0.70 m leaf swings clear to 90 deg"
 },
 {
 "rule": "swing-room",
 "ok": true,
-"detail": "dining swing door (SwingDoor.glb, double-acting): 0.70 m leaf swings clear to 90 deg"
+"detail": "dining swing door 1 (SwingDoor.glb, double-acting): 0.70 m leaf swings clear to 90 deg"
 }
 ],
 "header": {
@@ -4475,13 +4475,13 @@
 },
 "swings": [
 {
-"what": "dining swing door (SwingDoor.glb, double-acting)",
+"what": "dining swing door 1 (SwingDoor.glb, double-acting)",
 "hinge_s": 7.234,
 "toward_n": -1,
 "width": 0.7
 },
 {
-"what": "dining swing door (SwingDoor.glb, double-acting)",
+"what": "dining swing door 1 (SwingDoor.glb, double-acting)",
 "hinge_s": 7.234,
 "toward_n": 1,
 "width": 0.7
@@ -4634,6 +4634,16 @@
 "rule": "head-cased",
 "ok": true,
 "detail": "dining_room face: head by SpecGreybox"
+},
+{
+"rule": "swing-room",
+"ok": true,
+"detail": "dining swing door 2 (SwingDoor.glb, double-acting): 0.70 m leaf swings clear to 90 deg"
+},
+{
+"rule": "swing-room",
+"ok": true,
+"detail": "dining swing door 2 (SwingDoor.glb, double-acting): 0.70 m leaf swings clear to 90 deg"
 }
 ],
 "header": {
@@ -4649,7 +4659,21 @@
 "kitchen": 2.438,
 "dining_room": 2.438
 }
+},
+"swings": [
+{
+"what": "dining swing door 2 (SwingDoor.glb, double-acting)",
+"hinge_s": 4.424,
+"toward_n": -1,
+"width": 0.7
+},
+{
+"what": "dining swing door 2 (SwingDoor.glb, double-acting)",
+"hinge_s": 4.424,
+"toward_n": 1,
+"width": 0.7
 }
+]
 },
 {
 "id": "ground:fake_door:dining_room|sunroom:6.811",

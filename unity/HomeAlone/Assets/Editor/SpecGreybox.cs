@@ -345,6 +345,7 @@ public static partial class SpecGreybox
         FrenchDoors(root, groot, gy, geo["ground"]);   // FrenchDoors.cs: the glazed French door pairs (changes/2026-10-16-french-doors.json)
         StoreProps(root, groot, gy);   // StoreProps.cs: Asset Store furniture in measured boxes (spec/dressing/store_props.json)
         DenScreenPatch();              // SpecGreybox.Den.cs: the video screen over the bought TV's glass (after StoreProps placed it)
+        ParentsFloorLamp(root);        // SpecGreybox.Curtains.cs: the parents' floor lamp lit at night (after StoreProps placed it)
         SketchfabProps(root, gy);      // SpecGreybox.Sketchfab.cs: the user's Sketchfab downloads (BB gun, glove, helmet, trophies, corkboard, Hershey, den table)
         if (TrimFromFaces) FaceTrim(groot); else LayTrim(groot, new[] { "PropDoor", "Casing", "FrontDoor_HiFi", "MainStair_HiFi" });   // SpecGreybox.Trim.cs
         Envelope(root, geo, j["attic_stair"]["boxes"], gj["wall_openings"], gj["stair"]?["ceiling_openings"], gy);
@@ -381,7 +382,8 @@ public static partial class SpecGreybox
         dressing?.SetActive(true); Physics.SyncTransforms();
         SeamRooms.AddRange(BasementRooms(gy).Select(r => (r.pts, r.y0, r.y1)));   // the surface gates see the basement too
         Step("ZFightCheck");
-        report += ZFightCheck(root, groot);
+        report += ZFightCheck(root, groot, GameObject.Find("HouseShell"));   // the exterior skin too: seen from rooms through the windows and
+                                                                            // sidelights (Oct 18 21:21: a sidelight's outer sill z-fought; the skin was never checked)
         Step("ClashCheck");
         report += ClashCheck(root, groot);
         Step("CasingCheck");
@@ -474,24 +476,32 @@ public static partial class SpecGreybox
         Physics.SyncTransforms();
     }
 
-    // The dining room's swing door (tools/house/hifi_swing_door.py, Marina 228 s) in the dining-kitchen door nearest the foyer, hinged
-    // on its foyer-side jamb, turned by SwingDoor.cs; no collider (the opening stays walkable, the gates do not change)
+    // The dining room's swing doors (tools/house/hifi_swing_door.py, Marina 228 s) in both dining-kitchen doors, hinged on the jamb
+    // nearer the foyer, turned by SwingDoor.cs; no collider (the openings stay walkable, the gates do not change). The second one (the
+    // door by the corner, walk note Oct 18 21:20): film 10512 (Harry crosses the kitchen to it), 10534-10536 (he comes through it into
+    // the dining room; brass push plate on the leaf)
     static void SwingDoors(GameObject root, float gy, JToken ground)
     {
-        var o = ground["openings"].Where(q => q["between"].Select(t => (string)t).SequenceEqual(new[] { "dining_room", "kitchen" }))
-            .OrderByDescending(q => (float)q["hi"]).FirstOrDefault();
         var a = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Models/Foyer/SwingDoor.glb");
-        if (o == null || a == null) { Debug.LogWarning("SwingDoors: no opening or model"); return; }
-        var hinge = new GameObject("DiningSwingDoor"); hinge.transform.SetParent(root.transform, false);
-        hinge.transform.position = new Vector3((float)o["c"], gy, -((float)o["hi"] - 0.005f));
-        var leaf = (GameObject)Object.Instantiate(a, hinge.transform); leaf.name = "Leaf"; leaf.transform.localPosition = Vector3.zero;
-        foreach (var c in leaf.GetComponentsInChildren<Collider>()) Object.DestroyImmediate(c);
-        foreach (var r in leaf.GetComponentsInChildren<MeshRenderer>())
+        var ops = ground["openings"].Where(q => q["between"].Select(t => (string)t).SequenceEqual(new[] { "dining_room", "kitchen" }))
+            .OrderByDescending(q => (float)q["hi"]).ToList();
+        if (ops.Count == 0 || a == null) { Debug.LogWarning("SwingDoors: no opening or model"); return; }
+        for (int i = 0; i < ops.Count; i++)
         {
-            if (r.sharedMaterial != null && r.sharedMaterial.name.StartsWith("SD_Brass")) r.sharedMaterial = BrassMat();
-            else if (r.sharedMaterial != null && r.sharedMaterial.name.StartsWith("SD_Paint")) r.sharedMaterial = mProp;   // the house's door paint (HDRP/Lit)
+            var o = ops[i];
+            var hinge = new GameObject(i == 0 ? "DiningSwingDoor" : "DiningSwingDoor" + (i + 1)); hinge.transform.SetParent(root.transform, false);
+            hinge.transform.position = new Vector3((float)o["c"], gy, -((float)o["hi"] - 0.005f));
+            var leaf = (GameObject)Object.Instantiate(a, hinge.transform); leaf.name = "Leaf"; leaf.transform.localPosition = Vector3.zero;
+            float w = (float)o["hi"] - (float)o["lo"] - 0.01f;
+            leaf.transform.localScale = new Vector3(1f, 1f, w / ((float)ops[0]["hi"] - (float)ops[0]["lo"] - 0.01f));   // the model is built to the first door
+            foreach (var c in leaf.GetComponentsInChildren<Collider>()) Object.DestroyImmediate(c);
+            foreach (var r in leaf.GetComponentsInChildren<MeshRenderer>())
+            {
+                if (r.sharedMaterial != null && r.sharedMaterial.name.StartsWith("SD_Brass")) r.sharedMaterial = BrassMat();
+                else if (r.sharedMaterial != null && r.sharedMaterial.name.StartsWith("SD_Paint")) r.sharedMaterial = mProp;   // the house's door paint (HDRP/Lit)
+            }
+            var sd = hinge.AddComponent<SwingDoor>(); sd.leaf = leaf.transform; sd.width = w;
         }
-        var sd = hinge.AddComponent<SwingDoor>(); sd.leaf = leaf.transform; sd.width = (float)o["hi"] - (float)o["lo"] - 0.01f;
     }
 
     static void LayTrim(GameObject parent, string[] blockers)
@@ -957,6 +967,15 @@ public static partial class SpecGreybox
             }
             r.sharedMaterials = mats; r.gameObject.isStatic = true;
             foreach (var c in r.GetComponents<Collider>()) Object.DestroyImmediate(c);   // the grey-box carries collision
+        }
+        {   // the volute at the foot of flight 1 (hifi_foyer.py, changes/2026-10-18-stair-volute.json) stands proud of the grey-box: its ring
+            // of balusters is solid to the rail and the first step's round end is a step, so nobody walks through them
+            var rj = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/captures/main_stair_rails.json"))));
+            var ft = rj["newels"].First(q => (string)q["name"] == "foot"); float vx = (float)ft["x"], vz = (float)ft["z"], vy0 = (float)ft["y0"], vy1 = (float)ft["y1"];
+            var vc = new GameObject("VoluteCollider"); vc.transform.SetParent(go.transform, false); vc.isStatic = true;
+            vc.transform.position = new Vector3(vx, (gy + vy1) / 2, -vz); vc.AddComponent<BoxCollider>().size = new Vector3(0.34f, vy1 - gy, 0.34f);
+            var bn = new GameObject("VoluteStepCollider"); bn.transform.SetParent(go.transform, false); bn.isStatic = true;
+            bn.transform.position = new Vector3(vx + 0.026f, (gy + vy0) / 2, -(vz - 0.02f)); bn.AddComponent<BoxCollider>().size = new Vector3(0.35f, vy0 - gy, 0.36f);   // spec x 6.23-6.58, z 9.87-10.23
         }
         if (TrimFromFaces)   // the stair wall's skirt, raking panel and rail now come from the face model (SpecGreybox.Trim.cs)
             foreach (var r in go.GetComponentsInChildren<MeshRenderer>().Where(r => r.name.StartsWith("StairWallTrim")).ToList()) Object.DestroyImmediate(r.gameObject);
@@ -1569,7 +1588,7 @@ public static partial class SpecGreybox
         if (lamps != null) foreach (var l in ShellLights) if (l) l.transform.SetParent(lamps, true);   // the exterior's night lights (SpecGreybox.Shell)
         WindowBackdrop(dayLayer, lamps != null ? lamps.gameObject : null, groundY);   // SpecGreybox.Backdrop.cs: winter backdrop outside the windows (overnight5)
         var bdl = GameObject.Find("BasementDaylight"); if (bdl != null) bdl.transform.SetParent(dayLayer.transform, true);   // SpecGreybox.Basement: windows glow by day only
-        var mode = new GameObject("Day and night - press N").AddComponent<HouseNightMode>(); mode.transform.parent = day.transform; mode.glowRenderers = glow.Concat(ShellGlow).ToArray();
+        var mode = new GameObject("Day and night - press N").AddComponent<HouseNightMode>(); mode.transform.parent = day.transform; mode.glowRenderers = glow.Concat(ShellGlow).Concat(PropGlow).ToArray();
         mode.nightLayer = lamps != null ? lamps.gameObject : null; mode.dayLayer = dayLayer; mode.interiorLights = new Light[0]; mode.daytimeEnabled = new bool[0];
         if (lamps != null) NightSetCheck(mode);   // SpecGreybox.Shell.cs
         if (lamps != null)   // night sky (user, Oct 16: "when it's nighttime i still see the daylight streaming from outside")
@@ -1900,7 +1919,7 @@ public static partial class SpecGreybox
             Vector3? Stand((float, float, float, float) q)
             {
                 var c0 = M0(q); if (Free(c0)) return c0;
-                if (!Physics.OverlapCapsule(c0 + Vector3.up * (r + 0.06f), c0 + Vector3.up * (h - r), r).All(k => k.name.Contains("Collider_"))) return null;
+                if (!Physics.OverlapCapsule(c0 + Vector3.up * (r + 0.06f), c0 + Vector3.up * (h - r), r).All(k => k.name.Contains("Collider_") || k.name.EndsWith("_Collider"))) return null;   // store props' walk boxes ("<name>_Collider", StoreProps.cs) are furniture too
                 var pts = new List<Vector3>();
                 for (float x = q.Item1 + r + 0.05f; x <= q.Item2 - r - 0.05f; x += 0.25f)
                     for (float z = q.Item3 + r + 0.05f; z <= q.Item4 - r - 0.05f; z += 0.25f) pts.Add(new Vector3(x, FloorY, z));
