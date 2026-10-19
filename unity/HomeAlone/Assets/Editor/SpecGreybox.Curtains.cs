@@ -63,6 +63,12 @@ public static partial class SpecGreybox
             foreach (var bx in JObject.Parse(File.ReadAllText(pj))["boxes"])
                 if (((string)bx["name"]).StartsWith("parents_nightstand"))
                     AddLamp(pfx, "ParentsLamp_" + ((string)bx["name"]).Substring(19), new Vector3(((float)bx["x"][0] + (float)bx["x"][1]) / 2, (float)bx["y"][1] + 0.48f, ((float)bx["z"][0] + (float)bx["z"][1]) / 2), 0f, 450f, 2700f);
+                    {   // walk note Oct 18 21:16 "why do shadows look so pronounced and harsh?": the opaque drum's cones and the bedposts
+                        // threw black, razor-edged shadows (punctual filtering is Medium, so the source size alone barely softens them):
+                        // a 12 cm bulb and shadows at 55% so the cones read as shading, not cut-outs
+                        var pl = pfx.transform.Find("ParentsLamp_" + ((string)bx["name"]).Substring(19))?.GetComponent<HDAdditionalLightData>();
+                        if (pl != null) { pl.shapeRadius = 0.12f; pl.shadowDimmer = 0.55f; }
+                    }
         foreach (var gg in new[] { g, bz, pc })
             if (gg != null)
                 foreach (var r in gg.GetComponentsInChildren<MeshRenderer>())
