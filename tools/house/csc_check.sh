@@ -3,7 +3,9 @@
 # ~10 s (no Unity launch), so a compile error never costs a house build or a bake (Oct 18: a build died on another file's CS0103).
 #   tools/house/csc_check.sh        # exit 1 and print the errors on a failure
 set -euo pipefail
-REPO="$(cd "$(dirname "$0")/../.." && pwd)"; S="${HA_SCRATCH:-$HOME/.cache/home-alone}/ucopy/HomeAlone"; A="$REPO/unity/HomeAlone/Assets"
+REPO="$(cd "$(dirname "$0")/../.." && pwd)"; A="$REPO/unity/HomeAlone/Assets"
+# the scratch copy: HA_SCRATCH's, else whichever scratch built most recently (the default one may have been deleted for disk)
+S="${HA_SCRATCH:+$HA_SCRATCH/ucopy/HomeAlone}"; S="${S:-$(ls -t "$HOME"/.cache/home-alone*/ucopy/HomeAlone/Library/Bee/artifacts/*.dag/Assembly-CSharp-Editor.rsp 2>/dev/null | head -1 | sed 's#/Library/Bee/.*##')}"
 D=/Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/Resources/Scripting; CSC=$(ls "$D"/DotNetSdk/sdk/*/Roslyn/bincore/csc.dll | head -1)
 DAG=$(dirname "$(ls -t "$S"/Library/Bee/artifacts/*.dag/Assembly-CSharp-Editor.rsp | head -1)"); T=$(mktemp -d); trap 'rm -rf "$T"' EXIT
 rsp() {   # rsp ASSEMBLY SRC_DIR: the scratch response file with the repo's sources, our output, and our Assembly-CSharp.dll
