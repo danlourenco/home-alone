@@ -33,6 +33,7 @@ BUILDS = {
     "tools/house/hifi_kitchen.py": (["KitchenCabinets.glb"], [LIB, "spec/dressing/kitchen.json"]),
     "tools/house/hifi_kitchen_lights.py": (["KitchenChandelier.glb", "KitchenSconces.glb"], [LIB, "spec/dressing/kitchen.json"]),
     "tools/house/hifi_kitchen_gallery.py": (["KitchenGallery.glb"], [LIB, "spec/dressing/kitchen.json"]),
+    "tools/house/hifi_kitchen_props.py": (["KitchenProps.glb"], [LIB, "spec/dressing/kitchen.json"]),   # kitchen fidelity (Oct 19): pot rack, stools, counter dressing
     "tools/house/hifi_breakfast_table.py": (["BreakfastTable.glb"], [LIB, "spec/dressing/kitchen.json"]),
     "tools/house/hifi_sheers.py": (["Sheers.glb"], [LIB, "spec/house_spec.ground.json"]),
     "tools/house/hifi_den.py": (["DenWindows.glb", "DenBuiltins.glb"], [LIB, "spec/house_spec.ground.json", "spec/dressing/den.json", "spec/dressing/den_fabric.json", "spec/dressing/den_labels.json", "tools/house/den_textures.py"]),

@@ -33,6 +33,9 @@ TEX = 8 * P                                                           # metres p
 
 wood, tile, edge, grout, brass, black, steel, sink, cushion, housing, glow = (Part(n, "KT_" + n) for n in
     ("Wood", "Tile", "Edge", "Grout", "Brass", "Black", "Steel", "Sink", "Cushion", "Housing", "UnderLight"))
+# Oct 19 (kitchen fidelity, user photo IMG_4305 / film 2116): the corner cupboard is knotty pine in four stacked sections, not
+# cherry; the fridge's left door has the ice/water dispenser (film 1050/1146); the wall oven reads black (film 6044)
+pine, disp = Part("Pine", "KT_Pine"), Part("Dispenser", "KT_Dispenser")
 UL = K.get("under_lights")
 AX = {"+x": (1, 0), "-x": (-1, 0), "+z": (0, 1), "-z": (0, -1)}
 
@@ -284,8 +287,8 @@ for t in K["talls"]:
         ov0, ov1 = t["oven"]; g = GAP / 2
         for y0, y1 in ((TOE + GAP, 0.45 - g), (0.45 + g, ov0 - g)):
             raised(wood, o, e, n, x0 + g, x1 - g, y0, y1, 0.035); bail(o, e, n, (x0 + x1) / 2, (y0 + y1) / 2, 0.012)
-        obox(steel, o, e, n, x0 + 0.03, x1 - 0.03, -DT, 0.0, ov0 + g, ov1 - g)                   # wall oven: steel frame
-        obox(black, o, e, n, x0 + 0.10, x1 - 0.10, 0.0, 0.012, ov0 + 0.10, ov1 - 0.22)          # its black glass door window
+        obox(black, o, e, n, x0 + 0.03, x1 - 0.03, -DT, 0.0, ov0 + g, ov1 - g)                   # wall oven: black frame (film 6044)
+        obox(disp, o, e, n, x0 + 0.10, x1 - 0.10, 0.0, 0.012, ov0 + 0.10, ov1 - 0.22)           # its smoked glass door window
         obox(black, o, e, n, x0 + 0.08, x1 - 0.08, 0.0, 0.012, ov1 - 0.16, ov1 - 0.06)          # control panel
         obox(wood, o, e, n, x0 + g, x0 + 0.03, -DT, 0.0, ov0 + g, ov1 - g); obox(wood, o, e, n, x1 - 0.03, x1 - g, -DT, 0.0, ov0 + g, ov1 - g)
         hp = [(o[0] + a * e[0] + 0.035 * n[0], ov1 - 0.19, o[1] + a * e[1] + 0.035 * n[1]) for a in (x0 + 0.12, x1 - 0.12)]
@@ -299,12 +302,14 @@ for t in K["talls"]:
         cx_, cz_ = sum(p[0] for p in poly) / len(poly), sum(p[1] for p in poly) / len(poly)
         n = (-e[1], e[0]) if (-e[1]) * (ax - cx_) + e[0] * (az - cz_) > 0 else (e[1], -e[0])
         def pull_in(r): return [p if k not in (i, j) else (p[0] - n[0] * r, p[1] - n[1] * r) for k, p in enumerate(poly)]
-        prism(wood, pull_in(DT), TOE, t["top"]); prism(wood, pull_in(TR), 0.0, TOE)
-        g = GAP / 2; half = L / 2
-        for a0, a1 in ((g, half - g), (half + g, L - g)):
-            raised(wood, (ax, az), e, n, a0, a1, TOE + GAP, t["top"] - GAP, 0.07)
-        for a in (half - 0.04, half + 0.04):
-            bar((ax, az), e, n, a, 0.95, 1.15, 0.0)
+        prism(pine, pull_in(DT), TOE, t["top"]); prism(pine, pull_in(TR), 0.0, TOE)
+        g = GAP / 2; half = L / 2; tops = [TOE + k * (t["top"] - TOE) / 4 for k in range(5)]   # four stacked sections (IMG_4305)
+        for y0, y1 in zip(tops, tops[1:]):
+            for a0, a1 in ((g, half - g), (half + g, L - g)):
+                raised(pine, (ax, az), e, n, a0, a1, y0 + g + 0.012, y1 - g - 0.012, 0.06)
+            obox(pine, (ax, az), e, n, 0.0, L, 0.0, 0.012, y1 - g - 0.012, y1 - g)            # the section's lip
+            for a in (half - 0.05, half + 0.05):
+                obox(brass, (ax, az), e, n, a - 0.012, a + 0.012, 0.0, 0.026, (y0 + y1) / 2 - 0.012, (y0 + y1) / 2 + 0.012)   # knob
 
 for st in K["seats"]:
     x0, x1, z0, z1 = *st["x"], *st["z"]; top = st["seat_top"]; cu = st["cushion"]; o, e, n = front_frame("+z", z1)
@@ -336,9 +341,12 @@ for a in K["appliances"]:
         o, e, n = front_frame(a["front"], z0); top = a["top"]                                  # front -z at z0
         black.box(x0 + 0.005, x1 - 0.005, 0.03, top, z0 + 0.03, z1)                             # body behind 3 cm doors
         black.box(x0 + 0.04, x1 - 0.04, 0.0, 0.03, z0 + 0.06, z1)                               # grille / feet recess
-        split = x0 + 0.42 * (x1 - x0)
+        split = x1 - 0.42 * (x1 - x0)                                                            # narrow freezer door at high x (the room's left; film 1050)
         for b0, b1 in ((x0 + 0.005, split - 0.003), (split + 0.003, x1 - 0.005)):
             obox(black, o, e, n, b0, b1, -0.03, 0.0, 0.03, top - 0.003)
+        dx0, dx1 = split + 0.09, x1 - 0.08                                                          # dispenser on the freezer door
+        obox(disp, o, e, n, dx0, dx1, 0.0, 0.012, 0.98, 1.40)
+        obox(black, o, e, n, dx0 + 0.025, dx1 - 0.025, 0.012, 0.022, 1.02, 1.30)                 # its dark recess face
         for ac in (split - 0.04, split + 0.04):
             path = [(ac, 0.75 + 0.6 * k / 8, z0 - 0.006 - 0.025 * math.sin(math.pi * k / 8)) for k in range(9)]
             steel.sweep(path, [(-0.007, -0.007), (0.007, -0.007), (0.007, 0.007), (-0.007, 0.007)])
@@ -377,10 +385,11 @@ M = {"KT_Wood": material("KT_Wood", (0.36, 0.11, 0.12), 0.45), "KT_Tile": materi
      "KT_Brass": material("KT_Brass", (0.75, 0.56, 0.25), 0.3), "KT_Black": material("KT_Black", (0.02, 0.02, 0.02), 0.15),
      "KT_Steel": material("KT_Steel", (0.6, 0.6, 0.6), 0.3), "KT_Sink": material("KT_Sink", (0.92, 0.91, 0.88), 0.15),
      "KT_Cushion": material("KT_Cushion", (0.55, 0.06, 0.08), 0.9), "KT_Housing": material("KT_Housing", (0.85, 0.84, 0.8), 0.4),
-     "KT_UnderLight": material("KT_UnderLight", (0.95, 0.95, 0.92), 0.5, (1.0, 0.93, 0.8), 5.0)}
+     "KT_UnderLight": material("KT_UnderLight", (0.95, 0.95, 0.92), 0.5, (1.0, 0.93, 0.8), 5.0),
+     "KT_Pine": material("KT_Pine", (0.72, 0.48, 0.25), 0.4), "KT_Dispenser": material("KT_Dispenser", (0.12, 0.12, 0.13), 0.3)}
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("KitchenCabinets_HiFi", None); coll.objects.link(root)
-parts = (wood, tile, edge, grout, brass, black, steel, sink, cushion, housing, glow)
+parts = (wood, tile, edge, grout, brass, black, steel, sink, cushion, housing, glow, pine, disp)
 for p in parts:
     if p.f:
         p.build(coll, M).parent = root

@@ -4,8 +4,8 @@
   "sources": "97a2f9c4dd60e5a4"
  },
  "tools/house/hifi_back_door.py": {
-  "models": "2c0a63b305143d99",
-  "sources": "7d2b701f2d613fac"
+  "models": "2bf9317cb2e263f1",
+  "sources": "4c8a0b544f258b76"
  },
  "tools/house/hifi_bare_trees.py": {
   "models": "cb0a4d0f9d6f714c",
@@ -17,11 +17,11 @@
  },
  "tools/house/hifi_breakfast_table.py": {
   "models": "9f0d9d2837876295",
-  "sources": "8b287a28b1777b97"
+  "sources": "de8d8f74fc565bc9"
  },
  "tools/house/hifi_buzz_curtains.py": {
   "models": "356da5161781ccee",
-  "sources": "5a835f0fd08a4753"
+  "sources": "ef3489f5b4fc7e76"
  },
  "tools/house/hifi_buzz_props.py": {
   "models": "2d758557410006f8",
@@ -97,19 +97,23 @@
  },
  "tools/house/hifi_kevin.py": {
   "models": "7d908db416183345",
-  "sources": "1e0cb4fc1d0ef6b9"
+  "sources": "c27ad4012e77804e"
  },
  "tools/house/hifi_kitchen.py": {
-  "models": "98ab235e28f66103",
-  "sources": "7d3e4833ef7734b8"
+  "models": "014054bdf98e50bf",
+  "sources": "763ecce823aa731e"
  },
  "tools/house/hifi_kitchen_gallery.py": {
-  "models": "b8d8d699e7a32759",
-  "sources": "4441270efa76e975"
+  "models": "5ab16e1c001908cf",
+  "sources": "b9e62771fd3e7208"
  },
  "tools/house/hifi_kitchen_lights.py": {
   "models": "06fb85ac17b17dee",
-  "sources": "0fc5b01c0aa73d08"
+  "sources": "1482c775edc5ee59"
+ },
+ "tools/house/hifi_kitchen_props.py": {
+  "models": "f40a29acf3a6a362",
+  "sources": "976a9d81c7151c46"
  },
  "tools/house/hifi_landing_window.py": {
   "models": "c19bb98c7077b7fe",
@@ -121,7 +125,7 @@
  },
  "tools/house/hifi_living.py": {
   "models": "4f7ff9f660e18c79",
-  "sources": "0ace8e901fbf9071"
+  "sources": "068ee04886e4c82c"
  },
  "tools/house/hifi_living_props.py": {
   "models": "56f15333bdab29d6",
@@ -137,7 +141,7 @@
  },
  "tools/house/hifi_parents_dressing.py": {
   "models": "07cd8f4c0fc1836f",
-  "sources": "b6190ea7c0033ab3"
+  "sources": "2e448358401f494a"
  },
  "tools/house/hifi_parents_fireplace.py": {
   "models": "784e462dec45d619",
@@ -148,8 +152,8 @@
   "sources": "9d9541c85a71cfc4"
  },
  "tools/house/hifi_sheers.py": {
-  "models": "791088592b4e8115",
-  "sources": "215294874610bea2"
+  "models": "565234db675c90a7",
+  "sources": "0230cabf6a2394e5"
  },
  "tools/house/hifi_swing_door.py": {
   "models": "f7e1a4cdfc07a73c",

@@ -8,6 +8,9 @@ public class EntranceDoor : MonoBehaviour
     public BoxCollider leafCollider;
     public bool locked;
     public float openAngle = 100f, speed = 95f, reach = 2f;
+    // the knob in the leaf's local frame and the prompt's name: the front door's by default; the kitchen back door sets its own
+    public Vector3 handleLocal = new Vector3(0, 1.0f, -0.74f);
+    public string label = "front door";
     public bool IsOpen => target > 0f;
     float angle, target;
     bool aimed;
@@ -28,7 +31,7 @@ public class EntranceDoor : MonoBehaviour
         if (!leaf || !leafCollider) return;
         Initialize();
         var camera = Camera.main;
-        var handle = leaf.TransformPoint(new Vector3(0, 1.0f, -0.74f));
+        var handle = leaf.TransformPoint(handleLocal);
         aimed = camera && Vector3.Distance(camera.transform.position, handle) < reach &&
             Vector3.Angle(camera.transform.forward, handle-camera.transform.position) < 38f;
         if (aimed && Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(KeyCode.E)) SetOpen(!IsOpen);
@@ -49,6 +52,6 @@ public class EntranceDoor : MonoBehaviour
     {
         if (!aimed) return;
         var style = new GUIStyle(GUI.skin.label) { fontSize=18, alignment=TextAnchor.MiddleCenter };
-        GUI.Label(new Rect(0,Screen.height*.62f,Screen.width,30), locked && !IsOpen ? "Front door locked" : IsOpen ? "E: close the front door" : "E: open the front door",style);
+        GUI.Label(new Rect(0,Screen.height*.62f,Screen.width,30), locked && !IsOpen ? char.ToUpper(label[0]) + label.Substring(1) + " locked" : IsOpen ? "E: close the " + label : "E: open the " + label,style);
     }
 }

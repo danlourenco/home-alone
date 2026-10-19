@@ -68,10 +68,59 @@ def still_life(h, w, seed):
     return np.clip(img + 0.02 * smooth_noise(h, w, 40, rng)[..., None], 0, 1)
 
 
+def snapshot(h, w, seed):
+    """An invented family snapshot (Oct 19, film 2116 / IMG_4305: the kitchen wall is a cluster of framed family photos): a soft
+    background and one to three figures as plain shapes (head, shoulders); no face, nobody's likeness."""
+    rng = np.random.default_rng(seed); y = np.linspace(0, 1, h)[:, None]; x = np.linspace(0, 1, w)[None, :]
+    bg = [np.array(c) for c in ([0.55, 0.62, 0.72], [0.62, 0.5, 0.38], [0.45, 0.55, 0.4], [0.75, 0.7, 0.62])][seed % 4]
+    img = np.zeros((h, w, 3)); img[:] = bg * (1.05 - 0.3 * y[..., None]); img += 0.05 * smooth_noise(h, w, 5, rng)[..., None]
+    n = int(rng.integers(1, 4)); aspect = h / w
+    for k in range(n):
+        cx = (k + 0.5) / n + rng.uniform(-0.05, 0.05); r = 0.11 / max(1, n * 0.6)
+        cloth = [np.array(c) for c in ([0.6, 0.1, 0.12], [0.15, 0.2, 0.4], [0.2, 0.35, 0.2], [0.85, 0.82, 0.75])][int(rng.integers(0, 4))]
+        hy = 0.42 + rng.uniform(-0.05, 0.05)
+        body = (((x - cx) / (2.2 * r)) ** 2 + ((y - 1.0) / (0.5 + hy * 0.2)) ** 2) < 1
+        img = np.where(body[..., None], cloth * (0.85 + 0.15 * smooth_noise(h, w, 9, rng))[..., None], img)
+        head = (((x - cx) / r) ** 2 + ((y - hy) / (r * 1.25 / aspect)) ** 2) < 1
+        hair = head & (y < hy - 0.25 * r / aspect)
+        img = np.where(head[..., None], np.array([0.85, 0.66, 0.55]), img)
+        img = np.where(hair[..., None], np.array([[0.35, 0.22, 0.12], [0.75, 0.6, 0.35], [0.15, 0.1, 0.08]][int(rng.integers(0, 3))]), img)
+    return np.clip(img + 0.03 * smooth_noise(h, w, 30, rng)[..., None], 0, 1)
+
+
+def calendar(h, w, seed):
+    """A 1990 wall calendar (film 2116: hung right of the photos): a picture on top, the month's grid below, red header band."""
+    img = np.ones((h, w, 3)) * 0.93; top = int(h * 0.45)
+    img[:top] = landscape(top, w, seed, [0.6, 0.7, 0.85], [0.92, 0.9, 0.85], [0.5, 0.55, 0.6], [0.9, 0.92, 0.95], [0.2, 0.3, 0.2])
+    img[top:top + int(h * 0.06)] = [0.7, 0.12, 0.12]
+    g0 = top + int(h * 0.09)
+    for r in range(6):
+        img[g0 + r * (h - g0) // 6] = 0.55
+    for c in range(8):
+        img[g0:, min(w - 1, c * (w - 1) // 7)] = 0.55
+    rng = np.random.default_rng(seed)
+    for k in range(9):                                                   # pencilled notes in a few squares
+        r, c = int(rng.integers(0, 5)), int(rng.integers(0, 7)); y0 = g0 + r * (h - g0) // 6 + 6; x0 = c * (w - 1) // 7 + 6
+        img[y0:y0 + 3, x0:x0 + int(rng.integers(12, 40))] = 0.3
+    return img
+
+
+def memo_board(h, w, seed):
+    """The white framed board right of the calendar (film 2116): pale with a few pinned notes and cards."""
+    rng = np.random.default_rng(seed); img = np.ones((h, w, 3)) * 0.9; img += 0.02 * smooth_noise(h, w, 6, rng)[..., None]
+    for k in range(5):
+        cw, ch = int(rng.integers(w // 6, w // 3)), int(rng.integers(h // 8, h // 4)); x0, y0 = int(rng.integers(5, w - cw - 5)), int(rng.integers(5, h - ch - 5))
+        img[y0:y0 + ch, x0:x0 + cw] = [[1.0, 0.95, 0.55], [0.95, 0.95, 0.95], [0.75, 0.85, 0.95], [0.95, 0.7, 0.7]][k % 4]
+    return np.clip(img, 0, 1)
+
+
 PICS = {"p1": lambda h, w: landscape(h, w, 3, [0.62, 0.72, 0.85], [0.9, 0.88, 0.8], [0.45, 0.52, 0.5], [0.55, 0.6, 0.35], [0.2, 0.35, 0.18]),
         "p2": lambda h, w: still_life(h, w, 7),
         "p3": lambda h, w: landscape(h, w, 11, [0.85, 0.75, 0.62], [0.95, 0.85, 0.7], [0.55, 0.45, 0.4], [0.85, 0.85, 0.88], [0.25, 0.2, 0.15]),
-        "p4": lambda h, w: landscape(h, w, 19, [0.55, 0.65, 0.8], [0.85, 0.85, 0.82], [0.4, 0.45, 0.48], [0.88, 0.9, 0.92], [0.22, 0.28, 0.22])}
+        "p4": lambda h, w: landscape(h, w, 19, [0.55, 0.65, 0.8], [0.85, 0.85, 0.82], [0.4, 0.45, 0.48], [0.88, 0.9, 0.92], [0.22, 0.28, 0.22]),
+        "p5": lambda h, w: snapshot(h, w, 5), "p6": lambda h, w: snapshot(h, w, 6), "p7": lambda h, w: snapshot(h, w, 9),
+        "p8": lambda h, w: snapshot(h, w, 12), "p9": lambda h, w: snapshot(h, w, 14), "px": lambda h, w: snapshot(h, w, 17),
+        "calendar": lambda h, w: calendar(h, w, 23), "memo": lambda h, w: memo_board(h, w, 29)}
 
 
 def save_png(name, arr):
@@ -85,10 +134,12 @@ frame, desk, brass = Part("Frame", "KG_Frame"), Part("Desk", "KG_Wood"), Part("B
 pics = {f["name"]: Part("Pic_" + f["name"], "KG_" + f["name"]) for f in G["frames"]}
 MO, DEP = G["moulding"], G["depth"]
 
+paper, board = Part("Paper", "KG_Paper"), Part("Board", "KG_Board")
 for f in G["frames"]:
+    MO = f.get("moulding", G["moulding"]); fp = {"paper": paper, "board": board}.get(f.get("kind"), frame)   # calendar: a paper edge
     z0, z1 = f["z"]; y0, y1 = f["h"]; xb, xf = WX - 0.003, WX - 0.003 - DEP           # back on the wall (3 mm off), front 2 cm out
     for (a0, a1, b0, b1) in ((z0, z1, y1 - MO, y1), (z0, z1, y0, y0 + MO), (z0, z0 + MO, y0 + MO, y1 - MO), (z1 - MO, z1, y0 + MO, y1 - MO)):
-        frame.box(xf, xb, b0, b1, a0, a1)
+        fp.box(xf, xb, b0, b1, a0, a1)
     xp = WX - 0.013                                                                    # the picture: 13 mm off the paper
     pts = [(xp - 0.0005, y0 + MO, z1 - MO), (xp - 0.0005, y0 + MO, z0 + MO), (xp - 0.0005, y1 - MO, z0 + MO), (xp - 0.0005, y1 - MO, z1 - MO)]
     pics[f["name"]].face(pts, (-1, 0, 0), [(0, 0), (1, 0), (1, 1), (0, 1)])            # seen from the kitchen: z decreases left to right
@@ -115,20 +166,21 @@ brass.box(x0 + 0.05, x0 + 0.062, bh + 0.035, bh + 0.065, mz - 0.02, mz + 0.02)  
 bpy.ops.wm.read_factory_settings(use_empty=True)
 TEX.mkdir(parents=True, exist_ok=True)
 M = {"KG_Frame": material("KG_Frame", (0.25, 0.14, 0.07), 0.45), "KG_Wood": material("KG_Wood", (0.55, 0.37, 0.2), 0.45),
-     "KG_Brass": material("KG_Brass", (0.75, 0.56, 0.25), 0.3)}
+     "KG_Brass": material("KG_Brass", (0.75, 0.56, 0.25), 0.3), "KG_Paper": material("KG_Paper", (0.9, 0.9, 0.88), 0.8),
+     "KG_Board": material("KG_Board", (0.92, 0.92, 0.9), 0.5)}
 for f in G["frames"]:
     M["KG_" + f["name"]] = material("KG_" + f["name"], (0.8, 0.8, 0.8), 0.6)
 for f in G["frames"]:                                                                  # the invented pictures
-    z0_, z1_ = f["z"]; y0_, y1_ = f["h"]; w_px = 512; h_px = max(64, round(w_px * (y1_ - y0_ - 2 * MO) / (z1_ - z0_ - 2 * MO)))
+    MO = f.get("moulding", G["moulding"]); z0_, z1_ = f["z"]; y0_, y1_ = f["h"]; w_px = 512; h_px = max(64, round(w_px * (y1_ - y0_ - 2 * MO) / (z1_ - z0_ - 2 * MO)))
     save_png("gallery_" + f["name"], PICS[f["name"]](h_px, w_px))
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("KitchenGallery", None); coll.objects.link(root)
-for p in [frame, desk, brass] + list(pics.values()):
+for p in [frame, desk, brass, paper, board] + list(pics.values()):
     if p.f:
         ob = p.build(coll, M); ob.parent = root
-        if p in (frame, desk):
+        if p in (frame, desk, board):
             b = ob.modifiers.new("Bevel", "BEVEL"); b.width = 0.002; b.segments = 2; b.limit_method = "ANGLE"; b.angle_limit = math.radians(40)
             ob.modifiers.new("WeightedNormal", "WEIGHTED_NORMAL").keep_sharp = True
 OUT.parent.mkdir(parents=True, exist_ok=True)
 bpy.ops.export_scene.gltf(filepath=str(OUT), export_format="GLB", export_yup=True, export_apply=True, export_texcoords=True)
-print("wrote", OUT, {p.name: len(p.f) for p in [frame, desk, brass] + list(pics.values())})
+print("wrote", OUT, {p.name: len(p.f) for p in [frame, desk, brass, paper, board] + list(pics.values())})

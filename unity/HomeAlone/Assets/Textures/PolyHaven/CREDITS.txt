@@ -8,3 +8,4 @@ Poly Haven textures (CC0, https://polyhaven.com/license), downloaded Oct 15 2026
 - old_planks_02 (as old_planks_02_h, turned 90 deg: horizontal boards), weathered_planks (weathered_planks_h, turned), bark_brown_02 (Oct 18 2026, treehouse boards, timbers, trunk; 1k)
 - bark_willow_02 (Oct 18 2026, generated bare winter trees: oak/ash bark; bark_brown_02 for the maples/elms; 1k)
 - red_brick_03 (2k), roof_slates_02, white_plaster_02, concrete_floor_01, snow_02, asphalt_02 (Oct 18 2026, exterior realism pass: as <id>_x with mask/height maps, tools/house/exterior_textures.py; white_plaster_02, concrete_floor_01 and snow_02 albedo rescaled to a neutral mean for tinting)
+- coated_pine (Oct 19 2026, kitchen corner cupboard + bar stools: knotty pine, film 2116 / user photo IMG_4305)

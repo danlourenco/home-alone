@@ -35,9 +35,12 @@ YL0, YL1 = THR + 0.001, HEAD - JT - GAP                                    # lea
 DL0, DL1 = 0.02, 0.064                                                     # leaf faces (in from the room face; 44 mm leaf)
 assert abs((ZL1 - ZL0) - 0.914) < 0.01 and abs((YL1 - YL0) - 2.032) < 0.01, (ZL1 - ZL0, YL1 - YL0)
 
-paint, glass, brass, flap, red, sheer, oak = (Part("Paint", "BD_Paint"), Part("Glass", "BD_Glass"), Part("Brass", "BD_Brass"),
-                                              Part("Flap", "BD_Flap"), Part("Curtain", "BD_Curtain"), Part("Sheer", "BD_Sheer"),
+# Fixed to the building: Frame (jambs, stops, brick mould) and Threshold. Moving with the leaf (door-assembly skill; Oct 19 "walk out
+# the kitchen door"): every part whose name starts with "Leaf" (SpecGreybox.BackDoorInteractions hangs them on the hinge).
+paint, glass, brass, flap, red, sheer, oak = (Part("LeafPaint", "BD_Paint"), Part("LeafGlass", "BD_Glass"), Part("LeafBrass", "BD_Brass"),
+                                              Part("LeafFlap", "BD_Flap"), Part("Curtain", "BD_Curtain"), Part("Sheer", "BD_Sheer"),
                                               Part("Threshold", "BD_Oak"))
+frame = Part("Frame", "BD_Paint")
 
 
 def bx(p, d0, d1, y0, y1, z0, z1):
@@ -65,15 +68,15 @@ def round_x(p, cy, cz, prof, n=16):
 
 
 # ---- frame: side and head jambs lining the opening, the stop on the outside of the leaf, threshold, brick mould outside
-bx(paint, 0.005, WT, 0.0, HEAD, Z0, Z0 + JT); bx(paint, 0.005, WT, 0.0, HEAD, Z1 - JT, Z1)
-bx(paint, 0.005, WT, HEAD - JT, HEAD, Z0 + JT, Z1 - JT)
+bx(frame, 0.005, WT, 0.0, HEAD, Z0, Z0 + JT); bx(frame, 0.005, WT, 0.0, HEAD, Z1 - JT, Z1)
+bx(frame, 0.005, WT, HEAD - JT, HEAD, Z0 + JT, Z1 - JT)
 for zs in ((Z0 + JT, Z0 + JT + 0.012), (Z1 - JT - 0.012, Z1 - JT)):                     # stops (outside the leaf)
-    bx(paint, DL1, DL1 + 0.035, THR, HEAD - JT, *zs)
-bx(paint, DL1, DL1 + 0.035, HEAD - JT - 0.012, HEAD - JT, Z0 + JT + 0.012, Z1 - JT - 0.012)
+    bx(frame, DL1, DL1 + 0.035, THR, HEAD - JT, *zs)
+bx(frame, DL1, DL1 + 0.035, HEAD - JT - 0.012, HEAD - JT, Z0 + JT + 0.012, Z1 - JT - 0.012)
 oak.box(X(WT + 0.03), X(0.005), 0.0, THR, Z0 + JT, Z1 - JT)                            # threshold, 3 cm past the outside face
 for z0, z1 in ((Z0 - 0.05, Z0), (Z1, Z1 + 0.05)):                                       # brick mould (outside face of the wall)
-    bx(paint, WT, WT + 0.03, 0.0, HEAD + 0.05, z0, z1)
-bx(paint, WT, WT + 0.03, HEAD, HEAD + 0.05, Z0, Z1)
+    bx(frame, WT, WT + 0.03, 0.0, HEAD + 0.05, z0, z1)
+bx(frame, WT, WT + 0.03, HEAD, HEAD + 0.05, Z0, Z1)
 
 # ---- the leaf: stiles 0.115, top rail 1.935-top, lock rail 0.734-0.92, bottom rail to 0.265
 ST, GL0, GL1, LR0, BR1 = 0.115, 0.92, 1.935, 0.734, 0.265
@@ -120,11 +123,11 @@ M = {"BD_Paint": material("BD_Paint", (0.88, 0.87, 0.83), 0.35), "BD_Glass": mat
      "BD_Oak": material("BD_Oak", (0.45, 0.32, 0.2), 0.5)}
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("BackDoor_HiFi", None); coll.objects.link(root)
-parts = (paint, glass, brass, flap, red, sheer, oak)
+parts = (frame, paint, glass, brass, flap, red, sheer, oak)
 for p in parts:
     if p.f:
         ob = p.build(coll, M); ob.parent = root
-        if p is paint:   # exterior realism (walk note Oct 18 20:47): chamfered stiles, rails, panels and muntins catch the light
+        if p in (paint, frame):   # exterior realism (walk note Oct 18 20:47): chamfered stiles, rails, panels and muntins catch the light
             import bmesh
             bm = bmesh.new(); bm.from_mesh(ob.data); bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-4); bm.to_mesh(ob.data); bm.free()
             for poly in ob.data.polygons: poly.use_smooth = True

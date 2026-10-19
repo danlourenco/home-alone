@@ -43,6 +43,8 @@ public static partial class SpecGreybox
         if (k["gallery"] == null) return;
         var remap = new Dictionary<string, Material> { ["KG_Brass"] = BrassMat(), ["KG_Wood"] = TexMat("HiFi_DeskOak", "oak_veneer_01", new Color(0.8f, 0.7f, 0.6f), 1.0f, 0.5f) };
         var frame = Mat("HiFi_PictureFrame", new Color(0.25f, 0.14f, 0.07f)); frame.SetFloat("_Smoothness", 0.5f); remap["KG_Frame"] = frame;
+        var paper = Mat("HiFi_CalendarPaper", new Color(0.9f, 0.9f, 0.88f)); paper.SetFloat("_Smoothness", 0.15f); remap["KG_Paper"] = paper;
+        var board = Mat("HiFi_MemoBoardFrame", new Color(0.92f, 0.92f, 0.9f)); board.SetFloat("_Smoothness", 0.45f); remap["KG_Board"] = board;
         foreach (var f in k["gallery"]["frames"])
         {
             string n = (string)f["name"], png = $"Assets/Textures/Kitchen/gallery_{n}.png";

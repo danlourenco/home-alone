@@ -48,6 +48,13 @@ docs/FOYER-WIP.md (the foyer job's checkpoints); STATUS.md is the long log. This
    vertical slice; GitHub issues as the backlog once the pillars are signed off). Must-haves named so far: **the upstairs hall
    bathroom** (missing), **the kitchen finished** (it "still feels unfinished": ask what reads unfinished), **walk out the kitchen
    back door to the exterior**. Confirm the full list with the user before starting; everything else waits for the slice.
+   - **Kitchen part (Oct 19, TRIAL, built + baked + loaded; changes/2026-10-19-kitchen-fidelity.json, DEVIATIONS 106):** pot rack + 14 pans,
+     four pine stools, counter dressing (kettle, knife block, spaghetti, canisters, coffee maker, microwave, toaster, fruit, mortar, towels),
+     pine stacked corner cupboard, black wall oven, fridge dispenser + papers, six snapshots + calendar + memo board (all
+     tools/house/hifi_kitchen_props.py / hifi_kitchen.py / hifi_kitchen_gallery.py from spec/dressing/kitchen.json "wares"). The back door
+     opens (E; `locked` for gameplay; SpecGreybox.BackDoor.cs): BACK DOOR route bandit/kevin/player out and in 0 blocked, Back door check
+     passes (closed/open/swept 25-100 deg/locked). Gates: z-fight 0, clash 0. Pending: the user's walk; `python3 tools/house/check_fall_recovery.py`
+     with Play stopped; duck decoy, the film's pine pigeonhole desk, a wall phone (no film frame found).
 1. (done 55eca097) persist the live settings; the lamp comparison still needs the user's decision.
 2. **Mac test app** (user-authorized; iOS out of scope; nothing built yet):
    1. Fix standalone feedback storage: `FeelNotes.Dir` writes repo-relative `../../../spec/feedback`; keep that in the Editor, use

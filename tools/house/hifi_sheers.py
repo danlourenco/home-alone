@@ -282,18 +282,20 @@ def sash(body, frill, P, a, b, y0, y1, dc, A, P0, seed):
     sheet(frill, P, ts, lin(y1 - 0.015, y1, 0.0075), pos)
 
 
-sash(voile, hem, P, zi0 - 0.01, zi1 + 0.01, GL0 - 0.005, GL1 + 0.015, -0.010, 0.003, 0.025, 5.0)
+# separate objects (Leaf*): they hang on the back door's leaf and swing with it (SpecGreybox.BackDoorInteractions, Oct 19)
+lvoile, lhem, lred = Part("LeafSheer", "SH_Voile"), Part("LeafSheerHem", "SH_Hem"), Part("LeafRed", "SH_Red")
+sash(lvoile, lhem, P, zi0 - 0.01, zi1 + 0.01, GL0 - 0.005, GL1 + 0.015, -0.010, 0.003, 0.025, 5.0)
 PW = 0.17
 for zo, s in ((zi0 - 0.02, 1), (zi1 + 0.02, -1)):
     a, b = sorted((zo, zo + s * PW))
-    sash(red, red, P, a, b, GL0 - 0.005, GL1 + 0.02, 0.008, 0.004, 0.03, 6.0 + s)
+    sash(lred, lred, P, a, b, GL0 - 0.005, GL1 + 0.02, 0.008, 0.004, 0.03, 6.0 + s)
 
 voile_texture()
 M = {"SH_Voile": material("SH_Voile", (0.95, 0.94, 0.91), 0.8), "SH_Hem": material("SH_Hem", (0.95, 0.94, 0.91), 0.8),
      "SH_DrapeIvory": material("SH_DrapeIvory", (0.80, 0.77, 0.66), 0.9), "SH_Red": material("SH_Red", (0.55, 0.02, 0.04), 0.5)}
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("Sheers_HiFi", None); coll.objects.link(root)
-parts = (voile, hem, ivory, tie, red, redtie)
+parts = (voile, hem, ivory, tie, red, redtie, lvoile, lhem, lred)
 for p in parts:
     if p.f:
         ob = p.build(coll, M); ob.parent = root

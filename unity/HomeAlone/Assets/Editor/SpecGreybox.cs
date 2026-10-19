@@ -356,6 +356,7 @@ public static partial class SpecGreybox
         Player(spawn, spawnYaw);
         ExteriorLook(gy);   // SpecGreybox.ExteriorRealism.cs: outside-only fog/grade/bloom/night exposure, falling snow on the camera
         var entranceDoor = FoyerInteractions(root,gy);
+        var backDoor = BackDoorInteractions(root, gy);   // SpecGreybox.BackDoor.cs: the kitchen back door opens (Oct 19)
         FoyerMirror(root,gy);
         var player = GameObject.Find("Player"); player.SetActive(false);
         Physics.SyncTransforms();
@@ -364,7 +365,9 @@ public static partial class SpecGreybox
         Step("WalkTest ground");
         FloorY = gy; report += "GROUND\n" + WalkTest(gspaces, gdoors); FloorY = 0f;
         Step("StairWalk");
+        backDoor.SetInstant(true); Physics.SyncTransforms();   // the BACK DOOR route walks through it, out and in
         report += StairWalk(stairPath) + StairWalk(atticPath) + StairWalk(servicePath) + (basementPath.Count > 1 ? "BASEMENT (kitchen -> landing -> flight -> outside door -> areaway to grade)\n" + StairWalk(basementPath) : "") + string.Concat(YardRoutes(gy, basementPath).Select(r => r.name + "\n" + StairWalk(r.pts)));
+        backDoor.SetInstant(false); Physics.SyncTransforms();
         Step("RenderCheck");
         report += RenderCheck(groot.transform.Find("ServiceStair"));
         var dressing = GameObject.Find("Ground/Dressing"); dressing?.SetActive(false); Physics.SyncTransforms();
@@ -405,6 +408,7 @@ public static partial class SpecGreybox
         foreach (var f in BudgetFails) report += f + "\n";
         Traps(root, gy);   // Traps.cs: gameplay rigs (spec/dressing/traps.json), after the gates so none of them sees the rig
         report += EntranceCheck(entranceDoor,gy);
+        report += BackDoorCheck(backDoor, gy);
         player.SetActive(true);
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, "walk-test-wallgrid.txt"), report);
@@ -1007,6 +1011,7 @@ public static partial class SpecGreybox
         Den(root, gy);            // SpecGreybox.Den.cs: tools/house/hifi_den.py + hifi_den_props.py + spec/dressing/den.json (changes/2026-10-16-den.json)
         KitchenModel(root, gy);   // tools/house/hifi_kitchen.py + spec/dressing/kitchen.json (changes/2026-10-16-kitchen-cabinets.json)
         KitchenSconcesAndGallery(root, gy);   // SpecGreybox.KitchenLights.cs: wall sconces, picture gallery, desk
+        KitchenProps(root, gy);   // SpecGreybox.KitchenProps.cs: pot rack + pans, bar stools, counter dressing (hifi_kitchen_props.py; Oct 19)
         {   // tools/house/hifi_breakfast_table.py (changes/2026-10-16-breakfast-table.json): honey oak, Poly Haven oak_veneer_01 tinted to film 2528
             var t = PlaceHiFi(root, gy, "BreakfastTable", new Dictionary<string, Material> { ["BT_Wood"] = TexMat("HiFi_BreakfastOak", "oak_veneer_01", new Color(0.95f, 0.80f, 0.60f), 1.0f, 0.55f)   /* darker honey pine (user photo IMG_4306, Oct 19) */ });
             if (t != null) foreach (var r in t.GetComponentsInChildren<MeshRenderer>()) r.gameObject.isStatic = true;
@@ -1065,7 +1070,9 @@ public static partial class SpecGreybox
             ["KT_Black"] = Solid("HiFi_ApplianceBlack", new Color(0.03f, 0.03f, 0.03f), 0.8f),
             ["KT_Steel"] = Solid("HiFi_Steel", new Color(0.62f, 0.62f, 0.62f), 0.6f, 1f),
             ["KT_Sink"] = Solid("HiFi_SinkEnamel", new Color(0.92f, 0.91f, 0.88f), 0.8f),
-            ["KT_Cushion"] = Solid("HiFi_SeatCushion", new Color(0.55f, 0.06f, 0.08f), 0.1f) });
+            ["KT_Cushion"] = Solid("HiFi_SeatCushion", new Color(0.55f, 0.06f, 0.08f), 0.1f),
+            ["KT_Pine"] = KnottyPine(),   // Oct 19: the stacked knotty-pine corner cupboard (film 2116, IMG_4305)
+            ["KT_Dispenser"] = Solid("HiFi_ApplianceSmoke", new Color(0.10f, 0.10f, 0.11f), 0.9f) });
         if (g != null) foreach (var r in g.GetComponentsInChildren<MeshRenderer>()) r.gameObject.isStatic = true;
         var fp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/kitchen.json"));
         if (!File.Exists(fp)) return;
@@ -1087,6 +1094,17 @@ public static partial class SpecGreybox
     // and the room's generic ceiling lamps (Light_kitchen, Light_back_stair) are removed there: no light without a fixture.
     // Strengths: tools/house/film_light_match.py --night (film 6042/9812/10452 region ratios).
     public static float UnderCabLumensPerM = 700f, ChandelierLumens = 2000f;
+    // knotty pine, honey-toned, satin (film 2116: the corner cupboard, bar stools and desk read a warm orange-honey)
+    // the grain only (polyhaven_fetch.py --neutral: the scan's own orange has no blue to tint), coloured to the film's cupboard (film
+    // island detail, sRGB 0.72/0.49/0.33 on the lit cupboard face -> tint sRGB 0.88/0.63/0.42 over the 0.8 grain)
+    static Material KnottyPine()
+    {
+        var m = TexMat("HiFi_KnottyPine", "coated_pine", new Color(0.88f, 0.63f, 0.42f), 1.2f, 0.45f);
+        var n = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Textures/PolyHaven/coated_pine/albedo_neutral.jpg");
+        if (n) { m.SetTexture("_BaseColorMap", n); EditorUtility.SetDirty(m); }
+        return m;
+    }
+
     static void KitchenFixtures(GameObject root, float gy, JObject k, GameObject cabinets)
     {
         var g = Child(root, "KitchenFixtures");
@@ -1774,7 +1792,7 @@ public static partial class SpecGreybox
         return new List<(string, List<Vector3>)> {
             ("MARV (street -> left side -> areaway -> basement door -> basement -> stair -> Kevin's door -> kitchen)", marv),
             ("FRONT WALK (street -> walk -> steps -> stoop at the front door; the door is shut by design)", W(34.0f, -4.30f, 9.716f, 20.0f, -4.30f, 9.716f, 14.5f, -4.30f, 9.716f, 10.65f, -3.09f, 9.716f)),
-            ("BACK DOOR (yard -> step -> stoop at the back door; DoorStop_BackDoor keeps it shut by design)", W(-8.5f, -3.39f, 2.5f, -7.3f, -3.39f, 2.5f, -5.75f, -3.127f, 2.5f)),
+            ("BACK DOOR (yard -> step -> stoop -> through the open back door -> kitchen, and back out)", W(-8.5f, -3.39f, 2.5f, -7.3f, -3.39f, 2.5f, -5.75f, -3.127f, 2.5f, -4.75f, -2.996f, 2.5f, -3.9f, -2.996f, 2.3f)),
         };
     }
 

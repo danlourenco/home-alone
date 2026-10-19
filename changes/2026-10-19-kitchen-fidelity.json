@@ -1,0 +1,150 @@
+{
+ "change": "Kitchen fidelity pass (user Oct 19: 'The kitchen is missing a lot of detail ... I want appliances and visual fidelity ... the pans hanging down above the kitchen counters'; 'i want to be able to walk out the kitchen door to the exterior'; TRIAL). FIXTURES (this record): the iron pot rack over the island's long leg with 14 hanging pans (tools/house/hifi_kitchen_props.py, kitchen.json wares.pot_rack); the corner cupboard rebuilt as the film's knotty-pine stacked cupboard (four sections, pine, brass knobs; same footprint), the wall oven's frame black, the fridge's ice/water dispenser (hifi_kitchen.py); the back door made operable (BackDoor.glb split into a fixed frame + threshold and a leaf, the sash curtains moving with the leaf, a hinge on the room face at the hinge edge, the hidden DoorStop collider removed, E opens / locked refuses: SpecGreybox.BackDoor.cs, EntranceDoor.handleLocal/label). PROPS LANE (no gate, listed for the record): four pine bar stools, kettle, knife block, spaghetti canister, salt/pepper, rolling pin, cutting board, fruit bowl, mortar, paper towels, coffee maker, can opener, canisters, toaster, microwave, fridge papers; six more invented snapshots, a calendar and a memo board on the gallery wall",
+ "target": "House_WallGrid",
+ "premise": "The film's kitchen hangs a rectangular rack of red enamel, black and steel pans from the ceiling over the island's long leg, and its back door is an ordinary in-swinging hinged door the bandits and Kevin pass through",
+ "claim": {
+  "value": {
+   "pot_rack_x": [
+    -2.35,
+    -0.35
+   ],
+   "pot_rack_z": [
+    1.0,
+    1.45
+   ],
+   "rack_bar_y": 2.2,
+   "lowest_pan_bottom_y": 1.6,
+   "pans": 14,
+   "back_door_hinge_spec_xz": [
+    -5.212,
+    2.982
+   ],
+   "back_door_swing": "into the kitchen, hinges on the sink-wall side, 100 deg"
+  },
+  "data": [
+   "film-frame:1146",
+   "film-frame:2116",
+   "film-frame:6900",
+   "user-photo:IMG_4305"
+  ],
+  "scale": [
+   "tile-6in:film-6902"
+  ],
+  "upstream": [
+   "film"
+  ],
+  "how": "By eye in film 1146/2116/6900 and IMG_4305 against the island (its tile pitch 0.158 m, film 6902, and the 36 in counter): the rack spans the long leg from just past the cooktop to near the L; the lowest pan rims hang a little above the wall uppers' bottoms (1.37 m) and the highest are cut by the frame top; pans: red enamel skillets and casseroles, black non-stick skillets with ringed bottoms, steel saucepans, two rows, handles up. The back door's opening, leaf and hinge side are hifi_back_door.py's (changes/2026-10-16-kitchen-wing.json, film 6902); only the leaf now turns about its hinge edge",
+  "applies_to": [
+   "kitchen"
+  ],
+  "measured_in": [
+   "kitchen"
+  ],
+  "risks": [
+   "extraction"
+  ],
+  "surface": "ceiling-plane"
+ },
+ "history": [
+  {
+   "date": "2026-10-16",
+   "what": "kitchen cabinets (changes/2026-10-16-kitchen-cabinets.json): island, runs, appliances; no pot rack; corner pantry in cherry",
+   "outcome": "accepted"
+  },
+  {
+   "date": "2026-10-16",
+   "what": "kitchen wing / back door (changes/2026-10-16-kitchen-wing.json): the door built fixed (DoorStop collider, 'shut by design')",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Marina's CG tour (Part 1 874 s, 946 s; art/home_alone/references/kitchen/frames/best-marina-0874.jpg, -0946.jpg): a ceiling-hung rack of red and dark pans over the island's long leg, the same place and arrangement; her own model, its own scale. Topological (where, what hangs), not a height",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "marina-frame:874",
+    "marina-frame:946"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "marina-model"
+   ]
+  },
+  {
+   "what": "The old reference GLB (HOME ALONE FINAL, objects 4/5/6/198 registered by spec/glb_registration.json): an iron rack on four ceiling rods with five pans over the island area; confirms the form, too coarse to borrow (256 px, 8-12 sided pans)",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "glb:home-alone-final-kitchen"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "glb-model"
+   ]
+  },
+  {
+   "what": "Film 10332-10348 (outside: Harry pushes the leaf in, the curtained sash on it) and 10356/10448 (inside: the leaf open into the kitchen, hinge on the sink-wall side, latch toward the end run where the blowtorch is clamped): the back door swings in, hinges on the +z side",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film-frame:10336",
+    "film-frame:10356",
+    "film-frame:10448"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "film"
+   ]
+  },
+  {
+   "what": "Build gates (self-consistency only): BACK DOOR route (bandit/kevin/player, out and in through the open door), Back door check (closed blocks at 0.3/1.0/1.8 m, open clears, the leaf swept at 25/50/75/100 deg touches nothing, locked refuses), z-fight/clash",
+   "agrees": true,
+   "type": "topological",
+   "tests": [],
+   "data": [
+    "unity:walk-test"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "unity:build"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/kitchen/fidelity/before/2116.jpg",
+   "spec/captures/views/kitchen/fidelity/before/6900.jpg",
+   "spec/captures/views/kitchen/fidelity/before/6044.jpg",
+   "spec/captures/views/kitchen/fidelity/before/1074.jpg",
+   "spec/captures/views/kitchen/fidelity/before/1146.jpg"
+  ],
+  "after": [
+   "spec/captures/views/kitchen/fidelity/after/2116.jpg",
+   "spec/captures/views/kitchen/fidelity/after/6900.jpg",
+   "spec/captures/views/kitchen/fidelity/after/6044.jpg",
+   "spec/captures/views/kitchen/fidelity/after/1074.jpg",
+   "spec/captures/views/kitchen/fidelity/after/1146.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "outcome": null
+}

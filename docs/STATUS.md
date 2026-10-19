@@ -1,6 +1,7 @@
 # Current status — start here
 
 ## OPEN WALK NOTES (Oct 18 evening; user: "don't lose track of them") — fix eventually, check off here
+- [ ] Oct19 kitchen fidelity + working back door TRIAL (changes/2026-10-19-kitchen-fidelity.json, DEVIATIONS 106; renders spec/captures/views/kitchen/fidelity/after/): walk the pot rack (height, pan mix), stools, counter dressing, pine cupboard, gallery/calendar, fridge dispenser + papers; E on the back door, walk out to the stoop and back. Open: duck decoy on the cupboard, the film's pine pigeonhole desk (ours is Marina's slant-front), magenta hutch (separate defect), red sash panels not seen through the open leaf's glass (check), fall-recovery check not re-run (user was in Play).
 - [ ] Oct19 12:56 den shelf lamp: too bright/broad, request better asset; current1200lm point/default7m range. Film2877 shows shaded confined pool. Candidate/lighting plan in WALK-FEEDBACK; no replacement bought. TV media crop/end-card removal completed live; original preserved.
 - **USER VERDICT Oct19:** mirror, front-door appearance/usability, den and36° TV accepted; other trial changes accepted except noted defects. **SOFFIT REJECTED: disconnected surfaces.** All prior defect notes remain open.
 - [ ] Oct19 12:31 void: existing GroundSkirt/OffLot had no colliders; repaired matching collision in builder/current scene,67→0 missing of121 nearby probes; actual kid/adult grounding tested without recovery. Permanent last-supported fall recovery also passes regression tests. User retrial pending.

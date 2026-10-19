@@ -75,6 +75,7 @@ public static partial class SpecGreybox
         z.ladderHigh = new Vector3(lx, DY - 0.3f, -(lzf + (lzt - lzf) * f + 0.3f));
         z.ladderDeck = new Vector3(lx, DY + 0.02f, -(Z1 - 0.5f));
         z.trolley = trolley.transform; z.rider = riderG; z.ropeMat = rope;
+        riderG.SetActive(false);   // hidden until a ride (ZipLine.Start does the same): in the saved scene it stood at the origin, in the kitchen (Oct 19)
         Debug.Log($"Treehouse: deck top {DY:F2} (grade {G}), deck x {X0:F2}..{X1:F2} z {Z0:F2}..{Z1:F2}; zipline {Vector3.Distance(z.window, z.trunk):F2} m, " +
                   $"{walk.transform.childCount} walk colliders");
     }
