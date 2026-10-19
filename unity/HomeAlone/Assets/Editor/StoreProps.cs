@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
@@ -74,16 +75,22 @@ public static partial class SpecGreybox
                         EditorUtility.SetDirty(t); return t;
                     }).ToArray();
             if (p["paint"] is JArray paint)   // "paint": [r, g, b] repaints a piece flat (a dark-wood pack hutch painted white like the film's built-in; a tint can't lift a dark map)
+            {   // one painted copy per source material, shared by every part that uses it (Oct 19: re-creating it per part deleted the copy
+                // the earlier parts held, leaving them with no material: the magenta hutch)
+                var made = new Dictionary<string, Material>();
                 foreach (var r in rs)
                     r.sharedMaterials = r.sharedMaterials.Select(m =>
                     {
                         if (m == null || !m.HasProperty("_BaseColor")) return m;
                         var path = $"Assets/Materials/Greybox/Paint_{name}_{m.name.Replace(' ', '_')}.mat";
-                        AssetDatabase.DeleteAsset(path);
-                        var t = new Material(m); t.SetTexture("_BaseColorMap", null);
+                        if (made.TryGetValue(path, out var done)) return done;
+                        var t = AssetDatabase.LoadAssetAtPath<Material>(path);
+                        if (t == null) { t = new Material(m); AssetDatabase.CreateAsset(t, path); } else t.CopyPropertiesFromMaterial(m);
+                        t.SetTexture("_BaseColorMap", null);
                         t.SetColor("_BaseColor", new Color((float)paint[0], (float)paint[1], (float)paint[2], 1f)); t.SetFloat("_Smoothness", 0.45f);
-                        AssetDatabase.CreateAsset(t, path); return t;
+                        EditorUtility.SetDirty(t); made[path] = t; return t;
                     }).ToArray();
+            }
             // "movable": true leaves a piece non-static so it can be nudged live in Play (static ones are batched and don't move)
             if (!(p["movable"] != null && (bool)p["movable"])) foreach (var t in go.GetComponentsInChildren<Transform>()) t.gameObject.isStatic = true;
             if (p["collide"] != null && (bool)p["collide"])
