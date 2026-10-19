@@ -19,7 +19,7 @@ docs/FOYER-WIP.md (the foyer job's checkpoints); STATUS.md is the long log. This
   added. Re-run `python3 tools/house/check_fall_recovery.py` with Play STOPPED. Not a whole-map coverage claim; the user's retrial
   of the void area is pending.
 
-### Live settings that are NOT saved yet (persist once the user stops Play)
+### Live settings (TV FOV, TV target and music PERSISTED Oct 19, 55eca097 + the saved scene; the lamp comparison is still live-only)
 | Item | Live | To persist |
 |---|---|---|
 | TV seat FOV | 24 deg | apply `changes/2026-10-19-tv-tight24.patch` (the 42->36 patch is already applied; don't re-apply), set the saved seat component to 24, save |
@@ -43,7 +43,7 @@ docs/FOYER-WIP.md (the foyer job's checkpoints); STATUS.md is the long log. This
   without asking; never kill the user's Unity editor.
 
 ## 1. Queue (one building job at a time)
-1. **Persist the live settings** above once the user stops Play (small, no geometry).
+1. (done 55eca097) persist the live settings; the lamp comparison still needs the user's decision.
 2. **Mac test app** (user-authorized; iOS out of scope; nothing built yet):
    1. Fix standalone feedback storage: `FeelNotes.Dir` writes repo-relative `../../../spec/feedback`; keep that in the Editor, use
       `Path.Combine(Application.persistentDataPath, "feedback")` in the player (check startup + M screenshot outside the repo).
