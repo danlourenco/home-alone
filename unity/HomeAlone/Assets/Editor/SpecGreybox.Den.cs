@@ -64,7 +64,9 @@ public static partial class SpecGreybox
                 }
                 r.sharedMaterials = ms;
             }
-        foreach (var g in new[] { w, b, p })
+        // the den's loose furniture (DenProps: sofa, movie chair, ficus) is NOT static (user Oct 19: "i just want to rotate and nudge it
+        // myself"): static pieces are batched in Play and can't move; non-static ones move live in Play and edit mode, lit by the probes
+        foreach (var g in new[] { w, b })
             if (g != null) foreach (var r in g.GetComponentsInChildren<MeshRenderer>()) r.gameObject.isStatic = true;
         var fp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/den.json"));
         if (!File.Exists(fp)) return;

@@ -15,7 +15,8 @@ Why this exists (Oct 13): Buzz's room was resized to the SfM size 4.35 m. The "p
 1. `python3 tools/house/props.py find bowl wood` lists owned models with their real drawn sizes (w x d x h m at yaw 0) and Poly Haven CC0 models; `props.py get polyhaven ID` brings one in as `Assets/Models/PolyHaven/ID.glb`.
 2. Read ONE ruler off the film frame (the piece it stands on is usually enough: the dresser's width), then `props.py add NAME --model ID --at x,z --back +x|-x|+z|-z|none (--floor upper | --on PIECE) [--wall C] [--yaw N] [--height H] --source "film 296: ..."`. It writes the store_props.json entry (box from the model's size, back 1 cm off wall C, standing on PIECE's top) and places it live (Home Alone > Refresh Props).
 3. `props.py front NAME...` gives one contact sheet (`spec/captures/props-front.png`) seen from the room side; `props.py pin NAME YAW` fixes a wrong facing. Edit any field by hand and `props.py refresh` re-places only what changed.
-4. The user nudges it in the Scene view + Save Prop Placement; batch the pieces into the next build (z-fight/clash still 0 there).
+4. Furniture the user may nudge again: give its store_props entry `"movable": true` (StoreProps.cs leaves it non-static; the den's DenProps sofa/chair/ficus are non-static already). Static pieces are batched in Play and silently refuse to move live; movable ones can be moved in Play or edit mode and need no re-bake (they are lit by the probes). Generated pieces (den.json etc.) are written back by hand: read the transform, update the json, rebuild the model. A build always re-bakes: a fresh build scene has no lighting data, so "skip the bake" would leave the whole house flat.
+5. The user nudges it in the Scene view + Save Prop Placement; batch the pieces into the next build (z-fight/clash still 0 there).
 
 ## Steps, in order. Don't skip ahead.
 

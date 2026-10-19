@@ -84,7 +84,8 @@ public static partial class SpecGreybox
                         t.SetColor("_BaseColor", new Color((float)paint[0], (float)paint[1], (float)paint[2], 1f)); t.SetFloat("_Smoothness", 0.45f);
                         AssetDatabase.CreateAsset(t, path); return t;
                     }).ToArray();
-            foreach (var t in go.GetComponentsInChildren<Transform>()) t.gameObject.isStatic = true;
+            // "movable": true leaves a piece non-static so it can be nudged live in Play (static ones are batched and don't move)
+            if (!(p["movable"] != null && (bool)p["movable"])) foreach (var t in go.GetComponentsInChildren<Transform>()) t.gameObject.isStatic = true;
             if (p["collide"] != null && (bool)p["collide"])
             {   // one box for the walk layer, the size of what is drawn
                 b = rs.Aggregate(rs[0].bounds, (a, r) => { a.Encapsulate(r.bounds); return a; });
