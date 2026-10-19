@@ -32,12 +32,12 @@
   "sources": "4a60610b2a4689b3"
  },
  "tools/house/hifi_den_props.py": {
-  "models": "42081f9687953036",
-  "sources": "34017d3a9069db79"
+  "models": "4930b745599e00e0",
+  "sources": "db1a58e0e2ed7e2b"
  },
  "tools/house/hifi_dining_props.py": {
   "models": "dd0d43cd190c2d06",
-  "sources": "2ed5cef11cfd0be9"
+  "sources": "6bc63fa756a28fd0"
  },
  "tools/house/hifi_door.py": {
   "models": "5374361b33a19de4",
@@ -117,7 +117,7 @@
  },
  "tools/house/hifi_living_props.py": {
   "models": "56f15333bdab29d6",
-  "sources": "bcb466b861ce1e4e"
+  "sources": "76b1e87b8754f776"
  },
  "tools/house/hifi_paint_can.py": {
   "models": "1b85af2207eec6d0",
@@ -133,7 +133,7 @@
  },
  "tools/house/hifi_parents_fireplace.py": {
   "models": "784e462dec45d619",
-  "sources": "e7d97d253a4918e8"
+  "sources": "4e5c32428226cfed"
  },
  "tools/house/hifi_props.py": {
   "models": "7e1090fca9cf172e",

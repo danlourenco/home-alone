@@ -17,7 +17,7 @@ from pathlib import Path
 
 import bpy
 import numpy as np
-from mathutils import Vector
+from mathutils import Matrix, Vector
 
 ROOT = Path(__file__).resolve().parents[2]
 PH = ROOT / "sfm-work/polyhaven"
@@ -110,15 +110,14 @@ for key, spec in P.items():   # (the TV is generated now: hifi_den.py, the film'
         recolour(objs, "DP_TvBlack", (0.07, 0.07, 0.07))
     fit(objs, spec["x"], spec["z"], spec["y"], spec["front"])
     if spec.get("yaw_to_tv"):   # Oct 19 (user): the movie chair turned toward the TV, about its box centre (Blender +Z = counter-clockwise)
-        lo, hi = bounds(objs); piv = bpy.data.objects.new("piv", None); bpy.context.scene.collection.objects.link(piv)
-        piv.location = (lo + hi) / 2
+        # a world-space turn on each mesh about the box centre (Oct 19: an empty-parent version threw the chair ~18 m out of the house)
+        lo, hi = bounds(objs); c = (lo + hi) / 2
+        turn = Matrix.Translation(c) @ Matrix.Rotation(math.radians(spec["yaw_to_tv"]), 4, "Z") @ Matrix.Translation(-c)
         for o in objs:
-            if o.type == "MESH":
-                o.parent = piv; o.matrix_parent_inverse = piv.matrix_world.inverted()
-        piv.rotation_euler = (0, 0, math.radians(spec["yaw_to_tv"])); bpy.context.view_layer.update()
-        for o in objs:
-            o.select_set(o.type == "MESH")
-        bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM"); bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+            if o.type == "MESH" and o.parent is None:
+                o.matrix_world = turn @ o.matrix_world
+        bpy.context.view_layer.update()
+        lo2, hi2 = bounds(objs); assert (((lo2 + hi2) / 2) - c).length < 0.05, "chair turn moved its centre"
 
 # the ficus in its wicker basket (film 2868/2877; the basket is hifi_den.py's): Poly Haven pachira_aquatica_01's tallest tree, fitted
 f = json.loads((ROOT / "spec/dressing/den.json").read_text())["decor"]["ficus"]
