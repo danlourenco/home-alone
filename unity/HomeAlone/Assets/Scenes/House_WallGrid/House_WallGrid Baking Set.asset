@@ -51,11 +51,11 @@ MonoBehaviour:
     m_Values:
     - position: {x: -1, y: -1, z: -1}
       index: 0
-      probeCount: 10432
+      probeCount: 11328
       minSubdiv: 0
       indexChunkCount: 91
       shChunkCount: 2
-      bricksCount: 163
+      bricksCount: 177
       indirectionEntryInfo:
       - positionInBricks: {x: -27, y: -27, z: -27}
         minSubdiv: 0
@@ -65,11 +65,11 @@ MonoBehaviour:
         hasOnlyBiggerBricks: 0
     - position: {x: -1, y: -1, z: 0}
       index: 9
-      probeCount: 1600
+      probeCount: 1728
       minSubdiv: 0
       indexChunkCount: 91
       shChunkCount: 1
-      bricksCount: 25
+      bricksCount: 27
       indirectionEntryInfo:
       - positionInBricks: {x: -27, y: -27, z: 0}
         minSubdiv: 0
@@ -193,7 +193,7 @@ MonoBehaviour:
     - Default
     - Night
     m_Values:
-    - sceneHash: -1752416639
+    - sceneHash: 1593901155
       cellDataAsset:
         m_AssetGUID: ca7e89723bbd448d18ceb03685392ab7
         m_StreamableAssetPath: APVStreamingAssets/90215873b0615476f932383fd19cd623/ca7e89723bbd448d18ceb03685392ab7.bytes
@@ -266,7 +266,7 @@ MonoBehaviour:
           - offset: 0
             elementCount: 1
         m_Asset: {fileID: 4900000, guid: 0133ef3d97d1647eeacf9d4fa6ae915c, type: 3}
-    - sceneHash: -1752416639
+    - sceneHash: 1593901155
       cellDataAsset:
         m_AssetGUID: 597baac0f27d84c17aad2ea8af92b28d
         m_StreamableAssetPath: APVStreamingAssets/90215873b0615476f932383fd19cd623/597baac0f27d84c17aad2ea8af92b28d.bytes
@@ -347,20 +347,20 @@ MonoBehaviour:
       m_Keys: 0000000009000000030000000c000000010000000a000000040000000d000000i
       m_Values:
       - offset: 0
-        elementCount: 163
-      - offset: 2608
-        elementCount: 25
-      - offset: 3008
+        elementCount: 177
+      - offset: 2832
+        elementCount: 27
+      - offset: 3264
         elementCount: 171
-      - offset: 5744
+      - offset: 6000
         elementCount: 6
-      - offset: 5840
+      - offset: 6096
         elementCount: 113
-      - offset: 7648
+      - offset: 7904
         elementCount: 19
-      - offset: 7952
+      - offset: 8208
         elementCount: 107
-      - offset: 9664
+      - offset: 9920
         elementCount: 18
     m_Asset: {fileID: 4900000, guid: 2dfdad26863ac4b1e9ef0510d8611190, type: 3}
   cellSupportDataAsset:
@@ -420,7 +420,7 @@ MonoBehaviour:
   supportLayerMaskChunkSize: 0
   supportOffsetsChunkSize: 98304
   supportDataChunkSize: 262144
-  lightingScenario: Night
+  lightingScenario: Default
   version: 2
   freezePlacement: 0
   probeOffset: {x: 0, y: 0, z: 0}
