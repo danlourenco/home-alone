@@ -1,5 +1,18 @@
 # Current status — start here
 
+## OPEN WALK NOTES (Oct 18 evening; user: "don't lose track of them") — fix eventually, check off here
+Accepted with these noted (exterior shell/polish/sunroom, yard, treehouse+zipline, Kevin and Jeff's room, guest room, hall polish). Each: time, world pose, note, shot in spec/feedback/shots/.
+- [ ] 21:05 front yard by the right end (12.17,-3.37,1.16) "random steps" — stray steps (likely the old sun-porch side steps the sunroom fix kept for Marv's route); reroute or justify
+- [ ] 21:07 basement (7.32,-5.68,-1.18) "why can i see daylight here? seems like a structural gap" — a hole between basement walls/foundation and the outside under the front/sunroom end
+- [ ] 21:08 upstairs hall (7.27,0.03,-10.91) "this arch still feels a bit awkward and unresolved" — the hall_corridor|south arch (B) despite the polish
+- [ ] 21:09 upstairs hall (6.7,0.03,-9.95) "runner misalignment suggest room door misalignment" — the runner's sideways steps under the arches expose doors/arches not on one axis; check the hall doors' alignment vs the film/Marina
+- [ ] 21:12 Buzz's room (9.3,0.03,-14.54) "would be cool if i knew how to open the chest" — the footlocker lid: add/explain an interact key (E) and a prompt
+- [ ] 21:13 Kevin's room (10.01,0.03,-4.78) "looks like lamp part isn't aligned with base" — the moved floor lamp's arm/head vs its base (hifi_kevin.py knee change)
+- [ ] 21:13 parents' room (6.75,0.03,-2.12, night) "this light should glow at night too" — another fixture there (floor lamp by the window chair? sconce?) not on the night layer
+- [ ] 21:14 parents' room (4.35,0.03,-3.47, night) "would be great to do parent's ensuite bath" — NEXT ROOM: the parents' ensuite (film 4398-4425 aftershave; Marina p2 206-228)
+- [x] 21:07 foyer "rugs looks great"
+Earlier still-open: yard trees hero swap (user's Sketchfab oaks), French windows ~1.0 m (film) vs 0.75 (Marina), upstairs depth vs film (HouseSplit hide trick), basement clutter density, laundry chute top, brass stair rods, perf speed-ups (bake fills, lamp ranges, cut-outs, sun shadow distance, texture compression), 38 older change records still "walk pending" (Oct 14-17) to batch-accept.
+
 ## RESUME HERE (Oct 17, 2026, morning): downstairs dressed room by room; artist pipeline + upstairs hall paused mid-way
 
 **Read this section first.** Everything below is history except where pointed to. All work is TRIAL unless a change record says
