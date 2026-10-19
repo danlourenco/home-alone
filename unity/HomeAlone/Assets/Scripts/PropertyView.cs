@@ -6,10 +6,11 @@ using UnityEngine;
 /// whose centre lies outside the lot. The house, the window/sky domes and the probes are never touched. Made at scene load, no editor setup.
 public class PropertyView : MonoBehaviour
 {
-    // ponytail: the lot is a world-space box: front edge = the public sidewalk's inner edge (x 28.87, SpecGreybox.FrontDrive, OSM ways),
-    // sides/rear = the registered GLB site's own lot (its garage fence and treehouse inside). Replace with the Cook County parcel polygon
-    // if the edges matter. (Oct 19: the first box ended at x 23, the GLB's scaled street, and hid the front lawn, piers and drive.)
-    static readonly Rect Lot = Rect.MinMaxRect(-22f, -38f, 28.87f, 7f);   // x min/max, z min/max (world; front = +x, the street side)
+    // The McCallister lot (user-agreed Oct 19, docs/RESUME.md section 3), spec (x, z): the Cook County parcel's sides and rear
+    // (art/home_alone/references/neighborhood/data, tools/house/nb_frame.py) with the front at the public sidewalk's back edge
+    // (x 28.87, SpecGreybox.FrontDrive), so the walk piers, the U-drive's mouths and the walk are on it (film 11908/12066; the 2015
+    // fence stands there). The parcel's own front line plots at x 27.35.
+    static readonly Vector2[] Poly = { new Vector2(-30.16f, 30.58f), new Vector2(28.87f, 30.72f), new Vector2(28.87f, -3.91f), new Vector2(-34.16f, -4.06f) };
     bool hidden;
     readonly List<Renderer> renderers = new List<Renderer>();
     readonly List<Light> lights = new List<Light>();
@@ -41,5 +42,15 @@ public class PropertyView : MonoBehaviour
         hidden = !hidden;
     }
 
+    // Lot.Contains(world x, z) (SpecGreybox.ExteriorRealism splits the ground meshes with it at build time)
+    public sealed class LotShape { public bool Contains(Vector2 worldXZ) => InPoly(worldXZ.x, -worldXZ.y); }
+    public static readonly LotShape Lot = new LotShape();
+    static bool InPoly(float x, float z)   // spec x, z; even-odd rule
+    {
+        bool inside = false;
+        for (int i = 0, j = Poly.Length - 1; i < Poly.Length; j = i++)
+            if ((Poly[i].y > z) != (Poly[j].y > z) && x < (Poly[j].x - Poly[i].x) * (z - Poly[i].y) / (Poly[j].y - Poly[i].y) + Poly[i].x) inside = !inside;
+        return inside;
+    }
     static bool Off(Vector3 p) => !Lot.Contains(new Vector2(p.x, p.z));
 }

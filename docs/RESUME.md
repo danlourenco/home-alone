@@ -78,8 +78,11 @@ Tiers by player distance; detail follows sightlines (window views, the film's ex
 - Data in `art/home_alone/references/neighborhood/data/` (Cook County parcels + 2022 lidar building footprints with heights, OSM,
   ISGS 2022 nDSM: 2516 trees > 6 m, post-1990 canopy). Manifest `spec/neighborhood.json` (18 parcels), `film_index.json`, `boards/`, `plan.png`.
 - True McCallister lot (spec x,z): (-30.16,30.58) (27.38,30.72) (27.36,19.17) (27.30,-3.91) (-34.16,-4.06): front line x ~27.35.
-  PropertyView's box is badly off (should take this polygon). **Open**: the piers (x 28.30-28.80) fall 1-1.5 m outside the parcel:
-  a ~1 m registration error, or they stand in the right-of-way. Decide before PropertyView uses the polygon.
+  **Decided (user, Oct 19)**: the lot's front is the public sidewalk's back edge (x 28.87), the parcel's sides/rear kept:
+  (-30.16,30.58) (28.87,30.72) (28.87,-3.91) (-34.16,-4.06), now in PropertyView.cs (K, and ExteriorRealism's on/off-lot ground
+  split). Why: the walk piers (x 28.30-28.80) sit there in film 11908/12030/12066 (a truck at the kerb beside the right pier), and
+  the 2015 Commons photo shows the owner's fence on that line right behind the sidewalk (the piers themselves are gone by 2015);
+  the parcel's own front plots ~1.5 m further back (registration, or a right-of-way strip in use by the owner).
 - Tier 2: lot_B0 = the Murphys (grey-blue clapboard Foursquare, 2.5 storeys, hip dormer, full-width white-column porch; film
   11551-11636 night), lot_A+1 / lot_A-1 neighbours (edge views only), lot_B+1 / lot_B-1 (no clean frame: style kit). The county
   height for our own house (9.2 m) is wrong: never use it for the house.
