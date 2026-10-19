@@ -48,10 +48,10 @@ public static partial class SpecGreybox
         {
             string p = $"{dir}_{map}.png";
             if (AssetImporter.GetAtPath(p) is TextureImporter ti && (ti.sRGBTexture != srgb || (ti.textureType == TextureImporterType.NormalMap) != normal
-                                                                    || ti.anisoLevel != 8 || !ti.mipmapEnabled))
+                                                                    || ti.anisoLevel != 8 || !ti.mipmapEnabled || ti.maxTextureSize < 4096))
             {
                 ti.textureType = normal ? TextureImporterType.NormalMap : TextureImporterType.Default; ti.sRGBTexture = srgb;
-                ti.anisoLevel = 8; ti.mipmapEnabled = true; ti.SaveAndReimport();
+                ti.anisoLevel = 8; ti.mipmapEnabled = true; ti.maxTextureSize = 4096; ti.SaveAndReimport();
             }
             var t = AssetDatabase.LoadAssetAtPath<Texture2D>(p);
             if (t == null) Debug.LogWarning("BakedMat: missing " + p);

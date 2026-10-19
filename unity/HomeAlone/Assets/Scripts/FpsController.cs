@@ -4,7 +4,7 @@ using UnityEngine;
 /// WASD move, mouse look, Shift sprint, Space jump, HOLD C or Left Ctrl to crouch/crawl (can't stand under a low ceiling),
 /// Esc/Tab releases cursor, click recaptures, R resets. G toggles Kevin (kid body, the default in Play) / adult;
 /// H toggles the step bob + landing dip (motion-sickness switch; footsteps stay).
-/// E interacts (each prompts on screen when you are close and looking at it): Buzz's footlocker opens/closes (TrunkLid, within 1.5 m);
+/// E interacts (each prompts on screen when you are close and looking at it): the front door opens/closes; the den movie chair sits/stands; Buzz's footlocker opens/closes (TrunkLid, within 1.5 m);
 /// at the attic dormer rides the zipline, at the treehouse ladder climbs (ZipLine). N day/night, O cycles the day's weather sunny (film 4382, the default) / morning (film 1890) / overcast (film 6399) (HouseWeather;
 /// it also drives the falling snow: off in sunny/morning, where F is ignored; on when overcast and at night),
 /// M marks a walk note (FeelNotes). K hides everything off the McCallister lot (PropertyView).
@@ -36,6 +36,11 @@ public class FpsController : MonoBehaviour
     float adultRadius, adultWalk, adultSprint, adultCrouch, bobPhase, bobWeight;
     float curH, curEye, targetH, targetEye, landDip, stepDist;
     bool wasGrounded = true;
+    // Below the basement/areaway: emergency recovery, never a substitute for ground collision.
+    public float fallRecoveryY = -12f;
+    Vector3 safePosition;
+    Quaternion safeRotation;
+    float safeSampleTimer;
     AudioSource audioSrc;
     static AudioClip[][] clips;
     int lastClip = -1;
@@ -46,6 +51,7 @@ public class FpsController : MonoBehaviour
     void Start()
     {
         spawnPosition = transform.position; spawnRotation = transform.rotation;
+        safePosition = spawnPosition + Vector3.up*.05f; safeRotation = spawnRotation;
         cc = GetComponent<CharacterController>();
         adultRadius = cc.radius; adultWalk = walkSpeed; adultSprint = sprintSpeed; adultCrouch = crouchSpeed;
         audioSrc = gameObject.AddComponent<AudioSource>(); audioSrc.spatialBlend = 0; audioSrc.playOnAwake = false;
@@ -183,12 +189,42 @@ public class FpsController : MonoBehaviour
     public void TickMotion(Vector3 direction, bool sprint, bool jump, float dt)
     {
         if (!cc) cc = GetComponent<CharacterController>();
+        if (RecoverIfFallen()) return;
+        safeSampleTimer -= dt;
+        if (cc.isGrounded && safeSampleTimer <= 0f) {
+            safeSampleTimer = .25f;
+            if (SupportedFootprint()) { safePosition=transform.position+Vector3.up*.05f; safeRotation=transform.rotation; }
+        }
         float speed = crouched ? crouchSpeed : (sprint ? sprintSpeed : walkSpeed);
         Vector3 move = direction.normalized * speed;
         if (cc.isGrounded) { vy = -1f; if (jump && !crouched) vy = jumpSpeed; }
         else vy -= gravity * dt;
         move.y = vy;
         cc.Move(move * dt);
+        RecoverIfFallen();
+    }
+
+    bool SupportedFootprint()
+    {
+        // Keep the last stable location away from ledges: centre and four points inside the capsule footprint.
+        float radius=cc.radius*.7f, minUp=Mathf.Cos(cc.slopeLimit*Mathf.Deg2Rad);
+        for (int i=0;i<5;i++) {
+            Vector3 offset=i==0?Vector3.zero:i==1?Vector3.right*radius:i==2?Vector3.left*radius:i==3?Vector3.forward*radius:Vector3.back*radius;
+            if (!Physics.Raycast(transform.position+offset+Vector3.up*.1f,Vector3.down,out var hit,.3f,~0,QueryTriggerInteraction.Ignore)
+                || hit.normal.y<minUp || hit.collider.attachedRigidbody && !hit.collider.attachedRigidbody.isKinematic) return false;
+        }
+        return true;
+    }
+
+    public bool RecoverIfFallen()
+    {
+        if (transform.position.y>=fallRecoveryY) return false;
+        if (!cc) cc=GetComponent<CharacterController>();
+        bool enabled=cc.enabled;cc.enabled=false;
+        transform.SetPositionAndRotation(safePosition,safeRotation);vy=0;landDip=0;bobWeight=0;wasGrounded=true;
+        cc.enabled=enabled;
+        Debug.LogWarning("Fall recovery: returned to last supported position; report the missing ground collision.");
+        return true;
     }
 
     void SetBody()

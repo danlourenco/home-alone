@@ -117,9 +117,20 @@ bot1 = stringer(f1, +1, 10.21, -1)
 # flight 2: rises toward +x, open side at z 9.17 (rail band 9.17-9.23)
 f2 = flight("flight2_step", -1, 9.17)
 stringer(f2, -1, 9.16, -1)
-for b in f2:   # flight 2 sits on the landing as slabs: their bodies under the treads are white (seen from the foyer below)
-    (x0, x1), (y0, y1), (z0, z1) = b["x"], b["y"], b["z"]
-    white.box(x0, x1, y0, y1 - TREAD_T, z0, z1)
+# Closed, continuous plaster envelope below flight 2. The greybox keeps its step colliders.
+# The former per-step white bodies protruded below a sloped cover; replace them, do not cover them.
+st2 = sorted(f2, key=lambda q: q["x"][0])
+xa, xb = st2[0]["x"][0], st2[-1]["x"][1]
+ya = B["landing"]["y"][0]
+yb = ya + (xb - xa) * RISE / (st2[0]["x"][1] - xa)
+z0, z1 = st2[0]["z"]
+for b in st2:
+    a, c = b["x"]; top = b["y"][1] - TREAD_T
+    ba = ya + (a-xa)/(xb-xa)*(yb-ya); bc = ya + (c-xa)/(xb-xa)*(yb-ya)
+    # side infill, straight bottom; 1 cm behind the separate open-side stringer
+    for z, sign in ((z0, -1), (z1-0.01, 1)):
+        white.face([(a,ba,z),(c,bc,z),(c,top,z),(a,top,z)],(0,0,sign))
+white.face([(xa,ya,z0),(xb,yb,z0),(xb,yb,z1),(xa,ya,z1)],(0,-1,0))
 L = B["landing"]; (lx0, lx1), (_, ly1), (lz0, lz1) = L["x"], L["y"], L["z"]
 white.box(lx0, lx1, L["y"][0], ly1 - TREAD_T, lz0, lz1)   # the landing's slab under its tread (fascia and soffit, white)
 tread.box(lx0, lx1 + NOSE - TREAD_T / 2, ly1 - TREAD_T, ly1, lz0, lz1); nosing(tread, lx1 + NOSE - TREAD_T / 2, ly1, 9.23, lz1, +1)

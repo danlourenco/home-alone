@@ -44,3 +44,7 @@ unity/HomeAlone/Assets/Purchased.meta
 # renders showing the bought (CGTrader) models: kept local, not published with the public repo
 spec/captures/views/purchased/
 art/home_alone/references/pietro/
+
+# the film screencaps (2.1 GB, copyrighted frames): local reference only, never in the public repo
+0-homealone/
+0-homealone.zip

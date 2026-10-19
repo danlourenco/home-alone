@@ -6,8 +6,8 @@ using UnityEngine.Rendering.HighDefinition;
 
 // Window winter backdrops (user Oct 17: "change the windows such that you don't see outside but rather a nice fake backdrop that looks
 // like a realistic winter scene"; overnight5). A photographic dome around the house, R 75 m from its middle: by day Poly Haven's
-// "Snowy Park 01" (CC0; overcast, bare trees, snow), by night the same panorama as a winter night; at night the film's own lit front
-// (film 5546, mirrored) stands across Lincoln Avenue as a cut-out card. Textures: tools/house/window_backdrop.py -> Textures/Backdrop.
+// "Snowy Park 01" (CC0; overcast, bare trees, snow), by night the same panorama as a winter night.
+// The old mirrored-house card is removed. Textures: tools/house/window_backdrop.py -> Textures/Backdrop.
 // Unlit emissive, no shadows, no collider, not static: out of the bake (the sky still lights the house), out of the walk.
 // The stand-in neighbour houses (fake-looking boxes through the den and living windows) cast shadows only, and every exterior
 // renderer beyond the dome (hidden by it anyway) is disabled (perf). The yard, street, street trees, poles and wires inside it stay.
@@ -59,13 +59,8 @@ public static partial class SpecGreybox
             var ov = new GameObject("OvercastSky").AddComponent<Volume>(); ov.transform.SetParent(wx.transform, false); ov.isGlobal = true; ov.priority = 6f; ov.sharedProfile = prof;
             wx.overcastSky = ov; wx.Apply(wx.state);   // the scene is saved Sunny
         }
-        // the film's front across the street: 26 m wide (the house fills 90% of the frame; ours is ~24 m), bottom at the far lots
-        var card = GameObject.CreatePrimitive(PrimitiveType.Quad); card.name = "WinterBackdrop_NightHouse";
-        Object.DestroyImmediate(card.GetComponent<Collider>()); card.transform.SetParent(nightLayer.transform, false);
-        float w = 26f, h = w * 1058f / 1920f;
-        card.transform.SetPositionAndRotation(new Vector3(52f, gy - 2.2f + h / 2f, -9.7f), Quaternion.Euler(0, 90f, 0));   // faces -x (the house)
-        card.transform.localScale = new Vector3(w, h, 1f);
-        Quiet(card.GetComponent<MeshRenderer>(), Glow("Backdrop_NightHouse", Tex("card_night.png", 2048, true), CardNightNits, true));
+        // No mirrored McCallister photo card across the street (walk12:04, Oct19).
+        // Neighbour facades must come from the neighbourhood evidence plan.
 
         // Buzz's desk-wall window (user Oct 18): the film's own POV out of it, Marley shovelling by the trash can (film 546) at night,
         // Christmas morning (film 12510) by day. Since the guest room over the den (Oct 18, TRIAL; changes/2026-10-18-guest-room.json,

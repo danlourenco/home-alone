@@ -1,157 +1,158 @@
 {
- "gate": 8,
- "change": "Sun and sky TRIAL 1: the daylight sun moves from the placeholder (az 155, el 21; DEVIATIONS 34) to the film's sun solved from film 4382's portico shadow (az 196.8, el 35.0), and O (Scripts/HouseWeather.cs) cycles the day look: Sunny (the film-solved sun, 100 klx, crisp shadows, HDRP physically based clear sky, a clear-winter dome: Poly Haven Snowy Cemetery CC0 with its sun rolled to az 196.8; the default), Morning (az 130 el 17, 70 klx: film 1890's low SE sun, a bound not a solve; lights the kitchen's SE windows) and Overcast (the Snowy Park dome, a grey gradient sky volume, the sun high at el 65, 6 klx, 40 deg wide, shadows at 0.4). The 45 grey-box window panes (material Glass) no longer cast shadows: HDRP drew them into the sun's shadow map as opaque, so no sun patch ever reached a room (live A/B in the dining room). The weather also drives the falling snow: off in Sunny/Morning (F ignored there), on when Overcast and at night. Lighting only: no geometry, collider, route or hiding place changes. The APV day bake is made with the Sunny sun; Morning/Overcast change only realtime light (one baked scenario, noted in the code).",
- "target": "House_WallGrid: Upstairs/Daylight/DayLayer/Sun, WinterBackdrop_Day material, Weather - press O (HouseWeather + OvercastSky volume), Settings/OvercastSky.asset",
- "premise": "Film 4382 (and its twin 4444) is a sunny ~midday exterior whose portico casts a sharp shadow on the brick; the camera solved on its window centres (tools/house/exterior_film_fit.py) and the portico's modelled depth (columns 1.28 m out, exterior_shell.py) convert that shadow's offset and slope into the sun's direction.",
- "claim": {
-  "value": {
-   "sun_azimuth_deg": 196.8,
-   "sun_azimuth_5_95": [
-    192.6,
-    200.2
-   ],
-   "sun_elevation_deg": 35.0,
-   "sun_elevation_5_95": [
-    28.6,
-    41.1
-   ],
-   "relative_to_front_normal_deg": -30.8
+  "gate": 8,
+  "change": "Sun and sky TRIAL 1: the daylight sun moves from the placeholder (az 155, el 21; DEVIATIONS 34) to the film's sun solved from film 4382's portico shadow (az 196.8, el 35.0), and O (Scripts/HouseWeather.cs) cycles the day look: Sunny (the film-solved sun, 100 klx, crisp shadows, HDRP physically based clear sky, a clear-winter dome: Poly Haven Snowy Cemetery CC0 with its sun rolled to az 196.8; the default), Morning (az 130 el 17, 70 klx: film 1890's low SE sun, a bound not a solve; lights the kitchen's SE windows) and Overcast (the Snowy Park dome, a grey gradient sky volume, the sun high at el 65, 6 klx, 40 deg wide, shadows at 0.4). The 45 grey-box window panes (material Glass) no longer cast shadows: HDRP drew them into the sun's shadow map as opaque, so no sun patch ever reached a room (live A/B in the dining room). The weather also drives the falling snow: off in Sunny/Morning (F ignored there), on when Overcast and at night. Lighting only: no geometry, collider, route or hiding place changes. The APV day bake is made with the Sunny sun; Morning/Overcast change only realtime light (one baked scenario, noted in the code).",
+  "target": "House_WallGrid: Upstairs/Daylight/DayLayer/Sun, WinterBackdrop_Day material, Weather - press O (HouseWeather + OvercastSky volume), Settings/OvercastSky.asset",
+  "premise": "Film 4382 (and its twin 4444) is a sunny ~midday exterior whose portico casts a sharp shadow on the brick; the camera solved on its window centres (tools/house/exterior_film_fit.py) and the portico's modelled depth (columns 1.28 m out, exterior_shell.py) convert that shadow's offset and slope into the sun's direction.",
+  "claim": {
+    "value": {
+      "sun_azimuth_deg": 196.8,
+      "sun_azimuth_5_95": [
+        192.6,
+        200.2
+      ],
+      "sun_elevation_deg": 35.0,
+      "sun_elevation_5_95": [
+        28.6,
+        41.1
+      ],
+      "relative_to_front_normal_deg": -30.8
+    },
+    "data": [
+      "film:4382"
+    ],
+    "scale": [
+      "camera-fit:4382-window-centres",
+      "portico-depth:exterior_shell"
+    ],
+    "upstream": [
+      "exterior_film_fit:4382",
+      "house_bearing:osm"
+    ],
+    "type": "angular",
+    "how": "uv run --with numpy --with scipy --with pillow python -I tools/house/sun_solve.py: edges read by the script (no hand picks) \u2014 the left column's shadow edge on the shutter (x 774, a subtle 20 -> 12 luminance step) vs the column's own left edge (x 829.5): -55.5 px; the diagonal top edge of the shadow under the canopy's left end (17 columns, slope -1.36). Both compared as image offsets/slopes through the solved camera, so its ~10 px absolute error cancels. Spread: Monte Carlo (150) over edge reads +-3 px, slope +-4 deg, column/entablature depth +-0.10 m, column radius, camera +-0.3 m / +-0.5 deg.",
+    "applies_to": [
+      "daylight"
+    ],
+    "measured_in": [
+      "daylight"
+    ],
+    "risks": [
+      "model-fidelity"
+    ],
+    "pick": {
+      "crop": "spec/captures/picks/sun-sky/f4382_portico_left.png",
+      "confirmed_by": "a Sonnet subagent shown only the crop: 'a white column ... a strong cast shadow covers the brick on the LEFT of the column ... the top edge is diagonal, from the upper right near the capital down to the lower left'; on the shutter step (the column edge read) it said 'unsure', so that read is weak"
+    },
+    "alternatives": [
+      "the placeholder az 155 el 21 (Dec 21 ~10:30 am; the build before)",
+      "a morning SE sun (film 1890's): kept as the Morning state, not the default"
+    ]
   },
-  "data": [
-   "film:4382"
+  "history": [
+    {
+      "date": "2026-10-15",
+      "what": "sun placeholder Dec 21 ~10:30 am Chicago (az 155, el 21), DEVIATIONS 34",
+      "outcome": "superseded: lit the front roof slope almost black against film 4382's lit front",
+      "ref": "docs/DEVIATIONS.md row 34"
+    }
   ],
-  "scale": [
-   "camera-fit:4382-window-centres",
-   "portico-depth:exterior_shell"
+  "premise_reviewed": "",
+  "checks": [
+    {
+      "what": "Held-out film 1644 (departure scene, another camera, near-frontal and closer): the left column's shadow runs over dark brick from the column to the shutter, >= 0.63 m on the column-shaft ruler (0.27 m) -> the sun is >= 26 deg SE of the front's normal (az <= 201). The solve's 30.8 deg (az 196.8) falls inside; same side (SE). A bound, not a second solve (the shutter hides the shadow's far edge).",
+      "agrees": true,
+      "type": "angular",
+      "data": [
+        "film:1644"
+      ],
+      "scale": [
+        "column-shaft:0.27m"
+      ],
+      "upstream": [
+        "none"
+      ],
+      "tests": [
+        "model-fidelity"
+      ],
+      "pick": {
+        "crop": "spec/captures/picks/sun-sky/f1644_column_left.png",
+        "confirmed_by": "a Sonnet subagent shown only the crop: 'a white column ... a cast shadow covers the brick LEFT of the column, including the dark rectangle [a shutter]'"
+      }
+    },
+    {
+      "what": "Solar ephemeris, Winnetka 42.106 N 87.736 W (NOAA low-precision, in sun_solve.py): the 5-95% box is reached Feb 1 1990 12:55-13:10, Feb 15 12:50-13:15, Mar 1 12:45-13:05 CST; no time on Dec 21 1989 (max elevation 24 deg) or Jan 15 (27), nor from mid-March on (at az ~197 the sun is then already above el 41). Fits a February 1990 location shoot at about 1 pm; the story's December cannot give this sun.",
+      "agrees": true,
+      "type": "angular",
+      "data": [
+        "ephemeris:noaa"
+      ],
+      "scale": [
+        "none"
+      ],
+      "upstream": [
+        "none"
+      ],
+      "tests": []
+    },
+    {
+      "what": "Same frame, other geometry: the main block's shadow on the set-back left section (0.96 m step) next to the corner. Predicted 21 px wide; the film shows dark brick 36 px wide (x 364-400), which alone would put the sun ~44 deg off the normal (az ~184).",
+      "agrees": false,
+      "type": "angular",
+      "data": [
+        "film:4382"
+      ],
+      "scale": [
+        "camera-fit:4382-window-centres"
+      ],
+      "upstream": [
+        "exterior_film_fit:4382"
+      ],
+      "tests": [],
+      "disposition": "Weak and not independent (same frame and camera): the dark strip's edge falls on a window mullion and a branch shadow, and the step depth is the shell's, not measured. Same side (SE) as the solve. Its az ~184 lies 9 deg below the solve's 5-95% range; the held-out 1644 bound (az <= 201) and the ephemeris both admit 184-200. Revisit with a film frame that shows the left corner unshadowed by branches."
+    }
   ],
-  "upstream": [
-   "exterior_film_fit:4382",
-   "house_bearing:osm"
-  ],
-  "type": "angular",
-  "how": "uv run --with numpy --with scipy --with pillow python -I tools/house/sun_solve.py: edges read by the script (no hand picks) — the left column's shadow edge on the shutter (x 774, a subtle 20 -> 12 luminance step) vs the column's own left edge (x 829.5): -55.5 px; the diagonal top edge of the shadow under the canopy's left end (17 columns, slope -1.36). Both compared as image offsets/slopes through the solved camera, so its ~10 px absolute error cancels. Spread: Monte Carlo (150) over edge reads +-3 px, slope +-4 deg, column/entablature depth +-0.10 m, column radius, camera +-0.3 m / +-0.5 deg.",
-  "applies_to": [
-   "daylight"
-  ],
-  "measured_in": [
-   "daylight"
-  ],
-  "risks": [
-   "model-fidelity"
-  ],
-  "pick": {
-   "crop": "spec/captures/picks/sun-sky/f4382_portico_left.png",
-   "confirmed_by": "a Sonnet subagent shown only the crop: 'a white column ... a strong cast shadow covers the brick on the LEFT of the column ... the top edge is diagonal, from the upper right near the capital down to the lower left'; on the shutter step (the column edge read) it said 'unsure', so that read is weak"
+  "notes": "Film 1890 (departure morning, the airport vans): the SE-facing end walls are sunlit and the SW front dark -> a sun east of SE (az <= ~138) at that shot: another time of day, so not a check on 4382; it is why the Morning state exists (az 130 el 17 = Feb 15 1990 ~8:45 CST). The user's breakfast-scene note (sun through the kitchen windows) fits it: the kitchen's windows face SE (spec -z wall) and NE (rear). Interior film frames were not used (sets, stage light). The clear dome photo's own sun sits at el ~25 (not 35): left as shot.",
+  "renders": {
+    "before": [
+      "spec/captures/views/sun-sky/before/film4382.jpg",
+      "spec/captures/views/sun-sky/before/film6399.jpg",
+      "spec/captures/views/sun-sky/before/film1890.jpg",
+      "spec/captures/views/sun-sky/before/street.jpg",
+      "spec/captures/views/sun-sky/before/in_dining.jpg",
+      "spec/captures/views/sun-sky/before/in_living.jpg",
+      "spec/captures/views/sun-sky/before/in_kitchen.jpg"
+    ],
+    "after": [
+      "spec/captures/views/sun-sky/after/morning/film1890.jpg",
+      "spec/captures/views/sun-sky/after/morning/film4382.jpg",
+      "spec/captures/views/sun-sky/after/morning/film6399.jpg",
+      "spec/captures/views/sun-sky/after/morning/in_dining.jpg",
+      "spec/captures/views/sun-sky/after/morning/in_kitchen.jpg",
+      "spec/captures/views/sun-sky/after/morning/in_living.jpg",
+      "spec/captures/views/sun-sky/after/morning/street.jpg",
+      "spec/captures/views/sun-sky/after/overcast/film1890.jpg",
+      "spec/captures/views/sun-sky/after/overcast/film4382.jpg",
+      "spec/captures/views/sun-sky/after/overcast/film6399.jpg",
+      "spec/captures/views/sun-sky/after/overcast/in_dining.jpg",
+      "spec/captures/views/sun-sky/after/overcast/in_kitchen.jpg",
+      "spec/captures/views/sun-sky/after/overcast/in_living.jpg",
+      "spec/captures/views/sun-sky/after/overcast/street.jpg",
+      "spec/captures/views/sun-sky/after/sunny/film1890.jpg",
+      "spec/captures/views/sun-sky/after/sunny/film4382.jpg",
+      "spec/captures/views/sun-sky/after/sunny/film6399.jpg",
+      "spec/captures/views/sun-sky/after/sunny/in_dining.jpg",
+      "spec/captures/views/sun-sky/after/sunny/in_kitchen.jpg",
+      "spec/captures/views/sun-sky/after/sunny/in_living.jpg",
+      "spec/captures/views/sun-sky/after/sunny/street.jpg",
+      "spec/captures/views/sun-sky/compare/film1890.jpg",
+      "spec/captures/views/sun-sky/compare/film4382.jpg",
+      "spec/captures/views/sun-sky/compare/film6399.jpg",
+      "spec/captures/views/sun-sky/compare/in_dining.jpg",
+      "spec/captures/views/sun-sky/compare/in_kitchen.jpg",
+      "spec/captures/views/sun-sky/compare/in_living.jpg",
+      "spec/captures/views/sun-sky/compare/street.jpg"
+    ]
   },
-  "alternatives": [
-   "the placeholder az 155 el 21 (Dec 21 ~10:30 am; the build before)",
-   "a morning SE sun (film 1890's): kept as the Morning state, not the default"
-  ]
- },
- "history": [
-  {
-   "date": "2026-10-15",
-   "what": "sun placeholder Dec 21 ~10:30 am Chicago (az 155, el 21), DEVIATIONS 34",
-   "outcome": "superseded: lit the front roof slope almost black against film 4382's lit front",
-   "ref": "docs/DEVIATIONS.md row 34"
-  }
- ],
- "premise_reviewed": "",
- "checks": [
-  {
-   "what": "Held-out film 1644 (departure scene, another camera, near-frontal and closer): the left column's shadow runs over dark brick from the column to the shutter, >= 0.63 m on the column-shaft ruler (0.27 m) -> the sun is >= 26 deg SE of the front's normal (az <= 201). The solve's 30.8 deg (az 196.8) falls inside; same side (SE). A bound, not a second solve (the shutter hides the shadow's far edge).",
-   "agrees": true,
-   "type": "angular",
-   "data": [
-    "film:1644"
-   ],
-   "scale": [
-    "column-shaft:0.27m"
-   ],
-   "upstream": [
-    "none"
-   ],
-   "tests": [
-    "model-fidelity"
-   ],
-   "pick": {
-    "crop": "spec/captures/picks/sun-sky/f1644_column_left.png",
-    "confirmed_by": "a Sonnet subagent shown only the crop: 'a white column ... a cast shadow covers the brick LEFT of the column, including the dark rectangle [a shutter]'"
-   }
-  },
-  {
-   "what": "Solar ephemeris, Winnetka 42.106 N 87.736 W (NOAA low-precision, in sun_solve.py): the 5-95% box is reached Feb 1 1990 12:55-13:10, Feb 15 12:50-13:15, Mar 1 12:45-13:05 CST; no time on Dec 21 1989 (max elevation 24 deg) or Jan 15 (27), nor from mid-March on (at az ~197 the sun is then already above el 41). Fits a February 1990 location shoot at about 1 pm; the story's December cannot give this sun.",
-   "agrees": true,
-   "type": "angular",
-   "data": [
-    "ephemeris:noaa"
-   ],
-   "scale": [
-    "none"
-   ],
-   "upstream": [
-    "none"
-   ],
-   "tests": []
-  },
-  {
-   "what": "Same frame, other geometry: the main block's shadow on the set-back left section (0.96 m step) next to the corner. Predicted 21 px wide; the film shows dark brick 36 px wide (x 364-400), which alone would put the sun ~44 deg off the normal (az ~184).",
-   "agrees": false,
-   "type": "angular",
-   "data": [
-    "film:4382"
-   ],
-   "scale": [
-    "camera-fit:4382-window-centres"
-   ],
-   "upstream": [
-    "exterior_film_fit:4382"
-   ],
-   "tests": [],
-   "disposition": "Weak and not independent (same frame and camera): the dark strip's edge falls on a window mullion and a branch shadow, and the step depth is the shell's, not measured. Same side (SE) as the solve. Its az ~184 lies 9 deg below the solve's 5-95% range; the held-out 1644 bound (az <= 201) and the ephemeris both admit 184-200. Revisit with a film frame that shows the left corner unshadowed by branches."
-  }
- ],
- "notes": "Film 1890 (departure morning, the airport vans): the SE-facing end walls are sunlit and the SW front dark -> a sun east of SE (az <= ~138) at that shot: another time of day, so not a check on 4382; it is why the Morning state exists (az 130 el 17 = Feb 15 1990 ~8:45 CST). The user's breakfast-scene note (sun through the kitchen windows) fits it: the kitchen's windows face SE (spec -z wall) and NE (rear). Interior film frames were not used (sets, stage light). The clear dome photo's own sun sits at el ~25 (not 35): left as shot.",
- "renders": {
-  "before": [
-   "spec/captures/views/sun-sky/before/film4382.jpg",
-   "spec/captures/views/sun-sky/before/film6399.jpg",
-   "spec/captures/views/sun-sky/before/film1890.jpg",
-   "spec/captures/views/sun-sky/before/street.jpg",
-   "spec/captures/views/sun-sky/before/in_dining.jpg",
-   "spec/captures/views/sun-sky/before/in_living.jpg",
-   "spec/captures/views/sun-sky/before/in_kitchen.jpg"
-  ],
-  "after": [
-   "spec/captures/views/sun-sky/after/morning/film1890.jpg",
-   "spec/captures/views/sun-sky/after/morning/film4382.jpg",
-   "spec/captures/views/sun-sky/after/morning/film6399.jpg",
-   "spec/captures/views/sun-sky/after/morning/in_dining.jpg",
-   "spec/captures/views/sun-sky/after/morning/in_kitchen.jpg",
-   "spec/captures/views/sun-sky/after/morning/in_living.jpg",
-   "spec/captures/views/sun-sky/after/morning/street.jpg",
-   "spec/captures/views/sun-sky/after/overcast/film1890.jpg",
-   "spec/captures/views/sun-sky/after/overcast/film4382.jpg",
-   "spec/captures/views/sun-sky/after/overcast/film6399.jpg",
-   "spec/captures/views/sun-sky/after/overcast/in_dining.jpg",
-   "spec/captures/views/sun-sky/after/overcast/in_kitchen.jpg",
-   "spec/captures/views/sun-sky/after/overcast/in_living.jpg",
-   "spec/captures/views/sun-sky/after/overcast/street.jpg",
-   "spec/captures/views/sun-sky/after/sunny/film1890.jpg",
-   "spec/captures/views/sun-sky/after/sunny/film4382.jpg",
-   "spec/captures/views/sun-sky/after/sunny/film6399.jpg",
-   "spec/captures/views/sun-sky/after/sunny/in_dining.jpg",
-   "spec/captures/views/sun-sky/after/sunny/in_kitchen.jpg",
-   "spec/captures/views/sun-sky/after/sunny/in_living.jpg",
-   "spec/captures/views/sun-sky/after/sunny/street.jpg",
-   "spec/captures/views/sun-sky/compare/film1890.jpg",
-   "spec/captures/views/sun-sky/compare/film4382.jpg",
-   "spec/captures/views/sun-sky/compare/film6399.jpg",
-   "spec/captures/views/sun-sky/compare/in_dining.jpg",
-   "spec/captures/views/sun-sky/compare/in_kitchen.jpg",
-   "spec/captures/views/sun-sky/compare/in_living.jpg",
-   "spec/captures/views/sun-sky/compare/street.jpg"
-  ]
- },
- "user_walk": "pending"
+  "user_walk": "accepted",
+  "acceptance_note": "Oct19 user accepts exterior changes unless otherwise noted; all explicitly logged walk defects remain open. Back/areaway exterior lighting explicitly praised12:32. Street-lamp style requires separate reference review."
 }

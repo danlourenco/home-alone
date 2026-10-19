@@ -1,126 +1,142 @@
 {
- "change": "Exterior realism TRIAL 1 (on exterior shell/polish/sunroom TRIAL 1): PBR surfaces on the skin's own metric UVs (brick with parallax mortar, shingles with rows level on every hip, painted trim, speckled stone sills), chamfered trim/sills/cornice/columns/shutters/brick corners, snow that sits (sill caps, gutter snow, a few icicles, a lighter roof dusting, drifts against the house and terrace walls, banks along the walk and the kerb), the front steps rebuilt (chamfered stone treads on brick risers) with black iron railings both sides (film 10162-10177), a terrain skirt over the yard's gaps to the neighbourhood lots, grime/streak decals, wet street; outside-only fog/grade/bloom/low night exposure (an interior volume restores the interior's values), falling snow round the camera (F), denser draped Christmas strands with varied bulbs and shrub glow lights, brighter night shades. Walk colliders unchanged (step boxes keep their colliders; new geometry has none).",
- "target": "House_WallGrid exterior (Exterior/HouseShell, Exterior/ExteriorRealism, Exterior/Yard), Settings ExteriorDay/ExteriorNight/InteriorRestore volumes, Player/Camera/Snowfall",
- "premise": "The film's front steps have black iron railings with vertical bars on both sides, the top rail following the pitch down to a post at the foot (film 10162, 10168, 10174, 10177); everything else in this change is surface/decoration over unchanged walk geometry.",
- "claim": {
-  "value": {
-   "railings": "both step edges, 4 cm in from the steps' sides (spec z 8.806 / 10.626), newels at x 12.20 and 13.95, top rail 0.86 m over the nosing line, bars 16 mm at 0.11 m (authored from standard stair-rail sizes), a small scroll at the foot (authored)",
-   "treads": "45 mm stone slabs with a 30 mm chamfered nosing on the six existing steps (tops unchanged, step colliders unchanged); brick risers",
-   "drifts": "visual only, no colliders: 0.9 m wide against the brick face in the upper beds (to 0.26 m), against both terrace walls, banks either side of the walk (0.65 m wide, to 0.24 m) and at the kerb"
+  "change": "Exterior realism TRIAL 1 (on exterior shell/polish/sunroom TRIAL 1): PBR surfaces on the skin's own metric UVs (brick with parallax mortar, shingles with rows level on every hip, painted trim, speckled stone sills), chamfered trim/sills/cornice/columns/shutters/brick corners, snow that sits (sill caps, gutter snow, a few icicles, a lighter roof dusting, drifts against the house and terrace walls, banks along the walk and the kerb), the front steps rebuilt (chamfered stone treads on brick risers) with black iron railings both sides (film 10162-10177), a terrain skirt over the yard's gaps to the neighbourhood lots, grime/streak decals, wet street; outside-only fog/grade/bloom/low night exposure (an interior volume restores the interior's values), falling snow round the camera (F), denser draped Christmas strands with varied bulbs and shrub glow lights, brighter night shades. Walk colliders unchanged (step boxes keep their colliders; new geometry has none).",
+  "target": "House_WallGrid exterior (Exterior/HouseShell, Exterior/ExteriorRealism, Exterior/Yard), Settings ExteriorDay/ExteriorNight/InteriorRestore volumes, Player/Camera/Snowfall",
+  "premise": "The film's front steps have black iron railings with vertical bars on both sides, the top rail following the pitch down to a post at the foot (film 10162, 10168, 10174, 10177); everything else in this change is surface/decoration over unchanged walk geometry.",
+  "claim": {
+    "value": {
+      "railings": "both step edges, 4 cm in from the steps' sides (spec z 8.806 / 10.626), newels at x 12.20 and 13.95, top rail 0.86 m over the nosing line, bars 16 mm at 0.11 m (authored from standard stair-rail sizes), a small scroll at the foot (authored)",
+      "treads": "45 mm stone slabs with a 30 mm chamfered nosing on the six existing steps (tops unchanged, step colliders unchanged); brick risers",
+      "drifts": "visual only, no colliders: 0.9 m wide against the brick face in the upper beds (to 0.26 m), against both terrace walls, banks either side of the walk (0.65 m wide, to 0.24 m) and at the kerb",
+      "terrain_collision": "Existing visual GroundSkirt and GroundSkirt_OffLot receive matching MeshColliders; vertex positions/grade unchanged. No collider on decorative snow drifts."
+    },
+    "data": [
+      "film:10162"
+    ],
+    "scale": [
+      "none"
+    ],
+    "upstream": [],
+    "type": "topological",
+    "applies_to": [
+      "exterior"
+    ],
+    "measured_in": [
+      "exterior"
+    ],
+    "pick": {
+      "crop": "spec/captures/picks/exterior-realism/f10162_railing.png",
+      "confirmed_by": "the same railing found in a second frame from another camera (film 10174 overhead: black bars both sides of the steps; crop f10174_railing.png)"
+    }
   },
-  "data": [
-   "film:10162"
+  "history": [
+    {
+      "date": "2026-10-18",
+      "what": "exterior shell TRIAL 1 (changes/2026-10-18-exterior-shell.json): steps as flat red boxes, no railings",
+      "outcome": "pending (this pass builds on it)"
+    },
+    {
+      "date": "2026-10-18",
+      "what": "exterior polish TRIAL 1: shingles attempted with a world-triplanar texture (the roof had no UVs)",
+      "outcome": "accepted overall; roof read flat"
+    },
+    {
+      "date": "2026-10-19",
+      "what": "Walk12:31 void. Before collision fix:67/121 down-rays near x7.5..12.5,z4..9 lack ground. Both existing GroundSkirt meshes have no Collider. Add collision using their exact existing meshes; no changed vertices, dimensions or grade. Keep drifts decorative/noncolliding.",
+      "outcome": "collision restoration trial; verify coverage and kid/adult grounding"
+    }
   ],
-  "scale": [
-   "none"
+  "premise_reviewed": "",
+  "checks": [
+    {
+      "what": "film 10174 (overhead on the steps, night): black iron railings either side of the steps, vertical bars, a white urn beside each foot; crop spec/captures/picks/exterior-realism/f10174_railing.png",
+      "agrees": true,
+      "type": "topological",
+      "data": [
+        "film:10174"
+      ],
+      "scale": [
+        "none"
+      ],
+      "upstream": [],
+      "tests": [
+        "model-fidelity"
+      ],
+      "pick": {
+        "crop": "spec/captures/picks/exterior-realism/f10174_railing.png",
+        "confirmed_by": "film 10162 from the street side shows the same bars and top rail"
+      }
+    },
+    {
+      "what": "film 10174: treads read pale smooth stone (iced) over darker risers; film 4382 (day, far) reads the steps red: treads kept red-tinted stone (film 4382 colour) with the speckled stone texture; crop f10174_treads.png",
+      "agrees": true,
+      "type": "topological",
+      "data": [
+        "film:10174"
+      ],
+      "scale": [
+        "none"
+      ],
+      "upstream": [],
+      "tests": [
+        "model-fidelity"
+      ],
+      "pick": {
+        "crop": "spec/captures/picks/exterior-realism/f10174_treads.png",
+        "confirmed_by": "film 10177 same camera, later frame: same pale treads"
+      }
+    }
   ],
-  "upstream": [],
-  "type": "topological",
-  "applies_to": [
-   "exterior"
-  ],
-  "measured_in": [
-   "exterior"
-  ],
-  "pick": {
-   "crop": "spec/captures/picks/exterior-realism/f10162_railing.png",
-   "confirmed_by": "the same railing found in a second frame from another camera (film 10174 overhead: black bars both sides of the steps; crop f10174_railing.png)"
-  }
- },
- "history": [
-  {
-   "date": "2026-10-18",
-   "what": "exterior shell TRIAL 1 (changes/2026-10-18-exterior-shell.json): steps as flat red boxes, no railings",
-   "outcome": "pending (this pass builds on it)"
+  "renders": {
+    "before": [
+      "spec/captures/views/exterior-realism/before/street.jpg",
+      "spec/captures/views/exterior-realism/before/street_night.jpg",
+      "spec/captures/views/exterior-realism/before/film4382.jpg",
+      "spec/captures/views/exterior-realism/before/steps.jpg",
+      "spec/captures/views/exterior-realism/before/oblique.jpg",
+      "spec/captures/views/exterior-realism/before/rear.jpg",
+      "spec/captures/views/exterior-realism/before/pietro_night.jpg",
+      "spec/captures/views/exterior-realism/before/foyer_day.jpg",
+      "spec/captures/views/exterior-realism/before/living_night.jpg"
+    ],
+    "after": [
+      "spec/captures/views/exterior-realism/after/street.jpg",
+      "spec/captures/views/exterior-realism/after/street_night.jpg",
+      "spec/captures/views/exterior-realism/after/film4382.jpg",
+      "spec/captures/views/exterior-realism/after/steps.jpg",
+      "spec/captures/views/exterior-realism/after/oblique.jpg",
+      "spec/captures/views/exterior-realism/after/rear.jpg",
+      "spec/captures/views/exterior-realism/after/pietro_night.jpg",
+      "spec/captures/views/exterior-realism/after/foyer_day.jpg",
+      "spec/captures/views/exterior-realism/after/living_night.jpg",
+      "spec/captures/views/exterior-realism/compare/street.jpg",
+      "spec/captures/views/exterior-realism/compare/street_night.jpg",
+      "spec/captures/views/exterior-realism/compare/film4382.jpg",
+      "spec/captures/views/exterior-realism/compare/steps.jpg",
+      "spec/captures/views/exterior-realism/compare/oblique.jpg",
+      "spec/captures/views/exterior-realism/compare/rear.jpg",
+      "spec/captures/views/exterior-realism/compare/pietro_night.jpg",
+      "spec/captures/views/exterior-realism/notes/note-2046-cliff.jpg",
+      "spec/captures/views/exterior-realism/notes/note-2047-backdoor.jpg",
+      "spec/captures/views/exterior-realism/notes/note-2052-beds.jpg",
+      "spec/captures/views/exterior-realism/notes/note-2105-steps.jpg"
+    ]
   },
-  {
-   "date": "2026-10-18",
-   "what": "exterior polish TRIAL 1: shingles attempted with a world-triplanar texture (the roof had no UVs)",
-   "outcome": "accepted overall; roof read flat"
-  }
- ],
- "premise_reviewed": "",
- "checks": [
-  {
-   "what": "film 10174 (overhead on the steps, night): black iron railings either side of the steps, vertical bars, a white urn beside each foot; crop spec/captures/picks/exterior-realism/f10174_railing.png",
-   "agrees": true,
-   "type": "topological",
-   "data": [
-    "film:10174"
-   ],
-   "scale": [
-    "none"
-   ],
-   "upstream": [],
-   "tests": [
-    "model-fidelity"
-   ],
-   "pick": {
-    "crop": "spec/captures/picks/exterior-realism/f10174_railing.png",
-    "confirmed_by": "film 10162 from the street side shows the same bars and top rail"
-   }
+  "user_walk": "pending",
+  "gates": {
+    "build": "build 4 (~/.cache/home-alone-2, Oct 18 23:5x): seam 0, clash 0, envelope 0, quality 0; walk: Marv 78 legs / front walk / back door 0 blocked (the service-stair 'player up leg 2' BLOCKED is pre-existing, same in HEAD); z-fight 4 = 2 pre-existing living gifts + 2 exterior pairs the widened gate now sees (U_Glass vs U_Sash 5 mm; L_Brick vs L_DoorTrim 0 mm at the sidelight reveal): source fixed after build 4 (glass a single outward face 1 cm behind the muntins; sidelight head/sill and outer pilasters 1 cm into the reveals) and the GLB reloaded live, NOT re-gated by a build",
+    "nightcheck": "ok (foyer 0.297, living 0.310, buzz 0.323, parents 0.339, attic 0.153)",
+    "daycheck": "APV ok, saturation ok; buzz floor R/B 1.40 < 1.5 FAILS as on every load since Oct 18 (STATUS 7y: captures follow the player's split state; pre-existing)",
+    "interior_unchanged": "live A/B (exterior volumes + restore + camera SSR on vs off, same frames): foyer day 0.00/255, living night 0.01, Buzz night 0.02, basement 0.03, attic 0.09, kitchen 0.52 (snow past the window); no snow indoors (SnowfallGate)",
+    "perf": "standalone player tour ext-after (spec/captures/perf/runs/ext-after): GPU times empty (display locked overnight); street day 15.3 M tris / 299 set-pass / 13 rt lights (Oct 18 before: 13.1 / 268 / 6), street night 6.1 M / 139 / 98 rt lights, 56 shadowed (before 5.1 / 130 / 60, 52): GPU cost NOT measured"
   },
-  {
-   "what": "film 10174: treads read pale smooth stone (iced) over darker risers; film 4382 (day, far) reads the steps red: treads kept red-tinted stone (film 4382 colour) with the speckled stone texture; crop f10174_treads.png",
-   "agrees": true,
-   "type": "topological",
-   "data": [
-    "film:10174"
-   ],
-   "scale": [
-    "none"
-   ],
-   "upstream": [],
-   "tests": [
-    "model-fidelity"
-   ],
-   "pick": {
-    "crop": "spec/captures/picks/exterior-realism/f10174_treads.png",
-    "confirmed_by": "film 10177 same camera, later frame: same pale treads"
-   }
+  "collision_verification": {
+    "date": "2026-10-19",
+    "before": "67/121 ground probes missing; GroundSkirt and GroundSkirt_OffLot had no Collider",
+    "after": "0/121 missing; both existing mesh colliders saved in main scene; builder writes matching colliders",
+    "body_tests": "kid/adult settle on repaired actual ground with emergency recovery disabled",
+    "recovery_tests": "last-supported location, unsupported ledge rejection, automatic fall, velocity reset, basement height all pass for both bodies",
+    "rerun": "python3 tools/house/check_fall_recovery.py (connected editor, Play stopped)",
+    "user_retrial": "pending",
+    "scope": "no vertices, grade or visible surfaces moved; broader map collision coverage not yet claimed"
   }
- ],
- "renders": {
-  "before": [
-   "spec/captures/views/exterior-realism/before/street.jpg",
-   "spec/captures/views/exterior-realism/before/street_night.jpg",
-   "spec/captures/views/exterior-realism/before/film4382.jpg",
-   "spec/captures/views/exterior-realism/before/steps.jpg",
-   "spec/captures/views/exterior-realism/before/oblique.jpg",
-   "spec/captures/views/exterior-realism/before/rear.jpg",
-   "spec/captures/views/exterior-realism/before/pietro_night.jpg",
-   "spec/captures/views/exterior-realism/before/foyer_day.jpg",
-   "spec/captures/views/exterior-realism/before/living_night.jpg"
-  ],
-  "after": [
-   "spec/captures/views/exterior-realism/after/street.jpg",
-   "spec/captures/views/exterior-realism/after/street_night.jpg",
-   "spec/captures/views/exterior-realism/after/film4382.jpg",
-   "spec/captures/views/exterior-realism/after/steps.jpg",
-   "spec/captures/views/exterior-realism/after/oblique.jpg",
-   "spec/captures/views/exterior-realism/after/rear.jpg",
-   "spec/captures/views/exterior-realism/after/pietro_night.jpg",
-   "spec/captures/views/exterior-realism/after/foyer_day.jpg",
-   "spec/captures/views/exterior-realism/after/living_night.jpg",
-   "spec/captures/views/exterior-realism/compare/street.jpg",
-   "spec/captures/views/exterior-realism/compare/street_night.jpg",
-   "spec/captures/views/exterior-realism/compare/film4382.jpg",
-   "spec/captures/views/exterior-realism/compare/steps.jpg",
-   "spec/captures/views/exterior-realism/compare/oblique.jpg",
-   "spec/captures/views/exterior-realism/compare/rear.jpg",
-   "spec/captures/views/exterior-realism/compare/pietro_night.jpg",
-   "spec/captures/views/exterior-realism/notes/note-2046-cliff.jpg",
-   "spec/captures/views/exterior-realism/notes/note-2047-backdoor.jpg",
-   "spec/captures/views/exterior-realism/notes/note-2052-beds.jpg",
-   "spec/captures/views/exterior-realism/notes/note-2105-steps.jpg"
-  ]
- },
- "user_walk": "pending",
- "gates": {
-  "build": "build 4 (~/.cache/home-alone-2, Oct 18 23:5x): seam 0, clash 0, envelope 0, quality 0; walk: Marv 78 legs / front walk / back door 0 blocked (the service-stair 'player up leg 2' BLOCKED is pre-existing, same in HEAD); z-fight 4 = 2 pre-existing living gifts + 2 exterior pairs the widened gate now sees (U_Glass vs U_Sash 5 mm; L_Brick vs L_DoorTrim 0 mm at the sidelight reveal): source fixed after build 4 (glass a single outward face 1 cm behind the muntins; sidelight head/sill and outer pilasters 1 cm into the reveals) and the GLB reloaded live, NOT re-gated by a build",
-  "nightcheck": "ok (foyer 0.297, living 0.310, buzz 0.323, parents 0.339, attic 0.153)",
-  "daycheck": "APV ok, saturation ok; buzz floor R/B 1.40 < 1.5 FAILS as on every load since Oct 18 (STATUS 7y: captures follow the player's split state; pre-existing)",
-  "interior_unchanged": "live A/B (exterior volumes + restore + camera SSR on vs off, same frames): foyer day 0.00/255, living night 0.01, Buzz night 0.02, basement 0.03, attic 0.09, kitchen 0.52 (snow past the window); no snow indoors (SnowfallGate)",
-  "perf": "standalone player tour ext-after (spec/captures/perf/runs/ext-after): GPU times empty (display locked overnight); street day 15.3 M tris / 299 set-pass / 13 rt lights (Oct 18 before: 13.1 / 268 / 6), street night 6.1 M / 139 / 98 rt lights, 56 shadowed (before 5.1 / 130 / 60, 52): GPU cost NOT measured"
- }
 }

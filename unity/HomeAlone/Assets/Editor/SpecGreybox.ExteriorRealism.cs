@@ -65,7 +65,7 @@ public static partial class SpecGreybox
     }
 
     // a mesh from world triangles (flat-shaded if flat, else smooth normals), static, under parent
-    static GameObject WorldMesh(GameObject parent, string n, List<Vector3> vs, List<int> tris, Material m, bool shadows = true, bool upFacing = false)
+    static GameObject WorldMesh(GameObject parent, string n, List<Vector3> vs, List<int> tris, Material m, bool shadows = true, bool upFacing = false, bool collision = false)
     {
         if (upFacing)   // ground-like sheets: every triangle faces up (Unity's front face: Cross(b - a, c - a))
             for (int i = 0; i < tris.Count; i += 3)
@@ -83,6 +83,7 @@ public static partial class SpecGreybox
             var g = new GameObject(name); g.transform.SetParent(parent.transform, false); g.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity); g.isStatic = true;
             g.AddComponent<MeshFilter>().sharedMesh = mesh; var r = g.AddComponent<MeshRenderer>(); r.sharedMaterial = m;
             r.shadowCastingMode = shadows ? ShadowCastingMode.On : ShadowCastingMode.Off;
+            if (collision) g.AddComponent<MeshCollider>().sharedMesh=mesh;
             return g;
         }
         var on = new List<int>(tris.Count); var off = new List<int>();
@@ -298,7 +299,7 @@ public static partial class SpecGreybox
                     int a = V(i, j), b = V(i + 1, j), c = V(i, j + 1), e = V(i + 1, j + 1);
                     tt2.AddRange(new[] { a, c, e, a, e, b }); cells++;
                 }
-            if (cells > 0) WorldMesh(holder, "GroundSkirt", tv, tt2, snowM, true, true);
+            if (cells > 0) WorldMesh(holder, "GroundSkirt", tv, tt2, snowM, true, true, true);
             Debug.Log($"ExteriorRealism: ground skirt {cells} cells of {cell} m over the yard's gaps ({nk} known samples, mean {mean:F2})");
         }
 

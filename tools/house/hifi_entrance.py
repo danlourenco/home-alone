@@ -186,7 +186,7 @@ coll = bpy.context.scene.collection
 root = bpy.data.objects.new("FrontEntrance_HiFi", None); coll.objects.link(root)
 root["lod_reason"] = "single LOD: a door, its hardware and a lantern seen from the stoop and the walk (<= 15 m)"
 stats = {}
-for p in (paint, panels, brass, lbrass, glass, bulb, wbulb):
+for p in (lbrass, glass, bulb, wbulb):  # the unified leaf owns both door faces and all door hardware
     if not p.f:
         continue
     ob = hp.to_object(p, M[p.mat], coll, hard_deg=30.0, weld=1e-5); ob.parent = root

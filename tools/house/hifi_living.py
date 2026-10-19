@@ -483,7 +483,10 @@ def tree():
         y0 = 0.013 if rx[0] - 0.25 < gx < rx[1] + 0.25 and rz[0] - 0.25 < gz < rz[1] + 0.25 else 0.0   # on (or at the edge of) the rug: its top
         if y0 and not (rx[0] < gx - w / 2 and gx + w / 2 < rx[1] and rz[0] < gz - dd / 2 and gz + dd / 2 < rz[1]):
             gx = max(gx, rx[0] + w / 2 + 0.01); gz = min(gz, rz[1] - dd / 2 - 0.01)           # wholly on it, not straddling its edge
-        GIFT[c].box(gx - w / 2, gx + w / 2, y0, y0 + h, gz - dd / 2, gz + dd / 2); h += y0
+        GIFT[c].box(gx - w / 2, gx + w / 2, y0, y0 + h, gz - dd / 2, gz + dd / 2)
+        # The bottom rests on rug/floor; remove the covered contact face rather than drawing two surfaces there.
+        del GIFT[c].f[-5]
+        h += y0
         GIFT["Ribbon"].box(gx - 0.02, gx + 0.02, h, h + 0.004, gz - dd / 2 - 0.004, gz + dd / 2 + 0.004)
         GIFT["Ribbon"].box(gx - w / 2 - 0.004, gx + w / 2 + 0.004, h, h + 0.004, gz - 0.02, gz + 0.02)
 

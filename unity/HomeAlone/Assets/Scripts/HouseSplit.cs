@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 // The split (DEVIATIONS 1, 97): the exterior is the film's house on the measured ground floor; Marina's upstairs is bigger and stands
 // outside it. While the camera is upstairs (above switchY and over an upstairs room) the upstairs and attic are drawn whole and the
@@ -13,6 +14,19 @@ public class HouseSplit : MonoBehaviour
     public Vector2[] rooms = new Vector2[0];         // upstairs room outlines (world x, z), concatenated
     public int[] roomStarts = new int[0];
     int state = -1;
+    // A capture has its own viewpoint. Camera.main may still be downstairs/outside.
+    public bool captureViewpoint = true;
+    readonly System.Collections.Generic.Stack<int> captureStates = new();
+    void OnEnable() { RenderPipelineManager.beginCameraRendering += BeginCapture; RenderPipelineManager.endCameraRendering += EndCapture; }
+    void OnDisable() { RenderPipelineManager.beginCameraRendering -= BeginCapture; RenderPipelineManager.endCameraRendering -= EndCapture; }
+    void BeginCapture(ScriptableRenderContext context, Camera camera) {
+        if (!captureViewpoint || camera.name!="TmpCam") return;
+        captureStates.Push(state); ApplyFor(camera.transform.position);
+    }
+    void EndCapture(ScriptableRenderContext context, Camera camera) {
+        if (camera.name!="TmpCam" || captureStates.Count==0) return;
+        Set(captureStates.Pop());
+    }
 
     public bool Upstairs(Vector3 p)
     {

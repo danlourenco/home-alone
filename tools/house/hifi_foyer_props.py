@@ -130,21 +130,9 @@ def chair(cx):
 # ---------------------------------------------------------------- mirror
 def mirror():
     m = D["mirror"]; cx, w, (y0, y1), zb, dep = m["cx"], m["w"], m["y"], m["z_back"], m["depth"]
-    x0, x1, f = cx - w / 2, cx + w / 2, 0.065
-    zf = zb + dep
-    gilt.box(x0, x1, y1 - f, y1, zb, zf); gilt.box(x0, x1, y0, y0 + f, zb, zf)
-    gilt.box(x0, x0 + f, y0 + f, y1 - f, zb, zf); gilt.box(x1 - f, x1, y0 + f, y1 - f, zb, zf)
-    for a, b in ((x0 + f - 0.012, x0 + f), (x1 - f, x1 - f + 0.012)):                        # inner bead, proud
-        gilt.box(a, b, y0 + f - 0.012, y1 - f + 0.012, zf, zf + 0.012)
-    gilt.box(x0 + f, x1 - f, y0 + f - 0.012, y0 + f, zf, zf + 0.012); gilt.box(x0 + f, x1 - f, y1 - f, y1 - f + 0.012, zf, zf + 0.012)
-    glass.box(x0 + f, x1 - f, y0 + f, y1 - f, zb + 0.004, zb + 0.016)                         # the glass, set 2.4 cm back from the frame face
-    ct = m["crest_top"]; h = ct - y1
-    crest = [(x0 + 0.02, y1), (x1 - 0.02, y1), (x1 - 0.01, y1 + h * 0.35), (x1 - 0.07, y1 + h * 0.62), (cx + 0.07, y1 + h * 0.55),
-             (cx + 0.035, y1 + h * 0.86), (cx, y1 + h), (cx - 0.035, y1 + h * 0.86), (cx - 0.07, y1 + h * 0.55), (x0 + 0.07, y1 + h * 0.62),
-             (x0 + 0.01, y1 + h * 0.35)]
-    prism(gilt, crest, "z", zb + 0.008, zb + 0.03)                                           # scrolled pediment with a finial
-    ap = [(x0 + 0.05, y0), (x1 - 0.05, y0), (x1 - 0.12, y0 - 0.04), (cx + 0.05, y0 - 0.05), (cx, y0 - 0.075), (cx - 0.05, y0 - 0.05), (x0 + 0.12, y0 - 0.04)]
-    prism(gilt, ap, "z", zb + 0.008, zb + 0.03)
+    # The ornate frame is a separate artist-pipeline asset (FoyerMirror.glb).
+    f=.065; x0,x1=cx-w/2,cx+w/2
+    glass.box(x0+f,x1-f,y0+f,y1-f,zb+.004,zb+.016)
 
 
 # ---------------------------------------------------------------- bench

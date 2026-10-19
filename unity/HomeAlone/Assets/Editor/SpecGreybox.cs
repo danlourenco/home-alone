@@ -355,6 +355,8 @@ public static partial class SpecGreybox
         var (spawn, spawnYaw) = FrontDoorSpawn(geo["ground"], j["stair"], gy);
         Player(spawn, spawnYaw);
         ExteriorLook(gy);   // SpecGreybox.ExteriorRealism.cs: outside-only fog/grade/bloom/night exposure, falling snow on the camera
+        var entranceDoor = FoyerInteractions(root,gy);
+        FoyerMirror(root,gy);
         var player = GameObject.Find("Player"); player.SetActive(false);
         Physics.SyncTransforms();
         stepName = null; BudgetFails.Clear(); Step("WalkTest");
@@ -402,6 +404,7 @@ public static partial class SpecGreybox
         Step(null);
         foreach (var f in BudgetFails) report += f + "\n";
         Traps(root, gy);   // Traps.cs: gameplay rigs (spec/dressing/traps.json), after the gates so none of them sees the rig
+        report += EntranceCheck(entranceDoor,gy);
         player.SetActive(true);
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, "walk-test-wallgrid.txt"), report);

@@ -1,0 +1,105 @@
+{
+  "change": "Foyer soffit and unified operable hero front door; TRIAL",
+  "target": "House_WallGrid",
+  "premise": "The stair underside is a continuous plaster slope and the entrance has one six-panel hinged leaf, with a fixed frame and sidelights.",
+  "claim": {
+    "value": {
+      "soffit": "straight line below flight 2, meeting landing underside; steps and route unchanged",
+      "door": "existing 0.811 x 1.898 opening; one 50 mm leaf at inner reveal; six panels both sides; inward hinge on inside-left",
+      "door_profiles": "authored bevels 2-4 mm, paint relief and brass hardware; DEVIATIONS 105"
+    },
+    "data": [
+      "film:1690",
+      "film:9358"
+    ],
+    "scale": [
+      "none"
+    ],
+    "upstream": [],
+    "how": "Topological correction, not a new room measurement. Existing opening retained. Profiles and leaf thickness authored and explicitly logged.",
+    "applies_to": [
+      "foyer",
+      "vestibule"
+    ],
+    "measured_in": [
+      "foyer",
+      "vestibule"
+    ],
+    "assumed": {
+      "vestibule": "DEVIATIONS 105: 50 mm thickness, hinge clearance, profiles and opening angle authored",
+      "foyer": "DEVIATIONS 105: soffit joining existing landing and last step; no changed tread elevations"
+    }
+  },
+  "history": [
+    {
+      "date": "2026-10-15",
+      "what": "Landing soffit depth changed; flight 2 left stepped (DEVIATIONS 20)",
+      "outcome": "superseded"
+    },
+    {
+      "date": "2026-10-19",
+      "what": "Re-enabled greybox soffit during user walk; steps remained visible below it",
+      "outcome": "failed"
+    },
+    {
+      "date": "2026-10-19",
+      "what": "User rejected smooth soffit: surfaces do not connect (note12:26). Prior inspection/gates missed the join. Add expected-contact tests against built meshes and demonstrate this version fails before correction.",
+      "outcome": "failed"
+    }
+  ],
+  "premise_reviewed": "Existing individual step bodies extend below the proposed slope; remove their visible lower faces, retain collision, and build a continuous envelope instead of covering them with a plane.",
+  "checks": [
+    {
+      "what": "Inspected Marina312 reference (spec/captures/compare-marina/web/marina-312-ref.jpg) shows a smooth white flight2 underside, independently of film1690. Film778 independently shows six relieved panels, round brass hardware, left hinges and one wreath. Shape checks only; thickness and recess remain explicitly authored.",
+      "agrees": true,
+      "type": "topological",
+      "data": [
+        "marina-frame:p1-312",
+        "film:778"
+      ],
+      "scale": [
+        "none"
+      ],
+      "upstream": []
+    }
+  ],
+  "renders": {
+    "before": [
+      "spec/captures/views/foyer-interactions/before-foyer.jpg"
+    ],
+    "after": [
+      "spec/captures/views/foyer-interactions/after-foyer.jpg",
+      "spec/captures/views/foyer-interactions/after-door-inside-day.jpg",
+      "spec/captures/views/foyer-interactions/after-door-inside-night.jpg",
+      "spec/captures/views/foyer-interactions/after-door-outside-day.jpg",
+      "spec/captures/views/foyer-interactions/after-door-outside-night.jpg",
+      "spec/captures/views/foyer-interactions/after-door-open.jpg",
+      "spec/captures/views/foyer-interactions/after-mirror-day.jpg",
+      "spec/captures/views/foyer-interactions/after-mirror-night.jpg",
+      "spec/captures/views/foyer-interactions/after-seat.jpg"
+    ]
+  },
+  "user_walk": "pending",
+  "outcome": "PARTIALLY ACCEPTED Oct19: mirror, front-door appearance/usability, den and TV accepted; soffit rejected. All recorded defects remain open. user_walk stays pending for the combined record because it includes the rejected soffit.",
+  "verification": {
+    "date": "2026-10-19",
+    "status": "Partial acceptance; prior geometric checks did not certify soffit connectivity",
+    "preflight": "all pass; models current; C# compile passes",
+    "surface_gates": "0 z-fights, 0 clashes; no new BLOCKED lines versus HEAD",
+    "entrance": "closed blocks/open clears an adult capsule; lock refuses; moving leaf pauses at 52.18 degrees against player, closes to 0 after player leaves",
+    "seat": "kid/adult each sit+stand twice; eye, FOV and controls restored; TV prepared and playing",
+    "lighting": "Night and Default baked; 76/76 authored baked lights; all five night checks pass",
+    "daycheck": "saturation .104/.127 >= .085; floor R/B 8.08 from foyer, 8.09 with player outside >= unchanged 1.5; Overcast restored after outside test",
+    "limits": "Existing service-winder BLOCKED leg, props warnings, 4 legacy triangle-budget models and 1 trim gap remain. Original floor-failure cause not reproduced conclusively in A/B: capture viewpoint and weather are now controlled; do not claim a proven single root cause.",
+    "look": "Live day/night door faces and mirror, smooth soffit, open leaf, seated TV view inspected. Paint relief reduced after close-range live comparison. USER REJECTED soffit connectivity after walk; earlier visual inspection was insufficient."
+  },
+  "component_verdicts": {
+    "soffit": "REJECTED: does not connect; note12:26. Repair and verify required full-span surface contacts before retrial.",
+    "mirror": "accepted",
+    "front_door_appearance": "accepted; wallpaper/jamb defect remains open",
+    "door_usability": "accepted; jerky swing remains open",
+    "den_arrangement": "accepted",
+    "tv_view": "accepted, including tighter36 degree view",
+    "exterior": "accepted except recorded defects; void/collision, street-lamp style, driveway tree, fence position and previous walk defects remain corrections"
+  }
+}

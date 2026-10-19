@@ -1,166 +1,167 @@
 {
- "change": "Exterior mess + back-door lanterns (walk notes Oct 19 09:04 'what is happening here? this is a mess' and 09:03 'missing exterior lights by the basement door and kitchen. please refer to appropriate movie stills'; TRIAL). (1) The sunny/morning dome photo is Poly Haven Horn-koppe Snow (clear blue sky, open snowfield, low wooded horizon) instead of Snowy Cemetery (its gravestones, crosses and an office tower stood at eye level; the 'grey slab' under the piers in the shot was a ledger stone in the photo). (2) K floated white strips: one generated sheet (SnowDrifts: the kerb banks; the U-drive's banks and asphalt; the ground skirt) ran from the lot to the street, K hides by renderer centre, so the street ground went and the banks stayed: SpecGreybox.WorldMesh now splits every sheet on PropertyView.Lot into '<name>' and '<name>_OffLot'. (3) The walk's last 4.5 m ('Front walk connection', between the piers) lived in the neighbourhood and K hid it: moved under Exterior. (4) That slab and the sidewalk stand 15-17 cm proud of the registered lawn (the ledge round the piers): the walk's snow banks now run to the piers (x 22.8-28.27) and a drift lines the sidewalk's lawn edge, over the piers' feet. (5) Two black wall lanterns with milky glass (tools/house/hifi_door_lamps.py, DoorLamps.glb): right of the kitchen back door at film 10372's height, on the areaway's left wall by the basement door (film 9936/10012); panes glow and 350 lm lights at night only. No wall, opening, collider or walk surface moves",
- "target": "House_WallGrid",
- "premise": "The film's back doors each have a small black wall lantern with milky glass: the kitchen's on the brick right of the door just under its head, the basement's on the areaway's left stone wall near the door; the yard's snow meets the walks and sidewalk without a step; the sunny backdrop shows only sky and a clean snowy horizon",
- "claim": {
-  "value": {
-   "kitchen_lantern_glass_centre_over_sill_m": 1.84,
-   "kitchen_lantern_axis_beyond_mould_m": 0.28,
-   "basement_lantern_glass_centre_over_landing_m": 1.95,
-   "basement_lantern_from_door_wall_m": 0.71,
-   "lantern_body_m": [
-    0.15,
-    0.15
-   ],
-   "lantern_glass_h_m": 0.19
+  "change": "Exterior mess + back-door lanterns (walk notes Oct 19 09:04 'what is happening here? this is a mess' and 09:03 'missing exterior lights by the basement door and kitchen. please refer to appropriate movie stills'; TRIAL). (1) The sunny/morning dome photo is Poly Haven Horn-koppe Snow (clear blue sky, open snowfield, low wooded horizon) instead of Snowy Cemetery (its gravestones, crosses and an office tower stood at eye level; the 'grey slab' under the piers in the shot was a ledger stone in the photo). (2) K floated white strips: one generated sheet (SnowDrifts: the kerb banks; the U-drive's banks and asphalt; the ground skirt) ran from the lot to the street, K hides by renderer centre, so the street ground went and the banks stayed: SpecGreybox.WorldMesh now splits every sheet on PropertyView.Lot into '<name>' and '<name>_OffLot'. (3) The walk's last 4.5 m ('Front walk connection', between the piers) lived in the neighbourhood and K hid it: moved under Exterior. (4) That slab and the sidewalk stand 15-17 cm proud of the registered lawn (the ledge round the piers): the walk's snow banks now run to the piers (x 22.8-28.27) and a drift lines the sidewalk's lawn edge, over the piers' feet. (5) Two black wall lanterns with milky glass (tools/house/hifi_door_lamps.py, DoorLamps.glb): right of the kitchen back door at film 10372's height, on the areaway's left wall by the basement door (film 9936/10012); panes glow and 350 lm lights at night only. No wall, opening, collider or walk surface moves",
+  "target": "House_WallGrid",
+  "premise": "The film's back doors each have a small black wall lantern with milky glass: the kitchen's on the brick right of the door just under its head, the basement's on the areaway's left stone wall near the door; the yard's snow meets the walks and sidewalk without a step; the sunny backdrop shows only sky and a clean snowy horizon",
+  "claim": {
+    "value": {
+      "kitchen_lantern_glass_centre_over_sill_m": 1.84,
+      "kitchen_lantern_axis_beyond_mould_m": 0.28,
+      "basement_lantern_glass_centre_over_landing_m": 1.95,
+      "basement_lantern_from_door_wall_m": 0.71,
+      "lantern_body_m": [
+        0.15,
+        0.15
+      ],
+      "lantern_glass_h_m": 0.19
+    },
+    "data": [
+      "film-frame:10372"
+    ],
+    "scale": [
+      "door-80in:10372"
+    ],
+    "upstream": [
+      "standard:80in-door"
+    ],
+    "how": "Film 10372 (Harry at the kitchen back door, a near-frontal wide shot): the door from sill to head is 510 px = 80 in (250 px/m); its casing 247 px wide (leaf 0.81 + 2 x 0.09) agrees. Lantern glass centre 460 px over the sill = 1.84 m; axis 70 px = 0.28 m beyond the casing's outer edge; body ~40 x 55 px = 0.16 x 0.22 m. The basement lantern by eye (9936: above the door's lights; 10012 from above: on the left side wall, about over the bottom step): DEVIATIONS 104",
+    "applies_to": [
+      "exterior"
+    ],
+    "measured_in": [
+      "exterior"
+    ],
+    "pick": {
+      "crop": "spec/captures/picks/door-lamps/film10372-lantern-crop.jpg",
+      "confirmed_by": "the same lantern seen in a second frame, film 10324 (spec/captures/picks/door-lamps/film10324-lantern-crop.jpg): a black square wall lantern with milky glass on the brick right of the nine-lite back door"
+    }
   },
-  "data": [
-   "film-frame:10372"
+  "history": [
+    {
+      "date": "2026-10-18",
+      "what": "basement shell (changes/2026-10-18-basement-shell.json): a bare-bulb lamp INSIDE beside the basement door (spec/dressing/basement.json door_lamp, a reading of 9936); exterior polish listed 'basement-door lamp (9936)' as open",
+      "outcome": "kept; the outside lantern added"
+    },
+    {
+      "date": "2026-10-19",
+      "what": "sun + sky (changes/2026-10-19-sun-and-sky.json): Snowy Cemetery as the clear dome; its open item already named the gravestones/buildings low on the horizon",
+      "outcome": "superseded (dome photo replaced)"
+    },
+    {
+      "date": "2026-10-19",
+      "what": "front drive + piers (changes/2026-10-19-front-drive.json): piers at the walk's sidewalk end beside the neighbourhood walk slab",
+      "outcome": "kept; banks added round them"
+    }
   ],
-  "scale": [
-   "door-80in:10372"
+  "premise_reviewed": "",
+  "checks": [
+    {
+      "what": "Film 10324 (Harry stooping at the same door, a second camera): the lantern's glass centre sits ~0.2 of a light-row above the middle of the door's upper row of lights (rows 140 px; centre 57 px vs row middle 85 px). On our door (hifi_back_door.py: glazing 0.92-1.935 in 3 rows) that is 1.766 + 0.2 x 0.338 = 1.83 m over the sill vs 1.84 claimed: a ratio on the door's own glazing, no metric ruler",
+      "agrees": true,
+      "type": "ratio",
+      "tests": [
+        "extraction"
+      ],
+      "data": [
+        "film-frame:10324"
+      ],
+      "scale": [
+        "none"
+      ],
+      "upstream": [],
+      "pick": {
+        "crop": "spec/captures/picks/door-lamps/film10324-lantern-crop.jpg",
+        "confirmed_by": "film 10372 shows the same lantern right of the same nine-lite door"
+      }
+    },
+    {
+      "what": "Film 10372, brick courses as the ruler (18.5 px per course in the crop): 455 px from the sill to the glass centre is 24.6 courses = 1.67 m with modular US brick (67.7 mm) or 1.87 m with 3 in courses (old Chicago common brick, 76 mm); the brick's size is not known",
+      "agrees": false,
+      "type": "metric",
+      "tests": [
+        "scale"
+      ],
+      "data": [
+        "film-frame:10372"
+      ],
+      "scale": [
+        "brick-course:10372"
+      ],
+      "upstream": [
+        "standard:brick"
+      ],
+      "disposition": "The span 1.67-1.87 m contains the door-ruler 1.84 m only at the larger brick; kept the door ruler (the door's 80 in is our built door) and the 10324 glazing ratio (1.83) that agrees with it. Revisit if the house's brick size is measured"
+    },
+    {
+      "what": "Film 10012 (from above, down the areaway) and 10372 (wide, the areaway lit low-left of the basement door's window): the basement lantern is on the areaway's LEFT side wall near the door, outside (stone, snow), not inside the basement; 9936 shows its frosted body over the door's upper lights",
+      "agrees": true,
+      "type": "topological",
+      "tests": [
+        "extraction"
+      ],
+      "data": [
+        "film-frame:10012",
+        "film-frame:9936"
+      ],
+      "scale": [
+        "none"
+      ],
+      "upstream": [],
+      "pick": {
+        "crop": "spec/captures/picks/door-lamps/film10012-lantern-crop.jpg",
+        "confirmed_by": "film 9936 shows the same frosted lantern on the stone left of the basement door"
+      }
+    },
+    {
+      "what": "Live editor (the user's Play session, K on): renderers whose bounds centre lies in PropertyView.Lot kept SnowDrifts (centre x 20.5, spans to the street), FrontDrive_SnowBanks and FrontDrive_Asphalt (spanning x 18-30) enabled while the street and sidewalk under their street ends were hidden; the neighbourhood walk slab between the piers (x 24.37-28.87, top -4.20 over the lawn's -4.364) was hidden with the hood",
+      "agrees": true,
+      "type": "topological",
+      "tests": [
+        "construction"
+      ],
+      "data": [
+        "live-editor"
+      ],
+      "scale": [
+        "none"
+      ],
+      "upstream": []
+    },
+    {
+      "what": "glb_orientation on DoorLamps.glb (build_models.py): 0 inward, 0 flipped (self-consistency, not evidence)",
+      "agrees": true,
+      "type": "topological",
+      "tests": [
+        "construction"
+      ],
+      "data": [
+        "glb_orientation"
+      ],
+      "scale": [
+        "none"
+      ],
+      "upstream": []
+    }
   ],
-  "upstream": [
-   "standard:80in-door"
-  ],
-  "how": "Film 10372 (Harry at the kitchen back door, a near-frontal wide shot): the door from sill to head is 510 px = 80 in (250 px/m); its casing 247 px wide (leaf 0.81 + 2 x 0.09) agrees. Lantern glass centre 460 px over the sill = 1.84 m; axis 70 px = 0.28 m beyond the casing's outer edge; body ~40 x 55 px = 0.16 x 0.22 m. The basement lantern by eye (9936: above the door's lights; 10012 from above: on the left side wall, about over the bottom step): DEVIATIONS 104",
-  "applies_to": [
-   "exterior"
-  ],
-  "measured_in": [
-   "exterior"
-  ],
-  "pick": {
-   "crop": "spec/captures/picks/door-lamps/film10372-lantern-crop.jpg",
-   "confirmed_by": "the same lantern seen in a second frame, film 10324 (spec/captures/picks/door-lamps/film10324-lantern-crop.jpg): a black square wall lantern with milky glass on the brick right of the nine-lite back door"
-  }
- },
- "history": [
-  {
-   "date": "2026-10-18",
-   "what": "basement shell (changes/2026-10-18-basement-shell.json): a bare-bulb lamp INSIDE beside the basement door (spec/dressing/basement.json door_lamp, a reading of 9936); exterior polish listed 'basement-door lamp (9936)' as open",
-   "outcome": "kept; the outside lantern added"
+  "renders": {
+    "before": [
+      "spec/captures/views/exterior-fixes/before/noteA_Kon.jpg",
+      "spec/captures/views/exterior-fixes/before/noteA_Koff.jpg",
+      "spec/captures/views/exterior-fixes/before/noteB_day.jpg",
+      "spec/captures/views/exterior-fixes/before/noteB_night.jpg"
+    ],
+    "after": [
+      "spec/captures/views/exterior-fixes/after/noteA_Koff.jpg",
+      "spec/captures/views/exterior-fixes/after/noteB_day.jpg",
+      "spec/captures/views/exterior-fixes/after/noteB_night.jpg",
+      "spec/captures/views/exterior-fixes/after/film10372_vs_night.jpg",
+      "spec/captures/views/exterior-fixes/after/film9936_vs_night.jpg",
+      "spec/captures/views/exterior-fixes/after/piers_Koff.jpg",
+      "spec/captures/views/exterior-fixes/after/kitchen_lamp_night.jpg",
+      "spec/captures/views/exterior-fixes/after/basement_lamp_night.jpg",
+      "spec/captures/views/exterior-fixes/after/kitchen_lamp_day_close.jpg"
+    ]
   },
-  {
-   "date": "2026-10-19",
-   "what": "sun + sky (changes/2026-10-19-sun-and-sky.json): Snowy Cemetery as the clear dome; its open item already named the gravestones/buildings low on the horizon",
-   "outcome": "superseded (dome photo replaced)"
-  },
-  {
-   "date": "2026-10-19",
-   "what": "front drive + piers (changes/2026-10-19-front-drive.json): piers at the walk's sidewalk end beside the neighbourhood walk slab",
-   "outcome": "kept; banks added round them"
-  }
- ],
- "premise_reviewed": "",
- "checks": [
-  {
-   "what": "Film 10324 (Harry stooping at the same door, a second camera): the lantern's glass centre sits ~0.2 of a light-row above the middle of the door's upper row of lights (rows 140 px; centre 57 px vs row middle 85 px). On our door (hifi_back_door.py: glazing 0.92-1.935 in 3 rows) that is 1.766 + 0.2 x 0.338 = 1.83 m over the sill vs 1.84 claimed: a ratio on the door's own glazing, no metric ruler",
-   "agrees": true,
-   "type": "ratio",
-   "tests": [
-    "extraction"
-   ],
-   "data": [
-    "film-frame:10324"
-   ],
-   "scale": [
-    "none"
-   ],
-   "upstream": [],
-   "pick": {
-    "crop": "spec/captures/picks/door-lamps/film10324-lantern-crop.jpg",
-    "confirmed_by": "film 10372 shows the same lantern right of the same nine-lite door"
-   }
-  },
-  {
-   "what": "Film 10372, brick courses as the ruler (18.5 px per course in the crop): 455 px from the sill to the glass centre is 24.6 courses = 1.67 m with modular US brick (67.7 mm) or 1.87 m with 3 in courses (old Chicago common brick, 76 mm); the brick's size is not known",
-   "agrees": false,
-   "type": "metric",
-   "tests": [
-    "scale"
-   ],
-   "data": [
-    "film-frame:10372"
-   ],
-   "scale": [
-    "brick-course:10372"
-   ],
-   "upstream": [
-    "standard:brick"
-   ],
-   "disposition": "The span 1.67-1.87 m contains the door-ruler 1.84 m only at the larger brick; kept the door ruler (the door's 80 in is our built door) and the 10324 glazing ratio (1.83) that agrees with it. Revisit if the house's brick size is measured"
-  },
-  {
-   "what": "Film 10012 (from above, down the areaway) and 10372 (wide, the areaway lit low-left of the basement door's window): the basement lantern is on the areaway's LEFT side wall near the door, outside (stone, snow), not inside the basement; 9936 shows its frosted body over the door's upper lights",
-   "agrees": true,
-   "type": "topological",
-   "tests": [
-    "extraction"
-   ],
-   "data": [
-    "film-frame:10012",
-    "film-frame:9936"
-   ],
-   "scale": [
-    "none"
-   ],
-   "upstream": [],
-   "pick": {
-    "crop": "spec/captures/picks/door-lamps/film10012-lantern-crop.jpg",
-    "confirmed_by": "film 9936 shows the same frosted lantern on the stone left of the basement door"
-   }
-  },
-  {
-   "what": "Live editor (the user's Play session, K on): renderers whose bounds centre lies in PropertyView.Lot kept SnowDrifts (centre x 20.5, spans to the street), FrontDrive_SnowBanks and FrontDrive_Asphalt (spanning x 18-30) enabled while the street and sidewalk under their street ends were hidden; the neighbourhood walk slab between the piers (x 24.37-28.87, top -4.20 over the lawn's -4.364) was hidden with the hood",
-   "agrees": true,
-   "type": "topological",
-   "tests": [
-    "construction"
-   ],
-   "data": [
-    "live-editor"
-   ],
-   "scale": [
-    "none"
-   ],
-   "upstream": []
-  },
-  {
-   "what": "glb_orientation on DoorLamps.glb (build_models.py): 0 inward, 0 flipped (self-consistency, not evidence)",
-   "agrees": true,
-   "type": "topological",
-   "tests": [
-    "construction"
-   ],
-   "data": [
-    "glb_orientation"
-   ],
-   "scale": [
-    "none"
-   ],
-   "upstream": []
-  }
- ],
- "renders": {
-  "before": [
-   "spec/captures/views/exterior-fixes/before/noteA_Kon.jpg",
-   "spec/captures/views/exterior-fixes/before/noteA_Koff.jpg",
-   "spec/captures/views/exterior-fixes/before/noteB_day.jpg",
-   "spec/captures/views/exterior-fixes/before/noteB_night.jpg"
-  ],
-  "after": [
-   "spec/captures/views/exterior-fixes/after/noteA_Koff.jpg",
-   "spec/captures/views/exterior-fixes/after/noteB_day.jpg",
-   "spec/captures/views/exterior-fixes/after/noteB_night.jpg",
-   "spec/captures/views/exterior-fixes/after/film10372_vs_night.jpg",
-   "spec/captures/views/exterior-fixes/after/film9936_vs_night.jpg",
-   "spec/captures/views/exterior-fixes/after/piers_Koff.jpg",
-   "spec/captures/views/exterior-fixes/after/kitchen_lamp_night.jpg",
-   "spec/captures/views/exterior-fixes/after/basement_lamp_night.jpg",
-   "spec/captures/views/exterior-fixes/after/kitchen_lamp_day_close.jpg"
-  ]
- },
- "user_walk": "pending",
- "outcome": null
+  "user_walk": "accepted",
+  "outcome": null,
+  "acceptance_note": "Oct19 user accepts exterior changes unless otherwise noted; all explicitly logged walk defects remain open. Back/areaway exterior lighting explicitly praised12:32. Street-lamp style requires separate reference review."
 }

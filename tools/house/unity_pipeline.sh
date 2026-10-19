@@ -60,7 +60,7 @@ preflight)   # cheap gates before any Unity launch (STATUS 8p f); runs them all,
            "uv run -q --with numpy --with pillow python -I tools/house/model_quality.py --report" \
            "env HA_PREBUILD=1 uv run -q python -I tools/house/change_gate.py $(grep -L '"user_walk": "rejected"' changes/*.json | tr '\n' ' ')"; do
     n=$(echo "$g" | grep -oE '[a-z_]+\.py( --[a-z]+)?')
-    if out=$($g 2>&1); then echo "ok   $n"; else echo "FAIL $n"; echo "$out" | grep -E '^[^ ].*\.json:|^ *FAIL|Error' | grep -B1 -E '^ *FAIL|Error' | cut -c1-160 | head -8; bad=1; fi
+    if out=$($g 2>&1); then echo "ok   $n"; else echo "FAIL $n"; echo "$out" | grep -E '^[^ ].*\.json:|^ *FAIL|Error' | grep -B1 -E '^ *FAIL|Error' | cut -c1-160 | head -8 || true; bad=1; fi
   done
   python3 tools/house/props_yaw.py | sed 's/^/     /'   # informational: furniture still on a shape-guessed turn (pin after a front render)
   python3 tools/house/slow_jobs.py | sed 's/^/     /'   # informational: recurring slow work and builds since the last bake (never fails)
@@ -155,6 +155,10 @@ daycheck)   # day must have its baked bounce: the APV baking set loaded, and day
   # broken state it catches: a build loaded without a bake (no APV, sky ambient only): saturation marina-16 0.042, kevin-front 0.059;
   # baked 0.114 / 0.118 (accepted Buzz trial 2: 0.113 / 0.118). Floor 0.085 each. load runs it after nightcheck.
   fails=0
+  # The colour floors were calibrated in the Sunny baked scenario. Morning/Overcast
+  # change realtime light, so testing arbitrary user weather makes the result non-reproducible.
+  weather=$(ev 'var w=UnityEngine.Object.FindObjectsByType<HouseWeather>(UnityEngine.FindObjectsInactive.Include,UnityEngine.FindObjectsSortMode.None)[0]; var was=(int)w.state; w.Apply(HouseWeather.State.Sunny); return was.ToString();')
+  case "$weather" in 0|1|2) trap 'ev "var w=UnityEngine.Object.FindObjectsByType<HouseWeather>(UnityEngine.FindObjectsInactive.Include,UnityEngine.FindObjectsSortMode.None)[0]; w.Apply((HouseWeather.State)$weather); return \"restored\";" >/dev/null || true' EXIT;; *) echo "FAIL day: weather state unavailable"; exit 1;; esac
   apv=$(ev 'var p=UnityEngine.Rendering.ProbeReferenceVolume.instance; return (p.currentBakingSet!=null && p.DataHasBeenLoaded())?"yes":"no";')
   [ "$apv" = yes ] && echo "ok   day APV baking set loaded" || { echo "FAIL day: no APV baking set loaded (scene unbaked?)"; fails=1; }
   for p in "marina-16 8.652 1.304 -13.193 9.536 1.197 -13.649 37.57 0.05 0.085" "kevin-front 8.4 1.1 -12.6 11.15 0.9 -14.2 60 0.05 0.085"; do
@@ -178,9 +182,9 @@ shot|cam)
   fi
   night=$([ "$dn" = night ] && echo true || echo false)
   clear='foreach(var o in UnityEngine.Object.FindObjectsByType<UnityEngine.Camera>(UnityEngine.FindObjectsSortMode.None)) if(o.name=="TmpCam") UnityEngine.Object.DestroyImmediate(o.gameObject);'
-  ev "$clear var hm=UnityEngine.Object.FindFirstObjectByType<HouseNightMode>(); UnityEngine.PlayerPrefs.SetInt(\"tmpwas\", hm.night?1:0); hm.SetNight($night); var g=UnityEngine.Object.Instantiate(UnityEngine.Camera.main.gameObject); g.name=\"TmpCam\"; foreach(var a in g.GetComponentsInChildren<UnityEngine.AudioListener>()) UnityEngine.Object.Destroy(a); foreach(var m in g.GetComponents<UnityEngine.MonoBehaviour>()) if(!(m is UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData)) UnityEngine.Object.Destroy(m); var c=g.GetComponent<UnityEngine.Camera>(); c.enabled=false; var hd=g.GetComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData>(); hd.customRenderingSettings=true; hd.renderingPathCustomFrameSettingsOverrideMask.mask[(uint)UnityEngine.Rendering.HighDefinition.FrameSettingsField.MotionBlur]=true; hd.renderingPathCustomFrameSettings.SetEnabled(UnityEngine.Rendering.HighDefinition.FrameSettingsField.MotionBlur,false); $pose for(int i=0;i<30;i++) c.Render(); return \"ok\";" >/dev/null
+  ev "$clear var hm=UnityEngine.Object.FindFirstObjectByType<HouseNightMode>(); UnityEngine.PlayerPrefs.SetInt(\"tmpwas\", hm.night?1:0); if(hm.night!=$night) hm.SetNight($night); var g=UnityEngine.Object.Instantiate(UnityEngine.Camera.main.gameObject); g.name=\"TmpCam\"; g.tag=\"Untagged\"; foreach(var a in g.GetComponentsInChildren<UnityEngine.AudioListener>()) UnityEngine.Object.Destroy(a); foreach(var m in g.GetComponents<UnityEngine.MonoBehaviour>()) if(!(m is UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData)) UnityEngine.Object.Destroy(m); var c=g.GetComponent<UnityEngine.Camera>(); c.enabled=false; var hd=g.GetComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData>(); hd.customRenderingSettings=true; hd.renderingPathCustomFrameSettingsOverrideMask.mask[(uint)UnityEngine.Rendering.HighDefinition.FrameSettingsField.MotionBlur]=true; hd.renderingPathCustomFrameSettings.SetEnabled(UnityEngine.Rendering.HighDefinition.FrameSettingsField.MotionBlur,false); $pose for(int i=0;i<30;i++) c.Render(); return \"ok\";" >/dev/null
   (cd "$P" && "$CLI" command capture_game_view --camera TmpCam --save_path "Temp/$name.png" >/dev/null)
-  ev "$clear UnityEngine.Object.FindFirstObjectByType<HouseNightMode>().SetNight(UnityEngine.PlayerPrefs.GetInt(\"tmpwas\")==1); return \"x\";" >/dev/null
+  ev "$clear var hm=UnityEngine.Object.FindFirstObjectByType<HouseNightMode>(); bool was=UnityEngine.PlayerPrefs.GetInt(\"tmpwas\")==1; if(hm.night!=was) hm.SetNight(was); return \"x\";" >/dev/null
   mv "$P/Assets/Temp/$name.png" "$CAP/"; rm -rf "$P/Assets/Temp" "$P/Assets/Temp.meta"; echo "$CAP/$name.png";;
 *) sed -n 2,17p "$0"; exit 1;;
 esac

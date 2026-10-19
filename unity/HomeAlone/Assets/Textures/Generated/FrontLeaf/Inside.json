@@ -1,0 +1,15 @@
+{
+ "role": "baked",
+ "albedo_srgb": [
+  0.88,
+  0.87,
+  0.83
+ ],
+ "albedo_tol": 0.06,
+ "ppm": 2048,
+ "detail_tiling": [
+  4,
+  4
+ ],
+ "scan": "polyhaven:white_plaster_02 (CC0), subdued to painted finish"
+}

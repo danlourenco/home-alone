@@ -263,6 +263,25 @@
    "confidence": "medium",
    "landing_y": 2.326,
    "landing_y_source": "spec/dressing/foyer.json landing_carpet top (the landing at 2.314 + carpet)"
+  },
+  {
+   "name": "front_door_leaf",
+   "kind": "door",
+   "wall": "x",
+   "x": [
+    10.13,
+    10.27
+   ],
+   "y": [
+    0.0,
+    1.898
+   ],
+   "z": [
+    9.31,
+    10.121
+   ],
+   "source": "Existing front-door leaf dimensions (hifi_door.py; film9358/778 six-panel leaf). Cut the fixed wall behind the unified moving door, preserving jambs/head. No new dimension. changes/2026-10-19-foyer-interactions.json; DEVIATIONS105",
+   "confidence": "medium"
   }
  ]
 }
