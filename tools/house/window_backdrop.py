@@ -4,6 +4,10 @@
                   Its blue cast pulled toward neutral (film 12512, the view out the front window on Christmas morning, reads grey).
   dome_night.jpg  the same panorama as a winter night: sky a dark blue gradient with a faint horizon glow, snow dim blue-grey,
                   trees as silhouettes.
+  dome_day_clear.jpg  Poly Haven "Snowy Cemetery" (CC0, Andreas Mischok), tonemapped 8K: a clear winter day, bare deciduous trees, snow,
+                  deep blue sky (film 4382). Rolled so its sun sits at the film's sun azimuth (tools/house/sun_solve.py, 196.8 deg) on
+                  the dome's mapping (compass = 227.6 + (u - DomeYawU) * 360); the photo's own sun disc is left as shot. The O key
+                  (Scripts/HouseWeather.cs) swaps it with dome_day (overcast).
   card_night.png  film 5546: the McCallister front at night with its Christmas lights (the film's own street), mirrored so it reads
                   as the house across Lincoln Avenue; the black sky above the roofline is cut out (alpha).
   No day card: no clean daylight frame of the street exists in the film (1564/1650: vans, the cherry picker), and a day version
@@ -21,6 +25,8 @@ OUT = REPO / "unity/HomeAlone/Assets/Textures/Backdrop"
 FILM = REPO / "0-homealone/full/homealone-movie-screencaps.com-%d.jpg"
 CACHE = pathlib.Path.home() / ".cache/home-alone-backdrop"
 PH = "https://dl.polyhaven.org/file/ph-assets/HDRIs/extra/Tonemapped%20JPG/snowy_park_01.jpg"
+PH_CLEAR = "https://dl.polyhaven.org/file/ph-assets/HDRIs/extra/Tonemapped%20JPG/snowy_cemetery.jpg"
+SUN_AZ, FRONT_AZ, DOME_YAW_U = 196.8, 227.6, 0.55     # sun_solve.py; SpecGreybox.cs FrontAzimuth; SpecGreybox.Backdrop.cs DomeYawU
 
 
 def park():
@@ -30,6 +36,23 @@ def park():
         req = urllib.request.Request(PH, headers={"User-Agent": "home-alone-build"})
         p.write_bytes(urllib.request.urlopen(req).read())
     return np.asarray(Image.open(p).convert("RGB")).astype(np.float32) / 255.0
+
+
+def clear():
+    CACHE.mkdir(parents=True, exist_ok=True)
+    p = CACHE / "snowy_cemetery.jpg"
+    if not p.exists():   # no login, no personal data in the request
+        req = urllib.request.Request(PH_CLEAR, headers={"User-Agent": "home-alone-build"})
+        p.write_bytes(urllib.request.urlopen(req).read())
+    a = np.asarray(Image.open(p).convert("RGB"))
+    h, w, _ = a.shape
+    lum = a[: h // 2].astype(np.float32).mean(-1)                     # the sun: the brightest blob above the horizon
+    blob = ndimage.gaussian_filter((lum > 250).astype(np.float32), 8)
+    sy, sx = np.unravel_index(int(np.argmax(blob)), blob.shape)
+    want = DOME_YAW_U + (SUN_AZ - FRONT_AZ) / 360.0
+    shift = int(round((want - sx / w) * w)) % w
+    print(f"clear dome: photo sun at u {sx / w:.3f}, elevation {90 - 180 * sy / h:.1f} deg; rolled {shift} px -> u {want:.3f} (az {SUN_AZ})")
+    return np.roll(a, shift, axis=1).astype(np.float32) / 255.0
 
 
 def dome(a):
@@ -83,6 +106,7 @@ def main():
     day, night = dome(park())
     save(day, "dome_day.jpg")
     save(night, "dome_night.jpg", size=(4096, 2048))
+    save(clear(), "dome_day_clear.jpg")
     n, al = card()
     save(n, "card_night.png", al)
     # self-check: the card's sky is cut out above the roof and the facade is kept

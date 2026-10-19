@@ -13,7 +13,7 @@ using UnityEngine.Rendering.HighDefinition;
 // renderer beyond the dome (hidden by it anyway) is disabled (perf). The yard, street, street trees, poles and wires inside it stay.
 public static partial class SpecGreybox
 {
-    public static float DomeRadius = 75f, DomeDayNits = 9000f, DomeNightNits = 600f, CardNightNits = 300f, MoonLux = 30f, DomeYawU = 0.55f;
+    public static float DomeRadius = 75f, DomeDayNits = 9000f, DomeClearNits = 9000f, DomeNightNits = 600f, CardNightNits = 300f, MoonLux = 30f, DomeYawU = 0.55f;
     static readonly Vector3 DomeCentreXZ = new Vector3(3f, 0f, -8f);   // the house's middle (front x 10.3, back -5; z +4 .. -20)
     public const uint LayerOutside = 8;   // the exterior's own rendering layer (the moon lights only it)
     const string BackdropDir = "Assets/Textures/Backdrop";
@@ -42,6 +42,23 @@ public static partial class SpecGreybox
         var c = new Vector3(DomeCentreXZ.x, gy + 3f, DomeCentreXZ.z);   // between the two storeys' eyes: the photo's horizon at eye level
         var day = Dome(dayLayer.transform, "WinterBackdrop_Day", c, Glow("Backdrop_DomeDay", Tex("dome_day.jpg", 8192, false), DomeDayNits, false));
         Dome(nightLayer.transform, "WinterBackdrop_Night", c, Glow("Backdrop_DomeNight", Tex("dome_night.jpg", 4096, false), DomeNightNits, false));
+        // O: sunny / morning / overcast (Scripts/HouseWeather.cs; user Oct 19). The clear-winter dome (Poly Haven Snowy Cemetery, CC0,
+        // its sun rolled to the film's azimuth by tools/house/window_backdrop.py) for the sunny states, the Snowy Park one when overcast
+        {
+            var wx = new GameObject("Weather - press O").AddComponent<HouseWeather>(); wx.transform.SetParent(dayLayer.transform, false);
+            wx.sun = dayLayer.transform.Find("Sun")?.GetComponent<Light>(); wx.dome = day.GetComponent<MeshRenderer>();
+            wx.overcastDome = day.GetComponent<MeshRenderer>().sharedMaterial;
+            wx.clearDome = Glow("Backdrop_DomeDayClear", Tex("dome_day_clear.jpg", 8192, false), DomeClearNits, false);
+            wx.frontAzimuth = FrontAzimuth; wx.sunny.az = wx.overcast.az = wx.domeSunAzimuth = SunAzimuth; wx.sunny.el = SunElevation;
+            string op = "Assets/Settings/OvercastSky.asset"; AssetDatabase.DeleteAsset(op);
+            var prof = ScriptableObject.CreateInstance<VolumeProfile>(); AssetDatabase.CreateAsset(prof, op);
+            var env = prof.Add<VisualEnvironment>(true); env.skyType.value = (int)SkyType.Gradient; AssetDatabase.AddObjectToAsset(env, prof);
+            var g = prof.Add<GradientSky>(true); AssetDatabase.AddObjectToAsset(g, prof);   // tuned live against film 6399 (Oct 19)
+            g.top.value = new Color(0.70f, 0.72f, 0.76f); g.middle.value = new Color(0.62f, 0.63f, 0.65f); g.bottom.value = new Color(0.30f, 0.30f, 0.31f);
+            g.skyIntensityMode.value = SkyIntensityMode.Lux; g.desiredLuxValue.value = 18000f;
+            var ov = new GameObject("OvercastSky").AddComponent<Volume>(); ov.transform.SetParent(wx.transform, false); ov.isGlobal = true; ov.priority = 6f; ov.sharedProfile = prof;
+            wx.overcastSky = ov; wx.Apply(wx.state);   // the scene is saved Sunny
+        }
         // the film's front across the street: 26 m wide (the house fills 90% of the frame; ours is ~24 m), bottom at the far lots
         var card = GameObject.CreatePrimitive(PrimitiveType.Quad); card.name = "WinterBackdrop_NightHouse";
         Object.DestroyImmediate(card.GetComponent<Collider>()); card.transform.SetParent(nightLayer.transform, false);

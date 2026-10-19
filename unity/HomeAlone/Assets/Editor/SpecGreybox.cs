@@ -1535,7 +1535,9 @@ public static partial class SpecGreybox
     // the front faces 227.6 deg (SW): OpenStreetMap's building and Lincoln Avenue (tools/house/house_bearing.py), with the photographers'
     // positions and the film's sunlit front (frame 4382) agreeing; the film was shot here, so this is its orientation. The sun's time is a placeholder (DEVIATIONS 34)
     const float FrontAzimuth = 227.6f;                    // compass bearing the front (+spec x) faces
-    const float SunAzimuth = 155f, SunElevation = 21f;    // Chicago, Dec 21, ~10:30 am
+    // the film's sun (Oct 19): solved from the portico's shadow in 4382 (tools/house/sun_solve.py: az 196.8 [192.6-200.2], el 35.0
+    // [28.6-41.1]; ~1 pm in Feb 1990, when the exteriors were shot; DEVIATIONS 34). HouseWeather (O) swaps it for a morning or overcast sun
+    const float SunAzimuth = 196.8f, SunElevation = 35f;
     static void Daylight(GameObject root, float groundY)
     {
         var day = Child(root, "Daylight");
@@ -1564,7 +1566,10 @@ public static partial class SpecGreybox
         var ss = sun.gameObject.AddComponent<StoreyShadows>(); ss.groundMask = LayerHouse | LayerFilmFront; ss.upperMask = LayerHouse | LayerOverhang;
         ss.switchY = groundY + 2.326f + 0.9f;   // the eye 0.9 m above the main stair's landing: past it, the upstairs' own shadows
         foreach (var r in root.GetComponentsInChildren<MeshRenderer>(true))   // both faces cast: a lit back face never leaks
-            if (r.shadowCastingMode == ShadowCastingMode.On) r.shadowCastingMode = ShadowCastingMode.TwoSided;
+            if (r.sharedMaterial != null && r.sharedMaterial.name == "Glass") r.shadowCastingMode = ShadowCastingMode.Off;   // window panes let the sun in
+            // (Oct 19, sun-and-sky: HDRP draws a transparent caster into the shadow map as opaque, so the 45 grey-box panes kept every
+            // sun patch out of the rooms; live A/B in the dining room: none with, the film's window patches without)
+            else if (r.shadowCastingMode == ShadowCastingMode.On) r.shadowCastingMode = ShadowCastingMode.TwoSided;
         Exterior(groundY);   // the old reference scene's yard and street replace the flat snow plane (user, Oct 16: "weird artifacts")
         var lamps = root.transform.Cast<Transform>().SelectMany(t => t.GetComponentsInChildren<Transform>(true)).FirstOrDefault(t => t.name == "Lights");
         var groundLamps = GameObject.Find("Ground/Lights");   // one night layer: the ground floor's lamps were left on by day

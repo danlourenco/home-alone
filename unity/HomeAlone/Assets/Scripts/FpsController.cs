@@ -5,7 +5,9 @@ using UnityEngine;
 /// Esc/Tab releases cursor, click recaptures, R resets. G toggles Kevin (kid body, the default in Play) / adult;
 /// H toggles the step bob + landing dip (motion-sickness switch; footsteps stay).
 /// E interacts (each prompts on screen when you are close and looking at it): Buzz's footlocker opens/closes (TrunkLid, within 1.5 m);
-/// at the attic dormer rides the zipline, at the treehouse ladder climbs (ZipLine). N day/night, M marks a walk note (FeelNotes).
+/// at the attic dormer rides the zipline, at the treehouse ladder climbs (ZipLine). N day/night, O cycles the day's weather sunny (film 4382, the default) / morning (film 1890) / overcast (film 6399) (HouseWeather;
+/// it also drives the falling snow: off in sunny/morning, where F is ignored; on when overcast and at night),
+/// M marks a walk note (FeelNotes).
 /// Footsteps by floor surface: Surface is read from the material/collider name under the feet (SurfaceFor); clips are Kenney Impact Sounds (CC0).
 [RequireComponent(typeof(CharacterController))]
 public class FpsController : MonoBehaviour
@@ -64,6 +66,7 @@ public class FpsController : MonoBehaviour
             curH = Mathf.MoveTowards(curH, targetH, Time.deltaTime * 2.5f); curEye = Mathf.MoveTowards(curEye, targetEye, Time.deltaTime * 2.5f); ApplyHeight();
         }
         if (Input.GetKeyDown(KeyCode.H)) headBob = !headBob;
+        if (Input.GetKeyDown(KeyCode.F) && cam.Find("Snowfall") is Transform sf) sf.gameObject.SetActive(!sf.gameObject.activeSelf);   // falling snow on/off (SpecGreybox.ExteriorRealism)
         if (Input.GetKeyDown(KeyCode.R)) { cc.enabled = false; transform.SetPositionAndRotation(spawnPosition, spawnRotation); cc.enabled = true; vy = 0; pitch = 0; }
 
         if (Cursor.lockState == CursorLockMode.Locked)
