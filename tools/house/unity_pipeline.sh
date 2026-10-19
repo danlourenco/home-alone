@@ -55,7 +55,7 @@ preflight)   # cheap gates before any Unity launch (STATUS 8p f); runs them all,
   cd "$REPO"; bad=0
   free_gb=$(df -g "$HOME" | awk 'NR==2{print $4}')   # Oct 18: a full disk broke a video encode and every tool call; builds + bakes need room
   if [ "${free_gb:-0}" -lt 15 ]; then echo "FAIL disk: only ${free_gb} GB free on the home volume (need 15)"; bad=1; else echo "ok   disk: ${free_gb} GB free"; fi
-  for g in "python3 tools/house/build_models.py --check" "python3 tools/house/openings.py --check" "python3 tools/house/trim_faces.py --check" "python3 tools/house/stair_arrival.py" "uv run -q --with trimesh --with numpy python -I tools/house/rail_joints.py" \
+  for g in "python3 tools/house/build_models.py --check" "python3 tools/house/openings.py --check" "python3 tools/house/trim_faces.py --check" "python3 tools/house/stair_arrival.py" "uv run -q --with trimesh --with numpy python -I tools/house/rail_joints.py" "uv run -q --with trimesh --with numpy python -I tools/house/soffit_joints.py" \
            "uv run -q --with numpy --with matplotlib --with pillow python -I tools/house/verify_plan.py" \
            "uv run -q --with numpy --with pillow python -I tools/house/model_quality.py --report" \
            "env HA_PREBUILD=1 uv run -q python -I tools/house/change_gate.py $(grep -L '"user_walk": "rejected"' changes/*.json | tr '\n' ' ')"; do

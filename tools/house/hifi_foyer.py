@@ -65,17 +65,17 @@ def flight(prefix, dirx, open_z, runner_inset=0.15):
     return steps
 
 
-def stringer(steps, dirx, z_face, outward, depth=0.25):
+def stringer(steps, dirx, z_face, outward, depth=0.25, floor=None):
     """White cut stringer on the open side: one board, stepped top (risers and treads), a straight bottom edge parallel to the
-    pitch 'depth' below the nosing line, clipped at the floor; a front face at z_face and a back face 2 cm in (user note 23:26:
-    per-step boxes stepped its bottom edge)."""
+    pitch 'depth' below the nosing line, clipped at the floor (or at 'floor'); a front face at z_face and a back face 2 cm in
+    (user note 23:26: per-step boxes stepped its bottom edge)."""
     st = sorted(steps, key=lambda b: b["y"][1])                     # bottom step first
     top = []
     for b in st:
         (x0, x1), (_, y1) = b["x"], b["y"]
         front, back = (x1, x0) if dirx > 0 else (x0, x1)
         top += [(front, y1 - RISE), (front, y1 - TREAD_T), (back, y1 - TREAD_T)]
-    yf = st[0]["y"][0]
+    yf = st[0]["y"][0] if floor is None else floor
     slope = RISE / abs(st[0]["x"][1] - st[0]["x"][0])
     xs = [q[0] for q in top]; x_lo, x_hi = (xs[0], xs[-1])
     bot = lambda x: max(yf, (st[0]["y"][1] - depth) + slope * (x - top[0][0]) * (-dirx))
@@ -116,21 +116,22 @@ f1 = flight("flight1_step", +1, 10.23)
 bot1 = stringer(f1, +1, 10.21, -1)
 # flight 2: rises toward +x, open side at z 9.17 (rail band 9.17-9.23)
 f2 = flight("flight2_step", -1, 9.17)
-stringer(f2, -1, 9.16, -1)
-# Closed, continuous plaster envelope below flight 2. The greybox keeps its step colliders.
-# The former per-step white bodies protruded below a sloped cover; replace them, do not cover them.
+# Flight 2's plaster underside (film 10673, Marina 312 s: one smooth white slope, a white fascia on the open side). One plane on the
+# pitch from the landing's underside (the foot) up to the foyer ceiling under the gallery (the head), meeting the north wall's face
+# and the open-side stringer's bottom edge; the stringer is cut that deep so its face closes the side down to the soffit.
+# Rejected Oct 19 (14:49 "why is this soffit still not fixed?"): the plane stopped at the top step's back, 11.5 cm under the ceiling
+# (the treads' undersides showed through), and stood 7-9 cm under the stringer behind a recessed infill. tools/house/soffit_joints.py
+# checks every edge meets a surface. The grey-box keeps its step colliders.
 st2 = sorted(f2, key=lambda q: q["x"][0])
-xa, xb = st2[0]["x"][0], st2[-1]["x"][1]
-ya = B["landing"]["y"][0]
-yb = ya + (xb - xa) * RISE / (st2[0]["x"][1] - xa)
-z0, z1 = st2[0]["z"]
-for b in st2:
-    a, c = b["x"]; top = b["y"][1] - TREAD_T
-    ba = ya + (a-xa)/(xb-xa)*(yb-ya); bc = ya + (c-xa)/(xb-xa)*(yb-ya)
-    # side infill, straight bottom; 1 cm behind the separate open-side stringer
-    for z, sign in ((z0, -1), (z1-0.01, 1)):
-        white.face([(a,ba,z),(c,bc,z),(c,top,z),(a,top,z)],(0,0,sign))
-white.face([(xa,ya,z0),(xb,yb,z0),(xb,yb,z1),(xa,ya,z1)],(0,-1,0))
+xa, ya = st2[0]["x"][0], B["landing"]["y"][0]                     # foot: the landing's underside line
+k2 = RISE / (st2[0]["x"][1] - xa)                                  # the flight's pitch
+G0 = json.loads((ROOT / "spec/geometry.json").read_text())["ground"]
+CEIL = G0["floor_y"] + next(c["y"][0] for c in G0["ceilings"] if c["room"] == "foyer")   # foyer ceiling under the gallery (2.82 m)
+xh = st2[-1]["x"][1]; xb = xa + (CEIL - ya) / k2                    # top step's back; where the slope meets the ceiling (DEVIATIONS 107)
+z0, ZO = st2[0]["z"][0], 9.16 + 0.02                               # north wall face; the stringer's outer face
+stringer(f2, -1, 9.16, -1, depth=st2[0]["y"][1] - ya, floor=ya)
+white.face([(xa, ya, z0), (xb, CEIL, z0), (xb, CEIL, ZO), (xa, ya, ZO)], (0, -1, 0))
+white.face([(xh, ya + (xh - xa) * k2, ZO), (xb, CEIL, ZO), (xh, CEIL, ZO)], (0, 0, 1))   # the fascia on from the stringer's end to the ceiling
 L = B["landing"]; (lx0, lx1), (_, ly1), (lz0, lz1) = L["x"], L["y"], L["z"]
 white.box(lx0, lx1, L["y"][0], ly1 - TREAD_T, lz0, lz1)   # the landing's slab under its tread (fascia and soffit, white)
 tread.box(lx0, lx1 + NOSE - TREAD_T / 2, ly1 - TREAD_T, ly1, lz0, lz1); nosing(tread, lx1 + NOSE - TREAD_T / 2, ly1, 9.23, lz1, +1)

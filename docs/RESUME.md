@@ -8,13 +8,14 @@ docs/FOYER-WIP.md (the foyer job's checkpoints); STATUS.md is the long log. This
 - Branch `unity-sfm-reconstruction`, pushed through the Codex session's work (3773db20). Trials since Oct 18 are in `changes/`.
 - **Oct 19 walk verdict:** accepted: mirror, front door look + use, den arrangement, TV seat/view concept, the exterior/sky/drive
   trials except listed defects. **Rejected: the flight-2 soffit (does not connect).** Acceptance does not close defects.
-- **Open defects** (details, shots and proposed fixes: docs/WALK-FEEDBACK-2026-10-19.md): disconnected soffit; exterior wallpaper on a
+- **Open defects** (details, shots and proposed fixes: docs/WALK-FEEDBACK-2026-10-19.md): soffit FIX BUILT, TRIAL awaiting the user's walk
+  (changes/2026-10-19-soffit-joints.json; built + baked in ~/.cache/home-alone-2, not yet loaded); exterior wallpaper on a
   jamb; jerky door swing (profile it first: the timing sample had zero moving-door frames, cause NOT proven); stoop/step overlap; noisy
   porch shadows; coarse/dry walk material; a protruding gutter/trim candidate; magenta breakfast hutch + a reference-correct built-in;
   flat interior doors; street-lamp style; a tree in the driveway; garage fence placement; den shelf lamp too broad/bright. Older notes:
   the STATUS checklist. Don't guess hutch geometry or neighbour facades.
-- **Not yet implemented:** a general automated door validator; a real soffit-contact regression check (prove the rejected output
-  fails it before accepting a fix). Door work follows `.claude/skills/door-assembly/SKILL.md`.
+- **Not yet implemented:** a general automated door validator. (Done Oct 19: `tools/house/soffit_joints.py` in preflight; the
+  rejected soffit fails it, the fix passes.) Door work follows `.claude/skills/door-assembly/SKILL.md`.
 - **Fall prevention:** the visible GroundSkirt/OffLot lacked colliders (the void); exact mesh colliders + last-supported recovery
   added. Re-run `python3 tools/house/check_fall_recovery.py` with Play STOPPED. Not a whole-map coverage claim; the user's retrial
   of the void area is pending.

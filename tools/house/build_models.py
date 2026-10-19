@@ -21,7 +21,7 @@ BLENDER = "/Applications/Blender.app/Contents/MacOS/Blender"
 LIB = "tools/house/hifi_lib.py"
 # script -> (models it writes, data files it reads); Poly Haven downloads (sfm-work/, untracked) are not hashed
 BUILDS = {
-    "tools/house/hifi_foyer.py": (["MainStair.glb"], [LIB, "spec/house_spec.json", "spec/dressing/foyer.json"]),
+    "tools/house/hifi_foyer.py": (["MainStair.glb"], [LIB, "spec/house_spec.json", "spec/dressing/foyer.json", "spec/geometry.json"]),   # geometry: the foyer ceiling the soffit meets
     "tools/house/hifi_lights.py": (["Lantern.glb", "Sconce.glb", "Hurricane.glb", "Dome.glb"], [LIB]),
     "tools/house/hifi_props.py": (["Tree.glb"], ["spec/dressing/foyer.json"]),
     "tools/house/hifi_front_leaf.py": (["FrontLeaf.glb"], [LIB, "tools/house/hifi_pipeline.py", "tools/house/front_leaf_finish.py"]),

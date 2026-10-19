@@ -1,0 +1,103 @@
+{
+  "change": "Flight 2 soffit closed at every edge: one plane on the pitch from the landing underside to the foyer ceiling under the gallery, the open-side stringer cut down to it; TRIAL",
+  "target": "House_WallGrid",
+  "premise": "Flight 2's underside is one plastered slope (film 10673; Marina 312 s) whose edges die into the landing's underside, the north wall, the open-side fascia and the flat foyer ceiling under the gallery.",
+  "claim": {
+    "value": {
+      "soffit": "plane from (x 2.985, y -0.856) to (x 4.059, y -0.206) spec, z 7.778 (north wall face) to 9.18 (stringer outer face), parallel to the pitch (rise 0.178 / going 0.294)",
+      "stringer": "flight 2 open-side stringer depth 0.322 below the first nosing line, clipped at the landing underside, so its bottom edge is the soffit's edge",
+      "head": "a white triangle in the stringer's outer plane closes the side from the top step's back (x 3.868) to where the slope meets the ceiling (x 4.059)",
+      "unchanged": "treads, risers, landing, colliders, route; kitchen-opening clearance 2.221 m over its 2.20 m head (DEVIATIONS 20)"
+    },
+    "surface": "ceiling-plane",
+    "data": [
+      "film:10673"
+    ],
+    "scale": [
+      "none"
+    ],
+    "upstream": [],
+    "how": "Topological correction of the stair model (tools/house/hifi_foyer.py), no new measurement. The ceiling plane is the foyer's 2.82 m ceiling in spec/geometry.json (the plane itself, not an edge). The head joint and the stringer depth are authored (DEVIATIONS 107).",
+    "applies_to": [
+      "foyer"
+    ],
+    "measured_in": [],
+    "assumed": {
+      "foyer": "DEVIATIONS 107: soffit carried on the pitch past the top step to the ceiling (x 3.868 -> 4.059, 11.5 cm drop); open-side stringer deepened 0.25 -> 0.322 m"
+    }
+  },
+  "history": [
+    {
+      "date": "2026-10-15",
+      "what": "Landing soffit depth changed; flight 2 left stepped (DEVIATIONS 20)",
+      "outcome": "superseded"
+    },
+    {
+      "date": "2026-10-19",
+      "what": "Re-enabled greybox soffit during user walk; steps remained visible below it",
+      "outcome": "failed"
+    },
+    {
+      "date": "2026-10-19",
+      "what": "Smooth soffit plane in hifi_foyer.py (changes/2026-10-19-foyer-interactions.json): user 12:26 'does not connect', 14:49 'why is this soffit still not fixed?' (shot 20261019-144917). Cause: the plane ended at the top step's back 11.5 cm under the ceiling (the dark tread undersides showed through), and its open edge stood 1 cm proud of a recessed infill 7-9 cm under the stringer.",
+      "outcome": "rejected"
+    }
+  ],
+  "premise_reviewed": "Census of the failed attempts: both drew the soffit and checked it by eye and with the z-fight/clash gates, which only look for overlaps, never for edges that touch nothing; both ended the soffit at the flight's own boxes (step bottoms, top step's back) instead of at the neighbouring surfaces. The premise (one smooth slope) still stands: film 10673 and Marina 312 s both show it. What changes is the construction rule (each edge ends ON a neighbour's surface, the head on the ceiling plane) and a gate that measures it: tools/house/soffit_joints.py fails the rejected model (head 115 mm, open side 10 mm) and passes this one (0 of 4 edges loose at 3 mm).",
+  "checks": [
+    {
+      "what": "Marina 312 s (spec/captures/compare-marina/web/marina-312-ref.jpg): flight 2's underside is one smooth white slope meeting the north wall in a diagonal, independent of film 10673. Shape only.",
+      "agrees": true,
+      "type": "topological",
+      "data": [
+        "marina-frame:p1-312"
+      ],
+      "scale": [
+        "none"
+      ],
+      "upstream": []
+    },
+    {
+      "what": "tools/house/soffit_joints.py on MainStair.glb: rejected model FAILS (head edge 115 mm off the ceiling, open edge 10 mm off the infill); fixed model 0 problems; soffit over the kitchen opening 2.221 m vs head 2.200. Self-consistency only, not evidence.",
+      "agrees": true,
+      "type": "topological",
+      "data": [
+        "tools:soffit_joints"
+      ],
+      "scale": [
+        "none"
+      ],
+      "upstream": []
+    }
+  ],
+  "renders": {
+    "before": [
+      "spec/captures/views/foyer/soffit/offline-before-user.jpg",
+      "spec/captures/views/foyer/soffit/offline-before-head.jpg",
+      "spec/captures/views/foyer/soffit/offline-before-kitchen.jpg",
+      "spec/captures/views/foyer/soffit/offline-before-landing.jpg"
+    ],
+    "after": [
+      "spec/captures/views/foyer/soffit/offline-after-user.jpg",
+      "spec/captures/views/foyer/soffit/offline-after-head.jpg",
+      "spec/captures/views/foyer/soffit/offline-after-kitchen.jpg",
+      "spec/captures/views/foyer/soffit/offline-after-landing.jpg",
+      "spec/captures/views/foyer/soffit/film10673-vs-offline-after-head.jpg",
+      "spec/captures/views/foyer/soffit/unity-after-user.jpg",
+      "spec/captures/views/foyer/soffit/unity-after-head.jpg",
+      "spec/captures/views/foyer/soffit/unity-after-kitchen.jpg",
+      "spec/captures/views/foyer/soffit/unity-after-landing.jpg",
+      "spec/captures/views/foyer/soffit/sbs-user-before-after.jpg",
+      "spec/captures/views/foyer/soffit/film10673-vs-unity-after-head.jpg"
+    ]
+  },
+  "user_walk": "pending",
+  "verification": {
+    "date": "2026-10-19",
+    "build": "1 build + 1 bake (HA_SCRATCH=~/.cache/home-alone-2), from current sources",
+    "preflight": "all pass incl. soffit_joints, rail_joints, stair_arrival, csc_check",
+    "surface_gates": "0 z-fights, 0 clashes; seams 0; BLOCKED lines identical to HEAD (existing service-winder leg only)",
+    "soffit_joints": "rejected MainStair.glb FAIL (head 115 mm, open side 10 mm); rebuilt 0 problems; kitchen-opening clearance 2.221 m >= 2.20",
+    "look": "batch renders of the built scene at the user's 14:49 pose, head, kitchen and landing views: dark slot at the head gone, soffit dies into the ceiling, open-side fascia continuous. Batch lighting (no probes) only; live capture pending the user's load."
+  }
+}
