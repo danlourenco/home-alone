@@ -1,0 +1,4256 @@
+{
+ "_comment": "DRAFT evidence manifest (Oct 19 2026). Spec metres, +x toward Lincoln Ave (front). Lot ids are neutral: A = Lincoln's McCallister side, B = across the street; +n is toward +z (film-left from the street). Heights are 2022 lidar, post-1990: trees and additions differ from 1990.",
+ "frame": "tools/house/nb_frame.py",
+ "parcels": [
+  {
+   "id": "lot_A-3",
+   "tier": 3,
+   "parcel_idx": 211,
+   "side": "mccallister_side",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     -51.41,
+     -87.34
+    ],
+    [
+     -49.66,
+     -72.15
+    ],
+    [
+     27.15,
+     -71.97
+    ],
+    [
+     27.12,
+     -87.16
+    ],
+    [
+     27.1,
+     -91.86
+    ],
+    [
+     26.66,
+     -94.9
+    ],
+    [
+     25.06,
+     -98.1
+    ],
+    [
+     22.5,
+     -100.58
+    ],
+    [
+     19.24,
+     -102.08
+    ],
+    [
+     5.38,
+     -105.15
+    ],
+    [
+     -8.7,
+     -107.02
+    ],
+    [
+     -22.89,
+     -107.69
+    ],
+    [
+     -34.57,
+     -107.32
+    ],
+    [
+     -44.84,
+     -106.65
+    ],
+    [
+     -53.62,
+     -106.49
+    ],
+    [
+     -51.41,
+     -87.34
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       -21.69,
+       -91.77
+      ],
+      [
+       -21.77,
+       -84.41
+      ],
+      [
+       -24.64,
+       -84.43
+      ],
+      [
+       -24.65,
+       -83.28
+      ],
+      [
+       -24.66,
+       -83.12
+      ],
+      [
+       -24.66,
+       -83.04
+      ],
+      [
+       -24.66,
+       -82.84
+      ],
+      [
+       -24.67,
+       -81.46
+      ],
+      [
+       -24.69,
+       -80.01
+      ],
+      [
+       -24.74,
+       -74.84
+      ],
+      [
+       -17.39,
+       -74.79
+      ],
+      [
+       -17.4,
+       -73.94
+      ],
+      [
+       -14.03,
+       -73.92
+      ],
+      [
+       -9.74,
+       -73.62
+      ],
+      [
+       -9.71,
+       -77.18
+      ],
+      [
+       -9.68,
+       -80.13
+      ],
+      [
+       0.31,
+       -80.41
+      ],
+      [
+       0.59,
+       -80.32
+      ],
+      [
+       1.45,
+       -80.31
+      ],
+      [
+       1.53,
+       -80.31
+      ],
+      [
+       1.94,
+       -80.31
+      ],
+      [
+       2.7,
+       -80.3
+      ],
+      [
+       3.31,
+       -80.3
+      ],
+      [
+       3.33,
+       -81.87
+      ],
+      [
+       5.41,
+       -81.85
+      ],
+      [
+       5.42,
+       -82.18
+      ],
+      [
+       5.43,
+       -83.87
+      ],
+      [
+       4.67,
+       -90.34
+      ],
+      [
+       4.58,
+       -91.08
+      ],
+      [
+       3.96,
+       -91.11
+      ],
+      [
+       -5.94,
+       -91.6
+      ],
+      [
+       -6.31,
+       -94.02
+      ],
+      [
+       -6.3,
+       -94.48
+      ],
+      [
+       -8.43,
+       -94.5
+      ],
+      [
+       -10.38,
+       -94.51
+      ],
+      [
+       -10.39,
+       -94.05
+      ],
+      [
+       -11.62,
+       -94.06
+      ],
+      [
+       -11.63,
+       -92.78
+      ],
+      [
+       -12.01,
+       -92.36
+      ],
+      [
+       -15.37,
+       -92.22
+      ],
+      [
+       -15.36,
+       -92.87
+      ],
+      [
+       -18.06,
+       -92.89
+      ],
+      [
+       -18.07,
+       -91.97
+      ],
+      [
+       -19.66,
+       -91.98
+      ],
+      [
+       -19.66,
+       -91.75
+      ],
+      [
+       -21.69,
+       -91.77
+      ]
+     ],
+     "area_m2": 421.9,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 11.9,
+     "ndsm_p95_m_tree_contaminated": 19.9,
+     "eave_m_estimate": 5.0,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    },
+    {
+     "footprint_spec": [
+      [
+       -47.01,
+       -75.88
+      ],
+      [
+       -43.41,
+       -76.31
+      ],
+      [
+       -44.58,
+       -86.38
+      ],
+      [
+       -48.19,
+       -85.95
+      ],
+      [
+       -52.1,
+       -85.48
+      ],
+      [
+       -50.92,
+       -75.41
+      ],
+      [
+       -47.01,
+       -75.88
+      ]
+     ],
+     "area_m2": 76.8,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 5.0,
+     "ndsm_p95_m_tree_contaminated": 12.1,
+     "eave_m_estimate": 2.5,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": false
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": -39.6,
+     "z": -103.0,
+     "h_m": 20.0
+    },
+    {
+     "x": -43.0,
+     "z": -97.0,
+     "h_m": 22.2
+    },
+    {
+     "x": -43.8,
+     "z": -96.2,
+     "h_m": 22.2
+    },
+    {
+     "x": -51.2,
+     "z": -86.5,
+     "h_m": 20.2
+    },
+    {
+     "x": -39.5,
+     "z": -93.3,
+     "h_m": 22.8
+    },
+    {
+     "x": -40.3,
+     "z": -92.5,
+     "h_m": 22.8
+    },
+    {
+     "x": -22.8,
+     "z": -107.6,
+     "h_m": 11.5
+    },
+    {
+     "x": -25.9,
+     "z": -94.9,
+     "h_m": 20.6
+    },
+    {
+     "x": -26.7,
+     "z": -94.1,
+     "h_m": 20.6
+    },
+    {
+     "x": -47.0,
+     "z": -72.3,
+     "h_m": 14.7
+    },
+    {
+     "x": -16.9,
+     "z": -96.5,
+     "h_m": 14.1
+    },
+    {
+     "x": -2.1,
+     "z": -103.3,
+     "h_m": 17.0
+    },
+    {
+     "x": 4.5,
+     "z": -102.7,
+     "h_m": 14.1
+    },
+    {
+     "x": 3.2,
+     "z": -94.4,
+     "h_m": 14.9
+    },
+    {
+     "x": -5.4,
+     "z": -79.4,
+     "h_m": 22.7
+    },
+    {
+     "x": 8.6,
+     "z": -87.0,
+     "h_m": 15.3
+    },
+    {
+     "x": 18.2,
+     "z": -84.9,
+     "h_m": 9.8
+    },
+    {
+     "x": 24.4,
+     "z": -78.2,
+     "h_m": 12.9
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_A-2",
+   "tier": 3,
+   "parcel_idx": 153,
+   "side": "mccallister_side",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     -47.91,
+     -56.95
+    ],
+    [
+     -46.15,
+     -41.76
+    ],
+    [
+     27.22,
+     -41.59
+    ],
+    [
+     27.18,
+     -56.78
+    ],
+    [
+     27.15,
+     -71.97
+    ],
+    [
+     -49.66,
+     -72.15
+    ],
+    [
+     -47.91,
+     -56.95
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       -15.17,
+       -67.88
+      ],
+      [
+       -15.25,
+       -62.6
+      ],
+      [
+       -18.91,
+       -62.64
+      ],
+      [
+       -18.92,
+       -62.2
+      ],
+      [
+       -18.96,
+       -59.85
+      ],
+      [
+       -19.04,
+       -54.05
+      ],
+      [
+       -14.01,
+       -53.99
+      ],
+      [
+       -8.26,
+       -53.92
+      ],
+      [
+       -8.29,
+       -52.01
+      ],
+      [
+       -4.52,
+       -51.86
+      ],
+      [
+       -4.62,
+       -54.22
+      ],
+      [
+       -4.6,
+       -55.41
+      ],
+      [
+       -0.15,
+       -55.35
+      ],
+      [
+       7.65,
+       -54.44
+      ],
+      [
+       7.64,
+       -67.69
+      ],
+      [
+       7.63,
+       -68.07
+      ],
+      [
+       4.54,
+       -68.29
+      ],
+      [
+       0.01,
+       -68.27
+      ],
+      [
+       -1.91,
+       -68.26
+      ],
+      [
+       -1.91,
+       -69.1
+      ],
+      [
+       -5.52,
+       -69.09
+      ],
+      [
+       -7.47,
+       -67.98
+      ],
+      [
+       -8.75,
+       -68.17
+      ],
+      [
+       -10.46,
+       -68.21
+      ],
+      [
+       -12.29,
+       -68.23
+      ],
+      [
+       -12.3,
+       -67.84
+      ],
+      [
+       -15.17,
+       -67.88
+      ]
+     ],
+     "area_m2": 354.8,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 11.9,
+     "ndsm_p95_m_tree_contaminated": 16.0,
+     "eave_m_estimate": 6.2,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    },
+    {
+     "footprint_spec": [
+      [
+       -42.98,
+       -47.67
+      ],
+      [
+       -42.23,
+       -43.39
+      ],
+      [
+       -42.22,
+       -41.9
+      ],
+      [
+       -41.22,
+       -41.92
+      ],
+      [
+       -40.61,
+       -41.94
+      ],
+      [
+       -36.61,
+       -42.02
+      ],
+      [
+       -34.66,
+       -42.06
+      ],
+      [
+       -31.53,
+       -42.13
+      ],
+      [
+       -31.58,
+       -42.62
+      ],
+      [
+       -31.36,
+       -44.71
+      ],
+      [
+       -31.37,
+       -46.41
+      ],
+      [
+       -30.97,
+       -47.62
+      ],
+      [
+       -31.36,
+       -50.3
+      ],
+      [
+       -32.02,
+       -50.3
+      ],
+      [
+       -38.96,
+       -50.24
+      ],
+      [
+       -39.69,
+       -50.07
+      ],
+      [
+       -39.69,
+       -48.81
+      ],
+      [
+       -42.24,
+       -48.79
+      ],
+      [
+       -42.23,
+       -48.29
+      ],
+      [
+       -42.9,
+       -48.29
+      ],
+      [
+       -42.9,
+       -48.41
+      ],
+      [
+       -42.98,
+       -48.41
+      ],
+      [
+       -42.98,
+       -47.67
+      ]
+     ],
+     "area_m2": 88.4,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 4.3,
+     "ndsm_p95_m_tree_contaminated": 10.9,
+     "eave_m_estimate": 2.5,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": false
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": -33.7,
+     "z": -71.0,
+     "h_m": 17.0
+    },
+    {
+     "x": -28.8,
+     "z": -65.8,
+     "h_m": 14.6
+    },
+    {
+     "x": -20.3,
+     "z": -69.6,
+     "h_m": 15.8
+    },
+    {
+     "x": -25.4,
+     "z": -62.1,
+     "h_m": 16.3
+    },
+    {
+     "x": -45.4,
+     "z": -43.3,
+     "h_m": 14.5
+    },
+    {
+     "x": -30.5,
+     "z": -53.1,
+     "h_m": 16.6
+    },
+    {
+     "x": -23.5,
+     "z": -56.9,
+     "h_m": 15.8
+    },
+    {
+     "x": -12.1,
+     "z": -49.6,
+     "h_m": 21.5
+    },
+    {
+     "x": -15.3,
+     "z": -46.5,
+     "h_m": 20.0
+    },
+    {
+     "x": 8.7,
+     "z": -67.6,
+     "h_m": 11.8
+    },
+    {
+     "x": 14.8,
+     "z": -69.2,
+     "h_m": 12.0
+    },
+    {
+     "x": 0.8,
+     "z": -51.9,
+     "h_m": 17.6
+    },
+    {
+     "x": 24.7,
+     "z": -61.8,
+     "h_m": 17.6
+    },
+    {
+     "x": 24.5,
+     "z": -49.2,
+     "h_m": 17.4
+    },
+    {
+     "x": 18.1,
+     "z": -43.1,
+     "h_m": 19.3
+    },
+    {
+     "x": 27.1,
+     "z": -43.2,
+     "h_m": 20.7
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_A-1",
+   "tier": 2,
+   "parcel_idx": 26,
+   "side": "mccallister_side",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     -45.94,
+     -39.89
+    ],
+    [
+     -44.21,
+     -24.89
+    ],
+    [
+     -41.82,
+     -4.08
+    ],
+    [
+     -34.16,
+     -4.06
+    ],
+    [
+     27.3,
+     -3.91
+    ],
+    [
+     27.23,
+     -38.95
+    ],
+    [
+     27.22,
+     -41.59
+    ],
+    [
+     -46.15,
+     -41.76
+    ],
+    [
+     -45.94,
+     -39.89
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       -15.68,
+       -37.89
+      ],
+      [
+       -15.8,
+       -37.42
+      ],
+      [
+       -16.35,
+       -37.42
+      ],
+      [
+       -16.46,
+       -29.5
+      ],
+      [
+       -14.6,
+       -29.49
+      ],
+      [
+       -14.62,
+       -26.28
+      ],
+      [
+       -16.77,
+       -25.91
+      ],
+      [
+       -19.65,
+       -25.92
+      ],
+      [
+       -19.7,
+       -18.53
+      ],
+      [
+       -19.72,
+       -15.82
+      ],
+      [
+       -19.72,
+       -15.33
+      ],
+      [
+       -7.9,
+       -15.31
+      ],
+      [
+       -7.87,
+       -20.83
+      ],
+      [
+       -3.62,
+       -20.82
+      ],
+      [
+       -3.45,
+       -20.82
+      ],
+      [
+       -3.43,
+       -24.32
+      ],
+      [
+       -0.62,
+       -24.51
+      ],
+      [
+       1.77,
+       -26.92
+      ],
+      [
+       1.84,
+       -29.67
+      ],
+      [
+       8.21,
+       -29.65
+      ],
+      [
+       8.27,
+       -37.95
+      ],
+      [
+       -0.15,
+       -37.83
+      ],
+      [
+       -0.14,
+       -39.45
+      ],
+      [
+       -11.37,
+       -39.16
+      ],
+      [
+       -12.58,
+       -39.16
+      ],
+      [
+       -15.67,
+       -38.68
+      ],
+      [
+       -15.68,
+       -37.89
+      ]
+     ],
+     "area_m2": 437.6,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 12.8,
+     "ndsm_p95_m_tree_contaminated": 14.9,
+     "eave_m_estimate": 4.8,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": -39.5,
+     "z": -32.1,
+     "h_m": 15.0
+    },
+    {
+     "x": -25.4,
+     "z": -41.2,
+     "h_m": 12.6
+    },
+    {
+     "x": -28.8,
+     "z": -35.2,
+     "h_m": 15.6
+    },
+    {
+     "x": -31.3,
+     "z": -31.5,
+     "h_m": 15.5
+    },
+    {
+     "x": -35.0,
+     "z": -22.5,
+     "h_m": 14.9
+    },
+    {
+     "x": -33.7,
+     "z": -9.8,
+     "h_m": 12.2
+    },
+    {
+     "x": -34.5,
+     "z": -9.1,
+     "h_m": 12.2
+    },
+    {
+     "x": -25.1,
+     "z": -15.1,
+     "h_m": 13.3
+    },
+    {
+     "x": 10.9,
+     "z": -36.4,
+     "h_m": 20.1
+    },
+    {
+     "x": 12.2,
+     "z": -33.4,
+     "h_m": 20.1
+    },
+    {
+     "x": -15.3,
+     "z": -6.3,
+     "h_m": 13.6
+    },
+    {
+     "x": 24.6,
+     "z": -39.5,
+     "h_m": 20.8
+    },
+    {
+     "x": 4.5,
+     "z": -20.6,
+     "h_m": 12.3
+    },
+    {
+     "x": -6.1,
+     "z": -9.3,
+     "h_m": 11.3
+    },
+    {
+     "x": 21.4,
+     "z": -26.8,
+     "h_m": 21.2
+    },
+    {
+     "x": 25.0,
+     "z": -24.6,
+     "h_m": 21.4
+    },
+    {
+     "x": 25.3,
+     "z": -19.3,
+     "h_m": 21.5
+    },
+    {
+     "x": 12.5,
+     "z": -7.3,
+     "h_m": 16.2
+    },
+    {
+     "x": 11.7,
+     "z": -6.5,
+     "h_m": 16.2
+    },
+    {
+     "x": 21.2,
+     "z": -14.1,
+     "h_m": 18.9
+    },
+    {
+     "x": 20.4,
+     "z": -13.3,
+     "h_m": 18.9
+    },
+    {
+     "x": 16.1,
+     "z": -5.1,
+     "h_m": 16.7
+    }
+   ],
+   "style_kit_guess": "white clapboard colonial/foursquare, 2.5 storeys, set close to the street, lamp post at its frontage",
+   "evidence_frames": [
+    1471,
+    1475,
+    3297,
+    6399,
+    9511
+   ],
+   "confidence": "low",
+   "status": "evidence",
+   "note": "film-right neighbour (toward -z): seen only at the edge of frames 1471/6399/9511; side and roof not seen"
+  },
+  {
+   "id": "lot_A0",
+   "tier": 1,
+   "parcel_idx": 10,
+   "side": "mccallister_side",
+   "film_role": "McCallister lot",
+   "parcel_poly_spec": [
+    [
+     -30.16,
+     30.58
+    ],
+    [
+     27.38,
+     30.72
+    ],
+    [
+     27.36,
+     19.17
+    ],
+    [
+     27.3,
+     -3.91
+    ],
+    [
+     -34.16,
+     -4.06
+    ],
+    [
+     -30.16,
+     30.58
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       -18.5,
+       12.68
+      ],
+      [
+       -18.5,
+       12.94
+      ],
+      [
+       -13.35,
+       12.91
+      ],
+      [
+       -11.54,
+       12.9
+      ],
+      [
+       -9.73,
+       13.0
+      ],
+      [
+       -5.96,
+       12.97
+      ],
+      [
+       -5.73,
+       20.34
+      ],
+      [
+       -7.9,
+       20.22
+      ],
+      [
+       -7.88,
+       26.58
+      ],
+      [
+       -7.88,
+       27.07
+      ],
+      [
+       1.88,
+       27.0
+      ],
+      [
+       1.88,
+       26.52
+      ],
+      [
+       2.16,
+       23.13
+      ],
+      [
+       4.29,
+       23.56
+      ],
+      [
+       11.24,
+       23.52
+      ],
+      [
+       11.49,
+       23.19
+      ],
+      [
+       11.81,
+       19.98
+      ],
+      [
+       12.7,
+       19.81
+      ],
+      [
+       13.02,
+       19.81
+      ],
+      [
+       13.0,
+       14.32
+      ],
+      [
+       13.66,
+       14.31
+      ],
+      [
+       13.66,
+       12.32
+      ],
+      [
+       13.65,
+       10.95
+      ],
+      [
+       12.99,
+       10.95
+      ],
+      [
+       12.97,
+       5.28
+      ],
+      [
+       12.8,
+       5.1
+      ],
+      [
+       11.63,
+       5.11
+      ],
+      [
+       11.6,
+       1.52
+      ],
+      [
+       5.12,
+       1.56
+      ],
+      [
+       4.68,
+       1.95
+      ],
+      [
+       4.31,
+       1.95
+      ],
+      [
+       4.32,
+       5.32
+      ],
+      [
+       2.98,
+       5.33
+      ],
+      [
+       2.98,
+       5.7
+      ],
+      [
+       2.99,
+       7.77
+      ],
+      [
+       2.99,
+       8.11
+      ],
+      [
+       2.99,
+       8.82
+      ],
+      [
+       2.99,
+       9.43
+      ],
+      [
+       0.77,
+       9.12
+      ],
+      [
+       -1.23,
+       9.13
+      ],
+      [
+       -1.42,
+       2.99
+      ],
+      [
+       -1.84,
+       2.92
+      ],
+      [
+       -5.07,
+       2.94
+      ],
+      [
+       -6.98,
+       3.03
+      ],
+      [
+       -9.77,
+       3.05
+      ],
+      [
+       -9.77,
+       4.46
+      ],
+      [
+       -18.09,
+       4.79
+      ],
+      [
+       -18.53,
+       4.79
+      ],
+      [
+       -18.5,
+       12.68
+      ]
+     ],
+     "area_m2": 514.5,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 9.2,
+     "ndsm_p95_m_tree_contaminated": 13.1,
+     "eave_m_estimate": 2.5,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": -19.8,
+     "z": 5.0,
+     "h_m": 17.8
+    },
+    {
+     "x": -26.2,
+     "z": 11.0,
+     "h_m": 18.8
+    },
+    {
+     "x": -11.9,
+     "z": -1.1,
+     "h_m": 17.6
+    },
+    {
+     "x": -14.4,
+     "z": 2.7,
+     "h_m": 18.1
+    },
+    {
+     "x": -2.8,
+     "z": -2.7,
+     "h_m": 18.3
+    },
+    {
+     "x": 2.4,
+     "z": -2.0,
+     "h_m": 18.0
+    },
+    {
+     "x": 1.6,
+     "z": -1.2,
+     "h_m": 18.0
+    },
+    {
+     "x": -27.7,
+     "z": 30.4,
+     "h_m": 16.1
+    },
+    {
+     "x": -15.9,
+     "z": 23.6,
+     "h_m": 19.7
+    },
+    {
+     "x": -6.6,
+     "z": 28.7,
+     "h_m": 6.7
+    },
+    {
+     "x": 23.4,
+     "z": 7.5,
+     "h_m": 23.5
+    },
+    {
+     "x": 22.6,
+     "z": 8.3,
+     "h_m": 23.5
+    },
+    {
+     "x": 18.7,
+     "z": 20.2,
+     "h_m": 23.1
+    },
+    {
+     "x": 17.9,
+     "z": 21.0,
+     "h_m": 23.1
+    },
+    {
+     "x": 27.1,
+     "z": 17.9,
+     "h_m": 19.3
+    }
+   ],
+   "style_kit_guess": "Georgian Colonial Revival, red brick, 2.5 storeys, hip roof, 3 dormers; documented elsewhere in spec",
+   "evidence_frames": [
+    4382,
+    6399,
+    9512,
+    11908,
+    1570,
+    1891
+   ],
+   "confidence": "high",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_A+1",
+   "tier": 2,
+   "parcel_idx": 205,
+   "side": "mccallister_side",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     -35.64,
+     49.41
+    ],
+    [
+     27.42,
+     49.55
+    ],
+    [
+     27.39,
+     34.36
+    ],
+    [
+     27.38,
+     30.72
+    ],
+    [
+     -30.16,
+     30.58
+    ],
+    [
+     -29.75,
+     34.23
+    ],
+    [
+     -37.4,
+     34.21
+    ],
+    [
+     -35.64,
+     49.41
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       -4.85,
+       48.35
+      ],
+      [
+       -3.72,
+       48.34
+      ],
+      [
+       -2.11,
+       48.6
+      ],
+      [
+       -2.11,
+       47.66
+      ],
+      [
+       2.78,
+       47.63
+      ],
+      [
+       3.61,
+       47.63
+      ],
+      [
+       7.99,
+       47.61
+      ],
+      [
+       7.98,
+       47.21
+      ],
+      [
+       10.8,
+       47.19
+      ],
+      [
+       10.8,
+       43.05
+      ],
+      [
+       12.64,
+       43.04
+      ],
+      [
+       12.64,
+       41.24
+      ],
+      [
+       12.64,
+       40.25
+      ],
+      [
+       11.21,
+       40.26
+      ],
+      [
+       10.79,
+       39.43
+      ],
+      [
+       10.79,
+       38.61
+      ],
+      [
+       10.78,
+       36.87
+      ],
+      [
+       10.78,
+       36.83
+      ],
+      [
+       9.34,
+       35.52
+      ],
+      [
+       9.34,
+       35.06
+      ],
+      [
+       8.35,
+       35.07
+      ],
+      [
+       8.35,
+       35.74
+      ],
+      [
+       8.35,
+       36.53
+      ],
+      [
+       -1.95,
+       36.75
+      ],
+      [
+       -1.96,
+       33.07
+      ],
+      [
+       -9.58,
+       33.11
+      ],
+      [
+       -9.57,
+       36.62
+      ],
+      [
+       -9.57,
+       40.85
+      ],
+      [
+       -9.56,
+       43.9
+      ],
+      [
+       -9.56,
+       45.83
+      ],
+      [
+       -9.56,
+       47.19
+      ],
+      [
+       -9.55,
+       47.7
+      ],
+      [
+       -6.04,
+       47.68
+      ],
+      [
+       -6.03,
+       48.36
+      ],
+      [
+       -4.85,
+       48.35
+      ]
+     ],
+     "area_m2": 260.4,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 10.0,
+     "ndsm_p95_m_tree_contaminated": 15.9,
+     "eave_m_estimate": 4.9,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    },
+    {
+     "footprint_spec": [
+      [
+       -32.56,
+       41.9
+      ],
+      [
+       -30.62,
+       41.89
+      ],
+      [
+       -30.62,
+       41.17
+      ],
+      [
+       -30.63,
+       35.85
+      ],
+      [
+       -32.34,
+       35.73
+      ],
+      [
+       -37.86,
+       35.1
+      ],
+      [
+       -38.16,
+       38.42
+      ],
+      [
+       -38.24,
+       39.37
+      ],
+      [
+       -38.47,
+       42.06
+      ],
+      [
+       -36.31,
+       42.0
+      ],
+      [
+       -32.56,
+       41.9
+      ]
+     ],
+     "area_m2": 48.8,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 5.0,
+     "ndsm_p95_m_tree_contaminated": 8.0,
+     "eave_m_estimate": 2.7,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": false
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": -24.4,
+     "z": 37.1,
+     "h_m": 17.6
+    },
+    {
+     "x": -19.0,
+     "z": 34.8,
+     "h_m": 16.2
+    },
+    {
+     "x": -18.6,
+     "z": 40.0,
+     "h_m": 20.0
+    },
+    {
+     "x": -20.7,
+     "z": 47.5,
+     "h_m": 19.2
+    },
+    {
+     "x": -15.4,
+     "z": 46.7,
+     "h_m": 22.3
+    },
+    {
+     "x": 9.6,
+     "z": 31.5,
+     "h_m": 14.3
+    },
+    {
+     "x": 21.9,
+     "z": 38.1,
+     "h_m": 12.2
+    }
+   ],
+   "style_kit_guess": "dark/red-brown 2-storey house with garage side; in 1886/1891 a red-brick house with red roof tiles at left of ours",
+   "evidence_frames": [
+    1471,
+    1886,
+    1891,
+    6399
+   ],
+   "confidence": "low",
+   "status": "evidence",
+   "note": "film-left neighbour (toward +z): behind our detached garage at 6399; only far edges seen"
+  },
+  {
+   "id": "lot_A+2",
+   "tier": 3,
+   "parcel_idx": 115,
+   "side": "mccallister_side",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     -33.89,
+     64.6
+    ],
+    [
+     27.46,
+     64.74
+    ],
+    [
+     27.42,
+     49.55
+    ],
+    [
+     -35.64,
+     49.41
+    ],
+    [
+     -33.89,
+     64.6
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       8.48,
+       63.31
+      ],
+      [
+       9.75,
+       63.03
+      ],
+      [
+       9.85,
+       59.96
+      ],
+      [
+       10.02,
+       54.48
+      ],
+      [
+       10.09,
+       52.19
+      ],
+      [
+       10.13,
+       50.74
+      ],
+      [
+       7.12,
+       50.76
+      ],
+      [
+       5.11,
+       50.77
+      ],
+      [
+       1.38,
+       50.79
+      ],
+      [
+       -3.22,
+       51.05
+      ],
+      [
+       -4.68,
+       51.13
+      ],
+      [
+       -6.41,
+       51.22
+      ],
+      [
+       -8.32,
+       51.33
+      ],
+      [
+       -8.37,
+       51.88
+      ],
+      [
+       -8.53,
+       53.37
+      ],
+      [
+       -8.51,
+       61.56
+      ],
+      [
+       -5.8,
+       61.55
+      ],
+      [
+       -4.2,
+       61.54
+      ],
+      [
+       -4.2,
+       61.86
+      ],
+      [
+       -4.19,
+       64.06
+      ],
+      [
+       -2.93,
+       64.06
+      ],
+      [
+       5.23,
+       64.01
+      ],
+      [
+       8.48,
+       63.31
+      ]
+     ],
+     "area_m2": 228.5,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 12.2,
+     "ndsm_p95_m_tree_contaminated": 17.3,
+     "eave_m_estimate": 7.8,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": -29.4,
+     "z": 54.3,
+     "h_m": 24.5
+    },
+    {
+     "x": -20.3,
+     "z": 52.7,
+     "h_m": 22.2
+    },
+    {
+     "x": -29.2,
+     "z": 61.0,
+     "h_m": 22.8
+    },
+    {
+     "x": -23.3,
+     "z": 62.4,
+     "h_m": 18.5
+    },
+    {
+     "x": -15.7,
+     "z": 60.8,
+     "h_m": 19.3
+    },
+    {
+     "x": 20.1,
+     "z": 52.3,
+     "h_m": 21.1
+    },
+    {
+     "x": 17.6,
+     "z": 56.0,
+     "h_m": 20.4
+    },
+    {
+     "x": 16.8,
+     "z": 56.8,
+     "h_m": 20.4
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_A+3",
+   "tier": 3,
+   "parcel_idx": 54,
+   "side": "mccallister_side",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     -32.14,
+     79.8
+    ],
+    [
+     27.5,
+     79.93
+    ],
+    [
+     27.46,
+     64.74
+    ],
+    [
+     -33.89,
+     64.6
+    ],
+    [
+     -32.14,
+     79.8
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       -4.65,
+       70.3
+      ],
+      [
+       -4.63,
+       73.65
+      ],
+      [
+       -11.69,
+       73.72
+      ],
+      [
+       -11.69,
+       74.02
+      ],
+      [
+       -11.69,
+       74.83
+      ],
+      [
+       -12.23,
+       74.84
+      ],
+      [
+       -12.22,
+       75.84
+      ],
+      [
+       -12.22,
+       76.07
+      ],
+      [
+       -12.21,
+       76.56
+      ],
+      [
+       -12.2,
+       78.38
+      ],
+      [
+       -4.6,
+       78.3
+      ],
+      [
+       -4.59,
+       79.2
+      ],
+      [
+       3.67,
+       79.12
+      ],
+      [
+       3.67,
+       78.19
+      ],
+      [
+       3.66,
+       76.66
+      ],
+      [
+       8.36,
+       76.61
+      ],
+      [
+       8.57,
+       76.61
+      ],
+      [
+       8.38,
+       73.52
+      ],
+      [
+       8.34,
+       72.87
+      ],
+      [
+       8.33,
+       70.78
+      ],
+      [
+       8.32,
+       69.64
+      ],
+      [
+       8.31,
+       68.9
+      ],
+      [
+       3.95,
+       68.94
+      ],
+      [
+       3.94,
+       66.31
+      ],
+      [
+       -1.26,
+       66.27
+      ],
+      [
+       -3.4,
+       66.3
+      ],
+      [
+       -4.1,
+       66.3
+      ],
+      [
+       -4.68,
+       66.31
+      ],
+      [
+       -4.65,
+       70.3
+      ]
+     ],
+     "area_m2": 178.8,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 10.8,
+     "ndsm_p95_m_tree_contaminated": 9.7,
+     "eave_m_estimate": 6.5,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": -32.0,
+     "z": 78.9,
+     "h_m": 18.9
+    },
+    {
+     "x": -23.4,
+     "z": 73.6,
+     "h_m": 20.6
+    },
+    {
+     "x": 14.6,
+     "z": 65.8,
+     "h_m": 18.9
+    },
+    {
+     "x": 18.8,
+     "z": 70.2,
+     "h_m": 19.4
+    },
+    {
+     "x": 26.6,
+     "z": 65.6,
+     "h_m": 20.1
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_A+4",
+   "tier": 3,
+   "parcel_idx": 73,
+   "side": "mccallister_side",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     -31.61,
+     84.36
+    ],
+    [
+     -22.5,
+     84.38
+    ],
+    [
+     27.51,
+     84.49
+    ],
+    [
+     27.5,
+     79.93
+    ],
+    [
+     -32.14,
+     79.8
+    ],
+    [
+     -31.61,
+     84.36
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       -31.63,
+       84.78
+      ],
+      [
+       -24.53,
+       84.88
+      ],
+      [
+       -24.32,
+       79.87
+      ],
+      [
+       -25.74,
+       79.88
+      ],
+      [
+       -29.54,
+       79.88
+      ],
+      [
+       -31.9,
+       80.17
+      ],
+      [
+       -31.9,
+       82.47
+      ],
+      [
+       -31.9,
+       84.79
+      ],
+      [
+       -31.63,
+       84.78
+      ]
+     ],
+     "area_m2": 36.7,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 4.1,
+     "ndsm_p95_m_tree_contaminated": 18.1,
+     "eave_m_estimate": 2.5,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": 9.0,
+     "z": 80.7,
+     "h_m": 16.7
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_A+5",
+   "tier": 3,
+   "parcel_idx": 94,
+   "side": "mccallister_side",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     -23.14,
+     99.56
+    ],
+    [
+     27.54,
+     99.68
+    ],
+    [
+     27.51,
+     84.49
+    ],
+    [
+     -22.5,
+     84.38
+    ],
+    [
+     -23.14,
+     99.56
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       -5.65,
+       97.53
+      ],
+      [
+       -0.65,
+       97.47
+      ],
+      [
+       -0.09,
+       96.22
+      ],
+      [
+       7.18,
+       96.18
+      ],
+      [
+       7.67,
+       96.18
+      ],
+      [
+       10.04,
+       96.97
+      ],
+      [
+       11.18,
+       95.73
+      ],
+      [
+       11.57,
+       95.41
+      ],
+      [
+       11.55,
+       92.44
+      ],
+      [
+       11.28,
+       85.28
+      ],
+      [
+       7.59,
+       85.32
+      ],
+      [
+       4.27,
+       85.36
+      ],
+      [
+       4.24,
+       81.63
+      ],
+      [
+       2.0,
+       81.66
+      ],
+      [
+       -7.91,
+       81.77
+      ],
+      [
+       -8.74,
+       81.88
+      ],
+      [
+       -9.02,
+       86.02
+      ],
+      [
+       -9.0,
+       88.22
+      ],
+      [
+       -7.88,
+       88.2
+      ],
+      [
+       -7.87,
+       89.2
+      ],
+      [
+       -7.87,
+       90.0
+      ],
+      [
+       -7.16,
+       91.06
+      ],
+      [
+       -7.15,
+       91.87
+      ],
+      [
+       -6.49,
+       91.86
+      ],
+      [
+       -6.44,
+       97.53
+      ],
+      [
+       -5.65,
+       97.53
+      ]
+     ],
+     "area_m2": 262.8,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 10.8,
+     "ndsm_p95_m_tree_contaminated": 13.8,
+     "eave_m_estimate": 5.6,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": -13.1,
+     "z": 86.2,
+     "h_m": 14.7
+    },
+    {
+     "x": -20.7,
+     "z": 98.9,
+     "h_m": 12.6
+    },
+    {
+     "x": -4.3,
+     "z": 98.8,
+     "h_m": 19.2
+    },
+    {
+     "x": 13.9,
+     "z": 85.9,
+     "h_m": 11.5
+    },
+    {
+     "x": 3.9,
+     "z": 99.4,
+     "h_m": 14.4
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_A+6",
+   "tier": 3,
+   "parcel_idx": 138,
+   "side": "mccallister_side",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     -22.57,
+     114.76
+    ],
+    [
+     8.19,
+     114.82
+    ],
+    [
+     27.58,
+     114.87
+    ],
+    [
+     27.54,
+     99.68
+    ],
+    [
+     -23.14,
+     99.56
+    ],
+    [
+     -27.09,
+     99.55
+    ],
+    [
+     -22.57,
+     114.76
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       -10.91,
+       107.19
+      ],
+      [
+       -8.13,
+       107.74
+      ],
+      [
+       -7.7,
+       107.73
+      ],
+      [
+       -7.09,
+       107.76
+      ],
+      [
+       -7.06,
+       112.33
+      ],
+      [
+       6.12,
+       112.2
+      ],
+      [
+       9.73,
+       112.15
+      ],
+      [
+       11.26,
+       112.13
+      ],
+      [
+       11.14,
+       111.32
+      ],
+      [
+       11.85,
+       103.61
+      ],
+      [
+       11.84,
+       102.05
+      ],
+      [
+       11.06,
+       101.5
+      ],
+      [
+       9.28,
+       100.59
+      ],
+      [
+       8.8,
+       100.6
+      ],
+      [
+       8.72,
+       100.6
+      ],
+      [
+       -2.85,
+       100.4
+      ],
+      [
+       -3.59,
+       101.3
+      ],
+      [
+       -5.76,
+       101.33
+      ],
+      [
+       -7.75,
+       101.35
+      ],
+      [
+       -8.61,
+       101.35
+      ],
+      [
+       -10.95,
+       101.77
+      ],
+      [
+       -10.91,
+       107.19
+      ]
+     ],
+     "area_m2": 237.0,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 10.0,
+     "ndsm_p95_m_tree_contaminated": 11.7,
+     "eave_m_estimate": 6.1,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": -8.9,
+     "z": 100.3,
+     "h_m": 18.2
+    },
+    {
+     "x": 20.3,
+     "z": 100.8,
+     "h_m": 9.5
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_B-3",
+   "tier": 3,
+   "parcel_idx": 195,
+   "side": "across_lincoln",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     55.18,
+     -110.21
+    ],
+    [
+     57.1,
+     -109.24
+    ],
+    [
+     60.34,
+     -107.61
+    ],
+    [
+     66.91,
+     -104.29
+    ],
+    [
+     78.8,
+     -97.02
+    ],
+    [
+     67.37,
+     -155.16
+    ],
+    [
+     59.52,
+     -157.12
+    ],
+    [
+     46.47,
+     -154.52
+    ],
+    [
+     55.18,
+     -110.21
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       51.74,
+       -135.1
+      ],
+      [
+       52.5,
+       -131.14
+      ],
+      [
+       56.46,
+       -131.91
+      ],
+      [
+       56.64,
+       -130.93
+      ],
+      [
+       57.54,
+       -131.1
+      ],
+      [
+       58.68,
+       -124.02
+      ],
+      [
+       59.07,
+       -122.02
+      ],
+      [
+       69.71,
+       -124.1
+      ],
+      [
+       68.24,
+       -130.98
+      ],
+      [
+       67.67,
+       -133.93
+      ],
+      [
+       66.71,
+       -136.42
+      ],
+      [
+       65.61,
+       -142.01
+      ],
+      [
+       65.36,
+       -143.29
+      ],
+      [
+       63.83,
+       -142.99
+      ],
+      [
+       63.34,
+       -145.53
+      ],
+      [
+       62.72,
+       -145.41
+      ],
+      [
+       59.95,
+       -144.87
+      ],
+      [
+       57.0,
+       -144.3
+      ],
+      [
+       57.78,
+       -140.2
+      ],
+      [
+       55.86,
+       -139.82
+      ],
+      [
+       54.12,
+       -139.48
+      ],
+      [
+       52.65,
+       -139.2
+      ],
+      [
+       51.01,
+       -138.88
+      ],
+      [
+       51.74,
+       -135.1
+      ]
+     ],
+     "area_m2": 257.4,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 11.0,
+     "ndsm_p95_m_tree_contaminated": 12.4,
+     "eave_m_estimate": 4.8,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    },
+    {
+     "footprint_spec": [
+      [
+       53.76,
+       -144.44
+      ],
+      [
+       57.43,
+       -145.15
+      ],
+      [
+       56.08,
+       -152.33
+      ],
+      [
+       52.41,
+       -151.63
+      ],
+      [
+       49.06,
+       -150.99
+      ],
+      [
+       50.41,
+       -143.8
+      ],
+      [
+       53.76,
+       -144.44
+      ]
+     ],
+     "area_m2": 52.2,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 4.3,
+     "ndsm_p95_m_tree_contaminated": 2.0,
+     "eave_m_estimate": 2.5,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": false
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": 55.3,
+     "z": -141.9,
+     "h_m": 15.4
+    },
+    {
+     "x": 66.3,
+     "z": -149.5,
+     "h_m": 15.3
+    },
+    {
+     "x": 57.6,
+     "z": -112.1,
+     "h_m": 10.4
+    },
+    {
+     "x": 69.5,
+     "z": -112.2,
+     "h_m": 13.2
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_B-2",
+   "tier": 3,
+   "parcel_idx": 6,
+   "side": "across_lincoln",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     50.48,
+     -66.76
+    ],
+    [
+     47.78,
+     -62.28
+    ],
+    [
+     47.23,
+     -59.75
+    ],
+    [
+     47.29,
+     -32.87
+    ],
+    [
+     91.49,
+     -32.86
+    ],
+    [
+     91.31,
+     -48.05
+    ],
+    [
+     91.09,
+     -65.4
+    ],
+    [
+     81.27,
+     -71.54
+    ],
+    [
+     78.75,
+     -73.06
+    ],
+    [
+     73.86,
+     -74.91
+    ],
+    [
+     68.68,
+     -75.58
+    ],
+    [
+     63.49,
+     -75.04
+    ],
+    [
+     58.54,
+     -73.32
+    ],
+    [
+     54.12,
+     -70.51
+    ],
+    [
+     50.48,
+     -66.76
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       73.49,
+       -36.38
+      ],
+      [
+       77.78,
+       -36.34
+      ],
+      [
+       77.79,
+       -37.09
+      ],
+      [
+       77.81,
+       -39.0
+      ],
+      [
+       85.38,
+       -38.94
+      ],
+      [
+       85.48,
+       -49.29
+      ],
+      [
+       78.04,
+       -48.88
+      ],
+      [
+       78.0,
+       -50.98
+      ],
+      [
+       77.97,
+       -52.71
+      ],
+      [
+       78.0,
+       -55.76
+      ],
+      [
+       77.65,
+       -55.76
+      ],
+      [
+       73.77,
+       -55.79
+      ],
+      [
+       73.79,
+       -57.09
+      ],
+      [
+       71.8,
+       -57.11
+      ],
+      [
+       70.5,
+       -58.51
+      ],
+      [
+       69.95,
+       -58.97
+      ],
+      [
+       69.44,
+       -58.98
+      ],
+      [
+       67.82,
+       -59.01
+      ],
+      [
+       66.41,
+       -58.83
+      ],
+      [
+       63.46,
+       -58.45
+      ],
+      [
+       59.83,
+       -37.0
+      ],
+      [
+       63.26,
+       -36.72
+      ],
+      [
+       66.79,
+       -36.43
+      ],
+      [
+       73.49,
+       -36.38
+      ]
+     ],
+     "area_m2": 421.9,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 11.6,
+     "ndsm_p95_m_tree_contaminated": 12.5,
+     "eave_m_estimate": 4.1,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": 55.1,
+     "z": -58.4,
+     "h_m": 13.1
+    },
+    {
+     "x": 59.0,
+     "z": -60.7,
+     "h_m": 12.6
+    },
+    {
+     "x": 66.7,
+     "z": -63.7,
+     "h_m": 14.6
+    },
+    {
+     "x": 74.5,
+     "z": -68.3,
+     "h_m": 14.1
+    },
+    {
+     "x": 48.0,
+     "z": -43.4,
+     "h_m": 18.7
+    },
+    {
+     "x": 72.0,
+     "z": -64.5,
+     "h_m": 13.6
+    },
+    {
+     "x": 59.9,
+     "z": -51.7,
+     "h_m": 14.4
+    },
+    {
+     "x": 78.1,
+     "z": -66.1,
+     "h_m": 12.8
+    },
+    {
+     "x": 51.9,
+     "z": -34.5,
+     "h_m": 14.0
+    },
+    {
+     "x": 87.9,
+     "z": -66.9,
+     "h_m": 15.7
+    },
+    {
+     "x": 85.0,
+     "z": -37.8,
+     "h_m": 14.6
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_B-1",
+   "tier": 2,
+   "parcel_idx": 119,
+   "side": "across_lincoln",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     47.36,
+     -2.49
+    ],
+    [
+     91.88,
+     -2.49
+    ],
+    [
+     91.49,
+     -32.86
+    ],
+    [
+     47.29,
+     -32.87
+    ],
+    [
+     47.36,
+     -2.49
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       60.57,
+       -10.49
+      ],
+      [
+       71.24,
+       -10.37
+      ],
+      [
+       71.24,
+       -9.97
+      ],
+      [
+       75.1,
+       -9.93
+      ],
+      [
+       76.08,
+       -10.38
+      ],
+      [
+       76.11,
+       -12.93
+      ],
+      [
+       76.12,
+       -13.28
+      ],
+      [
+       76.12,
+       -13.59
+      ],
+      [
+       76.13,
+       -13.91
+      ],
+      [
+       76.14,
+       -14.92
+      ],
+      [
+       76.15,
+       -15.21
+      ],
+      [
+       76.15,
+       -15.5
+      ],
+      [
+       77.06,
+       -15.99
+      ],
+      [
+       78.19,
+       -16.18
+      ],
+      [
+       78.27,
+       -21.59
+      ],
+      [
+       70.79,
+       -21.69
+      ],
+      [
+       65.55,
+       -21.76
+      ],
+      [
+       63.8,
+       -21.78
+      ],
+      [
+       60.73,
+       -21.81
+      ],
+      [
+       60.7,
+       -19.41
+      ],
+      [
+       60.69,
+       -18.77
+      ],
+      [
+       60.69,
+       -18.63
+      ],
+      [
+       60.68,
+       -18.32
+      ],
+      [
+       60.65,
+       -16.15
+      ],
+      [
+       60.64,
+       -15.32
+      ],
+      [
+       60.6,
+       -12.68
+      ],
+      [
+       60.57,
+       -10.49
+      ]
+     ],
+     "area_m2": 188.7,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 9.9,
+     "ndsm_p95_m_tree_contaminated": 15.3,
+     "eave_m_estimate": 6.0,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    },
+    {
+     "footprint_spec": [
+      [
+       75.79,
+       -21.97
+      ],
+      [
+       84.83,
+       -21.9
+      ],
+      [
+       84.85,
+       -23.35
+      ],
+      [
+       84.9,
+       -24.59
+      ],
+      [
+       85.09,
+       -29.04
+      ],
+      [
+       85.1,
+       -30.51
+      ],
+      [
+       81.84,
+       -30.54
+      ],
+      [
+       77.18,
+       -30.49
+      ],
+      [
+       75.88,
+       -30.5
+      ],
+      [
+       75.84,
+       -26.52
+      ],
+      [
+       75.83,
+       -25.78
+      ],
+      [
+       75.81,
+       -24.4
+      ],
+      [
+       75.79,
+       -21.97
+      ]
+     ],
+     "area_m2": 78.4,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 4.4,
+     "ndsm_p95_m_tree_contaminated": 16.6,
+     "eave_m_estimate": 2.5,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": false
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": 79.8,
+     "z": -7.9,
+     "h_m": 16.4
+    },
+    {
+     "x": 90.5,
+     "z": -11.0,
+     "h_m": 11.6
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_B0",
+   "tier": 2,
+   "parcel_idx": 32,
+   "side": "across_lincoln",
+   "film_role": "Murphys",
+   "parcel_poly_spec": [
+    [
+     47.4,
+     12.7
+    ],
+    [
+     47.43,
+     27.89
+    ],
+    [
+     92.26,
+     27.9
+    ],
+    [
+     92.07,
+     12.71
+    ],
+    [
+     91.98,
+     5.52
+    ],
+    [
+     91.88,
+     -2.49
+    ],
+    [
+     47.36,
+     -2.49
+    ],
+    [
+     47.4,
+     12.7
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       61.0,
+       6.37
+      ],
+      [
+       60.63,
+       17.76
+      ],
+      [
+       60.71,
+       17.95
+      ],
+      [
+       67.69,
+       18.23
+      ],
+      [
+       70.35,
+       18.22
+      ],
+      [
+       73.38,
+       18.21
+      ],
+      [
+       77.3,
+       17.96
+      ],
+      [
+       78.15,
+       17.9
+      ],
+      [
+       78.25,
+       16.32
+      ],
+      [
+       78.61,
+       10.71
+      ],
+      [
+       79.05,
+       10.71
+      ],
+      [
+       79.05,
+       10.14
+      ],
+      [
+       79.05,
+       5.3
+      ],
+      [
+       77.39,
+       5.07
+      ],
+      [
+       76.29,
+       5.08
+      ],
+      [
+       74.38,
+       5.08
+      ],
+      [
+       70.35,
+       5.1
+      ],
+      [
+       67.24,
+       5.11
+      ],
+      [
+       64.65,
+       5.11
+      ],
+      [
+       63.54,
+       5.12
+      ],
+      [
+       63.54,
+       6.05
+      ],
+      [
+       61.57,
+       6.06
+      ],
+      [
+       61.0,
+       6.37
+      ]
+     ],
+     "area_m2": 229.7,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 11.1,
+     "ndsm_p95_m_tree_contaminated": 12.8,
+     "eave_m_estimate": 6.8,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    },
+    {
+     "footprint_spec": [
+      [
+       88.46,
+       9.16
+      ],
+      [
+       92.85,
+       9.14
+      ],
+      [
+       92.84,
+       -1.9
+      ],
+      [
+       88.44,
+       -1.88
+      ],
+      [
+       83.91,
+       -1.86
+      ],
+      [
+       83.92,
+       9.18
+      ],
+      [
+       88.46,
+       9.16
+      ]
+     ],
+     "area_m2": 98.5,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 5.9,
+     "ndsm_p95_m_tree_contaminated": 12.9,
+     "eave_m_estimate": 2.9,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": false
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": 63.5,
+     "z": 0.4,
+     "h_m": 11.4
+    },
+    {
+     "x": 60.2,
+     "z": 4.9,
+     "h_m": 11.0
+    },
+    {
+     "x": 59.3,
+     "z": 7.2,
+     "h_m": 11.0
+    },
+    {
+     "x": 88.2,
+     "z": 10.6,
+     "h_m": 15.5
+    },
+    {
+     "x": 82.7,
+     "z": 24.1,
+     "h_m": 8.8
+    }
+   ],
+   "style_kit_guess": "American Foursquare/Craftsman: 2.5 storeys, painted wood clapboard (grey-blue), low hip roof with front dormer, full-width front porch with white square columns and railing, small-pane upper windows, Christmas lights on porch and eaves",
+   "evidence_frames": [
+    11581,
+    11586,
+    11626,
+    11631,
+    11556,
+    11566,
+    11551
+   ],
+   "confidence": "medium",
+   "status": "evidence",
+   "note": "1990 state as the film shows it. Lot assignment (straight across from ours) is by position; real-house identity unverified"
+  },
+  {
+   "id": "lot_B+1",
+   "tier": 2,
+   "parcel_idx": 75,
+   "side": "across_lincoln",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     47.5,
+     58.27
+    ],
+    [
+     92.64,
+     58.28
+    ],
+    [
+     92.45,
+     43.09
+    ],
+    [
+     92.26,
+     27.9
+    ],
+    [
+     47.43,
+     27.89
+    ],
+    [
+     47.5,
+     58.27
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       60.79,
+       40.89
+      ],
+      [
+       60.66,
+       43.62
+      ],
+      [
+       60.52,
+       46.63
+      ],
+      [
+       60.42,
+       48.81
+      ],
+      [
+       60.28,
+       51.71
+      ],
+      [
+       61.6,
+       52.98
+      ],
+      [
+       62.86,
+       52.97
+      ],
+      [
+       62.86,
+       52.28
+      ],
+      [
+       63.72,
+       52.28
+      ],
+      [
+       63.72,
+       54.69
+      ],
+      [
+       65.53,
+       54.68
+      ],
+      [
+       69.86,
+       54.62
+      ],
+      [
+       71.07,
+       54.6
+      ],
+      [
+       74.89,
+       54.6
+      ],
+      [
+       74.9,
+       53.78
+      ],
+      [
+       74.9,
+       52.27
+      ],
+      [
+       75.63,
+       52.27
+      ],
+      [
+       75.63,
+       50.85
+      ],
+      [
+       81.06,
+       50.85
+      ],
+      [
+       81.0,
+       44.18
+      ],
+      [
+       80.43,
+       44.18
+      ],
+      [
+       80.44,
+       40.3
+      ],
+      [
+       79.21,
+       40.3
+      ],
+      [
+       79.44,
+       38.5
+      ],
+      [
+       63.76,
+       38.51
+      ],
+      [
+       63.48,
+       38.85
+      ],
+      [
+       63.48,
+       39.5
+      ],
+      [
+       61.24,
+       39.5
+      ],
+      [
+       60.86,
+       39.5
+      ],
+      [
+       60.79,
+       40.89
+      ]
+     ],
+     "area_m2": 293.2,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 10.4,
+     "ndsm_p95_m_tree_contaminated": 15.5,
+     "eave_m_estimate": 5.1,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    },
+    {
+     "footprint_spec": [
+      [
+       83.36,
+       41.97
+      ],
+      [
+       91.72,
+       42.03
+      ],
+      [
+       91.74,
+       31.5
+      ],
+      [
+       83.46,
+       31.31
+      ],
+      [
+       83.36,
+       41.51
+      ],
+      [
+       83.36,
+       41.97
+      ]
+     ],
+     "area_m2": 88.2,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 5.2,
+     "ndsm_p95_m_tree_contaminated": 1.6,
+     "eave_m_estimate": 2.5,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": false
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": 48.7,
+     "z": 39.3,
+     "h_m": 22.3
+    },
+    {
+     "x": 58.1,
+     "z": 33.3,
+     "h_m": 18.7
+    },
+    {
+     "x": 56.3,
+     "z": 37.8,
+     "h_m": 20.8
+    },
+    {
+     "x": 51.5,
+     "z": 42.3,
+     "h_m": 24.1
+    },
+    {
+     "x": 74.8,
+     "z": 30.1,
+     "h_m": 12.2
+    },
+    {
+     "x": 70.0,
+     "z": 34.7,
+     "h_m": 14.9
+    },
+    {
+     "x": 58.2,
+     "z": 52.7,
+     "h_m": 17.6
+    },
+    {
+     "x": 57.4,
+     "z": 53.4,
+     "h_m": 17.6
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_B+2",
+   "tier": 3,
+   "parcel_idx": 52,
+   "side": "across_lincoln",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     47.53,
+     73.45
+    ],
+    [
+     88.87,
+     72.92
+    ],
+    [
+     88.95,
+     79.52
+    ],
+    [
+     90.39,
+     78.35
+    ],
+    [
+     92.87,
+     76.52
+    ],
+    [
+     92.64,
+     58.28
+    ],
+    [
+     47.5,
+     58.27
+    ],
+    [
+     47.53,
+     73.45
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       61.21,
+       60.39
+      ],
+      [
+       60.89,
+       65.01
+      ],
+      [
+       60.89,
+       70.5
+      ],
+      [
+       61.43,
+       70.5
+      ],
+      [
+       61.43,
+       71.27
+      ],
+      [
+       62.43,
+       71.27
+      ],
+      [
+       63.68,
+       71.46
+      ],
+      [
+       68.09,
+       71.45
+      ],
+      [
+       72.54,
+       71.44
+      ],
+      [
+       72.54,
+       70.89
+      ],
+      [
+       78.11,
+       70.87
+      ],
+      [
+       77.97,
+       68.45
+      ],
+      [
+       77.56,
+       61.35
+      ],
+      [
+       76.7,
+       60.89
+      ],
+      [
+       75.77,
+       60.4
+      ],
+      [
+       75.07,
+       60.24
+      ],
+      [
+       72.55,
+       59.69
+      ],
+      [
+       70.98,
+       59.35
+      ],
+      [
+       68.1,
+       59.35
+      ],
+      [
+       64.95,
+       58.8
+      ],
+      [
+       63.61,
+       58.59
+      ],
+      [
+       63.61,
+       59.49
+      ],
+      [
+       63.04,
+       60.0
+      ],
+      [
+       61.21,
+       60.0
+      ],
+      [
+       61.21,
+       60.39
+      ]
+     ],
+     "area_m2": 194.7,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 9.9,
+     "ndsm_p95_m_tree_contaminated": 6.2,
+     "eave_m_estimate": 5.7,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    },
+    {
+     "footprint_spec": [
+      [
+       83.12,
+       66.67
+      ],
+      [
+       92.51,
+       66.58
+      ],
+      [
+       92.87,
+       65.58
+      ],
+      [
+       92.86,
+       62.74
+      ],
+      [
+       92.83,
+       58.45
+      ],
+      [
+       90.51,
+       58.47
+      ],
+      [
+       86.14,
+       58.85
+      ],
+      [
+       83.41,
+       58.88
+      ],
+      [
+       83.12,
+       66.67
+      ]
+     ],
+     "area_m2": 76.1,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 4.5,
+     "ndsm_p95_m_tree_contaminated": 1.2,
+     "eave_m_estimate": 2.5,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": false
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": 53.3,
+     "z": 58.7,
+     "h_m": 17.6
+    },
+    {
+     "x": 54.7,
+     "z": 69.8,
+     "h_m": 10.2
+    },
+    {
+     "x": 82.3,
+     "z": 60.6,
+     "h_m": 6.6
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_B+3",
+   "tier": 3,
+   "parcel_idx": 95,
+   "side": "across_lincoln",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     47.57,
+     89.73
+    ],
+    [
+     47.87,
+     91.83
+    ],
+    [
+     49.28,
+     94.5
+    ],
+    [
+     51.62,
+     96.42
+    ],
+    [
+     54.52,
+     97.26
+    ],
+    [
+     57.52,
+     96.91
+    ],
+    [
+     60.45,
+     95.89
+    ],
+    [
+     70.37,
+     91.63
+    ],
+    [
+     79.74,
+     86.28
+    ],
+    [
+     88.46,
+     79.91
+    ],
+    [
+     88.95,
+     79.52
+    ],
+    [
+     88.87,
+     72.92
+    ],
+    [
+     47.53,
+     73.45
+    ],
+    [
+     47.57,
+     89.73
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       63.41,
+       76.79
+      ],
+      [
+       63.45,
+       80.62
+      ],
+      [
+       60.61,
+       80.66
+      ],
+      [
+       60.67,
+       86.72
+      ],
+      [
+       63.75,
+       86.69
+      ],
+      [
+       63.76,
+       87.53
+      ],
+      [
+       66.46,
+       87.5
+      ],
+      [
+       67.18,
+       87.49
+      ],
+      [
+       68.59,
+       87.47
+      ],
+      [
+       73.66,
+       87.41
+      ],
+      [
+       73.64,
+       85.57
+      ],
+      [
+       73.62,
+       83.02
+      ],
+      [
+       73.6,
+       80.81
+      ],
+      [
+       73.58,
+       78.79
+      ],
+      [
+       73.54,
+       74.59
+      ],
+      [
+       68.47,
+       74.66
+      ],
+      [
+       65.03,
+       74.66
+      ],
+      [
+       63.71,
+       74.66
+      ],
+      [
+       63.41,
+       76.79
+      ]
+     ],
+     "area_m2": 146.8,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 9.8,
+     "ndsm_p95_m_tree_contaminated": 0.1,
+     "eave_m_estimate": 5.5,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": true
+    },
+    {
+     "footprint_spec": [
+      [
+       85.76,
+       78.86
+      ],
+      [
+       88.97,
+       78.62
+      ],
+      [
+       88.44,
+       71.48
+      ],
+      [
+       84.77,
+       71.77
+      ],
+      [
+       81.02,
+       72.06
+      ],
+      [
+       81.54,
+       79.19
+      ],
+      [
+       85.76,
+       78.86
+      ]
+     ],
+     "area_m2": 53.3,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar); ISGS Cook DSM-DTM 2022 sampled as a cross-check",
+     "ridge_m": 4.7,
+     "ndsm_p95_m_tree_contaminated": 0.1,
+     "eave_m_estimate": 2.5,
+     "eave_note": "ESTIMATE: ridge minus 8:12 pitch rise over the short span; hip/gable and storeys unconfirmed",
+     "main": false
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": 51.6,
+     "z": 81.1,
+     "h_m": 8.7
+    },
+    {
+     "x": 50.8,
+     "z": 81.8,
+     "h_m": 8.7
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  },
+  {
+   "id": "lot_B+4",
+   "tier": 3,
+   "parcel_idx": 96,
+   "side": "across_lincoln",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     49.26,
+     120.37
+    ],
+    [
+     47.91,
+     123.4
+    ],
+    [
+     47.66,
+     125.56
+    ],
+    [
+     47.75,
+     168.16
+    ],
+    [
+     61.18,
+     182.35
+    ],
+    [
+     88.46,
+     155.84
+    ],
+    [
+     99.37,
+     145.23
+    ],
+    [
+     110.28,
+     134.62
+    ],
+    [
+     82.85,
+     105.63
+    ],
+    [
+     72.26,
+     110.8
+    ],
+    [
+     68.2,
+     112.28
+    ],
+    [
+     61.2,
+     114.84
+    ],
+    [
+     54.63,
+     116.66
+    ],
+    [
+     51.6,
+     118.02
+    ],
+    [
+     49.26,
+     120.37
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [],
+   "trees_over_6m": [
+    {
+     "x": 63.9,
+     "z": 116.7,
+     "h_m": 11.9
+    },
+    {
+     "x": 63.1,
+     "z": 117.5,
+     "h_m": 11.9
+    },
+    {
+     "x": 55.9,
+     "z": 124.3,
+     "h_m": 13.1
+    },
+    {
+     "x": 55.1,
+     "z": 125.0,
+     "h_m": 13.1
+    },
+    {
+     "x": 75.9,
+     "z": 116.6,
+     "h_m": 10.9
+    },
+    {
+     "x": 75.1,
+     "z": 117.4,
+     "h_m": 10.9
+    },
+    {
+     "x": 63.1,
+     "z": 128.7,
+     "h_m": 12.5
+    },
+    {
+     "x": 83.6,
+     "z": 113.6,
+     "h_m": 11.9
+    },
+    {
+     "x": 52.2,
+     "z": 154.1,
+     "h_m": 17.9
+    },
+    {
+     "x": 48.1,
+     "z": 159.4,
+     "h_m": 16.7
+    },
+    {
+     "x": 93.5,
+     "z": 120.9,
+     "h_m": 9.7
+    },
+    {
+     "x": 57.1,
+     "z": 159.3,
+     "h_m": 18.2
+    },
+    {
+     "x": 54.6,
+     "z": 163.1,
+     "h_m": 18.7
+    },
+    {
+     "x": 97.6,
+     "z": 126.8,
+     "h_m": 7.4
+    },
+    {
+     "x": 57.5,
+     "z": 174.2,
+     "h_m": 14.0
+    },
+    {
+     "x": 71.9,
+     "z": 171.8,
+     "h_m": 8.1
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "evidence"
+  }
+ ]
+}

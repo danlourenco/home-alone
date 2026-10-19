@@ -1,0 +1,294 @@
+{
+ "_comment": "Exterior shots showing neighbours or the street; complements film-exterior/index.json (our house). Frames: 0-homealone/full/homealone-movie-screencaps.com-N.jpg. Sampled every 30th frame of the film, refined at candidates. Not exhaustive: the Buzz-window and van-on-street POVs are in the house-side index.",
+ "shots": [
+  {
+   "first": 2,
+   "last": 17,
+   "shows": [
+    "lot_A0",
+    "lot_A-1",
+    "lot_A+1"
+   ],
+   "time": "night",
+   "note": "Opening credits, whole front from street; garage far left, white neighbour right (see film-exterior/index.json)",
+   "best": [
+    10
+   ]
+  },
+  {
+   "first": 1464,
+   "last": 1480,
+   "shows": [
+    "lot_A0",
+    "lot_A-1"
+   ],
+   "time": "night",
+   "note": "Storm night, wide of front; lamp post and white neighbour at right, dark house at left",
+   "best": [
+    1471,
+    1475
+   ]
+  },
+  {
+   "first": 1533,
+   "last": 1538,
+   "shows": [
+    "lot_A0"
+   ],
+   "time": "night",
+   "note": "transformer sparks, street lamp",
+   "best": [
+    1533
+   ]
+  },
+  {
+   "first": 1564,
+   "last": 1577,
+   "shows": [
+    "lot_A0"
+   ],
+   "time": "day",
+   "note": "Front from across the street, vans, cherry picker, bare trees: street edge and parkway",
+   "best": [
+    1564,
+    1572
+   ]
+  },
+  {
+   "first": 1880,
+   "last": 1897,
+   "shows": [
+    "lot_A0",
+    "lot_A+1"
+   ],
+   "time": "day",
+   "note": "From airport van across Lincoln: house, brick/red-roof neighbours at left, parkway trees, parked cars",
+   "best": [
+    1886,
+    1891
+   ]
+  },
+  {
+   "first": 3237,
+   "last": 3250,
+   "shows": [
+    "lot_B0?"
+   ],
+   "time": "day",
+   "note": "3241: white 2.5-storey porch-columned house seen across snow, low POV (sled). Which lot unconfirmed",
+   "best": [
+    3241,
+    3246
+   ]
+  },
+  {
+   "first": 3295,
+   "last": 3299,
+   "shows": [
+    "lot_A0",
+    "lot_A-1"
+   ],
+   "time": "night",
+   "note": "Van arrives; lamp post; row of houses down the street at left",
+   "best": [
+    3295,
+    3297
+   ]
+  },
+  {
+   "first": 3375,
+   "last": 3378,
+   "shows": [
+    "lot_A0"
+   ],
+   "time": "night",
+   "note": "van POV",
+   "best": [
+    3377
+   ]
+  },
+  {
+   "first": 4377,
+   "last": 4384,
+   "shows": [
+    "lot_A0"
+   ],
+   "time": "day",
+   "note": "straight-on front, clear sky",
+   "best": [
+    4382
+   ]
+  },
+  {
+   "first": 5539,
+   "last": 5559,
+   "shows": [
+    "lot_A0"
+   ],
+   "time": "night",
+   "note": "straight-on front, van enters",
+   "best": [
+    5545
+   ]
+  },
+  {
+   "first": 6397,
+   "last": 6401,
+   "shows": [
+    "lot_A0",
+    "lot_A-1",
+    "lot_A+1"
+   ],
+   "time": "day",
+   "note": "Overcast front from the left: garage far left; white clapboard neighbour at right edge",
+   "best": [
+    6399
+   ]
+  },
+  {
+   "first": 9510,
+   "last": 9551,
+   "shows": [
+    "lot_A0",
+    "lot_A-1"
+   ],
+   "time": "night",
+   "note": "From across the street: lamp post, right neighbour lit",
+   "best": [
+    9511,
+    9512
+   ]
+  },
+  {
+   "first": 11304,
+   "last": 11340,
+   "shows": [
+    "lot_A0"
+   ],
+   "time": "night",
+   "note": "Front left half through trees; 11311-11331 lamp, wet street, Kevin runs along the lit street and the bandits follow along the sidewalk (Kevin's own lot edge)",
+   "best": [
+    11305,
+    11311,
+    11321
+   ]
+  },
+  {
+   "first": 11541,
+   "last": 11641,
+   "shows": [
+    "lot_B0"
+   ],
+   "time": "night",
+   "note": "The Murphys: Kevin at his front window sees the police at the neighbour's porch across the street. House fully seen 11576-11586 and 11621-11631 (dormered foursquare, lit porch), porch close 11551-11571",
+   "best": [
+    11581,
+    11626,
+    11556,
+    11566
+   ]
+  },
+  {
+   "first": 11904,
+   "last": 12069,
+   "shows": [
+    "lot_A0"
+   ],
+   "time": "day",
+   "note": "snow, piers",
+   "best": [
+    11908,
+    12033
+   ]
+  },
+  {
+   "first": 12495,
+   "last": 12611,
+   "shows": [
+    "street"
+   ],
+   "time": "day",
+   "note": "Kevin at the front window; 12495-12511 distant figures in the snowy parkway beyond hedges; 12545-12585 Marley and his family embracing in the snowfall (street side of the lot); shovelling itself not seen in a clear frame",
+   "best": [
+    12511,
+    12551,
+    12575
+   ]
+  },
+  {
+   "first": 5101,
+   "last": 5141,
+   "shows": [
+    "other_street"
+   ],
+   "time": "day",
+   "note": "Not Lincoln: Kevin with a van on another street (blue clapboard house); reference for style only",
+   "best": [
+    5101
+   ]
+  },
+  {
+   "first": 8191,
+   "last": 8371,
+   "shows": [
+    "other_street"
+   ],
+   "time": "night",
+   "note": "Kevin on Christmas-lit streets (not Lincoln; church/town), style reference only",
+   "best": [
+    8221
+   ]
+  }
+ ],
+ "parcels": {
+  "lot_A0": {
+   "frames": [
+    4382,
+    6399,
+    9512,
+    11908,
+    1570,
+    1891
+   ],
+   "confidence": "high",
+   "style": "Georgian Colonial Revival, red brick, 2.5 storeys, hip roof, 3 dormers; documented elsewhere in spec"
+  },
+  "lot_A-1": {
+   "frames": [
+    1471,
+    1475,
+    3297,
+    6399,
+    9511
+   ],
+   "confidence": "low",
+   "style": "white clapboard colonial/foursquare, 2.5 storeys, set close to the street, lamp post at its frontage",
+   "note": "film-right neighbour (toward -z): seen only at the edge of frames 1471/6399/9511; side and roof not seen"
+  },
+  "lot_A+1": {
+   "frames": [
+    1471,
+    1886,
+    1891,
+    6399
+   ],
+   "confidence": "low",
+   "style": "dark/red-brown 2-storey house with garage side; in 1886/1891 a red-brick house with red roof tiles at left of ours",
+   "note": "film-left neighbour (toward +z): behind our detached garage at 6399; only far edges seen"
+  },
+  "lot_B0": {
+   "frames": [
+    11581,
+    11586,
+    11626,
+    11631,
+    11556,
+    11566,
+    11551
+   ],
+   "confidence": "medium",
+   "style": "American Foursquare/Craftsman: 2.5 storeys, painted wood clapboard (grey-blue), low hip roof with front dormer, full-width front porch with white square columns and railing, small-pane upper windows, Christmas lights on porch and eaves",
+   "note": "1990 state as the film shows it. Lot assignment (straight across from ours) is by position; real-house identity unverified"
+  }
+ }
+}

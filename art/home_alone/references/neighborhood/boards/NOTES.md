@@ -1,0 +1,8 @@
+# Tier 1-2 lot notes (1990 state as the film shows it; evidence only)
+Lot ids are neutral (A = Lincoln's McCallister side, B = across; +n toward +z = film-left). Heights are 2022 lidar, post-1990.
+
+- **lot_B0 (the Murphys, film 11551-11636, night)**: American Foursquare / Craftsman. 2.5 storeys, painted wood clapboard (grey-blue), low hip roof with one front hip dormer (small paired windows), full-width front porch on brick/white piers with white square columns and a white railing, 2 steps, multi-pane upper windows, Christmas lights on porch rails and eave lines. A detached garage sits behind at the right (it matches the small outbuilding in the footprint). Main footprint 230 m2, ridge 11.1 m. Confidence medium (film is clear; the lot match is by position and the footprint agrees).
+- **lot_A0 (McCallister)**: red brick Georgian Colonial Revival, documented in the house spec. County footprint 514 m2 includes porch/wings; its 9.2 m height is the lidar max over the polygon, below our house's ridge, so do not use it for the house.
+- **lot_A-1 (film-right, toward -z)**: white clapboard colonial/foursquare close to the street with a lamp post at the frontage, seen only at the right edge of 1471, 6399, 9511. 12.8 m ridge looks tree-raised; confidence low.
+- **lot_A+1 (film-left, toward +z)**: behind the McCallister garage; dark/red-brown 2-storey house with a red roof in 1886/1891 (maybe the house at the left of ours). Confidence low.
+- **lot_B-1, lot_B+1 (beside the Murphys)**: no clear film frame found; 11576/11586 show a white clapboard 2-storey at the left and a hipped roof with a garage at the right. Footprints only. Confidence low.
