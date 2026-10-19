@@ -20,3 +20,13 @@ Goal: a faithful, walkable Unity recreation of the McCallister house. Faithfulne
 - **Static pieces can't be moved live in Play** (static batching: the transform changes, the screen doesn't, and the eval still reports success). Hide the batched renderer and show a copy, then confirm with `unity_pipeline.sh shot`; never report a live fix without that shot.
 - **Live preview first:** for colour, material, light and placement tweaks, change the live editor (editor eval / `props.py refresh`), capture, compare with the film, then write the same values into code so the next build keeps them.
 
+## Skills (any agent, including Codex: read the file before the matching job)
+Plain instruction files in `.claude/skills/<name>/SKILL.md`; Claude loads them automatically, other agents must open them.
+- `change-gate`: before ANY geometry change (walls, rooms, doors, stairs, furniture, fixtures); props/decorations lane and "Props in 5 minutes".
+- `verify-plan`: after any edit to a trace, doors file, room measurement or the reconciler.
+- `room-upgrade`: any visual upgrade of a room (models, trim, textures, props, lighting); its "Traps" list.
+- `artist-pipeline`: generated models (doors, windows, arches, mouldings, cabinets, built-ins) to near-AAA quality.
+- `zfight-check`: before handing over any visible-surface change (z-fight, clash, stale models).
+- `room-feel`: when a room feels too big or small, before moving a wall.
+- `overhead-floor`: calibrating Marina's overhead render into a floor plan.
+- `anatomy`, `anatomy-reveal`: explanatory SVG/object pages (artifacts), not house work.
