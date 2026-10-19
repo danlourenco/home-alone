@@ -15,6 +15,9 @@ one builder at a time, live-only while the user walks, no email in requests, nev
 - Pipeline: `HA_SCRATCH=$HOME/.cache/home-alone-2 tools/house/unity_pipeline.sh preflight|all|load` ; `tools/house/csc_check.sh`
   (10 s compile check) ; `python3 tools/house/build_models.py` (regenerate stale models) ; live editor:
   `$HOME/.unity/bin/unity command eval --code '...'` (times out after 5 s but keeps running: write results to a file).
+- Standing rules carried over from the retired handoff files (HANDOFF.md, ASTRA_HANDOFF.md, docs/HANDOFF-2026-10-14.md, deleted
+  Oct 19; see git history): agents never contact Marina Coates; never move the house's outside walls without asking the user; never
+  kill the user's Unity editor.
 - Commits: normal commits run the change gate. Props/decorations use `git commit --no-verify` with "prop"/"decoration" in the
   message (change-gate skill); the Claude auto-mode classifier blocks that flag, so the user runs it.
 
