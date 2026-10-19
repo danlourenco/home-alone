@@ -129,20 +129,20 @@
   "armchair": {
    "model": "sofa_02",
    "x": [
-    6.32,
-    7.22
+    5.85,
+    6.75
    ],
    "z": [
-    16.85,
-    17.8
+    16.585,
+    17.535
    ],
    "y": [
     0.0,
     0.92
    ],
    "front": "-x",
-   "source": "Marina f101/M27: the brown leather armchair stands by the living wall facing the bookcase (TV), below the right-hand pictures; position read off f101 against the arch casing (x ~6.3-7.0), NOT camera-solved (f101 shows no room corner). The film's den chair (2856-2941) is a burgundy tufted leather club chair facing the TV: built from sofa_02 narrowed to a chair, burgundy (film) | Oct 18 (user, with Marina's den render): moved 0.55 m off the living-side wall so the side table stands between the wall and the chair; x +0.07 to clear the coffee table | Oct 19 (user walk note 08:54 'the chair should be angled slightly'): turned 11.1 deg toward the TV (aimed at den_tv's centre, film 2856/2868 see the chair angled to the set from behind)",
-   "yaw_to_tv": 11.1
+   "source": "Marina f101/M27: the brown leather armchair stands by the living wall facing the bookcase (TV), below the right-hand pictures; position read off f101 against the arch casing (x ~6.3-7.0), NOT camera-solved (f101 shows no room corner). The film's den chair (2856-2941) is a burgundy tufted leather club chair facing the TV: built from sofa_02 narrowed to a chair, burgundy (film) | Oct 18 (user, with Marina's den render): moved 0.55 m off the living-side wall so the side table stands between the wall and the chair; x +0.07 to clear the coffee table | Oct 19 (user walk note 08:54 'the chair should be angled slightly'): turned 11.1 deg toward the TV (aimed at den_tv's centre, film 2856/2868 see the chair angled to the set from behind) | Oct 19 10:25 (user turned it live to ~33 deg, 'bring the lamp and chair forward just a little'): centre (6.30, 17.06), 0.25 m toward the TV from the user's spot; tray lamp kept at its front-right arm (film 2900/2932)",
+   "yaw_to_tv": 32.9
   }
  },
  "colliders": [
@@ -179,12 +179,12 @@
   {
    "name": "armchair",
    "x": [
-    6.32,
-    7.22
+    5.83,
+    6.77
    ],
    "z": [
-    16.85,
-    17.8
+    16.59,
+    17.53
    ],
    "y": [
     0,
@@ -254,12 +254,12 @@
   {
    "name": "tray_lamp_base",
    "x": [
-    6.08,
-    6.36
+    5.54,
+    5.82
    ],
    "z": [
-    16.26,
-    16.54
+    16.52,
+    16.8
    ],
    "y": [
     0,
@@ -269,12 +269,12 @@
   {
    "name": "tray_lamp_tray",
    "x": [
-    5.99,
-    6.33
+    5.45,
+    5.79
    ],
    "z": [
-    16.37,
-    16.71
+    16.63,
+    16.97
    ],
    "y": [
     0.8,
@@ -324,9 +324,9 @@
   },
   "tray": {
    "at": [
-    6.22,
+    5.68,
     0.0,
-    16.4
+    16.66
    ],
    "arm": [
     0.3,
@@ -342,8 +342,8 @@
    "base_r": 0.14,
    "tray": {
     "at": [
-     6.16,
-     16.54
+     5.62,
+     16.8
     ],
     "y": 0.84,
     "d": 0.34
@@ -445,8 +445,8 @@
   "snacks": {
    "bag": {
     "at": [
-     6.165,
-     16.5
+     5.625,
+     16.76
     ],
     "w": 0.2,
     "h": 0.29,
@@ -456,17 +456,17 @@
    },
    "can": {
     "at": [
-     6.1,
-     16.645
+     5.56,
+     16.905
     ],
     "d": 0.066,
     "h": 0.122
    },
    "remote": {
     "at": [
-     6.666,
+     6.374,
      0.828,
-     17.789
+     17.524
     ],
     "size": [
      0.2,
