@@ -48,7 +48,7 @@ public static partial class SpecGreybox
             var seatObject=new GameObject("DenMovieSeat");seatObject.transform.SetParent(root.transform,false);
             seatObject.transform.position=new Vector3(6.30f,gy,-17.06f);
             var seat=seatObject.AddComponent<DenSeat>();seat.screen=tv.GetComponent<Renderer>();
-            seat.eyePosition=new Vector3(6.30f,gy+1.02f,-17.06f);seat.fieldOfView=36f;
+            seat.eyePosition=new Vector3(6.30f,gy+1.02f,-17.06f);seat.fieldOfView=24f;
         }
         return door;
     }

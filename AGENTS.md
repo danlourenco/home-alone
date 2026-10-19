@@ -26,6 +26,7 @@ Plain instruction files in `.claude/skills/<name>/SKILL.md`; Claude loads them a
 - `verify-plan`: after any edit to a trace, doors file, room measurement or the reconciler.
 - `room-upgrade`: any visual upgrade of a room (models, trim, textures, props, lighting); its "Traps" list.
 - `artist-pipeline`: generated models (doors, windows, arches, mouldings, cabinets, built-ins) to near-AAA quality.
+- `door-assembly`: before building, upgrading or verifying any doorway; one cohesive frame/leaf/finish/collision assembly, inside and outside carpentry checks.
 - `zfight-check`: before handing over any visible-surface change (z-fight, clash, stale models).
 - `room-feel`: when a room feels too big or small, before moving a wall.
 - `overhead-floor`: calibrating Marina's overhead render into a floor plan.

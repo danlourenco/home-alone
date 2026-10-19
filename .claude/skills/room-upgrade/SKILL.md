@@ -9,6 +9,8 @@ The grey-box stays the walking and collision layer: its walk, seam, leak and pee
 layer of models generated from the same spec, plus real textures, props and lights. Reference: the foyer (Oct 15),
 `tools/house/hifi_foyer.py` (stair, trim), `tools/house/hifi_props.py` (props), `SpecGreybox.HiFiStair` / `TexMat`.
 
+For door work, also read [door-assembly](../door-assembly/SKILL.md): fixed frame through wall depth, one physical leaf, finish boundaries and per-door verification.
+
 ## Order of work (the user's eye ranks it: lighting > materials > models)
 1. **Reference sheet first.** Pull Marina's frames and film stills of the room (the room's `art/home_alone/references/*` and
    `spec/captures/compare-marina/web/*-ref.jpg`). List every element: trim (baseboard, wainscot height and cap, chair/dado rail,
@@ -21,6 +23,8 @@ layer of models generated from the same spec, plus real textures, props and ligh
 4. **Textures:** Poly Haven (CC0, user OK Oct 15) via `TexMat(name, id, tint, tile_m, smoothness)`: world-space triplanar, no UVs.
 5. **Props:** Poly Haven models sized and placed by the dressing piece's measured footprint and height (`hifi_props.py`).
 6. **Lighting** from the stills, then `Unity -projectPath <p> -executeMethod BakeLighting.Bake` WITHOUT `-batchmode` (bounce light; batch mode has no render loop, so no sky in the bake, and it refuses): every fixture placed where the frames show it (`tools/house/hifi_lights.py` models, `SpecGreybox.HiFiLights` places them with 2700 K point lights), checked from the frame's own view.
+
+Required surface contacts must be listed and verified against built neighbours (zfight-check, “Expected connections”). A smooth plane that stops short of the landing is a failure even when clash and z-fight counts are0.
 
 ## Traps hit in the foyer (each cost the user a walk)
 | Trap | Fix |

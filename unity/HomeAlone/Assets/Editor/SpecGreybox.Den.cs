@@ -87,9 +87,9 @@ public static partial class SpecGreybox
     {
         Directory.CreateDirectory("Assets/Textures/Greybox");
         var rt = AssetDatabase.LoadAssetAtPath<RenderTexture>(DenTvRT);
-        // the render texture has the SCREEN's aspect (the patch over the JVC glass, ~0.646 x 0.455), so a 4:3 clip letterboxes (VideoAspectRatio.FitInside) instead of stretching
-        if (rt != null && (rt.width != 768 || rt.height != 540)) { AssetDatabase.DeleteAsset(DenTvRT); rt = null; }
-        if (rt == null) { rt = new RenderTexture(768, 540, 0) { name = "DenTV" }; AssetDatabase.CreateAsset(rt, DenTvRT); }
+        // 4:3 picture fills the CRT: user-requested cropped clip, no baked-in black bars.
+        if (rt != null && (rt.width != 720 || rt.height != 540)) { AssetDatabase.DeleteAsset(DenTvRT); rt = null; }
+        if (rt == null) { rt = new RenderTexture(720, 540, 0) { name = "DenTV" }; AssetDatabase.CreateAsset(rt, DenTvRT); }
         var m = Mat("HiFi_DenScreen", new Color(0.02f, 0.025f, 0.025f)); m.SetFloat("_Smoothness", 0.25f);   // 0.9 mirrored the den lamps as two hot spots on the picture (user, Oct 16: "why is there a glare")
         m.SetTexture("_EmissiveColorMap", rt); m.SetColor("_EmissiveColor", Color.black);
         UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(m); return m;

@@ -10,6 +10,8 @@ artifacts ... the arch is jagged; poinsettias ... essentially just a bunch of tr
 least Rainbow Six Siege quality." Generated pieces had razor edges, stepped curves (ArchTop built from slices), no baked detail
 and one tinted texture. Bought assets differ by process, not by magic: this skill is that process, scripted in headless Blender.
 
+For door work, also read [door-assembly](../door-assembly/SKILL.md): fixed frame through wall depth, one physical leaf, finish boundaries and per-door verification.
+
 ## Decide first: generate, buy or scan
 - **Generate** (this skill): architecture and joinery that must fit measured openings and runs: doors, windows, casings, arches,
   mouldings, stairs, cabinets, built-ins, tables, simple case furniture. Done properly this reaches AAA.

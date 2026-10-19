@@ -5,7 +5,7 @@ public class DenSeat : MonoBehaviour
 {
     public Renderer screen;
     public Vector3 eyePosition;
-    public float fieldOfView = 36f, reach = 1.6f;
+    public float fieldOfView = 24f, reach = 1.6f;
     public bool Seated => seated;
     FpsController player; CharacterController cc; Camera view;
     Vector3 returnPosition, cameraPosition;

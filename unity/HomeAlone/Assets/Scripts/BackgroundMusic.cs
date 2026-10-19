@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 // Background music: tracks live in  unity/HomeAlone/Assets/StreamingAssets/LocalMedia/  (gitignored: the user's tracks never enter
 // the public repo) as  music.mp3  (the main track) and  music_<phase>.mp3  (e.g. music_prep.mp3 for the trap-setting phase);
 // .ogg / .wav work too. Starts itself in Play, no scene object needed; a missing file means silence, no errors.
-// Game code switches with BackgroundMusic.Phase("prep") / Phase("") for the main track. Keys: J pause, - / = volume,
+// Default volume 20% (user, Oct 19 walk). Game code switches with BackgroundMusic.Phase("prep") / Phase("") for the main track. Keys: J pause, - / = volume,
 // U cycles the tracks (for listening until the game has phases). 2-D (the same in every room).
 public class BackgroundMusic : MonoBehaviour
 {
@@ -26,7 +26,7 @@ public class BackgroundMusic : MonoBehaviour
     void Awake()
     {
         src = gameObject.AddComponent<AudioSource>();
-        src.loop = true; src.spatialBlend = 0f; src.volume = 0.35f; src.playOnAwake = false;
+        src.loop = true; src.spatialBlend = 0f; src.volume = 0.20f; src.playOnAwake = false;
     }
 
     void Start() => StartCoroutine(Switch(""));

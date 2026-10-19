@@ -26,6 +26,14 @@ float depth is good, but exactly coplanar faces fight at any distance, and a 4 m
 5. **No large hidden overlaps either:** two boxes occupying the same volume (a tread inside its step) put their side faces in
    one plane where the edge shows.
 
+## Expected connections: absence of clashes is not proof of a sound join
+
+Oct19 user rejected flight2 soffit: it did not connect to the landing although z-fight/clash were0. For every added/rebuilt architectural surface, identify the boundaries that MUST meet adjacent built surfaces (soffit/landing, wall/ceiling, jamb/head, slab/riser). Mark intentional openings and offsets separately; do not force unrelated planes together.
+
+For each required join, declare the two actual built mesh boundaries, the intended join span and a justified tolerance. Check boundary distance and coverage ALONG that span, including ends and corners; a single touching point or overlapping renderer bounds is insufficient. Sloped surfaces can meet at a change of normal: they need a continuous shared boundary, not identical planes. Fail visible gaps, missing returns or insufficient spans; do not solve a gap by introducing a hidden overlap or moving measured structure arbitrarily.
+
+Use exported/built mesh vertices in world coordinates to check contact against the independently built neighbour; reusing the generator's intended endpoint is not proof it connected. Inspect oblique before/after close views. Add a proven regression checkpoint for each repaired join. **Current gap:** structural SeamCheck does not certify all hi-fi surface connections. Implement and run the missing per-join check during the soffit correction; first demonstrate that it fails this rejected output. Do not label it automatically verified merely because this instruction exists.
+
 ## Clashes (one part through another)
 The build appends `Clash check: ... N parts passing through another`. A part whose surface within 6 cm of a crossing reaches
 more than 2 cm past both sides of the other part (its face and, by a ray, its far side), at a point seen from a room and not
