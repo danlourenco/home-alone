@@ -4,7 +4,7 @@
 "spec/geometry.json": "fe9be6044fa7bebc6a4c76be20053f4abbcade8de1a1f8ff2c149bae7bcecd56",
 "spec/house_spec.json": "aa13c8ba63825b984b8fec9d3d9e0a94b75ce00158b842fe54949ec7900a05eb",
 "spec/house_spec.ground.json": "b2202c1e6656e5f08dccf8c5a2836afd2a9aaf8a7d2b300ab8cb65f0f4ed7286",
-"spec/dressing/foyer.json": "ddc26402b9a3aab46412955dd1c9a0f8ea1d7f39150543c1f91ed2f981c5c7d3",
+"spec/dressing/foyer.json": "a2c8820c1c480bc5f130d48c91968fd15b2eabb38120b1b3d94f483012437e53",
 "spec/dressing/finishes.json": "ff51afb2ff9366c5664802dc6cecbbc56fd71e3ee4dd9a4d36a76d071d336059",
 "spec/openings.json": "18b7015bd131b360f7d2440972093c086a9f8a5a597bc98e422769b28ed95c43",
 "tools/house/trim_faces.py": "a4e53dfe8cd8200b7196e3e06778f95496491d829de4872b9c098398f6fb6206"

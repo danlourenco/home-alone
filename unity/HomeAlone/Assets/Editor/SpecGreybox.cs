@@ -933,7 +933,9 @@ public static partial class SpecGreybox
         var go = (GameObject)Object.Instantiate(asset, root.transform); go.name = "MainStair_HiFi";
         go.transform.localPosition = Vector3.zero; go.transform.localRotation = Quaternion.identity;
         var wood = TexMat("HiFi_Wood", "wood_floor", new Color(0.62f, 0.5f, 0.46f), 1.6f, 0.25f);
-        var runnerM = TexMat("HiFi_Runner", "dirty_carpet", new Color(0.62f, 0.2f, 0.17f), 0.6f, 0.05f);
+        // stair runner: film 1616/10673's deep crimson-burgundy carpet (user Oct 18 "Fix the stair runner too"). Plain colour: the Poly
+        // Haven dirty_carpet photo it used is ~3.5% reflectance, so any tint on it rendered near-black
+        var runnerM = Mat("HiFi_Runner", new Color(0.27f, 0.025f, 0.055f)); runnerM.SetFloat("_Smoothness", 0.08f);
         var tex = new Dictionary<string, Material> { ["Stair_TreadWood"] = wood, ["Stair_RailWood"] = wood, ["Stair_Runner"] = runnerM };
         var cols = new Dictionary<string, Color> { ["Stair_White"] = new Color(0.86f, 0.86f, 0.84f) };
         foreach (var r in go.GetComponentsInChildren<MeshRenderer>())

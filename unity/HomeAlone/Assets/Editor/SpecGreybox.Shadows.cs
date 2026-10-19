@@ -74,11 +74,10 @@ public static partial class SpecGreybox
         Debug.Log($"LimitShadows: {n} lamps with cached shadows ({texels / 1e6:F1} M punctual + {areaTexels / 1e6:F1} M area texels), {contact} lights with contact shadows (HDRP max 24 on screen)");
         // Invariant (perf pass, Oct 18): every cached shadow map fits its atlas. Oct 18 the 47 shadowed lamps wanted 82.1 M texels of an
         // 8192^2 (67.1 M) punctual atlas: the lamps HDRP could not place kept retrying (night frame time 40-80 ms, unstable run to run).
-        // Over budget is a WARNING for now (docs/PERFORMANCE.md: the 16384 atlas that fits them visibly changes the night look and
-        // waits for the user's walk); make it a BUDGET FAIL once the fix lands.
+        // Fixed Oct 18 (user: "Apply shadow space fix"): the punctual atlas is 16384^2 in HDRP.asset; over budget now FAILS the build.
         var ip = AssetDatabase.LoadAssetAtPath<HDRenderPipelineAsset>("Assets/Settings/HDRP.asset").currentPlatformRenderPipelineSettings.hdShadowInitParams;
         long pCap = (long)ip.cachedPunctualLightShadowAtlas * ip.cachedPunctualLightShadowAtlas, aCap = (long)ip.cachedAreaLightShadowAtlas * ip.cachedAreaLightShadowAtlas;
         if (texels > pCap * 0.95 || areaTexels > aCap * 0.95)   // 5% slack for packing
-            Debug.LogWarning($"SHADOW ATLAS OVER BUDGET: punctual {texels / 1e6:F1} M of {pCap / 1e6:F1} M, area {areaTexels / 1e6:F1} M of {aCap / 1e6:F1} M (HDRP.asset cached*ShadowAtlas)");
+            throw new System.Exception($"BUDGET FAIL shadow atlas: punctual {texels / 1e6:F1} M of {pCap / 1e6:F1} M, area {areaTexels / 1e6:F1} M of {aCap / 1e6:F1} M (HDRP.asset cached*ShadowAtlas)");
     }
 }
