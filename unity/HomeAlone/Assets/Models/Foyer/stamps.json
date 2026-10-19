@@ -4,8 +4,8 @@
   "sources": "97a2f9c4dd60e5a4"
  },
  "tools/house/hifi_back_door.py": {
-  "models": "0d4291972387f8cb",
-  "sources": "5b3368c698056ea3"
+  "models": "2c0a63b305143d99",
+  "sources": "67f738c619ff74fe"
  },
  "tools/house/hifi_bare_trees.py": {
   "models": "cb0a4d0f9d6f714c",
@@ -32,8 +32,8 @@
   "sources": "a102ff89cd251480"
  },
  "tools/house/hifi_den_props.py": {
-  "models": "0e652d45402645d3",
-  "sources": "ee125c22efbfebe6"
+  "models": "8a1ffdebd0a25237",
+  "sources": "896136c4da7dbea0"
  },
  "tools/house/hifi_dining_props.py": {
   "models": "98f2267f6866fc49",
@@ -52,8 +52,8 @@
   "sources": "2804c516077172f6"
  },
  "tools/house/hifi_exterior.py": {
-  "models": "1f952846c3280bb9",
-  "sources": "b3b64441a576e190"
+  "models": "b5d6a848a0715fa3",
+  "sources": "db4e1acd76bfb0dd"
  },
  "tools/house/hifi_foyer.py": {
   "models": "f3fa61a37913053b",

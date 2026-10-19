@@ -104,7 +104,7 @@ for key, spec in P.items():   # (the TV is generated now: hifi_den.py, the film'
     if key == "sofa":
         recolour(objs, "DP_SofaRed", (0.30, 0.035, 0.045), keep=wood)
     if key == "armchair":
-        recolour(objs, "DP_ChairBurgundy", (0.20, 0.035, 0.04), keep=wood)
+        recolour(objs, "DP_ChairBurgundy", (0.135, 0.021, 0.025), keep=wood)   # user Oct 18: darker oxblood (film 2900/2932), was (0.20, 0.035, 0.04)
     if key == "tv":
         recolour(objs, "DP_TvBlack", (0.07, 0.07, 0.07))
     fit(objs, spec["x"], spec["z"], spec["y"], spec["front"])
