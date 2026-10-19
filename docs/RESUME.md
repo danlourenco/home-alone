@@ -43,6 +43,11 @@ docs/FOYER-WIP.md (the foyer job's checkpoints); STATUS.md is the long log. This
   without asking; never kill the user's Unity editor.
 
 ## 1. Queue (one building job at a time)
+0. **The user's must-have house pass, then call the environment (user, Oct 19)**: "refine the house just a little bit more" to pick a
+   direction (stealth vs Rainbow Six Siege-like), then stop polishing and start core game development (a GDD with pillars, then a
+   vertical slice; GitHub issues as the backlog once the pillars are signed off). Must-haves named so far: **the upstairs hall
+   bathroom** (missing), **the kitchen finished** (it "still feels unfinished": ask what reads unfinished), **walk out the kitchen
+   back door to the exterior**. Confirm the full list with the user before starting; everything else waits for the slice.
 1. (done 55eca097) persist the live settings; the lamp comparison still needs the user's decision.
 2. **Mac test app** (user-authorized; iOS out of scope; nothing built yet):
    1. Fix standalone feedback storage: `FeelNotes.Dir` writes repo-relative `../../../spec/feedback`; keep that in the Editor, use
