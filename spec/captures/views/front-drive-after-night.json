@@ -1,0 +1,47 @@
+[
+ {
+  "name": "front-drive/batch-after/night_note",
+  "pos": [
+   32.553,
+   -3.02,
+   -10.029
+  ],
+  "look_at": [
+   25.235,
+   -4.928,
+   -3.486
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "front-drive/batch-after/night_f11908",
+  "pos": [
+   40.5,
+   -2.5,
+   -9.716
+  ],
+  "look_at": [
+   10.37,
+   1.2,
+   -9.716
+  ],
+  "vfov": 28,
+  "near": 0.05
+ },
+ {
+  "name": "front-drive/batch-after/night_piers_close",
+  "pos": [
+   33.5,
+   -2.6,
+   -6.5
+  ],
+  "look_at": [
+   28.5,
+   -3.6,
+   -9.716
+  ],
+  "vfov": 50,
+  "near": 0.05
+ }
+]

@@ -337,7 +337,7 @@ public static partial class SpecGreybox
         // lamp posts at the street (film 1470: black post, globe lantern; film 10 one at the left)
         var post = Mat("HiFi_ExtLampPost", new Color(0.02f, 0.025f, 0.025f)); var globe = AtticGlow("HiFi_ExtLampGlobe", new Color(1f, 0.88f, 0.70f), 4000f, 0.6f);   // realism pass: a bright globe that blooms (Pietro)
         var posts = new GameObject("LampPosts"); posts.transform.SetParent(holder.transform, false);
-        foreach (var (x, z) in new[] { (25.2f, 21.5f), (25.2f, -6.0f) })
+        foreach (var (x, z) in new[] { (25.2f, 24.2f), (25.2f, -6.0f) })   // the left one 2.7 m off the drive's left mouth (z 21.4; front drive, Oct 19)
         {
             float y0 = -4.35f + d;
             if (Physics.Raycast(new Vector3(x, 0f, -z), Vector3.down, out var hit, 8f)) y0 = hit.point.y;

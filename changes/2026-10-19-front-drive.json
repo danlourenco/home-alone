@@ -1,0 +1,250 @@
+{
+ "change": "Front U-drive, walk-entrance piers and garage fence (user Oct 19: 'one of the previous builds i think has the columns in the front and the u shape driveway. we should do this or borrow from it'; 'keep the fencing if that's correct too'; walk note 08:08 'the street looks super realistic and wet but our driveway is a dull slab of grey'; TRIAL). GENERATED in SpecGreybox.FrontDrive.cs (the GLB's pieces are crude and stand at its 0.757-scaled parcel: piers 6.4 m short of our sidewalk, its 'drive' one asphalt apron over the whole front lawn): a 3.6 m wet-asphalt U-drive on the real lot's centreline (OSM ways 1012087264/65) from the kerb at spec z 21.4 (joining the garage drive) round the front of the lawn (x 20.2-20.6 across the walk) to the kerb at z -2.1, flush on the grade (raycast, +12 mm, no collider) with snow banks on both edges; two brick piers with stone caps, lanterns (lit at night) and a brass mailbox on the right pier, and ogee brick wing walls, at the walk's street end (x 28.30-28.80, 1.5 m apart round the walk axis 9.716); a stained board fence off the garage's left front corner (film 2513/2515/2525). Also: the garage drive and the new drive take the street's wet asphalt (HiFi_ExtWetRoad), the sidewalks, kerbs, walk connection and front walk a wet PBR concrete; the neighbourhood's two driveway aprons and the GLB's object2 post (they sat where the drive mouths go) removed; the left street lamp post moved 2.7 m off the left mouth (z 21.5 -> 24.2); the walk's and kerb's snow banks opened where the drive crosses",
+ "target": "House_WallGrid",
+ "premise": "The film's lot has a U-shaped drive with two street mouths on either side of the front walk, crossing the walk in front of the terraced beds, and a pair of brick piers with curved low wing walls at the walk's street end",
+ "claim": {
+  "value": {
+   "drive_centreline_spec_xz": [
+    [
+     30.7,
+     21.4
+    ],
+    [
+     28.65,
+     21.41
+    ],
+    [
+     24.41,
+     21.48
+    ],
+    [
+     21.78,
+     18.15
+    ],
+    [
+     20.23,
+     13.53
+    ],
+    [
+     20.46,
+     9.82
+    ],
+    [
+     20.55,
+     8.49
+    ],
+    [
+     22.66,
+     3.86
+    ],
+    [
+     25.56,
+     1.09
+    ],
+    [
+     27.28,
+     -0.51
+    ],
+    [
+     28.73,
+     -1.18
+    ],
+    [
+     30.7,
+     -2.07
+    ]
+   ],
+   "drive_width_m": 3.6,
+   "pier_street_face_x": 28.8,
+   "pier_size_m": [
+    0.5,
+    0.5
+   ],
+   "pier_gap_m": 1.5,
+   "pier_cap_top_m": 1.04,
+   "wing_length_m": 1.74,
+   "wing_top_m": [
+    0.84,
+    0.31
+   ]
+  },
+  "data": [
+   "osm:671-lincoln-ways-1012087264-65-66"
+  ],
+  "scale": [
+   "geodetic:osm"
+  ],
+  "upstream": [
+   "osm"
+  ],
+  "how": "OSM (art/home_alone/references/site/osm-671-lincoln.json, ODbL) mapped into spec by the footprint's front line (door node (-7.8,-7.7) -> x 10.37, z 9.716; facade direction from its two front corners): the footway lands on the steps at 12.21-14.39 (ours 12.25-14.05), the house front at 10.38 (ours 10.37), the sidewalk at 28.65 (the scene's public sidewalk 28.87-30.37); the drive centreline is OSM's, cut at our kerb (30.62). Piers: placed at the walk's sidewalk end (OSM footway start 28.64; film 11908/1466: at the sidewalk); their proportions from film 11908 (gap 3.0, wing 3.5, cap top 2.07 pier widths; cap 1.23 pier widths, wing top 0.81 -> 0.30 of the cap top), absolute size AUTHORED from the walk width 1.50 m = the gap (DEVIATIONS 103)",
+  "applies_to": [
+   "front-yard"
+  ],
+  "measured_in": [
+   "front-yard"
+  ],
+  "risks": [
+   "registration",
+   "extraction"
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-10-18",
+   "what": "yard registration (changes/2026-10-18-yard-registration.json): the GLB's driveway loop across the front lawn dropped (z < 20.2): not in film 4382 and 0.41 m over the front walk",
+   "outcome": "superseded"
+  },
+  {
+   "date": "2026-10-18",
+   "what": "exterior shell DEVIATIONS 97 (h): 'film 6399/9512 suggest a curved front drive further out, not modelled'",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film, U-drive topology in 6 frames: 6399 (day, left oblique) the drive passes in front of the terraced steps and curves toward the street right of the walk, a branch to the garage at left; 10 (night, from the left) and 9512 (night, from the right) each show one leg leaving the street near the camera and curving to the front; 1570 and 1640 the airport vans parked on the drive's front run before the steps; 11304/11306 the drive before the lit terrace; 2513/2515 the garage drive with snow banked at its edges. Two mouths, one each side of the piers, one joining the garage drive: OSM's shape",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film-frame:6399",
+    "film-frame:10",
+    "film-frame:9512",
+    "film-frame:1570",
+    "film-frame:1640",
+    "film-frame:11304"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": []
+  },
+  {
+   "what": "The downloaded GLB's site (HOME ALONE FINAL.glb, registered by spec/glb_registration.json; plan spec/captures/views/front-drive/plan_osm_glb.png): a U of asphalt round a lawn island with the walk across it and piers at the walk's street end, as OSM; at the GLB's own raw scale (registered / 0.757) its front run lies 8.1 m before the facade (OSM 10.1) and its piers 15.5 m (OSM sidewalk 18.3): within 2-3 m. Its registered parcel is 0.757 x and puts the piers at x 22.1 against our sidewalk at 28.9, so its geometry is not borrowed",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "registration"
+   ],
+   "data": [
+    "glb:home-alone-final-site"
+   ],
+   "scale": [
+    "glb-raw-units"
+   ],
+   "upstream": [
+    "glb-model"
+   ]
+  },
+  {
+   "what": "OSM's footway, steps and house front against OUR measured front (independent of OSM's drive): steps 12.21-14.39 vs ours 12.25-14.05, house front 10.38 vs 10.37, walk axis 9.74-9.93 vs 9.716, sidewalk 28.65 vs the scene's 28.87-30.37: the OSM registration holds to ~0.3 m at the house and the street",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "registration"
+   ],
+   "data": [
+    "spec:geometry-front",
+    "scene:winter-neighborhood"
+   ],
+   "scale": [
+    "door-80in:spec"
+   ],
+   "upstream": [
+    "marina"
+   ]
+  },
+  {
+   "what": "Film 6399 ground back-projection (tools/house/exterior_film_fit.py's camera, 1.7 m over the yard): the drive's house-side edge at the steps at x 15.4 (OSM: 18.6). Disagrees by 3 m",
+   "agrees": false,
+   "type": "metric",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film-frame:6399"
+   ],
+   "scale": [
+    "door-80in:spec"
+   ],
+   "upstream": [
+    "marina"
+   ],
+   "disposition": "Not used: the facade-only solve is near-degenerate in focal vs distance (it puts 6399's camera at x 26, inside our yard, where the film shot from across the street at x ~40), and a ground back-projection scales with that distance and the assumed 1.7 m camera height; OSM's footway and steps land within 0.35 m of ours, so OSM sets the layout"
+  },
+  {
+   "what": "Film 11908 piers (crop spec/captures/views/front-drive/film11908_piers.png; 12030/12066 same set-up): pier 82 px, gap 246, wing 285, cap top 170 over the base, cap 101 px wide x 25 thick, wing top 0.81 of the cap top at the pier falling in an S to 0.30 with a short level end; the right pier carries a brass mailbox on its street face (62 x 50 px) and both carry a lantern on a short post (post 90 px, head 75 px). The same 11908 solve with a 1.7 m camera reads pier 0.47, gap 1.38, cap top 0.95, wing 1.6 m (scale from our facade; consistency, not evidence)",
+   "agrees": true,
+   "type": "ratio",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film-frame:11908",
+    "film-frame:12030"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [],
+   "pick": {
+    "crop": "spec/captures/views/front-drive/film11908_piers.png",
+    "confirmed_by": "film 12066 (same set-up, a truck at the kerb) shows the same two piers, lanterns, mailbox and wing walls"
+   }
+  },
+  {
+   "what": "Film 2513, 2515, 2525 (garage, day): a brown stained board fence with spaced vertical boards off the garage's left front corner, running away from the house, its top ~0.6 of the garage door's height (1.3-1.4 m on a 7 ft door); no fence seen between the garage and the house. Film 11294-11300 (night) shows a white picket fence behind the bandits at the house's side, but its place on the lot is not seen: not built",
+   "agrees": true,
+   "type": "ratio",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film-frame:2513",
+    "film-frame:2515",
+    "film-frame:2525"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": []
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/front-drive/before/note.jpg",
+   "spec/captures/views/front-drive/before/f11908.jpg",
+   "spec/captures/views/front-drive/before/f11908_night.jpg",
+   "spec/captures/views/front-drive/before/f1570.jpg",
+   "spec/captures/views/front-drive/before/f4382.jpg",
+   "spec/captures/views/front-drive/before/oblique.jpg"
+  ],
+  "after": [
+   "spec/captures/views/front-drive/after/note.jpg",
+   "spec/captures/views/front-drive/after/f11908.jpg",
+   "spec/captures/views/front-drive/after/f11908_night.jpg",
+   "spec/captures/views/front-drive/after/f1570.jpg",
+   "spec/captures/views/front-drive/after/f4382.jpg",
+   "spec/captures/views/front-drive/after/oblique.jpg",
+   "spec/captures/views/front-drive/after/piers_close.jpg",
+   "spec/captures/views/front-drive/after/piers_close_night.jpg",
+   "spec/captures/views/front-drive/after/garage_fence.jpg",
+   "spec/captures/views/front-drive/after/note_live_materials.jpg",
+   "spec/captures/views/front-drive/compare_f11908.jpg",
+   "spec/captures/views/front-drive/compare_f11908_night.jpg",
+   "spec/captures/views/front-drive/compare_f1570.jpg",
+   "spec/captures/views/front-drive/compare_f4382.jpg",
+   "spec/captures/views/front-drive/compare_oblique.jpg",
+   "spec/captures/views/front-drive/compare_note.jpg",
+   "spec/captures/views/front-drive/compare_piers.jpg",
+   "spec/captures/views/front-drive/compare_fence.jpg"
+  ],
+  "note": "before: live captures in the user's editor (baked, Oct 19 08:20); after: batch renders of the baked scratch build (~/.cache/home-alone-2), the user was walking so the build is not loaded; batch-before/ + batch-after/ are the same batch renderer on the old and new scratch scenes. after/note_live_materials.jpg: the surface change alone applied live in the user's Play session"
+ },
+ "user_walk": "pending",
+ "outcome": null
+}

@@ -1634,6 +1634,7 @@ public static partial class SpecGreybox
         {
             if (!r.enabled || r.name == "object183") continue;   // object183: the treehouse (built to the film by its own job, at the registered GLB position)
             if (r.name == "object257") continue;                 // a rear-yard slab that ran over the areaway's top steps: SpecGreybox.Yard's Grade_RearW
+            if (r.name == "object2") continue;                   // a post at the GLB lot's edge, on the front drive's right leg (SpecGreybox.FrontDrive; not in the film)
             if (r.bounds.max.y > 1.35f || house.Contains(new Vector3(r.bounds.center.x, 0, r.bounds.center.z)))
             {   // the property beyond the house (user Oct 18: "a good layout of the property, including the standalone garage"): the GLB
                 // merges parts by material, so the garage shares meshes with the house shell; its triangles are cut out by region
@@ -1676,6 +1677,7 @@ public static partial class SpecGreybox
         Trees(ext);       // SpecGreybox.Trees.cs: generated bare winter trees replace the stick trees (hifi_bare_trees.py)
         Shell(ext, gy);   // SpecGreybox.Shell.cs: the house's exterior skin (after the cull above: its upper storey crosses Marina's rooms by design)
         ExteriorRealism(ext, gy);   // SpecGreybox.ExteriorRealism.cs: steps, railings, drifts, ground skirt, decals, wet road (changes/2026-10-18-exterior-realism.json)
+        FrontDrive(ext, gy);        // SpecGreybox.FrontDrive.cs: the U-drive, the walk piers and wing walls, the garage fence (changes/2026-10-19-front-drive.json)
     }
 
     // The GLB's garage and driveway (registered with the site): triangles of a GLB renderer whose registered centroid lies in the

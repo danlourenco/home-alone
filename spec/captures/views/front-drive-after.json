@@ -1,0 +1,107 @@
+[
+ {
+  "name": "front-drive/batch-after/note",
+  "pos": [
+   32.553,
+   -3.02,
+   -10.029
+  ],
+  "look_at": [
+   25.235,
+   -4.928,
+   -3.486
+  ],
+  "vfov": 60,
+  "near": 0.05
+ },
+ {
+  "name": "front-drive/batch-after/f11908",
+  "pos": [
+   40.5,
+   -2.5,
+   -9.716
+  ],
+  "look_at": [
+   10.37,
+   1.2,
+   -9.716
+  ],
+  "vfov": 28,
+  "near": 0.05
+ },
+ {
+  "name": "front-drive/batch-after/f1570",
+  "pos": [
+   40,
+   1.0,
+   -5.5
+  ],
+  "look_at": [
+   12,
+   -2.5,
+   -9.716
+  ],
+  "vfov": 30,
+  "near": 0.05
+ },
+ {
+  "name": "front-drive/batch-after/f4382",
+  "pos": [
+   25.648,
+   -2.6,
+   -9.837
+  ],
+  "look_at": [
+   15.898,
+   -0.4,
+   -9.662
+  ],
+  "vfov": 45.5,
+  "near": 0.05
+ },
+ {
+  "name": "front-drive/batch-after/oblique",
+  "pos": [
+   38,
+   8,
+   8
+  ],
+  "look_at": [
+   20,
+   -4.3,
+   -10
+  ],
+  "vfov": 50,
+  "near": 0.05
+ },
+ {
+  "name": "front-drive/batch-after/piers_close",
+  "pos": [
+   33.5,
+   -2.6,
+   -6.5
+  ],
+  "look_at": [
+   28.5,
+   -3.6,
+   -9.716
+  ],
+  "vfov": 50,
+  "near": 0.05
+ },
+ {
+  "name": "front-drive/batch-after/garage_fence",
+  "pos": [
+   14.0,
+   -2.4,
+   -23.0
+  ],
+  "look_at": [
+   -0.5,
+   -3.0,
+   -29.0
+  ],
+  "vfov": 45,
+  "near": 0.05
+ }
+]

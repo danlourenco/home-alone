@@ -208,7 +208,8 @@ public static partial class SpecGreybox
             Mound(14.05f, 15.0f, -(zc + s * (sw + 0.02f)), -(zc + s * (sw + 0.55f)), true, 0.22f, wallDrift, yF + 0.5f, 0.25f);
         // shovelled banks along the walk to the street (film 10174, Pietro)
         foreach (float s in new[] { -1f, 1f })
-            Mound(15.1f, 24.2f, -(zc + s * 0.80f), -(zc + s * 1.45f), true, 0.24f, bank, yF + 0.5f, 0.6f);
+            foreach (var (xa, xb) in new[] { (15.1f, 18.1f), (22.8f, 24.2f) })   // open where the front drive crosses (x 18.6-22.3: SpecGreybox.FrontDrive)
+                Mound(xa, xb, -(zc + s * 0.80f), -(zc + s * 1.45f), true, 0.24f, bank, yF + 0.5f, 0.6f);
         // the kerb: plowed banks at the street's edge on the house side, open at the walk
         var road = ext.GetComponentsInChildren<MeshRenderer>(true).FirstOrDefault(r => r.name.StartsWith("Lincoln"));
         if (road != null)
@@ -216,7 +217,7 @@ public static partial class SpecGreybox
             var wet = TexMat("HiFi_ExtWetRoad", "asphalt_02_x", new Color(0.45f, 0.45f, 0.47f), 4.0f, 0.86f);   // dark wet asphalt (Pietro; film 10162 night)
             road.sharedMaterial = wet;
             float kx = road.bounds.min.x;
-            foreach (var (za, zb) in new[] { (-38f, -10.9f), (-8.5f, 22f) })
+            foreach (var (za, zb) in new[] { (-38f, -23.7f), (-19.1f, -10.9f), (-8.5f, -0.2f), (4.4f, 22f) })   // open at the walk and the two drive mouths (world z)
                 Mound(kx + 0.05f, kx + 0.75f, za, zb, true, 0.28f, bank, road.bounds.max.y + 1.0f, 1.0f, 0.12f);
         }
         WorldMesh(holder, "SnowDrifts", mv, mt, snowM, true, true);
