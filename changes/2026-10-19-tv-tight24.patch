@@ -1,0 +1,22 @@
+--- a/unity/HomeAlone/Assets/Scripts/DenSeat.cs
++++ b/unity/HomeAlone/Assets/Scripts/DenSeat.cs
+@@ -5,7 +5,7 @@
+ {
+     public Renderer screen;
+     public Vector3 eyePosition;
+-    public float fieldOfView = 36f, reach = 1.6f;
++    public float fieldOfView = 24f, reach = 1.6f;
+     public bool Seated => seated;
+     FpsController player; CharacterController cc; Camera view;
+     Vector3 returnPosition, cameraPosition;
+--- a/unity/HomeAlone/Assets/Editor/SpecGreybox.FoyerInteractions.cs
++++ b/unity/HomeAlone/Assets/Editor/SpecGreybox.FoyerInteractions.cs
+@@ -48,7 +48,7 @@
+             var seatObject=new GameObject("DenMovieSeat");seatObject.transform.SetParent(root.transform,false);
+             seatObject.transform.position=new Vector3(6.30f,gy,-17.06f);
+             var seat=seatObject.AddComponent<DenSeat>();seat.screen=tv.GetComponent<Renderer>();
+-            seat.eyePosition=new Vector3(6.30f,gy+1.02f,-17.06f);seat.fieldOfView=36f;
++            seat.eyePosition=new Vector3(6.30f,gy+1.02f,-17.06f);seat.fieldOfView=24f;
+         }
+         return door;
+     }

@@ -1,0 +1,7 @@
+[
+ {"name":"foyer-interactions/after-foyer","pos":[7.352,-1.716,-9.628],"look_at":[6.374,-1.508,-9.525],"vfov":60,"near":0.05},
+ {"name":"foyer-interactions/after-door-inside","pos":[8.6,-1.65,-9.7155],"look_at":[10.1,-1.85,-9.7155],"vfov":58,"near":0.05},
+ {"name":"foyer-interactions/after-door-outside","pos":[11.6,-1.65,-9.7155],"look_at":[10.132,-1.85,-9.7155],"vfov":58,"near":0.05},
+ {"name":"foyer-interactions/after-mirror","pos":[6.3,-1.5,-9.0],"look_at":[5.67,-1.35,-7.8],"vfov":48,"near":0.05},
+ {"name":"foyer-interactions/after-seat","pos":[6.30,-2.006,-17.06],"look_at":[2.9,-2.13,-18.1],"vfov":42,"near":0.05}
+]

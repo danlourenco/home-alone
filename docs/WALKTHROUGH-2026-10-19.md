@@ -1,0 +1,12 @@
+# Exterior, den and foyer — combined TRIAL walkthrough
+
+Oct19 verdict: mirror, door appearance/usability, den and tighter TV view accepted; other changes accepted except logged defects. Soffit rejected for a disconnected join. Use this route for regression checks after corrections; see WALK-FEEDBACK-2026-10-19.md.
+
+1. **Street and grounds, daytime.** Look toward the house and along the horizon: clean winter sky/treeline, wet driveway, piers and walk sitting on the ground. Press **O** through Sunny → Morning → Overcast. Press **K** off/on to check that off-lot snow strips disappear with their surroundings, without floating strips remaining.
+2. **Front entrance, both sides.** Approach closely: inspect the white inside and dark green outside, panel relief, rounded edges, brass fittings and paint detail. Aim near the handle and press **E** to open/close. Walk through. Both faces and their wreaths should move as one leaf; frame, fanlight and sidelights stay fixed. There should be one inside wreath. The closed leaf should block you; an opening/closing leaf should pause against you.
+3. **Foyer.** Look up beneath the second stair flight: a continuous white slope meeting the landing, with no exposed stepped underside. Move in front of the mirror: inspect the gilt frame and a sharp reflection that follows your viewpoint. Climb the main stair and return, checking joins and clearances.
+4. **Den.** Inspect the angled movie chair, leather sheen, cleared table area and tray lamp from the earlier trials. Approach the chair and look at its seat; press **E** to sit. The view should settle at seated eye height, looking toward the TV with a tighter field of view (36° live preview). **V** switches the existing movie clip on/off. **E** stands and returns your previous view. Try twice; optionally repeat after **G** switches to adult height.
+5. **Night route.** Press **N**. Check the foyer/door/mirror and den again, then walk around to the kitchen back door and basement areaway: both new lanterns should light. Check the front lantern/wreath lights. Return to day with **N**.
+6. **Report anything off.** Use **M** for a note at the exact viewpoint, and include whether it was day/night and which weather state. A visual or interaction change stays TRIAL until you accept it.
+
+Existing follow-ups remain separate: measured French-window height, neighbourhood empty lots/lawn grade, and the third lamp visible on the far wall in film 10372.
