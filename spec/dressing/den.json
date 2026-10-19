@@ -287,6 +287,36 @@
     0,
     1.44
    ]
+  },
+  {
+   "name": "tray_lamp_base",
+   "x": [
+    6.08,
+    6.36
+   ],
+   "z": [
+    16.26,
+    16.54
+   ],
+   "y": [
+    0,
+    1.25
+   ]
+  },
+  {
+   "name": "tray_lamp_tray",
+   "x": [
+    5.99,
+    6.33
+   ],
+   "z": [
+    16.37,
+    16.71
+   ],
+   "y": [
+    0.8,
+    0.86
+   ]
   }
  ],
  "colliders_note": "walk layer for the generated/Poly Haven pieces (the models carry none); the coffee table's top is 0.42 m up so Kevin's body passes under the rim (he can't stand under it: 0.42 < his height)",
@@ -329,23 +359,37 @@
    "colour": "cream",
    "source": "Marina f9/f13 (foot x 7.03 z 19.40) and film 2868 (top right: a brass swing-arm lamp with a cream drum shade): brass pole, arm 0.30 m toward the sofa; 100 W ~1100 lm (authored)"
   },
-  "side": {
+  "tray": {
    "at": [
-    6.015,
-    0.62,
-    16.545
+    6.22,
+    0.0,
+    16.4
+   ],
+   "arm": [
+    0.3,
+    0.12
    ],
    "shade": [
+    0.19,
     0.17,
-    0.14,
-    0.36,
-    0.6
+    1.4,
+    1.64
    ],
+   "pole_top": 1.25,
+   "base_r": 0.14,
+   "tray": {
+    "at": [
+     6.16,
+     16.54
+    ],
+    "y": 0.84,
+    "d": 0.34
+   },
    "lumens": 150,
    "kelvin": 2700,
-   "colour": "white",
-   "source": "Marina f101/M27: white drum shade on a turned stem, on the side table by the armchair; 60 W ~700 lm (authored) | Oct 18: moved with the side table into the gap between the wall and the chair (user) | then forward to the chair's front corner toward the TV (film 2868), 150 lm with a 3 m range: a local pool, the corner stays dim (user)",
-   "range": 3.0
+   "colour": "cream",
+   "range": 3.0,
+   "source": "Kevin's tray floor lamp (user Oct 18: 'a tall floor lamp with ... a tiny connected tray'; film 2868/2874 from behind Kevin: brass pole at the chair's front corner against the living-side (green) wall, an S-curved arm up into a cream drum shade over the chair's front; 2900/2932: a small round dark tray clamped to the pole holding the Crunch Tators bag and a Pepsi can, a thumbscrew collar above it, the arm's bend above that). ONE ruler, the can (0.122 m tall) in 2932: tray to collar 0.27 m, tray to the bend 0.41 m; tray top just above the chair's front arm (2932; our chair's arm top 0.82-0.86, measured on DenProps.glb) -> tray 0.84, collar 1.10, bend 1.25; shade (2868: above Kevin's head, its socket below it) 1.40-1.64, 0.38 dia; arm 0.32 toward the chair. Replaces the side table (den_side_table) and its white-shade table lamp. 150 lm, range 3 m: the local pool (user)"
   },
   "desk": {
    "at": [
@@ -434,6 +478,42 @@
   "vhs": {
    "bay": "centre_low_right",
    "source": "film 2877: a row of VHS tapes on the lower shelf under the TV bay"
+  },
+  "snacks": {
+   "bag": {
+    "at": [
+     6.165,
+     16.5
+    ],
+    "w": 0.2,
+    "h": 0.29,
+    "t": 0.06,
+    "yaw": 20,
+    "lean": 6
+   },
+   "can": {
+    "at": [
+     6.1,
+     16.645
+    ],
+    "d": 0.066,
+    "h": 0.122
+   },
+   "remote": {
+    "at": [
+     6.58,
+     0.828,
+     17.76
+    ],
+    "size": [
+     0.2,
+     0.022,
+     0.05
+    ],
+    "slope": 0.21,
+    "source": "on the arm's ridge (z 17.76; raycast on the chair: 0.805 at x 6.48 rising to 0.847 at 6.68), tilted to follow it; a 1990 VCR remote ~0.20 x 0.05 x 0.022"
+   },
+   "source": "film 2900/2932: the Crunch Tators bag (a 1990 6.5 oz chip bag ~0.20 x 0.29) leaning on the pole, a 12 oz Pepsi can (0.066 x 0.122, standard) in front-right of it on the tray; the TV remote on the chair's arm on Kevin's left (+z) (2868, 2900); art: tools/house/den_textures.py"
   }
  },
  "lamps_calibration": "film 2877 (tools/house/film_light_match.py --den-night), three passes: standard bulbs (bookcase 350, floor 1100, side 700 lm) read the urn lamp's pool -1.5/-1.9 stops vs the wall and the game boxes; 900/550/350 -> -0.7/-1.3; built 1200/300/250 (the floor lamp, out of 2877's frame, lit the game boxes). Desk 350 (not in the frame)"

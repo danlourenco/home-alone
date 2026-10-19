@@ -28,12 +28,12 @@
   "sources": "0d751db9ae7c2162"
  },
  "tools/house/hifi_den.py": {
-  "models": "9623b7608e25260b",
-  "sources": "781e347ccba9e767"
+  "models": "34fa615d73c22b61",
+  "sources": "68fd04968b124f7a"
  },
  "tools/house/hifi_den_props.py": {
   "models": "2c5ae5de7464b4e8",
-  "sources": "18d95ab29d66dea0"
+  "sources": "8a52e23e95a8a5ea"
  },
  "tools/house/hifi_dining_props.py": {
   "models": "98f2267f6866fc49",

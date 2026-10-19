@@ -243,23 +243,6 @@
    "source": "Den (Oct 16, TRIAL, changes/2026-10-16-den.json, DEVIATIONS 53): Fadnn Vintage Interior (owned; furniture-plan N5/N6). the side chair against the front wall by the living-side corner, facing the room (Marina f153: legs x 9.03 z 16.61; f161/f129)"
   },
   {
-   "name": "den_side_table",
-   "prefab": "Assets/Fadnn - Vintage Interior Furniture Pack/Props/Prefabs/HDRP/SM_Table_01.prefab",
-   "x": [
-    5.72,
-    6.31
-   ],
-   "z": [
-    16.28,
-    16.81
-   ],
-   "y0": 0.0,
-   "height": 0.62,
-   "back": "",
-   "hides": [],
-   "source": "Den (Oct 16, TRIAL, changes/2026-10-16-den.json, DEVIATIONS 53): Fadnn Vintage Interior (owned; furniture-plan N5/N6). the round side table with the lamp by the armchair, against the living wall (Marina f101/M27/f93: left of the armchair, below the left pictures); read off f101, not camera-solved | Oct 18 (user): between the living-side wall and Kevin's chair, at the chair's front corner toward the TV, against the wall (film 2868, user)"
-  },
-  {
    "name": "den_tv",
    "prefab": "Assets/VTC_AV-2062s/Prefabs/VTC_AV-2062s.prefab",
    "x": [

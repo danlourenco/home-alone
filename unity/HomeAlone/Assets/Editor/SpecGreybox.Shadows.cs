@@ -24,7 +24,7 @@ public static partial class SpecGreybox
     // (they pass light): a lamp whose bulb sits in one, near a wall or shelf, drew its own shade's silhouette as a dark blot (the
     // living room's console lamps, the den's urn lamp: play-mode captures, Oct 16). Only lamps clear of any surface get them.
     static readonly string[] ContactLamps = { "UnderCab_", "KitchenChandelier_Light", "Lantern_Light", "DenLamp_desk", "LivingLamp_banker" };
-    static readonly string[] HeroLamps = { "DenLamp_bookcase", "DenLamp_floor", "DenLamp_side", "LivingLamp_chest" };
+    static readonly string[] HeroLamps = { "DenLamp_bookcase", "DenLamp_floor", "DenLamp_tray", "LivingLamp_chest" };
     // rooms nobody can see into: behind prop doors (linen closet, under the landing) or with no opening at all (girls' A closet)
     static readonly string[] SealedRoomLamps = { "Light_linen_closet", "Light_under_landing", "Light_girls_a_closet" };
     const float UpstairsY = 0.5f;   // world y above which a lamp is upstairs (upstairs floor 0, ground floor -3.0)

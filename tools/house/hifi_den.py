@@ -253,17 +253,105 @@ def lamps(P):
     P["brass"].lathe(x, z, y, [(0, 0.14), (0.025, 0.13), (0.03, 0.012), (s1 - 0.02, 0.012), (s1, 0.0)], 20)
     P["brass"].box(min(x, x + ax), max(x, x + ax), s1 - 0.035, s1 - 0.02, z - 0.008, z + 0.008)          # the swing arm
     P["shade_cream"].lathe(x + ax, z + az, s0, [(0, rb), (s1 - s0 - 0.06, rt), (s1 - s0 - 0.06, 0.0)], 24)
-    x, y, z = Lm["side"]["at"]; rb, rt, s0, s1 = Lm["side"]["shade"]
-    P["stemwood"].lathe(x, z, y, [(0, 0.07), (0.03, 0.07), (0.05, 0.03), (0.15, 0.04), (0.25, 0.02), (s0 + 0.05, 0.012), (s0 + 0.05, 0.0)], 16)
-    P["shade_white"].lathe(x, z, y + s0, [(0, rb), (s1 - s0, rt), (s1 - s0, 0.0)], 24)
+    tray_lamp(P, Lm["tray"])
     x, y, z = Lm["desk"]["at"]                                                        # banker's lamp: brass base and stem, green shade
     if "store" not in Lm["desk"]:   # the bought lamp (store_props den_banker) replaces this stand-in
      P["brass"].lathe(x, z, y, [(0, 0.075), (0.02, 0.07), (0.025, 0.012), (0.30, 0.012), (0.30, 0.0)], 16)
      P["shade_green"].box(x - 0.06, x + 0.06, y + 0.30, y + 0.36, z - 0.13, z + 0.13)
-    for name in ("bookcase", "floor", "side"):                                           # a bulb inside each shade (it glows through)
+    for name in ("bookcase", "floor", "tray"):                                           # a bulb inside each shade (it glows through)
         x, y, z = Lm[name]["at"]; ax, az = Lm[name].get("arm", [0, 0]); rb, rt, s0, s1 = Lm[name]["shade"]
         yb = (y if name != "floor" else 0) + (s0 + s1) / 2 - (0.03 if name == "floor" else 0)
         P["bulb"].lathe(x + ax, z + az, yb - 0.03, [(0, 0.0001), (0.01, 0.025), (0.04, 0.03), (0.06, 0.012), (0.06, 0.0)], 10)
+
+
+def s_arm(x0, z0, y0, dx, dz, y1, n=16):
+    """the swing arm's S: a cubic from the pole top (rising) to the shade's socket (rising), dipping between (film 2868)"""
+    c = [(0, y0), (0, y0 + 0.16), (1, y1 - 0.20), (1, y1)]
+    pts = []
+    for i in range(n + 1):
+        t = i / n; w = [(1 - t) ** 3, 3 * t * (1 - t) ** 2, 3 * t * t * (1 - t), t ** 3]
+        f, y = sum(wi * ci[0] for wi, ci in zip(w, c)), sum(wi * ci[1] for wi, ci in zip(w, c))
+        pts.append((x0 + f * dx, y, z0 + f * dz))
+    return pts
+
+
+def tray_lamp(P, q):
+    """Kevin's tray floor lamp (den.json lamps.tray; film 2868/2874/2900/2932): weighted brass base, brass pole, a small dark tray
+    clamped to the pole with a brass rim, a thumbscrew collar, the S-curved arm up to a socket and the cream drum shade"""
+    x, _, z = q["at"]; ax, az = q["arm"]; rb, rt, s0, s1 = q["shade"]; top = q["pole_top"]; br = q["base_r"]
+    T = q["tray"]; tx, tz = T["at"]; ty, tr = T["y"], T["d"] / 2
+    P["brass"].lathe(x, z, 0.0, [(0, br), (0.012, br), (0.03, br * 0.75), (0.045, 0.03), (0.06, 0.016), (0.06, 0.0)], 28)   # weighted base
+    P["brass"].lathe(x, z, 0.06, [(0, 0.011), (top - 0.06, 0.011), (top - 0.06, 0.0)], 12)                                # pole
+    P["brass"].lathe(x, z, 1.08, [(0, 0.017), (0.04, 0.017), (0.04, 0.0)], 14)                                          # height collar (2932)
+    P["brass"].box(x - 0.004, x + 0.004, 1.094, 1.106, z - 0.05, z - 0.017)                                              # its thumbscrew, wall side
+    P["brass"].box(x - 0.009, x + 0.009, 1.088, 1.112, z - 0.062, z - 0.05)
+    P["brass"].lathe(x, z, ty - 0.07, [(0, 0.018), (0.035, 0.018), (0.035, 0.0)], 14)                                  # the tray's clamp
+    L = math.hypot(tx - x, tz - z); ux, uz = (tx - x) / L, (tz - z) / L
+    for k in range(5):                                                                                                    # bracket: clamp to the tray's centre
+        f0, f1 = k / 5, (k + 1) / 5
+        cx0, cz0, cx1, cz1 = x + ux * L * f0, z + uz * L * f0, x + ux * L * f1, z + uz * L * f1
+        P["brass"].box(min(cx0, cx1) - 0.006, max(cx0, cx1) + 0.006, ty - 0.042, ty - 0.03, min(cz0, cz1) - 0.006, max(cz0, cz1) + 0.006)
+    P["tray"].lathe(tx, tz, ty - 0.018, [(0, tr - 0.03), (0.006, tr - 0.012), (0.012, tr), (0.028, tr), (0.028, tr - 0.008), (0.018, tr - 0.008), (0.018, 0.0)], 32)   # the dark dish and its raised rim; its floor is ty
+    path = s_arm(x, z, top - 0.01, ax, az, s0 - 0.04)
+    P["brass"].sweep(path, [(0.008 * math.cos(2 * math.pi * k / 8), 0.008 * math.sin(2 * math.pi * k / 8)) for k in range(8)])
+    P["brass"].lathe(x, z, top - 0.025, [(0, 0.014), (0.03, 0.014), (0.03, 0.0)], 12)                                    # knuckle at the pole top
+    P["brass"].lathe(x + ax, z + az, s0 - 0.14, [(0, 0.016), (0.12, 0.018), (0.20, 0.018), (0.20, 0.0)], 14)            # socket up into the shade (2868)
+    P["shade_cream"].lathe(x + ax, z + az, s0, [(0, rb), (s1 - s0, rt), (s1 - s0, 0.0)], 32)
+
+
+def grid(part, F, nu, nv, uv=None, toward=None):
+    """a curved sheet: F(u, v) -> point, quads with optional atlas uv [u0, v0, u1, v1]; each faces 'toward' (a function of u, v)"""
+    for i in range(nu):
+        for j in range(nv):
+            us, vs = (i / nu, (i + 1) / nu), (j / nv, (j + 1) / nv)
+            cs = [(us[0], vs[0]), (us[1], vs[0]), (us[1], vs[1]), (us[0], vs[1])]
+            uvs = [(uv[0] + (uv[2] - uv[0]) * a, uv[1] + (uv[3] - uv[1]) * b) for a, b in cs] if uv else None
+            part.face([F(a, b) for a, b in cs], toward((us[0] + us[1]) / 2, (vs[0] + vs[1]) / 2), uvs)
+
+
+def snacks(P):
+    """on the tray (film 2900/2932): the Crunch Tators bag leaning on the pole, a Pepsi can; the TV remote on the chair's arm"""
+    S = D["decor"]["snacks"]; L = json.loads((ROOT / "spec/dressing/den_labels.json").read_text())
+    ty = D["lamps"]["tray"]["tray"]["y"]
+    b = S["bag"]; cx, cz = b["at"]; w, h, t = b["w"], b["h"], b["t"]
+    yaw, lean = math.radians(b["yaw"]), math.radians(b["lean"])
+    nx, nz = -math.cos(yaw), math.sin(yaw)          # the front's normal: -x, turned toward +z (the room) by yaw
+    ax_, az_ = -nz, nx                                # across, left to right seen from the front
+    ax_, az_ = (ax_, az_) if az_ > 0 else (-ax_, -az_)
+    def bag(side):
+        def F(u, v):
+            a = (u - 0.5) * w * (1 - 0.08 * v)                                             # a little narrower at the crimp
+            th = side * t / 2 * math.sin(math.pi * u) ** 0.5 * math.sin(math.pi * min(v * 0.9 + 0.05, 1)) ** 0.6
+            yy = v * h; back = yy * math.tan(lean)                                         # leans back toward the pole
+            return (cx + a * ax_ + (th - back) * nx, ty + 0.001 + yy * math.cos(lean), cz + a * az_ + (th - back) * nz)
+        return F
+    front = lambda u, v: (nx, 0.0, nz)
+    backn = lambda u, v: (-nx, 0.0, -nz)
+    grid(P["labels"], bag(1), 8, 10, L["bag_front"], front)
+    Fb = bag(-1)
+    grid(P["labels"], lambda u, v: Fb(1 - u, v), 8, 10, L["bag_back"], backn)
+    c = S["can"]; px, pz = c["at"]; r, hc = c["d"] / 2, c["h"]; n = 24; u0, v0, u1, v1 = L["can"]
+    for k in range(n):
+        a0, a1 = 2 * math.pi * k / n, 2 * math.pi * (k + 1) / n
+        p0, p1 = (px + r * math.cos(a0), pz + r * math.sin(a0)), (px + r * math.cos(a1), pz + r * math.sin(a1))
+        y0c, y1c = ty + 0.012, ty + hc - 0.01
+        mid = (math.cos((a0 + a1) / 2), 0.0, math.sin((a0 + a1) / 2))
+        ua, ub = u0 + (u1 - u0) * k / n, u0 + (u1 - u0) * (k + 1) / n
+        P["labels"].face([(p0[0], y0c, p0[1]), (p1[0], y0c, p1[1]), (p1[0], y1c, p1[1]), (p0[0], y1c, p0[1])], mid, [(ua, v0), (ub, v0), (ub, v1), (ua, v1)])
+    P["can_metal"].lathe(px, pz, ty + 0.001, [(0, r - 0.006), (0.011, r), (0.011, 0.0)], n)                     # base
+    P["can_metal"].lathe(px, pz, ty + hc - 0.01, [(0, r), (0.008, r - 0.007), (0.010, r - 0.007), (0.010, 0.0)], n)   # shoulder and lid
+    rm = S["remote"]; rx, ry, rz = rm["at"]; L_, H_, W_ = rm["size"]; k = rm.get("slope", 0.0)   # ry: its bottom at rx; rises k per m along +x
+    xa, xb, za, zb = rx - L_ / 2, rx + L_ / 2, rz - W_ / 2, rz + W_ / 2
+    Y = lambda x, top: ry + (x - rx) * k + (H_ - 0.001 if top else 0)
+    C = lambda x, z, top: (x, Y(x, top), z)
+    for f, n in (([C(xa, za, 0), C(xb, za, 0), C(xb, zb, 0), C(xa, zb, 0)], (k, -1, 0)),
+                 ([C(xa, za, 0), C(xa, zb, 0), C(xa, zb, 1), C(xa, za, 1)], (-1, 0, 0)), ([C(xb, za, 0), C(xb, za, 1), C(xb, zb, 1), C(xb, zb, 0)], (1, 0, 0)),
+                 ([C(xa, za, 0), C(xa, za, 1), C(xb, za, 1), C(xb, za, 0)], (0, 0, -1)), ([C(xa, zb, 0), C(xb, zb, 0), C(xb, zb, 1), C(xa, zb, 1)], (0, 0, 1))):
+        P["remote_black"].face(f, n)
+    u0, v0, u1, v1 = L["remote"]   # its top IS the label (as lbox: no face under it), keys along x, the label's top toward -x (the TV)
+    T = lambda x, z: C(x, z, 1)
+    P["labels"].face([T(xa, za), T(xb, za), T(xb, zb), T(xa, zb)], (-k, 1, 0),
+                     [(u0, v1), (u0, v0), (u1, v0), (u1, v1)])
 
 
 def decor(P):
@@ -316,10 +404,11 @@ MATS = {"labels": ("DB_Labels", (1, 1, 1), 0.6), "box_0": ("DB_Box0", (0.75, 0.1
         "urn": ("DB_Urn", (0.04, 0.06, 0.05), 0.2), "brass": ("DL_Brass", (0.75, 0.56, 0.25), 0.3), "stemwood": ("DL_Stem", (0.35, 0.22, 0.12), 0.4),
         "shade_orange": ("DL_ShadeOrange", (0.80, 0.30, 0.08), 0.8), "shade_cream": ("DL_ShadeCream", (0.92, 0.88, 0.78), 0.9),
         "shade_white": ("DL_ShadeWhite", (0.94, 0.93, 0.90), 0.9), "shade_green": ("DL_ShadeGreen", (0.05, 0.40, 0.12), 0.2),
+        "tray": ("DL_Tray", (0.035, 0.024, 0.018), 0.7), "can_metal": ("DB_CanMetal", (0.75, 0.75, 0.76), 0.3), "remote_black": ("DB_Remote", (0.02, 0.02, 0.022), 0.5),
         "bulb": ("DL_Bulb", (1, 0.95, 0.85), 0.2), "foil": ("DB_Foil", (0.85, 0.65, 0.25), 0.3), "wicker": ("DB_Wicker", (0.55, 0.38, 0.20), 0.85),
         "leaf": ("DB_Leaf", (0.06, 0.20, 0.06), 0.6), "bract_red": ("DB_BractRed", (0.62, 0.03, 0.05), 0.7), "bract_white": ("DB_BractWhite", (0.90, 0.90, 0.84), 0.7)}
 P = {k: Part(k, m) for k, (m, _, _) in MATS.items()}
-clutter(P); lamps(P); decor(P)
+clutter(P); lamps(P); snacks(P); decor(P)
 export([wood, white, black] + books + list(P.values()), {**{m: (c, r) for m, c, r in MATS.values()}, "DB_Wood": ((0.12, 0.05, 0.035), 0.5), "DB_Paint": ((0.88, 0.87, 0.83), 0.35), "DB_Black": ((0.02, 0.02, 0.02), 0.4),
                                       "DB_Book0": ((0.45, 0.06, 0.05), 0.7), "DB_Book1": ((0.08, 0.15, 0.30), 0.7), "DB_Book2": ((0.70, 0.62, 0.45), 0.7),
                                       "DB_Book3": ((0.10, 0.22, 0.12), 0.7), "DB_Book4": ((0.80, 0.78, 0.72), 0.7)},
