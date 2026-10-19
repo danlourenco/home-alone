@@ -47,19 +47,21 @@ def nosing(part, x_front, y_top, z0, z1, dirx):
         part.face([(xa, ya, z0), (xa, ya, z1), (xb, yb, z1), (xb, yb, z0)], ((xa + xb) / 2 - x_front, (ya + yb) / 2 - yc, 0))
 
 
-def flight(prefix, dirx, open_z, runner_inset=0.15):
-    """Steps named prefix01..: each a tread slab (front edge proud by NOSE, rounded), a white riser under its front, a runner."""
+def flight(prefix, dirx, out_z, runner_inset=0.15, keep=()):
+    """Steps named prefix01..: each a tread slab (front edge proud by NOSE, rounded), a white riser under its front, a runner.
+    Cut-string construction (user note Oct 19 16:23 "the balusters appear to hang off the side"): each tread runs out over the open
+    stringer to its outer face out_z (the rail band's outer edge), so the balusters stand on it; the riser stops at the stringer's
+    inner face. Steps in 'keep' (the bullnose first step) keep their own ends."""
     steps = sorted((b for n, b in B.items() if n.startswith(prefix) and b["kind"] == "step"), key=lambda b: b["name"])
     for b in steps:
         (x0, x1), (_, y1), (z0, z1) = b["x"], b["y"], b["z"]
+        tz, sz = ((z0, z1), (z0, z1)) if b["name"] in keep else ((out_z, z1), (out_z + 0.02, z1)) if out_z < z0 else ((z0, out_z), (z0, out_z - 0.02))
         front = x1 if dirx > 0 else x0
         xa, xb = (x0, x1 + NOSE - TREAD_T / 2) if dirx > 0 else (x0 - NOSE + TREAD_T / 2, x1)
-        tread.box(xa, xb, y1 - TREAD_T, y1, z0, z1)
-        nosing(tread, xb if dirx > 0 else xa, y1, z0, z1, dirx)
-        white.box(front - 0.02 if dirx > 0 else front, front if dirx > 0 else front + 0.02, y1 - RISE, y1 - TREAD_T, z0, z1)   # riser
+        tread.box(xa, xb, y1 - TREAD_T, y1, *tz)
+        nosing(tread, xb if dirx > 0 else xa, y1, *tz, dirx)
+        white.box(front - 0.02 if dirx > 0 else front, front if dirx > 0 else front + 0.02, y1 - RISE, y1 - TREAD_T, *sz)   # riser
         ra, rb = z0 + runner_inset, z1 - runner_inset                                    # carpet runner on tread and riser
-        if open_z is not None:
-            ra, rb = (z0 + runner_inset, z1 - runner_inset)
         runner.box(xa + 0.01, xb - 0.01, y1, y1 + CARPET, ra, rb)
         runner.box(front + (0 if dirx > 0 else -CARPET), front + (CARPET if dirx > 0 else 0), y1 - RISE, y1 + CARPET, ra, rb)
     return steps
@@ -112,10 +114,16 @@ def newel_post(cx, cz, y0, h):
 RAIL_PROF = [(-0.03, -0.035), (0.03, -0.035), (0.035, -0.01), (0.03, 0.01), (0.015, 0.025), (-0.015, 0.025), (-0.03, 0.01), (-0.035, -0.01)]
 
 # flight 1: rises toward -x, open side at z 10.23 (rail band 10.17-10.23), wall at 11.43
-f1 = flight("flight1_step", +1, 10.23)
-bot1 = stringer(f1, +1, 10.21, -1)
+# the open sides' outer plane: the rail band's outer edge (spec rail boxes), one plane each for flight 1, the landing edge and flight 2
+# + the gallery fascia (z 9.23, spec/geometry.json); stringer outer faces, tread ends, landing edge and soffit all stop on it
+RB = [b for b in S["boxes"] if b["kind"] == "rail"]
+OUT1 = min(b["z"][0] for b in RB if b["name"].startswith("flight1_rail"))   # 10.17
+OUT2 = max(b["z"][1] for b in RB if b["name"].startswith("flight2_rail"))   # 9.23
+OUTL = B["landing_rail_cap"]["x"][1]                                         # 3.045
+f1 = flight("flight1_step", +1, OUT1, keep=("flight1_step01",))
+bot1 = stringer(f1, +1, OUT1, -1)
 # flight 2: rises toward +x, open side at z 9.17 (rail band 9.17-9.23)
-f2 = flight("flight2_step", -1, 9.17)
+f2 = flight("flight2_step", -1, OUT2)
 # Flight 2's plaster underside (film 10673, Marina 312 s: one smooth white slope, a white fascia on the open side). One plane on the
 # pitch from the landing's underside (the foot) up to the foyer ceiling under the gallery (the head), meeting the north wall's face
 # and the open-side stringer's bottom edge; the stringer is cut that deep so its face closes the side down to the soffit.
@@ -128,13 +136,17 @@ k2 = RISE / (st2[0]["x"][1] - xa)                                  # the flight'
 G0 = json.loads((ROOT / "spec/geometry.json").read_text())["ground"]
 CEIL = G0["floor_y"] + next(c["y"][0] for c in G0["ceilings"] if c["room"] == "foyer")   # foyer ceiling under the gallery (2.82 m)
 xh = st2[-1]["x"][1]; xb = xa + (CEIL - ya) / k2                    # top step's back; where the slope meets the ceiling (DEVIATIONS 107)
-z0, ZO = st2[0]["z"][0], 9.16 + 0.02                               # north wall face; the stringer's outer face
-stringer(f2, -1, 9.16, -1, depth=st2[0]["y"][1] - ya, floor=ya)
+z0, ZO = st2[0]["z"][0], OUT2                                      # north wall face; the stringer's outer face
+stringer(f2, -1, OUT2 - 0.02, -1, depth=st2[0]["y"][1] - ya, floor=ya)
 white.face([(xa, ya, z0), (xb, CEIL, z0), (xb, CEIL, ZO), (xa, ya, ZO)], (0, -1, 0))
 white.face([(xh, ya + (xh - xa) * k2, ZO), (xb, CEIL, ZO), (xh, CEIL, ZO)], (0, 0, 1))   # the fascia on from the stringer's end to the ceiling
 L = B["landing"]; (lx0, lx1), (_, ly1), (lz0, lz1) = L["x"], L["y"], L["z"]
 white.box(lx0, lx1, L["y"][0], ly1 - TREAD_T, lz0, lz1)   # the landing's slab under its tread (fascia and soffit, white)
-tread.box(lx0, lx1 + NOSE - TREAD_T / 2, ly1 - TREAD_T, ly1, lz0, lz1); nosing(tread, lx1 + NOSE - TREAD_T / 2, ly1, 9.23, lz1, +1)
+tread.box(lx0, lx1 + NOSE - TREAD_T / 2, ly1 - TREAD_T, ly1, lz0, lz1); nosing(tread, lx1 + NOSE - TREAD_T / 2, ly1, OUT1, lz1, +1)
+# the landing's edge over the well, between the flights: slab and tread out to the rail band's outer edge (the landing balusters stand
+# on it, the newels take the corners), flush with no nosing, one fascia plane x OUTL
+white.box(lx1, OUTL, L["y"][0], ly1 - TREAD_T, OUT2, OUT1)
+tread.box(lx1 + NOSE - TREAD_T / 2, OUTL, ly1 - TREAD_T, ly1, OUT2, OUT1)
 runner.box(lx0 + 0.15, lx1 - 0.15, ly1, ly1 + CARPET, lz0 + 0.15, lz1 - 0.15)
 
 # wall-side skirt board along flight 1 (Marina 193.5 s, film 2677: a white board following the pitch on the wall): through the
@@ -160,7 +172,7 @@ wall.box(line[-1][0], line[-2][0], LN["y"][1], LN["y"][1] + 0.20, WALL_FACE - 0.
 # (0.705 m, foyer.json) with a cap; one plane 1 cm proud of the open side, over the flight only (the landing has its wall)
 spand, wains = Part("Spandrel", "Stair_Spandrel"), Part("Wainscot", "Stair_White")
 WAIN = json.loads((ROOT / "spec/dressing/foyer.json").read_text())["walls"]["wainscot_m"]
-zf, y_floor = 10.21 - 0.012, B["flight1_step01"]["y"][0]
+zf, y_floor = OUT1 - 0.012, B["flight1_step01"]["y"][0]
 xa1, xb1 = B["flight1_step12"]["x"][0], B["flight1_step01"]["x"][0]   # stops behind the bullnose first step, which rounds out in front of it
 xs_ = [xa1 + (xb1 - xa1) * k / 40 for k in range(41)]
 # the panel stops at the stringer's underside where the stair is lower than the wainscot (user note 08:40: it rose above the

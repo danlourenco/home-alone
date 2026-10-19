@@ -1,5 +1,7 @@
 # Current status — start here
 
+- [ ] **Latest16:23 stair support TRIAL (Codex):** built+baked in `~/.cache/home-alone-2`, not loaded while user walks.90/90 feet supported,5 aligned planes;0 z-fights/clashes, no new BLOCKED routes. Before/after batch views in `spec/captures/views/foyer/stair-support/`; regression `tools/house/test_soffit_joints.py`. User walk pending; see RESUME.
+
 ## OPEN WALK NOTES (Oct 18 evening; user: "don't lose track of them") — fix eventually, check off here
 - [ ] Oct19 kitchen fidelity + working back door TRIAL (changes/2026-10-19-kitchen-fidelity.json, DEVIATIONS 106; renders spec/captures/views/kitchen/fidelity/after/): walk the pot rack (height, pan mix), stools, counter dressing, pine cupboard, gallery/calendar, fridge dispenser + papers; E on the back door, walk out to the stoop and back. Open: duck decoy on the cupboard, the film's pine pigeonhole desk (ours is Marina's slant-front), magenta hutch (separate defect), red sash panels not seen through the open leaf's glass (check), fall-recovery check not re-run (user was in Play).
 - [ ] Oct19 12:56 den shelf lamp: too bright/broad, request better asset; current1200lm point/default7m range. Film2877 shows shaded confined pool. Candidate/lighting plan in WALK-FEEDBACK; no replacement bought. TV media crop/end-card removal completed live; original preserved.

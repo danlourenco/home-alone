@@ -1,0 +1,73 @@
+[
+  {
+    "name": "foyer/stair-support/before-note1623",
+    "pos": [
+      5.282,
+      -1.896,
+      -9.44
+    ],
+    "look_at": [
+      4.435,
+      -1.375,
+      -9.332
+    ],
+    "vfov": 60.0,
+    "night": false
+  },
+  {
+    "name": "foyer/stair-support/before-user",
+    "pos": [
+      6.741,
+      -1.716,
+      -9.664
+    ],
+    "look_at": [
+      1.821,
+      -1.036,
+      -9.086
+    ],
+    "vfov": 60
+  },
+  {
+    "name": "foyer/stair-support/before-kitchen",
+    "pos": [
+      3.56,
+      -1.55,
+      -7.62
+    ],
+    "look_at": [
+      3.35,
+      -0.45,
+      -8.7
+    ],
+    "vfov": 70
+  },
+  {
+    "name": "foyer/stair-support/before-landing",
+    "pos": [
+      2.55,
+      -1.7,
+      -9.6
+    ],
+    "look_at": [
+      3.7,
+      -0.45,
+      -8.5
+    ],
+    "vfov": 70
+  },
+  {
+    "name": "foyer/stair-support/before-head",
+    "pos": [
+      5.3,
+      -1.55,
+      -9.9
+    ],
+    "look_at": [
+      3.95,
+      -0.3,
+      -8.6
+    ],
+    "vfov": 50
+  }
+]

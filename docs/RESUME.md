@@ -5,6 +5,9 @@ Skills index apply to every job), then this, then docs/WALK-FEEDBACK-2026-10-19.
 docs/FOYER-WIP.md (the foyer job's checkpoints); STATUS.md is the long log. This file supersedes older pending/accepted wording there.
 
 ## 0. State
+
+> **Latest stair continuation (Codex, Oct19):** completed the paused16:23 support fix; ONE build235s + ONE bake262s passed.90/90 baluster feet supported,5 edge planes aligned,0 z-fights/clashes and no new BLOCKED routes. Regression also rejects a partially missing fascia. Five before/after BATCH views inspected: `spec/captures/views/foyer/stair-support/compare-note1623.jpg`. **Not loaded; main editor remains in Play.** Load when ready: `HA_SCRATCH="$HOME/.cache/home-alone-2" tools/house/unity_pipeline.sh load`. Trial awaits user walk; hall-runner work remains paused.
+
 - Branch `unity-sfm-reconstruction`, pushed through the Codex session's work (3773db20). Trials since Oct 18 are in `changes/`.
 - **Oct 19 walk verdict:** accepted: mirror, front door look + use, den arrangement, TV seat/view concept, the exterior/sky/drive
   trials except listed defects. **Rejected: the flight-2 soffit (does not connect).** Acceptance does not close defects.

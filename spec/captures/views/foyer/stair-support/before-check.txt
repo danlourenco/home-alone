@@ -1,0 +1,8 @@
+Open sides: 5 plane joints, 90 baluster feet checked
+Soffit over the kitchen opening: lowest 2.221 m above the floor, head 2.200 m (0 vertices over it)
+Soffit joints: 2 soffit triangles, x 2.985-4.059, y -0.856--0.206; 4 edges checked against 31106 triangles; 5 problems (tolerance 3 mm)
+PLANE   flight 2 stringer outer face (z): 9.180, the rail band's outer edge is 9.230 (50 mm off; nan means missing surface)
+PLANE   flight 2 soffit open edge (z): 9.180, the rail band's outer edge is 9.230 (50 mm off; nan means missing surface)
+PLANE   landing edge over the well (x): nan, the rail band's outer edge is 3.045 (nan mm off; nan means missing surface)
+PLANE   flight 1 stringer outer face (z): 10.210, the rail band's outer edge is 10.170 (40 mm off; nan means missing surface)
+HANGING 47 of 90 balusters not standing on a tread/landing/floor: (5.987, -2.670, 10.200) 4/4 corners over air; (6.083, -2.670, 10.200) 4/4 corners over air; (6.181, -2.670, 10.200) 4/4 corners over air; (5.692, -2.492, 10.200) 4/4 corners over air; (5.788, -2.492, 10.200) 4/4 corners over air; (5.886, -2.492, 10.200) 4/4 corners over air ...

@@ -1,13 +1,19 @@
 {
-  "change": "Flight 2 soffit closed at every edge: one plane on the pitch from the landing underside to the foyer ceiling under the gallery, the open-side stringer cut down to it; TRIAL",
+  "change": "Open stair sides carried to existing rail/landing edge; supported baluster feet and coplanar stringer/soffit/fascia joints; TRIAL",
   "target": "House_WallGrid",
   "premise": "Flight 2's underside is one plastered slope (film 10673; Marina 312 s) whose edges die into the landing's underside, the north wall, the open-side fascia and the flat foyer ceiling under the gallery.",
   "claim": {
     "value": {
-      "soffit": "plane from (x 2.985, y -0.856) to (x 4.059, y -0.206) spec, z 7.778 (north wall face) to 9.18 (stringer outer face), parallel to the pitch (rise 0.178 / going 0.294)",
+      "soffit": "plane from (x 2.985, y -0.856) to (x 4.059, y -0.206) spec, z 7.778 (north wall face) to 9.23 (stringer/landing/gallery outer face), parallel to the pitch (rise 0.178 / going 0.294)",
       "stringer": "flight 2 open-side stringer depth 0.322 below the first nosing line, clipped at the landing underside, so its bottom edge is the soffit's edge",
       "head": "a white triangle in the stringer's outer plane closes the side from the top step's back (x 3.868) to where the slope meets the ceiling (x 4.059)",
-      "unchanged": "treads, risers, landing, colliders, route; kitchen-opening clearance 2.221 m over its 2.20 m head (DEVIATIONS 20)"
+      "unchanged": "treads, risers, landing, colliders, route; kitchen-opening clearance 2.221 m over its 2.20 m head (DEVIATIONS 20)",
+      "open_sides": {
+        "flight1_outer_z": 10.17,
+        "flight2_outer_z": 9.23,
+        "landing_outer_x": 3.045,
+        "method": "Extend visible tread ends and cut stringers to the existing rail-band outer planes, extend landing support to landing rail outer face. Keep measured step boxes, tread elevations, rail centres, landing position and collision/walk route unchanged. Preserve first-step volute."
+      }
     },
     "surface": "ceiling-plane",
     "data": [
@@ -23,7 +29,7 @@
     ],
     "measured_in": [],
     "assumed": {
-      "foyer": "DEVIATIONS 107: soffit carried on the pitch past the top step to the ceiling (x 3.868 -> 4.059, 11.5 cm drop); open-side stringer deepened 0.25 -> 0.322 m"
+      "foyer": "DEVIATIONS 107: soffit carried on the pitch past the top step to the ceiling (x 3.868 -> 4.059, 11.5 cm drop); open-side stringer deepened 0.25 -> 0.322 m; open-side finish planes use existing rail-band edges: flight2 +50mm z, flight1 -40mm z; landing cap support extends +60mm x. These are authored finish/support margins, not new measured stair clear widths; DEVIATIONS107."
     }
   },
   "history": [
@@ -41,9 +47,14 @@
       "date": "2026-10-19",
       "what": "Smooth soffit plane in hifi_foyer.py (changes/2026-10-19-foyer-interactions.json): user 12:26 'does not connect', 14:49 'why is this soffit still not fixed?' (shot 20261019-144917). Cause: the plane ended at the top step's back 11.5 cm under the ceiling (the dark tread undersides showed through), and its open edge stood 1 cm proud of a recessed infill 7-9 cm under the stringer.",
       "outcome": "rejected"
+    },
+    {
+      "date": "2026-10-19",
+      "what": "16:23 user walk: closer, but balusters appear to hang off the side; flight2 stringer/soffit edge z9.18 is50mm inboard of existing landing/gallery edge z9.23. Prior joint check tested contact but not baluster support or common edge alignment.",
+      "outcome": "rejected"
     }
   ],
-  "premise_reviewed": "Census of the failed attempts: both drew the soffit and checked it by eye and with the z-fight/clash gates, which only look for overlaps, never for edges that touch nothing; both ended the soffit at the flight's own boxes (step bottoms, top step's back) instead of at the neighbouring surfaces. The premise (one smooth slope) still stands: film 10673 and Marina 312 s both show it. What changes is the construction rule (each edge ends ON a neighbour's surface, the head on the ceiling plane) and a gate that measures it: tools/house/soffit_joints.py fails the rejected model (head 115 mm, open side 10 mm) and passes this one (0 of 4 edges loose at 3 mm).",
+  "premise_reviewed": "Census of the failed attempts: both drew the soffit and checked it by eye and with the z-fight/clash gates, which only look for overlaps, never for edges that touch nothing; both ended the soffit at the flight's own boxes (step bottoms, top step's back) instead of at the neighbouring surfaces. The premise (one smooth slope) still stands: film 10673 and Marina 312 s both show it. What changes is the construction rule (each edge ends ON a neighbour's surface, the head on the ceiling plane) and a gate that measures it: tools/house/soffit_joints.py fails the rejected model (head 115 mm, open side 10 mm) and passes this one (0 of 4 edges loose at 3 mm). The 16:23 rejection shows that contact alone is insufficient: the white outer board must carry tread ends and the entire baluster footprint must stand on support. Reuse measured rail positions rather than moving the landing or narrowing the measured flight. Film2677 and10673 show balusters seated on dark tread ends over a continuous white side; Marina312 remains independent shape evidence, not a metric ruler.",
   "checks": [
     {
       "what": "Marina 312 s (spec/captures/compare-marina/web/marina-312-ref.jpg): flight 2's underside is one smooth white slope meeting the north wall in a diagonal, independent of film 10673. Shape only.",
@@ -68,36 +79,47 @@
         "none"
       ],
       "upstream": []
+    },
+    {
+      "what": "Oct19 continuation: test_soffit_joints.py rejects committed walked model381c7e42 (47/90 feet unsupported, flight2 edge50mm inboard), passes corrected model (90 feet,5 planes, full landing fascia span at3mm); rejects a deliberately removed half-fascia even though remaining corners reach the plane. Self-consistency regression, not dimensional evidence.",
+      "agrees": true,
+      "type": "topological",
+      "data": [
+        "tools:soffit_joints"
+      ],
+      "scale": [
+        "none"
+      ],
+      "upstream": []
     }
   ],
   "renders": {
     "before": [
-      "spec/captures/views/foyer/soffit/offline-before-user.jpg",
-      "spec/captures/views/foyer/soffit/offline-before-head.jpg",
-      "spec/captures/views/foyer/soffit/offline-before-kitchen.jpg",
-      "spec/captures/views/foyer/soffit/offline-before-landing.jpg"
+      "spec/captures/views/foyer/stair-support/before-note1623.jpg",
+      "spec/captures/views/foyer/stair-support/before-user.jpg",
+      "spec/captures/views/foyer/stair-support/before-kitchen.jpg",
+      "spec/captures/views/foyer/stair-support/before-landing.jpg",
+      "spec/captures/views/foyer/stair-support/before-head.jpg"
     ],
     "after": [
-      "spec/captures/views/foyer/soffit/offline-after-user.jpg",
-      "spec/captures/views/foyer/soffit/offline-after-head.jpg",
-      "spec/captures/views/foyer/soffit/offline-after-kitchen.jpg",
-      "spec/captures/views/foyer/soffit/offline-after-landing.jpg",
-      "spec/captures/views/foyer/soffit/film10673-vs-offline-after-head.jpg",
-      "spec/captures/views/foyer/soffit/unity-after-user.jpg",
-      "spec/captures/views/foyer/soffit/unity-after-head.jpg",
-      "spec/captures/views/foyer/soffit/unity-after-kitchen.jpg",
-      "spec/captures/views/foyer/soffit/unity-after-landing.jpg",
-      "spec/captures/views/foyer/soffit/sbs-user-before-after.jpg",
-      "spec/captures/views/foyer/soffit/film10673-vs-unity-after-head.jpg"
+      "spec/captures/views/foyer/stair-support/after-note1623.jpg",
+      "spec/captures/views/foyer/stair-support/after-user.jpg",
+      "spec/captures/views/foyer/stair-support/after-kitchen.jpg",
+      "spec/captures/views/foyer/stair-support/after-landing.jpg",
+      "spec/captures/views/foyer/stair-support/after-head.jpg"
     ]
   },
   "user_walk": "pending",
   "verification": {
     "date": "2026-10-19",
-    "build": "1 build + 1 bake (HA_SCRATCH=~/.cache/home-alone-2), from current sources",
-    "preflight": "all pass incl. soffit_joints, rail_joints, stair_arrival, csc_check",
-    "surface_gates": "0 z-fights, 0 clashes; seams 0; BLOCKED lines identical to HEAD (existing service-winder leg only)",
-    "soffit_joints": "rejected MainStair.glb FAIL (head 115 mm, open side 10 mm); rebuilt 0 problems; kitchen-opening clearance 2.221 m >= 2.20",
-    "look": "batch renders of the built scene at the user's 14:49 pose, head, kitchen and landing views: dark slot at the head gone, soffit dies into the ceiling, open-side fascia continuous. Batch lighting (no probes) only; live capture pending the user's load."
+    "build": "ONE scene build235s + ONE Night/Default bake262s, HA_SCRATCH=~/.cache/home-alone-2; both exit0",
+    "preflight": "all pass including plan, arrivals, rail/soffit joints, model quality, all change records; separate csc_check passed",
+    "surface_gates": "0 z-fights,0 clashes,0 structural seam gaps/ledges/overlaps; BLOCKED lines byte-identical to baseline (one existing service-winder leg)",
+    "soffit_joints": "Walked model381c7e42 fails:47/90 unsupported feet and50mm flight2 offset. Corrected model:90 feet supported,5 aligned planes, soffit boundary and complete landing fascia span within3mm. test_soffit_joints.py also detects deliberately incomplete fascia.",
+    "built_model_sha256": "d214a8c1acf6ecd1562a4215b4e3f3066f6adcd9d1dc29a92155fc4a4add60ce",
+    "lighting": "76/76 lights baked; Night58s/Default54s; reflection probes rerendered for both. No live main-editor lighting verification.",
+    "look": "Five BEFORE views of previously built/walked model and five AFTER views from newly built+baked scratch scene, exact16:23 note pose plus previous user/kitchen/landing/head cameras. Inspected all after views and comparisons; exposed baluster undersides removed, continuous tread/stringer/fascia support. BATCH renders only, not live lighting proof.",
+    "known_warnings": "Existing service-stair blockage,4 older models over triangle budget,1 trim gap and legacy props warnings retained; no new BLOCKED route.",
+    "load": "NOT LOADED: main editor is walking in Play. HA_SCRATCH=\"$HOME/.cache/home-alone-2\" tools/house/unity_pipeline.sh load when ready to end current walk."
   }
 }

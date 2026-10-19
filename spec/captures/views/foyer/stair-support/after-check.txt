@@ -1,0 +1,3 @@
+Open sides: 5 plane joints, 90 baluster feet checked
+Soffit over the kitchen opening: lowest 2.221 m above the floor, head 2.200 m (0 vertices over it)
+Soffit joints: 2 soffit triangles, x 2.985-4.059, y -0.856--0.206; 4 edges checked against 31130 triangles; 0 problems (tolerance 3 mm)
