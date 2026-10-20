@@ -17,8 +17,8 @@ Sources (mfb64, Sketchfab, CC BY 4.0; author/licence from each GLB's asset.extra
     (luminance high-pass as height: knots and motif edges catch the light); stated, not claimed as a bake
 Fits (non-uniform, kept rather than cropped: a border-preserving crop truncated the Nain's oval medallion, see
 ~/.cache/home-alone-2/captures/overnight11-nain-crop-vs-squash.png):
-  FrontRug  spec/dressing/foyer_props.json front_rug (x 7.48-8.90, z 8.60-10.72; film 1616/1690 cream field), fringe at the z ends
-            (film 1616). The photo is 1:1.92 (borders to borders); at 1.42 x 2.12 (1:1.49) motifs are 1.28x wide.
+  FrontRug  spec/dressing/foyer_props.json front_rug (x 7.48-8.90, z 8.60-10.72), fringe at the z ends (film 1616, 31). Recoloured
+            to the film's palette (Oct 20, nain_film_recolor: green field, cream border, red-brown guards; film 30-35, 1616, 1690). The photo is 1:1.92 (borders to borders); at 1.42 x 2.12 (1:1.49) motifs are 1.28x wide.
   LivingRug spec/dressing/living.json rug (x 2.90-6.56, z 12.45-15.19; the red oriental of Marina f3/f165, film 10600): the Heriz
             is 1:1.345, the box 1:1.336: near-uniform (x0.93 along, x0.95 across). Fringe at the x ends (the long axis), INSIDE the
             box (body shortened by it): beyond x 2.90 it ran through the nutcracker standing at the rug's end (clash gate).
@@ -107,6 +107,59 @@ def set_normal(mat, img):
     nt.links.new(tex.outputs["Color"], nm.inputs["Color"]); nt.links.new(nm.outputs["Normal"], bs.inputs["Normal"])
 
 
+# The film's front rug (Oct 20): film 30-35 (opening, night, from the landing) show it whole: a DARK GREEN field, all-over floral
+# with a small cream/red medallion, a cream-gold border with red motifs between red-brown guards; film 1616/1690 (day) show only its
+# near border (cream + red-brown guard: the "cream field" read on Oct 17 was that border). The Nain's design is kept and its colours
+# remapped to that palette (nain_film_recolor). Film colours, sRGB as graded: border cream/tan/brown/red and the guard from 1616+1690
+# rows 1030-1058 (k-means); the field green from 31/33/34/35 (pixels G >= R in x 420-880, y 640-780), white-balanced night -> day on
+# the rug's own undyed fringe (31: x 330-372 y 580-720; 1616: the corner tassels), so it is in the day frames' grading. The targets
+# are used RELATIVE to the film's cream (x the Nain's cream albedo): exposure-free. Spread: the night border under the fringe
+# balance reads (119, 100, 95) against the day frames' (149, 137, 124), so the green is +-20% in brightness.
+def _lin(s): return np.where(s <= 0.04045, s / 12.92, ((s + 0.055) / 1.055) ** 2.4)
+def _srgb(l): return np.where(l <= 0.0031308, l * 12.92, 1.055 * np.clip(l, 0, None) ** (1 / 2.4) - 0.055)
+NAIN_K = np.array([(249, 246, 231), (221, 209, 198), (194, 175, 162), (136, 130, 130), (73, 73, 82), (16, 11, 17)]) / 255  # k-means
+FILM = {k: np.array(v) / 255 for k, v in dict(cream=(149, 137, 124), tan=(127, 111, 98), brown=(105, 84, 74), guard=(89, 67, 61),
+        red=(64, 17, 24), deep=(31, 6, 10), green=(32, 47, 36)).items()}
+NAIN_FILM = {  # each Nain colour (NAIN_K order: cream, warm grey, tan, grey, navy, black) -> a film colour, by region
+    "field": ("green", "tan", "guard", "cream", "red", "deep"),
+    "border": ("cream", "tan", "brown", "guard", "red", "deep"),
+    "guard": ("guard", "guard", "red", "red", "deep", "deep"),
+}
+NAIN_FIELD, NAIN_GUARDS = (172, 276), [((26, 68), (52, 104)), ((146, 238), (172, 276))]  # px insets on the 1024 x 2048 photo
+
+
+def nain_film_recolor(a, field=NAIN_FIELD, guards=NAIN_GUARDS):
+    """a (h, w, 3) sRGB 0-1 (either row order: the regions are mirror-symmetric). field: the field's inset (x, y) px; guards: each
+    blue guard band as the insets of its outer and inner edges. Soft nearest-colour remap; within a colour the pixel's luminance
+    ratio is kept (knots, wear, photo shading). Outside the outer guard (the photo's margin) is left as is."""
+    h, w = a.shape[:2]
+    d = ((a[..., None, :] - NAIN_K) ** 2).sum(-1)
+    wk = np.exp(-(d - d.min(-1, keepdims=True)) / (2 * 0.06 ** 2)); wk /= wk.sum(-1, keepdims=True)
+    Y = np.array([0.2126, 0.7152, 0.0722])
+    ratio = np.clip((_lin(a) @ Y)[..., None] / (_lin(NAIN_K) @ Y), 0.5, 1.6)
+    scale = _lin(NAIN_K[0]) / _lin(FILM["cream"])
+    yy, xx = np.mgrid[:h, :w]; xs, ys = np.minimum(xx, w - 1 - xx), np.minimum(yy, h - 1 - yy)
+    rect = lambda x, y: (xs >= x) & (ys >= y)
+    region = np.full((h, w), "border", object)
+    for (x0, y0), (x1, y1) in guards: region[rect(x0, y0) & ~rect(x1, y1)] = "guard"
+    region[rect(*field)] = "field"
+    out = a.copy()
+    for r, names in NAIN_FILM.items():
+        m = (region == r) & rect(*guards[0][0])
+        T = np.array([_lin(FILM[n]) * scale for n in names])
+        out[m] = _srgb(np.clip((wk[m][..., None] * ratio[m][..., None] * T).sum(1), 0, 1))
+    return out
+
+
+def recolor_front(mat, name):
+    """Swap the Nain's albedo for its film recolour (a new packed sRGB PNG: the pile normal was derived from the original first)."""
+    tex = next(n for n in mat.node_tree.nodes if n.type == "TEX_IMAGE" and n.image.colorspace_settings.name != "Non-Color")
+    w, h = tex.image.size; assert (w, h) == (1024, 2048), (w, h)   # NAIN_FIELD / NAIN_GUARDS are read off this photo
+    a = np.empty(w * h * 4, np.float32); tex.image.pixels.foreach_get(a); a = a.reshape(h, w, 4)[..., :3]
+    img = image_png(name, np.dstack([nain_film_recolor(a), np.ones((h, w, 1))]), w, h); img.colorspace_settings.name = "sRGB"
+    tex.image = img
+
+
 def thin_strands(o, keep):
     """Keep every `keep`-th loose part (strand): ~7800 strands at 0.4 mm spacing after the fit is far denser than reads; decimation
     alone stops at ~9 triangles a strand (70k a rug)."""
@@ -153,6 +206,7 @@ def prepare(key, src):
     bm.to_mesh(body.data); bm.free()
     albedo = next(n.image for n in body.data.materials[0].node_tree.nodes if n.type == "TEX_IMAGE")
     set_normal(body.data.materials[0], pile_normal(albedo, key + "_pile_normal"))
+    if key == "FrontRug": recolor_front(body.data.materials[0], key + "_film_albedo")
     body.name = key + "Body"
     print(f"{key}: {src} {n0} tris -> body {tris([body])} + fringe {tris([low])} = {tris([body, low])}")
     return body, low
