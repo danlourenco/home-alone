@@ -269,8 +269,8 @@ ok      player down leg 2: ended 0.01 m from waypoint, 0.03 m off its floor heig
 ok      player down leg 3: ended 0.04 m from waypoint, 0.03 m off its floor height, 26 frames (clean walk 27)
 ok      player down leg 4: ended 0.01 m from waypoint, 0.03 m off its floor height, 21 frames (clean walk 21)
 Render check (outward faces, ServiceStair): 100 parts, 0 inside-out
-Seam check: 946 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
-Leak and headroom check: 1491 points, 0 leaks, 13 low-headroom points (ground floor, outside flight 1)
+Seam check: 1098 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
+Leak and headroom check: 1491 points, 0 leaks, 17 low-headroom points (ground floor, outside flight 1)
 LOW     den at (2.6, 18.2): 0.83 m clear under StoreProps/den_tv_Collider
 LOW     den at (5.6, 16.7): 0.75 m clear under DenColliders/DenCollider_tray_lamp_tray
 LOW     kitchen at (0.1, 4.9): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_endA3
@@ -283,7 +283,7 @@ LOW     kitchen at (1.1, 4.4): 0.57 m clear under KitchenColliders/KitchenCollid
 LOW     kitchen at (1.6, 5.4): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
 LOW     kitchen at (1.6, 4.9): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
 LOW     kitchen at (1.6, 4.4): 0.57 m clear under KitchenColliders/KitchenCollider_breakfast_table_top_mid
-Peek check: 600768 rays from rooms you can walk in, 0 into closed spaces
+Peek check: 597576 rays from rooms you can walk in, 0 into closed spaces
 UPSTAIRS Room walk test (both bodies, every doorway to room centre and back): 80 legs, 0 blocked
 skip    bandit kevin_jeff_room: no cell to stand in (its floor is a stair)
 skip    bandit hall_corridor via main_stair_opening/hall_corridor: the other side is all stair
@@ -301,17 +301,19 @@ skip    kevin dining_room: no cell to stand in (its floor is a stair)
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin back_stair: no cell to stand in (its floor is a stair)
-Z-fight check: 2937220 triangles, 2317 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
-Clash check: 3260082 triangles, 0 parts passing through another (31 allowed joints) (every visible mesh checked)
+Z-fight check: 2955209 triangles, 2550 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
+Clash check: 3294658 triangles, 2 parts passing through another (49 allowed joints) (every visible mesh checked)
+CLASH   Upstairs/BathroomProps_HiFi/bud_flowers through Upstairs/BathroomProps_HiFi/bud_stems: 102 crossings, first at spec (1.29, 1.28, 4.29)
+CLASH   Upstairs/BathroomProps_HiFi/bud_stems through Upstairs/BathroomProps_HiFi/bud_flowers: 8 crossings, first at spec (1.29, 1.28, 4.30)
 Casing check: 0 casings placed apart from their opening
 Opening face check: 24 door faces, 0 without a head casing, 0 showing the other room's finish within the casing width
 Arch fit: 1 generated arches on their cuts, 0 joints off by more than 1 mm (worst 0.00 mm)
-Props check: 239 store models, 149 problems (landing_table: back -0.5 cm from the drawn wall (want 0-3); den_banker: material Glass_HDRP has no base colour map; basement_door: back 4.0 cm from the drawn wall (want 0-3); den_book_001: back 19.1 cm from the drawn wall (want 0-3); den_book_002: back 19.2 cm from the drawn wall (want 0-3); den_book_003: back 20.3 cm from the drawn wall (want 0-3); den_book_004: back 19.9 cm from the drawn wall (want 0-3); den_book_005: back 16.7 cm from the drawn wall (want 0-3); den_book_006: back 17.5 cm from the drawn wall (want 0-3); den_book_007: back 21.3 cm from the drawn wall (want 0-3))
+Props check: 244 store models, 146 problems (landing_table: back -0.5 cm from the drawn wall (want 0-3); den_banker: material Glass_HDRP has no base colour map; basement_door: back 4.0 cm from the drawn wall (want 0-3); den_book_001: back 19.1 cm from the drawn wall (want 0-3); den_book_002: back 19.2 cm from the drawn wall (want 0-3); den_book_003: back 20.3 cm from the drawn wall (want 0-3); den_book_004: back 19.9 cm from the drawn wall (want 0-3); den_book_005: back 16.7 cm from the drawn wall (want 0-3); den_book_006: back 17.5 cm from the drawn wall (want 0-3); den_book_007: back 21.3 cm from the drawn wall (want 0-3))
 Props triangle budget: 4 models over 150k triangles (Assets/Purchased/PurchasedPlants.glb 411k, Assets/Purchased/HallPlants.glb 296k, Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Models/ChristmasTree.fbx 259k, Assets/Models/Foyer/HallDressing.glb 202k)
-Trim check: 83 face runs (3 on the stair and landings, 0 panelled by a window model), 140.5 m, 11162 samples, 1 gaps in the baseboard, wainscot or cap rail; run ends: corner 83, opening 79, outside-corner 4
+Trim check: 97 face runs (3 on the stair and landings, 0 panelled by a window model), 165.0 m, 12355 samples, 1 gaps in the baseboard, wainscot or cap rail; run ends: corner 103, opening 84, outside-corner 7
 GAP     0.06 m of bare wall 0.42 above the line of the room:hall_corridor run at spec (7.35, 0.42, 9.91)
-Envelope check: 2166 points at room joints, 0 see the sky through < 0.3 m of shadow caster
+Envelope check: 2139 points at room joints, 0 see the sky through < 0.3 m of shadow caster
 Entrance check: closed blocks, open clears, locked refuses open; one leaf collider
 Back door check: closed blocks (0.3/1.0/1.8 m), open clears, the open leaf touches nothing, locked refuses open
-Quality check: 4 pipeline models of 48 generated (the rest predate the artist pipeline), 0 problems
+Quality check: 4 pipeline models of 50 generated (the rest predate the artist pipeline), 0 problems
 

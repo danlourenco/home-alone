@@ -106,6 +106,29 @@
    "source": "film 296/301 (packing night, the room's only film shots): white ground, small scattered sprig/dot motifs in muted green, rose and gold; the production still of the set (Marina Part 2 335 s) shows the same paper sharp (multicolour dots, ~4.7 cm spacing at an ASSUMED 0.74 m window casing). Too soft to cut a repeat: DRAWN by tools/house/kevin_wallpaper.py (repeat 0.188 m, DEVIATIONS 95). Marina's CG paper is red dots (her colourway). The set still's toy-robot border under the crown is NOT built. A white baseboard only (Marina 375/380). Kevin+Jeff TRIAL 1 (changes/2026-10-18-kevin-room.json)",
    "floor": "wood",
    "floor_source": "Marina 375/380 s: the house's dark stained strip hardwood, no rug; set still 335 s the same"
+  },
+  "parents_bath": {
+   "upper": [
+    0.86,
+    0.76,
+    0.74
+   ],
+   "wainscot_m": 0.14,
+   "source": "film 4398/4446/6446 (the aftershave scene) and the set photo (Marina Part 2 165 s): flat blush-pink PAINT, a white baseboard, no wainscot; colour by eye from the film's wall against the ivory vanity in the same light (film 4398 wall linear 0.156/0.144/0.136 vs drawer 0.114/0.122/0.093: the wall is warmer and lighter), ASSUMED albedo ~0.6: DEVIATIONS 110. Marina's walls are the same pale pink. Bathrooms TRIAL 1 (changes/2026-10-19-bathrooms.json)",
+   "floor": "carpet",
+   "floor_source": "the set photo (Marina 165 s): a dark green-black carpet; built in SpecGreybox.Bathrooms.cs"
+  },
+  "hall_bath": {
+   "paper": "spec/dressing/hall_bath_wallpaper.png",
+   "upper": [
+    0.15,
+    0.26,
+    0.16
+   ],
+   "wainscot_m": 0.14,
+   "source": "film 336-344 (Fuller at the pedestal sink): dark green paper with white lidded tureens and pale-blue medallions on a gold trellis, DRAWN by tools/house/bathroom_textures.py (repeat 0.128 m, DEVIATIONS 110); the subway-tile wainscot (black liner + cap) is a generated overlay (hifi_bathrooms.py, spec/dressing/bathrooms.json), so the wall finish here is the paper over the baseboard only. Marina's paper is her own floral. Bathrooms TRIAL 1 (changes/2026-10-19-bathrooms.json)",
+   "floor": "tile",
+   "floor_source": "ASSUMED white 2 in hex mosaic (the film never shows it; Marina 457 s a white tile floor); built in SpecGreybox.Bathrooms.cs"
   }
  }
 }

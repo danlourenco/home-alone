@@ -335,6 +335,7 @@ public static partial class SpecGreybox
         HiFiLights(root, gy);
         Hall(root);                    // SpecGreybox.Hall.cs: the upstairs hall's dressing, sconces and plants (spec/dressing/hall.json)
         Trunk(root);                   // SpecGreybox.Trunk.cs: Buzz's footlocker, bought scan rebuilt hollow (spec/dressing/buzz_trunk.json)
+        Bathrooms(root);               // SpecGreybox.Bathrooms.cs: the parents' ensuite + the hall bath (hifi_bathrooms.py; changes/2026-10-19-bathrooms.json)
         Kevin(root);                   // SpecGreybox.Kevin.cs: Kevin and Jeff's room, bunks/curtains/props + night lamps (hifi_kevin.py; changes/2026-10-18-kevin-room.json)
         Parents(root);                 // SpecGreybox.Buzz.cs: the parents' bedroom furniture boxes (spec/dressing/parents.json; changes/2026-10-18-parents-room.json)
         Attic(root);                   // SpecGreybox.Attic.cs: the attic shell over the attic stair (hifi_attic.py; changes/2026-10-18-attic-shell.json)

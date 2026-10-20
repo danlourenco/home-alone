@@ -1,0 +1,83 @@
+{
+ "change": "Hall bath tile wainscot heights (part of the bathrooms TRIAL, changes/2026-10-19-bathrooms.json): the white subway-tile wainscot's black cap 1.10-1.155 and black liner 0.975-0.99 above the floor, built as a 1.5 cm overlay (cap 2.2 cm) by tools/house/hifi_bathrooms.py from spec/dressing/bathrooms.json hall_bath.wainscot. TRIAL.",
+ "target": "House_WallGrid",
+ "premise": "Marina's hall bath tile wainscot (her CG model) has the film's design and height, and her door-wall view at 468.5 s is near frontal so the door leaf scales the wall plane",
+ "claim": {
+  "value": {
+   "hall_tile_cap_top": 1.155,
+   "hall_tile_cap_bottom": 1.1,
+   "hall_tile_liner": [
+    0.975,
+    0.99
+   ]
+  },
+  "data": [
+   "marina-frame:468.5"
+  ],
+  "scale": [
+   "door-80in:marina-468.5"
+  ],
+  "upstream": [
+   "marina-model"
+  ],
+  "how": "Marina Part 2 468.5 s, frontal on the hall bath's door wall: the 80 in (2.032 m) leaf spans 960 px (top 95, bottom 1055) -> 2.117 mm/px; on the wall right of the casing, floor line 1060: cap top 515 px -> 1.154 m, cap bottom 540 -> 1.10, liner 590-600 -> 0.975-0.99",
+  "applies_to": [
+   "hall_bath"
+  ],
+  "measured_in": [
+   "hall_bath"
+  ],
+  "risks": [
+   "extraction",
+   "model-fidelity"
+  ]
+ },
+ "history": [],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 336 (the hall bath at night from the hall doorway; the film, not Marina's model): the same wainscot design (white subway tile, a thin black liner, a deep black cap just under the medicine cabinet's sill). On the far wall the liner-to-cap distance is 122 px and the paper's motif pitch 91 px; the cap's thickness 35 px. Marina's liner-to-cap 0.17 m over her cap 0.055 m = 3.1; film 122/35 = 3.5 (cap measured on its lit edge). A ratio, no ruler of its own: agrees within the reading",
+   "agrees": true,
+   "type": "ratio",
+   "tests": [
+    "extraction",
+    "model-fidelity"
+   ],
+   "data": [
+    "film-frame:336"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "film"
+   ]
+  },
+  {
+   "what": "Build gates (self-consistency only): z-fight 0, clash 0 round the tile overlay",
+   "agrees": true,
+   "type": "topological",
+   "tests": [],
+   "data": [
+    "unity:walk-test"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "unity:build"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/bathrooms/before/hall-doorway.jpg"
+  ],
+  "after": [
+   "spec/captures/views/bathrooms/after/hall-doorway.jpg",
+   "spec/captures/views/bathrooms/compare-hall-336.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "outcome": null
+}

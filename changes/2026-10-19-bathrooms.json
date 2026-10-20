@@ -1,0 +1,121 @@
+{
+ "change": "The two upstairs bathrooms built out (user Oct 19: 'can you tackle the bathrooms next'; Oct 18: 'would be great to do parent's ensuite bath'; the hall bathroom was on the must-have list as missing). Both rooms existed as empty grey-box shells with their doors (stock Door_3 leaves, store props) and windows. FIXTURES (tools/house/hifi_bathrooms.py -> Bathrooms.glb, spec/dressing/bathrooms.json; SpecGreybox.Bathrooms.cs): PARENTS' ENSUITE: a dark-green marble vanity on the bedroom-side wall with an undermount oval sink, brass widespread taps, an ivory 4-drawer bank, a knee space and a dark sink cabinet with brass towel rings, a gilt mirror (planar reflection, as the foyer's), bracket shelves at both ends, a curved-front tub with a black marble upstand, a black-framed quadrant shower in the notch corner, the 4-globe brass light bar over the tub, three gilt botanical prints over two brass bars of layered sage / dark-green towels, the toilet beside the door, lace panels and a lace valance, a wastebasket, a downlight; blush paint (finishes.json) and a dark green carpet. HALL BATH: a white subway-tile wainscot (black liner 0.975-0.99, black cap 1.10-1.155) generated as a 1.5 cm overlay round the room (to 1.90 in the tub alcove), the film's green tureen/medallion paper above (drawn: tools/house/bathroom_textures.py), a 60 in alcove tub with a tiled end wall, brass shower head and a green curtain, the toilet, a pedestal sink, the white medicine cabinet and the frosted globe over it, a brass towel bar with white/green/white towels, a wicker shelf, a wicker hamper, tall grass in a pot, cream window panels, a white hex mosaic floor. PROPS LANE (listed for the record; BathroomProps.glb, NOT static so they can be nudged live): the aftershave bottle, Shower to Shower, shave can, pump soap, deodorant, the shelf's amber bottles, Aquafresh, the toothbrush cup + toothbrush, cotton balls, the jade bud vase with wheat and red flowers, towel stacks; the hall bath's toilet rolls, folded towels, toothbrush cup, soap. Walk colliders for every solid fixture; Kevin's hiding spots kept open: the vanity's knee space (0.56 x 0.71 x 0.54) and the shower stall; behind the hall bath's shower curtain. TRIAL.",
+ "target": "House_WallGrid",
+ "premise": "The film's parents' bathroom (the aftershave scene, film 4386-4438 and 6402-6474) and hall bathroom (film 332-344) are the rooms our measured parents_bath and hall_bath shells stand for, and each fixture's wall can be read from the film and the set photograph with Marina's CG walk as the check",
+ "claim": {
+  "value": {
+   "parents_layout": "vanity on the bedroom-side wall z 4.436 (window end: drawers; then knee space; sink toward the door); window wall x 0.343: prints + towel bars between the tub and the window; tub + quadrant shower on z 0.872 (shower in the notch corner x 2.409); light bar over the tub; toilet on the door wall x 3.07",
+   "hall_layout": "tub alcove on the back wall z 7.778 from the notch wall; toilet beside its end wall; window wall x 11.664: towel bar + wicker shelf between the window and the corner; pedestal sink + medicine cabinet on z 11.43 near the window corner; hamper by the door",
+   "vanity_top": 0.84,
+   "tub_rim": 0.56
+  },
+  "data": [
+   "film-frame:4398",
+   "film-frame:4446",
+   "film-frame:6446",
+   "film-frame:336",
+   "production-photo:marina-p2-165",
+   "production-photo:marina-p2-166"
+  ],
+  "scale": [
+   "none"
+  ],
+  "upstream": [
+   "film",
+   "production-photo"
+  ],
+  "how": "Layout: read from film 4398 (the vanity wall frontal; the reflection shows the light bar on the viewer's left, the prints in the middle, the lace window on the right: the window wall is on the drawer side), 6446 (the opposite walls), 336 (the hall bath from its doorway: the medicine cabinet and sink on the right-hand wall far end, the towel bar + wicker shelf on the far wall) and the set photographs Marina reproduces at Part 2 160-169 s (a panorama: vanity -> window wall -> prints/towels -> curved tub + quadrant shower -> toilet -> door). Fitted onto our measured shells: geometry.json polygons, openings.json casings; every fixture 1.5 cm off the wall faces (the baseboard runs behind). Hall tile heights: changes/2026-10-19-hall-bath-tile.json. Vanity top 0.84 and tub rim 0.56: ASSUMED stock sizes (no ruler in the film frames): DEVIATIONS 110",
+  "applies_to": [
+   "parents_bath",
+   "hall_bath"
+  ],
+  "measured_in": [
+   "parents_bath",
+   "hall_bath"
+  ],
+  "risks": [
+   "extraction"
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-09-14",
+   "what": "the September IntactHouseReference ensuite (Unity Editor/ParentsEnsuite.cs: green stone vanity, an integrated curved bath + shower, towels, a vanity light) built in the old downloaded GLB's shell, not the measured house; its outline was 'a provisional fit, not a film measurement' (art/home_alone/references/ensuite/README.md)",
+   "outcome": "superseded"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Marina's CG walk (Part 2 205-228 s) and her overhead (0:50, upper floor): the vanity on the wall beside the bedroom door with corner shelves and a gilt mirror, the window opposite the door, prints + green towels on the window wall, the curved tub with a black upstand and a black-framed quadrant shower beyond it, the toilet beside the door; her own model and its own scale. Topological",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "marina-frame:210",
+    "marina-frame:215",
+    "marina-frame:218",
+    "marina-frame:222",
+    "marina-frame:226",
+    "marina-overhead:50"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "marina-model"
+   ]
+  },
+  {
+   "what": "Marina's hall bath walk (Part 2 451-489 s) and overhead: the tub in an alcove on the back wall with a short end wall, the toilet beside it, the window with curtains, the wicker shelf + towel bar between the window and the corner, the pedestal sink + medicine cabinet on the next wall, a hamper by the door. Topological (her paper is her own floral: not used)",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "marina-frame:451",
+    "marina-frame:457",
+    "marina-frame:468.5",
+    "marina-frame:486"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "marina-model"
+   ]
+  },
+  {
+   "what": "Build gates (self-consistency only): walk test (both bathroom doors 'ok', no new BLOCKED line), z-fight 0, clash 0, Props check, glb_orientation",
+   "agrees": true,
+   "type": "topological",
+   "tests": [],
+   "data": [
+    "unity:walk-test"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "unity:build"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/bathrooms/before/parents-doorway.jpg",
+   "spec/captures/views/bathrooms/before/hall-doorway.jpg"
+  ],
+  "after": [
+   "spec/captures/views/bathrooms/after/parents-doorway.jpg",
+   "spec/captures/views/bathrooms/after/hall-doorway.jpg",
+   "spec/captures/views/bathrooms/compare-parents-4398.jpg",
+   "spec/captures/views/bathrooms/compare-hall-336.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "outcome": null
+}

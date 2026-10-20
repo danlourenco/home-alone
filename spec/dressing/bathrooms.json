@@ -1,0 +1,311 @@
+{
+ "note": "The two upstairs bathrooms (Oct 19, TRIAL 1; changes/2026-10-19-bathrooms.json; DEVIATIONS 110). Spec metres above the upper floor (x, y, z; Unity z = -spec z). Read by tools/house/hifi_bathrooms.py (Bathrooms.glb) and SpecGreybox.Bathrooms.cs (colliders, lamps, the vanity mirror's planar probe, floors). Every fixture stands >= 1.5 cm off the wall faces so the room's baseboard (1.2 cm proud) runs behind it. Boxes are [x0, x1, y0, y1, z0, z1].",
+ "parents_bath": {
+  "layout_source": "Film 4386-4438 (the aftershave scream) and 6402-6474 (toothbrush + aftershave montage): vanity wall with a big gilt mirror over a long dark-green marble counter, undermount oval sink with brass widespread taps left, a knee space (a Windsor chair) and an ivory drawer bank to the right, wall shelves on brass brackets at both ends (green towels left, toiletries right); in the mirror (4398): a 4-globe brass light bar, three framed prints, two brass bars of green/dark-green towels, the lace-curtained window and a white curved tub. Production photo (Marina Part 2 160-169 s, the set): vanity wall, the window wall (lace swag valance + lace panels), the prints/towel-bar wall, the curved tub with a black-framed quadrant shower in the corner, the toilet beside the door. Marina 205-228 s (her CG walk) and her overhead (0:50) agree on the wall each sits on. Placement on our measured room (geometry.json parents_bath): vanity on the bedroom-side wall z 4.436 (the door's corner wall), window wall x 0.343, tub + shower on z 0.872 (the shower in the notch corner x 2.409), prints + towel bars on the window wall between the tub and the window, toilet on the door wall x 3.07",
+  "vanity": {
+   "x": [
+    0.358,
+    2.25
+   ],
+   "z": [
+    3.876,
+    4.421
+   ],
+   "top": 0.84,
+   "slab": 0.03,
+   "overhang": 0.02,
+   "toe": [
+    0.1,
+    0.05
+   ],
+   "drawers_x": [
+    0.358,
+    0.86
+   ],
+   "knee_x": [
+    0.86,
+    1.42
+   ],
+   "sink_x": [
+    1.42,
+    2.25
+   ],
+   "sink": {
+    "x": 1.8,
+    "z": 4.12,
+    "rx": 0.24,
+    "rz": 0.19,
+    "depth": 0.16
+   },
+   "backsplash": 0.1,
+   "source": "film 4398: one continuous counter, sink nearer the door end, knee space, drawers at the window end (the production photo agrees); height 0.84 ASSUMED (34 in vanity; no ruler in the film frames: the 3-gang drawer bank reads 4 drawers), depth 0.545 + 2 cm nosing ASSUMED; the door end stops 0.82 m short of the door wall so the measured doorway (z 3.584-4.344, 0.09 m from this wall) opens onto clear floor: DEVIATIONS 110"
+  },
+  "mirror": {
+   "x": [
+    0.8,
+    1.93
+   ],
+   "y": [
+    1.0,
+    2.02
+   ],
+   "frame": 0.09,
+   "source": "film 4398: a gilt frame spanning sink to knee space, its bottom rail just above the backsplash, its top near the ceiling's soffit; 1.13 x 1.02 ASSUMED from the counter (no ruler)"
+  },
+  "shelves_door_end": {
+   "x": [
+    1.97,
+    2.25
+   ],
+   "ys": [
+    1.3,
+    1.66
+   ],
+   "depth": 0.25
+  },
+  "shelves_window_end": {
+   "x": [
+    0.36,
+    0.76
+   ],
+   "ys": [
+    1.22,
+    1.52,
+    1.82
+   ],
+   "depth": 0.25
+  },
+  "tub": {
+   "x": [
+    0.358,
+    1.45
+   ],
+   "z": [
+    0.887,
+    1.8
+   ],
+   "rim": 0.56,
+   "bulge": 0.1,
+   "source": "production photo (Marina 165-169 s) + Marina 215-218 s: a white tub with a rounded front apron against the wall under the light bar, a dark marble band on the walls above its deck; 1.09 x 0.91 ASSUMED (fits the corner beside the shower; Marina's overhead reads ~1.1 x 1.5 in perspective)"
+  },
+  "shower": {
+   "corner": [
+    2.409,
+    0.872
+   ],
+   "r": 0.9,
+   "glass_h": 1.9,
+   "tray": 0.06,
+   "door": [
+    0.38,
+    0.62
+   ],
+   "source": "production photo 166 s: black-framed curved (quadrant) glass shower in the corner beyond the tub; Marina overhead + 215 s the same; radius 0.90 = a stock 36 in quadrant ASSUMED"
+  },
+  "light_bar": {
+   "x": [
+    0.7,
+    1.32
+   ],
+   "y": 1.98,
+   "wall_z": 0.872,
+   "globes": 4,
+   "lumens": 900,
+   "kelvin": 2700,
+   "source": "film 4398 (in the mirror) and 4446: a brass bar of four globe bulbs above the tub; Marina 215/218 a bar in the same place"
+  },
+  "ceiling_lamp": {
+   "at": [
+    1.8,
+    2.4,
+    3.4
+   ],
+   "lumens": 600,
+   "kelvin": 2700,
+   "source": "production photo 165 s: recessed downlights over the vanity"
+  },
+  "prints": {
+   "wall_x": 0.343,
+   "y": [
+    1.42,
+    1.9
+   ],
+   "z": [
+    [
+     1.9,
+     2.2
+    ],
+    [
+     2.27,
+     2.62
+    ],
+    [
+     2.69,
+     2.92
+    ]
+   ],
+   "source": "production photo 165 s + Marina 215 s: three gilt-framed botanical prints in a row above the towel bars"
+  },
+  "towel_bars": {
+   "wall_x": 0.343,
+   "y": 1.14,
+   "z": [
+    [
+     1.92,
+     2.37
+    ],
+    [
+     2.48,
+     2.93
+    ]
+   ],
+   "source": "film 4398 (mirror) + 6446: two brass bars, a sage towel and a dark-green towel layered on each; production photo 165 s"
+  },
+  "toilet": {
+   "wall_x": 3.07,
+   "z": 2.98,
+   "source": "production photo 166 s + Marina 222 s: the toilet against the door wall beside the door"
+  },
+  "wastebasket": {
+   "x": 0.55,
+   "z": 3.3,
+   "source": "production photo 165 s + Marina 210 s: a dark wastebasket under the window"
+  },
+  "kid_hide": "the vanity's knee space (0.56 wide, 0.70 high, 0.54 deep: Kevin's 0.45 m crouch fits) and the shower stall"
+ },
+ "hall_bath": {
+  "layout_source": "Film 332-344 (Fuller at the pedestal sink, seen from the hall doorway): a white subway-tile wainscot with a black liner and a black cap, the film's green tureen/medallion paper above, a white medicine cabinet over the pedestal sink with a frosted globe above it, a brass bar of white/dark-green/white towels on the far wall over a wicker shelf (toilet paper), a tall grass plant. Marina Part 2 445-490 s (her CG walk, her own floral paper): the tub in an alcove with a green shower curtain, the toilet beside the alcove's end, the window with tied-back curtains, the wicker shelf + towel bar between the window and the corner, the pedestal sink + medicine cabinet on the next wall, a wicker hamper beside the door. Our room: geometry.json hall_bath (door x 8.511 at z 10.274-10.949, window x 11.664 at z 9.331-10.051)",
+  "wainscot": {
+   "cap": [
+    1.1,
+    1.155
+   ],
+   "liner": [
+    0.975,
+    0.99
+   ],
+   "tile_from": 0.14,
+   "proud": 0.015,
+   "cap_proud": 0.022,
+   "tub_tile_top": 1.9,
+   "source": "Marina 468.5 s, frontal on the door wall, the 80 in door leaf as the ruler (960 px = 2.032 m, 2.12 mm/px): cap top 1.154, cap bottom 1.10, liner 0.975-0.99. Check (film 336, a different source and ruler kind): the same arrangement (white tile, a thin black liner, a deep black cap a little above the medicine cabinet's sill), liner-to-cap 122 px vs 91 px paper pitch"
+  },
+  "tub": {
+   "x": [
+    9.1285,
+    10.65
+   ],
+   "z": [
+    7.793,
+    8.553
+   ],
+   "rim": 0.4,
+   "source": "Marina overhead + 457-466 s: a 60 in tub in an alcove on the back wall with a short tiled end wall; 1.52 x 0.76 (stock 60 x 30 in)"
+  },
+  "tub_end_wall": {
+   "x": [
+    10.65,
+    10.75
+   ],
+   "z": [
+    7.793,
+    8.553
+   ],
+   "y": [
+    0.0,
+    2.1
+   ]
+  },
+  "curtain": {
+   "z": 8.52,
+   "x": [
+    9.62,
+    10.64
+   ],
+   "y": [
+    0.45,
+    1.95
+   ],
+   "rod_y": 1.97
+  },
+  "shower_head": {
+   "wall_x": 9.1135,
+   "z": 8.17,
+   "y": 1.85
+  },
+  "toilet": {
+   "wall_z": 7.778,
+   "x": 11.21,
+   "source": "Marina 457 s: the toilet between the alcove's end wall and the window wall"
+  },
+  "sink": {
+   "x": 10.95,
+   "wall_z": 11.43,
+   "rim": 0.84,
+   "source": "film 336 + Marina 486 s: pedestal sink under the medicine cabinet on the wall beside the window wall; rim 0.84 ASSUMED (stock)"
+  },
+  "cabinet": {
+   "x": [
+    10.71,
+    11.19
+   ],
+   "y": [
+    1.19,
+    1.89
+   ],
+   "depth": 0.13,
+   "source": "film 336: white medicine cabinet, mirror door, a moulded top, its bottom just above the tile cap"
+  },
+  "sconce": {
+   "at": [
+    10.95,
+    2.12,
+    11.3
+   ],
+   "lumens": 450,
+   "kelvin": 2700,
+   "source": "film 336: a frosted glass globe above the cabinet"
+  },
+  "towel_bar": {
+   "wall_x": 11.664,
+   "y": 1.42,
+   "z": [
+    10.36,
+    10.96
+   ],
+   "source": "film 336: brass bar, white / dark green / white towels"
+  },
+  "wicker_shelf": {
+   "x": [
+    11.32,
+    11.649
+   ],
+   "z": [
+    10.3,
+    10.7
+   ],
+   "h": 0.75,
+   "source": "film 336 + Marina 486: a wicker shelf unit with toilet paper"
+  },
+  "plant": {
+   "at": [
+    11.47,
+    11.22
+   ],
+   "source": "film 336: tall grass in a pot; Marina 486 a snake plant in the same corner"
+  },
+  "hamper": {
+   "x": [
+    8.526,
+    8.906
+   ],
+   "z": [
+    9.4,
+    9.86
+   ],
+   "h": 0.65,
+   "source": "Marina 468 s: a wicker hamper beside the door"
+  },
+  "kid_hide": "behind the shower curtain in the tub"
+ }
+}

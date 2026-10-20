@@ -15,6 +15,10 @@
   "models": "6c6f8f59db00c351",
   "sources": "d7d05b7373b9275f"
  },
+ "tools/house/hifi_bathrooms.py": {
+  "models": "92c070ead987a4a6",
+  "sources": "8e9b53c2172a284b"
+ },
  "tools/house/hifi_breakfast_table.py": {
   "models": "9f0d9d2837876295",
   "sources": "098c2e9291e14adf"
@@ -93,7 +97,7 @@
  },
  "tools/house/hifi_hall_arches.py": {
   "models": "92290ce88850ddb3",
-  "sources": "1c29b20260dd1dbd"
+  "sources": "1d8ce660f7c07cb4"
  },
  "tools/house/hifi_kevin.py": {
   "models": "7d908db416183345",
