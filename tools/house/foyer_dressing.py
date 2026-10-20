@@ -86,6 +86,29 @@ def seg(name, a, b, w, t, colour, collide=False, note=""):
             "colour": colour, "collide": collide, "note": note}
 
 
+def service_soffit(g, white):
+    """The service stair's underside over the basement flight (walk note 2026-10-20 07:13, 'i'd expect a soffit here'): its solid step
+    boxes left a dark sawtooth over the basement stair. As flight 2's soffit: a 12 mm white board on the line through each straight step's
+    low (-x) bottom corner, from the winders to the end wall, and a flat ceiling under the winders closed by a short vertical face.
+    Built from the spec's step boxes (ground y), so it follows the stair."""
+    st = g["stair"]; B = {b["name"]: b for b in st["boxes"] if b["kind"] == "step"}
+    run = sorted((b for n, b in B.items() if n.startswith("service_step")), key=lambda b: -b["x"][1])
+    if not run:
+        return []
+    r, go = st["rise_m"], st["going_m"]; z0, z1 = run[0]["z"]
+    x_hi = run[0]["x"][1]                                         # the winders' low-x edge
+    x_end = min(o["x"][0] for o in st["ceiling_openings"])       # the bay's end wall
+    slope = r / go
+    y_at = lambda x: run[0]["y"][0] + (run[0]["x"][0] - x) * slope   # the line through the low (-x) bottom corners
+    assert all(y_at(b["x"][0]) <= b["y"][0] + 1e-6 and y_at(b["x"][1]) <= b["y"][0] + 1e-6 for b in run), "soffit above a step"
+    win = [b for n, b in B.items() if n.startswith("service_winder")]
+    yw = min(b["y"][0] for b in win)                             # under the lowest winder
+    note = "walk note 2026-10-20 07:13: the service stair's underside over the basement flight, as flight 2's soffit (white board, 12 mm)"
+    return [seg("service_soffit", [x_hi, y_at(x_hi) - 0.006, (z0 + z1) / 2], [x_end, y_at(x_end) - 0.006, (z0 + z1) / 2], z1 - z0, 0.012, white, note=note),
+            box("service_soffit_winders", [x_hi, max(b["x"][1] for b in win)], [yw - 0.012, yw], [z0, z1], white, note=note),
+            box("service_soffit_step", [x_hi - 0.012, x_hi], [yw - 0.012, y_at(x_hi) - 0.012], [z0, z1], white, note=note)]
+
+
 def main():
     up = json.loads((ROOT / "spec/house_spec.json").read_text())
     st = up["stair"]; F = st["floor_to_floor_m"]
@@ -247,6 +270,10 @@ def main():
              "wainscot_by_space": {"vestibule": 0.14, "main_stair_opening": 0.0},   # the stair well's walls: papered, no floor at the
                                                                                    # upstairs level, so no wainscot or trim (film 384, 11966)
              "wainscot_by_space_note": "film 10248 (camera solved, tools/house/film_solve_10248.py): the vestibule's walls are papered to a ~0.14 m baseboard, no 0.7 m wainscot"}
+    P += service_soffit(g, C["white"])
+    # the colours table's runner (read by the hi-fi stair) was set by hand in the json (ef5a94a1, film 1616/10673, user: "Fix the stair
+    # runner too"); the pieces above keep the sampled colour, as committed
+    C = dict(C, runner=[0.36, 0.035, 0.06])
     out = {"note": __doc__.split("\n\n")[0], "colours": C, "walls": walls,
            "stair": {"step": C["white"], "spindle": C["white"], "landing": C["white"], "well_wall": C["wallpaper"], "hide": ["flight1_rail*_cap", "flight2_step*"]},
            "pieces": P}

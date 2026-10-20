@@ -11,7 +11,10 @@
    0.85,
    0.85
   ],
-  "runner": [0.36, 0.035, 0.06
+  "runner": [
+   0.36,
+   0.035,
+   0.06
   ],
   "floor": [
    0.3,
@@ -1854,6 +1857,72 @@
    ],
    "collide": false,
    "note": ""
+  },
+  {
+   "name": "service_soffit",
+   "a": [
+    1.48,
+    0.689,
+    7.147
+   ],
+   "b": [
+    -1.505,
+    2.51,
+    7.147
+   ],
+   "w": 0.9809999999999999,
+   "t": 0.012,
+   "colour": [
+    0.85,
+    0.85,
+    0.85
+   ],
+   "collide": false,
+   "note": "walk note 2026-10-20 07:13: the service stair's underside over the basement flight, as flight 2's soffit (white board, 12 mm)"
+  },
+  {
+   "name": "service_soffit_winders",
+   "x": [
+    1.48,
+    2.64
+   ],
+   "y": [
+    0.317,
+    0.329
+   ],
+   "z": [
+    6.657,
+    7.638
+   ],
+   "colour": [
+    0.85,
+    0.85,
+    0.85
+   ],
+   "collide": false,
+   "note": "walk note 2026-10-20 07:13: the service stair's underside over the basement flight, as flight 2's soffit (white board, 12 mm)"
+  },
+  {
+   "name": "service_soffit_step",
+   "x": [
+    1.468,
+    1.48
+   ],
+   "y": [
+    0.317,
+    0.683
+   ],
+   "z": [
+    6.657,
+    7.638
+   ],
+   "colour": [
+    0.85,
+    0.85,
+    0.85
+   ],
+   "collide": false,
+   "note": "walk note 2026-10-20 07:13: the service stair's underside over the basement flight, as flight 2's soffit (white board, 12 mm)"
   }
  ]
 }

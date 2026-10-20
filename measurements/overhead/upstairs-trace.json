@@ -24,15 +24,15 @@
      -1.59
     ],
     [
-     3.736,
+     4.366,
      -1.482
     ],
     [
-     3.727,
+     4.357,
      -4.098
     ]
    ],
-   "notes": "overhead outline shifted +0.20 m across (plan y) per the parents clip's in-room wall points (check_walls.py, Oct 13): far wall -21 cm and bedroom-side wall +19 cm, i.e. same width, whole room 20 cm toward the bedroom; bath/bedroom wall back to ~15 cm (SfM measured 17 cm)"
+   "notes": "overhead outline shifted +0.20 m across (plan y) per the parents clip's in-room wall points (check_walls.py, Oct 13): far wall -21 cm and bedroom-side wall +19 cm, i.e. same width, whole room 20 cm toward the bedroom; bath/bedroom wall back to ~15 cm (SfM measured 17 cm) | Oct 20 (changes/2026-10-20-parents-bath-end-wall.json): the vanity (end) wall moved from plan x 3.73 to 4.366, the parents SfM's crisp wall (rooms/parents.json x 1.26 units x 3.465): the overhead's white band there is the vanity soffit's top plus the wall, not the wall alone; Marina 196 s (bedroom-side pier 0.70 m, door ruler + switch plate) and 225 s (bath-side pier 0.6-0.8) put the door ~0.7 m from this wall"
   },
   {
    "name": "parents_bedroom",

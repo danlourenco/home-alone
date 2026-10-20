@@ -129,23 +129,25 @@ def hang_towel(part, axis, rc, inward, ry, a, b, drop, g):
 # ================================================================ parents' ensuite
 PB = D["parents_bath"]
 V = PB["vanity"]; vx0, vx1 = V["x"]; vz0, vz1 = V["z"]; TOP = V["top"]; SL = V["slab"]; OH = V["overhang"]
-WALL_A = 4.436                                                   # the vanity wall's face (geometry.json parents_bath)
+WALL_A = max(z for _, z in POLY["parents_bath"])                # the vanity wall's face (geometry.json parents_bath; 5.17 since Oct 20)
+assert abs(vz1 + GAP - WALL_A) < 0.002, (vz1, WALL_A)            # bathrooms.json's vanity must follow the wall
 ivory, marble, brass, gilt = P("BA_Ivory"), P("BA_Marble"), P("BA_Brass"), P("BA_Gilt")
 porc = P("BA_Porcelain")
 toe, toe_in = V["toe"]
 # carcass: drawer bank, knee space (open), sink cabinet; the front face set back by the doors' 2 cm
 fz = vz0 + 0.02
-for a, b in (V["drawers_x"], V["sink_x"]):
+BANKS = [V["drawers_x"], V["drawers_door_x"]]                  # the window-end bank (film 4398) and the door-end bank (Marina 196/225/228 s)
+for a, b in BANKS + [V["sink_x"]]:
     ivory.box(a, b, toe, TOP - SL, fz, vz1)                      # case
     P("BA_Shadow").box(a + 0.01, b - 0.01, 0.0, toe, fz + toe_in, vz1)   # recessed toe kick
 ivory.box(V["knee_x"][0], V["knee_x"][1], TOP - SL - 0.10, TOP - SL, fz, vz1)   # the knee space's apron (a pencil drawer front)
 # drawer fronts (4) with brass pulls, the knee space's pencil drawer, the sink section's two dark doors with brass towel rings
-dx0, dx1 = V["drawers_x"]
 hs = (TOP - SL - toe) / 4
-for k in range(4):
-    y0, y1 = toe + k * hs + 0.004, toe + (k + 1) * hs - 0.004
-    ivory.box(dx0 + 0.006, dx1 - 0.006, y0, y1, vz0, fz)
-    brass.box((dx0 + dx1) / 2 - 0.05, (dx0 + dx1) / 2 + 0.05, (y0 + y1) / 2 - 0.006, (y0 + y1) / 2 + 0.006, vz0 - 0.022, vz0)
+for dx0, dx1 in BANKS:
+    for k in range(4):
+        y0, y1 = toe + k * hs + 0.004, toe + (k + 1) * hs - 0.004
+        ivory.box(dx0 + 0.006, dx1 - 0.006, y0, y1, vz0, fz)
+        brass.box((dx0 + dx1) / 2 - 0.05, (dx0 + dx1) / 2 + 0.05, (y0 + y1) / 2 - 0.006, (y0 + y1) / 2 + 0.006, vz0 - 0.022, vz0)
 kx0, kx1 = V["knee_x"]
 ivory.box(kx0 + 0.006, kx1 - 0.006, TOP - SL - 0.096, TOP - SL - 0.004, vz0, fz)
 brass.box((kx0 + kx1) / 2 - 0.04, (kx0 + kx1) / 2 + 0.04, TOP - SL - 0.056, TOP - SL - 0.044, vz0 - 0.02, vz0)
@@ -282,16 +284,7 @@ for a, b in TB["z"]:
     rod(brass, (tbx + 0.065, ty, a + 0.01), (tbx + 0.065, ty, b - 0.01), 0.010)
     hang_towel(P("BA_TowelSage"), "x", tbx + 0.065, +1, ty, a + 0.05, b - 0.05, 0.58, 0.012)
     hang_towel(P("BA_TowelDark"), "x", tbx + 0.065, +1, ty, (a + b) / 2 - 0.10, (a + b) / 2 + 0.10, 0.50, 0.028)
-# the toilet: tank on the door wall, an elongated bowl, seat and lid down
-TL = PB["toilet"]; twx, tzc = TL["wall_x"], TL["z"]
-porc.box(twx - GAP - 0.20, twx - GAP, 0.40, 0.76, tzc - 0.25, tzc + 0.25)                 # tank
-porc.box(twx - GAP - 0.22, twx - GAP + 0.0, 0.76, 0.785, tzc - 0.26, tzc + 0.26)          # tank lid
-bowl_o = ellipse(twx - GAP - 0.44, tzc, 0.26, 0.19, 32)
-prism(porc, bowl_o, 0.16, 0.38, bottom=False)
-prism(porc, ellipse(twx - GAP - 0.40, tzc, 0.17, 0.12, 24), 0.0, 0.16, bottom=False)       # the foot
-prism(porc, [(twx - GAP - 0.20, tzc - 0.10), (twx - GAP - 0.20, tzc + 0.10), (twx - GAP - 0.34, tzc + 0.10), (twx - GAP - 0.34, tzc - 0.10)], 0.16, 0.40)   # neck to the tank
-prism(P("BA_Seat", "BA_Porcelain"), ellipse(twx - GAP - 0.44, tzc, 0.25, 0.185, 32), 0.385, 0.42)
-brass.box(twx - GAP - 0.215, twx - GAP - 0.20, 0.70, 0.72, tzc + 0.12, tzc + 0.20)        # flush lever
+# the toilet: the bought model (store_props.json parents_toilet; user Oct 20), walk colliders in SpecGreybox.Bathrooms
 # the window: lace panels either side and a shirred lace valance (production photo 165 s; Marina's is a grey swag)
 W = next(o for o in OPEN if o["kind"] == "window" and o["between"] == ["parents_bath"])
 def Pw(u, y, d):                                                # u along the window wall (spec z), d into the room
@@ -306,6 +299,7 @@ cl = PB["ceiling_lamp"]["at"]
 P("BA_White", "BA_Ivory").lathe(cl[0], cl[2], 2.495, [(0, 0.09), (0.004, 0.09)], 24)
 
 # ---------------------------------------------------------------- parents' counter clutter (props: BathroomProps.glb, movable)
+_before = set(props)   # the clutter below is written against the Oct 19 wall (z 4.436) and door-end shelf (x 1.97); moved with them after
 def bottle(name, mat, x, z, h, r, cap_mat="BA_PropBlack", cap_h=0.03, square=False):
     q = Q(name + "_body", mat)
     n = 4 if square else 14
@@ -328,7 +322,7 @@ Q("bud_vase", "BA_PropJade").lathe(1.30, 4.32, TOP, [(0, 0.035), (0.01, 0.02), (
 for k in range(5):                                              # its dried wheat and red flowers, fanned 5 cm apart
     a = -1.0 + 0.5 * k
     tip = (1.30 + 0.09 * math.sin(a), TOP + 0.44 + 0.03 * (k % 2), 4.32 - 0.05 * math.cos(a))
-    Q("bud_stems", "BA_PropWheat").sweep([(1.30 + 0.004 * math.sin(a), TOP + 0.22, 4.32 - 0.004 * math.cos(a)), tip],
+    Q("bud_stems", "BA_PropWheat").sweep([(1.30 + 0.004 * math.sin(a), TOP + 0.22, 4.32 - 0.004 * math.cos(a)), (tip[0], tip[1] - 0.010, tip[2])],   # stops under its flower (ran through it: clash)
                                          [(0.003, 0), (0, 0.003), (-0.003, 0), (0, -0.003)])
     Q("bud_flowers", "BA_PropRed").lathe(tip[0], tip[2], tip[1] - 0.008, [(0, 0.0), (0.012, 0.016), (0.03, 0.0)], 8)
 for k, (y, tone) in enumerate(((0.0, "BA_TowelSage"), (0.05, "BA_TowelDark"), (0.10, "BA_TowelWhite"))):   # towel stack on the counter's door end
@@ -336,6 +330,11 @@ for k, (y, tone) in enumerate(((0.0, "BA_TowelSage"), (0.05, "BA_TowelDark"), (0
 for k, y in enumerate(PB["shelves_door_end"]["ys"]):              # green towels on the door-end shelves
     for j in range(3):
         Q(f"shelf_towel_{k}_{j}", "BA_TowelSage" if j % 2 == 0 else "BA_TowelDark").box(1.99, 2.23, y + 0.022 + j * 0.05, y + 0.022 + (j + 1) * 0.05 - 0.003, 4.20, 4.42)
+
+DZ, DXS = WALL_A - 4.436, PB["shelves_door_end"]["x"][0] - 1.97   # Oct 20: the vanity wall moved 0.73 m, the door-end shelves to the new door end
+for name in set(props) - _before:
+    dx = DXS if name.startswith(("towel_stack", "shelf_towel")) else 0.0
+    props[name].v = [(vx + dx, vy, vz + DZ) for vx, vy, vz in props[name].v]
 
 # ================================================================ hall bath
 HB = D["hall_bath"]
@@ -424,15 +423,7 @@ rod(brass, (hx0 + TP + 0.005, CU["rod_y"], CU["z"]), (ex0 - 0.002, CU["rod_y"], 
 def Pc(u, y, d):
     return (u, y, CU["z"] - d)
 sheer_panel(P("BA_ShowerCurtain"), P("BA_ShowerCurtain"), Pc, CU["x"][0], CU["x"][1], CU["y"][0], CU["y"][1], 0.0, 0.6, P0=0.11, A0=0.025)
-# the toilet on the back wall (tank against the tile)
-HT = HB["toilet"]; htx = HT["x"]; hw = 7.778 + TP
-porc.box(htx - 0.25, htx + 0.25, 0.40, 0.76, hw + 0.002, hw + 0.20)
-porc.box(htx - 0.26, htx + 0.26, 0.76, 0.785, hw + 0.002, hw + 0.22)
-prism(porc, ellipse(htx, hw + 0.44, 0.19, 0.26, 32), 0.16, 0.38, bottom=False)
-prism(porc, ellipse(htx, hw + 0.40, 0.12, 0.17, 24), 0.0, 0.16, bottom=False)
-prism(porc, [(htx - 0.10, hw + 0.20), (htx + 0.10, hw + 0.20), (htx + 0.10, hw + 0.34), (htx - 0.10, hw + 0.34)], 0.16, 0.40)
-prism(P("BA_Seat", "BA_Porcelain"), ellipse(htx, hw + 0.44, 0.185, 0.25, 32), 0.385, 0.42)
-brass.box(htx - 0.20, htx - 0.12, 0.70, 0.72, hw + 0.20, hw + 0.215)
+# the toilet: the bought model (store_props.json hall_toilet; user Oct 20)
 # the pedestal sink against the tile on the wall z = 11.43
 SK = HB["sink"]; skx = SK["x"]; sw = 11.43 - TP
 porc.box(skx - 0.30, skx + 0.30, SK["rim"] - 0.17, SK["rim"], sw - 0.48, sw - 0.002)        # the basin's body (film 336: a square-shouldered basin)
@@ -454,11 +445,26 @@ whitep.box(mca, mcb, mcy0, mcy1, wz - MC["depth"], wz)
 whitep.box(mca - 0.02, mcb + 0.02, mcy1, mcy1 + 0.04, wz - MC["depth"] - 0.02, wz)        # cornice
 whitep.box(mca - 0.01, mcb + 0.01, mcy0 - 0.03, mcy0, wz - MC["depth"] - 0.015, wz)       # sill shelf
 P("BA_MirrorGlass").box(mca + 0.04, mcb - 0.04, mcy0 + 0.05, mcy1 - 0.05, wz - MC["depth"] - 0.012, wz - MC["depth"])   # 1.2 cm proud (a 6 mm plate z-fought the case)
-# the frosted globe above it
-SC = HB["sconce"]["at"]
-brass.box(SC[0] - 0.05, SC[0] + 0.05, SC[1] + 0.03, SC[1] + 0.13, wz - 0.02, wz)
-brass.sweep([(SC[0], SC[1] + 0.08, wz - 0.02), (SC[0], SC[1] + 0.08, SC[2] + 0.0)], [(0.008 * math.cos(2 * math.pi * k / 8), 0.008 * math.sin(2 * math.pi * k / 8)) for k in range(8)])
-P("BA_Globe").lathe(SC[0], SC[2], SC[1] - 0.13, [(0, 0.0), (0.03, 0.06), (0.10, 0.08), (0.16, 0.05), (0.18, 0.03)], 20)
+# the double sconce above it (film 336: two ruffled frosted shades side by side over the cabinet): a brass backplate, two arms,
+# a tulip shade on each with a scalloped rim (the globe was one; walk note 06:58)
+SC = HB["sconce"]; sy, sd = SC["y"], SC["out"]
+brass.box(SC["x"] - 0.04, SC["x"] + 0.04, sy + 0.02, sy + 0.14, wz - 0.015, wz)
+for ax in SC["arms"]:
+    brass.sweep([(SC["x"], sy + 0.08, wz - 0.015), (ax, sy + 0.17, wz - sd * 0.6), (ax, sy + 0.17, wz - sd), (ax, sy + 0.135, wz - sd)],   # over the shade, down into its cup (a level arm crossed the glass: clash)
+                [(0.007 * math.cos(2 * math.pi * k / 8), 0.007 * math.sin(2 * math.pi * k / 8)) for k in range(8)])
+    brass.lathe(ax, wz - sd, sy + 0.115, [(0, 0.022), (0.02, 0.02)], 12)                         # the cup (top sy + 0.135)
+    # tulip shade, opening down, its rim ruffled by 8 scallops; glass 4 mm thick (an outer and an inner skin)
+    shade = P("BA_Globe")
+    rings = [(sy + 0.12, 0.035), (sy + 0.09, 0.055), (sy + 0.04, 0.075), (sy - 0.01, 0.085)]
+    def outline(r, ruffle, k=1.0):
+        return [(ax + k * r * (1 + ruffle * math.cos(8 * t)) * math.cos(t), wz - sd + k * r * (1 + ruffle * math.cos(8 * t)) * math.sin(t))
+                for t in [2 * math.pi * i / 32 for i in range(32)]]
+    for k, inward in ((1.0, False), (0.95, True)):
+        ols = [outline(r, 0.12 if j == len(rings) - 1 else 0.0, k) for j, (_, r) in enumerate(rings)]
+        for (y0, _), (y1, _), oa, ob in zip(rings, rings[1:], ols, ols[1:]):
+            wall_band(shade, oa, ob, y0, y1, inward, (ax, wz - sd))
+    ering(shade, outline(rings[-1][1], 0.12), outline(rings[-1][1], 0.12, 0.95), rings[-1][0], False)   # the rim's edge, facing down
+    ering(shade, outline(rings[0][1], 0.0), outline(rings[0][1], 0.0, 0.95), rings[0][0], True)       # the crown's edge under the cup
 # towel bar with white / dark green / white towels (film 336)
 HTB = HB["towel_bar"]; bx = HTB["wall_x"] - 0.002; za, zb = HTB["z"]; by = HTB["y"]
 for zz in (za + 0.03, zb - 0.03):

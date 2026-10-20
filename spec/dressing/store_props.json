@@ -5031,6 +5031,42 @@
     1,
     1
    ]
+  },
+  {
+   "name": "parents_toilet",
+   "floor": "upper",
+   "prefab": "Assets/Purchased/Toilet/Toilet.glb",
+   "x": [
+    2.345,
+    3.055
+   ],
+   "z": [
+    2.505,
+    3.055
+   ],
+   "y0": 0.0,
+   "height": 0.8,
+   "back": "+x",
+   "collide": false,
+   "source": "the user's Asset Store toilet (Tobiesen 'VR-ready PBR toilet', Oct 20: 'replace the one you made with the downloaded asset'; tools/house/purchased_toilet.py, gitignored), LOD0 only, rebuilt as a GLB (the 2017 prefab does not import in Unity 6). Model 0.576 w x 0.711 d x 0.821 h, fitted to the measured box (bathrooms.json parents_bath.toilet: on the door wall x 3.07, centre z 2.78 from Marina 222's tank ruler, 1.5 cm off the wall): width x0.95, height x0.97. Walk colliders stay in SpecGreybox.Bathrooms"
+  },
+  {
+   "name": "hall_toilet",
+   "floor": "upper",
+   "prefab": "Assets/Purchased/Toilet/Toilet.glb",
+   "x": [
+    10.935,
+    11.485
+   ],
+   "z": [
+    7.815,
+    8.525
+   ],
+   "y0": 0.0,
+   "height": 0.8,
+   "back": "-z",
+   "collide": false,
+   "source": "the user's Asset Store toilet (Tobiesen 'VR-ready PBR toilet', Oct 20: 'replace the one you made with the downloaded asset'; tools/house/purchased_toilet.py, gitignored), LOD0 only, rebuilt as a GLB (the 2017 prefab does not import in Unity 6). Model 0.576 w x 0.711 d x 0.821 h, fitted to the measured box (bathrooms.json hall_bath.toilet: on the tile of the back wall z 7.778, centre x 11.21 (Marina 457 s)): width x0.95, height x0.97. Walk colliders stay in SpecGreybox.Bathrooms. Back 2 cm off the tile face (7.793): at 7.795 its back fought the wall paper behind (build ZFIGHT, 0.3 mm)"
   }
  ]
 }

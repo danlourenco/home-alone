@@ -1,7 +1,7 @@
 {
  "tools/house/hifi_attic.py": {
   "models": "4a7800ef61f968ce",
-  "sources": "97a2f9c4dd60e5a4"
+  "sources": "c64ce7545c990b10"
  },
  "tools/house/hifi_back_door.py": {
   "models": "2bf9317cb2e263f1",
@@ -16,8 +16,8 @@
   "sources": "d7d05b7373b9275f"
  },
  "tools/house/hifi_bathrooms.py": {
-  "models": "48ffee55cdd6a6e9",
-  "sources": "048eb06efe77d5f2"
+  "models": "5976c245526e7c28",
+  "sources": "6091b173920d9979"
  },
  "tools/house/hifi_breakfast_table.py": {
   "models": "9f0d9d2837876295",
@@ -25,7 +25,7 @@
  },
  "tools/house/hifi_buzz_curtains.py": {
   "models": "356da5161781ccee",
-  "sources": "90d65fed84c52dfb"
+  "sources": "fcedff329103a994"
  },
  "tools/house/hifi_buzz_props.py": {
   "models": "2d758557410006f8",
@@ -49,31 +49,31 @@
  },
  "tools/house/hifi_door_lamps.py": {
   "models": "86bc4c6458e108e0",
-  "sources": "c8d9fcd72c421c4b"
+  "sources": "183c033eed260e74"
  },
  "tools/house/hifi_dressing.py": {
   "models": "0124111d024c1391",
-  "sources": "75584ecffc4105a3"
+  "sources": "f52d89a2b89e141d"
  },
  "tools/house/hifi_entrance.py": {
   "models": "eb0f56da6e41184d",
-  "sources": "19ce6b91fc4d3cda"
+  "sources": "19bdb4d538d1b8a7"
  },
  "tools/house/hifi_ext_plants.py": {
   "models": "f510832234d6ad84",
   "sources": "2804c516077172f6"
  },
  "tools/house/hifi_exterior.py": {
-  "models": "fb0941c81cbc87d6",
-  "sources": "f39493ddb31a1cc8"
+  "models": "4d2bc1ddb91d25e6",
+  "sources": "f1cdaf3f490e84d9"
  },
  "tools/house/hifi_foyer.py": {
   "models": "69c2d7fed081c40c",
-  "sources": "47ae60364882fe43"
+  "sources": "8e0e3293ce15ab4e"
  },
  "tools/house/hifi_foyer_arch.py": {
   "models": "58773c07b2d399cd",
-  "sources": "3f34824e7318af69"
+  "sources": "6639816154535663"
  },
  "tools/house/hifi_foyer_mirror.py": {
   "models": "7d87542ae90db396",
@@ -85,23 +85,23 @@
  },
  "tools/house/hifi_french_doors.py": {
   "models": "734c05b759ab6c96",
-  "sources": "89e346ade3b637c8"
+  "sources": "360be378e695b6a1"
  },
  "tools/house/hifi_front_leaf.py": {
   "models": "711401cb4825ff5c",
   "sources": "66908950842b9ac2"
  },
  "tools/house/hifi_hall.py": {
-  "models": "eb974ba237439287",
-  "sources": "b80324a0fd0344d9"
+  "models": "08ffe03510e1f806",
+  "sources": "042e29979e7800e0"
  },
  "tools/house/hifi_hall_arches.py": {
   "models": "92290ce88850ddb3",
-  "sources": "1d8ce660f7c07cb4"
+  "sources": "a0975a64269bf2c0"
  },
  "tools/house/hifi_kevin.py": {
   "models": "7d908db416183345",
-  "sources": "ca0ddd557096327d"
+  "sources": "ad67b991ba6ca882"
  },
  "tools/house/hifi_kitchen.py": {
   "models": "7daee545f608d070",
@@ -121,7 +121,7 @@
  },
  "tools/house/hifi_landing_window.py": {
   "models": "c19bb98c7077b7fe",
-  "sources": "05bf8bf9bbde1fc1"
+  "sources": "137727eff01fec98"
  },
  "tools/house/hifi_lights.py": {
   "models": "039d900b97254c67",
@@ -145,7 +145,7 @@
  },
  "tools/house/hifi_parents_dressing.py": {
   "models": "07cd8f4c0fc1836f",
-  "sources": "f2b40c83b4382b4d"
+  "sources": "197aa4bac0671768"
  },
  "tools/house/hifi_parents_fireplace.py": {
   "models": "784e462dec45d619",
@@ -153,7 +153,7 @@
  },
  "tools/house/hifi_props.py": {
   "models": "7e1090fca9cf172e",
-  "sources": "9d9541c85a71cfc4"
+  "sources": "0dcd0cc0e22ee7a5"
  },
  "tools/house/hifi_sheers.py": {
   "models": "565234db675c90a7",
@@ -161,7 +161,7 @@
  },
  "tools/house/hifi_swing_door.py": {
   "models": "f7e1a4cdfc07a73c",
-  "sources": "2136d459057f6237"
+  "sources": "cdf52c38f820f667"
  },
  "tools/house/hifi_treehouse.py": {
   "models": "86cc6bf65e6587aa",

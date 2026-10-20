@@ -267,6 +267,14 @@ public static partial class SpecGreybox
         if (albedo) n.SetTexture("_BaseColorMap", albedo);
         if (m.HasProperty("_BaseColor")) n.SetColor("_BaseColor", m.GetColor("_BaseColor")); else if (m.HasProperty("_Color")) n.SetColor("_BaseColor", m.GetColor("_Color")); else if (m.HasProperty("baseColorFactor")) n.SetColor("_BaseColor", m.GetColor("baseColorFactor"));
         var nrm = m.HasProperty("normalTexture") ? m.GetTexture("normalTexture") : T("_BumpMap", "_NormalMap"); if (nrm) n.SetTexture("_NormalMap", nrm);
+        {   // an HDRP mask map (R metallic, G AO, A smoothness) an adapter packed beside a GLB as <stem>_Mask.png (purchased_toilet.py), read linear
+            string mp = Path.ChangeExtension(src, null) + "_Mask.png";
+            if (src.EndsWith(".glb") && AssetImporter.GetAtPath(mp) is TextureImporter ti)
+            {
+                if (ti.sRGBTexture) { ti.sRGBTexture = false; ti.SaveAndReimport(); }
+                n.SetTexture("_MaskMap", AssetDatabase.LoadAssetAtPath<Texture2D>(mp));
+            }
+        }
         n.SetFloat("_Smoothness", m.HasProperty("_Smoothness") ? m.GetFloat("_Smoothness") : m.HasProperty("roughnessFactor") ? 1f - m.GetFloat("roughnessFactor") : 0.4f);
         // the kitchen's Poly Haven variants (tools/house/kitchen_ph_props.py) carry constant metallic factors (the kettle's chrome lid and
         // handle): kept there only; elsewhere a glTF's missing metallic defaults to 1, which would turn plain props to metal

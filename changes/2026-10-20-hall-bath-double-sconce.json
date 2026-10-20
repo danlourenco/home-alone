@@ -1,0 +1,88 @@
+{
+ "change": "Hall bath: the single frosted globe over the medicine cabinet becomes the film's double sconce (walk note 2026-10-20 06:58, 'i thought there were double sconce lights in the film?'). Film 335/336 (the only film view of the room) show two frosted shades with ruffled rims side by side at the top of the frame over the cabinet. Built: a brass backplate (x 10.95, y 2.00-2.12), two arms to tulip shades 0.40 m apart (x 10.75 / 11.15), 0.17 m off the wall, rims at 1.97 (4 cm over the cabinet's cornice), a 300 lm 2700 K lamp in each (was one 450 lm). TRIAL.",
+ "target": "House_WallGrid",
+ "premise": "The film's hall bath has a two-light fixture over the medicine cabinet; the globe was a misread of a frame that cuts the fixture off at its top edge",
+ "claim": {
+  "value": {
+   "arms_x": [
+    10.75,
+    11.15
+   ],
+   "out_m": 0.17,
+   "rim_y": 1.97,
+   "lumens_each": 300
+  },
+  "data": [
+   "film-frame:336"
+  ],
+  "scale": [
+   "cabinet-assumed:film-336"
+  ],
+  "upstream": [
+   "film"
+  ],
+  "how": "film 336: shade centres ~210 px apart on the cabinet plane (cabinet 0.48 m = ~225 px); spacing and height otherwise ASSUMED (a stock 2-light bath bar)",
+  "applies_to": [
+   "hall_bath"
+  ],
+  "measured_in": [
+   "hall_bath"
+  ],
+  "pick": {
+   "crop": "spec/captures/picks/hall-bath-sconce-336.jpg",
+   "confirmed_by": "two shades with scalloped rims in both film 335 and 336 (two frames)"
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-19",
+   "what": "bathrooms TRIAL 1: one frosted globe from film 336",
+   "outcome": "walked: 'i thought there were double sconce lights in the film? i could be mistaken' (06:58)"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 335, a second frame: the same two ruffled shades at the top edge over the cabinet",
+   "agrees": true,
+   "type": "topological",
+   "tests": [],
+   "data": [
+    "film-frame:335"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "film-2"
+   ]
+  },
+  {
+   "what": "Marina 445-490 s (her CG hall bath): a fixture over the cabinet in her model; her own reading, no scale shared",
+   "agrees": true,
+   "type": "topological",
+   "tests": [],
+   "data": [
+    "marina-frame:468"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "marina-model"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/bathnotes3/before/hall-note0658.jpg",
+   "spec/captures/views/bathnotes3/before/hall-toilet.jpg"
+  ],
+  "after": [
+   "spec/captures/views/bathnotes3/after/hall-note0658.jpg",
+   "spec/captures/views/bathnotes3/after/hall-toilet.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "outcome": null
+}

@@ -1,0 +1,152 @@
+[
+ {
+  "name": "bathnotes3/before/parents-note0650",
+  "pos": [
+   4.518,
+   1.13,
+   -3.846
+  ],
+  "look_at": [
+   3.543,
+   0.91,
+   -3.882
+  ],
+  "vfov": 60,
+  "night": false
+ },
+ {
+  "name": "bathnotes3/before/parents-exit",
+  "pos": [
+   1.0,
+   1.13,
+   -2.4
+  ],
+  "look_at": [
+   3.1,
+   0.9,
+   -3.95
+  ],
+  "vfov": 70,
+  "night": false
+ },
+ {
+  "name": "bathnotes3/before/parents-vanity",
+  "pos": [
+   0.9,
+   1.13,
+   -2.0
+  ],
+  "look_at": [
+   2.8,
+   0.85,
+   -4.7
+  ],
+  "vfov": 75,
+  "night": false
+ },
+ {
+  "name": "bathnotes3/before/parents-plan",
+  "pos": [
+   1.75,
+   2.45,
+   -3.0
+  ],
+  "look_at": [
+   1.75,
+   0.0,
+   -2.999
+  ],
+  "vfov": 100,
+  "night": false
+ },
+ {
+  "name": "bathnotes3/before/parents-toilet",
+  "pos": [
+   1.55,
+   1.0,
+   -2.78
+  ],
+  "look_at": [
+   3.07,
+   0.4,
+   -2.78
+  ],
+  "vfov": 60,
+  "night": false
+ },
+ {
+  "name": "bathnotes3/before/parents-from-bedroom-far",
+  "pos": [
+   5.6,
+   1.13,
+   -1.6
+  ],
+  "look_at": [
+   3.1,
+   0.9,
+   -4.0
+  ],
+  "vfov": 70,
+  "night": false
+ },
+ {
+  "name": "bathnotes3/before/hall-note0658",
+  "pos": [
+   11.173,
+   1.13,
+   -9.555
+  ],
+  "look_at": [
+   10.9442,
+   1.3054,
+   -10.511899999999999
+  ],
+  "vfov": 60,
+  "night": false
+ },
+ {
+  "name": "bathnotes3/before/hall-toilet",
+  "pos": [
+   11.0,
+   1.0,
+   -9.6
+  ],
+  "look_at": [
+   11.21,
+   0.4,
+   -7.9
+  ],
+  "vfov": 60,
+  "night": false
+ },
+ {
+  "name": "bathnotes3/before/kitchen-note0713",
+  "pos": [
+   -0.055,
+   -2.196,
+   -7.103
+  ],
+  "look_at": [
+   0.945,
+   -2.182,
+   -7.0995
+  ],
+  "vfov": 60,
+  "night": false
+ },
+ {
+  "name": "bathnotes3/before/kitchen-soffit-up",
+  "pos": [
+   2.2,
+   -4.0,
+   -7.15
+  ],
+  "look_at": [
+   -0.5,
+   -2.4,
+   -7.15
+  ],
+  "vfov": 70,
+  "night": false
+ }
+]

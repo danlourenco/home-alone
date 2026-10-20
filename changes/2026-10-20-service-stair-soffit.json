@@ -1,0 +1,91 @@
+{
+ "change": "Basement stair: a white soffit under the service stair (walk note 2026-10-20 07:13 at the basement flight, 'i'd expect a soffit here'). The service stair's solid step boxes (kitchen paper, each 0.22 m deep) left a dark sawtooth of box bottoms over the basement flight that runs under it. Built as Codex's flight-2 soffit (foyer_dressing.py seg: a 12 mm white board on the line under the steps): from the winders' edge x 1.48 (y 0.689) up the run's low bottom corners to the bay's end wall x -1.505 (y 2.51), a flat 12 mm board under the winders (y 0.317) and a short vertical face between them at x 1.468. Generated from the spec's step boxes (follows the stair). TRIAL.",
+ "target": "House_WallGrid",
+ "premise": "A finished house closes the underside of a stair that runs over another stair; the dark stepped box bottoms are a construction gap of our grey-box steps, not a measured shape",
+ "claim": {
+  "value": {
+   "soffit_line": "through each straight step's low bottom corner, 0.183/0.30 slope",
+   "x": [
+    1.48,
+    -1.505
+   ],
+   "y": [
+    0.689,
+    2.51
+   ],
+   "winders_board_y": 0.317
+  },
+  "data": [
+   "house-spec:ground-stair"
+  ],
+  "scale": [
+   "house-spec:ground-stair"
+  ],
+  "upstream": [
+   "unity:build"
+  ],
+  "how": "tools/house/foyer_dressing.py service_soffit(): asserts the board stays under every step box",
+  "applies_to": [
+   "back_stair"
+  ],
+  "measured_in": [
+   "back_stair"
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-10-15",
+   "what": "flight 2's soffit in the foyer (Codex; changes/2026-10-15-landing-soffit.json), joints 2026-10-19-soffit-joints.json",
+   "outcome": "accepted"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "The film's basement-stair shot (shown in Marina Part 2 940 s, Kevin climbing): a white diagonal rising over the head of the basement stair at the upper right, a plastered underside, not open steps. Topological, low detail (a small inset)",
+   "agrees": true,
+   "type": "topological",
+   "tests": [],
+   "data": [
+    "film-frame:marina-p2-940-inset"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "film"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/basement-stair-film-inset-940.jpg",
+    "confirmed_by": "the same white sloping edge read in the 940 s inset and the user's walk note (a soffit expected there)"
+   }
+  },
+  {
+   "what": "Headroom (walk test BASEMENT route, adult capsule 1.8 m): lowest clearance under the new faces 2.23 m over basement step 04",
+   "agrees": true,
+   "type": "topological",
+   "tests": [],
+   "data": [
+    "unity:walk-test"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "unity:build"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/bathnotes3/before/kitchen-note0713.jpg",
+   "spec/captures/views/bathnotes3/before/kitchen-soffit-up.jpg"
+  ],
+  "after": [
+   "spec/captures/views/bathnotes3/after/kitchen-note0713.jpg",
+   "spec/captures/views/bathnotes3/after/kitchen-soffit-up.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "outcome": null
+}

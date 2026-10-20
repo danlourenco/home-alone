@@ -1,0 +1,5 @@
+{"frame":"marina2:196","f":1428,
+ "ruler":{"corners":[[57,183],[446,184],[447,1029],[60,1033]],"w":null,"h":2.032},
+ "points":{"pTL":[509.5,540.5],"pTR":[539,540.5],"pBL":[509.5,588],"st1":[571,520],"st3":[728,520]},
+ "lengths":{"plate_w":["pTL","pTR"],"plate_h":["pTL","pBL"],"rep2":["st1","st3"]},
+ "check":{"lengths":{"plate_w":0.0699,"plate_h":0.1143}}}

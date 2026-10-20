@@ -23,15 +23,15 @@
      -1.59
     ],
     [
-     3.736,
+     4.366,
      -1.482
     ],
     [
-     3.727,
+     4.357,
      -4.098
     ]
    ],
-   "area_m2": 8.6
+   "area_m2": 10.29
   },
   {
    "name": "parents_bedroom",
@@ -452,11 +452,11 @@
   }
  ],
  "totals_m2": {
-  "room": 126.41,
+  "room": 128.1,
   "hall": 12.8,
   "closet": 2.45,
   "opening": 15.13,
-  "net_floor_excl_openings": 141.66,
+  "net_floor_excl_openings": 143.35,
   "gross_outline": 183.17
  }
 }

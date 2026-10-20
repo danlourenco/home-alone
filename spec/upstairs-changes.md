@@ -28,7 +28,8 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 
 | line | walls (space) | before (m) | after (m) | largest move (cm) |
 |---|---|---|---|---|
-| y = -4.23 | parents_bath, girls_room_a | -4.22, -4.26 | -4.23 | 2.9 |
+| y = -1.54 | parents_bath, girls_a_closet | -1.54, -1.53 | -1.54 | 0.6 |
+| y = -4.23 | parents_bath, girls_room_a | -4.22, -4.26 | -4.23 | 3.0 |
 | y = 7.09 | kevin_jeff_room, hall_bath | 7.10, 7.03 | 7.09 | 6.1 |
 | x = 6.93 | kevin_jeff_room, girls_room_a, hall_end | 6.95, 6.89, 6.89 | 6.93 | 4.8 |
 | y = 2.58 | kevin_jeff_room, hall_corridor | 2.58, 2.59 | 2.58 | 0.9 |
@@ -75,6 +76,7 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | girls_room_a / hall_corridor | 24 | 1.57 |  |
 | girls_room_a / hall_end | 34 | 1.53 |  |
 | girls_room_a / main_stair_opening | 24 | 2.29 |  |
+| girls_room_a / parents_bath | 35 | 2.30 |  |
 | girls_room_b / guest_room | 15 | 2.11 |  |
 | girls_room_b / hall_corridor_south | 27 | 1.73 |  |
 | girls_room_b / main_stair_opening | 33 | 3.96 |  |
@@ -88,16 +90,16 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | hall_end / kevin_jeff_room | 34 | 1.95 |  |
 | hall_end / parents_bedroom | 36 | 0.87 |  |
 | kevin_jeff_room / parents_bedroom | 50 | 1.38 |  |
-| parents_bath / parents_bedroom | 20 | 2.07 |  |
+| parents_bath / parents_bedroom | 19 | 2.70 |  |
 
 ## 3b. Interior walls thinned to 14 cm (centrelines kept; rooms take the space)
 
 | space | before (m) | after (m) | area before → after (m²) | change |
 |---|---|---|---|---|
-| parents_bath | 3.56 x 2.70 | 3.56 x 2.73 | 8.7 → 8.7 | +0.7% |
+| parents_bath | 4.19 x 2.70 | 4.30 x 2.73 | 10.4 → 10.7 | +3.5% |
 | parents_bedroom | 5.22 x 5.25 | 5.33 x 5.28 | 24.3 → 25.5 | +4.8% |
 | kevin_jeff_room | 3.60 x 4.51 | 3.88 x 4.60 | 16.2 → 17.9 | +10.1% |
-| girls_room_a | 2.22 x 5.09 | 2.27 x 5.19 | 9.6 → 10.1 | +5.3% |
+| girls_room_a | 2.22 x 5.09 | 2.38 x 5.19 | 9.6 → 10.4 | +8.0% |
 | hall_end | 2.06 x 1.05 | 2.27 x 1.25 | 2.2 → 2.8 | +30.9% |
 | hall_corridor | 3.42 x 4.50 | 3.57 x 4.50 | 8.4 → 9.7 | +15.3% |
 | hall_corridor_south | 1.81 x 1.34 | 1.98 x 1.55 | 2.4 → 3.1 | +26.6% |
@@ -108,7 +110,7 @@ Anchors (SfM-measured, weight 5): parents_bedroom, kevin_jeff_room, buzz_room. T
 | girls_room_b | 4.36 x 3.99 | 4.46 x 4.06 | 17.4 → 18.1 | +3.9% |
 | main_stair_opening | 3.42 x 3.99 | 3.57 x 3.99 | 11.4 → 11.9 | +4.3% |
 | attic_stair | 2.66 x 1.34 | 2.74 x 1.55 | 3.6 → 4.2 | +19.0% |
-| girls_a_closet | 0.30 x 2.39 | 0.42 x 2.44 | 0.7 → 1.0 | +46.4% |
+| girls_a_closet | 0.30 x 2.39 | 0.42 x 2.45 | 0.7 → 1.0 | +46.2% |
 | guest_room | 3.78 x 6.92 | 3.78 x 6.92 | 25.4 → 25.4 | +0.0% |
 
 ## 4. Doors and openings

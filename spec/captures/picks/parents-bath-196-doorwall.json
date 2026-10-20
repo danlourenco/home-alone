@@ -1,0 +1,4 @@
+{"frame":"marina2:196","f":1428,
+ "ruler":{"corners":[[1495,233],[1745,157],[1742,1002],[1494,957]],"w":null,"h":2.032},
+ "points":{"cTop":[1238,207],"cBot":[1272,934],"casL_top":[1424,212],"casL_bot":[1422,955],"str1":[1300,800],"str2":[1347,800],"str3":[1396,800]},
+ "lengths":{"pier_top":["cTop","casL_top"],"pier_bot":["cBot","casL_bot"],"rep":["str1","str3"]}}

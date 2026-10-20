@@ -5,11 +5,11 @@
   "vanity": {
    "x": [
     0.358,
-    2.25
+    3.055
    ],
    "z": [
-    3.876,
-    4.421
+    4.61,
+    5.155
    ],
    "top": 0.84,
    "slab": 0.03,
@@ -32,13 +32,17 @@
    ],
    "sink": {
     "x": 1.8,
-    "z": 4.12,
+    "z": 4.854,
     "rx": 0.24,
     "rz": 0.19,
     "depth": 0.16
    },
    "backsplash": 0.1,
-   "source": "film 4398: one continuous counter, sink nearer the door end, knee space, drawers at the window end (the production photo agrees); height 0.84 ASSUMED (34 in vanity; no ruler in the film frames: the 3-gang drawer bank reads 4 drawers), depth 0.545 + 2 cm nosing ASSUMED; the door end stops 0.82 m short of the door wall so the measured doorway (z 3.584-4.344, 0.09 m from this wall) opens onto clear floor: DEVIATIONS 110"
+   "source": "film 4398: one continuous counter, sink nearer the door end, knee space, drawers at the window end (the production photo agrees); height 0.84 ASSUMED (34 in vanity; no ruler in the film frames: the 3-gang drawer bank reads 4 drawers), depth 0.545 + 2 cm nosing ASSUMED; runs to the door wall since Oct 20 (changes/2026-10-20-parents-bath-end-wall.json): the vanity wall moved to z 5.17 (parents SfM's crisp wall; Marina 196/225 s piers ~0.7 m), so the measured doorway (z 3.584-4.344) is 0.83 m from it and the counter's end stands against that pier with a door-end drawer bank (Marina 196/225/228 s: drawers at the door end)",
+   "drawers_door_x": [
+    2.25,
+    3.055
+   ]
   },
   "mirror": {
    "x": [
@@ -54,8 +58,8 @@
   },
   "shelves_door_end": {
    "x": [
-    1.97,
-    2.25
+    2.75,
+    3.03
    ],
    "ys": [
     1.3,
@@ -118,7 +122,7 @@
    "at": [
     1.8,
     2.4,
-    3.4
+    4.134
    ],
    "lumens": 600,
    "kelvin": 2700,
@@ -257,14 +261,16 @@
    "source": "film 336: white medicine cabinet, mirror door, a moulded top, its bottom just above the tile cap"
   },
   "sconce": {
-   "at": [
-    10.95,
-    2.12,
-    11.3
+   "x": 10.95,
+   "y": 1.98,
+   "out": 0.17,
+   "arms": [
+    10.75,
+    11.15
    ],
-   "lumens": 450,
+   "lumens": 300,
    "kelvin": 2700,
-   "source": "film 336: a frosted glass globe above the cabinet"
+   "source": "film 336 (and 335): two frosted shades with ruffled (scalloped) rims side by side at the top of the frame over the medicine cabinet, cut off by the frame top; a two-arm brass bath sconce over the cabinet. Spacing 0.40 m ASSUMED (the shades' centres ~210 px apart at ~470 px/m on the cabinet plane, standing ~0.17 m proud); height ASSUMED (above the cabinet's cornice 1.93). Was one frosted globe (walk note 2026-10-20 06:58)"
   },
   "towel_bar": {
    "wall_x": 11.664,

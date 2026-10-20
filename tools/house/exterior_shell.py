@@ -247,7 +247,12 @@ def upper_windows():
     W.append(dict(face="den_rear", axis="x", d=DEN["x"][0] - V, a0=16.992, a1=19.624, y0=ys, y1=yh, units=4))
     W.append(dict(face="right_front", axis="x", d=RIGHT["x"][1] + V, a0=0.905 - 1.316, a1=0.905 + 1.316, y0=ys, y1=yh, units=4))
     W.append(dict(face="right_end", axis="z", d=RIGHT["z"][0] - V, a0=5.85 - 1.316, a1=5.85 + 1.316, y0=ys, y1=yh, units=4))
-    for a0, a1, s in ((12.291, 13.011, 0.81), (15.006, 15.726, 0.81), (6.555, 7.276, 0.81), (3.056, 3.656, 0.54)):   # rear: girls_b x2, girls_a, parents bath
+    # rear: girls_b x2, girls_a, parents bath, read from the spec's windows (were copied numbers; the parents bath's end wall moved Oct 20
+    # and its window, placed as a fraction of the wall, moved with it)
+    rear = [(w["span_spec"][0], w["span_spec"][1], w["sill_m"]) for w in HS["windows"]
+            if w["room"] in ("girls_room_b", "girls_room_a", "parents_bath") and w["wall_axis"] == "x" and w["name"].startswith("rear")]
+    assert len(rear) == 4, rear
+    for a0, a1, s in rear:
         W.append(dict(face="rear", axis="x", d=MAIN["x"][0] - V, a0=a0, a1=a1, y0=UF + UPPER_DY + s, y1=yh, units=1))
     return W
 

@@ -8,7 +8,7 @@ using UnityEngine.Rendering;
 
 // The two upstairs bathrooms (TRIAL 1, Oct 19; changes/2026-10-19-bathrooms.json): the generated fixtures (tools/house/hifi_bathrooms.py ->
 // Models/Foyer/Bathrooms.glb, static) and counter clutter (BathroomProps.glb, NOT static: movable live), the tile/carpet floors, walk
-// colliders for the fixtures, the film's lamps (the parents' 4-globe bar, a downlight, the hall bath's frosted globe) and a planar
+// colliders for the fixtures, the film's lamps (the parents' 4-globe bar, a downlight, the hall bath's double sconce) and a planar
 // reflection on the parents' vanity mirror (the foyer mirror's approach). Positions: spec/dressing/bathrooms.json (spec metres above the
 // upper floor; Unity z = -spec z). Wall finishes come from finishes.json (Storey).
 public static partial class SpecGreybox
@@ -103,10 +103,11 @@ public static partial class SpecGreybox
             c.AddComponent<BoxCollider>().size = new Vector3(x1 - x0, y1 - y0, z1 - z0);
         }
         var PB = D["parents_bath"]; var V = PB["vanity"];
-        float top = (float)V["top"], vz0 = (float)V["z"][0], vz1 = (float)V["z"][1];
+        float top = (float)V["top"], vz0 = (float)V["z"][0], vz1 = (float)V["z"][1], wallA = vz1 + 0.015f;   // the vanity wall face (fixtures 1.5 cm off it; z 5.17 since Oct 20)
         Col("vanity_drawers", (float)V["drawers_x"][0], (float)V["drawers_x"][1], 0f, top, vz0, vz1);
         Col("vanity_sink", (float)V["sink_x"][0], (float)V["sink_x"][1], 0f, top, vz0, vz1);
-        Col("vanity_top", 0.343f, (float)V["x"][1] + 0.02f, top - (float)V["slab"] - 0.10f, top + 0.10f, vz0 - 0.02f, 4.436f);
+        Col("vanity_drawers_door", (float)V["drawers_door_x"][0], (float)V["drawers_door_x"][1], 0f, top, vz0, vz1);
+        Col("vanity_top", 0.343f, (float)V["x"][1] + 0.02f, top - (float)V["slab"] - 0.10f, top + 0.10f, vz0 - 0.02f, wallA);
         var T = PB["tub"]; Col("tub", (float)T["x"][0], (float)T["x"][1], 0f, (float)T["rim"], (float)T["z"][0], (float)T["z"][1]);
         float tlx = (float)PB["toilet"]["wall_x"], tlz = (float)PB["toilet"]["z"];
         Col("toilet", tlx - 0.725f, tlx - 0.015f, 0f, 0.42f, tlz - 0.26f, tlz + 0.26f);
@@ -139,13 +140,15 @@ public static partial class SpecGreybox
         var LB = PB["light_bar"];
         AddLamp(fx, "BathLamp_parents_bar", new Vector3(((float)LB["x"][0] + (float)LB["x"][1]) / 2, (float)LB["y"] - 0.10f, (float)LB["wall_z"] + 0.20f), 0f, (float)LB["lumens"], (float)LB["kelvin"]);
         var CL = PB["ceiling_lamp"]; AddLamp(fx, "BathLamp_parents_ceiling", new Vector3((float)CL["at"][0], (float)CL["at"][1] - 0.06f, (float)CL["at"][2]), 0f, (float)CL["lumens"], (float)CL["kelvin"]);
-        var SC = HB["sconce"]; AddLamp(fx, "BathLamp_hall_globe", new Vector3((float)SC["at"][0], (float)SC["at"][1] - 0.08f, (float)SC["at"][2] - 0.10f), 0f, (float)SC["lumens"], (float)SC["kelvin"]);
+        var SC = HB["sconce"]; int si = 0;   // the double sconce (film 336): one lamp in each shade
+        foreach (var ax in SC["arms"])
+            AddLamp(fx, $"BathLamp_hall_sconce{si++}", new Vector3((float)ax, (float)SC["y"] + 0.03f, 11.428f - (float)SC["out"]), 0f, (float)SC["lumens"], (float)SC["kelvin"]);
 
-        // the vanity mirror's planar reflection (as FoyerMirror): the glass is 3 cm off the wall face z 4.436, the room toward world +z
+        // the vanity mirror's planar reflection (as FoyerMirror): the glass is 3 cm off the vanity wall face, the room toward world +z
         var MI = PB["mirror"];
         float mx = ((float)MI["x"][0] + (float)MI["x"][1]) / 2, my = ((float)MI["y"][0] + (float)MI["y"][1]) / 2;
         var go = new GameObject("BathMirrorProbe"); go.transform.SetParent(fx.transform, false);
-        go.transform.position = new Vector3(mx, my, -(4.436f - 0.032f));
+        go.transform.position = new Vector3(mx, my, -(wallA - 0.032f));
         go.transform.rotation = Quaternion.identity;   // local forward (+z) faces the room
         var probe = go.AddComponent<PlanarReflectionProbe>();
         probe.mode = ProbeSettings.Mode.Realtime; probe.realtimeMode = ProbeSettings.RealtimeMode.EveryFrame;

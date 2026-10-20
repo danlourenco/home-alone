@@ -1,0 +1,198 @@
+{
+ "change": "Parents' ensuite: the VANITY WALL moves 0.734 m (spec z 4.436 -> 5.17; plan x 3.73 -> 4.366), not the door. Asked: move the door ~0.5 m toward the toilet (Marina 222/225 put a 0.6-0.8 m pier between the door and the vanity wall; ours was 0.09). Measured from the bedroom side (Marina 196 s, door leaf as ruler, a stock switch plate agreeing to 0.9%): the pier from the bedroom's hall-side corner to the bath door's casing is 0.60-0.80 m (stripe count: 3.7-4.0 repeats x 0.188 m = 0.70); moving the door 0.5 m would make it ~1.4. So the door (parents SfM frame 413) is right and the bath was short at the vanity end: the SfM's own crisp wall there is plan x 4.366 (rooms/parents.json x 1.26 units), but the Oct 13 trace took the overhead's white band for the wall; the production photographs (Marina 160-166 s) show a dropped soffit with downlights over the vanity, so that band is the soffit's top plus the wall. With the wall at 5.17 the measured doorway sits 0.83 m from it (Marina 225: 0.6-0.8); the vanity runs to the door wall (x 0.358-3.055) with a door-end drawer bank (Marina 196/225/228), knee space unchanged. The reconciler thinned the new 0.34 m bath/girls-A wall to 14 cm: girls room A grows 0.10 m at that end (5.414 -> 5.31). The bath window, placed as a fraction of its wall (Marina 209/213), moves with it (z 3.056-3.656 -> 3.568-4.168), and the exterior skin now reads its rear upper windows from the spec. Toilets: both bathrooms' generated toilets replaced by the user's store toilet (store_props.json, same boxes and colliders). TRIAL.",
+ "target": "House_WallGrid",
+ "premise": "The overhead trace put the ensuite's vanity wall 0.63 m short (it traced the vanity soffit's edge); the door was measured correctly by the parents SfM",
+ "claim": {
+  "value": {
+   "vanity_wall_z": 5.17,
+   "plan_x": 4.366,
+   "door_span_z": [
+    3.584,
+    4.344
+   ],
+   "door_to_vanity_wall_m": 0.826,
+   "vanity_x": [
+    0.358,
+    3.055
+   ],
+   "bath_window_z": [
+    3.568,
+    4.168
+   ],
+   "girls_a_wall_z": 5.31
+  },
+  "data": [
+   "vggt:parents"
+  ],
+  "scale": [
+   "door-80in:parents"
+  ],
+  "upstream": [
+   "marina-model"
+  ],
+  "how": "rooms/parents.json: bath polygon x 1.26 units ('y=-1.20 and x=1.26 crisp') x 3.465 m/unit (80 in door, frames 402/407/413, spread 2.8%) = plan 4.366; trace 'm' polygon edited, verify_plan 0 FAIL, reconciler thins to spec z 5.17",
+  "applies_to": [
+   "parents_bath",
+   "girls_room_a"
+  ],
+  "measured_in": [
+   "parents_bath",
+   "parents_bedroom"
+  ],
+  "assumed": {
+   "girls_room_a": "DEVIATIONS 113"
+  },
+  "risks": [
+   "extraction"
+  ],
+  "pick": {
+   "crop": "spec/captures/picks/parents-bath-pier-196.jpg",
+   "confirmed_by": "the same corner, picture and casing in Marina 200 s (a second frame): the flower picture hangs on the pier between the room corner and the bath door's casing"
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-13",
+   "what": "overhead trace of parents_bath (overhead_plan, trace 'm' shifted +0.20 m across per check_walls); end wall at plan 3.73",
+   "outcome": "built since; the 0.09 m door-to-wall gap stopped the vanity short (DEVIATIONS 110)"
+  },
+  {
+   "date": "2026-10-19",
+   "what": "bathrooms TRIAL 1: vanity stopped 0.82 m short of the door wall",
+   "outcome": "walked: 'barely room to walk between the toilet and cabinets' (06:50)"
+  },
+  {
+   "date": "2026-10-20",
+   "what": "bath notes pass 2: door re-hung, toilet -0.20 m; found Marina 222/225 vs the SfM door (DEVIATIONS 111)",
+   "outcome": "pending walk"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Production photographs of the set (Marina Part 2 160-166 s): a pink wall pier carrying a light switch between the open door and the vanity's end shelves (160, 166), and a dropped soffit with recessed downlights over the vanity (162, 164): the door is not at the vanity wall, and the overhead's band there is a soffit. Topological; its own photographs, no scale shared",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "production-photo:marina-p2-160",
+    "production-photo:marina-p2-162",
+    "production-photo:marina-p2-166"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "production-photo"
+   ],
+   "pick": {
+    "crop": "spec/captures/picks/parents-bath-overhead-band.jpg",
+    "confirmed_by": "the soffit and the switch pier seen in two different photographs (162 and 160/166)"
+   }
+  },
+  {
+   "what": "Marina 196 s from the bedroom: pier from the hall-side corner to the bath door's casing 0.60 (floor) - 0.80 m (head) on the door's own 80 in ruler (wall_measure.py, f 1428; spec/captures/picks/parents-bath-196-doorwall.json); wallpaper stripe repeat 0.188 m on the fireplace wall where the stock 2.75 x 4.5 in switch plate reads 0.0705 x 0.1143 (spread +0.9% / 0.0%), 0.193 m on the door wall; 3.7 repeats on the pier = 0.70 m. Moving the door 0.5 m toward the toilet would make this ~1.4 m",
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "marina-frame:196",
+    "marina-frame:200"
+   ],
+   "scale": [
+    "switch-plate:marina-196",
+    "door-80in:marina-196"
+   ],
+   "upstream": [
+    "marina-model"
+   ]
+  },
+  {
+   "what": "Marina 225 s inside the bath: a 0.6-0.8 m pier (sconce, 2-gang switch plate) between the door casing and the vanity wall; built 0.83 to the opening (0.76 to the casing)",
+   "agrees": true,
+   "type": "metric",
+   "tests": [],
+   "data": [
+    "marina-frame:225"
+   ],
+   "scale": [
+    "switch-plate:marina-225"
+   ],
+   "upstream": [
+    "marina-model"
+   ]
+  },
+  {
+   "what": "Marina's overhead (Part 2 0:50) as a ratio: bath length from the tub wall to the bedroom's hall-wall line / bedroom length = 450/535 px x 5.33 = 4.48 m; built 4.30",
+   "agrees": true,
+   "type": "ratio",
+   "tests": [],
+   "data": [
+    "overhead-trace:upstairs"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "marina-model"
+   ]
+  },
+  {
+   "what": "Bedroom-side pier as built: 5.331 - 4.344 - casing 0.065 = 0.92 m vs Marina 196's 0.60-0.80",
+   "agrees": false,
+   "type": "metric",
+   "tests": [],
+   "data": [
+    "marina-frame:196"
+   ],
+   "scale": [
+    "switch-plate:marina-196"
+   ],
+   "upstream": [
+    "marina-model"
+   ],
+   "disposition": "door kept at its SfM span (frame 413 casing edges): the 196 corner pick at the floor is behind the plant (0.60) and the head pick reads 0.80, so the door may sit 0.1-0.2 m too far from the hall corner; moving it toward the corner would shorten the bath-side pier to ~0.65 (Marina 225: 0.6-0.8). Left open in DEVIATIONS 112 for a frontal frame"
+  },
+  {
+   "what": "Build gates (self-consistency): verify_plan 0 FAIL, Opening clear check, walk test, z-fight, clash",
+   "agrees": true,
+   "type": "topological",
+   "tests": [],
+   "data": [
+    "unity:walk-test"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "unity:build"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/bathnotes3/before/parents-note0650.jpg",
+   "spec/captures/views/bathnotes3/before/parents-exit.jpg",
+   "spec/captures/views/bathnotes3/before/parents-vanity.jpg",
+   "spec/captures/views/bathnotes3/before/parents-plan.jpg",
+   "spec/captures/views/bathnotes3/before/parents-toilet.jpg",
+   "spec/captures/views/bathnotes3/before/parents-from-bedroom-far.jpg",
+   "spec/captures/views/bathnotes3/before/hall-toilet.jpg"
+  ],
+  "after": [
+   "spec/captures/views/bathnotes3/after/parents-note0650.jpg",
+   "spec/captures/views/bathnotes3/after/parents-exit.jpg",
+   "spec/captures/views/bathnotes3/after/parents-vanity.jpg",
+   "spec/captures/views/bathnotes3/after/parents-plan.jpg",
+   "spec/captures/views/bathnotes3/after/parents-toilet.jpg",
+   "spec/captures/views/bathnotes3/after/parents-from-bedroom-far.jpg",
+   "spec/captures/views/bathnotes3/after/hall-toilet.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "outcome": null
+}
