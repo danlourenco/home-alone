@@ -44,7 +44,7 @@ public static class ShadowAudit
         EditorApplication.EnterPlaymode();
     }
 
-    static int tick, view; static Camera pcam; static RenderTexture prt; static Newtonsoft.Json.Linq.JArray pviews; static StringBuilder psb; static Color32[] prevPx;
+    static int tick, view; static Camera pcam; static RenderTexture prt; static Newtonsoft.Json.Linq.JArray pviews; static StringBuilder psb; static Color32[] prevPx; static float dtSum; static int dtN;
     static void PlayTick()
     {
         UnityEditorInternal.InternalEditorUtility.RepaintAllViews(); EditorApplication.QueuePlayerLoopUpdate();
@@ -64,12 +64,14 @@ public static class ShadowAudit
             psb = new StringBuilder($"PLAY-MODE SHADOW AUDIT ({(SessionState.GetBool("ShadowAuditLegacy", false) ? "legacy lamps" : "as built")}), 30 frames per view\n");
             view = 0; tick = f; Pose(); return;
         }
-        if (f - tick < 30) return;
-        if (f - tick == 30) { prevPx = Grab(out var t0); Object.DestroyImmediate(t0); return; }
+        int W = pviews[view]["frames"] != null ? (int)pviews[view]["frames"] : 30;   // per view: frames to settle (exposure adapts after a day/night switch)
+        if (f - tick > W / 2 && f - tick < W) { dtSum += Time.unscaledDeltaTime; dtN++; }   // frame time over the settled half (editor Play: A/B only)
+        if (f - tick < W) return;
+        if (f - tick == W) { prevPx = Grab(out var t0); Object.DestroyImmediate(t0); return; }
         var px = Grab(out var tex);
         int changed = 0; for (int i = 0; i < px.Length; i++) if (Mathf.Abs(px[i].r - prevPx[i].r) + Mathf.Abs(px[i].g - prevPx[i].g) + Mathf.Abs(px[i].b - prevPx[i].b) > 6) changed++;
         var v = pviews[view]; var s = Stats();
-        psb.AppendLine($"{(string)v["name"]}: requests {s.used}, dynamic tiles {s.dynTiles}, atlas scale {s.scale:F3}, cached placed {s.placed} pending {s.pending}; consecutive frames: {changed} pixels differ (> 2/255 per channel)");
+        psb.AppendLine($"{(string)v["name"]}: frame {1000f * dtSum / Mathf.Max(1, dtN):F2} ms (mean of {dtN}); requests {s.used}, dynamic tiles {s.dynTiles}, atlas scale {s.scale:F3}, cached placed {s.placed} pending {s.pending}; consecutive frames: {changed} pixels differ (> 2/255 per channel)");
         var dir2 = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/captures/views"));
         var fp = Path.Combine(dir2, (string)v["name"] + ".png"); Directory.CreateDirectory(Path.GetDirectoryName(fp)); File.WriteAllBytes(fp, tex.EncodeToPNG()); Object.DestroyImmediate(tex);
         view++;
@@ -81,7 +83,9 @@ public static class ShadowAudit
     static void Pose()
     {
         Vector3 V(Newtonsoft.Json.Linq.JToken t) => new Vector3((float)t[0], (float)t[1], (float)t[2]);
-        var v = pviews[view]; pcam.transform.position = V(v["pos"]); pcam.transform.LookAt(V(v["look_at"])); pcam.fieldOfView = (float)v["vfov"];
+        var v = pviews[view]; dtSum = 0f; dtN = 0;
+        if (v["night"] != null) Object.FindAnyObjectByType<HouseNightMode>().SetNight((bool)v["night"]);   // per view: "night": false for a day shot
+        pcam.transform.position = V(v["pos"]); pcam.transform.LookAt(V(v["look_at"])); pcam.fieldOfView = (float)v["vfov"];
     }
     static Color32[] Grab(out Texture2D tex)
     {

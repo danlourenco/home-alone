@@ -49,7 +49,7 @@ BUILDS = {
     "tools/house/hifi_basement.py": (["Basement.glb"], [LIB, "spec/house_spec.ground.json"]),
     "tools/house/hifi_treehouse.py": (["Treehouse.glb"], [LIB, "spec/dressing/treehouse.json", "tools/house/hifi_bare_trees.py"]),
     "tools/house/hifi_bare_trees.py": (["BareTrees.glb"], ["spec/dressing/treehouse.json"]),   # bare winter trees (Oct 18, decoration)
-    "tools/house/hifi_living.py": (["LivingWindows.glb", "LivingBuiltins.glb"], [LIB, "spec/house_spec.ground.json", "spec/dressing/living.json", "tools/house/hifi_sheers.py"]),
+    "tools/house/hifi_living.py": (["LivingWindows.glb", "LivingBuiltins.glb"], [LIB, "spec/house_spec.ground.json", "spec/dressing/living.json", "tools/house/hifi_sheers.py", "spec/exterior_shell.json"]),
     "tools/house/hifi_living_props.py": (["LivingProps.glb"], ["spec/dressing/living.json", "tools/house/hifi_den_props.py"]),
     "tools/house/hifi_dining_props.py": (["DiningProps.glb"], ["spec/dressing/dining.json", "tools/house/hifi_den_props.py"]),   # props lane (Oct 18 overnight)
     "tools/house/hifi_hall.py": (["HallDressing.glb"], [LIB, "spec/dressing/hall.json", "spec/dressing/hall_art.json", "spec/dressing/hall_art.png", "spec/geometry.json"]),

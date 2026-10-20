@@ -36,7 +36,7 @@ OUT = ROOT / "unity/HomeAlone/Assets/Models/Foyer/HallDressing.glb"
 D = json.loads((ROOT / "spec/dressing/hall.json").read_text())
 G = json.loads((ROOT / "spec/geometry.json").read_text())["upstairs"]
 ATLAS = json.loads((ROOT / "spec/dressing/hall_art.json").read_text())["pictures"]
-HALLS = ("hall_end", "hall_corridor", "hall_corridor_south")
+HALLS = ("hall_end", "hall_corridor", "hall_corridor_south", "main_stair_opening")   # the stair well too (film 2085: its crown runs round the damask walls and over the gallery arch; walk note 2026-10-19T20:57:39 "the casing/molding at the top stopping abruptly": it stopped where the corridor outline met the well)
 NROUND = 72
 
 parts = {}

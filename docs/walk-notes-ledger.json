@@ -137,12 +137,12 @@
    "what": "hall runner / corridor alignment: prepared, parked by the user"
   },
   "2026-10-19T19:04:16": {
-   "status": "queued",
-   "what": "front French windows flush with the facade (Oct 20 job)"
+   "status": "fixed",
+   "what": "French windows at the brick face: user accepted the exterior Oct 20"
   },
   "2026-10-19T20:57:39": {
-   "status": "queued",
-   "what": "upstairs hall casing stops abruptly at the top (Oct 20 job)"
+   "status": "fixed",
+   "what": "TRIAL (not walked): crown runs round the stair well too (film 2085); gallery-arch header crown NOT built (follow-up)"
   },
   "2026-10-19T22:20:48": {
    "status": "fixed",
@@ -169,12 +169,16 @@
    "what": "service-stair soffit (faa53de1)"
   },
   "2026-10-20T08:28:15": {
-   "status": "queued",
-   "what": "upstairs hall: vertical wallpaper strip at the corner (Oct 20 job)"
+   "status": "fixed",
+   "what": "TRIAL (not walked): hall-bath tile wraps the jog's outside corner; the corner pier's closet-side half no longer plain (end-face finish rule, SpecGreybox.cs)"
   },
   "2026-10-20T08:28:52": {
-   "status": "queued",
-   "what": "upstairs hall: wallpaper bleeds into the casing (Oct 20 job)"
+   "status": "fixed",
+   "what": "TRIAL (not walked): every grey-box door/window cut lined (openings.py lined, in-wall 1.2 cm boards); Opening face check REVEAL rule (48/48 before, 0 after)"
+  },
+  "2026-10-20T14:16:50": {
+   "status": "fixed",
+   "what": "facade sun: hidden envelope skin + untagged overhang; Facade sun check; user accepted the exterior Oct 20"
   }
  },
  "since": "2026-10-19"

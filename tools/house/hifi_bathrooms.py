@@ -387,18 +387,36 @@ WALLS = [("z", 7.778, 1, 9.1135, ex0, WN["tub_tile_top"]), ("z", 7.778, 1, ex1, 
          ("x", 11.664, -1, 7.778, 11.43, WN["cap"][0]), ("z", 11.43, -1, 8.511, 11.664, WN["cap"][0]),
          ("x", 8.511, 1, 8.781, 11.43, WN["cap"][0]), ("z", 8.781, 1, 8.511, 9.1135, WN["cap"][0]),
          ("x", 9.1135, 1, 7.778, TB_["z"][1], WN["tub_tile_top"]), ("x", 9.1135, 1, TB_["z"][1], 8.781, WN["cap"][0])]
+def corner(ax, c, end, out):
+    """How a run along the wall (ax, c) ends at `end` (its lo end: out = -1, its hi end: +1) against a face running across it:
+    'in' (an inside corner: the other face stands on the room side, the run stops a tile depth short of it), 'out' (an outside corner,
+    the face turns away: walk note 2026-10-20T08:28:15, 'strange vertical strip of wallpaper at the corner': both runs stopped a tile
+    depth SHORT of the jog's corner (9.1135, 8.781), so a 1.5 cm strip of paper showed up the corner between them), or None."""
+    for w in WALLS:
+        if w[0] != ax and abs(w[1] - end) < 1e-3 and w[3] - 1e-3 <= c <= w[4] + 1e-3:
+            return "in" if w[2] == -out else "out"   # the crossing face's inward normal points back along the run: inside
+    return None
+
+
+def ends(ax, c, lo, hi, d):
+    """the run's ends for a member d proud: inside corners stop d short (the crossing run covers them); at an outside corner the run
+    along x (wall x = c) carries on d past the corner to cover the crossing run's end grain, the other stops at the corner"""
+    a, b = corner(ax, c, lo, -1), corner(ax, c, hi, 1)
+    return (lo + d if a == "in" else lo - d if a == "out" and ax == "x" else lo,
+            hi - d if b == "in" else hi + d if b == "out" and ax == "x" else hi)
+
+
 for ax, c, inw, lo, hi, top in WALLS:
-    # runs meet at inside corners: shorten each run by the tile depth where it meets a face running across it (no overlap)
-    lo2 = lo + (TP if any(w[0] != ax and abs(w[1] - lo) < 1e-3 for w in WALLS) else 0)
-    hi2 = hi - (TP if any(w[0] != ax and abs(w[1] - hi) < 1e-3 for w in WALLS) else 0)
+    # runs meet at inside corners without overlap and wrap outside corners (each member by its own depth)
+    B = lambda part, y0, y1, d: band(part, ax, c, inw, *ends(ax, c, lo, hi, d), y0, y1, d)
     if top > 1.5:
-        band(tile, ax, c, inw, lo2, hi2, WN["tile_from"], top, TP)
-        band(black, ax, c, inw, lo2, hi2, top, top + 0.055, CP)
+        B(tile, WN["tile_from"], top, TP)
+        B(black, top, top + 0.055, CP)
         continue
-    band(tile, ax, c, inw, lo2, hi2, WN["tile_from"], WN["liner"][0], TP)
-    band(black, ax, c, inw, lo2, hi2, WN["liner"][0], WN["liner"][1], TP + 0.003)
-    band(tile, ax, c, inw, lo2, hi2, WN["liner"][1], WN["cap"][0], TP)
-    band(black, ax, c, inw, lo2, hi2, WN["cap"][0], WN["cap"][1], CP)
+    B(tile, WN["tile_from"], WN["liner"][0], TP)
+    B(black, WN["liner"][0], WN["liner"][1], TP + 0.003)
+    B(tile, WN["liner"][1], WN["cap"][0], TP)
+    B(black, WN["cap"][0], WN["cap"][1], CP)
 # the alcove's tiled end wall (its back 1.5 cm off the back wall: the baseboard runs behind it) and a black cap on top
 tile.box(ex0, ex1, 0.0, HB["tub_end_wall"]["y"][1], 7.778 + TP, TB_["z"][1])
 black.box(ex0 - 0.005, ex1 + 0.005, HB["tub_end_wall"]["y"][1], HB["tub_end_wall"]["y"][1] + 0.04, 7.778 + TP, TB_["z"][1] + 0.005)

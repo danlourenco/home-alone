@@ -160,14 +160,25 @@ def double_hung(w):
         L.box(brass, q - 0.025, q + 0.025, 0.012, 0.025, YB + 0.025, YB + 0.045)
 
 
+# the front French windows stand at the BRICK FACE, as the dining room's (walk note 2026-10-19T19:04:16 from the street: "i believe the
+# french windows are flush with the front of the house. confirm." Film 2508 / 4382: the white brick mould lies on the brick face and the
+# leaves a few cm behind it, no brick return to speak of; here they stood at the room's wall, 0.36 m behind the brick: the living room's
+# wall is 0.176 behind the dining's and its veneer 0.276 deep, DEVIATIONS 97 d). Leaves 0.065-0.11 m behind the brick face (as
+# exterior_shell.french_leaves for the dining room); the frame lines the whole reveal from the room face to 6 cm behind the brick
+# (a painted jamb/head/threshold box: the room sees a deep painted reveal, the street a 6 cm brick return); DEVIATIONS 120.
+BRICK = json.loads((ROOT / "spec/exterior_shell.json").read_text())["front_main"]
+
+
 def french(w):
     """a pair of leaves in a 0.75 m cut: frame, leaves (stiles 0.055, top rail 0.10, glass 0.44-1.90 in 2 x 5 lites, a raised bottom
-    panel), meeting stiles, knobs at 0.945 (Marina f89), a threshold"""
+    panel), meeting stiles, knobs at 0.945 (Marina f89), a threshold; at the brick face (BRICK above)"""
     L = Wall(w); W = L.hi - L.lo; H = w["head_m"]; JT = 0.02
-    L.box(paint, 0.0, W, 0.0, WT, H - JT, H)
-    L.box(paint, 0.0, JT, 0.0, WT, 0.012, H - JT); L.box(paint, W - JT, W, 0.0, WT, 0.012, H - JT)
-    L.box(paint, -0.02, W + 0.02, -0.01, WT, 0.0, 0.012)                          # threshold (oak, painted here)
-    lw = (W - 2 * JT) / 2; d0, d1 = 0.03, 0.075
+    DB = BRICK - L.face if L.out > 0 else WT   # the brick face's depth from the room face (front wall only)
+    DF = DB - 0.06                             # the frame's outer edge: the brick's own 6 cm return outside it
+    L.box(paint, 0.0, W, 0.0, DF, H - JT, H)
+    L.box(paint, 0.0, JT, 0.0, DF, 0.012, H - JT); L.box(paint, W - JT, W, 0.0, DF, 0.012, H - JT)
+    L.box(paint, -0.02, W + 0.02, -0.01, DF, 0.0, 0.012)                          # threshold (oak, painted here)
+    lw = (W - 2 * JT) / 2; d0, d1 = DB - 0.11, DB - 0.065
     for k in range(2):
         a0 = JT + k * lw; a1 = a0 + lw; SS, TR, G0, G1 = 0.055, 0.10, 0.44, 1.90
         L.box(paint, a0, a0 + SS, d0, d1, 0.012, H - JT); L.box(paint, a1 - SS, a1, d0, d1, 0.012, H - JT)

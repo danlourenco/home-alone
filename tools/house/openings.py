@@ -7,7 +7,7 @@ the landing window and the front door drew their own casing inside their models,
 probe (front door) or not at all (the landing window: its wall was "panelled by the model" at its own height, STATUS 8t-3).
 
 Each opening record holds:
-  pieces  every casing part (leg_lo, leg_hi, head, stool, apron) and mounted piece (prop door, a model's frame) on each face, a box in
+  pieces  every casing part (leg_lo, leg_hi, head, stool, apron), the cut's liners (liner_lo/hi/head/sill, Oct 20) and mounted piece (prop door, a model's frame) on each face, a box in
           spec x / z and world y, with the face it is on; "by" names who draws it (null = SpecGreybox lays it from this file; a model or
           a store prop otherwise). spec/trim_faces.json cuts every run at these boxes, so the trim ends at the casing by construction.
   dropped casing the opening does NOT carry on a face, with the reason (a recorded decision, never a silent skip): a leg that would run
@@ -44,6 +44,7 @@ OUT = ROOT / "spec/openings.json"
 INPUTS = ["spec/geometry.json", "spec/house_spec.json", "spec/house_spec.ground.json", "spec/dressing/store_props.json",
           "spec/dressing/french_doors.json", "spec/dressing/buzz.json", "tools/house/hifi_door.py", "tools/house/openings.py"]
 CASING_W, CASING_PROUD, STOOL_PROUD, STOOL_T, HALF, PROP_T = 0.07, 0.02, 0.04, 0.025, 0.07, 0.03   # SpecGreybox consts
+LINER_T = 0.012                                  # jamb / head / sill liner board (>= 1 cm proud of the cut face: zfight-check rule 2)
 ARCH_MODELS = {"foyer|rear_passage": "FoyerArch",   # SpecGreybox.Arch.cs ArchModels: plain (film), no casing
                # the hall's plastered arches (hifi_hall_arches.py, film 410/2296/10828: no casing); the legs to the spring that
                # stood here were the "random vertical stripe" of walk note 2026-10-17T08:28:50
@@ -174,9 +175,30 @@ def openings():
                 piece("leg_hi", n, f0, f1, hi, hi + CASING_W, sill, head + CASING_W)
                 piece("head", n, f0, f1, lo - CASING_W, hi + CASING_W, head, head + CASING_W)
 
+            def lined(y0, head):
+                """Jamb liners (walk note 2026-10-20T08:28:52: the hall bath window's reveal showed the wall paper inside the casing;
+                every grey-box door and window cut showed its wall's paper or paint on its jambs, head and sill: the Opening face check's
+                REVEAL rule). The cut's faces are carpentry: a LINER_T painted board on each jamb, the head and (windows) the sill, through
+                the wall's whole thickness, one piece per half (each owned by its face, n). The boards stand IN the wall, behind the cut's
+                faces ("in_wall": SpecGreybox.LayCasings carves the wall boxes there), so the measured clear opening stays as it is (lined
+                inside the cut, the first build's boards took 2.4 cm off every door and 1.2 cm off its head: new BLOCKED lines at the
+                attic door) and the casing laps the boards' edges on the face."""
+                for n in (-1, 1):
+                    f0, f1 = c, c + n * HALF
+                    yb = y0   # the jambs stand on the sill board (or the floor)
+                    if y0 > 0:
+                        piece("liner_sill", n, f0, f1, lo - LINER_T, hi + LINER_T, y0 - LINER_T, y0)
+                    piece("liner_lo", n, f0, f1, lo - LINER_T, lo, yb, head)
+                    piece("liner_hi", n, f0, f1, hi, hi + LINER_T, yb, head)
+                    piece("liner_head", n, f0, f1, lo - LINER_T, hi + LINER_T, head, head + LINER_T)
+                for pc in rec["pieces"]:
+                    if pc["part"].startswith("liner"): pc["in_wall"] = True
+
             if k == "door" or (k == "arch" and o.get("cased")):
                 for n in (-1, 1):
                     cased(n, o["height"])
+                if k == "door" and not o.get("model"):
+                    lined(0.0, o["height"])
             elif k == "arch" and o.get("spring") is not None:
                 if key in ARCH_MODELS:
                     for n in (-1, 1):
@@ -190,12 +212,15 @@ def openings():
                 for n in (-1, 1):
                     f0 = c + n * HALF
                     piece("prop", n, f0, f0 + n * PROP_T, lo, hi, 0, o["height"], by="SpecGreybox.Storey PropDoor")
+            elif k == "window" and o.get("bare") and not o.get("model"):   # a model's sidelight: its frame is the model's, its cut is lined here
+                lined(o["sill"], o["head"])
             elif k == "window" and not o.get("bare"):
                 n = -o["faces"][0]   # the room's face (faces[0] is the outward side, spec)
                 cased(n, o["head"], o["sill"])
                 if not o.get("model"):
                     f0 = c + n * HALF
                     piece("stool", n, f0, f0 + n * STOOL_PROUD, lo - CASING_W - 0.025, hi + CASING_W + 0.025, o["sill"] - STOOL_T, o["sill"])
+                    lined(o["sill"], o["head"])
             out.append(rec)
     out += [landing_window(o) for o in SG.get("wall_openings", []) if o["name"] == "landing_window"]
     out.append(front_door())
@@ -233,7 +258,7 @@ def store_frames(recs):
         pb = [p["x"][0], p["x"][1], p["z"][0], p["z"][1], p["y0"] + fy, p["y0"] + fy + p["height"]]
         reach = [v + (0.1 if i % 2 else -0.1) for i, v in enumerate(pb)]
         for r in recs:
-            hit = [pc for pc in r["pieces"] if pc["by"] is None and overlap(pc["box"], reach)]
+            hit = [pc for pc in r["pieces"] if pc["by"] is None and not pc["part"].startswith("liner") and overlap(pc["box"], reach)]   # a pack frame laps the face, the cut stays lined
             if not hit:
                 continue
             for pc in hit:

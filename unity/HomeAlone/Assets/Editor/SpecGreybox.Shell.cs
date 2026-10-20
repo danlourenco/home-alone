@@ -21,7 +21,41 @@ public static partial class SpecGreybox
     static Material XmasBulb() => XmasBulb("HiFi_XmasBulb", new Color(1f, 0.78f, 0.50f), 2500f);
     static Material XmasBulb(string n, Color c, float nits)   // film 10: warm white mini-lights (double-sided: the generated cubes' winding is not checked)
     {
-        var m = AtticGlow(n, c, nits, 0.4f); m.SetFloat("_DoubleSidedEnable", 1f); HDMaterial.ValidateMaterial(m); return m;
+        var m = AtticGlow(n, c, nits, 0.4f); m.SetFloat("_DoubleSidedEnable", 1f);
+        m.SetColor("_BaseColor", new Color(0.80f, 0.70f, 0.52f)); m.SetFloat("_Smoothness", 0.88f);   // by day an unlit mini bulb is clear-warm glass on its dark wire (film), not a yellow cube (shrubs TRIAL, Oct 20); emission stays c x nits
+        HDMaterial.ValidateMaterial(m); return m;
+    }
+
+    // a foliage card material: an atlas of leaves alpha-clipped (coverage-preserving mips, so far shrubs don't thin out), double sided
+    // with mirrored normals, HDRP translucent with the Foliage diffusion profile (the sun through the leaves; listed on the global volume
+    // in SpecGreybox.Curtains), the map set's normal and mask
+    static Material LeafMat(string n, Color tint, string dir, string albedo, string normal, string mask, bool clip = true, bool translucent = true)
+    {
+        Texture2D Map(string f, bool lin, bool nrm)
+        {
+            if (AssetImporter.GetAtPath(dir + f) is TextureImporter ti)
+            {
+                bool dirty = false;
+                if (nrm && ti.textureType != TextureImporterType.NormalMap) { ti.textureType = TextureImporterType.NormalMap; dirty = true; }
+                if (!nrm && lin && ti.sRGBTexture) { ti.sRGBTexture = false; dirty = true; }
+                if (f == albedo && (!ti.mipMapsPreserveCoverage || !ti.alphaIsTransparency)) { ti.alphaIsTransparency = true; ti.mipMapsPreserveCoverage = true; ti.alphaTestReferenceValue = 0.45f; dirty = true; }
+                if (ti.anisoLevel < 8) { ti.anisoLevel = 8; dirty = true; }
+                if (dirty) ti.SaveAndReimport();
+            }
+            return AssetDatabase.LoadAssetAtPath<Texture2D>(dir + f);
+        }
+        var m = Mat(n, tint);
+        m.SetTexture("_BaseColorMap", Map(albedo, false, false));
+        m.SetTexture("_NormalMap", Map(normal, true, true)); m.SetFloat("_NormalScale", 1f);
+        m.SetTexture("_MaskMap", Map(mask, true, false));
+        m.SetFloat("_MetallicRemapMin", 0f); m.SetFloat("_MetallicRemapMax", 0f); m.SetFloat("_SmoothnessRemapMin", 0f); m.SetFloat("_SmoothnessRemapMax", 0.12f);   // 0.45 caught the blue sky (build 4); 0.30 and 0.20 still sheened the boxwood grey-blue (scan build 1, film4382 view: shrub_colour.py)
+        m.SetFloat("_AlphaCutoffEnable", clip ? 1f : 0f); m.SetFloat("_AlphaCutoff", 0.45f); m.SetFloat("_UseShadowThreshold", 1f); m.SetFloat("_AlphaCutoffShadow", 0.45f);
+        m.SetFloat("_DoubleSidedEnable", 1f); m.SetFloat("_DoubleSidedNormalMode", 1f);   // mirror
+        var prof = AssetDatabase.LoadAssetAtPath<DiffusionProfileSettings>(AssetDatabase.GUIDToAssetPath("2384dbf2c1c420f45a792fbc315fbfb1"));   // HDRP's Foliage profile
+        if (!translucent) m.SetFloat("_MaterialID", (float)MaterialId.LitStandard);
+        else if (prof != null) { m.SetFloat("_MaterialID", (float)MaterialId.LitTranslucent); m.SetFloat("_Thickness", 0.25f); HDMaterial.SetDiffusionProfile(m, prof); }
+        else Debug.LogWarning("LeafMat: HDRP Foliage diffusion profile not found (opaque leaves)");
+        HDMaterial.ValidateMaterial(m); EditorUtility.SetDirty(m); return m;
     }
 
     static void Shell(GameObject ext, float gy)
@@ -240,13 +274,25 @@ public static partial class SpecGreybox
     static GameObject Bulbs(GameObject parent, string n, List<Vector3> pts, Material m, List<float> sizes)
     {
         var vs = new List<Vector3>(); var tris = new List<int>();
-        int[] F = { 0, 2, 1, 0, 3, 2, 4, 5, 6, 4, 6, 7, 0, 1, 5, 0, 5, 4, 1, 2, 6, 1, 6, 5, 2, 3, 7, 2, 7, 6, 3, 0, 4, 3, 4, 7 };
+        // each bulb a small smooth glass ellipsoid (shrubs TRIAL, Oct 20: the cubes read as "big grey faceted pebbles" at Kevin's eye):
+        // 6 sides x 4 bands, 0.7 x size wide and size tall (a C7-ish 1.0-1.6 x 1.5-2.3 cm), smooth normals, 36 triangles
+        const int S6 = 6; var rings = new[] { (-1f, 0f), (-0.45f, 0.85f), (0.35f, 1f), (1f, 0f) };   // (y, radius) as fractions of the half sizes
         for (int pi = 0; pi < pts.Count; pi++)
         {
-            var p = pts[pi]; float h = sizes[pi] / 2;
+            var p = pts[pi]; float hy = sizes[pi] / 2, hr = sizes[pi] * 0.35f;
             int b = vs.Count;
-            foreach (var y in new[] { -h, h }) { vs.Add(p + new Vector3(-h, y, -h)); vs.Add(p + new Vector3(h, y, -h)); vs.Add(p + new Vector3(h, y, h)); vs.Add(p + new Vector3(-h, y, h)); }
-            foreach (var i in F) tris.Add(b + i);
+            vs.Add(p + new Vector3(0, -hy, 0));
+            for (int k = 1; k < 3; k++)
+                for (int j = 0; j < S6; j++) { float a = (j + 0.5f * k) * Mathf.PI * 2 / S6; vs.Add(p + new Vector3(Mathf.Cos(a) * hr * rings[k].Item2, rings[k].Item1 * hy, Mathf.Sin(a) * hr * rings[k].Item2)); }
+            vs.Add(p + new Vector3(0, hy, 0));
+            int r1 = b + 1, r2 = b + 1 + S6, top = b + 1 + 2 * S6;
+            for (int j = 0; j < S6; j++)
+            {
+                int j1 = (j + 1) % S6;
+                tris.AddRange(new[] { b, r1 + j, r1 + j1 });                                  // bottom cap
+                tris.AddRange(new[] { r1 + j, r2 + j, r1 + j1, r1 + j1, r2 + j, r2 + j1 });  // band
+                tris.AddRange(new[] { r2 + j, top, r2 + j1 });                              // top cap
+            }
         }
         var mesh = new Mesh { name = n, indexFormat = IndexFormat.UInt32 }; mesh.SetVertices(vs); mesh.SetTriangles(tris, 0); mesh.RecalculateNormals(); mesh.RecalculateBounds();
         // the mesh is saved inside the scene (as PropertyPart's): an asset made in the scratch copy is missing from the project after a load
@@ -286,18 +332,48 @@ public static partial class SpecGreybox
         var holder = new GameObject("ExteriorPolish"); holder.transform.SetParent(yard.transform, true);
         holder.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         var g = (GameObject)Object.Instantiate(a, holder.transform); g.name = "ExteriorPlants_HiFi"; g.transform.localPosition = Vector3.zero; g.transform.localRotation = Quaternion.identity;
+        // the downloaded boxwood (exterior shrubs TRIAL 3, Oct 20; tools/house/scan_shrubs.py -> the gitignored Assets/Purchased/
+        // Sketchfab/ScanShrubs/, CC-BY, CREDITS.md): where it has a plant (root P<i>_<kind>_SCAN), the generated plant's foliage (_leaf,
+        // _ball<k>) goes and the boxwood's copies join its root (stems, urns and firs stay); its mini-lights come from bulbs.json (points
+        // on the drawn leaves, root-local). A clone without the download keeps the generated plants.
+        const string SS = "Assets/Purchased/Sketchfab/ScanShrubs/";
+        var scanBulbs = new Dictionary<Transform, List<(Vector3 p, bool dim)>>();
+        var sa = AssetDatabase.LoadAssetAtPath<GameObject>(SS + "ScanShrubs.glb");
+        if (sa != null)
+        {
+            var bj = JObject.Parse(File.ReadAllText(Path.GetFullPath(SS + "bulbs.json")))["plants"];
+            var gs = (GameObject)Object.Instantiate(sa, holder.transform); gs.transform.localPosition = Vector3.zero; gs.transform.localRotation = Quaternion.identity;
+            int nScan = 0;
+            foreach (Transform sr in gs.transform.Cast<Transform>().ToList())
+            {
+                string pn = sr.name.Replace("_SCAN", ""); var p0 = g.transform.Find(pn);
+                if (p0 == null) { Debug.LogWarning($"ExteriorPlants: no generated plant for {sr.name}"); continue; }
+                foreach (var r in p0.GetComponentsInChildren<MeshRenderer>().Where(r => r.name.Contains("_leaf") || r.name.Contains("_ball")).ToList()) Object.DestroyImmediate(r.gameObject);
+                foreach (Transform c in sr.Cast<Transform>().ToList()) c.SetParent(p0, true);
+                scanBulbs[p0] = bj[pn] == null ? new List<(Vector3, bool)>() : bj[pn].Select(q => (p0.InverseTransformPoint(sr.TransformPoint(new Vector3((float)q[0], (float)q[1], (float)q[2]))), (int)q[3] == 1)).ToList();
+                nScan++;
+            }
+            Object.DestroyImmediate(gs);
+            Debug.Log($"ExteriorPlants: {nScan} plants from the downloaded boxwood (ScanShrubs.glb)");
+        }
+        else Debug.Log("ExteriorPlants: Assets/Purchased/Sketchfab/ScanShrubs not present: generated shrubs kept");
         foreach (var c in g.GetComponentsInChildren<Collider>()) Object.DestroyImmediate(c);
         Material DS(Material m) { m.SetFloat("_DoubleSidedEnable", 1f); HDMaterial.ValidateMaterial(m); return m; }
         var remap = new Dictionary<string, Material> {
-            ["EP_Core"] = Mat("HiFi_ExtShrubCore", new Color(0.012f, 0.025f, 0.010f)),
+            ["EP_Core"] = Mat("HiFi_ExtShrubCore", new Color(0.012f, 0.025f, 0.010f)),   // the generated fallback (no download)
             ["EP_LeafB"] = DS(Mat("HiFi_ExtShrubLeafB", new Color(0.050f, 0.095f, 0.030f))),
             ["EP_Leaf"] = DS(Mat("HiFi_ExtShrubLeaf", new Color(0.030f, 0.070f, 0.025f))),
             ["EP_Snow"] = DS(Mat("HiFi_ExtShrubSnow", new Color(0.85f, 0.87f, 0.90f))),
             ["EP_Stem"] = Mat("HiFi_ExtShrubStem", new Color(0.12f, 0.08f, 0.05f)),
             ["EP_Stone"] = Mat("HiFi_ExtUrn", new Color(0.80f, 0.78f, 0.74f)) };
+        if (sa != null)
+        {   // the boxwood's leaves graded to film 4382's olive in scan_shrubs.py (tint white: tune live here); the crown's snow cards
+            remap["EP_ScanBux"] = LeafMat("HiFi_ExtShrubBoxwood", Color.white, SS, "bux_albedo.png", "bux_normal.png", "bux_mask.png");
+            remap["EP_ScanBuxSnow"] = LeafMat("HiFi_ExtShrubBoxwoodSnow", Color.white, SS, "bux_albedo_snow.png", "bux_normal.png", "bux_mask.png");
+        }
         foreach (var r in g.GetComponentsInChildren<MeshRenderer>())
         {
-            r.sharedMaterials = r.sharedMaterials.Select(m => m == null ? m : remap.Where(kv => m.name.StartsWith(kv.Key)).Select(kv => kv.Value).FirstOrDefault() ?? m).ToArray();
+            r.sharedMaterials = r.sharedMaterials.Select(m => m == null ? m : remap.Where(kv => m.name.StartsWith(kv.Key)).OrderByDescending(kv => kv.Key.Length).Select(kv => kv.Value).FirstOrDefault() ?? m).ToArray();
             r.gameObject.isStatic = true; r.shadowCastingMode = ShadowCastingMode.On;
         }
         Physics.SyncTransforms();
@@ -307,25 +383,39 @@ public static partial class SpecGreybox
         var pts = new List<Vector3>(); var sz = new List<float>(); var tint = new List<int>(); var rnd = new System.Random(10); int dropped = 0;
         var glowAt = new List<(Vector3 c, float r)>();
         float R() => (float)rnd.NextDouble();
-        void Add(Vector3 p, float depth) { pts.Add(p); sz.Add(0.018f + 0.012f * R()); tint.Add(depth < 0.82f ? 2 : R() < 0.5f ? 0 : 1); }
+        void Add(Vector3 p, float depth) { pts.Add(p); sz.Add(0.015f + 0.008f * R()); tint.Add(depth < 0.95f ? 2 : R() < 0.5f ? 0 : 1); }
         foreach (Transform p in g.transform.Cast<Transform>().ToList())
         {
             var o = p.position;
             if (Physics.Raycast(new Vector3(o.x, -2.6f + d, o.z), Vector3.down, out var hit, 3f)) { p.position = new Vector3(o.x, hit.point.y - 0.02f, o.z); dropped++; }
             else Debug.LogWarning($"ExteriorPlants: no bed under {p.name} at {o}");
+            {   // one LODGroup per plant (the boxwood is 1080 triangles: one LOD), culled when under 0.5 % of the screen height
+                var lg = p.gameObject.AddComponent<LODGroup>(); lg.fadeMode = LODFadeMode.None;
+                lg.SetLODs(new[] { new LOD(0.005f, p.GetComponentsInChildren<MeshRenderer>()) }); lg.RecalculateBounds();
+            }
+            if (scanBulbs.TryGetValue(p, out var sb))   // the boxwood: mini-lights threaded through its outer leaves (scan_shrubs.py)
+            {
+                foreach (var (q, dim) in sb) Add(p.TransformPoint(q), dim ? 0.9f : 1f);
+                foreach (var r in p.GetComponentsInChildren<MeshRenderer>().Where(r => r.name.Contains("_scan")))
+                    if (r.bounds.extents.y > 0.18f) glowAt.Add((r.bounds.center, Mathf.Max(r.bounds.extents.x, r.bounds.extents.z)));
+                continue;
+            }
             if (p.name.Contains("urn") || p.name.Contains("fir")) continue;
             foreach (var r in p.GetComponentsInChildren<MeshRenderer>())
             {
                 if (r.name.Contains("stem")) continue;
-                var b = r.bounds; var c = b.center; var e = b.extents + Vector3.one * 0.02f;
+                // the mesh's own box in the plant's turned frame (each plant is turned: the world AABB of a turned shrub is larger than the
+                // shrub, and build 1 hung its bulbs in the air beside it)
+                var lb = r.localBounds; var tr = r.transform;
+                var c = tr.TransformPoint(lb.center); var e = Vector3.Scale(lb.extents, tr.lossyScale) + Vector3.one * 0.01f;
                 int n = Mathf.RoundToInt(4f * Mathf.PI * ((e.x * e.y + e.x * e.z + e.y * e.z) / 3f) * 52f);
                 for (int k = 0; k < n; k++)
                 {
                     var v = new Vector3(R() * 2 - 1, R() * 2 - 1, R() * 2 - 1);
                     if (v.sqrMagnitude < 1e-4f || v.sqrMagnitude > 1f) { k--; continue; }
                     v.Normalize(); if (v.y < -0.55f) continue;
-                    float depth = 0.55f + 0.45f * Mathf.Sqrt(R());   // most near the outside, some deep in the leaves
-                    Add(c + Vector3.Scale(v, e) * depth, depth);
+                    float depth = 0.93f + 0.07f * Mathf.Sqrt(R());   // on the outer shell, among the spray tips (build 6 at 0.70-0.92 hid them inside the shells)
+                    Add(c + tr.rotation * Vector3.Scale(v, e) * depth, depth);
                 }
                 if (e.y > 0.18f) glowAt.Add((c, Mathf.Max(e.x, e.z)));
             }

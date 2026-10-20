@@ -22,7 +22,8 @@ public static partial class SpecGreybox
         var prof = AssetDatabase.LoadAssetAtPath<DiffusionProfileSettings>(SheerDir + "/SheerDiffusionProfile.asset");
         var gv = root.transform.Find("GlobalVolume")?.GetComponent<Volume>();
         if (prof == null || gv == null) { Debug.LogWarning($"Curtains: profile {prof != null}, global volume {gv != null}"); return; }
-        var list = gv.sharedProfile.Add<DiffusionProfileList>(true); list.diffusionProfiles.value = new[] { prof };
+        var foliage = AssetDatabase.LoadAssetAtPath<DiffusionProfileSettings>(AssetDatabase.GUIDToAssetPath("2384dbf2c1c420f45a792fbc315fbfb1"));   // HDRP's Foliage (the shrubs' leaf cards, SpecGreybox.Shell LeafMat)
+        var list = gv.sharedProfile.Add<DiffusionProfileList>(true); list.diffusionProfiles.value = foliage != null ? new[] { prof, foliage } : new[] { prof };
         AssetDatabase.AddObjectToAsset(list, gv.sharedProfile); EditorUtility.SetDirty(gv.sharedProfile);
 
         string tp = SheerDir + "/voile.png";

@@ -269,7 +269,7 @@ ok      player down leg 2: ended 0.01 m from waypoint, 0.03 m off its floor heig
 ok      player down leg 3: ended 0.04 m from waypoint, 0.03 m off its floor height, 26 frames (clean walk 27)
 ok      player down leg 4: ended 0.01 m from waypoint, 0.03 m off its floor height, 21 frames (clean walk 21)
 Render check (outward faces, ServiceStair): 100 parts, 0 inside-out
-Seam check: 1099 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
+Seam check: 1485 structural boxes, 0 overlaps (flicker), 0 ledges, 0 gaps
 Leak and headroom check: 1506 points, 0 leaks, 17 low-headroom points (ground floor, outside flight 1)
 LOW     den at (2.6, 18.2): 0.83 m clear under StoreProps/den_tv_Collider
 LOW     den at (5.6, 16.7): 0.75 m clear under DenColliders/DenCollider_tray_lamp_tray
@@ -301,27 +301,31 @@ skip    kevin dining_room: no cell to stand in (its floor is a stair)
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin back_stair: no cell to stand in (its floor is a stair)
-Z-fight check: 3258866 triangles, 2578 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
-Clash check: 3613540 triangles, 0 parts passing through another (52 allowed joints) (every visible mesh checked)
+Z-fight check: 3299137 triangles, 3197 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
+Clash check: 3621687 triangles, 0 parts passing through another (52 allowed joints) (every visible mesh checked)
 Casing check: 0 casings placed apart from their opening
-Opening face check: 24 door faces, 0 without a head casing, 0 showing the other room's finish within the casing width
+Opening face check: 24 door faces, 0 without a head casing, 0 showing the other room's finish within the casing width; 48 reveals, 0 showing the wall finish
 Opening clear check: 51 openings, 0 with a visible mesh in the passage (10 allowed)
 ALLOWED upstairs:door:closet_1|kevin_jeff_room:8.074: Upstairs/KevinRoom_HiFi/KV_GloveLeather (2 rays): the boxing gloves hang on the closet door's knob (Marina 380/383): leaf-mounted
 ALLOWED upstairs:arch:hall_corridor|hall_corridor_south:5.764: Upstairs/HallPlants_HiFi/Ficus_Pot_hall (6 rays): PRE-EXISTING, review: as the ficus
 ALLOWED upstairs:arch:hall_corridor|hall_corridor_south:5.764: Upstairs/HallPlants_HiFi/Ficus_Tree_hall (22 rays): PRE-EXISTING, review: the hall ficus beside the south arch reaches into its passage (Oct 20 first run)
-ALLOWED upstairs:arch:hall_corridor|hall_corridor_south:5.764: Upstairs/HallDressing_HiFi/Urn (5 rays): PRE-EXISTING, review: the urn beside the south arch
 ALLOWED upstairs:arch:hall_corridor|hall_corridor_south:5.764: Upstairs/HallDressing_HiFi/Soil (3 rays): PRE-EXISTING, review: the urn's soil (HallDressing)
+ALLOWED upstairs:arch:hall_corridor|hall_corridor_south:5.764: Upstairs/HallDressing_HiFi/Urn (5 rays): PRE-EXISTING, review: the urn beside the south arch
 ALLOWED upstairs:arch:hall_corridor|hall_corridor_south:5.764: Upstairs/HallPlants_HiFi/Poin_hall_urn3 (6 rays): PRE-EXISTING, review: a poinsettia urn beside the south arch
 ALLOWED upstairs:arch:hall_corridor|hall_corridor_south:5.764: Upstairs/HallDressing_HiFi/Wood (4 rays): PRE-EXISTING, review: the urn's stand (HallDressing)
 ALLOWED upstairs:window:buzz_room:10.197: Upstairs/Walls/Wall (13 rays): PRE-EXISTING, review: one row of rays meets wall inside this window's reveal (cut vs opening data)
 ALLOWED ground:arch:foyer|rear_passage:8.855: Upstairs/FoyerProps_HiFi/Velvet (15 rays): PRE-EXISTING, review: the foyer's velvet seat within 0.4 m of the rear passage arch
 ALLOWED ground:arch:foyer|rear_passage:8.855: Upstairs/FoyerProps_HiFi/Wood (5 rays): PRE-EXISTING, review: the same seat's frame
+Facade sun check: 3060 points on the lower front, 1025 shaded, 0 interior casters (0 ray hits) shading it (sun mask 5)
+outdoor Exterior/WinterNeighborhood/Bare winter tree elmB (971 rays)
+outdoor Exterior/HouseShell/Exterior_HiFi (691 rays)
+outdoor Exterior/Yard/ExteriorPolish (34 rays)
+Practices check: (a) 19 meshes drawn >= 8 times outside a LODGroup (Cube x4424, Cylinder x239, Sphere x122, SM_Book_04 x17, SM_Book_01 x16, SM_Book_02 x16); (b) 0 MeshColliders on foliage; (c) 0 renderers on material instances; (d) SRP Batcher: skipped (ShaderUtil.GetSRPBatcherCompatibilityCode did not answer for any of 4 shaders)
 Arch fit: 1 generated arches on their cuts, 0 joints off by more than 1 mm (worst 0.00 mm)
 Props check: 248 store models, 146 problems (landing_table: back -0.5 cm from the drawn wall (want 0-3); den_banker: material Glass_HDRP has no base colour map; basement_door: back 4.0 cm from the drawn wall (want 0-3); den_book_001: back 19.1 cm from the drawn wall (want 0-3); den_book_002: back 19.2 cm from the drawn wall (want 0-3); den_book_003: back 20.3 cm from the drawn wall (want 0-3); den_book_004: back 19.9 cm from the drawn wall (want 0-3); den_book_005: back 16.7 cm from the drawn wall (want 0-3); den_book_006: back 17.5 cm from the drawn wall (want 0-3); den_book_007: back 21.3 cm from the drawn wall (want 0-3))
 Props triangle budget: 4 models over 150k triangles (Assets/Purchased/PurchasedPlants.glb 411k, Assets/Purchased/HallPlants.glb 296k, Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Models/ChristmasTree.fbx 259k, Assets/Models/Foyer/HallDressing.glb 202k)
-Trim check: 97 face runs (3 on the stair and landings, 0 panelled by a window model), 166.5 m, 12420 samples, 1 gaps in the baseboard, wainscot or cap rail; run ends: corner 103, opening 84, outside-corner 7
-GAP     0.06 m of bare wall 0.42 above the line of the room:hall_corridor run at spec (7.35, 0.42, 9.91)
-Envelope check: 2143 points at room joints, 0 see the sky through < 0.3 m of shadow caster
+Trim check: 97 face runs (3 on the stair and landings, 0 panelled by a window model), 166.5 m, 12420 samples, 0 gaps in the baseboard, wainscot or cap rail; run ends: corner 103, opening 84, outside-corner 7
+Envelope check: 2142 points at room joints, 0 see the sky through < 0.3 m of shadow caster (0.26 where the last is the brick skin)
 Entrance check: closed blocks, open clears, locked refuses open; one leaf collider
 Back door check: closed blocks (0.3/1.0/1.8 m), open clears, the open leaf touches nothing, locked refuses open
 Quality check: 4 pipeline models of 50 generated (the rest predate the artist pipeline), 0 problems

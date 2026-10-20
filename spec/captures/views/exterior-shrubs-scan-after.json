@@ -1,0 +1,138 @@
+[
+ {
+  "name": "exterior-shrubs-scan/after/film4382",
+  "pos": [
+   25.648,
+   -2.6,
+   -9.837
+  ],
+  "look_at": [
+   6.142,
+   1.802,
+   -9.485
+  ],
+  "vfov": 45.49,
+  "near": 0.05,
+  "night": false,
+  "frames": 90
+ },
+ {
+  "name": "exterior-shrubs-scan/after/street",
+  "pos": [
+   34.0,
+   -3.02,
+   -9.716
+  ],
+  "look_at": [
+   10.0,
+   -1.0,
+   -9.716
+  ],
+  "vfov": 60,
+  "near": 0.05,
+  "night": false,
+  "frames": 90
+ },
+ {
+  "name": "exterior-shrubs-scan/after/shrubs_close",
+  "pos": [
+   15.6,
+   -2.55,
+   -3.6
+  ],
+  "look_at": [
+   11.4,
+   -2.9,
+   -6.6
+  ],
+  "vfov": 50,
+  "near": 0.05,
+  "night": false,
+  "frames": 90
+ },
+ {
+  "name": "exterior-shrubs-scan/after/oblique",
+  "pos": [
+   27.0,
+   -2.6,
+   11.0
+  ],
+  "look_at": [
+   6.0,
+   0.5,
+   -5.0
+  ],
+  "vfov": 50,
+  "near": 0.05,
+  "night": false,
+  "frames": 90
+ },
+ {
+  "name": "exterior-shrubs-scan/after/kevin_close",
+  "pos": [
+   12.35,
+   -1.85,
+   -6.45
+  ],
+  "look_at": [
+   11.75,
+   -2.55,
+   -7.35
+  ],
+  "vfov": 50,
+  "near": 0.05,
+  "night": false,
+  "frames": 90
+ },
+ {
+  "name": "exterior-shrubs-scan/after/pietro_night",
+  "pos": [
+   40.5,
+   -2.9,
+   -9.7
+  ],
+  "look_at": [
+   8.0,
+   0.2,
+   -9.7
+  ],
+  "vfov": 34,
+  "near": 0.05,
+  "night": true,
+  "frames": 90
+ },
+ {
+  "name": "exterior-shrubs-scan/after/shrubs_close_night",
+  "pos": [
+   15.6,
+   -2.55,
+   -3.6
+  ],
+  "look_at": [
+   11.4,
+   -2.9,
+   -6.6
+  ],
+  "vfov": 50,
+  "near": 0.05,
+  "night": true,
+  "frames": 90
+ },
+ {
+  "name": "exterior-shrubs-scan/after/street_night",
+  "pos": [
+   34.0,
+   -3.02,
+   -9.716
+  ],
+  "look_at": [
+   10.0,
+   -1.0,
+   -9.716
+  ],
+  "vfov": 60,
+  "near": 0.05,
+  "night": true,
+  "frames": 90
+ }
+]

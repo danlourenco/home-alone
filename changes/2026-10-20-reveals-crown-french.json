@@ -1,0 +1,187 @@
+{
+ "change": "Five walk notes on the trim/finish model (TRIAL). (1) 2026-10-19T19:04:16 street, living-room French window: 'i believe the french windows are flush with the front of the house. confirm.' Film 2508 (frontal, close) and 4382 (from the left) show the white brick mould on the brick face and the leaves a few cm behind it; ours stood at the living room's wall, 0.36 m behind the brick (the living wall is 0.176 behind the dining's, its veneer 0.276 deep: DEVIATIONS 97 d). hifi_living.french: leaves 0.065-0.11 m behind the brick face (the dining's exterior leaves' depth, Oct 18), the frame lining the reveal from the room face to 6 cm behind the brick. (2) 2026-10-19T20:57:39 upstairs hall: 'the casing/molding at the top stopping abruptly': the crown ran only over the hall outlines and stopped square at x 3.868 on the stair well's north wall; hifi_hall.py now runs it round the stair well (main_stair_opening) too (film 2085: the well's crown round its walls). (3) 2026-10-20T08:28:15 hall bath: 'strange vertical strip of wallpaper at the corner': the tile, liner and cap runs both stopped a tile depth short of the jog's OUTSIDE corner (9.1135, 8.781) (the inside-corner rule applied to it); the x-wall's run now wraps it. (4) 2026-10-20T08:28:52 hall bath window: 'the wallpaper bleeds into the casing': every grey-box door and window cut showed its wall's paper or paint on the jambs, head and sill inside the casing (48 of 48 reveals, new REVEAL rule of the Opening face check; PAINT looked only at the face plane, its rays run parallel to the jambs); openings.py now lines every cut (1.2 cm painted boards, both halves of the wall). (5) Window-outline mini bulbs: small glass ellipsoids instead of 2-3 cm cubes (decoration). Lighting (no geometry): 2026-10-20T14:16:50 the porch in shade: the overhang tag missed the upstairs Envelope skins and the upstairs baseboards; Facade sun check added.",
+ "target": "House_WallGrid",
+ "premise": "Each note is a construction fault in a generator (where a run stops, a missing jamb liner, the window set at the wrong depth in a thick wall), not a mis-measured room: no wall, opening width or height moves",
+ "claim": {
+  "value": {
+   "living_french_leaf_behind_brick_m": [
+    0.065,
+    0.11
+   ],
+   "liner_t_m": 0.012,
+   "hall_bath_outside_corner": "wrapped",
+   "crown_rooms": [
+    "hall_end",
+    "hall_corridor",
+    "hall_corridor_south",
+    "main_stair_opening"
+   ]
+  },
+  "data": [
+   "film-frame:4382"
+  ],
+  "scale": [
+   "none"
+  ],
+  "upstream": [
+   "film"
+  ],
+  "type": "topological",
+  "how": "Film 4382 (the street, camera left of the living-room windows): the right-hand jamb of each French window shows only a narrow white return between the brick mould and the leaf, no brick reveal; topological (the leaves are at the brick face, not 0.36 m in). The liner, crown and tile items are carpentry joins (where a run ends, what lines a cut), checked by the build's own gates and by the film frames below",
+  "applies_to": [
+   "living_room",
+   "hall_bath",
+   "main_stair_opening",
+   "every grey-box door and window"
+  ],
+  "measured_in": [
+   "living_room",
+   "hall_bath",
+   "main_stair_opening"
+  ],
+  "risks": [
+   "extraction"
+  ],
+  "assumed": {
+   "every grey-box door and window": "DEVIATIONS 120 (a): liner depth/thickness authored"
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-18",
+   "what": "exterior polish (changes/2026-10-18-exterior-polish.json): the dining room's exterior French leaves 6 cm behind the brick face; the living room's left at its interior model",
+   "outcome": "walked; the living one noted 2026-10-19T19:04:16"
+  },
+  {
+   "date": "2026-10-16",
+   "what": "upstairs hall crown (changes/2026-10-16-upstairs-hall.json): along the hall outlines only",
+   "outcome": "noted 2026-10-19T20:57:39"
+  },
+  {
+   "date": "2026-10-20",
+   "what": "bath notes pass 2 (changes/2026-10-20-bath-notes-pass2.json): tile cut at every opening's void",
+   "outcome": "pending; the corner strip noted 08:28:15"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 2508 (a different shot: Kevin running past the front, frontal and close): the French windows' white brick mould lies on the brick face, the leaves just behind it, the brick piers between them flat to the mould; topological",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film-frame:2508"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "film"
+   ]
+  },
+  {
+   "what": "The real house (Wikimedia Commons, Famartin 2015, art/home_alone/references/neighborhood/house.jpg; seen from the left of the front): the ground-floor French windows' white frames lie at the brick face, no deep brick reveal on either side; topological, a different source (the real building) from the film",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "real-house-photo:famartin-2015"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "real-house"
+   ]
+  },
+  {
+   "what": "Pietro's independent model of the house (art/home_alone/references/pietro/steps-closeup.png): the French window beside the portico has its white frame at the brick face; topological, its own artist's reconstruction",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "pietro:steps-closeup"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "pietro-model"
+   ]
+  },
+  {
+   "what": "Film 2085 (the stair well looking at the gallery arch): the white crown runs along the top of the stair well's damask walls and turns their corners; topological",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film-frame:2085"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "film"
+   ]
+  },
+  {
+   "what": "Film 336 (the hall bath from its doorway): the door's jambs inside the casing are white painted wood, not paper; the tile, black liner and cap turn the room's corner unbroken; topological",
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "film-frame:336"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "film"
+   ]
+  },
+  {
+   "what": "Build gates (self-consistency only): Opening face check REVEAL 0 (48 of 48 on the before build), Facade sun check 0 interior casters (1525 rays on the before build), z-fight 0, clash 0, Opening clear 0, no new BLOCKED line",
+   "agrees": true,
+   "type": "topological",
+   "tests": [],
+   "data": [
+    "unity:walk-test"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "unity:build"
+   ]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/trimfw/before/note190416.jpg",
+   "spec/captures/views/trimfw/before/note205739.jpg",
+   "spec/captures/views/trimfw/before/note082815.jpg",
+   "spec/captures/views/trimfw/before/note082852.jpg",
+   "spec/captures/views/trimfw/before/note141650.jpg"
+  ],
+  "after": [
+   "spec/captures/views/trimfw/after/note190416.jpg",
+   "spec/captures/views/trimfw/after/note205739.jpg",
+   "spec/captures/views/trimfw/after/note082815.jpg",
+   "spec/captures/views/trimfw/after/note082852.jpg",
+   "spec/captures/views/trimfw/after/note141650.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "outcome": null
+}

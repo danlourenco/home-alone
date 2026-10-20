@@ -16,8 +16,8 @@
   "sources": "d7d05b7373b9275f"
  },
  "tools/house/hifi_bathrooms.py": {
-  "models": "5976c245526e7c28",
-  "sources": "5d19af5209ad7294"
+  "models": "ac7222765e53a741",
+  "sources": "8d95fb3270e41d80"
  },
  "tools/house/hifi_breakfast_table.py": {
   "models": "9f0d9d2837876295",
@@ -25,7 +25,7 @@
  },
  "tools/house/hifi_buzz_curtains.py": {
   "models": "356da5161781ccee",
-  "sources": "3411cd0623207af3"
+  "sources": "bd32bad6cc12175d"
  },
  "tools/house/hifi_buzz_props.py": {
   "models": "2d758557410006f8",
@@ -64,8 +64,8 @@
   "sources": "2804c516077172f6"
  },
  "tools/house/hifi_exterior.py": {
-  "models": "4d2bc1ddb91d25e6",
-  "sources": "f1cdaf3f490e84d9"
+  "models": "12ea7b3ab3bab82b",
+  "sources": "523b3e30a09bf827"
  },
  "tools/house/hifi_foyer.py": {
   "models": "69c2d7fed081c40c",
@@ -92,8 +92,8 @@
   "sources": "66908950842b9ac2"
  },
  "tools/house/hifi_hall.py": {
-  "models": "08ffe03510e1f806",
-  "sources": "042e29979e7800e0"
+  "models": "6510e15aff0a3953",
+  "sources": "95aa7cc876a94cb7"
  },
  "tools/house/hifi_hall_arches.py": {
   "models": "92290ce88850ddb3",
@@ -101,7 +101,7 @@
  },
  "tools/house/hifi_kevin.py": {
   "models": "7d908db416183345",
-  "sources": "5605fcf8450d808e"
+  "sources": "da2cf7a810b4c837"
  },
  "tools/house/hifi_kitchen.py": {
   "models": "7daee545f608d070",
@@ -121,15 +121,15 @@
  },
  "tools/house/hifi_landing_window.py": {
   "models": "c19bb98c7077b7fe",
-  "sources": "e4c984e4ba5cb659"
+  "sources": "40480b48667e7f1d"
  },
  "tools/house/hifi_lights.py": {
   "models": "039d900b97254c67",
   "sources": "56371072e7ca4faf"
  },
  "tools/house/hifi_living.py": {
-  "models": "27ea0df3f30bbff9",
-  "sources": "f6fa4fe8097a2b42"
+  "models": "2a807c28545b4ef9",
+  "sources": "866d97d5e29306f3"
  },
  "tools/house/hifi_living_props.py": {
   "models": "56f15333bdab29d6",
@@ -145,7 +145,7 @@
  },
  "tools/house/hifi_parents_dressing.py": {
   "models": "07cd8f4c0fc1836f",
-  "sources": "42adfe55fdc1e9f5"
+  "sources": "8cb3b867977ce9f1"
  },
  "tools/house/hifi_parents_fireplace.py": {
   "models": "784e462dec45d619",

@@ -1,0 +1,122 @@
+[
+ {
+  "name": "trimfw/batch-after/note190416",
+  "pos": [
+   11.496,
+   -2.213,
+   -12.681
+  ],
+  "look_at": [
+   10.521,
+   -2.147,
+   -12.892
+  ],
+  "vfov": 60.0,
+  "night": false
+ },
+ {
+  "name": "trimfw/batch-after/note205739",
+  "pos": [
+   6.204,
+   1.13,
+   -9.753
+  ],
+  "look_at": [
+   5.758,
+   1.397,
+   -8.899
+  ],
+  "vfov": 60.0,
+  "night": false
+ },
+ {
+  "name": "trimfw/batch-after/note082815",
+  "pos": [
+   9.672,
+   1.13,
+   -9.175
+  ],
+  "look_at": [
+   8.871,
+   0.895,
+   -8.624
+  ],
+  "vfov": 60.0,
+  "night": false
+ },
+ {
+  "name": "trimfw/batch-after/note082852",
+  "pos": [
+   10.993,
+   1.13,
+   -9.165
+  ],
+  "look_at": [
+   11.739,
+   1.247,
+   -9.82
+  ],
+  "vfov": 60.0,
+  "night": false
+ },
+ {
+  "name": "trimfw/batch-after/note141650",
+  "pos": [
+   13.123,
+   -2.07,
+   -9.466
+  ],
+  "look_at": [
+   12.317,
+   -1.985,
+   -8.88
+  ],
+  "vfov": 60.0,
+  "night": false
+ },
+ {
+  "name": "trimfw/batch-after/living-front-inside",
+  "pos": [
+   8.4,
+   -1.6,
+   -12.9
+  ],
+  "look_at": [
+   10.2,
+   -1.9,
+   -12.9
+  ],
+  "vfov": 60.0,
+  "night": false
+ },
+ {
+  "name": "trimfw/batch-after/hallbath-door-from-hall",
+  "pos": [
+   7.5,
+   1.3,
+   -10.6
+  ],
+  "look_at": [
+   8.6,
+   1.1,
+   -10.6
+  ],
+  "vfov": 60.0,
+  "night": false
+ },
+ {
+  "name": "trimfw/batch-after/street-front",
+  "pos": [
+   17.0,
+   -2.6,
+   -9.0
+  ],
+  "look_at": [
+   10.3,
+   -2.0,
+   -9.0
+  ],
+  "vfov": 60.0,
+  "night": false
+ }
+]

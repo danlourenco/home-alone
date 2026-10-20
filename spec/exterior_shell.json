@@ -557,22 +557,22 @@
   "U_XmasBulbs": {
    "layer": "U",
    "mat": "EX_Bulb",
-   "faces": 2268
+   "faces": 9072
   },
   "L_XmasBulbs": {
    "layer": "L",
    "mat": "EX_Bulb",
-   "faces": 1818
+   "faces": 7272
   },
   "U_XmasBulbsWarm": {
    "layer": "U",
    "mat": "EX_BulbWarm",
-   "faces": 2892
+   "faces": 11568
   },
   "U_XmasBulbsDim": {
    "layer": "U",
    "mat": "EX_BulbDim",
-   "faces": 360
+   "faces": 1440
   },
   "U_XmasWire": {
    "layer": "U",
@@ -582,12 +582,12 @@
   "L_XmasBulbsWarm": {
    "layer": "L",
    "mat": "EX_BulbWarm",
-   "faces": 2088
+   "faces": 8352
   },
   "L_XmasBulbsDim": {
    "layer": "L",
    "mat": "EX_BulbDim",
-   "faces": 270
+   "faces": 1080
   },
   "L_XmasWire": {
    "layer": "L",

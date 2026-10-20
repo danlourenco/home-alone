@@ -37,11 +37,34 @@ public static partial class SpecGreybox
             foreach (var pc in r["pieces"].Where(p => p["by"].Type == JTokenType.Null && (string)p["part"] != "prop"))
             {
                 var b = pc["box"].Select(v => (float)v).ToArray();   // spec x, spec z, world y
+                if (pc["in_wall"] != null) CarveWalls(new Vector3(b[0], b[4], -b[3]), new Vector3(b[1], b[5], -b[2]));   // a jamb liner: the wall gives way
                 Box(parent, "Casing", b[0], b[1], -b[3], -b[2], b[4], b[5], mProp); n++;
             }
         }
         FloorY = keep;
         Debug.Log($"LayCasings: {n} casing pieces from spec/openings.json ({Openings["openings"].Sum(r => r["dropped"].Count())} dropped by recorded decision)");
+    }
+
+    // a jamb liner stands in the wall behind the cut's face (openings.py `lined`): every Wall box it overlaps is replaced by the pieces
+    // round it (copies keep material and collider, as CutWallOpenings), so the cut's face is the liner's painted face, not the wall's paper
+    static void CarveWalls(Vector3 lo, Vector3 hi)
+    {
+        foreach (var r in Object.FindObjectsByType<MeshRenderer>().Where(r => r.name == "Wall").ToList())
+        {
+            var b = r.bounds;
+            if (b.min.x >= hi.x - 1e-4f || b.max.x <= lo.x + 1e-4f || b.min.y >= hi.y - 1e-4f || b.max.y <= lo.y + 1e-4f || b.min.z >= hi.z - 1e-4f || b.max.z <= lo.z + 1e-4f) continue;
+            void Piece(Vector3 a, Vector3 c)
+            {
+                if (c.x - a.x < 1e-3f || c.y - a.y < 1e-3f || c.z - a.z < 1e-3f) return;
+                var g = Object.Instantiate(r.gameObject, r.transform.parent); g.name = "Wall";
+                g.transform.position = (a + c) / 2; g.transform.localScale = c - a;
+            }
+            float x0 = Mathf.Max(b.min.x, lo.x), x1 = Mathf.Min(b.max.x, hi.x), y0 = Mathf.Max(b.min.y, lo.y), y1 = Mathf.Min(b.max.y, hi.y);
+            Piece(b.min, new Vector3(lo.x, b.max.y, b.max.z)); Piece(new Vector3(hi.x, b.min.y, b.min.z), b.max);
+            Piece(new Vector3(x0, b.min.y, b.min.z), new Vector3(x1, lo.y, b.max.z)); Piece(new Vector3(x0, hi.y, b.min.z), new Vector3(x1, b.max.y, b.max.z));
+            Piece(new Vector3(x0, y0, b.min.z), new Vector3(x1, y1, lo.z)); Piece(new Vector3(x0, y0, hi.z), new Vector3(x1, y1, b.max.z));
+            Object.DestroyImmediate(r.gameObject);
+        }
     }
 
     // the rough opening a model window is cut to (under its stool), else the measured cut

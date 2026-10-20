@@ -753,7 +753,7 @@ def french_leaves(axis, d, s, a0, a1, y0, y1, layer):
             yy = G0 + (G1 - G0) * r / 5; bx(T, g0, g1, yy - m / 2, yy + m / 2, -0.035, -0.012)
 
 
-BULB, BULB_STEP = 0.024, 0.055   # realism pass: twice the density (Pietro/film 10 read as thick outlines), draped, varied
+BULB, BULB_STEP = 0.018, 0.055   # bulbs 1.3-2.3 cm tall, 0.9-1.6 cm wide as the shrubs TRIAL's (Oct 20; was 0.024 cubes); realism pass: twice the density (Pietro/film 10 read as thick outlines), draped, varied
 _BULBN = [0]
 
 
@@ -788,7 +788,24 @@ def bulb_loop(B, axis, d, s, a0, a1, y0, y1, closed=True):
             dy = -0.012 * _vnoise(_BULBN[0] * 0.37, 2.0, 8)   # hangs a little off the wire on its lead
             F = parts_[0 if r < 0.45 else 1 if r < 0.8 else 2]
             qq = q + s * (off + 0.006)
-            box(F, qq - h, qq + h, y + dy - h, y + dy + h, a - h, a + h) if axis == "x" else box(F, a - h, a + h, y + dy - h, y + dy + h, qq - h, qq + h)
+            bulb(F, axis, qq, a, y + dy, h)
+
+
+def bulb(F, axis, d, a, y, h, n=8):
+    """One mini bulb, a small glass ellipsoid 1.4 h wide and 2 h tall on (a, y) at depth d (walk note 2026-10-19T19:04:16's shot: the
+    window outlines' 2-3 cm cubes read as big blocky lumps; the shrubs TRIAL's bulbs, DEVIATIONS 119): n sides x 2 bands, 4 * n faces."""
+    rings = [(-1.0, 0.0), (-0.45, 0.85), (0.35, 1.0), (1.0, 0.0)]   # (y, radius) as fractions of h and 0.7 h (SpecGreybox.Shell Bulbs)
+    def P_(k, j):
+        fy, fr = rings[k]; t = 2 * math.pi * (j + 0.5 * k) / n; u, v = math.cos(t) * 0.7 * h * fr, math.sin(t) * 0.7 * h * fr
+        return (d + u, y + fy * h, a + v) if axis == "x" else (a + v, y + fy * h, d + u)
+    cen = (d, y, a) if axis == "x" else (a, y, d)
+    with group():
+        for k in range(3):
+            for j in range(n):
+                q = [P_(k, j), P_(k, j + 1), P_(k + 1, j + 1), P_(k + 1, j)]
+                q = [p for i, p in enumerate(q) if all(math.dist(p, r) > 1e-7 for r in q[:i])]   # the poles: triangles
+                m = [sum(p[i] for p in q) / len(q) for i in range(3)]
+                face(F, q, [m[i] - cen[i] for i in range(3)])
 
 
 def xmas_lights(D):

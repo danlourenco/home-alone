@@ -399,6 +399,10 @@ public static partial class SpecGreybox
         report += OpeningFaceCheck();   // SpecGreybox.OpeningFaces.cs: every door face has a head casing and only its own room's finish
         Step("OpeningClearCheck");
         report += OpeningClearCheck();   // SpecGreybox.OpeningFaces.cs: no visible mesh stands in any door, arch or window passage (walk note Oct 20 06:49)
+        Step("FacadeSunCheck");
+        report += FacadeSunCheck();   // SpecGreybox.FacadeSun.cs: no interior piece shades the sunlit ground-floor front (walk note Oct 20 14:16)
+        Step("PracticesCheck");
+        report += PracticesCheck();   // SpecGreybox.Practices.cs: repeats outside LODGroups, foliage MeshColliders, material instances, SRP Batcher (Oct 20)
         Step("ArchFitCheck");
         report += ArchFitCheck();   // SpecGreybox.Arch.cs
         Step("PropsCheck");
@@ -682,13 +686,17 @@ public static partial class SpecGreybox
                 Runs(z0, z1, z => (Fin(x0 - e, z), Fin(x1 + e, z)), (za, zb, a, c) =>
                 {
                     if (a.Item1 == null && c.Item1 == null) { Piece(x0, x1, za, zb, y0, y1, EndFinish(a, new Vector2(mx, za - e), new Vector2(mx, zb + e))); return; }
-                    if (a == c) Piece(x0, x1, za, zb, y0, y1, a); else { Piece(x0, mx, za, zb, y0, y1, a); Piece(mx, x1, za, zb, y0, y1, c); }
+                    // a half whose side borders no room still shows its END to a room at an outside corner: it takes that room's finish
+                    // (walk note 2026-10-20T08:28:15, the hall bath jog: the closet-side half was plain, a 7 cm beige strip up the corner)
+                    var ea = EndFinish(a, new Vector2((x0 + mx) / 2, za - e), new Vector2((x0 + mx) / 2, zb + e)); var ec = EndFinish(c, new Vector2((mx + x1) / 2, za - e), new Vector2((mx + x1) / 2, zb + e));
+                    if (a == c) Piece(x0, x1, za, zb, y0, y1, a); else { Piece(x0, mx, za, zb, y0, y1, ea); Piece(mx, x1, za, zb, y0, y1, ec); }
                 });
             else if (thinZ && !thinX)
                 Runs(x0, x1, x => (Fin(x, z0 - e), Fin(x, z1 + e)), (xa, xb, a, c) =>
                 {
                     if (a.Item1 == null && c.Item1 == null) { Piece(xa, xb, z0, z1, y0, y1, EndFinish(a, new Vector2(xa - e, mz), new Vector2(xb + e, mz))); return; }
-                    if (a == c) Piece(xa, xb, z0, z1, y0, y1, a); else { Piece(xa, xb, z0, mz, y0, y1, a); Piece(xa, xb, mz, z1, y0, y1, c); }
+                    var ea = EndFinish(a, new Vector2(xa - e, (z0 + mz) / 2), new Vector2(xb + e, (z0 + mz) / 2)); var ec = EndFinish(c, new Vector2(xa - e, (mz + z1) / 2), new Vector2(xb + e, (mz + z1) / 2));
+                    if (a == c) Piece(xa, xb, z0, z1, y0, y1, a); else { Piece(xa, xb, z0, mz, y0, y1, ea); Piece(xa, xb, mz, z1, y0, y1, ec); }
                 });
             else
             {   // a thick piece (a pier, a wall end): the finish beside it with the tallest wainscot, plain if none

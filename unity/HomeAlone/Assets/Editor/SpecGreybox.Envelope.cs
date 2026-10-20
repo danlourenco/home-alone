@@ -13,7 +13,7 @@ using UnityEngine.Rendering.HighDefinition;
 // Checked by EnvelopeCheck.
 public static partial class SpecGreybox
 {
-    const float SkinT = 0.25f, LidT = 0.4f, LidOver = 0.15f;
+    const float SkinT = 0.25f, LidT = 0.4f, LidOver = 0.15f, BrickT = 0.10f;   // BrickT: exterior_shell.py V
 
     struct Slab { public Vector3 lo, hi; public Slab(Vector3 a, Vector3 b) { lo = Vector3.Min(a, b); hi = Vector3.Max(a, b); } }
 
@@ -62,9 +62,15 @@ public static partial class SpecGreybox
         bool Outside(Vector3 p) => !Room(p) && !solids.Any(s => In(s, p));
 
         var skins = new List<Slab>();
+        // the ground storey's skin stays INSIDE the exterior skin's brick (V 0.10 on our outer faces, SpecGreybox.Shell / exterior_shell.py):
+        // at 0.25 it stood 0.15 m proud of the brick face, a shadows-only sheet in front of the whole ground-floor facade, and the sunlit
+        // front read as "big shades" (walk note 2026-10-20T14:16:50; Facade sun check: 1697 of 3060 facade rays). The brick, which casts
+        // both faces, is the outer part of the envelope there (EnvelopeCheck counts it)
+        bool shell = System.IO.File.Exists("Assets/Models/Foyer/Exterior.glb");
         foreach (var w in solids)   // walls, and the floor plates' and ceilings' edges (the band between the storeys)
         {
             float ym = (w.lo.y + w.hi.y) / 2;
+            float T = shell && w.hi.y < -0.15f ? BrickT - 0.005f : SkinT;   // a ground-storey solid (its top under the upper floor's -0.2)
             foreach (int ax in new[] { 0, 2 })        // the face's normal axis: x or z
                 foreach (int sd in new[] { -1, 1 })
                 {
@@ -77,10 +83,10 @@ public static partial class SpecGreybox
                     void Lay(float s0, float s1)
                     {
                         if (s1 - s0 < 0.005f) return;
-                        if (s0 <= a0 + 1e-4f) s0 -= SkinT; if (s1 >= a1 - 1e-4f) s1 += SkinT;
-                        float y0 = Outside(At((s0 + s1) / 2, 0.03f, w.lo.y - 0.05f)) ? w.lo.y - SkinT : w.lo.y;
-                        float y1 = Outside(At((s0 + s1) / 2, 0.03f, w.hi.y + 0.05f)) ? w.hi.y + SkinT : w.hi.y;
-                        Vector3 p = At(s0, 0f, y0), q = At(s1, SkinT, y1);
+                        if (s0 <= a0 + 1e-4f) s0 -= T; if (s1 >= a1 - 1e-4f) s1 += T;
+                        float y0 = Outside(At((s0 + s1) / 2, 0.03f, w.lo.y - 0.05f)) ? w.lo.y - T : w.lo.y;
+                        float y1 = Outside(At((s0 + s1) / 2, 0.03f, w.hi.y + 0.05f)) ? w.hi.y + T : w.hi.y;
+                        Vector3 p = At(s0, 0f, y0), q = At(s1, T, y1);
                         skins.Add(new Slab(p, q));
                     }
                     for (float a = a0 + 0.01f; a < a1; a += 0.01f) { bool x = Ext(Mathf.Min(a + 0.005f, a1 - 0.001f)); if (x != on) { if (on) Lay(r0, a); r0 = a; on = x; } }
@@ -188,6 +194,16 @@ public static partial class SpecGreybox
     // last caster opens into another room or a doorway are an inner wall, not the envelope, and are skipped; so are points within 0.5 m of an
     // outside opening (rays clipping a jamb or a sill: the edge of its sun patch, not a leak, which runs the length of a joint). Only the
     // structure counts as caster (walls, ceilings, floors, the envelope): sash bars and doors are thin on purpose.
+    // standalone on a saved scene: -executeMethod SpecGreybox.EnvelopeCheckScene (Library/EnvelopeCheck.txt)
+    public static void EnvelopeCheckScene()
+    {
+        UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Scenes/House_WallGrid.unity", UnityEditor.SceneManagement.OpenSceneMode.Single);
+        var geo = JObject.Parse(System.IO.File.ReadAllText(System.IO.Path.Combine(RepoRoot, "spec/geometry.json")));
+        var j = JObject.Parse(System.IO.File.ReadAllText(SpecPath)); var gj = JObject.Parse(System.IO.File.ReadAllText(GroundPath));
+        var r = EnvelopeCheck(geo, j["attic_stair"]["boxes"], gj["wall_openings"], (float)geo["ground"]["floor_y"]);
+        System.IO.File.WriteAllText("Library/EnvelopeCheck.txt", r); Debug.Log(r);
+    }
+
     static string EnvelopeCheck(JObject geo, JToken atticBoxes, JToken wallOpenings, float gy)
     {
         var temp = new List<Collider>();
@@ -195,11 +211,12 @@ public static partial class SpecGreybox
             if (r.enabled && r.shadowCastingMode != ShadowCastingMode.Off && r.GetComponent<Collider>() == null && r.GetComponent<MeshFilter>()?.sharedMesh is Mesh mesh)
             { var mc = r.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = mesh; temp.Add(mc); }
         Physics.SyncTransforms();
+        bool Shell(Transform t) { for (; t != null; t = t.parent) if (t.name == "Exterior_HiFi") return true; return false; }   // the brick skin (Oct 20)
         bool Caster(Collider c)
         {   // the house's structure: what the envelope must make thick (sash bars, doors and stair parts are thin on purpose)
             var r = c.GetComponent<MeshRenderer>(); var n = c.name; var top = c.transform.root.name;
-            return r != null && r.enabled && r.shadowCastingMode != ShadowCastingMode.Off && (top == "Upstairs" || top == "Ground")
-                && (n == "Wall" || n == "Ceiling" || n == "Envelope" || n.StartsWith("Floor"));
+            return r != null && r.enabled && r.shadowCastingMode != ShadowCastingMode.Off && ((top == "Upstairs" || top == "Ground")
+                && (n == "Wall" || n == "Ceiling" || n == "Envelope" || n.StartsWith("Floor")) || Shell(c.transform));
         }
         var rooms = EnvelopeRooms(geo, atticBoxes, gy);
         var doorways = new List<Slab>();   // every opening's volume through its wall: open air between two rooms or to the outside
@@ -246,7 +263,7 @@ public static partial class SpecGreybox
                             var q = a + t * s - nOut * 0.03f; var o = new Vector3(q.x, fy + y, q.y);
                             if (openings.Any(op => op.fy == fy && Vector2.Distance(new Vector2(Mathf.Clamp(q.x, op.lo.x, op.hi.x), Mathf.Clamp(q.y, op.lo.y, op.hi.y)), q) < 0.5f)) continue;
                             if (Physics.CheckSphere(o, 0.01f, ~0, QueryTriggerInteraction.Ignore)) continue;   // inside something (a step, a cabinet)
-                            pts++; float worst = float.MaxValue; string via = "";
+                            pts++; float worst = float.MaxValue; string via = ""; bool viaShell = false;
                             foreach (var d in dirs)
                             {
                                 if (Vector2.Dot(new Vector2(d.x, d.z), nOut) < 0f && y < 0.1f) continue;   // the foot's rays go out through its own wall
@@ -256,15 +273,17 @@ public static partial class SpecGreybox
                                 if (back.collider == null) continue;
                                 if (Room(back.point + d * 0.05f)) continue;   // its last crossing is an inner wall lit from another room: not the envelope
                                 float depth = R - back.distance;   // from the point to the caster surface nearest the sun
-                                if (depth < worst) { worst = depth; via = $"{back.collider.transform.parent?.name}/{back.collider.name}, out at spec ({back.point.x:F2}, {back.point.y:F2}, {-back.point.z:F2}) toward ({d.x:F2}, {d.y:F2}, {-d.z:F2})"; }
+                                if (depth < worst) { worst = depth; viaShell = Shell(back.collider.transform); via = $"{back.collider.transform.parent?.name}/{back.collider.name}, out at spec ({back.point.x:F2}, {back.point.y:F2}, {-back.point.z:F2}) toward ({d.x:F2}, {d.y:F2}, {-d.z:F2})"; }
                             }
-                            if (worst < 0.3f) thin.Add($"THIN    {(string)rm["name"]} at spec ({o.x:F2}, {o.y:F2}, {-o.z:F2}): {worst:F2} m of caster toward the sky, last {via}");
+                            // 0.3 m of caster; where the last caster is the exterior brick (the ground storey since Oct 20) the wall as built,
+                            // 0.14 grey-box + 0.10 brick from 3 cm inside: 0.27 at right angles, so 0.26 there (a real brick wall's own depth)
+                            if (worst < (viaShell ? 0.26f : 0.3f)) thin.Add($"THIN    {(string)rm["name"]} at spec ({o.x:F2}, {o.y:F2}, {-o.z:F2}): {worst:F2} m of caster toward the sky, last {via}");
                         }
                 }
             }
         foreach (var c in temp) Object.DestroyImmediate(c);
         Physics.SyncTransforms();
-        return $"Envelope check: {pts} points at room joints, {thin.Count} see the sky through < 0.3 m of shadow caster\n" + string.Concat(thin.Take(30).Select(x => x + "\n"));
+        return $"Envelope check: {pts} points at room joints, {thin.Count} see the sky through < 0.3 m of shadow caster (0.26 where the last is the brick skin)\n" + string.Concat(thin.Take(30).Select(x => x + "\n"));
     }
 
     // The film's day light (user, Oct 16: chose "the film's set lighting" over physical window light). The interiors were a lit set: soft,
@@ -367,8 +386,12 @@ public static partial class SpecGreybox
         int tagged = 0;
         foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
         {
-            if (r.transform.root.name == "Ground" || r.name == "FilmFront" || r.transform.root.name == "Exterior") continue;
-            var b = r.bounds; if (b.min.y < gy + 2.75f) continue;   // the ground storey's own skins, lids and fill sit lower
+            if (r.name == "FilmFront" || r.transform.root.name == "Exterior") continue;
+            // reaching the upper storey at all, not lying wholly in it (walk note 2026-10-20T14:16:50, the porch: "what is blocking the
+            // suns rays?"; Facade sun check): the upstairs Envelope skins run down past the upper floor (their feet close under the wall
+            // feet) and the upstairs baseboards live under Ground/Trim, so the old "min y over gy + 2.75" and "not under Ground" tests
+            // left Marina's overhanging strip of both casting on the ground-floor front (1349 + 176 of 3060 facade rays)
+            var b = r.bounds; if (b.max.y < gy + 2.75f) continue;   // wholly in the ground storey: its own skins, lids and fill
             bool past = false;
             for (int i = 0; i <= 4 && !past; i++) for (int k = 0; k <= 4 && !past; k++)
             {

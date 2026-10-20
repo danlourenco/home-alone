@@ -10,7 +10,8 @@ using UnityEngine;
 //   NO HEAD   rays at the head casing's middle height across the opening meet bare wall or nothing (no casing, no frame)
 //   PAINT     a wall within the casing width (lo - 7 cm .. hi + 7 cm, floor to ceiling) shows the OTHER room's finish there and not
 //             this room's: a room's finish is the set of wall materials its own walls show (>= 15% of rays from inside its outline)
-// Both must read 0. Standalone on a saved scene: Unity -batchmode -projectPath <scratch> -executeMethod SpecGreybox.OpeningFaceCheckScene
+//   REVEAL    a jamb, head or sill face inside the cut (room face to the glass) shows the wall's finish (doors and windows, below)
+// All must read 0. Standalone on a saved scene: Unity -batchmode -projectPath <scratch> -executeMethod SpecGreybox.OpeningFaceCheckScene
 // -quit (result in Library/OpeningFaceCheck.txt).
 public static partial class SpecGreybox
 {
@@ -104,10 +105,48 @@ public static partial class SpecGreybox
                 }
             }
         }
+        // REVEAL (walk note 2026-10-20T08:28:52, the hall bath window: "the wallpaper bleeds into the casing; we experienced this with the
+        // doorway downstairs"): PAINT looks AT the face plane, so its rays pass through the opening parallel to the jambs and never test
+        // them. The faces inside the cut (both jambs, the head, a window's sill), from the room face to the wall's centre (the glass), are
+        // carpentry: a jamb liner / stool, never the wall's paper or paint. Rays from inside the void toward each reveal face, 1 cm short
+        // of it; a hit on a Wall is a reveal showing the wall finish. Every door and window without a model, on every face facing a room.
+        int reveal = 0, revFaces = 0;
+        foreach (var r in ops["openings"].Where(r => ((string)r["kind"] == "door" || (string)r["kind"] == "window") && r["model"].Type == JTokenType.Null
+                                                  && r["header"]?["box"] is JArray))
+        {
+            string st = (string)r["storey"], ax = (string)r["axis"] == "x" ? "z" : "x";
+            float c = (float)r["c"], lo = (float)r["lo"], hi = (float)r["hi"], head = (float)r["head"], m = (lo + hi) / 2, fy = st == "ground" ? gy : 0f;
+            float sill = r["sill"].Type == JTokenType.Null ? 0f : (float)r["sill"];
+            var hb = (JArray)r["header"]["box"]; float w0 = ax == "z" ? (float)hb[0] : (float)hb[2], w1 = ax == "z" ? (float)hb[1] : (float)hb[3];   // the wall's two faces
+            Vector3 W(float s, float d, float y) => ax == "x" ? new Vector3(s, y, -d) : new Vector3(d, y, -s);   // spec (along s, across d), world y -> world
+            Vector3 Along(float k) => ax == "x" ? new Vector3(k, 0, 0) : new Vector3(0, 0, -k);
+            foreach (float n in new[] { -1f, 1f })
+            {
+                float a = (n > 0 ? w1 : w0) + n * 0.3f; var pt = ax == "x" ? new Vector2(m, a) : new Vector2(a, m);
+                var me = rooms.Keys.FirstOrDefault(kk => kk.StartsWith(st + ":") && Inside(rooms[kk].rm["poly"].Select(q => new Vector2((float)q[0], (float)q[1])).ToList(), pt));
+                if (me == null) continue;
+                revFaces++; float f = n > 0 ? w1 : w0; int k = 0; string mt = null; float d0 = 99f, d1 = -99f;
+                void Probe(Vector3 o, Vector3 dir, float dd)
+                {
+                    if (Physics.CheckSphere(o, 0.003f, ~0, QueryTriggerInteraction.Ignore)) return;
+                    if (Physics.Raycast(o, dir, out var h, 0.04f, ~0, QueryTriggerInteraction.Ignore) && MatOf(h) is string q) { k++; mt = q; d0 = Mathf.Min(d0, dd); d1 = Mathf.Max(d1, dd); }
+                }
+                for (float d = f - n * 0.005f; n * (d - c) > 0.012f; d -= n * 0.01f)   // room face -> 1.2 cm short of the centre (the glass)
+                {
+                    for (float y = sill + 0.05f; y < head - 0.04f; y += 0.05f)
+                    { Probe(W(lo + 0.03f, d, fy + y), Along(-1), d); Probe(W(hi - 0.03f, d, fy + y), Along(1), d); }
+                    for (float s = lo + 0.05f; s < hi - 0.04f; s += 0.05f)
+                    { Probe(W(s, d, fy + head - 0.03f), Vector3.up, d); if (sill > 0.05f) Probe(W(s, d, fy + sill + 0.03f), Vector3.down, d); }
+                }
+                if (k < 3) continue;
+                reveal++;
+                bad.Add($"REVEAL  {(string)r["id"]}: {me.Split(':')[1]} face shows the wall's {mt} on its jambs/head/sill inside the casing ({k} rays, spec {(ax == "x" ? "z" : "x")} {d0:F3}-{d1:F3})");
+            }
+        }
         foreach (var col in temp) Object.DestroyImmediate(col);
         Physics.SyncTransforms();
-        return $"Opening face check: {faces} door faces, {noHead} without a head casing, {paint} showing the other room's finish within the casing width\n"
-               + string.Concat(bad.Take(30).Select(b => b + "\n"));
+        return $"Opening face check: {faces} door faces, {noHead} without a head casing, {paint} showing the other room's finish within the casing width; {revFaces} reveals, {reveal} showing the wall finish\n"
+               + string.Concat(bad.Take(40).Select(b => b + "\n"));
     }
     // OPENING CLEAR (Oct 20, walk note 06:49 "what's with this wall blocking the doorway?": the hall bath's tile wainscot ran straight across
     // its door; no collider (walk test ok), crossing no other mesh (clash 0), and the review render stood inside the room). For every
