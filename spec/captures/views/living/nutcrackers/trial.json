@@ -1,5 +1,5 @@
 {
-  "status": "TRIAL - live preview; user acceptance pending",
+  "status": "ACCEPTED - user approved live walkthrough",
   "source": "User Downloads/nutcraker/Nutcraker.fbx plus texture.zip; private inputs in sfm-work/purchased/nutcrackers, private outputs Assets/Purchased/Nutcrackers",
   "figures": 6,
   "variants": {
@@ -24,5 +24,9 @@
     "python3 tools/house/props.py refresh <six LivingNutcracker_ names from store_props.json>",
     "For old shared-mesh scene while walking only: run tools/house/preview_nutcrackers.cs through eval_file.",
     "For verification: copy tools/house/check_nutcrackers.cs into SCRATCH Assets/Editor/NutcrackerCheck.cs, run Unity batch -executeMethod SpecGreybox.CheckNutcrackers. Never run that check in a walking editor."
-  ]
+  ],
+  "user_walk": {
+    "accepted": true,
+    "feedback": "ok i accept, it's good"
+  }
 }
