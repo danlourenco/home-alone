@@ -18,6 +18,7 @@ Materials FP_* are remapped in SpecGreybox.FoyerProps; the art and rug materials
   -> unity/HomeAlone/Assets/Models/Foyer/FoyerProps.glb
 """
 import json
+import os
 import math
 import random
 import sys
@@ -29,7 +30,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from hifi_lib import Part, material   # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "unity/HomeAlone/Assets/Models/Foyer/FoyerProps.glb"
+OUT = Path(os.environ.get("HA_MODEL_DIR", ROOT / "unity/HomeAlone/Assets/Models/Foyer")) / "FoyerProps.glb"   # HA_MODEL_DIR: a draft dir
 D = json.loads((ROOT / "spec/dressing/foyer_props.json").read_text())
 ATLAS = json.loads((ROOT / "spec/dressing/foyer_art.json").read_text())["pictures"]
 FW, GMAT = 0.03, 0.02   # frame moulding, gallery mat (foyer_textures.py)
@@ -90,6 +91,7 @@ def console():
 
 # ---------------------------------------------------------------- side chairs
 def chair(cx):
+    wood, red = part("ChairWood", "FP_Wood"), part("ChairSeat", "FP_Red")   # own parts: hidden when the bought Chippendale chairs are placed (store_props foyer_chair_*)
     c = D["chairs"]; zb, zf = c["z"]; seat, top, fw, bw = c["seat"], c["back_top"], c["front_w"], c["back_w"]
     rail0, rail1 = seat - 0.12, seat - 0.06                                                  # the seat frame under the slip seat
     # legs: back legs up to the frame, front legs square

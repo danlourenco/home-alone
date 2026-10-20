@@ -1,0 +1,39 @@
+{
+ "change": "Breakfast chandelier: the generated lathe model (hifi_kitchen_lights.py) replaced by Poly Haven Chandelier_02 (CC0, the user's download), its fabric drums replaced by generated frosted ribbed bowls opening UP as the film shows, fitted to the same Marina measures (hub bottom 1.50, 0.36 m shade ring, from the 2.438 ceiling at x 1.128 z 5.09); same light (2000 lm, 2700 K at cup_y + 0.07) and night glow (Light_Shade). With it (same build, no geometry change): the foyer's generated side chairs are their own parts (ChairWood/ChairSeat) in FoyerProps.glb so the bought Chippendale chairs (store_props foyer_chair_*, props lane) can hide them. TRIAL.",
+ "target": "House_WallGrid",
+ "premise": "The film's breakfast chandelier is brass with six arms and frosted bowls opening upward; Marina's measured ring and hub height still give its size and place",
+ "claim": {
+  "value": {"chandelier_xz": [1.128, 5.09], "chandelier_hub_bottom_h": 1.5, "ring_r": 0.36, "arms": 6, "bowls": "up"},
+  "data": ["marina-frame:917", "marina-frame:933"],
+  "scale": ["counter-36in:878"],
+  "upstream": ["counter-36in:878"],
+  "how": "unchanged measures (changes/2026-10-16-kitchen-night-lights.json); the model is scaled uniformly x1.362 so its shade ring meets ring_r, hub bottom placed at hub_bottom, rod alone cut to the canopy; bowls rim 0.105 / height 0.13 and the hub dome x0.6 are AUTHORED by eye (DEVIATIONS 118)",
+  "applies_to": ["kitchen"],
+  "measured_in": ["kitchen"],
+  "surface": "ceiling-plane",
+  "surface_note": "hangs from the built ceiling plane (2.438 m); no ceiling claim"
+ },
+ "history": [
+  {"date": "2026-10-16", "what": "generated chandelier, 8 then 6 arms, tulips up (changes/2026-10-16-kitchen-night-lights.json)", "outcome": "accepted"}
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Film 980/1025/1103 (day, the film's own camera, no Marina data): six brass arms on a narrow column, frosted ribbed bowls opening upward over the breakfast table",
+   "agrees": true, "type": "topological", "tests": [],
+   "data": ["film:980", "film:1025", "film:1103"], "scale": ["none"], "upstream": ["film"],
+   "pick": {"crop": "spec/captures/picks/chandelier02-film980-bowls.jpg", "confirmed_by": "the same upward white bowls on brass arms seen in film 1025 and 1103 (and the furniture-sourcing K7 note: 'the film's bowls face up')"}
+  },
+  {
+   "what": "Shade ring after the fit 0.36 m = Marina's triangulated ring (consistency with the claim's own measure; not evidence)",
+   "agrees": true, "type": "metric",
+   "data": ["marina-frame:917"], "scale": ["counter-36in:878"], "upstream": ["counter-36in:878"]
+  }
+ ],
+ "renders": {
+  "before": ["spec/captures/views/kitchen-chandelier02/before/kc.jpg", "spec/captures/views/kitchen-chandelier02/before/kc-night.jpg"],
+  "after": ["spec/captures/views/kitchen-chandelier02/after/kc.jpg", "spec/captures/views/kitchen-chandelier02/after/kc-night.jpg"]
+ },
+ "user_walk": "pending",
+ "outcome": null
+}

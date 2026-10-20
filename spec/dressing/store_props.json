@@ -775,155 +775,199 @@
   },
   {
    "name": "dining_chair_foyer_1",
-   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "prefab": "Assets/Purchased/Chairs/Chippendale_Dining.glb",
    "x": [
-    6.29,
-    6.81
+    6.279,
+    6.821
    ],
    "z": [
     5.88,
-    6.37
+    6.388
    ],
    "y0": 0.0,
-   "height": 0.97,
+   "height": 0.995,
    "yaw": 0,
    "back": "",
    "hides": [],
    "collide": true,
-   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+   "source": "Dining room (props lane, Oct 20): the user's CGTrader CHIPPENDALE CHAIR (tools/house/purchased_chairs.py; gitignored) replaces the CHAIR_01 stand-in at the same place and facing: the film's eight Chippendale chairs (246/252: pierced splat, carved crest, dark mahogany; tapestry slip seats). Model 0.542 x 0.508 x 0.995 at x0.88 of the purchased size (seat 0.458, back 0.995: a standard Chippendale side chair), front edge kept 2.5 cm clear of the cloth's skirt. Wood film 246 crest #351308, seat film 246 gold-tan tapestry. The film's chairs have cabriole legs as the model; any armchair at the ends is not shown (film 246 shows one carver against the right wall)."
   },
   {
    "name": "dining_chair_foyer_2",
-   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "prefab": "Assets/Purchased/Chairs/Chippendale_Dining.glb",
    "x": [
-    6.935,
-    7.455
+    6.924,
+    7.466
    ],
    "z": [
     5.88,
-    6.37
+    6.388
    ],
    "y0": 0.0,
-   "height": 0.97,
+   "height": 0.995,
    "yaw": 0,
    "back": "",
    "hides": [],
    "collide": true,
-   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+   "source": "Dining room (props lane, Oct 20): the user's CGTrader CHIPPENDALE CHAIR (tools/house/purchased_chairs.py; gitignored) replaces the CHAIR_01 stand-in at the same place and facing: the film's eight Chippendale chairs (246/252: pierced splat, carved crest, dark mahogany; tapestry slip seats). Model 0.542 x 0.508 x 0.995 at x0.88 of the purchased size (seat 0.458, back 0.995: a standard Chippendale side chair), front edge kept 2.5 cm clear of the cloth's skirt. Wood film 246 crest #351308, seat film 246 gold-tan tapestry. The film's chairs have cabriole legs as the model; any armchair at the ends is not shown (film 246 shows one carver against the right wall)."
   },
   {
    "name": "dining_chair_foyer_3",
-   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "prefab": "Assets/Purchased/Chairs/Chippendale_Dining.glb",
    "x": [
-    7.58,
-    8.1
+    7.569,
+    8.111
    ],
    "z": [
     5.88,
-    6.37
+    6.388
    ],
    "y0": 0.0,
-   "height": 0.97,
+   "height": 0.995,
    "yaw": 0,
    "back": "",
    "hides": [],
    "collide": true,
-   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+   "source": "Dining room (props lane, Oct 20): the user's CGTrader CHIPPENDALE CHAIR (tools/house/purchased_chairs.py; gitignored) replaces the CHAIR_01 stand-in at the same place and facing: the film's eight Chippendale chairs (246/252: pierced splat, carved crest, dark mahogany; tapestry slip seats). Model 0.542 x 0.508 x 0.995 at x0.88 of the purchased size (seat 0.458, back 0.995: a standard Chippendale side chair), front edge kept 2.5 cm clear of the cloth's skirt. Wood film 246 crest #351308, seat film 246 gold-tan tapestry. The film's chairs have cabriole legs as the model; any armchair at the ends is not shown (film 246 shows one carver against the right wall)."
   },
   {
    "name": "dining_chair_sunroom_1",
-   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "prefab": "Assets/Purchased/Chairs/Chippendale_Dining.glb",
    "x": [
-    6.29,
-    6.81
+    6.279,
+    6.821
    ],
    "z": [
-    4.27,
+    4.252,
     4.76
    ],
    "y0": 0.0,
-   "height": 0.97,
+   "height": 0.995,
    "yaw": 180,
    "back": "",
    "hides": [],
    "collide": true,
-   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+   "source": "Dining room (props lane, Oct 20): the user's CGTrader CHIPPENDALE CHAIR (tools/house/purchased_chairs.py; gitignored) replaces the CHAIR_01 stand-in at the same place and facing: the film's eight Chippendale chairs (246/252: pierced splat, carved crest, dark mahogany; tapestry slip seats). Model 0.542 x 0.508 x 0.995 at x0.88 of the purchased size (seat 0.458, back 0.995: a standard Chippendale side chair), front edge kept 2.5 cm clear of the cloth's skirt. Wood film 246 crest #351308, seat film 246 gold-tan tapestry. The film's chairs have cabriole legs as the model; any armchair at the ends is not shown (film 246 shows one carver against the right wall)."
   },
   {
    "name": "dining_chair_sunroom_2",
-   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "prefab": "Assets/Purchased/Chairs/Chippendale_Dining.glb",
    "x": [
-    6.935,
-    7.455
+    6.924,
+    7.466
    ],
    "z": [
-    4.27,
+    4.252,
     4.76
    ],
    "y0": 0.0,
-   "height": 0.97,
+   "height": 0.995,
    "yaw": 180,
    "back": "",
    "hides": [],
    "collide": true,
-   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+   "source": "Dining room (props lane, Oct 20): the user's CGTrader CHIPPENDALE CHAIR (tools/house/purchased_chairs.py; gitignored) replaces the CHAIR_01 stand-in at the same place and facing: the film's eight Chippendale chairs (246/252: pierced splat, carved crest, dark mahogany; tapestry slip seats). Model 0.542 x 0.508 x 0.995 at x0.88 of the purchased size (seat 0.458, back 0.995: a standard Chippendale side chair), front edge kept 2.5 cm clear of the cloth's skirt. Wood film 246 crest #351308, seat film 246 gold-tan tapestry. The film's chairs have cabriole legs as the model; any armchair at the ends is not shown (film 246 shows one carver against the right wall)."
   },
   {
    "name": "dining_chair_sunroom_3",
-   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "prefab": "Assets/Purchased/Chairs/Chippendale_Dining.glb",
    "x": [
-    7.58,
-    8.1
+    7.569,
+    8.111
    ],
    "z": [
-    4.27,
+    4.252,
     4.76
    ],
    "y0": 0.0,
-   "height": 0.97,
+   "height": 0.995,
    "yaw": 180,
    "back": "",
    "hides": [],
    "collide": true,
-   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+   "source": "Dining room (props lane, Oct 20): the user's CGTrader CHIPPENDALE CHAIR (tools/house/purchased_chairs.py; gitignored) replaces the CHAIR_01 stand-in at the same place and facing: the film's eight Chippendale chairs (246/252: pierced splat, carved crest, dark mahogany; tapestry slip seats). Model 0.542 x 0.508 x 0.995 at x0.88 of the purchased size (seat 0.458, back 0.995: a standard Chippendale side chair), front edge kept 2.5 cm clear of the cloth's skirt. Wood film 246 crest #351308, seat film 246 gold-tan tapestry. The film's chairs have cabriole legs as the model; any armchair at the ends is not shown (film 246 shows one carver against the right wall)."
   },
   {
    "name": "dining_chair_rear",
-   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "prefab": "Assets/Purchased/Chairs/Chippendale_Dining.glb",
    "x": [
-    5.56,
+    5.542,
     6.05
    ],
    "z": [
-    5.061,
-    5.581
+    5.05,
+    5.592
    ],
    "y0": 0.0,
-   "height": 0.97,
+   "height": 0.995,
    "yaw": 90,
    "back": "",
    "hides": [],
    "collide": true,
-   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+   "source": "Dining room (props lane, Oct 20): the user's CGTrader CHIPPENDALE CHAIR (tools/house/purchased_chairs.py; gitignored) replaces the CHAIR_01 stand-in at the same place and facing: the film's eight Chippendale chairs (246/252: pierced splat, carved crest, dark mahogany; tapestry slip seats). Model 0.542 x 0.508 x 0.995 at x0.88 of the purchased size (seat 0.458, back 0.995: a standard Chippendale side chair), front edge kept 2.5 cm clear of the cloth's skirt. Wood film 246 crest #351308, seat film 246 gold-tan tapestry. The film's chairs have cabriole legs as the model; any armchair at the ends is not shown (film 246 shows one carver against the right wall)."
   },
   {
    "name": "dining_chair_front",
-   "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
+   "prefab": "Assets/Purchased/Chairs/Chippendale_Dining.glb",
    "x": [
     8.34,
-    8.83
+    8.848
    ],
    "z": [
-    5.061,
-    5.581
+    5.05,
+    5.592
    ],
    "y0": 0.0,
-   "height": 0.97,
+   "height": 0.995,
    "yaw": 270,
    "back": "",
    "hides": [],
    "collide": true,
-   "source": "Dining room (overnight Oct 18, prop, not walked; spec/dressing/dining.json): owned Classic Wooden Furniture Pack CHAIR_01 at native size (0.52 x 0.49 x 0.97) as a STAND-IN for the film's eight Chippendale chairs (246/252: pierced splat backs, dark mahogany; furniture-sourcing D2, the user may buy them); three a side and one at each end, pulled up to the cloth's edge (2.5 cm clear of its skirt)"
+   "source": "Dining room (props lane, Oct 20): the user's CGTrader CHIPPENDALE CHAIR (tools/house/purchased_chairs.py; gitignored) replaces the CHAIR_01 stand-in at the same place and facing: the film's eight Chippendale chairs (246/252: pierced splat, carved crest, dark mahogany; tapestry slip seats). Model 0.542 x 0.508 x 0.995 at x0.88 of the purchased size (seat 0.458, back 0.995: a standard Chippendale side chair), front edge kept 2.5 cm clear of the cloth's skirt. Wood film 246 crest #351308, seat film 246 gold-tan tapestry. The film's chairs have cabriole legs as the model; any armchair at the ends is not shown (film 246 shows one carver against the right wall)."
+  },
+  {
+   "name": "foyer_chair_rear",
+   "prefab": "Assets/Purchased/Chairs/Chippendale_Foyer.glb",
+   "x": [
+    4.549,
+    5.091
+   ],
+   "z": [
+    7.83,
+    8.338
+   ],
+   "y0": 0.0,
+   "height": 0.995,
+   "yaw": 180,
+   "back": "",
+   "hides": [
+    "ChairWood",
+    "ChairSeat"
+   ],
+   "collide": false,
+   "source": "Foyer (props lane, Oct 20): the user's CGTrader CHIPPENDALE CHAIR, foyer variant (red slip seat, HiFi_FoyerSeat), replacing the generated side chair (hifi_foyer_props.py ChairWood/ChairSeat, hidden) flanking the console: film 1616/1690/10673, centres Marina 312 s (spec/dressing/foyer_props.json chairs), back to the dining wall at z 7.83 as the generated chair. Model 0.542 x 0.508 x 0.995. Deviation: the film's foyer chairs have straight square legs with an H stretcher, a vase splat and a 0.92 back (seat 0.48); this is the dining chair (cabriole legs, pierced splat, back 0.995, seat 0.458; the plan's one licence for both rooms). The dressing boxes keep the colliders."
+  },
+  {
+   "name": "foyer_chair_front",
+   "prefab": "Assets/Purchased/Chairs/Chippendale_Foyer.glb",
+   "x": [
+    6.239,
+    6.781
+   ],
+   "z": [
+    7.83,
+    8.338
+   ],
+   "y0": 0.0,
+   "height": 0.995,
+   "yaw": 180,
+   "back": "",
+   "hides": [
+    "ChairWood",
+    "ChairSeat"
+   ],
+   "collide": false,
+   "source": "Foyer (props lane, Oct 20): the user's CGTrader CHIPPENDALE CHAIR, foyer variant (red slip seat, HiFi_FoyerSeat), replacing the generated side chair (hifi_foyer_props.py ChairWood/ChairSeat, hidden) flanking the console: film 1616/1690/10673, centres Marina 312 s (spec/dressing/foyer_props.json chairs), back to the dining wall at z 7.83 as the generated chair. Model 0.542 x 0.508 x 0.995. Deviation: the film's foyer chairs have straight square legs with an H stretcher, a vase splat and a 0.92 back (seat 0.48); this is the dining chair (cabriole legs, pierced splat, back 0.995, seat 0.458; the plan's one licence for both rooms). The dressing boxes keep the colliders."
   },
   {
    "name": "dining_sideboard",
