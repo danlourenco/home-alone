@@ -236,3 +236,10 @@ Medium player from the perf clone with punctualShadowFilteringQuality 1). If nig
 parents' `shadowDimmer = 0.55f` (SpecGreybox.Curtains.cs).
 New PerfProbe knobs: `-perfpcss B,F` (PCSS sample counts in the variant), `-perfnoshadow P1,P2` (lamps by prefix lose shadows), and a
 `parents` pose (the bedside-lamp view of walk note 21:16).
+
+## Resolution A/B (Oct 20, HomeAloneRes.app: HDRP dynamic resolution + STP, clone-only; run res-ab)
+Frame mean ms, 100% -> 75% -> 67%: street day 27.3 -> 32.9 -> 32.4; street night 23.9 -> 28.6 -> 28.0; foyer day 27.3 -> 31.8 -> 30.4;
+foyer night 36.0 -> 37.6 -> 31.8; living day 12.4 -> 8.8 -> 8.4; living night 17.6 -> 11.0 -> 10.0. Image difference 0.5-1.8 (hard to see;
+spec/captures/perf/resolution-100-75-67.jpg). Verdict: only the pixel-bound rooms (living) gain; the heavy poses get SLOWER (STP's fixed
+cost) because their cost does not scale with pixels: shadow-map rendering and geometry. Not shipped; the heavy poses need geometry/shadow
+work (lamp ranges per room, fewer shadowed lamps, cheaper transparents), not a lower resolution.
