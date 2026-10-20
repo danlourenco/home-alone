@@ -18,7 +18,7 @@ public class EntranceDoor : MonoBehaviour
     bool initialized;
     void Initialize() { if (!initialized && leaf) { closed=leaf.localRotation; initialized=true; } }
     void Start() => Initialize();
-    public void SetInstant(bool value) { Initialize(); target=angle=value?openAngle:0f; leaf.localRotation=closed*Quaternion.Euler(0,angle,0); Physics.SyncTransforms(); }
+    public void SetInstant(bool value) { Initialize(); if (Application.isPlaying && leafCollider) ShadowRefresh.Near(leafCollider.bounds); target=angle=value?openAngle:0f; leaf.localRotation=closed*Quaternion.Euler(0,angle,0); Physics.SyncTransforms(); if (Application.isPlaying && leafCollider) ShadowRefresh.Near(leafCollider.bounds); }
     public bool SetOpen(bool value)
     {
         Initialize();
@@ -35,7 +35,15 @@ public class EntranceDoor : MonoBehaviour
         aimed = camera && Vector3.Distance(camera.transform.position, handle) < reach &&
             Vector3.Angle(camera.transform.forward, handle-camera.transform.position) < 38f;
         if (aimed && Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(KeyCode.E)) SetOpen(!IsOpen);
-        float next = Mathf.MoveTowards(angle, target, speed*Time.deltaTime);
+        Step(Time.deltaTime);
+    }
+    public bool Moving => angle != target;
+    // the swing, one frame (Update; the editor's motion-shadow gate drives it without Play)
+    public void Step(float dt)
+    {
+        if (!leaf || !leafCollider) return;
+        Initialize();
+        float next = Mathf.MoveTowards(angle, target, speed*dt);
         if (next == angle) return;
         leaf.localRotation = closed * Quaternion.Euler(0,next,0);
         Physics.SyncTransforms();

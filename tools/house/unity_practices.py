@@ -20,6 +20,11 @@ Checks (static; the scene-level ones, LODGroups / MeshColliders on foliage / mat
              Fails above 85% (HEADROOM): the next probe or mirror must not tip it over. Never baselined: over budget logs "No more
              space in Reflection Probe Atlas" and drops reflections. (reflectionCacheCompressed is a no-op in HDRP 17.6: LightLoop.cs
              has the BC6H path commented out; 128 is the smallest cube tier, so the levers are the atlas size and the mirrors.)
+  shadowbudget  the real-time shadow budget of House_WallGrid (perf pass 1, Oct 20) against the static rows of the "## BUDGET" table in
+             docs/PERFORMANCE.md: shadowed real-time (not Baked, not directional) lights in the scene file, and the sun's cascade
+             distance (SpecGreybox.cs SunShadowDistance, the build's scene volume; else the largest maxShadowDistance any profile overrides). The street pose's caster count is
+             counted by the build (SpecGreybox.MotionShadow.cs ShadowBudgetCheck) and the frame times by `perf_probe.sh gate`. A
+             budget, never baselined.
 """
 import json, re, struct, subprocess, sys
 from pathlib import Path
@@ -116,15 +121,49 @@ def probe_atlas(editor_texts=None, hdrp_text=None):
         yield f"probeatlas|unity/HomeAlone/Assets/Settings/HDRP.asset|need {need / 1e6:.2f}M > {HEADROOM:.0%} of {w * h / 1e6:.2f}M"
 
 
+def static_budget(md=None):
+    """{name: limit} from the static-* rows of docs/PERFORMANCE.md's BUDGET table"""
+    text = (md or ROOT / "docs/PERFORMANCE.md").read_text(); sec = text[text.index("## BUDGET"):]
+    return {m[1]: float(m[2]) for m in re.finditer(r"\|\s*`?(static-[\w-]+)`?\s*\|\s*([\d.]+)\s*\|", sec)}
+
+
+def scene_shadow_lights(text):
+    n = 0
+    for d in text.split("\n--- "):
+        if not d.startswith("!u!108 "):
+            continue
+        typ, sh, lm = (int(re.search(p, d).group(1)) for p in (r"\n  m_Type: (\d+)", r"m_Shadows:\n    m_Type: (\d+)", r"\n  m_Lightmapping: (\d+)"))
+        n += typ != 1 and sh > 0 and lm != 2   # 1 directional; m_Lightmapping 2 Baked
+    return n
+
+
+def sun_distance(texts):
+    return max([float(v) for t in texts for v in re.findall(r"maxShadowDistance:\n    m_OverrideState: 1\n    m_Value: ([\d.]+)", t)] or [0])
+
+
+def shadow_budget(scene_text=None, profile_texts=None, md=None, code_text=None):
+    lim = static_budget(md)
+    scene = scene_text or (A / "Scenes/House_WallGrid.unity").read_text(errors="ignore")
+    profs = profile_texts or [f.read_text(errors="ignore") for f in list((A / "Settings").glob("*.asset")) + list((A / "HDRPDefaultResources").glob("*.asset"))]
+    code = code_text if code_text is not None else (A / "Editor/SpecGreybox.cs").read_text(errors="ignore")
+    m = re.search(r"SunShadowDistance = ([\d.]+)f", code)   # the build's GreyboxVolume override (scene volume) beats the default profile
+    n, d = scene_shadow_lights(scene), float(m[1]) if m else sun_distance(profs)
+    print(f"shadow budget: {n} shadowed real-time lights (limit {lim.get('static-shadowed-lights', '-'):g}), sun cascades {d:g} m (limit {lim.get('static-sun-distance', '-'):g})")
+    if n > lim.get("static-shadowed-lights", 1e9):
+        yield f"shadowbudget|unity/HomeAlone/Assets/Scenes/House_WallGrid.unity|{n} shadowed real-time lights > {lim['static-shadowed-lights']:g}"
+    if d > lim.get("static-sun-distance", 1e9):
+        yield f"shadowbudget|unity/HomeAlone/Assets/HDRPDefaultResources/DefaultSettingsVolumeProfile.asset|sun cascades {d:g} m > {lim['static-sun-distance']:g}"
+
+
 def tracked(keys):
     files = set(subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True, text=True).stdout.split())
     return [k for k in keys if k.split("|")[1] in files]
 
 
 def run():
-    found = sorted(set(list(obsolete()) + list(material_access()) + list(foliage()) + list(textures()) + list(probe_atlas())))
+    found = sorted(set(list(obsolete()) + list(material_access()) + list(foliage()) + list(textures()) + list(probe_atlas()) + list(shadow_budget())))
     if "--update-baseline" in sys.argv:
-        keep = [k for k in tracked(found) if not k.startswith("probeatlas|")]   # a budget, not a ratchet
+        keep = [k for k in tracked(found) if not k.startswith(("probeatlas|", "shadowbudget|"))]   # a budget, not a ratchet
         BASE.write_text(json.dumps(keep, indent=0) + "\n")
         print(f"baseline: {len(keep)} existing violations accepted ({len(found) - len(keep)} untracked left out)"); return 0
     base = set(json.loads(BASE.read_text())) if BASE.exists() else set()
@@ -154,6 +193,16 @@ def selftest():
     small = re.sub(r"reflectionProbeTexCacheSize: \d+", "reflectionProbeTexCacheSize: 4096", h)
     assert list(probe_atlas(r1024, small)) and list(probe_atlas(r512, small)), "4096 atlas: 105% / 100% must fail (85% limit)"
     assert not list(probe_atlas(r512, big)) and not list(probe_atlas(r1024, big)), "8192x4096 atlas: 50% / 52% must pass"
+    light = lambda typ, sh, lm: f"!u!108 &1\nLight:\n  m_Type: {typ}\n  m_Shadows:\n    m_Type: {sh}\n  m_Lightmapping: {lm}\n"
+    scene = "\n--- ".join(["head", light(2, 2, 1), light(2, 0, 1), light(3, 2, 2), light(1, 2, 1), light(0, 1, 4)])
+    assert scene_shadow_lights(scene) == 2, "point mixed shadowed + spot realtime shadowed; not baked area, unshadowed, sun"
+    prof = lambda v, o=1: f"  maxShadowDistance:\n    m_OverrideState: {o}\n    m_Value: {v}\n"
+    assert sun_distance([prof(150), prof(80)]) == 150 and sun_distance([prof(300, 0), prof(80)]) == 80
+    import tempfile
+    with tempfile.TemporaryDirectory() as t:
+        md = Path(t) / "P.md"; md.write_text("## BUDGET\n| pose | mean ms | rest s |\n| static-shadowed-lights | 1 | - |\n| static-sun-distance | 100 | - |\n")
+        assert len(list(shadow_budget(scene, [prof(150)], md, ""))) == 2 and not list(shadow_budget(light(2, 2, 1), [prof(80)], md, ""))
+        assert not list(shadow_budget(light(2, 2, 1), [prof(150)], md, "const float SunShadowDistance = 80f;"))
     print("selftest ok")
 
 

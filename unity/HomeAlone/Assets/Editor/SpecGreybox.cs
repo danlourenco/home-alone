@@ -420,7 +420,12 @@ public static partial class SpecGreybox
         Directory.CreateDirectory(CaptureDir);
         File.WriteAllText(Path.Combine(CaptureDir, "walk-test-wallgrid.txt"), report);
         LimitShadows(root.transform.root.gameObject);   // SpecGreybox.Shadows.cs: real-time shadow budget
+        var zones = LampZones(apply: true);             // SpecGreybox.LampZones.cs: each lamp's shadow casters = what its zone can see
+        var sunCull = SunCull(Object.FindAnyObjectByType<HouseNightMode>(FindObjectsInactive.Include));   // SpecGreybox.SunCull.cs: never-sunlit pieces out of the sun's cascades by day
+        report += zones + sunCull; File.AppendAllText(Path.Combine(CaptureDir, "walk-test-wallgrid.txt"), zones + sunCull);
         EditorSceneManager.SaveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), "Assets/Scenes/House_WallGrid.unity");
+        var motion = ShadowBudgetCheck() + MotionShadowCheck();   // SpecGreybox.MotionShadow.cs: door/can motion redraws few lamp shadow maps; after the save (it adds the cans' joints)
+        report += motion; File.AppendAllText(Path.Combine(CaptureDir, "walk-test-wallgrid.txt"), motion);
         Debug.Log("SpecGreybox.BuildWallGrid\n" + report);
         OpeningsOwnTrim = false;   // the other builders keep their per-case casing
         if (System.Array.IndexOf(System.Environment.GetCommandLineArgs(), "-views") >= 0) RenderViews();   // renders in the same session (one Unity start)
@@ -1833,6 +1838,8 @@ public static partial class SpecGreybox
         };
     }
 
+    const float SunShadowDistance = 80f;   // docs/PERFORMANCE.md BUDGET static-sun-distance; unity_practices.py shadowbudget reads it here
+
     static void Volume(GameObject root)
     {
         Directory.CreateDirectory("Assets/Settings");
@@ -1845,6 +1852,10 @@ public static partial class SpecGreybox
         // baked bounce light (APV) is looked up 0.25 m out along each surface's normal: a door leaf set in a 14 cm wall read its light
         // from inside the wall (invalid, black) and showed only reflections (Oct 16)
         var pvo = profile.Add<ProbeVolumesOptions>(true); pvo.normalBias.value = 0.25f; AssetDatabase.AddObjectToAsset(pvo, profile);
+        // the sun's cascades (perf pass 1, Oct 20): 80 m, not the default profile's 150. The house is 26 m from the street pose, the
+        // neighbourhood lots beyond 80 m lose only their own far shadows; the tour's street day frame 34.2 -> 29.8 ms, PNG difference 1.2
+        // (edge noise, no shadow moved: spec/captures/perf/street-sun-150-vs-80.jpg). Splits stay the default profile's fractions
+        var shs = profile.Add<HDShadowSettings>(false); shs.maxShadowDistance.Override(SunShadowDistance); AssetDatabase.AddObjectToAsset(shs, profile);
         var vol = new GameObject("GlobalVolume").AddComponent<Volume>(); vol.transform.parent = root.transform; vol.isGlobal = true; vol.sharedProfile = profile;
     }
 

@@ -6,6 +6,7 @@
 #                                            # lock files) and build ~/.cache/home-alone-perf/build/HomeAlone.app (the local Mac test app;
 #                                            # `dev`: HomeAloneDev.app, a development player: draw calls/batches + ring-buffer warnings)
 #                                            # HA_REUSE=1: rebuild in the existing clone (scripts changed only; ~3 min)
+#                                            # HA_BUILD_ARGS=-perfDynRes HA_PERF_APP=<other.app>: a variant player (PerfBuild.cs flags)
 #                                            # HA_OVERLAY=<dir>: drafts (dir/Scripts, dir/Editor ...) copied over the clone's Assets/
 #   tools/house/perf_probe.sh run LABEL      # run the player's tour (PerfProbe.cs -perfprobe): 6 poses x day/night, 300 frames each,
 #                                            # 1920x1080 windowed -> ~/.cache/home-alone-perf/runs/LABEL/*.json + *.png, and prints the table
@@ -14,13 +15,14 @@
 #   tools/house/perf_probe.sh ab NAME APP_A APP_B   # two builds (a project-setting change), tours A B A B -> base -> variant table
 #                                            # (HA_PERF_APP=<.app> picks the player for run)
 #   tools/house/perf_probe.sh table A [B]    # the table for run A, or A vs B (before/after) with the PNG difference per pose
+#   tools/house/perf_probe.sh gate LABEL     # tour (if LABEL isn't done) + FAIL over the BUDGET table in docs/PERFORMANCE.md
 #   tools/house/perf_probe.sh attrib LABEL   # heavy frames per pose and their named cause (perf_attrib.py; HA_PERF_APP=<dev .app> tour)
 #   tools/house/perf_probe.sh clean          # delete the clone + player (~0.5-1 GB real; the clone shares blocks until rebuilt)
 # Wait for other Unity jobs first (one builder): never while tools/house/pipeline_busy.sh reports a build/bake/load.
 # LOCAL ONLY: the app carries gitignored store assets and the unlicensed exterior GLB; never distribute it, never commit build/.
 set -euo pipefail
 REPO="$(cd "$(dirname "$0")/../.." && pwd)"
-SRC="$REPO/unity/HomeAlone"
+SRC="${HA_PERF_SRC:-$REPO/unity/HomeAlone}"   # HA_PERF_SRC: clone another project (a scratch house build: ~/.cache/home-alone-2/ucopy/HomeAlone)
 W="$HOME/.cache/home-alone-perf"; C="$W/HomeAlone"; APP="${HA_PERF_APP:-$W/build/HomeAlone.app}"
 UNITY=/Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/MacOS/Unity
 case "${1:-}" in
@@ -32,8 +34,11 @@ build)
     find "$C/Library" \( -name "*-lock" -o -name "*.lock" \) -delete   # the open editor's LMDB/DataStore locks
     rm -f "$C/Assets/BankersLamp/Scripts/RenderTextureCaptureEditor.cs"*   # bought pack: an editor script outside Editor/ breaks player builds
     [ -n "${HA_OVERLAY:-}" ] && cp -R "$HA_OVERLAY/." "$C/Assets/"
+    [ -n "${HA_PERF_SRC:-}" ] && { rsync -a "$REPO/unity/HomeAlone/Assets/Scripts/" "$C/Assets/Scripts/"; rsync -a "$REPO/unity/HomeAlone/Assets/Editor/" "$C/Assets/Editor/"; }   # the repo's scripts over a scratch clone
+  elif [ -n "${HA_REUSE:-}" ]; then   # scripts only: the repo's Scripts + Editor into the existing clone (the scene and bake stay as cloned)
+    rsync -a "$SRC/Assets/Scripts/" "$C/Assets/Scripts/"; rsync -a "$SRC/Assets/Editor/" "$C/Assets/Editor/"
   fi
-  T=$SECONDS; "$UNITY" -batchmode -projectPath "$C" -executeMethod PerfBuild.Build -perfOut "$APP" $DEV -quit -logFile "$W/build.log" || { grep -m5 -E "error|PerfBuild" "$W/build.log"; exit 1; }
+  T=$SECONDS; "$UNITY" -batchmode -projectPath "$C" -executeMethod PerfBuild.Build -perfOut "$APP" $DEV ${HA_BUILD_ARGS:-} -quit -logFile "$W/build.log" || { grep -m5 -E "error|PerfBuild" "$W/build.log"; exit 1; }
   grep PerfBuild "$W/build.log"; echo "player built in $((SECONDS-T)) s";;
 run)
   L="${2:?label}"; O="$W/runs/$L"; rm -rf "$O"; mkdir -p "$O"
@@ -49,8 +54,12 @@ run)
 ab)   # ab NAME APP_A APP_B: tours A, B, A, B (two builds, e.g. a project-setting change), then the base -> variant table
   N="${2:?name}"; for i in 1 2; do HA_PERF_APP="$3" "$0" run "$N-A$i" >/dev/null; HA_PERF_APP="$4" "$0" run "$N-B$i" >/dev/null; done
   uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" --ab "$W/runs/$N-A1" "$W/runs/$N-B1" "$W/runs/$N-A2" "$W/runs/$N-B2";;
+gate)   # gate LABEL: tour LABEL (unless that run is already done), then FAIL if any pose's frame mean / motion time to rest is over the
+        # "## BUDGET" table in docs/PERFORMANCE.md (perf_table.py --gate). On demand only: a tour is ~8 quiet minutes, too slow for a build
+  L="${2:?label}"; [ -f "$W/runs/$L/done.txt" ] || "$0" run "$L" >/dev/null
+  python3 -I "$REPO/tools/house/perf_table.py" --gate "$W/runs/$L" "$REPO/docs/PERFORMANCE.md";;
 attrib) python3 -I "$REPO/tools/house/perf_attrib.py" "$W/runs/${2:?label}";;   # name each pose's heavy frames' cause (needs a dev player's tour)
 table) shift; uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" "${@/#/$W/runs/}";;
 clean) rm -rf "$C" "$W/build";;   # runs/ (the benchmark history) is kept
-*) sed -n 2,19p "$0"; exit 1;;
+*) sed -n 2,20p "$0"; exit 1;;
 esac

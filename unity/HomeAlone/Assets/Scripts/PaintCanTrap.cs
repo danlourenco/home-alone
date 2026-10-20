@@ -36,10 +36,19 @@ public class PaintCanTrap : MonoBehaviour
         if (Input.GetKeyDown(letGoKey)) LetGo();
         if (Input.GetKeyDown(climbKey)) StartClimb();
         if (Input.GetKeyDown(resetKey)) ResetRig();
-        // the lamps' cached shadow maps redraw while the can (and its rope) or the dummy moves (ShadowRefresh)
-        if (can && (can.position - lastShadowAt).sqrMagnitude > 1e-6f) { lastShadowAt = can.position; var b = new Bounds(can.position, Vector3.one * 0.3f); b.Encapsulate(knot); ShadowRefresh.Near(b); }
-        if (dummy && (dummy.position - lastDummyAt).sqrMagnitude > 1e-6f) { lastDummyAt = dummy.position; ShadowRefresh.Near(new Bounds(dummy.position, new Vector3(0.6f, dummyHeight, 0.6f))); }
+        ShadowTick();
     }
+    // the lamps' cached shadow maps redraw while the can (and its rope) or the dummy moves (ShadowRefresh queues and throttles them)
+    public bool ShadowTick()
+    {
+        bool moved = false;
+        if (can && (can.position - lastShadowAt).sqrMagnitude > 1e-6f) { moved = true; lastShadowAt = can.position; var b = new Bounds(can.position, Vector3.one * 0.3f); b.Encapsulate(knot); ShadowRefresh.Near(b); }
+        if (dummy && dummy.gameObject.activeInHierarchy && (dummy.position - lastDummyAt).sqrMagnitude > 1e-6f) { moved = true; lastDummyAt = dummy.position; ShadowRefresh.Near(new Bounds(dummy.position, new Vector3(0.6f, dummyHeight, 0.6f))); }
+        if (moved) lastMoveFrame = Time.frameCount;
+        return moved;
+    }
+    int lastMoveFrame = -10;
+    public bool Moving => Time.frameCount - lastMoveFrame <= 1;   // moved (> 1 mm) this frame or the last (PerfProbe's motion step)
     Vector3 lastShadowAt, lastDummyAt;
     void FixedUpdate() => Tick(Time.fixedDeltaTime);
     void LateUpdate() => DrawRope(Time.deltaTime);
@@ -115,6 +124,13 @@ public class PaintCanTrap : MonoBehaviour
         // redrew every nearby lamp's shadow map each frame (night, Oct 17: 209M -> 2.1M triangles, GPU 254 -> 45 ms with it still)
         can.linearDamping = can.linearVelocity.sqrMagnitude < 0.25f ? 1.5f : 0f;
         lastVel = can.linearVelocity;
+        // at rest: below ~1 cm of swing left (energy per kg of the bail over the bottom of its arc < 2e-4 J: 0.02 mm of rise), stop it
+        // dead and let it sleep. Damping alone only approaches rest, and each 1 mm move queued the lamps' shadow maps again (Oct 20)
+        if (!held && !wrapped && !climbing && !can.isKinematic && !can.IsSleeping())
+        {
+            float rise = can.position.y - (pivot.y - ropeLength), e = 9.81f * Mathf.Max(rise, 0f) + 0.5f * can.linearVelocity.sqrMagnitude;
+            if (e < 2e-4f && can.angularVelocity.sqrMagnitude < 0.04f) { can.linearVelocity = can.angularVelocity = Vector3.zero; can.Sleep(); }
+        }
     }
 
     void SetWrapped(bool w)

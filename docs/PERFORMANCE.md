@@ -1,5 +1,57 @@
 # Performance: how to measure, what was found (perf pass, Oct 18 2026; baseline Oct 20)
 
+## BUDGET (the gates read this table: `perf_probe.sh gate LABEL`, `unity_practices.py` shadowbudget, the build's ShadowBudget line)
+
+Target (Oct 20): 16.7 ms frame MEAN (60 fps) at every tour pose, with 3 ms held back for the neighbourhood, so the house today gets
+13.7 ms. Motion steps (PerfProbe `door-*`, `can-*`: 10 s after the front door opens / a paint can is knocked) get the same mean and a
+time to rest. `static-*` rows are scene/settings limits checked without a tour; lower them when a change is accepted (never raise
+one to pass). First matching row wins.
+
+| pose | mean ms | rest s |
+|---|---|---|
+| static-shadowed-lights | 60 | - |
+| static-sun-distance | 80 | - |
+| static-street-casters | 4100 | - |
+| door-* | 13.7 | 2 |
+| can-* | 13.7 | 10 |
+| * | 13.7 | - |
+
+## PERF PASS 1 (Oct 20, evening): what changed, measured in-session A/B in the standalone app
+
+**1. Motion shadows** (user, in the app: "if i open the door or hit a paint can, the fps becomes laughable again ... it gets lousy for a
+few seconds"). Every lamp whose range sphere reached a moving door / can redrew all 6 cube faces EVERY frame of the motion, lamps behind
+walls and floors included. `Scripts/ShadowRefresh.cs` now queues only the lamps that can SEE the moving bounds (range, spot cone, a line
+past the shadow-casting colliders) and a pump (`ShadowRefreshPump`) redraws at most 2 per frame, each at most once per 4 frames, nearest
+first, plus a final at-rest redraw. The paint can snaps to sleep under ~1 cm of swing left. Gate: the build's MotionShadow lines
+(`SpecGreybox.MotionShadow.cs`, batch, night, 10 s at 60 Hz; the legacy behaviour is printed beside it as "before"):
+
+| motion | before (legacy) | after |
+|---|---|---|
+| front door opens | 27 lamps, max 174 faces/frame, 10710 faces | 9 lamps, max 12, 810 |
+| paint can knocked 1.4 m/s | 36 lamps, mean 189 faces/frame (max 468) for 6.1 s | 17 lamps, mean 7.5 (max 12) |
+
+Standalone (`runs/motion-ab`, `-perfab -perfposes motion -perfshadowlegacy`, 10 s means; the editor was open and busy, so absolute
+numbers are inflated, the pairs are fair): can at night 380 -> 77 ms (worst seconds 470-640 -> 85), door at night 87 -> 66 (worst
+second 270-380 -> 79-87), door by day 35-60 -> 32-57. Rest: door 1.0 s, can 6.2 s. PerfProbe's new motion step: `-perfposes motion`
+(door day + night, can at night; JSON `rest_s`, per-frame `moving`, `shadow_lamps`).
+
+**2. Lamp zones** (`SpecGreybox.LampZones.cs`): what remained of the motion cost was each point-lamp redraw rendering ~25 M shadow
+triangles (every caster in its 7-9 m sphere, the rooms behind its walls and the yard included). Each cached lamp now casts only what a
+lamp of its zone can see (HDRP shadow layers: linkShadowLayers off, 11 free rendering-layer bits; zones = agglomerative clustering by
+the triangle cost of the union). Lighting layers untouched. Full redraw of the 60 lamps: 595 -> 196 M triangles (-67%; a zone per lamp
+would be 154 M). PerfProbe `-perfvariants lampzones=off` is the before.
+
+**3. Sun cascades 150 -> 80 m** (`SpecGreybox.cs` SunShadowDistance in the GreyboxVolume profile; gate static-sun-distance).
+`runs/sun-ab` (clean): street day 34.2 -> 29.8 ms (-13%; tris 47.6 -> 37.9 M, casters 28.3 k -> 17.9 k), foyer 30.7 -> 30.4, attic
+32.5 -> 31.3, hall 16.4 -> 16.4; PNG difference 1.2 at the street = TAA edge noise, no shadow moved
+(`spec/captures/perf/street-sun-150-vs-80.jpg`, top 150 m). 60 m: street -21% but the trees' shadows on the facade change; 100 m: -7%.
+Upper bounds (casters switched off, not looks): all small interior props -6..-15%, all big interior pieces -9..-15%, exterior -2..-11%.
+The sun's cascades are at most ~25-30% of a day frame.
+
+**4. Sun cull** (`SpecGreybox.SunCull.cs`): small interior pieces that no sun of any weather can reach past the walls, floors and shell,
+and that no day-lit lamp sees, cast no shadows by day (`HouseNightMode.sunlessCasters`, restored at night): 970 of 2071, 1.12 M triangles
+out of each cascade. Exact by construction (a point behind such a piece along a sun ray is behind the same wall). `sunless` variant = before.
+
 ## BASELINE (Oct 20, before the neighbourhood work): the local Mac test app
 
 **App:** `~/.cache/home-alone-perf/build/HomeAlone.app` (LOCAL ONLY: it carries gitignored store assets and the unlicensed exterior

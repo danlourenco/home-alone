@@ -328,5 +328,14 @@ Trim check: 97 face runs (3 on the stair and landings, 0 panelled by a window mo
 Envelope check: 2142 points at room joints, 0 see the sky through < 0.3 m of shadow caster (0.26 where the last is the brick skin)
 Entrance check: closed blocks, open clears, locked refuses open; one leaf collider
 Back door check: closed blocks (0.3/1.0/1.8 m), open clears, the open leaf touches nothing, locked refuses open
+LampZones: 60 cached shadowed lamps in 11 zones; casters a full redraw of every lamp draws 595 M -> 196 M triangles (-67%; a zone per lamp would be 154 M); 3828 of 5575 casters seen by some zone (5.7 s). Most seen: Lantern_Light z3, Light_vestibule z3, Light_foyer z5, Hurricane_Light z9, Hurricane_Light z5
+SunCull: 970 of 2071 interior casters never sunlit (shell of 3092; 15 sun directions x 2 storey masks, 2.0 M rays, 18.0 s): 1.12 M triangles out of the sun's cascades by day
+ShadowBudget ok: 4020 sun shadow casters within 80 m of the street pose (limit 2147483647, docs/PERFORMANCE.md)
+MOTION SHADOWS (night, 10 s at 60 Hz; faces = cached shadow cube faces redrawn: point 6, spot 1)
+info front door opens (before: legacy): rest at 1.05 s (budget 2 s), queue empty at 1.07 s; faces max 174/frame (budget 12), mean 17.9/frame, total 10710; 27 lamps: AtticBulb_mid, BasementBulb_1_Light, BasementBulb_2_Light, BathLamp_hall_sconce0, BathLamp_hall_sconce1, DiningChandelier_Light, HallSconce_0, HallSconce_1, HallSconce_2, HallSconce_3, Hurricane_Light, KevinLamp_banker, KevinLamp_red, Lantern_Light ...
+info paint can knocked 1.4 m/s (before: legacy): rest at 6.13 s (budget 10 s), queue empty at 6.13 s; faces max 468/frame (budget 12), mean 188.8/frame, total 113256; 36 lamps: AtticBulb_mid, AtticBulb_stair_head, AtticLamp_bed, BasementBulb_1_Light, BasementBulb_2_Light, BathLamp_hall_sconce0, BathLamp_hall_sconce1, DenLamp_bookcase, DiningChandelier_Light, Dome_Light, HallSconce_0, HallSconce_1, HallSconce_2, HallSconce_3 ...
+ok   front door opens: rest at 1.05 s (budget 2 s), queue empty at 1.13 s; faces max 12/frame (budget 12), mean 1.4/frame, total 810; 9 lamps: DiningChandelier_Light, HallSconce_3, Hurricane_Light, Lantern_Light, Light_foyer, Light_rear_passage, Light_vestibule, LivingLamp_banker, Sconce_Light
+ok   paint can knocked 1.4 m/s: rest at 6.13 s (budget 10 s), queue empty at 6.25 s; faces max 12/frame (budget 12), mean 7.5/frame, total 4494; 17 lamps: BathLamp_hall_sconce0, BathLamp_hall_sconce1, Dome_Light, HallSconce_0, HallSconce_1, HallSconce_2, HallSconce_3, Hurricane_Light, KevinLamp_red, KitchenChandelier_Light, Lantern_Light, Light_foyer, Light_guest_room, Light_parents_bedroom ...
+MotionShadow ok
 Quality check: 4 pipeline models of 50 generated (the rest predate the artist pipeline), 0 problems
 

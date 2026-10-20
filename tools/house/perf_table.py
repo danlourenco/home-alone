@@ -3,7 +3,12 @@
   perf_table.py RUN_DIR             -> one row per pose
   perf_table.py BEFORE_DIR AFTER_DIR -> before -> after per metric, plus the mean RGB difference of the pose PNGs (0-255;
                                        > ~3 means the picture changed: look at both PNGs)
+  perf_table.py --gate RUN_DIR [MD]  -> exit 1 if any pose's frame mean (or a motion step's time to rest) is over its budget in the
+                                       "## BUDGET" table of docs/PERFORMANCE.md (first matching pose pattern wins)
+  perf_table.py --selftest
 """
+import fnmatch
+import re
 import json
 import sys
 from pathlib import Path
@@ -49,7 +54,7 @@ def img_diff(a, b):
     return float(abs(x - y).mean()) if x.shape == y.shape else None
 
 
-def ab(base, variant):
+def ab(base, variant, pngs=None):
     """Base vs variant, each a list of (run dir, tag suffix) samples, e.g. [(run, "-A1"), (run, "-A2")] for one -perfab run, or
     [(runA1, ""), (runA2, "")] for two builds run alternately (perf_probe.sh ab). Means of GPU p10 / median, CPU median, triangles."""
     def side(samples):
@@ -60,22 +65,78 @@ def ab(base, variant):
                     out.setdefault(k[: len(k) - len(suf)] if suf else k, []).append(v)
         return out
     A, B = side(base), side(variant)
-    print("| pose | GPU p10 base -> variant | GPU median | CPU median | tris M |\n|---|---|---|---|---|")
+    print("| pose | frame mean base -> variant | GPU p10 | GPU median | frame p50 | tris M | shadow casters | img diff |\n|---|---|---|---|---|---|---|---|")
     for p in sorted(set(A) & set(B)):
         cells = []
-        for key in ("gpu_ms_p10", "gpu_ms_median", "cpu_ms_median", "triangles"):
+        for key in ("frame_ms_mean", "gpu_ms_p10", "gpu_ms_median", "cpu_ms_median", "triangles", "shadow_casters"):
             v = [[r[key] for r in X[p] if r.get(key) is not None] for X in (A, B)]
             m = [sum(x) / len(x) if x else 0 for x in v]
             sc = 1e6 if key == "triangles" else 1
             cells.append(f"{m[0] / sc:.1f} -> {m[1] / sc:.1f} ({(m[1] - m[0]) / m[0] * 100:+.0f}%)" if m[0] else "-")
-        print(f"| {p} | " + " | ".join(cells) + " |")
+        d = img_diff(*[Path(x) for x in pngs(p)]) if pngs else None
+        print(f"| {p} | " + " | ".join(cells) + f" | {'-' if d is None else f'{d:.1f}'} |")
+
+
+def budgets(md):
+    """rows of the '## BUDGET' table: (pose glob, mean ms, rest s or None)"""
+    text = Path(md).read_text(); sec = text[text.index("## BUDGET"):]
+    rows = []
+    for line in sec.splitlines()[1:]:
+        if line.startswith("## "):
+            break
+        m = re.match(r"\|\s*`?([\w*?\-]+)`?\s*\|\s*([\d.]+)\s*\|\s*([\d.]+|-)\s*\|", line)
+        if m:
+            rows.append((m[1], float(m[2]), None if m[3] == "-" else float(m[3])))
+    return rows
+
+
+def gate(run, md):
+    rows, bad = budgets(md), 0
+    poses = {k: v for k, v in load(run).items() if not re.search(r"-[A-Z]\d$", k)}   # -perfab samples are not the shipped state
+    if not poses:
+        print(f"FAIL perf gate: no poses in {run}"); return 1
+    for pose, r in sorted(poses.items()):
+        b = next((x for x in rows if fnmatch.fnmatch(pose, x[0])), None)
+        if b is None:
+            print(f"FAIL {pose}: no budget row"); bad += 1; continue
+        mean, rest = r.get("frame_ms_mean"), r.get("rest_s")
+        over = mean is None or mean > b[1] or (b[2] is not None and (rest is None or rest < 0 or rest > b[2]))
+        bad += over
+        print(f"{'FAIL' if over else 'ok  '} {pose}: mean {mean} ms (budget {b[1]})" + (f", rest {rest} s (budget {b[2]})" if b[2] is not None else ""))
+    print(f"perf gate: {'FAILED' if bad else 'ok'} ({bad} over budget, {len(poses)} poses)")
+    return 1 if bad else 0
+
+
+def selftest():
+    import tempfile
+    with tempfile.TemporaryDirectory() as t:
+        t = Path(t)
+        (t / "PERF.md").write_text("## BUDGET\n| pose | mean ms | rest s |\n|---|---|---|\n| door-* | 13.7 | 2 |\n| * | 13.7 | - |\n## next\n")
+        (t / "foyer-day.json").write_text(json.dumps({"frame_log": {"ms": [10, 12]}}))
+        (t / "foyer-day-B1.json").write_text(json.dumps({"frame_log": {"ms": [99]}}))   # an A/B sample: ignored
+        (t / "door-day.json").write_text(json.dumps({"frame_log": {"ms": [10]}, "rest_s": 1.0}))
+        assert gate(t, t / "PERF.md") == 0
+        (t / "door-day.json").write_text(json.dumps({"frame_log": {"ms": [10]}, "rest_s": 3.0}))
+        assert gate(t, t / "PERF.md") == 1
+        (t / "door-day.json").write_text(json.dumps({"frame_log": {"ms": [20]}, "rest_s": 1.0}))
+        assert gate(t, t / "PERF.md") == 1
+    print("selftest ok")
 
 
 def main(args):
+    if args[0] == "--selftest":
+        return selftest()
+    if args[0] == "--gate":
+        sys.exit(gate(args[1], args[2] if len(args) > 2 else Path(__file__).resolve().parents[2] / "docs/PERFORMANCE.md"))
     if args[0] == "--ab":   # --ab A1 B1 A2 B2 ...: alternate tours of two builds
         return ab([(d, "") for d in args[1::2]], [(d, "") for d in args[2::2]])
-    if len(args) == 1 and any(Path(args[0]).glob("*-A1.json")):   # one -perfab run
-        return ab([(args[0], "-A1"), (args[0], "-A2")], [(args[0], "-B1"), (args[0], "-B2")])
+    if len(args) == 1 and any(Path(args[0]).glob("*-A1.json")):   # one -perfab run: A (base) vs each variant B, C, ... (-perfvariants)
+        d = Path(args[0]); letters = sorted({q.stem[-2] for q in d.glob("*-?1.json")} - {"A"})
+        last = max(int(q.stem[-1]) for q in d.glob("*-A?.json"))   # -perfrounds: the PNGs are the last round's
+        for x in letters:
+            print(f"\nvariant {x} (base A):")
+            ab([(d, f"-A{i}") for i in range(1, last + 1)], [(d, f"-{x}{i}") for i in range(1, last + 1)], lambda p, x=x: (d / f"{p}-A{last}.png", d / f"{p}-{x}{last}.png"))
+        return
     runs = [load(d) for d in args]
     cols = COLS + [c for c in DEV_COLS if any(r.get(c[0]) for run in runs for r in run.values())]
     head = ["pose"] + [c[1] for c in cols] + (["img diff"] if len(runs) == 2 else [])
@@ -93,6 +154,6 @@ def main(args):
 
 
 if __name__ == "__main__":
-    if not sys.argv[1:] or (sys.argv[1] != "--ab" and len(sys.argv) > 3):
+    if not sys.argv[1:] or (sys.argv[1] not in ("--ab", "--gate") and len(sys.argv) > 3):
         sys.exit(__doc__)
     main(sys.argv[1:])

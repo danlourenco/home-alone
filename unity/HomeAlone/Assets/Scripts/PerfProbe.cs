@@ -75,44 +75,149 @@ public class PerfProbe : MonoBehaviour
         //   -perfmirror B[,V]     the foyer mirror's planar resolution: B in the base, V in the variant (e.g. 512,1024 with -perfab)
         var mirrorRes = (Arg("-perfmirror") ?? "").Split(',').Where(v => v.Length > 0).Select(int.Parse).ToArray();
         var mirror = FindObjectsByType<UnityEngine.Rendering.HighDefinition.PlanarReflectionProbe>().FirstOrDefault(m => m.name == "FoyerMirrorProbe");
+        //   -perfshadowlegacy     the variant redraws lamp shadow maps the pre-Oct 20 way (every lamp in range, every frame of a motion)
+        //   -perfshadowq M,I      the variant's ShadowRefresh throttle: M lamps per frame, each once per I frames
+        bool legacyShadows = System.Array.IndexOf(args, "-perfshadowlegacy") >= 0;
+        var shq = (Arg("-perfshadowq") ?? "").Split(',').Where(v => v.Length > 0).Select(int.Parse).ToArray();
+        int shq0 = ShadowRefresh.MaxPerFrame, shq1 = ShadowRefresh.Interval;
         var only = (Arg("-perfposes") ?? "").Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);   // -perfposes foyer,hall: just those
         var switchedOff = new Dictionary<Light, bool>();   // lamp -> its state before the variant (night mode switches lamps too)
-        void Apply(bool variant)
+        //   -perfvariants "sundist=80;sundist=60 splits=0.05,0.15,0.3;nocast=props"   several variants B, C, D ... (with -perfab: every pose
+        //                         sampled A1 B1 C1 .. A2 B2 C2 ..). Keys: sundist=M (sun shadow max distance), splits=a,b,c (cascade
+        //                         splits), cascades=N, nocast=props|interior|exterior (those renderers stop casting shadows: an
+        //                         attribution of the day shadow cost, not a look). Without it the knobs above are the one variant B.
+        //   -perfdn day|night     just day or night
+        var variants = (Arg("-perfvariants") ?? "").Split(new[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries)
+            .Select(v => v.Split(new[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries).Select(kv => kv.Split('=')).ToDictionary(kv => kv[0], kv => kv.Length > 1 ? kv[1] : "")).ToList();
+        int nVar = Mathf.Max(variants.Count, 1);
+        int rounds = int.Parse(Arg("-perfrounds") ?? "2");   // -perfrounds 1: each variant sampled once per pose (shorter A/B tours)
+        var steps = ab ? Enumerable.Range(0, rounds).SelectMany(r => Enumerable.Range(0, nVar + 1).Select(v => (char)('A' + v) + (r + 1).ToString())).ToArray() : new[] { "" };
+        var dnArg = Arg("-perfdn");
+        var shadowVol = new GameObject("PerfShadowVolume").AddComponent<UnityEngine.Rendering.Volume>(); shadowVol.isGlobal = true; shadowVol.priority = 100000f;
+        var shadowProf = ScriptableObject.CreateInstance<UnityEngine.Rendering.VolumeProfile>(); shadowVol.sharedProfile = shadowProf;
+        var shadowSet = shadowProf.Add<UnityEngine.Rendering.HighDefinition.HDShadowSettings>(false);
+        var casters = FindObjectsByType<Renderer>(FindObjectsInactive.Include).Where(r => r.shadowCastingMode != UnityEngine.Rendering.ShadowCastingMode.Off).Select(r => (r, r.shadowCastingMode)).ToList();
+        string Group(Renderer r)
         {
-            foreach (var (l, range) in lamps) l.range = variant ? range * rangeK : range;
+            var t = r.transform; string root = t.root.name; bool skin = false;
+            for (var q = t; q; q = q.parent) if (q.name == "HouseShell" || q.name.StartsWith("Exterior")) skin = true;
+            if (root == "Exterior" || skin) return "exterior";
+            if (r.shadowCastingMode == UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly) return "envelope";
+            return r.bounds.size.x < 1.5f && r.bounds.size.y < 1.5f && r.bounds.size.z < 1.5f ? "props" : "interior";
+        }
+        var casterGroup = casters.Select(c => Group(c.r)).ToList();
+        var offUsed = new Dictionary<UnityEngine.Rendering.HighDefinition.FrameSettingsField, (bool on, bool masked)>(); bool customRendering0 = hd != null && hd.customRenderingSettings;
+        var link0 = lampHd.ToDictionary(x => x.hd, x => x.hd.linkShadowLayers); var mask0 = lampHd.ToDictionary(x => x.l, x => x.l.renderingLayerMask); bool zonesWereOff = false;
+        void Apply(int v) => ApplyV(v > 0, v > 0 && variants.Count > 0 ? variants[v - 1] : null);
+        void ApplyV(bool variant, Dictionary<string, string> spec)
+        {
+            float F(string k) => float.Parse(spec[k], System.Globalization.CultureInfo.InvariantCulture);
+            shadowSet.maxShadowDistance.overrideState = spec != null && spec.ContainsKey("sundist"); if (shadowSet.maxShadowDistance.overrideState) shadowSet.maxShadowDistance.value = F("sundist");
+            shadowSet.cascadeShadowSplitCount.overrideState = spec != null && spec.ContainsKey("cascades"); if (shadowSet.cascadeShadowSplitCount.overrideState) shadowSet.cascadeShadowSplitCount.value = (int)F("cascades");
+            var sp = spec != null && spec.ContainsKey("splits") ? spec["splits"].Split(',').Select(x => float.Parse(x, System.Globalization.CultureInfo.InvariantCulture)).ToArray() : new float[0];
+            var split = new[] { shadowSet.cascadeShadowSplit0, shadowSet.cascadeShadowSplit1, shadowSet.cascadeShadowSplit2 };
+            for (int k = 0; k < 3; k++) { split[k].overrideState = k < sp.Length; if (k < sp.Length) split[k].value = sp[k]; }
+            var nocast = spec != null && spec.ContainsKey("nocast") ? spec["nocast"].Split(',') : new string[0];
+            for (int k = 0; k < casters.Count; k++) if (casters[k].r) casters[k].r.shadowCastingMode = nocast.Contains(casterGroup[k]) ? UnityEngine.Rendering.ShadowCastingMode.Off : casters[k].shadowCastingMode;
+            // a -perfvariants variant takes its knobs from its own keys: range=F lightsoff=P1,P2 noshadow=P1,P2 off=SSAO,Volumetrics
+            // shadowq=M,I legacyshadows pcss=B,F mirror=RES; otherwise the command-line knobs above are the variant
+            string S(string k) => spec != null && spec.TryGetValue(k, out var v) ? v : null;
+            string[] L(string k, string[] dflt) => spec == null ? dflt : (S(k) ?? "").Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
+            int[] I(string k, int[] dflt) => spec == null ? dflt : L(k, null).Select(int.Parse).ToArray();
+            float rk = spec == null ? rangeK : S("range") is string rs ? float.Parse(rs, System.Globalization.CultureInfo.InvariantCulture) : 1f;
+            var ns = L("noshadow", noShadow); var pf = L("lightsoff", prefixes); var pc = I("pcss", pcss); var q = I("shadowq", shq);
+            var mr = spec == null ? mirrorRes : S("mirror") is string m ? new[] { mirrorRes.Length > 0 ? mirrorRes[0] : int.Parse(m), int.Parse(m) } : mirrorRes.Take(1).ToArray();
+            var offV = spec == null ? off : L("off", null).Select(f => (UnityEngine.Rendering.HighDefinition.FrameSettingsField)System.Enum.Parse(typeof(UnityEngine.Rendering.HighDefinition.FrameSettingsField), f)).ToList();
+            foreach (var (l, range) in lamps) l.range = variant ? range * rk : range;
             foreach (var (l, lhd, sh, b, f) in lampHd)
             {
-                if (pcss.Length == 2) { lhd.blockerSampleCount = variant ? pcss[0] : b; lhd.filterSampleCount = variant ? pcss[1] : f; }
-                if (noShadow.Any(p => l.name.StartsWith(p))) l.shadows = variant ? LightShadows.None : sh;
+                if (pc.Length == 2 || pcss.Length == 2) { lhd.blockerSampleCount = variant && pc.Length == 2 ? pc[0] : b; lhd.filterSampleCount = variant && pc.Length == 2 ? pc[1] : f; }
+                l.shadows = variant && ns.Any(p => l.name.StartsWith(p)) ? LightShadows.None : sh;
             }
-            if (mirror && mirrorRes.Length > 0)
-                mirror.settingsRaw.resolutionScalable.@override = (UnityEngine.Rendering.HighDefinition.PlanarReflectionAtlasResolution)(variant && mirrorRes.Length > 1 ? mirrorRes[1] : mirrorRes[0]);
-            if (variant) { foreach (var (l, _) in lamps) if (prefixes.Any(p => l.name.StartsWith(p))) { switchedOff[l] = l.enabled; l.enabled = false; } }
-            else { foreach (var kv in switchedOff) kv.Key.enabled = kv.Value; switchedOff.Clear(); }
-            if (hd != null && off.Count > 0)
+            if (mirror && mr.Length > 0)
+                mirror.settingsRaw.resolutionScalable.@override = (UnityEngine.Rendering.HighDefinition.PlanarReflectionAtlasResolution)(variant && mr.Length > 1 ? mr[1] : mr[0]);
+            // res=P: render at P% and upscale (needs a player built with -perfDynRes: HDRP dynamic resolution on, STP); base 100%
+            if (spec != null || variants.Count > 0)
             {
-                hd.customRenderingSettings = variant;
-                foreach (var f in off) { hd.renderingPathCustomFrameSettingsOverrideMask.mask[(uint)f] = true; hd.renderingPathCustomFrameSettings.SetEnabled(f, false); }
+                float pct = spec != null && S("res") is string rp ? float.Parse(rp, System.Globalization.CultureInfo.InvariantCulture) : 100f;
+                UnityEngine.Rendering.DynamicResolutionHandler.SetDynamicResScaler(() => pct, UnityEngine.Rendering.DynamicResScalePolicyType.ReturnsPercentage);
+                Camera.main.allowDynamicResolution = true; if (hd != null) hd.allowDynamicResolution = true;
+            }
+            // sunless=on: the never-sunlit pieces (SpecGreybox.SunCull) cast into the sun's cascades again by day
+            if (night && !night.night)
+                for (int k = 0; k < night.sunlessCasters.Length && k < night.sunlessModes.Length; k++)
+                    if (night.sunlessCasters[k]) night.sunlessCasters[k].shadowCastingMode = variant && spec != null && spec.ContainsKey("sunless") ? night.sunlessModes[k] : UnityEngine.Rendering.ShadowCastingMode.Off;
+            // lampzones=off: the lamps cast every caster in range again (SpecGreybox.LampZones gave each lamp its zone's casters only)
+            bool zonesOff = variant && spec != null && spec.ContainsKey("lampzones");
+            if (zonesOff != zonesWereOff)
+            {
+                // the shadow mask itself: toggling linkShadowLayers alone at run time left the zone mask in force (motion-zones, Oct 20)
+                foreach (var (l, lhd, _, _, _) in lampHd) if (!link0[lhd]) l.renderingLayerMask = zonesOff ? 1 : mask0[l];
+                ShadowRefresh.Forget(); zonesWereOff = zonesOff;   // every lamp redrawn when next in view (night: HouseNightMode -> Warm)
+            }
+            ShadowRefresh.Legacy = variant && (spec == null ? legacyShadows : spec.ContainsKey("legacyshadows"));
+            ShadowRefresh.MaxPerFrame = variant && q.Length == 2 ? q[0] : shq0; ShadowRefresh.Interval = variant && q.Length == 2 ? q[1] : shq1;
+            foreach (var kv in switchedOff) kv.Key.enabled = kv.Value; switchedOff.Clear();
+            if (variant) foreach (var (l, _) in lamps) if (pf.Any(p => l.name.StartsWith(p))) { switchedOff[l] = l.enabled; l.enabled = false; }
+            if (hd != null)
+            {
+                foreach (var kv in offUsed) { hd.renderingPathCustomFrameSettings.SetEnabled(kv.Key, kv.Value.on); hd.renderingPathCustomFrameSettingsOverrideMask.mask[(uint)kv.Key] = kv.Value.masked; }
+                if (offUsed.Count > 0 || offV.Count > 0) hd.customRenderingSettings = customRendering0 || (variant && offV.Count > 0);
+                foreach (var f in offV)
+                {
+                    if (!offUsed.ContainsKey(f)) offUsed[f] = (hd.renderingPathCustomFrameSettings.IsEnabled(f), hd.renderingPathCustomFrameSettingsOverrideMask.mask[(uint)f]);
+                    if (variant) { hd.renderingPathCustomFrameSettingsOverrideMask.mask[(uint)f] = true; hd.renderingPathCustomFrameSettings.SetEnabled(f, false); }
+                }
             }
         }
         foreach (var dn in new[] { false, true })
         {
-            Apply(false);   // night mode switches lamps: let it see the base state, then apply the variant to what it left
+            if (dnArg != null && (dnArg == "night") != dn) continue;
+            Apply(0);   // night mode switches lamps: let it see the base state, then apply the variant to what it left
             if (night) night.SetNight(dn);
-            if (!ab) Apply(true);
+            if (!ab) Apply(1);
             foreach (var (name, pos, yaw, pitch) in POSES)
             {
                 if (only.Length > 0 && !only.Contains(name)) continue;
                 if (fps) fps.transform.position += pos - cam.position;   // move the body so the eye lands on the pose (HouseSplit, audio follow)
                 cam.SetPositionAndRotation(pos, Quaternion.Euler(pitch, yaw, 0));
                 string tag = name + "-" + (dn ? "night" : "day");
-                foreach (var step in ab ? new[] { "A1", "B1", "A2", "B2" } : new[] { "" })
+                foreach (var step in steps)
                 {
-                    if (ab) Apply(step[0] == 'B');
+                    if (ab) Apply(step[0] - 'A');
                     for (int w = 0; w < 120; w++) yield return null;   // warm-up: streaming, cached shadows, exposure
                     string t = ab ? tag + "-" + step : tag;
                     yield return Sample(t, ab ? 150 : 300, dir);
-                    if (step == "" || step == "B2" || step == "A2") { ScreenCapture.CaptureScreenshot(Path.Combine(dir, t + ".png")); yield return null; yield return null; }
+                    if (step == "" || step.EndsWith(rounds.ToString())) { ScreenCapture.CaptureScreenshot(Path.Combine(dir, t + ".png")); yield return null; yield return null; }
+                }
+            }
+            // MOTION (Oct 20, user: "if i open the door or hit a paint can, the fps becomes laughable again"): from the foyer pose, 10 s
+            // after the front door is opened (E's path: SetOpen), and at night 10 s after a paint can is knocked at walking speed
+            // (1.4 m/s, as PaintCanTrap.PushByPlayer). Per frame: ms, the lamps whose shadow maps redrew, whether the piece still moves.
+            if (only.Length == 0 || only.Contains("motion"))
+            {
+                var door = FindObjectsByType<EntranceDoor>(FindObjectsInactive.Include).FirstOrDefault(d => d.label == "front door");
+                var cans = FindObjectsByType<PaintCanTrap>(FindObjectsInactive.Include).OrderBy(q => q.name).ToArray();
+                var (_, fpos, fyaw, fpitch) = POSES[1];
+                if (fps) fps.transform.position += fpos - cam.position;
+                cam.SetPositionAndRotation(fpos, Quaternion.Euler(fpitch, fyaw, 0));
+                string dnS = dn ? "night" : "day";
+                foreach (var step in steps)
+                {
+                    if (ab) Apply(step[0] - 'A');
+                    string suf = ab ? "-" + step : "";
+                    if (door)
+                    {
+                        door.SetInstant(false); for (int w = 0; w < 120; w++) yield return null;
+                        yield return Sample("door-" + dnS + suf, 0, dir, 10f, () => door.SetOpen(true), () => door.Moving);
+                        door.SetInstant(false);
+                    }
+                    if (dn && cans.Length > 0)
+                    {
+                        foreach (var c in cans) c.ResetRig(); for (int w = 0; w < 120; w++) yield return null;
+                        yield return Sample("can-" + dnS + suf, 0, dir, 10f, () => { cans[0].can.WakeUp(); cans[0].can.linearVelocity = Vector3.forward * 1.4f; }, () => cans.Any(c => c.Moving));
+                        foreach (var c in cans) c.ResetRig();
+                    }
                 }
             }
         }
@@ -125,7 +230,7 @@ public class PerfProbe : MonoBehaviour
         var g = new GameObject("PerfProbe"); var p = g.AddComponent<PerfProbe>(); p.StartCoroutine(p.Sample(name, frames));
     }
 
-    IEnumerator Sample(string name, int frames, string outDir = null)
+    IEnumerator Sample(string name, int frames, string outDir = null, float seconds = 0f, System.Action start = null, System.Func<bool> moving = null)
     {
         Last = "running";
         var counters = new Dictionary<string, ProfilerRecorder>
@@ -157,9 +262,13 @@ public class PerfProbe : MonoBehaviour
         UnityEngine.Rendering.RenderPipelineManager.beginCameraRendering += onCam;
         int gc0 = System.GC.CollectionCount(0), sh0 = ShadowRefresh.Requests;
         var cpu = new List<float>(); var gpu = new List<double>(); var main = new List<double>(); var rend = new List<double>(); var ft = new FrameTiming[1];
-        for (int i = 0; i < frames; i++)
+        var movLog = new List<int>(); var lampLog = new List<string>(); ShadowRefresh.Drawn.Clear();
+        start?.Invoke(); float t0 = Time.unscaledTime;
+        for (int i = 0; seconds > 0f ? Time.unscaledTime - t0 < seconds : i < frames; i++)
         {
             yield return null;
+            movLog.Add(moving != null && moving() ? 1 : 0);
+            lampLog.Add("\"" + string.Join(" ", ShadowRefresh.Drawn) + "\""); ShadowRefresh.Drawn.Clear();
             cpu.Add(Time.unscaledDeltaTime * 1000f);
             int gc = System.GC.CollectionCount(0), sh = ShadowRefresh.Requests;
             gcLog.Add(gc - gc0); shLog.Add(sh - sh0); reflLog.Add(refl); gc0 = gc; sh0 = sh; refl = 0;
@@ -179,6 +288,7 @@ public class PerfProbe : MonoBehaviour
         string Arr<T>(IEnumerable<T> l) => "[" + string.Join(",", l.Select(x => System.Convert.ToString(x, System.Globalization.CultureInfo.InvariantCulture))) + "]";
         string flog = "{\"ms\":" + Arr(cpu.Select(x => System.Math.Round(x, 1))) + ",\"gpu_ms\":" + Arr(vals["gpu_frame_ns"].Select(x => System.Math.Round(x / 1e6, 1)))
             + ",\"gc\":" + Arr(gcLog) + ",\"shadow_requests\":" + Arr(shLog) + ",\"reflection_renders\":" + Arr(reflLog) + ",\"lights_on\":" + Arr(lightLog)
+            + ",\"moving\":" + Arr(movLog) + ",\"shadow_lamps\":[" + string.Join(",", lampLog) + "]"
             + ",\"markers_us\":{" + string.Join(",", mlog.Select(kv => $"\"{kv.Key}\":" + Arr(kv.Value.Select(v => v / 1000)))) + "}}";
         foreach (var k in new[] { "sys_mem_mb", "gfx_mem_mb" }) vals[k] = vals[k].Select(v => v >> 20).ToList();
         int rt = 0, rtShadow = 0;   // lights drawn in real time (not fully baked), and those casting shadows
@@ -191,7 +301,11 @@ public class PerfProbe : MonoBehaviour
         var gs = gpu.OrderBy(x => x).ToList();
         string gpuS = gs.Count > 0 ? gs[gs.Count / 2].ToString("F1") : "null", gpu10 = gs.Count > 0 ? gs[gs.Count / 10].ToString("F1") : "null";
         string Q(List<double> l, float q) { if (l.Count == 0) return "null"; var s = l.OrderBy(x => x).ToList(); return s[Mathf.Clamp((int)(q * (s.Count - 1)), 0, s.Count - 1)].ToString("F1"); }
-        Last = "{" + $"\"name\":\"{name}\",\"frames\":{frames},\"cpu_ms_median\":{Pct(cpu, 0.5f):F1},\"cpu_ms_p95\":{Pct(cpu, 0.95f):F1},\"cpu_ms_p99\":{Pct(cpu, 0.99f):F1},"
+        frames = cpu.Count;
+        int restAt = movLog.Count; while (restAt > 0 && movLog[restAt - 1] == 0) restAt--;   // first frame after which nothing moves
+        float restS = 0f; for (int i = 0; i < restAt; i++) restS += cpu[i] / 1000f;
+        string rest = moving == null ? "null" : restAt == movLog.Count ? "-1" : restS.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+        Last = "{" + $"\"name\":\"{name}\",\"frames\":{frames},\"rest_s\":{rest},\"cpu_ms_median\":{Pct(cpu, 0.5f):F1},\"cpu_ms_p95\":{Pct(cpu, 0.95f):F1},\"cpu_ms_p99\":{Pct(cpu, 0.99f):F1},"
              + $"\"gpu_ms_median\":{gpuS},\"gpu_ms_p10\":{gpu10},\"gpu_ms_p95\":{Q(gpu, 0.95f)},\"gpu_ms_p99\":{Q(gpu, 0.99f)},\"main_ms_median\":{Q(main, 0.5f)},\"render_ms_median\":{Q(rend, 0.5f)},\"rt_lights\":{rt},\"rt_shadow_lights\":{rtShadow}," + string.Join(",", vals.Select(kv => $"\"{kv.Key}\":{Med(kv.Value)}"))
              + ",\"frame_log\":" + flog
              + $",\"screen\":\"{Screen.width}x{Screen.height}\",\"focused\":{Application.isFocused.ToString().ToLower()},\"cam\":\"{cam.position.x:F2},{cam.position.y:F2},{cam.position.z:F2} yaw {cam.eulerAngles.y:F0}\"" + "}";
