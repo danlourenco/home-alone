@@ -41,7 +41,7 @@ build)
   T=$SECONDS; "$UNITY" -batchmode -projectPath "$C" -executeMethod PerfBuild.Build -perfOut "$APP" $DEV ${HA_BUILD_ARGS:-} -quit -logFile "$W/build.log" || { grep -m5 -E "error|PerfBuild" "$W/build.log"; exit 1; }
   grep PerfBuild "$W/build.log"; echo "player built in $((SECONDS-T)) s";;
 run)
-  L="${2:?label}"; O="$W/runs/$L"; rm -rf "$O"; mkdir -p "$O"
+  L="${2:?label}"; O="$W/runs/$L"; rm -rf "$O"; mkdir -p "$O"; printf '%s\n' "${HA_PERF_ARGS:-}" > "$O/args.txt"   # the sheet names variants from it
   defaults write "$(defaults read "$APP/Contents/Info.plist" CFBundleIdentifier)" NSAppSleepDisabled -bool YES   # no App Nap throttling in the background
   "$APP/Contents/MacOS/"* -perfprobe "$O" -screen-width 1920 -screen-height 1080 -screen-fullscreen 0 -logFile "$O/player.log" ${HA_PERF_ARGS:-} >/dev/null 2>&1 &
   pid=$!; caffeinate -d -u -w $pid &   # display awake for the whole tour: with the display asleep GPU timings come back empty (Oct 18)
@@ -50,7 +50,9 @@ run)
     sleep 2; done
   sleep 2; kill $pid 2>/dev/null || true
   [ -f "$O/done.txt" ] || { echo "tour did not finish: $O/player.log" >&2; exit 1; }
-  uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" "$O";;
+  uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" "$O"
+  # every A/B gets its visual comparison (user, Oct 20): pose rows x variant columns, FPS on each tile, opened for the user
+  if ls "$O"/*-B1.png >/dev/null 2>&1; then uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" --sheet "$O" && open -a Preview "$O/sheet.jpg" 2>/dev/null || true; fi;;
 ab)   # ab NAME APP_A APP_B: tours A, B, A, B (two builds, e.g. a project-setting change), then the base -> variant table
   N="${2:?name}"; for i in 1 2; do HA_PERF_APP="$3" "$0" run "$N-A$i" >/dev/null; HA_PERF_APP="$4" "$0" run "$N-B$i" >/dev/null; done
   uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" --ab "$W/runs/$N-A1" "$W/runs/$N-B1" "$W/runs/$N-A2" "$W/runs/$N-B2";;
@@ -59,6 +61,7 @@ gate)   # gate LABEL: tour LABEL (unless that run is already done), then FAIL if
   L="${2:?label}"; [ -f "$W/runs/$L/done.txt" ] || "$0" run "$L" >/dev/null
   python3 -I "$REPO/tools/house/perf_table.py" --gate "$W/runs/$L" "$REPO/docs/PERFORMANCE.md";;
 attrib) python3 -I "$REPO/tools/house/perf_attrib.py" "$W/runs/${2:?label}";;   # name each pose's heavy frames' cause (needs a dev player's tour)
+sheet) shift; uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" --sheet "$W/runs/$1" "${@:2}";;   # sheet LABEL [POSE ...]
 table) shift; uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" "${@/#/$W/runs/}";;
 clean) rm -rf "$C" "$W/build";;   # runs/ (the benchmark history) is kept
 *) sed -n 2,20p "$0"; exit 1;;

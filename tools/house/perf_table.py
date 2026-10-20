@@ -5,6 +5,7 @@
                                        > ~3 means the picture changed: look at both PNGs)
   perf_table.py --gate RUN_DIR [MD]  -> exit 1 if any pose's frame mean (or a motion step's time to rest) is over its budget in the
                                        "## BUDGET" table of docs/PERFORMANCE.md (first matching pose pattern wins)
+  perf_table.py --sheet RUN_DIR [POSE ...] -> RUN_DIR/sheet.jpg: the visual comparison (pose rows x variant columns, FPS on each tile)
   perf_table.py --selftest
 """
 import fnmatch
@@ -41,6 +42,51 @@ def fmt(k, v):
     return f"{v / 1e6:.2f}" if k == "triangles" else (f"{v:.1f}" if isinstance(v, float) else str(v))
 
 
+def fps(ms):
+    return round(1000.0 / ms) if ms else 0
+
+
+def sheet(d, poses=None, out=None):
+    """A visual comparison sheet for one -perfab run (user, Oct 20: every shadow/lighting change gets one): one row per pose, one column
+    per variant (A = base), each tile labelled with its variant and FPS. Variant names come from args.txt (perf_probe.sh run writes it)."""
+    from PIL import Image, ImageDraw, ImageFont
+    d = Path(d); names = {"A": "base"}
+    a = (d / "args.txt").read_text() if (d / "args.txt").exists() else ""
+    m = re.search(r"-perfvariants\s+['\"]?([^'\"]+)", a)
+    for i, v in enumerate(m.group(1).split(";") if m else []):
+        names[chr(ord("B") + i)] = v.strip()
+    last = max((int(q.stem[-1]) for q in d.glob("*-A?.json")), default=1)
+    letters = ["A"] + sorted({q.stem[-2] for q in d.glob(f"*-?{last}.png")} - {"A"})
+    poses = poses or sorted({q.stem[:-3] for q in d.glob(f"*-A{last}.png")})
+    try:
+        font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 22)
+    except OSError:
+        font = ImageFont.load_default()
+    W = 640; rows = []
+    for p in poses:
+        row = []
+        for x in letters:
+            png, js = d / f"{p}-{x}{last}.png", d / f"{p}-{x}{last}.json"
+            if not png.exists():
+                continue
+            im = Image.open(png).convert("RGB"); im = im.resize((W, int(im.height * W / im.width)))
+            r = load(d).get(f"{p}-{x}{last}", {}); ms = r.get("frame_ms_mean")
+            dr = ImageDraw.Draw(im); dr.rectangle([0, 0, W, 32], fill=(0, 0, 0))
+            dr.text((8, 4), f"{p}  {names.get(x, x)}  {fps(ms) if ms else '?'} fps", fill=(255, 255, 255), font=font)
+            row.append(im)
+        if row:
+            rows.append(row)
+    if not rows:
+        return None
+    sh = Image.new("RGB", (max(sum(i.width + 8 for i in r) for r in rows), sum(r[0].height + 8 for r in rows)), (20, 20, 20)); y = 0
+    for r in rows:
+        x = 0
+        for i in r:
+            sh.paste(i, (x, y)); x += i.width + 8
+        y += r[0].height + 8
+    out = Path(out or d / "sheet.jpg"); sh.save(out, quality=88); print(f"sheet: {out}"); return out
+
+
 def img_diff(a, b):
     try:
         import numpy as np
@@ -65,13 +111,15 @@ def ab(base, variant, pngs=None):
                     out.setdefault(k[: len(k) - len(suf)] if suf else k, []).append(v)
         return out
     A, B = side(base), side(variant)
-    print("| pose | frame mean base -> variant | GPU p10 | GPU median | frame p50 | tris M | shadow casters | img diff |\n|---|---|---|---|---|---|---|---|")
+    print("| pose | FPS base -> variant (frame mean ms) | GPU p10 | GPU median | frame p50 | tris M | shadow casters | img diff |\n|---|---|---|---|---|---|---|---|")
     for p in sorted(set(A) & set(B)):
         cells = []
         for key in ("frame_ms_mean", "gpu_ms_p10", "gpu_ms_median", "cpu_ms_median", "triangles", "shadow_casters"):
             v = [[r[key] for r in X[p] if r.get(key) is not None] for X in (A, B)]
             m = [sum(x) / len(x) if x else 0 for x in v]
             sc = 1e6 if key == "triangles" else 1
+            if key == "frame_ms_mean" and m[0] and m[1]:   # user, Oct 20: report FPS (ms kept beside it: ms add up, fps don't)
+                cells.append(f"{fps(m[0])} -> {fps(m[1])} fps ({m[0]:.1f} -> {m[1]:.1f} ms, {(fps(m[1]) - fps(m[0])) / fps(m[0]) * 100:+.0f}% fps)"); continue
             cells.append(f"{m[0] / sc:.1f} -> {m[1] / sc:.1f} ({(m[1] - m[0]) / m[0] * 100:+.0f}%)" if m[0] else "-")
         d = img_diff(*[Path(x) for x in pngs(p)]) if pngs else None
         print(f"| {p} | " + " | ".join(cells) + f" | {'-' if d is None else f'{d:.1f}'} |")
@@ -128,6 +176,8 @@ def main(args):
         return selftest()
     if args[0] == "--gate":
         sys.exit(gate(args[1], args[2] if len(args) > 2 else Path(__file__).resolve().parents[2] / "docs/PERFORMANCE.md"))
+    if args[0] == "--sheet":   # --sheet RUN_DIR [POSE ...]
+        return sheet(args[1], args[2:] or None)
     if args[0] == "--ab":   # --ab A1 B1 A2 B2 ...: alternate tours of two builds
         return ab([(d, "") for d in args[1::2]], [(d, "") for d in args[2::2]])
     if len(args) == 1 and any(Path(args[0]).glob("*-A1.json")):   # one -perfab run: A (base) vs each variant B, C, ... (-perfvariants)
@@ -154,6 +204,6 @@ def main(args):
 
 
 if __name__ == "__main__":
-    if not sys.argv[1:] or (sys.argv[1] not in ("--ab", "--gate") and len(sys.argv) > 3):
+    if not sys.argv[1:] or (sys.argv[1] not in ("--ab", "--gate", "--sheet") and len(sys.argv) > 3):
         sys.exit(__doc__)
     main(sys.argv[1:])
