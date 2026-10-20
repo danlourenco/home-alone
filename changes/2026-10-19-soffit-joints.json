@@ -1,5 +1,5 @@
 {
-  "change": "Open stair sides carried to existing rail/landing edge; supported baluster feet and coplanar stringer/soffit/fascia joints; TRIAL",
+  "change": "Open stair sides carried to existing rail/landing edge; supported baluster feet and coplanar stringer/soffit/fascia joints; ACCEPTED",
   "target": "House_WallGrid",
   "premise": "Flight 2's underside is one plastered slope (film 10673; Marina 312 s) whose edges die into the landing's underside, the north wall, the open-side fascia and the flat foyer ceiling under the gallery.",
   "claim": {
@@ -109,7 +109,7 @@
       "spec/captures/views/foyer/stair-support/after-head.jpg"
     ]
   },
-  "user_walk": "pending",
+  "user_walk": "accepted",
   "verification": {
     "date": "2026-10-19",
     "build": "ONE scene build235s + ONE Night/Default bake262s, HA_SCRATCH=~/.cache/home-alone-2; both exit0",
@@ -120,6 +120,28 @@
     "lighting": "76/76 lights baked; Night58s/Default54s; reflection probes rerendered for both. No live main-editor lighting verification.",
     "look": "Five BEFORE views of previously built/walked model and five AFTER views from newly built+baked scratch scene, exact16:23 note pose plus previous user/kitchen/landing/head cameras. Inspected all after views and comparisons; exposed baluster undersides removed, continuous tread/stringer/fascia support. BATCH renders only, not live lighting proof.",
     "known_warnings": "Existing service-stair blockage,4 older models over triangle budget,1 trim gap and legacy props warnings retained; no new BLOCKED route.",
-    "load": "NOT LOADED: main editor is walking in Play. HA_SCRATCH=\"$HOME/.cache/home-alone-2\" tools/house/unity_pipeline.sh load when ready to end current walk."
+    "load": "User ran HA_SCRATCH=\"$HOME/.cache/home-alone-2\" tools/house/unity_pipeline.sh load; exit0, entered Play; user subsequently approved.",
+    "live_load_checks": {
+      "source": "User-provided load command output",
+      "night_means": {
+        "foyer": 0.294,
+        "living": 0.313,
+        "buzz": 0.279,
+        "parents": 0.314,
+        "attic": 0.182
+      },
+      "day_apv": "loaded",
+      "day_saturation": {
+        "marina-16": 0.103,
+        "kevin-front": 0.108
+      },
+      "buzz_floor_R_over_B": 7.44,
+      "result": "all thresholds passed"
+    }
+  },
+  "user_approval": {
+    "date": "2026-10-19",
+    "words": "it looks great. approved.",
+    "scope": "Loaded soffit and open stair-side support correction, commit3a0e0afe; not a blanket acceptance of other open defects."
   }
 }

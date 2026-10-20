@@ -6,13 +6,13 @@ docs/FOYER-WIP.md (the foyer job's checkpoints); STATUS.md is the long log. This
 
 ## 0. State
 
-> **Latest stair continuation (Codex, Oct19):** completed the paused16:23 support fix; ONE build235s + ONE bake262s passed.90/90 baluster feet supported,5 edge planes aligned,0 z-fights/clashes and no new BLOCKED routes. Regression also rejects a partially missing fascia. Five before/after BATCH views inspected: `spec/captures/views/foyer/stair-support/compare-note1623.jpg`. **Not loaded; main editor remains in Play.** Load when ready: `HA_SCRATCH="$HOME/.cache/home-alone-2" tools/house/unity_pipeline.sh load`. Trial awaits user walk; hall-runner work remains paused.
+> **Stair/soffit ACCEPTED, Oct19:** user loaded the baked3a0e0afe trial and said "it looks great. approved." Night/day load checks all passed.90/90 baluster feet supported,5 aligned edge planes,0 z-fights/clashes and no new blocked routes. Comparison: `spec/captures/views/foyer/stair-support/compare-note1623.jpg`. Stair support/soffit defect closed; preserve this version. Hall-runner work remains paused; other defects remain open.
 
 - Branch `unity-sfm-reconstruction`, pushed through the Codex session's work (3773db20). Trials since Oct 18 are in `changes/`.
 - **Oct 19 walk verdict:** accepted: mirror, front door look + use, den arrangement, TV seat/view concept, the exterior/sky/drive
-  trials except listed defects. **Rejected: the flight-2 soffit (does not connect).** Acceptance does not close defects.
-- **Open defects** (details, shots and proposed fixes: docs/WALK-FEEDBACK-2026-10-19.md): soffit FIX BUILT, TRIAL awaiting the user's walk
-  (changes/2026-10-19-soffit-joints.json; built + baked in ~/.cache/home-alone-2, not yet loaded); exterior wallpaper on a
+  trials except listed defects. **Flight-2 soffit/open-side support correction now ACCEPTED** after the latest loaded walk. Other reported defects remain open.
+- **Open defects** (details, shots and proposed fixes: docs/WALK-FEEDBACK-2026-10-19.md): soffit/support CLOSED by user approval
+  (changes/2026-10-19-soffit-joints.json); exterior wallpaper on a
   jamb; jerky door swing (profile it first: the timing sample had zero moving-door frames, cause NOT proven); stoop/step overlap; noisy
   porch shadows; coarse/dry walk material; a protruding gutter/trim candidate; magenta breakfast hutch + a reference-correct built-in;
   flat interior doors; street-lamp style; a tree in the driveway; garage fence placement; den shelf lamp too broad/bright. Older notes:

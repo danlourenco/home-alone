@@ -1,3 +1,5 @@
+> **Latest Oct19 approval:** the user loaded stair/soffit support correction3a0e0afe and said "it looks great. approved." This supersedes the soffit rejection/pending status below. Night/day load checks passed; other reported defects remain open. Details in RESUME and WALK-FEEDBACK.
+
 # Foyer trial ready — Oct 19, 2026
 
 ## Latest disposition — supersedes earlier checkpoints
