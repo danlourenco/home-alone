@@ -95,6 +95,14 @@ docs/FOYER-WIP.md (the foyer job's checkpoints); STATUS.md is the long log. This
 7. **Duplicate Unity project names** ("Home Alone" and "Home Alone (1)"): the user asked why; where they appear (Hub, Dashboard,
    editor) is unanswered. Only one HomeAlone editor is connected; the Hub's local list doesn't show these names; cloudProjectId/name
    are blank. Identify IDs/paths before renaming or removing anything.
+8. **Cruft to remove (Oct 20; the auto-mode classifier blocks agent deletes, so the USER runs it).** Checked: nothing references
+   these. `Assets/VR-ready PBR toilet/` (611 MB raw store package; the house uses the converted `Assets/Purchased/Toilet`, made by
+   tools/house/purchased_toilet.py from the Asset Store cache; NOT gitignored, so never `git add` it), the 23 MB
+   `Scenes/House_WallGrid_unsaved_backup_20261019.unity` (Oct 19 freeze), `Assets/Resources/PerformanceTest*` (auto-made), the
+   orphan `Models/PolyHaven/Kitchen/kettle_red_*` materials, the unreferenced Oct 18 `spec/captures/views/o67-*.png`. Command:
+   `cd ~/Dev/home-alone && A=unity/HomeAlone/Assets && T=~/.Trash/home-alone-cruft && mkdir -p $T && mv "$A/VR-ready PBR toilet" "$A/VR-ready PBR toilet.meta" $A/Scenes/House_WallGrid_unsaved_backup_20261019.unity* $A/Resources $A/Resources.meta $A/Models/PolyHaven/Kitchen/kettle_red_* spec/captures/views/o67-*.png spec/captures/props-front.png $T/`
+   Never commit: the ~34 re-import-churned .mat files (property reorders), spec/feedback/ shots, ProjectSettings AI-assistant
+   settings. Rule: a store package goes to Assets/Purchased/ (gitignored), never unpacked at the Assets root.
 
 ## 2. Neighbourhood plan (user, Oct 19: "recreate the scene systematically ... period-accurate ... the Murphys across the street")
 Tiers by player distance; detail follows sightlines (window views, the film's exterior cameras, the bandits' routes):
