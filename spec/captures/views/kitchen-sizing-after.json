@@ -1,0 +1,7 @@
+[
+ {"name": "kitchen-sizing-film2104", "pos": [-5.631, -1.122, 0.628], "look_at": [-1.136, -2.314, -1.209], "vfov": 31.5, "near": 0.85},
+ {"name": "kitchen-sizing-cupboard", "pos": [-0.2, -1.576, -0.9], "look_at": [2.0, -2.026, 0.0], "vfov": 50},
+ {"name": "kitchen-sizing-corner", "pos": [0.0, -1.426, -1.8], "look_at": [2.0, -2.126, 0.6], "vfov": 60},
+ {"name": "kitchen-sizing-hutch", "pos": [1.0, -1.526, -5.4], "look_at": [4.1, -1.726, -5.5], "vfov": 55},
+ {"name": "kitchen-sizing-note1447", "pos": [-1.124, -1.716, -2.297], "look_at": [-0.296, -1.777, -1.74], "vfov": 60}
+]

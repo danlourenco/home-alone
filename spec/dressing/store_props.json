@@ -4211,30 +4211,6 @@
    "yaw": 180
   },
   {
-   "name": "kitchen_hutch",
-   "prefab": "Assets/Models/PolyHaven/vintage_cabinet_01.glb",
-   "x": [
-    3.61,
-    4.11
-   ],
-   "z": [
-    4.66,
-    6.43
-   ],
-   "y0": 0.0,
-   "height": 2.2,
-   "back": "+x",
-   "collide": true,
-   "hides": [],
-   "source": "props lane (props.py add, Oct 19): film 1024 (glazed white hutch behind the breakfast table, white door to its right), production still 'Breakfast Room' (art/home_alone/references/kitchen/production-breakfast-hutch.jpg), user photo IMG_4305 (film still: white built-in beyond the island, glazed upper doors, open dish shelves, closed lower cabinets), Marina 924 s (best-marina-0924: white built-in on the wall between the dining doorway and the white door, glazed 4-bay upper, open shelf, drawers + doors). It is a BUILT-IN in the film and Marina; placed in the props lane at the user's request (walk note Oct 19 08:42) as a pack china cabinet fitted to the run between the dining doors (wall z 4.50-6.46 inside the casings; the wider wallpaper strip with the switch on the door-1 side, Marina 924): 1.77 x 0.50 x 2.20 m, Poly Haven vintage_cabinet_01 (CC0, 2.02 x 0.67 x 2.24, fitted x0.88/x0.75/x0.98), painted the film's white: \"paint\" [0.80,0.79,0.74] = base map dropped, flat lin colour, smoothness 0.45 (applied LIVE by editor eval Oct 19; StoreProps.cs does not read \"paint\" yet, so a build shows the model's dark wood until it does; a tint can't whiten it: the map is lin 0.04/0.016/0.008 with 6x grain contrast). Deviation: arched carved crown and dark wood grain under the tint; the film's is flat-topped painted white. Revisit with a generated built-in (fixture gate).. Model 2.022 x 0.67 x 2.235 m (vintage_cabinet_01), fitted to 1.77 x 0.5 x 2.2.",
-   "yaw": 270,
-   "paint": [
-    0.8,
-    0.79,
-    0.74
-   ]
-  },
-  {
    "name": "breakfast_chair_n1",
    "prefab": "Assets/Classic Wooden Furniture Pack/Prefabs/CHAIR_01.prefab",
    "x": [

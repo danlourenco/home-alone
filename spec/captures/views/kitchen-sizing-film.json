@@ -1,0 +1,17 @@
+[
+ {
+  "name": "kitchen-sizing-film2104",
+  "pos": [
+   -3.4,
+   -1.126,
+   -0.35
+  ],
+  "look_at": [
+   1.45,
+   -2.226,
+   -1.56
+  ],
+  "vfov": 36,
+  "note": "the film's view (tools/house/film2104_measure.py: camera stood behind our end wall/tower, eye 1.9 m): from the stool end of the island toward the pine stack (left) and the hutch (back right), widened"
+ }
+]

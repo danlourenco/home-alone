@@ -81,8 +81,9 @@ route, not now. Licences: a personal hobby project; purchased assets and the fil
 
 ## 7. Everything else still open (Oct 19)
 - **House must-haves before calling the environment:** the upstairs hall bathroom (missing); the parents' ensuite (asked Oct 18);
-  the kitchen remainder (island small props read as simple shapes; stools a bit pale; the film's narrower pine cupboard, by eye;
-  the white goose decoy, a purchase; the film's pine pigeonhole desk; the breakfast hutch as a flat-topped built-in).
+  the kitchen remainder (island small props read as simple shapes; stools a bit pale; the white goose decoy, a purchase; the
+  film's pine pigeonhole desk; a poinsettia on the seat counter's end). The pine stack and the breakfast hutch are sized from
+  IMG_4305 (TRIAL, changes/2026-10-19-kitchen-cupboard-hutch.json), awaiting the walk.
 - **Walk defects:** hall runner jogs / possible corridor misalignment (job prepared, parked); arch B "awkward"; exterior wallpaper
   on the front door jamb; jerky door swing; stoop/step overlap; noisy porch shadows; coarse/dry walk material; a protruding
   gutter/trim; flat interior doors; street-lamp style; a tree in the driveway; garage fence placement; the den shelf lamp too

@@ -1073,7 +1073,13 @@ public static partial class SpecGreybox
             ["KT_Cushion"] = Solid("HiFi_SeatCushion", new Color(0.55f, 0.06f, 0.08f), 0.1f),
             ["KT_Pine"] = KnottyPine(),   // Oct 19: the stacked knotty-pine corner cupboard (film 2116, IMG_4305)
             ["KT_UVPine"] = KnottyPineUV(),   // Oct 19 walk note 14:47 ("looks weird"): the cupboard's grain laid by member (UVs), not triplanar
-            ["KT_Dispenser"] = Solid("HiFi_ApplianceSmoke", new Color(0.10f, 0.10f, 0.11f), 0.9f) });
+            ["KT_Dispenser"] = Solid("HiFi_ApplianceSmoke", new Color(0.10f, 0.10f, 0.11f), 0.9f),
+            // Oct 19: the generated breakfast hutch (film 2104 = IMG_4305): painted white (the film's warm white, as the live preview), glass, dishes
+            ["KT_Paint"] = Solid("HiFi_HutchPaint", new Color(0.80f, 0.79f, 0.74f), 0.45f),
+            ["KT_Glass"] = mGlass,
+            ["KT_DishRed"] = Solid("HiFi_DishRed", new Color(0.55f, 0.04f, 0.04f), 0.75f),
+            ["KT_DishGreen"] = Solid("HiFi_DishGreen", new Color(0.06f, 0.25f, 0.12f), 0.75f),
+            ["KT_DishDark"] = Solid("HiFi_DishDark", new Color(0.05f, 0.05f, 0.05f), 0.6f) });
         if (g != null) foreach (var r in g.GetComponentsInChildren<MeshRenderer>()) r.gameObject.isStatic = true;
         var fp = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/dressing/kitchen.json"));
         if (!File.Exists(fp)) return;

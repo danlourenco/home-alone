@@ -283,8 +283,8 @@ wood.box(s["x"][0] + TR, s["x"][1] - TR, 0.0, TOE, l["z"][1] - TR, s["z"][1] - T
 # ---------------------------------------------------------------- the stacked knotty-pine cupboard (walk note Oct 19 14:47: "what is
 # that thing in the corner? it looks weird": a plain slab with smeared triplanar grain). IMG_4305 / film 2116: four stacked pine
 # sections, each a face frame round framed raised-panel doors with wooden knobs, a moulded lip between sections, a moulded top.
-# Kept in the measured footprint (kitchen.json talls "pantry": 1.29 m angled front, two doors per section; the film's piece reads
-# narrower, one door per section: DEVIATIONS). Grain on UVs (KT_UVPine, 1 UV = 1 m): up the stiles and panels, along rails and mouldings.
+# Oct 19 (user: "make sure ... the wooden thing in the corner [is] sized correctly"): sized from film 2104 = IMG_4305 (pine_stack below:
+# a 0.33 x 0.30 x 1.85 m stack turned 45 deg, one door per section), replacing Marina's 1.29 m angled pantry (DEVIATIONS 109). Grain on UVs (KT_UVPine, 1 UV = 1 m): up the stiles and panels, along rails and mouldings.
 pineuv = Part("PineUV", "KT_UVPine")   # not "KT_Pine..." (PlaceHiFi remaps by name prefix)
 _MEMBER = [0]
 
@@ -346,26 +346,31 @@ def knob(o, e, n, a, y, base):
     pine.sweep([P(base + 0.034), P(base + 0.037)], circ(0.013))
 
 
-def stacked_cupboard(poly, pull_in, o, e, n, L, top):
-    prism(pine, pull_in(DT), TOE, top); prism(pine, pull_in(TR), 0.0, TOE)   # carcass (sides against the walls) and toe kick
-    FW, CW, DW, gap = 0.045, 0.04, 0.055, 0.003       # face-frame stile, centre stile, door frame member, door gap
-    db, df = -DT + 0.002, 0.012                       # door frame back and front (12 mm proud of the face frame: 6 mm read flat, build 1)
-    half = L / 2; CROWN = 0.09; tops = [TOE + k * (top - CROWN - TOE) / 4 for k in range(5)]
+def pine_stack(t):
+    """The film's knotty-pine stack (film 2104 = IMG_4305; tools/house/film2104_measure.py): four boxes turned 45 deg, the door face toward
+    the island with a face frame round ONE framed raised-panel door per section and a turned knob on its left stile side, a plain side
+    toward the seat counter, a moulded lip across the door face between sections (film: the lips stop at the door face), a flat cap."""
+    W, D, top = t["door_w"], t["side_w"], t["top"]; s2 = math.sqrt(0.5)
+    e = (s2, s2); n = (-s2, s2)                                   # door face runs +x+z; it faces -x+z (the island)
+    bx, bz = t["back"]; o = (bx - (W + D) * s2, bz - (W - D) * s2)   # the front corner (door face's left end)
+    FW, DW, gap, CAP = 0.045, 0.05, 0.003, 0.035
+    db, df = -DT, 0.012
+    tops = [0.0] + list(t.get("lips", [0.474, 0.922, 1.412])) + [top - CAP]
     for si, (y0, y1) in enumerate(zip(tops, tops[1:])):
-        for a0, a1 in ((0.0, FW), (L - FW, L), (half - CW / 2, half + CW / 2)):             # face-frame stiles
-            pbox(o, e, n, a0, a1, -DT + 0.002, 0.0, y0, y1, "v")
-        for a0, a1 in ((FW, half - CW / 2), (half + CW / 2, L - FW)):
-            pbox(o, e, n, a0, a1, -DT + 0.002, 0.0, y0, y0 + FW, "h"); pbox(o, e, n, a0, a1, -DT + 0.002, 0.0, y1 - FW, y1, "h")   # rails
-            b0, b1, c0, c1 = a0 + gap, a1 - gap, y0 + FW + gap, y1 - FW - gap               # the door in its opening
-            pbox(o, e, n, b0, b0 + DW, db, df, c0, c1, "v"); pbox(o, e, n, b1 - DW, b1, db, df, c0, c1, "v")
-            pbox(o, e, n, b0 + DW, b1 - DW, db, df, c0, c0 + DW, "h"); pbox(o, e, n, b0 + DW, b1 - DW, db, df, c1 - DW, c1, "h")
-            raised_field(o, e, n, b0 + DW, b1 - DW, c0 + DW, c1 - DW, db, -0.004, 0.006, 0.035)   # field 6 mm under the frame face
-            knob(o, e, n, b1 - 0.03 if a0 < half else b0 + 0.03, (c0 + c1) / 2, df)
-        if si < 3:                                                                          # the lip between sections
-            pbox(o, e, n, 0.004, L - 0.004, -0.003, 0.024, y1 - 0.018, y1 + 0.018, "h"); pbox(o, e, n, 0.008, L - 0.008, 0.024, 0.036, y1 - 0.010, y1 + 0.010, "h")
-    y = top - CROWN                                                                         # moulded top: three steps out
-    for d1, h0, h1 in ((0.02, 0.0, 0.035), (0.04, 0.03, 0.06), (0.06, 0.055, 0.09)):
-        pbox(o, e, n, 0.004, L - 0.004, -0.003, d1, y + h0, y + h1, "h")   # ends 4 mm in from the stiles' (no coplanar end faces)
+        yb = y1 - (0.002 if si < 3 else 0.0)                      # a 2 mm seam between the stacked boxes
+        pbox(o, e, n, 0.0, W, -D, -DT, y0, yb, "v")              # the box (its side at a=0 is the plain face toward the counter)
+        for a0, a1 in ((0.0, FW), (W - FW, W)):                   # face-frame stiles
+            pbox(o, e, n, a0, a1, -DT, 0.0, y0, yb, "v")
+        pbox(o, e, n, FW, W - FW, -DT, 0.0, y0, y0 + FW, "h"); pbox(o, e, n, FW, W - FW, -DT, 0.0, yb - FW, yb, "h")
+        b0, b1, c0, c1 = FW + gap, W - FW - gap, y0 + FW + gap, yb - FW - gap
+        pbox(o, e, n, b0, b0 + DW, db + 0.002, df, c0, c1, "v"); pbox(o, e, n, b1 - DW, b1, db + 0.002, df, c0, c1, "v")
+        pbox(o, e, n, b0 + DW, b1 - DW, db + 0.002, df, c0, c0 + DW, "h"); pbox(o, e, n, b0 + DW, b1 - DW, db + 0.002, df, c1 - DW, c1, "h")
+        raised_field(o, e, n, b0 + DW, b1 - DW, c0 + DW, c1 - DW, db + 0.002, -0.004, 0.006, 0.03)
+        knob(o, e, n, b0 + 0.028, (c0 + c1) / 2, df)
+        if si < 3:                                                # the lip across the door face
+            pbox(o, e, n, 0.004, W - 0.004, 0.0005, 0.022, y1 - 0.016, y1 + 0.016, "h")
+    pbox(o, e, n, -0.008, W + 0.008, -D - 0.008, 0.026, top - CAP, top - CAP + 0.02, "h")   # cap: a board and a thinner top step
+    pbox(o, e, n, -0.004, W + 0.004, -D - 0.004, 0.018, top - CAP + 0.02, top, "h")
 
 
 for t in K["talls"]:
@@ -384,13 +389,86 @@ for t in K["talls"]:
         for a in (x0 + 0.12, x1 - 0.12):
             obox(steel, o, e, n, a - 0.008, a + 0.008, 0.012, 0.03, ov1 - 0.198, ov1 - 0.182)
         raised(wood, o, e, n, x0 + g, x1 - g, ov1 + g, top - g, 0.06); bar(o, e, n, x1 - 0.05, ov1 + 0.04, ov1 + 0.16, 0.0)
-    else:                                                                                         # the corner pantry
-        poly = [tuple(v) for v in t["poly"]]; i, j = t["front_edge"]; (ax, az), (bx_, bz) = poly[i], poly[j]
-        L = math.hypot(bx_ - ax, bz - az); e = ((bx_ - ax) / L, (bz - az) / L)
-        cx_, cz_ = sum(p[0] for p in poly) / len(poly), sum(p[1] for p in poly) / len(poly)
-        n = (-e[1], e[0]) if (-e[1]) * (ax - cx_) + e[0] * (az - cz_) > 0 else (e[1], -e[0])
-        def pull_in(r): return [p if k not in (i, j) else (p[0] - n[0] * r, p[1] - n[1] * r) for k, p in enumerate(poly)]
-        stacked_cupboard(poly, pull_in, (ax, az), e, n, L, t["top"])
+    elif t["name"] == "pine_stack":                                                               # the film's corner stack
+        pine_stack(t)
+
+# ---------------------------------------------------------------- the breakfast hutch (user Oct 19: "make sure the hutch ... sized
+# correctly"; film 2104 = IMG_4305, 1100-1108, 1146; Marina 924 for what the film hides): a flat-topped white built-in between the dining
+# doors, three bays: drawers over pairs of doors, a row of open cubbies, an open band with the red canisters, a glazed upper case
+# (3 x 4 panes per door) to near the ceiling. Faces -x from the wall face at x_face; a = z, d = out of the front plane.
+paint, glass = Part("Paint", "KT_Paint"), Part("Glass", "KT_Glass")
+dred, dgreen, ddark = Part("DishRed", "KT_DishRed"), Part("DishGreen", "KT_DishGreen"), Part("DishDark", "KT_DishDark")
+
+
+def hutch(h):
+    X, (z0, z1), top = h["x_face"], h["z"], h["top"]; LD, UD, toe = h["lower_d"], h["upper_d"], h["toe"]
+    nb = h["bays"]; bw = (z1 - z0) / nb; e, n = (0.0, 1.0), (-1.0, 0.0); T = 0.02
+    oL, oU = (X - LD, 0.0), (X - UD, 0.0)                    # front planes of the lower and the upper case
+    # lower case: carcass behind its fronts, recessed toe, a top slab with a 2 cm nosing (the cubby floor)
+    paint.box(X - LD + DT, X, toe, h["drawer"][1] + 0.001, z0, z1); paint.box(X - LD + 0.06, X, 0.0, toe, z0 + 0.01, z1 - 0.01)
+    c0, c1 = h["cubby"]; paint.box(X - LD - 0.02, X, h["drawer"][1] + 0.001, c0, z0 - 0.01, z1 + 0.01)
+    g = GAP / 2
+    for k in range(nb):
+        a0, a1 = z0 + k * bw + g, z0 + (k + 1) * bw - g
+        raised(paint, oL, e, n, a0, a1, h["drawer"][0] + g, h["drawer"][1] - g, 0.03)
+        obox(ddark, oL, e, n, (a0 + a1) / 2 - 0.05, (a0 + a1) / 2 + 0.05, 0.012, 0.03, (h["drawer"][0] + h["drawer"][1]) / 2 - 0.006, (h["drawer"][0] + h["drawer"][1]) / 2 + 0.006)
+        m = (a0 + a1) / 2
+        for b0, b1, ka in ((a0, m - g, m - 0.04), (m + g, a1, m + 0.04)):
+            raised(paint, oL, e, n, b0, b1, toe + g, h["drawer"][0] - g, 0.05)
+            obox(ddark, oL, e, n, ka - 0.006, ka + 0.006, 0.012, 0.03, h["drawer"][0] - 0.16, h["drawer"][0] - 0.06)
+    # the cubby row: set back 3 cm, a top board (the open band's shelf), dividers at the bays
+    CD = LD - 0.03; XB = X - 0.012                               # everything above the lower case stops at the back panel
+    paint.box(X - CD, XB, c1 - T, c1, z0, z1)
+    for k in range(nb + 1):
+        zc = z0 + k * bw; za, zb = (zc, zc + T) if k == 0 else (zc - T, zc) if k == nb else (zc - T / 2, zc + T / 2)
+        paint.box(X - CD, XB, c0, c1 - T, za, zb)
+    paint.box(X - 0.012, X - 0.002, c0, top, z0 + T, z1 - T)          # back panel (white, film 2104), 2 mm off the wall
+    # upper case: bottom, top, ends, bay dividers, two shelves, then the glazed doors on its front plane
+    u0 = h["band_top"]; g0, g1 = h["glazed"]
+    paint.box(X - UD, XB, u0, g0 - 0.004, z0, z1); paint.box(X - UD, XB, g1 + 0.004, top, z0 - 0.01, z1 + 0.01)
+    for za, zb in ((z0, z0 + T), (z1 - T, z1)):
+        paint.box(X - UD, XB, g0 - 0.004, g1 + 0.004, za, zb)
+    for k in range(1, nb):
+        zc = z0 + k * bw; paint.box(X - UD + 0.03, XB, g0 - 0.004, g1 + 0.004, zc - T / 2, zc + T / 2)
+    shelves = (g0 + (g1 - g0) * 0.36, g0 + (g1 - g0) * 0.68)
+    for y in shelves:
+        paint.box(X - UD + 0.03, XB, y - 0.018, y, z0 + T, z1 - T)
+    pc, pr = h["panes"]; FR, MU = 0.05, 0.016
+    for k in range(nb):
+        a0, a1 = z0 + k * bw + 0.004, z0 + (k + 1) * bw - 0.004; y0, y1 = g0, g1
+        obox(paint, oU, e, n, a0, a0 + FR, 0.0, 0.018, y0, y1); obox(paint, oU, e, n, a1 - FR, a1, 0.0, 0.018, y0, y1)
+        obox(paint, oU, e, n, a0 + FR, a1 - FR, 0.0, 0.018, y0, y0 + FR + 0.02); obox(paint, oU, e, n, a0 + FR, a1 - FR, 0.0, 0.018, y1 - FR, y1)
+        ia0, ia1, iy0, iy1 = a0 + FR, a1 - FR, y0 + FR + 0.02, y1 - FR
+        for i in range(1, pc):
+            a = ia0 + (ia1 - ia0) * i / pc; obox(paint, oU, e, n, a - MU / 2, a + MU / 2, 0.002, 0.012, iy0, iy1)
+        for j in range(1, pr):
+            y = iy0 + (iy1 - iy0) * j / pr; obox(paint, oU, e, n, ia0, ia1, 0.002, 0.012, y - MU / 2, y + MU / 2)
+        glass.face([(oU[0] - 0.004, iy0, ia0), (oU[0] - 0.004, iy0, ia1), (oU[0] - 0.004, iy1, ia1), (oU[0] - 0.004, iy1, ia0)], (-1, 0, 0))
+        obox(brass, oU, e, n, (a1 - 0.025) if k % 2 == 0 else (a0 + 0.015), (a1 - 0.015) if k % 2 == 0 else (a0 + 0.025), 0.018, 0.03, (y0 + y1) / 2 - 0.03, (y0 + y1) / 2 + 0.03)
+    # wares (film 2104/1100): red canisters, a green tray, red bowls on the band shelf; dishes in the cubbies and on the glass shelves
+    def stack(part, x, z, y, r, k, t=0.012):
+        for i in range(k):
+            part.lathe(x, z, y + i * (t + 0.002), [(0, r * 0.7), (t * 0.4, r * 0.75), (t, r)], n=20)
+    xm = X - 0.20
+    for i in range(4):                                             # canisters on the left bay
+        zc = z0 + 0.10 + i * 0.12
+        dred.lathe(xm, zc, c1, [(0, 0.05), (0.10, 0.05), (0.104, 0.045)], n=20); paint.lathe(xm, zc, c1 + 0.104, [(0, 0.047), (0.012, 0.047), (0.016, 0.02), (0.024, 0.012)], n=20)
+    dgreen.box(xm - 0.10, xm + 0.10, c1, c1 + 0.02, z0 + bw + 0.12, z0 + 2 * bw - 0.12)   # the green tray
+    for zc in (z0 + 2 * bw + 0.15, z0 + 2 * bw + 0.32):
+        dred.lathe(xm, zc, c1, [(0, 0.03), (0.04, 0.055), (0.045, 0.058)], n=20)
+    for k, (part, kind) in enumerate(((dgreen, "bowl"), (ddark, "plates"), (dred, "plates"))):
+        zc = z0 + (k + 0.5) * bw
+        if kind == "bowl": part.lathe(xm, zc, c0, [(0, 0.05), (0.07, 0.10), (0.075, 0.105)], n=20)
+        else: stack(part, xm, zc, c0, 0.11, 5)
+    for y in shelves:
+        for k in range(nb):
+            zc = z0 + (k + 0.5) * bw
+            stack(dred if (k + int(y * 10)) % 2 else dgreen, X - 0.14, zc - 0.12, y, 0.10, 4); stack(paint, X - 0.14, zc + 0.12, y, 0.10, 6)
+    for k in range(nb):
+        stack(dgreen if k % 2 else dred, X - 0.14, z0 + (k + 0.5) * bw, g0 - 0.004 + 0.0, 0.09, 3)
+
+
+hutch(K["hutch"])
 
 for st in K["seats"]:
     x0, x1, z0, z1 = *st["x"], *st["z"]; top = st["seat_top"]; cu = st["cushion"]; o, e, n = front_frame("+z", z1)
@@ -467,10 +545,13 @@ M = {"KT_Wood": material("KT_Wood", (0.36, 0.11, 0.12), 0.45), "KT_Tile": materi
      "KT_Steel": material("KT_Steel", (0.6, 0.6, 0.6), 0.3), "KT_Sink": material("KT_Sink", (0.92, 0.91, 0.88), 0.15),
      "KT_Cushion": material("KT_Cushion", (0.55, 0.06, 0.08), 0.9), "KT_Housing": material("KT_Housing", (0.85, 0.84, 0.8), 0.4),
      "KT_UnderLight": material("KT_UnderLight", (0.95, 0.95, 0.92), 0.5, (1.0, 0.93, 0.8), 5.0),
-     "KT_Pine": material("KT_Pine", (0.72, 0.48, 0.25), 0.4), "KT_UVPine": material("KT_UVPine", (0.72, 0.48, 0.25), 0.4), "KT_Dispenser": material("KT_Dispenser", (0.12, 0.12, 0.13), 0.3)}
+     "KT_Pine": material("KT_Pine", (0.72, 0.48, 0.25), 0.4), "KT_UVPine": material("KT_UVPine", (0.72, 0.48, 0.25), 0.4), "KT_Dispenser": material("KT_Dispenser", (0.12, 0.12, 0.13), 0.3),
+     "KT_Paint": material("KT_Paint", (0.80, 0.79, 0.74), 0.5), "KT_Glass": material("KT_Glass", (0.6, 0.65, 0.65), 0.05),
+     "KT_DishRed": material("KT_DishRed", (0.55, 0.04, 0.04), 0.3), "KT_DishGreen": material("KT_DishGreen", (0.06, 0.25, 0.12), 0.3),
+     "KT_DishDark": material("KT_DishDark", (0.05, 0.05, 0.05), 0.3)}
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("KitchenCabinets_HiFi", None); coll.objects.link(root)
-parts = (wood, tile, edge, grout, brass, black, steel, sink, cushion, housing, glow, pine, disp, pineuv)
+parts = (wood, tile, edge, grout, brass, black, steel, sink, cushion, housing, glow, pine, disp, pineuv, paint, glass, dred, dgreen, ddark)
 for p in parts:
     if p.f:
         ob = p.build(coll, M); ob.parent = root
