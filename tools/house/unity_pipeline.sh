@@ -63,6 +63,7 @@ preflight)   # cheap gates before any Unity launch (STATUS 8p f); runs them all,
     if out=$($g 2>&1); then echo "ok   $n"; else echo "FAIL $n"; echo "$out" | grep -E '^[^ ].*\.json:|^ *FAIL|Error' | grep -B1 -E '^ *FAIL|Error' | cut -c1-160 | head -8 || true; bad=1; fi
   done
   python3 tools/house/props_yaw.py | sed 's/^/     /'   # informational: furniture still on a shape-guessed turn (pin after a front render)
+  python3 tools/house/walk_notes.py | sed 's/^/     /' || true   # informational: walk notes with no disposition (docs/walk-notes-ledger.json)
   python3 tools/house/slow_jobs.py | sed 's/^/     /'   # informational: recurring slow work and builds since the last bake (never fails)
   [ $bad = 0 ] || { echo "preflight FAILED: Unity not launched (HA_NO_PREFLIGHT=1 to override)" >&2; exit 1; };;
 build)
