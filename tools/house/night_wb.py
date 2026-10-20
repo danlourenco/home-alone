@@ -22,7 +22,7 @@ FILM = str(ROOT / "0-homealone/full/homealone-movie-screencaps.com-{}.jpg")
 PERF = Path.home() / ".cache/home-alone-perf/runs"
 FALLBACK = {"hallbath": PERF / "hallbath-B1/hallbath-night.png", "buzz": PERF / "hallbath-B1/buzz-night.png",
             "foyer": PERF / "rel-oct20/foyer-night.png", "living": PERF / "rel-oct20/living-night.png",
-            "parents": PERF / "rel-oct20/parents-night.png", "dining": ROOT / "spec/captures/views/purchased/chippendale/built-night-dining246.png"}
+            "parents": PERF / "rel-oct20/parents-night.png", "dining": PERF / "nightwb/dining-night-A1.png", "kitchen": PERF / "nightwb/kitchen-night-A1.png"}
 W, H = 960.0, 528.0   # box coordinates below: the 960-wide film frame (528 high) / our render (540 high)
 R = lambda x0, y0, x1, y1, h=H: (x0 / W, y0 / h, x1 / W, y1 / h)
 O = lambda x0, y0, x1, y1: R(x0, y0, x1, y1, 540.0)
@@ -35,7 +35,7 @@ ROOMS = {   # room: ([(film frame, box)], [our box], surface)
     "dining": ([(251, R(180, 370, 420, 450))], [O(290, 265, 600, 340)], "white lace tablecloth"),
     "kitchen": ([(1051, R(10, 30, 100, 90)), (1151, R(10, 30, 100, 90))], [O(0, 0, 0, 0)], "the room's cream paper (set in POSE_BOX)"),
 }
-POSE_BOX = {}   # our box per pose when the tour render differs from FALLBACK's framing (filled once the kitchen/dining poses exist)
+POSE_BOX = {"kitchen": O(450, 185, 485, 230), "dining": O(300, 262, 620, 276)}   # our box in the PerfProbe tour pose (kitchen: lit paper left of the hutch, the dim corner read 7.45 from near-black blue; dining: tablecloth top. The dining room's white doors read 3.18 / 2.22 / 1.61 at 0 / -28 / -57 against film 251's sheers 1.25, a different surface)
 
 
 def box_rgb(path, b):
