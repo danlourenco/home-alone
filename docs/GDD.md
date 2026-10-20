@@ -80,7 +80,7 @@ behaviour tree or hybrid) is open (vision §10), chosen in the slice. Multiplaye
 route, not now. Licences: a personal hobby project; purchased assets and the film IP limit distribution.
 
 ## 7. Everything else still open (Oct 19)
-- **House must-haves before calling the environment:** the upstairs hall bathroom (missing); the parents' ensuite (asked Oct 18);
+- **House must-haves before calling the environment:** the upstairs hall bathroom and the parents' ensuite are built (TRIAL 1, Oct 19, changes/2026-10-19-bathrooms.json; awaiting the walk);
   the kitchen remainder (island small props read as simple shapes; stools a bit pale; the white goose decoy, a purchase; the
   film's pine pigeonhole desk; a poinsettia on the seat counter's end). The pine stack and the breakfast hutch are sized from
   IMG_4305 (TRIAL, changes/2026-10-19-kitchen-cupboard-hutch.json), awaiting the walk.
