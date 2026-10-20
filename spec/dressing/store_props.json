@@ -4855,6 +4855,204 @@
    "movable": true,
    "hides": [],
    "source": "props lane (Oct 19): film 6044/2116: red fruit in the red bowl on the green plate (island, near the L); Poly Haven CC0 food_apple_01, 7.4 cm"
+  },
+  {
+   "name": "LivingNutcracker_Coffee01",
+   "prefab": "Assets/Purchased/Nutcrackers/Red.prefab",
+   "x": [
+    5.162,
+    5.258
+   ],
+   "z": [
+    13.426,
+    13.517
+   ],
+   "y0": 0.46,
+   "height": 0.355,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "hides": [
+    "Nutcracker01_Red",
+    "Nutcracker01_Green",
+    "Nutcracker01_White",
+    "Nutcracker01_Black",
+    "Nutcracker01_Skin",
+    "Nutcracker01_Gold",
+    "Nutcracker01_Brown",
+    "Nutcracker01_Tin"
+   ],
+   "source": "props lane (props.py add, Oct 19): User Oct19 replacement from Downloads/nutcraker; existing figure base position and 0.355m height preserved; film10636 coffee group / Marina458 console group. Model 0.09620735 x 0.0910240859 x 0.355000019 m (Nutcracker Red), fitted to 0.096 x 0.091 x 0.355.",
+   "scale": [
+    1,
+    1,
+    1
+   ]
+  },
+  {
+   "name": "LivingNutcracker_Coffee02",
+   "prefab": "Assets/Purchased/Nutcrackers/Green.prefab",
+   "x": [
+    5.363,
+    5.466
+   ],
+   "z": [
+    13.565,
+    13.719
+   ],
+   "y0": 0.46,
+   "height": 0.355,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "hides": [
+    "Nutcracker02_Red",
+    "Nutcracker02_Green",
+    "Nutcracker02_White",
+    "Nutcracker02_Black",
+    "Nutcracker02_Skin",
+    "Nutcracker02_Gold",
+    "Nutcracker02_Brown",
+    "Nutcracker02_Tin"
+   ],
+   "source": "props lane (props.py add, Oct 19): User Oct19 replacement from Downloads/nutcraker; existing figure base position and 0.355m height preserved; film10636 coffee group / Marina458 console group. Model 0.103071347 x 0.153523713 x 0.355000019 m (Nutcracker Green), fitted to 0.103 x 0.154 x 0.355.",
+   "scale": [
+    1,
+    1,
+    1
+   ]
+  },
+  {
+   "name": "LivingNutcracker_Coffee03",
+   "prefab": "Assets/Purchased/Nutcrackers/Red.prefab",
+   "x": [
+    5.132,
+    5.228
+   ],
+   "z": [
+    13.856,
+    13.947
+   ],
+   "y0": 0.46,
+   "height": 0.355,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "hides": [
+    "Nutcracker03_Red",
+    "Nutcracker03_Green",
+    "Nutcracker03_White",
+    "Nutcracker03_Black",
+    "Nutcracker03_Skin",
+    "Nutcracker03_Gold",
+    "Nutcracker03_Brown",
+    "Nutcracker03_Tin"
+   ],
+   "source": "props lane (props.py add, Oct 19): User Oct19 replacement from Downloads/nutcraker; existing figure base position and 0.355m height preserved; film10636 coffee group / Marina458 console group. Model 0.09620735 x 0.0910240859 x 0.355000019 m (Nutcracker Red), fitted to 0.096 x 0.091 x 0.355.",
+   "scale": [
+    1,
+    1,
+    1
+   ]
+  },
+  {
+   "name": "LivingNutcracker_Console01",
+   "prefab": "Assets/Purchased/Nutcrackers/Red.prefab",
+   "x": [
+    6.952,
+    7.048
+   ],
+   "z": [
+    14.396,
+    14.487
+   ],
+   "y0": 0.785,
+   "height": 0.355,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "hides": [
+    "Nutcracker04_Red",
+    "Nutcracker04_Green",
+    "Nutcracker04_White",
+    "Nutcracker04_Black",
+    "Nutcracker04_Skin",
+    "Nutcracker04_Gold",
+    "Nutcracker04_Brown",
+    "Nutcracker04_Tin"
+   ],
+   "source": "props lane (props.py add, Oct 19): User Oct19 replacement from Downloads/nutcraker; existing figure base position and 0.355m height preserved; film10636 coffee group / Marina458 console group. Model 0.09620735 x 0.0910240859 x 0.355000019 m (Nutcracker Red), fitted to 0.096 x 0.091 x 0.355. Grounding check: lower by15mm from the old floating position onto the actual console top.",
+   "scale": [
+    1,
+    1,
+    1
+   ]
+  },
+  {
+   "name": "LivingNutcracker_Console02",
+   "prefab": "Assets/Purchased/Nutcrackers/Red.prefab",
+   "x": [
+    6.972,
+    7.068
+   ],
+   "z": [
+    13.596,
+    13.687
+   ],
+   "y0": 0.8,
+   "height": 0.355,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "hides": [
+    "Nutcracker05_Red",
+    "Nutcracker05_Green",
+    "Nutcracker05_White",
+    "Nutcracker05_Black",
+    "Nutcracker05_Skin",
+    "Nutcracker05_Gold",
+    "Nutcracker05_Brown",
+    "Nutcracker05_Tin"
+   ],
+   "source": "props lane (props.py add, Oct 19): User Oct19 replacement from Downloads/nutcraker; existing figure base position and 0.355m height preserved; film10636 coffee group / Marina458 console group. Model 0.09620735 x 0.0910240859 x 0.355000019 m (Nutcracker Red), fitted to 0.096 x 0.091 x 0.355.",
+   "scale": [
+    1,
+    1,
+    1
+   ]
+  },
+  {
+   "name": "LivingNutcracker_Console03",
+   "prefab": "Assets/Purchased/Nutcrackers/Green.prefab",
+   "x": [
+    6.923,
+    7.026
+   ],
+   "z": [
+    13.295,
+    13.449
+   ],
+   "y0": 0.8,
+   "height": 0.355,
+   "back": "",
+   "yaw": 0,
+   "collide": false,
+   "hides": [
+    "Nutcracker06_Red",
+    "Nutcracker06_Green",
+    "Nutcracker06_White",
+    "Nutcracker06_Black",
+    "Nutcracker06_Skin",
+    "Nutcracker06_Gold",
+    "Nutcracker06_Brown",
+    "Nutcracker06_Tin"
+   ],
+   "source": "props lane (props.py add, Oct 19): User Oct19 replacement from Downloads/nutcraker; existing figure base position and 0.355m height preserved; film10636 coffee group / Marina458 console group. Model 0.103071347 x 0.153523713 x 0.355000019 m (Nutcracker Green), fitted to 0.103 x 0.154 x 0.355.",
+   "scale": [
+    1,
+    1,
+    1
+   ]
   }
  ]
 }

@@ -1,0 +1,12 @@
+Refresh Props: 6 piece(s)
+LivingNutcracker_Coffee01: placed, yaw 0, drawn (5.16, -2.57, -13.52) .. (5.26, -2.21, -13.43)
+LivingNutcracker_Coffee02: placed, yaw 0, drawn (5.36, -2.57, -13.72) .. (5.47, -2.21, -13.57)
+LivingNutcracker_Coffee03: placed, yaw 0, drawn (5.13, -2.57, -13.95) .. (5.23, -2.21, -13.86)
+LivingNutcracker_Console01: placed, yaw 0, drawn (6.95, -2.24, -14.49) .. (7.05, -1.89, -14.40)
+LivingNutcracker_Console02: placed, yaw 0, drawn (6.97, -2.23, -13.69) .. (7.07, -1.87, -13.60)
+LivingNutcracker_Console03: placed, yaw 0, drawn (6.92, -2.23, -13.45) .. (7.03, -1.87, -13.30)
+Props check: 6 store models, 0 problems
+Z-fight check: 2963793 triangles, 2417 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
+Clash check: 3319870 triangles, 0 parts passing through another (49 allowed joints) (every visible mesh checked)
+Props triangle budget: 4 models over 150k triangles (Assets/Purchased/PurchasedPlants.glb 411k, Assets/Purchased/HallPlants.glb 296k, Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Models/ChristmasTree.fbx 259k, Assets/Models/Foyer/HallDressing.glb 202k)
+Paint-can rigs excluded during surface checks, matching the production build; restored before save.

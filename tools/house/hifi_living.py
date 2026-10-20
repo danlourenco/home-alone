@@ -376,6 +376,7 @@ def lamps():
 # ------------------------------------------------------------------------------------------------ small dressing
 porcelain, gilt = P("Porcelain", "LV_Porcelain"), P("Gilt", "LV_Gilt")
 NC = {k: P("Nut_" + k, "LV_" + k) for k in ("Red", "Green", "White", "Black", "Skin", "Gold", "Brown", "Tin")}
+NUTCRACKERS = []   # separate fallback figures so purchased replacements never hide the train or other shared-colour props
 STK = {"red": P("StockRed", "LV_Red"), "cream": P("StockCream", "LV_White"), "cuff": P("StockCuff", "LV_Porcelain")}
 
 
@@ -394,16 +395,18 @@ def brackets():
 
 def nutcracker(x, z, y, coat, hat, beard=True):
     """film 10636: wooden nutcrackers, ~0.36 m: base, legs, coat, face, beard, hat (lathe parts)"""
-    NC["Black"].box(x - 0.05, x + 0.05, y, y + 0.025, z - 0.04, z + 0.04)
-    NC["Black"].lathe(x, z, y + 0.025, [(0, 0.032), (0.035, 0.032), (0.035, 0.0)], 12)            # boots
-    NC["White"].lathe(x, z, y + 0.06, [(0, 0.029), (0.055, 0.028), (0.055, 0.0)], 12)             # trousers, standing on the boots
-    NC[coat].lathe(x, z, y + 0.115, [(0, 0.04), (0.035, 0.037), (0.035, 0.0)], 14)                # coat below the belt
-    NC["Gold"].lathe(x, z, y + 0.15, [(0, 0.042), (0.012, 0.042), (0.012, 0.0)], 14)              # belt
-    NC[coat].lathe(x, z, y + 0.162, [(0, 0.036), (0.063, 0.034), (0.063, 0.0)], 14)               # coat above it
-    NC["Skin"].lathe(x, z, y + 0.225, [(0, 0.028), (0.05, 0.03), (0.05, 0.0)], 12)
+    nc = {k: P(f"Nutcracker{len(NUTCRACKERS) // len(NC) + 1:02d}_{k}", "LV_" + k) for k in NC}
+    NUTCRACKERS.extend(nc.values())
+    nc["Black"].box(x - 0.05, x + 0.05, y, y + 0.025, z - 0.04, z + 0.04)
+    nc["Black"].lathe(x, z, y + 0.025, [(0, 0.032), (0.035, 0.032), (0.035, 0.0)], 12)            # boots
+    nc["White"].lathe(x, z, y + 0.06, [(0, 0.029), (0.055, 0.028), (0.055, 0.0)], 12)             # trousers, standing on the boots
+    nc[coat].lathe(x, z, y + 0.115, [(0, 0.04), (0.035, 0.037), (0.035, 0.0)], 14)                # coat below the belt
+    nc["Gold"].lathe(x, z, y + 0.15, [(0, 0.042), (0.012, 0.042), (0.012, 0.0)], 14)              # belt
+    nc[coat].lathe(x, z, y + 0.162, [(0, 0.036), (0.063, 0.034), (0.063, 0.0)], 14)               # coat above it
+    nc["Skin"].lathe(x, z, y + 0.225, [(0, 0.028), (0.05, 0.03), (0.05, 0.0)], 12)
     if beard:
-        NC["White"].box(x - 0.02, x + 0.02, y + 0.215, y + 0.25, z - 0.034, z - 0.026)
-    NC[hat].lathe(x, z, y + 0.275, [(0, 0.032), (0.07, 0.03), (0.08, 0.0)], 12)
+        nc["White"].box(x - 0.02, x + 0.02, y + 0.215, y + 0.25, z - 0.034, z - 0.026)
+    nc[hat].lathe(x, z, y + 0.275, [(0, 0.032), (0.07, 0.03), (0.08, 0.0)], 12)
 
 
 def small():
@@ -521,7 +524,7 @@ export([paint, glass, brass, voile, hem, damask, tie], {"LV_Paint": ((0.88, 0.87
 paint, glass, brass = P("Paint", "LV_Paint"), P("Glass", "LV_Glass"), P("Brass", "LV_Brass")
 SMOOTH.clear()
 fireplace(); fire_screen(); stockings(); (piano() if "replaced_by" not in D["piano"] else None); lamps(); brackets(); extra = small(); tree()
-parts = [white, black, brick, slate, wood_log, screen_mesh, brass, mahog, keysw, keysb, felt, porcelain, gilt] + list(G.values()) + list(NC.values()) + \
+parts = [white, black, brick, slate, wood_log, screen_mesh, brass, mahog, keysw, keysb, felt, porcelain, gilt] + list(G.values()) + list(NC.values()) + NUTCRACKERS + \
         [STK["red"], STK["cream"], STK["cuff"]] + extra + list(C7.values()) + list(GIFT.values())
 MATS = {"LV_Paint": ((0.88, 0.87, 0.83), 0.35), "LV_Iron": ((0.02, 0.02, 0.02), 0.6), "LV_Firebrick": ((0.16, 0.06, 0.04), 0.9), "LV_Slate": ((0.04, 0.04, 0.045), 0.4),
         "LV_Log": ((0.12, 0.07, 0.04), 0.9), "LV_ScreenMesh": ((0.03, 0.03, 0.03), 0.5), "LV_Brass": ((0.75, 0.56, 0.25), 0.3), "LV_Mahogany": ((0.12, 0.04, 0.025), 0.3),

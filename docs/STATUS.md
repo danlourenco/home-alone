@@ -1,5 +1,7 @@
 # Current status — start here
 
+- [ ] **Nutcrackers TRIAL:** six living-room figures replaced with user-downloaded red/green designs; live preview and checked baked scratch scene ready.35.5cm, no added colliders; one old floating base lowered15mm.0 prop/z-fight/clash problems; comparisons `spec/captures/views/living/nutcrackers/`. User approval pending; no Play restart.
+
 - [x] **Stair/soffit support ACCEPTED (Oct19):** user loaded3a0e0afe and said "it looks great. approved." All night/day load checks passed.90/90 baluster feet supported,5 aligned planes;0 z-fights/clashes, no new blocked routes. Comparison `spec/captures/views/foyer/stair-support/compare-note1623.jpg`. Other defects remain open.
 
 ## OPEN WALK NOTES (Oct 18 evening; user: "don't lose track of them") — fix eventually, check off here

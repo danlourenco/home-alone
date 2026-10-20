@@ -1,0 +1,28 @@
+{
+  "status": "TRIAL - live preview; user acceptance pending",
+  "source": "User Downloads/nutcraker/Nutcraker.fbx plus texture.zip; private inputs in sfm-work/purchased/nutcrackers, private outputs Assets/Purchased/Nutcrackers",
+  "figures": 6,
+  "variants": {
+    "red": {
+      "triangles": 4870,
+      "instances": 4
+    },
+    "green": {
+      "triangles": 21750,
+      "instances": 2
+    }
+  },
+  "height_m": 0.355,
+  "placement": "Existing base x/z and height retained; Console01 lowered15mm onto drawn tabletop per grounding gate. Uniform model scale; no new colliders.",
+  "unchanged": "30 other LivingBuiltins meshes retain identical vertices/faces/UVs; player not moved, no Play restart, no runtime/editor script recompilation in main.",
+  "checks": "6 props /0 problems;0 z-fights/0 clashes in production scope (paint-can rigs temporarily disabled and restored); existing4 over-budget models unchanged; all six use HDRP base/mask maps, body normal maps and alpha-tested hair/beards",
+  "persistence": "Private prefabs and spec saved. Verified existing baked scratch scene updated in place with replacements, without full house build/bake. Main live changes disappear on Stop; load checked scratch scene when ready or refresh props in stopped editor then save.",
+  "reproduce": [
+    "Blender -b --factory-startup -P tools/house/purchased_nutcrackers.py",
+    "Run tools/house/import_nutcrackers.cs through Unity CLI eval_file (file path, timeout60000ms).",
+    "python3 tools/house/build_models.py --only hifi_living",
+    "python3 tools/house/props.py refresh <six LivingNutcracker_ names from store_props.json>",
+    "For old shared-mesh scene while walking only: run tools/house/preview_nutcrackers.cs through eval_file.",
+    "For verification: copy tools/house/check_nutcrackers.cs into SCRATCH Assets/Editor/NutcrackerCheck.cs, run Unity batch -executeMethod SpecGreybox.CheckNutcrackers. Never run that check in a walking editor."
+  ]
+}
