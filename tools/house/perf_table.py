@@ -5,7 +5,8 @@
                                        > ~3 means the picture changed: look at both PNGs)
   perf_table.py --gate RUN_DIR [MD]  -> exit 1 if any pose's frame mean (or a motion step's time to rest) is over its budget in the
                                        "## BUDGET" table of docs/PERFORMANCE.md (first matching pose pattern wins)
-  perf_table.py --sheet RUN_DIR [POSE ...] -> RUN_DIR/sheet.jpg: the visual comparison (pose rows x variant columns, FPS on each tile)
+  perf_table.py --sheet RUN_DIR [POSE ...] [film:N,N,...] -> RUN_DIR/sheet.jpg: the visual comparison (pose rows x variant columns, FPS
+                                       on each tile); film:N,... adds a last row of film frames (0-homealone screencaps) for reference
   perf_table.py --selftest
 """
 import fnmatch
@@ -46,7 +47,7 @@ def fps(ms):
     return round(1000.0 / ms) if ms else 0
 
 
-def sheet(d, poses=None, out=None):
+def sheet(d, poses=None, out=None, film=()):
     """A visual comparison sheet for one -perfab run (user, Oct 20: every shadow/lighting change gets one): one row per pose, one column
     per variant (A = base), each tile labelled with its variant and FPS. Variant names come from args.txt (perf_probe.sh run writes it)."""
     from PIL import Image, ImageDraw, ImageFont
@@ -78,6 +79,15 @@ def sheet(d, poses=None, out=None):
             rows.append(row)
     if not rows:
         return None
+    if film:   # the film's frames of the same rooms, one row (wrapping at the sheet's width)
+        cols = max(len(r) for r in rows); frow = []
+        for n in film:
+            f = Path(__file__).resolve().parents[2] / f"0-homealone/full/homealone-movie-screencaps.com-{n}.jpg"
+            if not f.exists():
+                continue
+            im = Image.open(f).convert("RGB"); im = im.resize((W, int(im.height * W / im.width)))
+            dr = ImageDraw.Draw(im); dr.rectangle([0, 0, W, 32], fill=(0, 0, 0)); dr.text((8, 4), f"film {n}", fill=(255, 255, 255), font=font); frow.append(im)
+        rows += [frow[i:i + cols] for i in range(0, len(frow), cols)]
     sh = Image.new("RGB", (max(sum(i.width + 8 for i in r) for r in rows), sum(r[0].height + 8 for r in rows)), (20, 20, 20)); y = 0
     for r in rows:
         x = 0
@@ -177,7 +187,8 @@ def main(args):
     if args[0] == "--gate":
         sys.exit(gate(args[1], args[2] if len(args) > 2 else Path(__file__).resolve().parents[2] / "docs/PERFORMANCE.md"))
     if args[0] == "--sheet":   # --sheet RUN_DIR [POSE ...]
-        return sheet(args[1], args[2:] or None)
+        film = [n for a in args[2:] if a.startswith("film:") for n in a[5:].split(",") if n]
+        return sheet(args[1], [a for a in args[2:] if not a.startswith("film:")] or None, film=film)
     if args[0] == "--ab":   # --ab A1 B1 A2 B2 ...: alternate tours of two builds
         return ab([(d, "") for d in args[1::2]], [(d, "") for d in args[2::2]])
     if len(args) == 1 and any(Path(args[0]).glob("*-A1.json")):   # one -perfab run: A (base) vs each variant B, C, ... (-perfvariants)

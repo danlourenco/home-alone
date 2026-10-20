@@ -34,6 +34,9 @@ public class PerfProbe : MonoBehaviour
         ("hallbath", new Vector3(8.7f, 1.31f, -10.6f), 106f, -8f),       // hall bath, just inside its door, facing the sconce over the sink (film 336)
         ("hallbathdoor", new Vector3(6.4f, 1.31f, -10.6f), 90f, 0f),     // the hall outside the bath door, looking in
         ("buzz", new Vector3(7.9f, 1.31f, -11.95f), 145f, 8f),           // Buzz's room from his door, toward the windows and the bed
+        // Oct 20 (night white balance, tools/house/night_wb.py): -perfposes hallbath,buzz,foyer,living,parents,kitchen,dining,street
+        ("kitchen", new Vector3(-3.4f, -1.426f, -0.9f), 115.7f, 2.8f),    // the kitchen toward the sconces and the breakfast table (film 1051/1151's side)
+        ("dining", new Vector3(7.5f, -1.5f, -8.7f), 357.2f, 12.4f),       // the dining room from the foyer doorway, the table and the French doors (film 251)
     };
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -89,7 +92,8 @@ public class PerfProbe : MonoBehaviour
         //   -perfvariants "sundist=80;sundist=60 splits=0.05,0.15,0.3;nocast=props"   several variants B, C, D ... (with -perfab: every pose
         //                         sampled A1 B1 C1 .. A2 B2 C2 ..). Keys: sundist=M (sun shadow max distance), splits=a,b,c (cascade
         //                         splits), cascades=N, nocast=props|interior|exterior (those renderers stop casting shadows: an
-        //                         attribution of the day shadow cost, not a look). Without it the knobs above are the one variant B.
+        //                         attribution of the day shadow cost, not a look), wb=T (night interior white balance, base 0).
+        //                         Without it the knobs above are the one variant B.
         //   -perfdn day|night     just day or night
         var variants = (Arg("-perfvariants") ?? "").Split(new[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries)
             .Select(v => v.Split(new[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries).Select(kv => kv.Split('=')).ToDictionary(kv => kv[0], kv => kv.Length > 1 ? kv[1] : "")).ToList();
@@ -128,6 +132,8 @@ public class PerfProbe : MonoBehaviour
             string S(string k) => spec != null && spec.TryGetValue(k, out var v) ? v : null;
             string[] L(string k, string[] dflt) => spec == null ? dflt : (S(k) ?? "").Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
             int[] I(string k, int[] dflt) => spec == null ? dflt : L(k, null).Select(int.Parse).ToArray();
+            // wb=T: the night interior white balance (HouseNightMode.SetWhiteBalance, not saved); when any variant sets it the base is 0
+            if (variants.Any(v => v.ContainsKey("wb"))) HouseNightMode.SetWhiteBalance(S("wb") is string wbs ? float.Parse(wbs, System.Globalization.CultureInfo.InvariantCulture) : 0f, false);
             float rk = spec == null ? rangeK : S("range") is string rs ? float.Parse(rs, System.Globalization.CultureInfo.InvariantCulture) : 1f;
             var ns = L("noshadow", noShadow); var pf = L("lightsoff", prefixes); var pc = I("pcss", pcss); var q = I("shadowq", shq);
             var mr = spec == null ? mirrorRes : S("mirror") is string m ? new[] { mirrorRes.Length > 0 ? mirrorRes[0] : int.Parse(m), int.Parse(m) } : mirrorRes.Take(1).ToArray();
