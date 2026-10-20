@@ -126,7 +126,7 @@ load)
     done   # if/fi, not &&: a false test as the loop's last command killed the script under set -e (Oct 16)
   done
   for m in "$S"/Assets/Scripts/*.cs.meta; do cmp -s "$m" "$P/Assets/Scripts/$(basename "$m")" || echo "WARNING: $(basename "$m") GUID differs from the project's"; done
-  ev 'UnityEditor.AssetDatabase.Refresh(); return "r";' >/dev/null; idle
+  ev 'UnityEditor.AssetDatabase.Refresh(); return "r";' >/dev/null || echo "load: the editor was busy importing (Refresh timed out); waiting for it" >&2; idle   # Oct 20: a big new store asset made this time out and set -e ended the load silently
   (cd "$P" && "$CLI" command open_scene Assets/Scenes/House_WallGrid.unity >/dev/null); idle
   # the first Play after a load can come up dull (lighting data still settling; user Oct 17, "sometimes this happens before it's
   # loaded"): a second Play cycle fixed it each time. ponytail: workaround, find why the first Play misses the baked data if it persists
