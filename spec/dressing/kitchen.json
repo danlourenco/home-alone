@@ -502,15 +502,32 @@
   },
   {
    "name": "pine_stack",
-   "back": [
-    2.296,
-    0.062
-   ],
-   "door_w": 0.33,
-   "side_w": 0.3,
    "top": 1.85,
    "sections": 4,
-   "source": "film 2104 = the user's IMG_4305 (tools/house/film2104_measure.py; changes/2026-10-19-kitchen-cupboard-hutch.json, DEVIATIONS 109): a freestanding stack of four knotty-pine boxes turned 45 deg, one framed raised-panel door per section on the face toward the island (+z/-x), a plain side toward the seat counter; height 1.844/1.847, lips 0.474/0.922/1.412, door face 0.322, side 0.25-0.33 (built 0.30); back corner 2 cm off the gallery wall, 0.34 m along it from the seat counter's front line; a white goose decoy on top (film; not modelled)"
+   "source": "film 2104 = the user's IMG_4305 (tools/house/film2104_measure.py, orientation test tools/house/film2104_measure.py --orient; changes/2026-10-19-kitchen-cupboard-hutch.json, DEVIATIONS 109): a corner cupboard of four stacked knotty-pine sections; ONE front face 0.50 m wide stile to stile at 60 deg to the seat counter (fits the stack's edges at 2.1 px rms; a box turned 45 deg 6.8 px, square to the gallery wall 22.3 px), a 0.16 m plain left section and one framed door per section on the right, height 1.845/1.854, lips 0.474/0.922/1.412; its left front corner at the seat counter's end (0.30 m off the gallery wall, 0.12 m proud of the counter's front), its right front corner 5 cm off the gallery wall; a wedge back to the gallery wall (its left side, perpendicular to the front, is the dark sliver left of the front in 2104); the corner pocket behind the counter's end stays open: the film shows wallpaper down to the floor there; a white goose decoy on top (not modelled)",
+   "poly": [
+    [
+     2.026,
+     -0.15
+    ],
+    [
+     2.266,
+     0.285
+    ],
+    [
+     2.306,
+     0.285
+    ],
+    [
+     2.306,
+     -0.311
+    ]
+   ],
+   "front_edge": [
+    0,
+    1
+   ],
+   "plain_w": 0.16
   }
  ],
  "seats": [
@@ -770,14 +787,14 @@
    ]
   },
   {
-   "name": "pine_stack",
+   "name": "pine_stack_a",
    "x": [
-    1.967,
-    2.179
+    2.12,
+    2.306
    ],
    "z": [
-    -0.055,
-    0.157
+    -0.2,
+    -0.02
    ],
    "y": [
     0,
@@ -785,14 +802,14 @@
    ]
   },
   {
-   "name": "pine_stack_x",
+   "name": "pine_stack_b",
    "x": [
-    1.883,
-    2.263
+    2.18,
+    2.306
    ],
    "z": [
-    0.011,
-    0.091
+    -0.02,
+    0.1
    ],
    "y": [
     0,
@@ -800,14 +817,14 @@
    ]
   },
   {
-   "name": "pine_stack_z",
+   "name": "pine_stack_c",
    "x": [
-    2.033,
-    2.113
+    2.25,
+    2.306
    ],
    "z": [
-    -0.139,
-    0.241
+    0.1,
+    0.24
    ],
    "y": [
     0,

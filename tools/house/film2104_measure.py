@@ -7,6 +7,7 @@ frame. Registration into spec: the island's far stool-side corner (683,378) = sp
 wall are then placed by their offset from that wall (the film's wall line reads 0.28 m nearer the island than Marina's spec: DEVIATIONS).
 
   uv run --with numpy --with scipy python -I tools/house/film2104_measure.py          # prints the fit, the checks and the sizes
+  ... film2104_measure.py --orient   # the stack's orientation: residuals of each hypothesis against its edges (walk note: "looks off")
 """
 import json
 from pathlib import Path
@@ -109,5 +110,28 @@ def main():
     print(json.dumps(out, indent=1))
 
 
+# the stack's edges, picked on an 8-frame average of 2104-2110 / 2194-2200 (spec/captures/picks/stack-bottom-avg.jpg): the bottom and the
+# top, each at the left end, the plain-part / door-part boundary (J) and the right end
+EDGES = {"bot": {"L": (280, 582), "J": (322, 575), "R": (392, 556)}, "top": {"L": (232, 80), "J": (296, 82), "R": (368, 82)}}
+
+
+def orient():
+    f, R, Cw, rms = fit(); K = np.array([[f, 0, C0[0]], [0, f, C0[1]], [0, 0, 1]])
+    def vp(deg):
+        q = K @ R @ np.array([np.cos(np.radians(deg)), 0, np.sin(np.radians(deg))]); return q[:2] / q[2]
+    def dist(p, a, v):
+        p, a, v = map(np.asarray, (p, a, v)); d = (v - a) / np.linalg.norm(v - a); return abs((p - a) @ np.array([-d[1], d[0]]))
+    def rmsr(face, side): return float(np.sqrt(np.mean([dist(o["R"], o["J"], vp(face)) ** 2 for o in EDGES.values()] + [dist(o["L"], o["J"], vp(side)) ** 2 for o in EDGES.values()])))
+    best = min(range(181), key=lambda t: rmsr(t, t))
+    out = {"square to the gallery wall (face 90, side 0)": rmsr(90, 0), "box turned 45 deg (face 45, side -45)": rmsr(45, -45), f"one front face at {best} deg": rmsr(best, best)}
+    print(json.dumps({k: round(v, 1) for k, v in out.items()}, indent=1))
+    Ki = np.linalg.inv(K)
+    def at_y(p, y): r = R.T @ (Ki @ np.array([p[0], p[1], 1.0])); return Cw + (y - Cw[1]) / r[1] * r
+    Lf, Rf = at_y(EDGES["bot"]["L"], -CH), at_y(EDGES["bot"]["R"], -CH)
+    print("front width stile to stile %.3f m at %.0f deg; plain part %.3f" % (np.hypot(*(Rf - Lf)[[0, 2]]), np.degrees(np.arctan2((Rf - Lf)[2], (Rf - Lf)[0])),
+          np.hypot(*(at_y(EDGES["bot"]["J"], -CH) - Lf)[[0, 2]])))
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+    orient() if "--orient" in sys.argv else main()

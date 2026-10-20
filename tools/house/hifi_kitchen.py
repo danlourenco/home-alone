@@ -284,7 +284,7 @@ wood.box(s["x"][0] + TR, s["x"][1] - TR, 0.0, TOE, l["z"][1] - TR, s["z"][1] - T
 # that thing in the corner? it looks weird": a plain slab with smeared triplanar grain). IMG_4305 / film 2116: four stacked pine
 # sections, each a face frame round framed raised-panel doors with wooden knobs, a moulded lip between sections, a moulded top.
 # Oct 19 (user: "make sure ... the wooden thing in the corner [is] sized correctly"): sized from film 2104 = IMG_4305 (pine_stack below:
-# a 0.33 x 0.30 x 1.85 m stack turned 45 deg, one door per section), replacing Marina's 1.29 m angled pantry (DEVIATIONS 109). Grain on UVs (KT_UVPine, 1 UV = 1 m): up the stiles and panels, along rails and mouldings.
+# a corner cupboard, one 0.50 m front at 60 deg, 1.85 m, one door per section), replacing Marina's 1.29 m angled pantry (DEVIATIONS 109). Grain on UVs (KT_UVPine, 1 UV = 1 m): up the stiles and panels, along rails and mouldings.
 pineuv = Part("PineUV", "KT_UVPine")   # not "KT_Pine..." (PlaceHiFi remaps by name prefix)
 _MEMBER = [0]
 
@@ -347,30 +347,36 @@ def knob(o, e, n, a, y, base):
 
 
 def pine_stack(t):
-    """The film's knotty-pine stack (film 2104 = IMG_4305; tools/house/film2104_measure.py): four boxes turned 45 deg, the door face toward
-    the island with a face frame round ONE framed raised-panel door per section and a turned knob on its left stile side, a plain side
-    toward the seat counter, a moulded lip across the door face between sections (film: the lips stop at the door face), a flat cap."""
-    W, D, top = t["door_w"], t["side_w"], t["top"]; s2 = math.sqrt(0.5)
-    e = (s2, s2); n = (-s2, s2)                                   # door face runs +x+z; it faces -x+z (the island)
-    bx, bz = t["back"]; o = (bx - (W + D) * s2, bz - (W - D) * s2)   # the front corner (door face's left end)
+    """The film's knotty-pine corner cupboard (film 2104 = IMG_4305; tools/house/film2104_measure.py --orient): one front face at 60 deg
+    to the seat counter, four stacked sections, each a face frame with a wide plain left section and ONE framed raised-panel door with a
+    turned knob; a moulded lip across the door part between sections (the film's lips); a flat cap. The carcass fills the footprint
+    polygon back into the corner (sections split by 2 mm seams)."""
+    poly = [tuple(v) for v in t["poly"]]; i, j = t["front_edge"]; (ax, az), (bx_, bz) = poly[i], poly[j]
+    W = math.hypot(bx_ - ax, bz - az); e = ((bx_ - ax) / W, (bz - az) / W)
+    cx_, cz_ = sum(p[0] for p in poly) / len(poly), sum(p[1] for p in poly) / len(poly)
+    n = (-e[1], e[0]) if (-e[1]) * (ax - cx_) + e[0] * (az - cz_) > 0 else (e[1], -e[0])
+    def pull_in(r): return [p if k not in (i, j) else (p[0] - n[0] * r, p[1] - n[1] * r) for k, p in enumerate(poly)]
+    o, top, PL = (ax, az), t["top"], t["plain_w"]
     FW, DW, gap, CAP = 0.045, 0.05, 0.003, 0.035
     db, df = -DT, 0.012
     tops = [0.0] + list(t.get("lips", [0.474, 0.922, 1.412])) + [top - CAP]
     for si, (y0, y1) in enumerate(zip(tops, tops[1:])):
-        yb = y1 - (0.002 if si < 3 else 0.0)                      # a 2 mm seam between the stacked boxes
-        pbox(o, e, n, 0.0, W, -D, -DT, y0, yb, "v")              # the box (its side at a=0 is the plain face toward the counter)
-        for a0, a1 in ((0.0, FW), (W - FW, W)):                   # face-frame stiles
-            pbox(o, e, n, a0, a1, -DT, 0.0, y0, yb, "v")
-        pbox(o, e, n, FW, W - FW, -DT, 0.0, y0, y0 + FW, "h"); pbox(o, e, n, FW, W - FW, -DT, 0.0, yb - FW, yb, "h")
-        b0, b1, c0, c1 = FW + gap, W - FW - gap, y0 + FW + gap, yb - FW - gap
+        yb = y1 - (0.002 if si < 3 else 0.0)                      # a 2 mm seam between the stacked sections
+        prism(pine, pull_in(DT), y0, yb)                          # the carcass behind the face frame
+        pbox(o, e, n, 0.0, PL, -DT, 0.0, y0, yb, "v")             # the wide plain left section (film: plain pine, knots)
+        pbox(o, e, n, W - FW, W, -DT, 0.0, y0, yb, "v")           # right stile
+        pbox(o, e, n, PL, W - FW, -DT, 0.0, y0, y0 + FW, "h"); pbox(o, e, n, PL, W - FW, -DT, 0.0, yb - FW, yb, "h")
+        b0, b1, c0, c1 = PL + gap, W - FW - gap, y0 + FW + gap, yb - FW - gap
         pbox(o, e, n, b0, b0 + DW, db + 0.002, df, c0, c1, "v"); pbox(o, e, n, b1 - DW, b1, db + 0.002, df, c0, c1, "v")
         pbox(o, e, n, b0 + DW, b1 - DW, db + 0.002, df, c0, c0 + DW, "h"); pbox(o, e, n, b0 + DW, b1 - DW, db + 0.002, df, c1 - DW, c1, "h")
         raised_field(o, e, n, b0 + DW, b1 - DW, c0 + DW, c1 - DW, db + 0.002, -0.004, 0.006, 0.03)
         knob(o, e, n, b0 + 0.028, (c0 + c1) / 2, df)
-        if si < 3:                                                # the lip across the door face
-            pbox(o, e, n, 0.004, W - 0.004, 0.0005, 0.022, y1 - 0.016, y1 + 0.016, "h")
-    pbox(o, e, n, -0.008, W + 0.008, -D - 0.008, 0.026, top - CAP, top - CAP + 0.02, "h")   # cap: a board and a thinner top step
-    pbox(o, e, n, -0.004, W + 0.004, -D - 0.004, 0.018, top - CAP + 0.02, top, "h")
+        if si < 3:                                                # the lip across the door part
+            pbox(o, e, n, PL - 0.01, W - 0.004, 0.0005, 0.022, y1 - 0.016, y1 + 0.016, "h")
+    prism(pine, pull_in(0.004), top - CAP, top - CAP + 0.02)      # cap: the footprint, a moulded step proud of the front
+    pbox(o, e, n, 0.004, W - 0.004, -0.004, 0.026, top - CAP, top - CAP + 0.02, "h")
+    pbox(o, e, n, 0.002, W - 0.002, -0.004, 0.016, top - CAP + 0.02, top, "h")
+    prism(pine, pull_in(0.004), top - CAP + 0.02, top)
 
 
 for t in K["talls"]:

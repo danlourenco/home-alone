@@ -1,60 +1,173 @@
 {
- "change": "Kitchen corner cupboard and breakfast hutch sized from the user's photo IMG_4305 (= film 2104-2146, one static camera; user Oct 19: 'make sure the hutch and the wooden thing in the corner are sized correctly'). (1) The 1.29 m angled corner pantry (Marina's) is replaced by the film's freestanding knotty-pine stack: four boxes, one framed raised-panel door each on the face toward the island, a plain side toward the seat counter, turned 45 deg, 0.33 (door face) x 0.30 (side) x 1.85 m, its back corner 2 cm off the gallery wall. (2) The freed corner: the seat counter (+ base module) runs on to 0.30 m short of the gallery wall as the film shows (the counter's far end and a strip of wallpaper to the floor between it and the cupboard), and the upper seat_U2 runs on to x 1.75. (3) The breakfast hutch is a generated white built-in (hifi_kitchen.py) replacing the store prop kitchen_hutch (Poly Haven vintage_cabinet_01, arched crown): 1.83 m wide, three bays, flat top 2.33, glazed upper doors (3 x 4 panes) 1.20-2.29 over a case bottom at 1.18, an open band (shelf 1.025) with red canisters and dishes, a row of three open cubbies 0.79-1.025, drawers + doors below, on the wall between the dining doors (x 4.12 face, z centred on the run 4.50-6.46). TRIAL.",
+ "change": "Kitchen corner cupboard and breakfast hutch sized from the user's photo IMG_4305 (= film 2104-2146, one static camera; user Oct 19: 'make sure the hutch and the wooden thing in the corner are sized correctly'). (1) The 1.29 m angled corner pantry (Marina's) is replaced by the film's knotty-pine corner cupboard: four stacked sections, ONE front face 0.50 m stile to stile at 60 deg to the seat counter (a 0.16 plain left section, one framed raised-panel door per section on the right), 1.85 m, a wedge back to the gallery wall; the corner pocket behind the counter's end stays open (film: wallpaper to the floor). REVISION after the walk ('the corner stack does look off'): the first build's 45-deg 0.33 x 0.30 box read as a thin slab; re-tested against the stack's edges (film2104_measure.py --orient): one face at 59-61 deg fits at 2.2 px rms, a box turned 45 deg 6.8, square to the gallery wall 22.4. (2) The freed corner: the seat counter (+ base module) runs on to 0.30 m short of the gallery wall as the film shows (the counter's far end and a strip of wallpaper to the floor between it and the cupboard), and the upper seat_U2 runs on to x 1.75. (3) The breakfast hutch is a generated white built-in (hifi_kitchen.py) replacing the store prop kitchen_hutch (Poly Haven vintage_cabinet_01, arched crown): 1.83 m wide, three bays, flat top 2.33, glazed upper doors (3 x 4 panes) 1.20-2.29 over a case bottom at 1.18, an open band (shelf 1.025) with red canisters and dishes, a row of three open cubbies 0.79-1.025, drawers + doors below, on the wall between the dining doors (x 4.12 face, z centred on the run 4.50-6.46). TRIAL.",
  "target": "House_WallGrid",
  "premise": "Film 2104 (the user's photo) shows the kitchen corner and the breakfast hutch from one fixed camera that can be solved from the island's 6 in tile grid, and the film is the authority over Marina's model for both pieces",
  "claim": {
   "value": {
-   "cupboard_h": 1.85, "cupboard_section_tops": [0.474, 0.922, 1.412, 1.85], "cupboard_door_face_w": 0.33, "cupboard_side_w": 0.30,
-   "cupboard_face_angle_deg": 46, "cupboard_back_corner_spec_xz": [2.296, 0.062],
-   "seat_counter_end_from_gallery_wall": 0.30,
-   "hutch_w": 1.83, "hutch_bays": 3, "hutch_cubby_bottom": 0.79, "hutch_shelf": 1.025, "hutch_case_bottom": 1.18, "hutch_glazed_bottom": 1.315, "hutch_top": 2.33
+   "cupboard_h": 1.85,
+   "cupboard_section_tops": [
+    0.474,
+    0.922,
+    1.412,
+    1.85
+   ],
+   "seat_counter_end_from_gallery_wall": 0.3,
+   "hutch_w": 1.83,
+   "hutch_bays": 3,
+   "hutch_cubby_bottom": 0.79,
+   "hutch_shelf": 1.025,
+   "hutch_case_bottom": 1.18,
+   "hutch_glazed_bottom": 1.315,
+   "hutch_top": 2.33,
+   "cupboard_front_w": 0.5,
+   "cupboard_plain_w": 0.16,
+   "cupboard_front_angle_deg": 60,
+   "cupboard_front_spec_xz": [
+    [
+     2.026,
+     -0.15
+    ],
+    [
+     2.266,
+     0.285
+    ]
+   ]
   },
-  "data": ["film-frame:2104"],
-  "scale": ["tile-6in:film-2104"],
-  "upstream": ["film"],
-  "how": "tools/house/film2104_measure.py: f (1873 px), rotation and position fitted jointly to the island's grout lines (10 cross lines, 4 long lines, indexed tiles at 0.158 m; measurements/kitchen/film2104_lines.json) and 54 long vertical edges (fit rms 2.0 px). Floor points, heights above them, and points on the hutch wall plane read off the solved camera. Cupboard: height 1.844/1.847 (right edge, door/side edge), section lips 0.474/0.922/1.412, door face 0.322 at 46 deg, side 0.25 (floor pick) to 0.33 (mid-height span; the bottom is in deep shadow): built 0.30. Hutch on the wall plane: width 1.804-1.857 (plane x 3.84-4.12: the film's walls read nearer than the spec), three bays 0.60-0.63, bands 0.77-0.81 / 1.01-1.04 / 1.17-1.19 / 1.31-1.32. The hutch's top is hidden by the pans in 2104; film 1146 shows the glazed doors reaching at least 2.30 against the dining door's head (2.032): built 2.33, under the 2.438 ceiling. The two vertical edges of the cupboard read 1.844 and 1.847",
-  "applies_to": ["kitchen"],
-  "measured_in": ["kitchen"],
-  "risks": ["scale", "extraction"],
-  "pick": {"crop": "spec/captures/picks/cupboard-2116.jpg", "confirmed_by": "the same features in film 2116 and 2194 (same camera, different moments) and the user's photo IMG_4305: four stacked pine sections, a door on the right of each, plain wood on the left, lips only across the door face"}
+  "data": [
+   "film-frame:2104"
+  ],
+  "scale": [
+   "tile-6in:film-2104"
+  ],
+  "upstream": [
+   "film"
+  ],
+  "how": "tools/house/film2104_measure.py: f (1873 px), rotation and position fitted jointly to the island's grout lines (10 cross lines, 4 long lines, indexed tiles at 0.158 m; measurements/kitchen/film2104_lines.json) and 54 long vertical edges (fit rms 2.0 px). Floor points, heights above them, and points on the hutch wall plane read off the solved camera. Cupboard: height 1.844/1.847 (right edge, door/side edge), section lips 0.474/0.922/1.412, door face 0.322 at 46 deg, side 0.25 (floor pick) to 0.33 (mid-height span; the bottom is in deep shadow): built 0.30. Hutch on the wall plane: width 1.804-1.857 (plane x 3.84-4.12: the film's walls read nearer than the spec), three bays 0.60-0.63, bands 0.77-0.81 / 1.01-1.04 / 1.17-1.19 / 1.31-1.32. The hutch's top is hidden by the pans in 2104; film 1146 shows the glazed doors reaching at least 2.30 against the dining door's head (2.032): built 2.33, under the 2.438 ceiling. The two vertical edges of the cupboard read 1.844 and 1.847 | Orientation (after the walk): the stack's bottom and top edges on an 8-frame average (spec/captures/picks/stack-bottom-avg.jpg) fitted per hypothesis with the solved camera's vanishing points: one front face at 59 deg 2.2 px rms, box at 45 deg 6.8, square to the gallery wall 22.4; front 0.499 m stile to stile at 61 deg, plain part 0.162",
+  "applies_to": [
+   "kitchen"
+  ],
+  "measured_in": [
+   "kitchen"
+  ],
+  "risks": [
+   "scale",
+   "extraction"
+  ],
+  "pick": {
+   "crop": "spec/captures/picks/cupboard-2116.jpg",
+   "confirmed_by": "the same features in film 2116 and 2194 (same camera, different moments) and the user's photo IMG_4305: four stacked pine sections, a door on the right of each, plain wood on the left, lips only across the door face"
+  }
  },
  "history": [
-  {"date": "2026-10-16", "what": "corner pantry from Marina's big clip (kitchen.json talls 'pantry': 1.29 m angled front), cherry (changes/2026-10-16-kitchen-cabinets.json)", "outcome": "accepted"},
-  {"date": "2026-10-19", "what": "pantry re-skinned as the film's knotty-pine stack in Marina's footprint, two doors per section (changes/2026-10-19-kitchen-fidelity.json; DEVIATIONS 106/108 said the film's piece reads narrower)", "outcome": "pending"},
-  {"date": "2026-10-19", "what": "breakfast hutch as a props-lane pack cabinet (store prop kitchen_hutch, vintage_cabinet_01, arched crown) at the user's request (walk note 08:42); reported magenta in a build", "outcome": "pending"}
+  {
+   "date": "2026-10-16",
+   "what": "corner pantry from Marina's big clip (kitchen.json talls 'pantry': 1.29 m angled front), cherry (changes/2026-10-16-kitchen-cabinets.json)",
+   "outcome": "accepted"
+  },
+  {
+   "date": "2026-10-19",
+   "what": "pantry re-skinned as the film's knotty-pine stack in Marina's footprint, two doors per section (changes/2026-10-19-kitchen-fidelity.json; DEVIATIONS 106/108 said the film's piece reads narrower)",
+   "outcome": "pending"
+  },
+  {
+   "date": "2026-10-19",
+   "what": "breakfast hutch as a props-lane pack cabinet (store prop kitchen_hutch, vintage_cabinet_01, arched crown) at the user's request (walk note 08:42); reported magenta in a build",
+   "outcome": "pending"
+  },
+  {
+   "date": "2026-10-19",
+   "what": "first build of this record: the stack as a 0.33 x 0.30 box turned 45 deg (plain part read as a side); user walk: 'the corner stack does look off' (a thin slab in the corner)",
+   "outcome": "rejected"
+  }
  ],
  "premise_reviewed": "",
  "checks": [
   {
    "what": "Vertical scale of the film camera against a Marina-measured feature: the gallery sconce backplates read 1.678 / 1.676 m on the wall plane in the tile-scaled film camera; Marina's big clip f153/f165 put them at 1.66 (kitchen.json sconces). 1% apart: the 1.85 m cupboard and the hutch bands rest on this vertical scale",
-   "agrees": true, "type": "metric",
-   "tests": ["scale"],
-   "data": ["marina-frame:153", "marina-frame:165"], "scale": ["marina-model"], "upstream": ["marina-model"]
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "scale"
+   ],
+   "data": [
+    "marina-frame:153",
+    "marina-frame:165"
+   ],
+   "scale": [
+    "marina-model"
+   ],
+   "upstream": [
+    "marina-model"
+   ]
   },
   {
    "what": "Hutch width against the wall it fills: the opening data put the wall between the two dining doors' casings at z 4.50-6.46 (1.96 m, the openings' own measurement); the film's hutch (1.80-1.86) leaves a strip of wallpaper each side, as film 2104 and Marina 924 both show",
-   "agrees": true, "type": "metric",
-   "tests": ["scale"],
-   "data": ["openings:dining_room|kitchen"], "scale": ["door-80in:openings"], "upstream": ["marina-model"]
+   "agrees": true,
+   "type": "metric",
+   "tests": [
+    "scale"
+   ],
+   "data": [
+    "openings:dining_room|kitchen"
+   ],
+   "scale": [
+    "door-80in:openings"
+   ],
+   "upstream": [
+    "marina-model"
+   ]
   },
   {
    "what": "Hutch layout in Marina's CG tour 924 s (art/home_alone/references/kitchen/frames/best-marina-0924.jpg): a flat-topped white built-in, glazed uppers, open band, a row of open cubbies, drawers over doors. Same bands; she draws four bays and stops the uppers well under the ceiling, the film shows three bays (2104, 1100-1108) and glazed doors reaching at least 2.30 (1146)",
-   "agrees": true, "type": "topological",
-   "tests": ["extraction"],
-   "data": ["marina-frame:924"], "scale": ["none"], "upstream": ["marina-model"]
+   "agrees": true,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "marina-frame:924"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "marina-model"
+   ]
   },
   {
    "what": "Marina's corner: a 1.29 m angled pantry with two doors per section where the film shows a narrow 45-deg stack beside the seat counter's end (and the counter running on to ~0.3 m from the wall)",
-   "agrees": false, "type": "topological",
-   "tests": ["extraction"],
-   "data": ["marina-frame:874"], "scale": ["none"], "upstream": ["marina-model"],
+   "agrees": false,
+   "type": "topological",
+   "tests": [
+    "extraction"
+   ],
+   "data": [
+    "marina-frame:874"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [
+    "marina-model"
+   ],
    "disposition": "Film first (user standing rule): the film shows the corner directly in 2104-2146 and 2194-2206; Marina's model draws her own pantry there. Logged in DEVIATIONS 109"
   },
   {
    "what": "Registration: in the island-anchored film camera the gallery wall reads at x 1.95 (spec 2.316) and the seat counter's front at z -0.54 (spec -0.274); the upper's front reads 0.27 off in z as well. Objects at the gallery wall are placed by their offset from that wall and from the counter's front, not by the island anchor",
-   "agrees": false, "type": "metric",
-   "tests": ["registration"],
-   "data": ["film-frame:2104"], "scale": ["tile-6in:film-2104"], "upstream": ["film"],
+   "agrees": false,
+   "type": "metric",
+   "tests": [
+    "registration"
+   ],
+   "data": [
+    "film-frame:2104"
+   ],
+   "scale": [
+    "tile-6in:film-2104"
+   ],
+   "upstream": [
+    "film"
+   ],
    "disposition": "Not a size: it is the known kitchen-wing length disagreement between the film/Marina and the built plan (DEVIATIONS 46, queue item 5). Placement is relative to the nearest walls; the wing itself is unchanged"
   }
  ],
@@ -71,7 +184,9 @@
    "spec/captures/views/kitchen/sizing/cupboard.jpg",
    "spec/captures/views/kitchen/sizing/corner.jpg",
    "spec/captures/views/kitchen/sizing/hutch.jpg",
-   "spec/captures/views/kitchen/sizing/note1447.jpg"
+   "spec/captures/views/kitchen/sizing/note1447.jpg",
+   "spec/captures/views/kitchen/sizing/stack-v2-film.jpg",
+   "spec/captures/views/kitchen/sizing/stack-v2-note1447.jpg"
   ]
  },
  "user_walk": "pending",
