@@ -44,3 +44,6 @@ art/home_alone/references/pietro/
 # the film screencaps (2.1 GB, copyrighted frames): local reference only, never in the public repo
 0-homealone/
 0-homealone.zip
+
+# props.py front contact sheet (regenerated on demand)
+spec/captures/props-front.png
