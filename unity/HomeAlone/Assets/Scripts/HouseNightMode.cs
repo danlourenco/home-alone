@@ -50,6 +50,13 @@ public class HouseNightMode : MonoBehaviour
         var iv=inside.GetComponent<UnityEngine.Rendering.Volume>();
         wbVol=inside.AddComponent<UnityEngine.Rendering.Volume>();   // the same GameObject: a local Volume uses its GameObject's colliders
         wbVol.isGlobal=false;wbVol.priority=26f;wbVol.blendDistance=iv?iv.blendDistance:0.6f;wbVol.sharedProfile=prof;
+        // BUZZ'S ROOM IS EXCLUDED (user, Oct 20: he loves it as it is after 12dd47a3): a higher-priority Volume over the room
+        // (spec/house_spec.json buzz_room: x 7.473-11.158, spec z 11.537-15.998 -> world z -15.998..-11.537, the upper floor) sets the
+        // temperature back to 0, no blend, so the room looks exactly as before at any setting
+        var buzz=new GameObject("NightWB_BuzzExcluded");buzz.layer=2;   // Ignore Raycast: never in a gate's or a placement's ray
+        var bc=buzz.AddComponent<BoxCollider>();bc.isTrigger=true;bc.center=new Vector3((7.473f+11.158f)/2f,1.3f,-(11.537f+15.998f)/2f);bc.size=new Vector3(11.158f-7.473f,3f,15.998f-11.537f);
+        var bp=ScriptableObject.CreateInstance<UnityEngine.Rendering.VolumeProfile>();bp.Add<UnityEngine.Rendering.HighDefinition.WhiteBalance>(true).temperature.value=0f;
+        var bv=buzz.AddComponent<UnityEngine.Rendering.Volume>();bv.isGlobal=false;bv.priority=27f;bv.blendDistance=0f;bv.sharedProfile=bp;
         SetWhiteBalance(WbTemperature,false);
     }
     // PerfProbe's variant wb=T sets it without saving
