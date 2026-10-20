@@ -5,7 +5,7 @@ using UnityEngine;
 // sets its own poses, so it is left alone. Override: -start x,y,z,yaw (world metres, yaw degrees).
 public static class AppStart
 {
-    static readonly Vector4 Piers = new Vector4(29.6f, -4.15f, -9.716f, 270f);   // x, y (feet), z, yaw; piers at x 28.30-28.80
+    static readonly Vector4 Piers = new Vector4(28.55f, -4.10f, -9.716f, 270f);   // x, y (feet), z, yaw: in the gap on the pier line (piers x 28.30-28.80), walk centre z
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     static void Place()
