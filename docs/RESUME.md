@@ -103,6 +103,11 @@ docs/FOYER-WIP.md (the foyer job's checkpoints); STATUS.md is the long log. This
    `cd ~/Dev/home-alone && A=unity/HomeAlone/Assets && T=~/.Trash/home-alone-cruft && mkdir -p $T && mv "$A/VR-ready PBR toilet" "$A/VR-ready PBR toilet.meta" $A/Scenes/House_WallGrid_unsaved_backup_20261019.unity* $A/Resources $A/Resources.meta $A/Models/PolyHaven/Kitchen/kettle_red_* spec/captures/views/o67-*.png spec/captures/props-front.png $T/`
    Never commit: the ~34 re-import-churned .mat files (property reorders), spec/feedback/ shots, ProjectSettings AI-assistant
    settings. Rule: a store package goes to Assets/Purchased/ (gitignored), never unpacked at the Assets root.
+9. **Obsolete-API migration (Oct 20, deterministic: a codemod, not an agent):** 63 CS0618 sites in Editor/Scripts
+   (unity_practices.py baseline): `FindObjectsByType<T>(FindObjectsSortMode.None)` -> `FindObjectsByType<T>()`, the
+   `(FindObjectsInactive.X, FindObjectsSortMode.None)` overload -> `(FindObjectsInactive.X)`, `FindFirstObjectByType` ->
+   `FindAnyObjectByType` (check the one `FindObjectsSortMode.InstanceID` caller needs no order), ShadowAudit's `spotLightShape` ->
+   `Light.type`. Only while the user is NOT in Play; csc_check.sh, then `unity_practices.py --update-baseline` to lock it in.
 
 ## 2. Neighbourhood plan (user, Oct 19: "recreate the scene systematically ... period-accurate ... the Murphys across the street")
 Tiers by player distance; detail follows sightlines (window views, the film's exterior cameras, the bandits' routes):

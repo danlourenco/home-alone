@@ -57,7 +57,7 @@ preflight)   # cheap gates before any Unity launch (STATUS 8p f); runs them all,
   if [ "${free_gb:-0}" -lt 15 ]; then echo "FAIL disk: only ${free_gb} GB free on the home volume (need 15)"; bad=1; else echo "ok   disk: ${free_gb} GB free"; fi
   for g in "python3 tools/house/build_models.py --check" "python3 tools/house/openings.py --check" "python3 tools/house/trim_faces.py --check" "python3 tools/house/stair_arrival.py" "uv run -q --with trimesh --with numpy python -I tools/house/rail_joints.py" "uv run -q --with trimesh --with numpy python -I tools/house/soffit_joints.py" \
            "uv run -q --with numpy --with matplotlib --with pillow python -I tools/house/verify_plan.py" \
-           "uv run -q --with numpy --with pillow python -I tools/house/model_quality.py --report" \
+           "uv run -q --with numpy --with pillow python -I tools/house/model_quality.py --report" "python3 tools/house/unity_practices.py" \
            "env HA_PREBUILD=1 uv run -q python -I tools/house/change_gate.py $(grep -L '"user_walk": "rejected"' changes/*.json | tr '\n' ' ')"; do
     n=$(echo "$g" | grep -oE '[a-z_]+\.py( --[a-z]+)?')
     if out=$($g 2>&1); then echo "ok   $n"; else echo "FAIL $n"; echo "$out" | grep -E '^[^ ].*\.json:|^ *FAIL|Error' | grep -B1 -E '^ *FAIL|Error' | cut -c1-160 | head -8 || true; bad=1; fi
@@ -76,6 +76,7 @@ build)
     [ -d "$P/Assets/$pk" ] && rsync -a "$P/Assets/$pk" "$P/Assets/$pk.meta" "$S/Assets/"; done
   [ -d "$P/Assets/Purchased" ] && rsync -a "$P/Assets/Purchased" "$S/Assets/" && { [ -f "$P/Assets/Purchased.meta" ] && cp "$P/Assets/Purchased.meta" "$S/Assets/" || true; }   # CGTrader buys (gitignored; may be absent: generated plants then)
   [ -n "${HA_OVERLAY:-}" ] && rsync -a "$HA_OVERLAY/" "$S/Assets/"
+  rm -rf "$S/Temp/__Backupscenes"   # Oct 20: a killed scratch run leaves scene backups; a windowed relaunch then blocks on a modal "Scene Backup Detected" dialog (scratch only, never the user project)
   ux=0; "$UNITY" -batchmode -projectPath "$S" -executeMethod SpecGreybox.BuildWallGrid -quit -logFile "$ROOT/build.log" "${@:2}" || ux=$?
   for d in Scripts Editor; do rsync -a --ignore-existing --include='*/' --include='*.meta' --exclude='*' "$S/Assets/$d/" "$P/Assets/$d/"; done   # a new script's .meta: the scratch's GUID is the one the scene references (PlacedProp, Oct 17)
   if grep -q "error CS" "$ROOT/build.log"; then grep "error CS" "$ROOT/build.log" | head -5; exit 1; fi

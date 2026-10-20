@@ -14,4 +14,5 @@ rsp() {   # rsp ASSEMBLY SRC_DIR: the scratch response file with the repo's sour
 cd "$S"; out=""
 rsp Assembly-CSharp "$A/Scripts" > "$T/a.rsp"; out+=$("$D/DotNetSdk/dotnet" exec "$CSC" /nologo "@$T/a.rsp" 2>&1 || true)
 rsp Assembly-CSharp-Editor "$A/Editor" > "$T/e.rsp"; out+=$("$D/DotNetSdk/dotnet" exec "$CSC" /nologo "@$T/e.rsp" 2>&1 || true)
+[ "${CSC_WARNINGS:-}" = 1 ] && { echo "$out" | grep -E "warning CS" | sort -u; exit 0; }   # unity_practices.py reads the warnings (obsolete APIs)
 if echo "$out" | grep -q "error CS"; then echo "$out" | grep "error CS" | sort -u | head -20; exit 1; fi; echo "ok   csc_check: Scripts + Editor compile"
