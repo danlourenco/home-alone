@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parents[2]
 BUILDS = ROOT / "spec/captures/build-log.jsonl"
 AGENTS = ROOT / "spec/captures/agent-log.jsonl"
 RUNNING = Path.home() / ".cache/home-alone-2/running.jsonl"   # runtime state, not in the repo
+STALE = 6 * 3600                                               # no agent job runs 6 h; older entries are dead
 BUILDLOG = Path.home() / ".cache/home-alone-2/build.log"
 SLOW_S, REPEAT, STEPS, BUILD_SHARE = 300, 2, 40, 0.2
 
@@ -114,11 +115,16 @@ def main():
         if a.at:
             h, m = map(int, a.at.split(":")); lt = time.localtime(); t = time.mktime((lt.tm_year, lt.tm_mon, lt.tm_mday, h, m, 0, 0, 0, -1))
         RUNNING.parent.mkdir(parents=True, exist_ok=True)
-        with RUNNING.open("a") as f:
-            f.write(json.dumps({"kind": a.kind, "job": a.job, "start": t}) + "\n")
+        keep = [r for r in rows(RUNNING) if r["job"] != a.job]          # a re-start of the same job replaces it (no duplicates)
+        if any(r["job"] == a.job for r in rows(RUNNING)):
+            t = min(r["start"] for r in rows(RUNNING) if r["job"] == a.job)
+        RUNNING.write_text("".join(json.dumps(r) + "\n" for r in keep + [{"kind": a.kind, "job": a.job, "start": t}]))
         return
     if a.cmd == "eta":
-        args = (rows(RUNNING), rows(AGENTS), time.time(), building_now())
+        live = [r for r in rows(RUNNING) if time.time() - r["start"] < STALE]   # a job never logged (died, or logged by another name) drops off
+        if len(live) != len(rows(RUNNING)):
+            RUNNING.write_text("".join(json.dumps(r) + "\n" for r in live))
+        args = (live, rows(AGENTS), time.time(), building_now())
         lines = short(*args) if a.line else eta(*args)
         print("\n".join(lines) or "no agent jobs running")
         return
