@@ -152,4 +152,14 @@ Tiers by player distance; detail follows sightlines (window views, the film's ex
 - Tier 2: lot_B0 = the Murphys (grey-blue clapboard Foursquare, 2.5 storeys, hip dormer, full-width white-column porch; film
   11551-11636 night), lot_A+1 / lot_A-1 neighbours (edge views only), lot_B+1 / lot_B-1 (no clean frame: style kit). The county
   height for our own house (9.2 m) is wrong: never use it for the house.
-- Next (step 2+): style kit + generator from the manifest; the Murphys first.
+- Step 2 (Oct 20, PREP, no Unity build): see section 4.
+
+## 4. Step 2 results (Oct 20; art/home_alone/references/neighborhood/README.md "Step 2")
+- Sheets (Preview): neighborhood/plan.png, plan_tier2.png, murphys_film11581_compare.jpg, murphys_film11581_closeup.jpg, tier2_contact.jpg.
+- Lidar fix: step 1's nDSM was ~45 m off (requested vs returned extent); re-fetched, trees and roof profiles redone.
+- Kit: nb_textures.py, nb_kits.py (kits + tiers + budgets in the manifest), nb_house.py (LOD0 hero ~10-36k tris, LOD1 stand-in 4-5 %), nb_street.py,
+  nb_film_camera.py, nb_render.py, nb_compare.py. GLBs in Assets/Models/Neighborhood (5 Tier 2 + 10 Tier 3, Street, LampPost).
+- **Ready for ONE Unity build** (when the pipeline is free): `HA_NEIGHBORHOOD=1` + the normal build; SpecGreybox.Neighborhood.cs (csc_check clean) places it,
+  swaps the lamp posts (walk note 12:33), hides the WinterNeighborhood inside the extent. Then: z-fight/clash 0, the walk test (street and the
+  new sidewalks), K, N; render 11581's camera live beside the film; the user walks across Lincoln.
+- Open: Tier 3 extension + Tier 4 treeline + the dome (manifest "tiers"), the Mac baseline into "budgets.baseline_ms", the user's decisions (hand-back).

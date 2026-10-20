@@ -1,0 +1,62 @@
+{
+ "roof_asphalt": {
+  "tile_m": 8.0,
+  "smooth": 0.18,
+  "source": "Poly Haven grey_roof_01",
+  "licence": "CC0"
+ },
+ "roof_clay": {
+  "tile_m": 2.5,
+  "smooth": 0.3,
+  "source": "Poly Haven clay_roof_tiles_02",
+  "licence": "CC0"
+ },
+ "brick": {
+  "tile_m": 1.9,
+  "smooth": 0.2,
+  "source": "Poly Haven red_brick_03",
+  "licence": "CC0"
+ },
+ "stucco": {
+  "tile_m": 2.23,
+  "smooth": 0.15,
+  "source": "Poly Haven plastered_wall_02",
+  "licence": "CC0"
+ },
+ "paint": {
+  "tile_m": 1.0,
+  "smooth": 0.35,
+  "source": "Poly Haven white_plaster_02",
+  "licence": "CC0"
+ },
+ "concrete": {
+  "tile_m": 2.0,
+  "smooth": 0.3,
+  "source": "Poly Haven concrete_floor_01",
+  "licence": "CC0"
+ },
+ "asphalt": {
+  "tile_m": 3.0,
+  "smooth": 0.86,
+  "source": "Poly Haven asphalt_02",
+  "licence": "CC0"
+ },
+ "snow": {
+  "tile_m": 2.0,
+  "smooth": 0.35,
+  "source": "Poly Haven snow_02",
+  "licence": "CC0"
+ },
+ "clapboard": {
+  "tile_m": 1.0,
+  "smooth": 0.38,
+  "source": "procedural (tools/house/nb_textures.py; grain: Poly Haven white_planks_clean)",
+  "licence": "CC0"
+ },
+ "shingle": {
+  "tile_m": 1.0,
+  "smooth": 0.22,
+  "source": "procedural (tools/house/nb_textures.py; grain: Poly Haven white_planks_clean)",
+  "licence": "CC0"
+ }
+}

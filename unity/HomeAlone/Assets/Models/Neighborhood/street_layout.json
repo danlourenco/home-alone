@@ -1,0 +1,693 @@
+{
+ "levels_rel_gy": {
+  "road": -1.304,
+  "walk": -1.184,
+  "kerb": -1.164,
+  "lawn_A": -1.334,
+  "lawn_B": -1.2,
+  "lot_grade": {
+   "lot_B-1": -1.18,
+   "lot_B0": -1.18,
+   "lot_B+1": -1.18,
+   "lot_A-1": -1.334,
+   "lot_A+1": -1.334,
+   "tier3_A": -1.334,
+   "tier3_B": -1.18
+  }
+ },
+ "kerb_faces_x": [
+  30.62,
+  41.3
+ ],
+ "centreline": "nb_street.centre(z): 36.3 for z -45..65, OSM beyond",
+ "extent_z": [
+  -150.0,
+  150.0
+ ],
+ "drives": [
+  {
+   "side": "B",
+   "z": 3.65,
+   "x0": 41.3,
+   "x1": 83.9,
+   "w": 3.0,
+   "src": "OSM service z 3.1-4.2 (2022) to the outbuilding"
+  },
+  {
+   "side": "B",
+   "z": 37.45,
+   "x0": 41.3,
+   "x1": 83.4,
+   "w": 3.0,
+   "src": "OSM service z 36.8-38.1 to the outbuilding"
+  },
+  {
+   "side": "B",
+   "z": -26.2,
+   "x0": 41.3,
+   "x1": 75.8,
+   "w": 3.0,
+   "src": "G: to lot_B-1's outbuilding (C)"
+  },
+  {
+   "side": "A",
+   "z": 33.6,
+   "x0": 30.62,
+   "x1": -30.0,
+   "w": 3.0,
+   "src": "G: lot_A+1's garage behind (C outbuilding x -38..-30)"
+  }
+ ],
+ "walks": [
+  {
+   "side": "B",
+   "z": 11.65,
+   "x0": 46.15,
+   "x1": 58.86,
+   "w": 1.5,
+   "src": "OSM footway z 11.5-11.8 to the porch steps (film 11556)"
+  },
+  {
+   "side": "B",
+   "z": -16.1,
+   "x0": 46.15,
+   "x1": 59.730000000000004,
+   "w": 1.4,
+   "src": "G: to lot_B-1's porch steps"
+  },
+  {
+   "side": "B",
+   "z": 46.55,
+   "x0": 46.15,
+   "x1": 59.14,
+   "w": 1.4,
+   "src": "OSM footway z 44.9-45.4 (moved to the kit's steps)"
+  },
+  {
+   "side": "A",
+   "z": -27.6,
+   "x0": 28.87,
+   "x1": 0.5,
+   "w": 1.3,
+   "src": "G: lot_A-1's door (kit, main block beside the front wing)"
+  },
+  {
+   "side": "A",
+   "z": 42.25,
+   "x0": 28.87,
+   "x1": 12.6,
+   "w": 1.3,
+   "src": "G: lot_A+1's vestibule door (kit)"
+  }
+ ],
+ "lamps": [
+  {
+   "x": 28.55,
+   "z": 24.2,
+   "src": "existing post (SpecGreybox.Shell z 24.2), moved from x 25.2 to the sidewalk's lawn edge (film 3297)"
+  },
+  {
+   "x": 28.55,
+   "z": -6.0,
+   "src": "existing post (z -6.0, film 1471/9511 right of our lot), moved from x 25.2"
+  },
+  {
+   "x": 28.55,
+   "z": -51.0,
+   "src": "G: ~45 m spacing on our side"
+  },
+  {
+   "x": 28.55,
+   "z": 69.0,
+   "src": "G: ~45 m spacing on our side"
+  },
+  {
+   "x": 28.55,
+   "z": 114.0,
+   "src": "G: ~45 m spacing on our side"
+  },
+  {
+   "x": 28.55,
+   "z": -96.0,
+   "src": "G: ~45 m spacing on our side"
+  },
+  {
+   "x": 44.25,
+   "z": -40.0,
+   "src": "G: B side, none in 11581's frontage (z -15..35)"
+  },
+  {
+   "x": 44.25,
+   "z": 60.0,
+   "src": "G: B side, none in 11581's frontage (z -15..35)"
+  },
+  {
+   "x": 44.25,
+   "z": 105.0,
+   "src": "G: B side, none in 11581's frontage (z -15..35)"
+  },
+  {
+   "x": 44.25,
+   "z": -85.0,
+   "src": "G: B side, none in 11581's frontage (z -15..35)"
+  }
+ ],
+ "trees": [
+  {
+   "x": 27.0,
+   "z": -83.2,
+   "h_m": 25.1,
+   "lidar_h_m": 27.3,
+   "variant": "mapleA",
+   "yaw": 221
+  },
+  {
+   "x": 27.9,
+   "z": -14.8,
+   "h_m": 21.8,
+   "lidar_h_m": 23.7,
+   "variant": "ashA",
+   "yaw": 239,
+   "moved_from": [
+    32.6,
+    -14.8
+   ]
+  },
+  {
+   "x": 27.5,
+   "z": -9.1,
+   "h_m": 21.2,
+   "lidar_h_m": 23.0,
+   "variant": "mapleA",
+   "yaw": 62
+  },
+  {
+   "x": 27.4,
+   "z": 26.4,
+   "h_m": 21.2,
+   "lidar_h_m": 23.0,
+   "variant": "mapleA",
+   "yaw": 296
+  },
+  {
+   "x": 25.1,
+   "z": -23.6,
+   "h_m": 20.8,
+   "lidar_h_m": 22.6,
+   "variant": "mapleA",
+   "yaw": 210
+  },
+  {
+   "x": 43.6,
+   "z": -25.8,
+   "h_m": 20.4,
+   "lidar_h_m": 22.2,
+   "variant": "oakB",
+   "yaw": 316,
+   "moved_from": [
+    45.0,
+    -28.4
+   ]
+  },
+  {
+   "x": 44.1,
+   "z": 47.1,
+   "h_m": 20.2,
+   "lidar_h_m": 22.0,
+   "variant": "elmA",
+   "yaw": 166
+  },
+  {
+   "x": -10.9,
+   "z": 49.4,
+   "h_m": 20.1,
+   "lidar_h_m": 21.8,
+   "variant": "elmA",
+   "yaw": 11
+  },
+  {
+   "x": 24.4,
+   "z": -15.5,
+   "h_m": 20.0,
+   "lidar_h_m": 21.7,
+   "variant": "elmB",
+   "yaw": 304
+  },
+  {
+   "x": 74.4,
+   "z": 57.9,
+   "h_m": 20.0,
+   "lidar_h_m": 21.7,
+   "variant": "elmB",
+   "yaw": 127
+  },
+  {
+   "x": 18.3,
+   "z": -36.8,
+   "h_m": 19.9,
+   "lidar_h_m": 21.6,
+   "variant": "oakA",
+   "yaw": 86
+  },
+  {
+   "x": 27.6,
+   "z": -34.4,
+   "h_m": 19.9,
+   "lidar_h_m": 21.6,
+   "variant": "oakB",
+   "yaw": 142
+  },
+  {
+   "x": 50.7,
+   "z": 54.9,
+   "h_m": 19.8,
+   "lidar_h_m": 21.5,
+   "variant": "ashA",
+   "yaw": 284
+  },
+  {
+   "x": 27.71,
+   "z": -89.5,
+   "h_m": 19.6,
+   "lidar_h_m": 21.3,
+   "variant": "elmA",
+   "yaw": 14,
+   "moved_from": [
+    31.6,
+    -89.5
+   ]
+  },
+  {
+   "x": -40.9,
+   "z": -5.6,
+   "h_m": 19.4,
+   "lidar_h_m": 21.1,
+   "variant": "oakB",
+   "yaw": 297
+  },
+  {
+   "x": 28.0,
+   "z": 67.3,
+   "h_m": 19.3,
+   "lidar_h_m": 21.0,
+   "variant": "mapleB",
+   "yaw": 124,
+   "moved_from": [
+    31.6,
+    67.3
+   ]
+  },
+  {
+   "x": 42.0,
+   "z": 53.8,
+   "h_m": 19.2,
+   "lidar_h_m": 20.9,
+   "variant": "mapleB",
+   "yaw": 41
+  },
+  {
+   "x": 43.6,
+   "z": 63.9,
+   "h_m": 19.1,
+   "lidar_h_m": 20.8,
+   "variant": "elmB",
+   "yaw": 107,
+   "moved_from": [
+    45.2,
+    63.9
+   ]
+  },
+  {
+   "x": 43.6,
+   "z": 83.0,
+   "h_m": 18.8,
+   "lidar_h_m": 20.4,
+   "variant": "elmA",
+   "yaw": 53
+  },
+  {
+   "x": 79.5,
+   "z": -5.7,
+   "h_m": 18.4,
+   "lidar_h_m": 20.0,
+   "variant": "oakA",
+   "yaw": 162
+  },
+  {
+   "x": 26.7,
+   "z": -41.9,
+   "h_m": 18.3,
+   "lidar_h_m": 19.9,
+   "variant": "elmA",
+   "yaw": 110
+  },
+  {
+   "x": 28.92,
+   "z": 84.3,
+   "h_m": 18.0,
+   "lidar_h_m": 19.6,
+   "variant": "oakB",
+   "yaw": 89,
+   "moved_from": [
+    34.4,
+    84.3
+   ]
+  },
+  {
+   "x": 27.9,
+   "z": 5.4,
+   "h_m": 17.9,
+   "lidar_h_m": 19.5,
+   "variant": "oakA",
+   "yaw": 104
+  },
+  {
+   "x": -41.2,
+   "z": -11.8,
+   "h_m": 17.8,
+   "lidar_h_m": 19.3,
+   "variant": "mapleA",
+   "yaw": 345
+  },
+  {
+   "x": 43.6,
+   "z": -1.5,
+   "h_m": 17.7,
+   "lidar_h_m": 19.2,
+   "variant": "elmB",
+   "yaw": 136,
+   "moved_from": [
+    45.2,
+    -1.5
+   ]
+  },
+  {
+   "x": 43.1,
+   "z": -45.2,
+   "h_m": 16.8,
+   "lidar_h_m": 18.3,
+   "variant": "oakB",
+   "yaw": 168
+  },
+  {
+   "x": -7.0,
+   "z": -6.6,
+   "h_m": 16.7,
+   "lidar_h_m": 18.2,
+   "variant": "mapleB",
+   "yaw": 155
+  },
+  {
+   "x": 26.57,
+   "z": -97.3,
+   "h_m": 16.7,
+   "lidar_h_m": 18.1,
+   "variant": "oakA",
+   "yaw": 345,
+   "moved_from": [
+    34.0,
+    -97.3
+   ]
+  },
+  {
+   "x": 29.3,
+   "z": 144.7,
+   "h_m": 16.5,
+   "lidar_h_m": 17.9,
+   "variant": "oakB",
+   "yaw": 311,
+   "moved_from": [
+    32.6,
+    144.7
+   ]
+  },
+  {
+   "x": -20.8,
+   "z": -5.7,
+   "h_m": 16.3,
+   "lidar_h_m": 17.7,
+   "variant": "elmA",
+   "yaw": 184
+  },
+  {
+   "x": -21.2,
+   "z": 37.3,
+   "h_m": 16.1,
+   "lidar_h_m": 17.5,
+   "variant": "elmA",
+   "yaw": 227,
+   "moved_from": [
+    -21.2,
+    34.7
+   ]
+  },
+  {
+   "x": 88.1,
+   "z": -21.1,
+   "h_m": 15.2,
+   "lidar_h_m": 16.5,
+   "variant": "elmA",
+   "yaw": 177
+  },
+  {
+   "x": 11.0,
+   "z": -6.7,
+   "h_m": 14.7,
+   "lidar_h_m": 16.0,
+   "variant": "ashA",
+   "yaw": 111
+  },
+  {
+   "x": 23.2,
+   "z": -130.5,
+   "h_m": 14.3,
+   "lidar_h_m": 15.5,
+   "variant": "elmB",
+   "yaw": 152,
+   "moved_from": [
+    28.6,
+    -130.5
+   ]
+  },
+  {
+   "x": 25.1,
+   "z": 118.2,
+   "h_m": 13.8,
+   "lidar_h_m": 15.0,
+   "variant": "elmA",
+   "yaw": 15
+  },
+  {
+   "x": 4.9,
+   "z": -6.5,
+   "h_m": 13.6,
+   "lidar_h_m": 14.8,
+   "variant": "oakA",
+   "yaw": 161
+  },
+  {
+   "x": 90.9,
+   "z": -32.2,
+   "h_m": 13.4,
+   "lidar_h_m": 14.6,
+   "variant": "oakA",
+   "yaw": 310
+  },
+  {
+   "x": 29.3,
+   "z": 134.4,
+   "h_m": 13.3,
+   "lidar_h_m": 14.5,
+   "variant": "ashA",
+   "yaw": 228,
+   "moved_from": [
+    32.6,
+    134.4
+   ]
+  },
+  {
+   "x": 43.3,
+   "z": 29.2,
+   "h_m": 13.2,
+   "lidar_h_m": 14.4,
+   "variant": "oakA",
+   "yaw": 56
+  },
+  {
+   "x": 15.1,
+   "z": 37.0,
+   "h_m": 13.1,
+   "lidar_h_m": 14.2,
+   "variant": "oakB",
+   "yaw": 144
+  },
+  {
+   "x": 88.9,
+   "z": 55.5,
+   "h_m": 13.1,
+   "lidar_h_m": 14.2,
+   "variant": "mapleB",
+   "yaw": 130
+  },
+  {
+   "x": 15.6,
+   "z": 48.7,
+   "h_m": 13.0,
+   "lidar_h_m": 14.1,
+   "variant": "elmA",
+   "yaw": 23
+  },
+  {
+   "x": -37.4,
+   "z": -29.3,
+   "h_m": 12.2,
+   "lidar_h_m": 13.3,
+   "variant": "mapleA",
+   "yaw": 254
+  },
+  {
+   "x": -36.0,
+   "z": -24.1,
+   "h_m": 12.1,
+   "lidar_h_m": 13.2,
+   "variant": "elmA",
+   "yaw": 217
+  },
+  {
+   "x": 27.9,
+   "z": 46.5,
+   "h_m": 11.5,
+   "lidar_h_m": 12.5,
+   "variant": "ashA",
+   "yaw": 302,
+   "moved_from": [
+    30.9,
+    46.5
+   ]
+  },
+  {
+   "x": 38.45,
+   "z": -121.8,
+   "h_m": 11.3,
+   "lidar_h_m": 12.3,
+   "variant": "elmA",
+   "yaw": 284,
+   "moved_from": [
+    33.3,
+    -121.8
+   ]
+  },
+  {
+   "x": 91.0,
+   "z": 48.8,
+   "h_m": 10.8,
+   "lidar_h_m": 11.7,
+   "variant": "mapleA",
+   "yaw": 25
+  },
+  {
+   "x": -33.6,
+   "z": -39.4,
+   "h_m": 10.7,
+   "lidar_h_m": 11.6,
+   "variant": "ashA",
+   "yaw": 61
+  },
+  {
+   "x": 29.23,
+   "z": 106.2,
+   "h_m": 10.2,
+   "lidar_h_m": 11.1,
+   "variant": "elmA",
+   "yaw": 277,
+   "moved_from": [
+    31.9,
+    106.2
+   ]
+  },
+  {
+   "x": 42.8,
+   "z": -142.9,
+   "h_m": 9.8,
+   "lidar_h_m": 10.7,
+   "variant": "elmA",
+   "yaw": 68
+  },
+  {
+   "x": 27.08,
+   "z": -63.9,
+   "h_m": 9.6,
+   "lidar_h_m": 10.4,
+   "variant": "elmA",
+   "yaw": 283,
+   "moved_from": [
+    31.2,
+    -63.9
+   ]
+  },
+  {
+   "x": 46.6,
+   "z": -109.1,
+   "h_m": 9.3,
+   "lidar_h_m": 10.1,
+   "variant": "mapleA",
+   "yaw": 288
+  },
+  {
+   "x": 44.55,
+   "z": 124.7,
+   "h_m": 8.5,
+   "lidar_h_m": 9.2,
+   "variant": "oakB",
+   "yaw": 155,
+   "moved_from": [
+    43.0,
+    124.7
+   ]
+  },
+  {
+   "x": 77.8,
+   "z": 22.1,
+   "h_m": 7.9,
+   "lidar_h_m": 8.6,
+   "variant": "oakB",
+   "yaw": 63
+  },
+  {
+   "x": 42.7,
+   "z": -85.8,
+   "h_m": 7.8,
+   "lidar_h_m": 8.5,
+   "variant": "elmA",
+   "yaw": 55
+  },
+  {
+   "x": -1.9,
+   "z": 34.1,
+   "h_m": 7.2,
+   "lidar_h_m": 7.8,
+   "variant": "elmA",
+   "yaw": 103,
+   "moved_from": [
+    -1.9,
+    31.5
+   ]
+  },
+  {
+   "x": 60.1,
+   "z": -0.5,
+   "h_m": 5.9,
+   "lidar_h_m": 6.4,
+   "variant": "elmA",
+   "yaw": 67
+  },
+  {
+   "x": 9.2,
+   "z": -19.0,
+   "h_m": 5.6,
+   "lidar_h_m": 6.1,
+   "variant": "elmA",
+   "yaw": 163
+  }
+ ]
+}

@@ -1,5 +1,5 @@
 """Neighbourhood evidence: Cook County parcels + footprints (+heights) and OSM -> spec frame, LiDAR trees.  Raw data: art/home_alone/references/neighborhood/data.
-   uv run --with numpy --with pillow --with matplotlib python -I tools/house/nb_evidence.py  -> data/spec_frame.json (and plan.png via nb_plan)"""
+   uv run --with numpy --with pillow --with matplotlib --with tifffile python -I tools/house/nb_evidence.py [--fetch]  -> data/spec_frame.json (and plan.png via nb_plan)"""
 import json, math, sys
 from pathlib import Path
 import numpy as np
@@ -28,20 +28,32 @@ for i, f in enumerate(json.load(open(P/"cook-footprints.json"))["features"]):
 osm = json.load(open(P/"osm-200m.json"))
 roads = [{"hw": e["tags"]["highway"], "name": e["tags"].get("name"), "pts": [F.spec(p["lat"], p["lon"]) for p in e["geometry"]]} for e in osm["elements"] if e["type"] == "way" and "highway" in e["tags"]]
 
-# nDSM (ISGS Cook 2022 DSM - DTM, ft->m, 600x600 over B) -> trees: local maxima > 6 m outside buildings
+# nDSM = ISGS Cook DSM 2022 - DTM 2022 (ft -> m). Oct 20 fix: the step-1 raster was georeferenced with the REQUESTED bbox, but ArcGIS
+# exportImage widens the extent to square pixels and returns the real one: every tree was ~45 m off and the footprints sat on bare
+# ground (median p25 0.1 m; registered now: 5.3 m). The npz keeps the server's extent; --fetch re-downloads (plain User-Agent).
 from matplotlib.path import Path as MP
-B = (-87.7376, 42.1070, -87.7296, 42.1125)
-n = np.load(P/"ndsm_m.npz")["n"].astype(np.float32)
+if "--fetch" in sys.argv:
+    import io, urllib.request
+    UA = {"User-Agent": "home-alone-house/1.0"}; url = "https://data.isgs.illinois.edu/arcgis/rest/services/Elevation/IL_Cook_{}_2022/ImageServer/exportImage"
+    q = "?bbox=-87.7376,42.1070,-87.7296,42.1125&bboxSR=4326&imageSR=4326&size=1300,1100&format=tiff&pixelType=F32&noData=-9999&interpolation=RSP_BilinearInterpolation&f=json"
+    get = lambda u: urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=120).read()
+    import tifffile
+    js = {k: json.loads(get(url.format(k) + q)) for k in ("DSM", "DTM")}
+    r = {k: tifffile.imread(io.BytesIO(get(j["href"]))).astype(np.float32) for k, j in js.items()}
+    e = js["DSM"]["extent"]; nn = (r["DSM"] - r["DTM"]) * 0.3048006; nn[(r["DSM"] < -9000) | (r["DTM"] < -9000)] = np.nan
+    np.savez_compressed(P/"ndsm_m.npz", n=nn.astype(np.float16), extent=np.array([e["xmin"], e["ymin"], e["xmax"], e["ymax"]]))
+z = np.load(P/"ndsm_m.npz"); n = np.nan_to_num(z["n"].astype(np.float32)); B = tuple(z["extent"])   # lon0, lat0, lon1, lat1 (server's)
 H, W = n.shape
 ii, jj = np.mgrid[0:H, 0:W]
 lon = B[0] + (jj+.5)/W*(B[2]-B[0]); lat = B[3] - (ii+.5)/H*(B[3]-B[1])
-sx = np.vectorize(lambda a, b: F.spec(a, b)[0])(lat[::1, ::1], lon); sz = np.vectorize(lambda a, b: F.spec(a, b)[1])(lat, lon)
+sx, sz = F.spec(lat, lon)
 pts = np.c_[sx.ravel(), sz.ravel()]
 inb = np.zeros(len(pts), bool)
 for f in fps: inb |= MP(f["poly"]).contains_points(pts, radius=-1.5)
 inb = inb.reshape(H, W)
-k = 3; pad = np.pad(n, k, constant_values=0); mx = np.max([pad[a:a+H, b:b+W] for a in range(2*k+1) for b in range(2*k+1)], axis=0)
-tm = (n > 6) & (n >= mx) & ~inb
+px = abs(float(sx[0, 1] - sx[0, 0]) + 1j * float(sz[0, 1] - sz[0, 0]))          # metres per pixel (~0.51)
+k = max(1, round(3.0 / px)); pad = np.pad(n, k, constant_values=0); mx = np.max([pad[a:a+H, b:b+W] for a in range(2*k+1) for b in range(2*k+1)], axis=0)
+tm = (n > 6) & (n >= mx) & ~inb                                                  # crowns: local maxima over 3 m, > 6 m, off the roofs
 trees = [{"x": round(float(sx[a, b]), 1), "z": round(float(sz[a, b]), 1), "h_m": round(float(n[a, b]), 1)} for a, b in zip(*np.nonzero(tm))]
 # per footprint: nDSM ridge (p95 inside) vs the county's Max_Point height
 for f in fps:

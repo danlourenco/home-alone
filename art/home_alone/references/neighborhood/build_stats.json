@@ -1,0 +1,242 @@
+{
+ "lot_B0": {
+  "tier": 2,
+  "lod0_tris": 29612,
+  "lod1_tris": 1572,
+  "glow_tris": 40,
+  "bulbs": 326,
+  "materials": [
+   "NB_Glass",
+   "NB_brick_red",
+   "NB_clapboard_greyblue",
+   "NB_concrete_stone",
+   "NB_paint_black",
+   "NB_paint_darkblue",
+   "NB_paint_porchgrey",
+   "NB_paint_white",
+   "NB_roof_asphalt_frostgrey"
+  ],
+  "lod1_ratio": 0.053
+ },
+ "street": {
+  "Street_Road": 1816,
+  "Street_Concrete": 1988,
+  "Street_Parkway": 874,
+  "Street_Lawns": 288,
+  "Street_SnowBanks": 3378,
+  "LampPost_LOD0": 1384,
+  "LampPost_LOD1": 456
+ },
+ "lot_A-3": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 396,
+  "glow_tris": 0,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_concrete_stone",
+   "NB_paint_white",
+   "NB_roof_asphalt_charcoal",
+   "NB_shingle_brown"
+  ]
+ },
+ "lot_A-2": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 394,
+  "glow_tris": 0,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_clapboard_pale_yellow",
+   "NB_concrete_stone",
+   "NB_paint_white",
+   "NB_roof_asphalt_slate"
+  ]
+ },
+ "lot_A-1": {
+  "tier": 2,
+  "lod0_tris": 39955,
+  "lod1_tris": 745,
+  "glow_tris": 8,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_brick_red",
+   "NB_clapboard_white",
+   "NB_concrete_stone",
+   "NB_paint_black",
+   "NB_paint_shuttergreen",
+   "NB_paint_white",
+   "NB_roof_asphalt_charcoal"
+  ],
+  "lod1_ratio": 0.019
+ },
+ "lot_A+1": {
+  "tier": 2,
+  "lod0_tris": 11000,
+  "lod1_tris": 596,
+  "glow_tris": 4,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_brick_red",
+   "NB_concrete_stone",
+   "NB_paint_black",
+   "NB_paint_brown",
+   "NB_roof_clay_clayred",
+   "NB_stucco_cream"
+  ],
+  "lod1_ratio": 0.054
+ },
+ "lot_A+2": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 274,
+  "glow_tris": 0,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_concrete_stone",
+   "NB_paint_white",
+   "NB_roof_asphalt_charcoal",
+   "NB_shingle_brown"
+  ]
+ },
+ "lot_A+3": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 274,
+  "glow_tris": 0,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_clapboard_pale_yellow",
+   "NB_concrete_stone",
+   "NB_paint_white",
+   "NB_roof_asphalt_slate"
+  ]
+ },
+ "lot_A+5": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 336,
+  "glow_tris": 0,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_clapboard_sage",
+   "NB_concrete_stone",
+   "NB_paint_white",
+   "NB_roof_asphalt_slate"
+  ]
+ },
+ "lot_A+6": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 274,
+  "glow_tris": 0,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_brick_red",
+   "NB_concrete_stone",
+   "NB_paint_ivory",
+   "NB_roof_asphalt_charcoal"
+  ]
+ },
+ "lot_B-3": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 514,
+  "glow_tris": 0,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_brick_red",
+   "NB_concrete_stone",
+   "NB_paint_ivory",
+   "NB_roof_asphalt_charcoal"
+  ]
+ },
+ "lot_B-2": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 450,
+  "glow_tris": 0,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_concrete_stone",
+   "NB_paint_brown",
+   "NB_roof_asphalt_slate",
+   "NB_stucco_ivory"
+  ]
+ },
+ "lot_B-1": {
+  "tier": 2,
+  "lod0_tris": 29194,
+  "lod1_tris": 972,
+  "glow_tris": 8,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_brick_red",
+   "NB_clapboard_white",
+   "NB_concrete_stone",
+   "NB_paint_black",
+   "NB_paint_darkred",
+   "NB_paint_porchgrey",
+   "NB_paint_white",
+   "NB_roof_asphalt_charcoal"
+  ],
+  "lod1_ratio": 0.033
+ },
+ "lot_B+1": {
+  "tier": 2,
+  "lod0_tris": 34458,
+  "lod1_tris": 1044,
+  "glow_tris": 2,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_brick_red",
+   "NB_clapboard_cream",
+   "NB_concrete_stone",
+   "NB_paint_black",
+   "NB_paint_porchgrey",
+   "NB_paint_white",
+   "NB_roof_asphalt_slate"
+  ],
+  "lod1_ratio": 0.03
+ },
+ "lot_B+2": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 276,
+  "glow_tris": 0,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_brick_red",
+   "NB_concrete_stone",
+   "NB_paint_ivory",
+   "NB_roof_asphalt_charcoal"
+  ]
+ },
+ "lot_B+3": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 276,
+  "glow_tris": 0,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_concrete_stone",
+   "NB_paint_brown",
+   "NB_roof_asphalt_slate",
+   "NB_stucco_ivory"
+  ]
+ }
+}

@@ -52,7 +52,15 @@ for row, anchor in (("A", OURS), ("B", MUR)):
                     "confidence": ev.get("confidence", "low"), "status": "evidence"})
         if ev.get("note"): ent["note"] = ev["note"]
         manifest.append(ent)
+# keep what later steps added (kits, budgets, street, tiers: tools/house/nb_kits.py) so a re-run only refreshes the evidence
+_old = json.loads((ROOT/"spec/neighborhood.json").read_text()) if (ROOT/"spec/neighborhood.json").exists() else {}
+_prev = {e["id"]: e for e in _old.get("parcels", [])}
+for ent in manifest:
+    for k, v in _prev.get(ent["id"], {}).items():
+        if k not in ent: ent[k] = v
 out = {"_comment": "DRAFT evidence manifest (Oct 19 2026). Spec metres, +x toward Lincoln Ave (front). Lot ids are neutral: A = Lincoln's McCallister side, B = across the street; +n is toward +z (film-left from the street). Heights are 2022 lidar, post-1990: trees and additions differ from 1990.",
        "frame": "tools/house/nb_frame.py", "parcels": manifest}
+for k, v in _old.items():
+    if k not in out: out[k] = v
 (ROOT/"spec/neighborhood.json").write_text(json.dumps(out, indent=1))
 print(len(manifest), [(e["id"], e["tier"], len(e["buildings"])) for e in manifest])
