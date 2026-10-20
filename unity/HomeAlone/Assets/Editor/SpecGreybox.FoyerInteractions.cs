@@ -74,7 +74,7 @@ public static partial class SpecGreybox
         var probe=go.AddComponent<PlanarReflectionProbe>();
         probe.mode=ProbeSettings.Mode.Realtime;probe.realtimeMode=ProbeSettings.RealtimeMode.EveryFrame;
         probe.settingsRaw.resolutionScalable.useOverride=true;
-        probe.settingsRaw.resolutionScalable.@override=PlanarReflectionAtlasResolution.Resolution1024;
+        probe.settingsRaw.resolutionScalable.@override=PlanarReflectionAtlasResolution.Resolution512;   // 512: at 1024 the probe atlas overflowed (unity_practices.py probeatlas, Oct 20)
         probe.settingsRaw.proxySettings.mirrorPositionProxySpace=Vector3.zero;
         probe.settingsRaw.proxySettings.mirrorRotationProxySpace=Quaternion.identity;
         probe.influenceVolume.boxSize=new Vector3(.46f,1.0f,.16f);

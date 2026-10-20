@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/House.unity
-    guid: 4aa8e483b33d840b2a3c760cddf50f45
+    path: Assets/Scenes/House_WallGrid.unity
+    guid: 0f3ab5f97e4474b3bbf67588316854e4
   m_configObjects: {}

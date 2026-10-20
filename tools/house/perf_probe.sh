@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 # perf_probe.sh: measure House_WallGrid in a STANDALONE macOS player at fixed poses (docs/PERFORMANCE.md).
 #
-#   tools/house/perf_probe.sh build          # APFS-clone the scratch copy ($HA_SCRATCH/ucopy, the last built+baked scene) to
-#                                            # ~/.cache/home-alone-perf/HomeAlone and build ~/.cache/home-alone-perf/build/HomeAlonePerf.app
+#   tools/house/perf_probe.sh build [dev]    # APFS-clone the MAIN project (unity/HomeAlone: the scene + bake the user walks, as it is
+#                                            # on disk, uncommitted trials included) to ~/.cache/home-alone-perf/HomeAlone (no Temp, no
+#                                            # lock files) and build ~/.cache/home-alone-perf/build/HomeAlone.app (the local Mac test app;
+#                                            # `dev`: HomeAloneDev.app, a development player: draw calls/batches + ring-buffer warnings)
+#                                            # HA_REUSE=1: rebuild in the existing clone (scripts changed only; ~3 min)
+#                                            # HA_OVERLAY=<dir>: drafts (dir/Scripts, dir/Editor ...) copied over the clone's Assets/
 #   tools/house/perf_probe.sh run LABEL      # run the player's tour (PerfProbe.cs -perfprobe): 6 poses x day/night, 300 frames each,
 #                                            # 1920x1080 windowed -> ~/.cache/home-alone-perf/runs/LABEL/*.json + *.png, and prints the table
 #                                            # HA_PERF_ARGS="-perfoff ShadowMaps,SSAO": HDRP frame settings off (attribution runs)
@@ -10,20 +14,26 @@
 #   tools/house/perf_probe.sh ab NAME APP_A APP_B   # two builds (a project-setting change), tours A B A B -> base -> variant table
 #                                            # (HA_PERF_APP=<.app> picks the player for run)
 #   tools/house/perf_probe.sh table A [B]    # the table for run A, or A vs B (before/after) with the PNG difference per pose
+#   tools/house/perf_probe.sh attrib LABEL   # heavy frames per pose and their named cause (perf_attrib.py; HA_PERF_APP=<dev .app> tour)
 #   tools/house/perf_probe.sh clean          # delete the clone + player (~0.5-1 GB real; the clone shares blocks until rebuilt)
-# Wait for other Unity jobs first: the clone is taken from the scratch copy, so never while unity_pipeline.sh build|bake runs.
+# Wait for other Unity jobs first (one builder): never while tools/house/pipeline_busy.sh reports a build/bake/load.
+# LOCAL ONLY: the app carries gitignored store assets and the unlicensed exterior GLB; never distribute it, never commit build/.
 set -euo pipefail
 REPO="$(cd "$(dirname "$0")/../.." && pwd)"
-SRC="${HA_SCRATCH:-$HOME/.cache/home-alone}/ucopy/HomeAlone"
-W="$HOME/.cache/home-alone-perf"; C="$W/HomeAlone"; APP="${HA_PERF_APP:-$W/build/HomeAlonePerf.app}"
+SRC="$REPO/unity/HomeAlone"
+W="$HOME/.cache/home-alone-perf"; C="$W/HomeAlone"; APP="${HA_PERF_APP:-$W/build/HomeAlone.app}"
 UNITY=/Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/MacOS/Unity
 case "${1:-}" in
 build)
-  pgrep -f "unity_pipeline.sh (build|bake)" >/dev/null && { echo "a pipeline build/bake is running: wait" >&2; exit 1; }
-  mkdir -p "$W"; rm -rf "$C"; cp -Rc "$SRC" "$C"; rm -rf "$C/Temp"   # copy-on-write clone: seconds, ~no disk
-  rm -f "$C/Assets/BankersLamp/Scripts/RenderTextureCaptureEditor.cs"*   # bought pack: an editor script outside Editor/ breaks player builds
-  cp "$REPO/unity/HomeAlone/Assets/Scripts/PerfProbe.cs" "$C/Assets/Scripts/"; cp "$REPO/unity/HomeAlone/Assets/Editor/PerfBuild.cs" "$C/Assets/Editor/"
-  T=$SECONDS; "$UNITY" -batchmode -projectPath "$C" -executeMethod PerfBuild.Build -perfOut "$APP" -quit -logFile "$W/build.log" || { grep -m5 -E "error|PerfBuild" "$W/build.log"; exit 1; }
+  "$REPO/tools/house/pipeline_busy.sh" && { echo "a pipeline build/bake/load is running: wait" >&2; exit 1; }
+  [ "${2:-}" = dev ] && { APP="$W/build/HomeAloneDev.app"; DEV=-perfDev; } || DEV=
+  if [ -z "$DEV" ] && [ -z "${HA_REUSE:-}" ] || [ ! -d "$C" ]; then   # `dev` reuses the release build's clone (same scene; IL2CPP caches warm)
+    mkdir -p "$W"; rm -rf "$C"; cp -Rc "$SRC" "$C"; rm -rf "$C/Temp" "$C/Logs"   # copy-on-write clone: seconds, ~no disk
+    find "$C/Library" \( -name "*-lock" -o -name "*.lock" \) -delete   # the open editor's LMDB/DataStore locks
+    rm -f "$C/Assets/BankersLamp/Scripts/RenderTextureCaptureEditor.cs"*   # bought pack: an editor script outside Editor/ breaks player builds
+    [ -n "${HA_OVERLAY:-}" ] && cp -R "$HA_OVERLAY/." "$C/Assets/"
+  fi
+  T=$SECONDS; "$UNITY" -batchmode -projectPath "$C" -executeMethod PerfBuild.Build -perfOut "$APP" $DEV -quit -logFile "$W/build.log" || { grep -m5 -E "error|PerfBuild" "$W/build.log"; exit 1; }
   grep PerfBuild "$W/build.log"; echo "player built in $((SECONDS-T)) s";;
 run)
   L="${2:?label}"; O="$W/runs/$L"; rm -rf "$O"; mkdir -p "$O"
@@ -39,7 +49,8 @@ run)
 ab)   # ab NAME APP_A APP_B: tours A, B, A, B (two builds, e.g. a project-setting change), then the base -> variant table
   N="${2:?name}"; for i in 1 2; do HA_PERF_APP="$3" "$0" run "$N-A$i" >/dev/null; HA_PERF_APP="$4" "$0" run "$N-B$i" >/dev/null; done
   uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" --ab "$W/runs/$N-A1" "$W/runs/$N-B1" "$W/runs/$N-A2" "$W/runs/$N-B2";;
+attrib) python3 -I "$REPO/tools/house/perf_attrib.py" "$W/runs/${2:?label}";;   # name each pose's heavy frames' cause (needs a dev player's tour)
 table) shift; uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" "${@/#/$W/runs/}";;
-clean) rm -rf "$C" "$W/build";;
-*) sed -n 2,11p "$0"; exit 1;;
+clean) rm -rf "$C" "$W/build";;   # runs/ (the benchmark history) is kept
+*) sed -n 2,19p "$0"; exit 1;;
 esac

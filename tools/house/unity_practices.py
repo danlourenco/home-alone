@@ -14,8 +14,14 @@ Checks (static; the scene-level ones, LODGroups / MeshColliders on foliage / mat
   foliage    a foliage .mat (by name) that is not opaque + alpha-clipped + double-sided (HDRP Lit foliage practice)
   mips       a 2D texture under Textures/ or Models/ imported without mipmaps
   texsize    a texture imported above 4096 (2048 for foliage; 8192 for the 360-degree Backdrop domes, which need it)
+  probeatlas the reflection probe atlas budget (HDRP.asset reflectionProbeTexCacheSize) against the baked cube probes of House_WallGrid
+             (every lighting scenario's set: across a day/night switch HDRP 17's LRU keeps the last two renders' entries, Oct 20 live
+             read: 61 entries = 2 x 30-31 cubes + mirrors, atlas 100% full) plus the realtime planar mirrors in SpecGreybox*.cs.
+             Fails above 85% (HEADROOM): the next probe or mirror must not tip it over. Never baselined: over budget logs "No more
+             space in Reflection Probe Atlas" and drops reflections. (reflectionCacheCompressed is a no-op in HDRP 17.6: LightLoop.cs
+             has the BC6H path commented out; 128 is the smallest cube tier, so the levers are the atlas size and the mirrors.)
 """
-import json, re, subprocess, sys
+import json, re, struct, subprocess, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -79,15 +85,46 @@ def textures():
             yield f"texsize|{rel(f)[:-5]}|{max(sizes)}>{cap}"
 
 
+def exr_size(f):   # (width, height) from an OpenEXR header's dataWindow (box2i)
+    d = f.read_bytes()[:4096]; i = d.index(b"dataWindow\0box2i\0") + 21
+    x0, y0, x1, y1 = struct.unpack("<4i", d[i:i + 16]); return x1 - x0 + 1, y1 - y0 + 1
+
+
+def atlas_need(cube_faces, planar_res):
+    """Texels HDRP 17.6 asks of the atlas (ReflectionProbeTextureCache.GetTextureSizeInAtlas): a cube of face F is stored octahedral at
+    max(F, 32) x4 (x2 from 512 up), squared; a planar at its resolution, squared. One slot per texture (not per camera: one realtime
+    RT per planar probe). Power-of-two squares sorted large-first pack a power-of-two atlas exactly, so area is the whole test."""
+    cube = lambda f: (max(f, 32) * (4 if max(f, 32) < 512 else 2)) ** 2
+    return sum(cube(f) for f in cube_faces) + sum(r * r for r in planar_res)
+
+
+HEADROOM = 0.85   # coordinator, Oct 20: 100% with no headroom is not a pass
+
+
+def probe_atlas(editor_texts=None, hdrp_text=None):
+    m = re.search(r"reflectionProbeTexCacheSize: (\d+)", hdrp_text or (A / "Settings/HDRP.asset").read_text())
+    v = int(m.group(1)); w, h = (v, v) if v <= 16384 else (v >> 16, v & 0xFFFF)
+    faces = [exr_size(f)[1] for f in sorted((A / "Scenes/House_WallGrid").glob("Probe_*.exr"))]   # 6:1 strip: height = face
+    if editor_texts is None:
+        editor_texts = [f.read_text(errors="ignore") for f in sorted((A / "Editor").glob("SpecGreybox*.cs"))]
+    planar = [int(r) for t in editor_texts for r in re.findall(r"PlanarReflectionAtlasResolution\.Resolution(\d+)", t)]
+    need = atlas_need(faces, planar)
+    vram = w * h * 4 * 1.33 / 2 ** 20   # R11G11B10 (4 B), 1 slice (fabric off), mips: HDRP's GetApproxCacheSizeInByte
+    print(f"probe atlas: {len(faces)} baked cubes (all scenarios) + planars {planar} need {need / 1e6:.2f} M of {w}x{h} = "
+          f"{w * h / 1e6:.2f} M ({100 * need / (w * h):.0f}%, limit {HEADROOM:.0%}; atlas ~{vram:.0f} MB VRAM)")
+    if need > HEADROOM * w * h:
+        yield f"probeatlas|unity/HomeAlone/Assets/Settings/HDRP.asset|need {need / 1e6:.2f}M > {HEADROOM:.0%} of {w * h / 1e6:.2f}M"
+
+
 def tracked(keys):
     files = set(subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True, text=True).stdout.split())
     return [k for k in keys if k.split("|")[1] in files]
 
 
 def run():
-    found = sorted(set(list(obsolete()) + list(material_access()) + list(foliage()) + list(textures())))
+    found = sorted(set(list(obsolete()) + list(material_access()) + list(foliage()) + list(textures()) + list(probe_atlas())))
     if "--update-baseline" in sys.argv:
-        keep = tracked(found)
+        keep = [k for k in tracked(found) if not k.startswith("probeatlas|")]   # a budget, not a ratchet
         BASE.write_text(json.dumps(keep, indent=0) + "\n")
         print(f"baseline: {len(keep)} existing violations accepted ({len(found) - len(keep)} untracked left out)"); return 0
     base = set(json.loads(BASE.read_text())) if BASE.exists() else set()
@@ -109,6 +146,14 @@ def selftest():
     assert mat_flags("_AlphaCutoffEnable: 1\n_SurfaceType: 0\n_DoubleSidedEnable: 1") == ("1", "0", "1")
     assert FOLIAGE.search("HiFi_ExtShrubLeaf") and not NOT_FOLIAGE.search("HiFi_ExtShrubLeaf")
     assert NOT_FOLIAGE.search("HiFi_FrontLeaf_Inside") and NOT_FOLIAGE.search("HiFi_ExtShrubStem")
+    t = [f.read_text(errors="ignore") for f in sorted((A / "Editor").glob("SpecGreybox*.cs"))]
+    foyer = lambda r: [x.replace("Resolution512", r).replace("Resolution1024", r) if "FoyerMirrorProbe" in x else x for x in t]
+    r1024, r512 = foyer("Resolution1024"), foyer("Resolution512")   # the foyer mirror at 1024 (Oct 20) and 512 (the fix)
+    assert atlas_need([128], [1024]) == 512 * 512 + 1024 * 1024 and atlas_need([512], []) == 1024 * 1024
+    h = (A / "Settings/HDRP.asset").read_text(); big = re.sub(r"reflectionProbeTexCacheSize: \d+", f"reflectionProbeTexCacheSize: {8192 << 16 | 4096}", h)
+    small = re.sub(r"reflectionProbeTexCacheSize: \d+", "reflectionProbeTexCacheSize: 4096", h)
+    assert list(probe_atlas(r1024, small)) and list(probe_atlas(r512, small)), "4096 atlas: 105% / 100% must fail (85% limit)"
+    assert not list(probe_atlas(r512, big)) and not list(probe_atlas(r1024, big)), "8192x4096 atlas: 50% / 52% must pass"
     print("selftest ok")
 
 

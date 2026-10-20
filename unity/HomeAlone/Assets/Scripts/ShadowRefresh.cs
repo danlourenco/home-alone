@@ -11,6 +11,7 @@ using UnityEngine.Rendering.HighDefinition;
 //  - Forget(): the night layer switched; every lamp is drawn afresh when next in view.
 public static class ShadowRefresh
 {
+    public static int Requests;   // shadow-map redraws asked for (PerfProbe tags the frames)
     static HDAdditionalLightData[] lamps;
     static Light[] lights;
     static int[] drawn;
@@ -37,8 +38,8 @@ public static class ShadowRefresh
             var l = lights[i];
             // once when it first comes into view, and once more when the camera first comes within its range: a map drawn while the
             // camera was far off came out wrong (the living room's console lamps, measured Oct 16); drawn from close by it is right
-            if ((drawn[i] & 1) == 0 && GeometryUtility.TestPlanesAABB(planes, new Bounds(l.transform.position, Vector3.one * 2f * l.range))) { lamps[i].RequestShadowMapRendering(); drawn[i] |= 1; }
-            if ((drawn[i] & 2) == 0 && (cam.transform.position - l.transform.position).sqrMagnitude < l.range * l.range) { lamps[i].RequestShadowMapRendering(); drawn[i] |= 2; }
+            if ((drawn[i] & 1) == 0 && GeometryUtility.TestPlanesAABB(planes, new Bounds(l.transform.position, Vector3.one * 2f * l.range))) { { lamps[i].RequestShadowMapRendering(); Requests++; } drawn[i] |= 1; }
+            if ((drawn[i] & 2) == 0 && (cam.transform.position - l.transform.position).sqrMagnitude < l.range * l.range) { { lamps[i].RequestShadowMapRendering(); Requests++; } drawn[i] |= 2; }
         }
     }
 
@@ -47,7 +48,7 @@ public static class ShadowRefresh
         Find();
         for (int i = 0; i < lamps.Length; i++)
         {
-            if (Cached(i) && b.SqrDistance(lights[i].transform.position) < lights[i].range * lights[i].range) lamps[i].RequestShadowMapRendering();
+            if (Cached(i) && b.SqrDistance(lights[i].transform.position) < lights[i].range * lights[i].range) { lamps[i].RequestShadowMapRendering(); Requests++; }
         }
     }
 }

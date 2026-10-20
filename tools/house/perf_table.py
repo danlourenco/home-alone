@@ -8,13 +8,26 @@ import json
 import sys
 from pathlib import Path
 
-COLS = [("gpu_ms_p10", "GPU ms p10"), ("gpu_ms_median", "GPU ms"), ("cpu_ms_median", "CPU ms"), ("triangles", "tris M"), ("setpass", "setpass"), ("shadow_casters", "shadow casters"), ("rt_lights", "rt lights"),
-        ("rt_shadow_lights", "rt shadow lights"), ("sys_mem_mb", "sys MB")]
-# batches / draw calls / gfx memory are 0 in a release player (Unity only counts them in development builds): kept in the JSON, not shown
+# cpu_ms_* is the frame's wall time (unscaledDeltaTime): "frame p50/p95/p99". main/render ms are the threads' busy time per frame
+# (FrameTiming): GPU ms well above both = GPU-bound. Older runs lack the GPU p95 / thread columns ("-").
+COLS = [("frame_ms_mean", "frame mean"), ("cpu_ms_median", "frame p50"), ("cpu_ms_p95", "frame p95"), ("cpu_ms_p99", "frame p99"), ("gpu_ms_p10", "GPU p10"), ("gpu_ms_median", "GPU p50"),
+        ("gpu_ms_p95", "GPU p95"), ("main_ms_median", "main ms"), ("render_ms_median", "render ms"), ("triangles", "tris M"), ("setpass", "setpass"),
+        ("shadow_casters", "shadow casters"), ("rt_lights", "rt lights"), ("rt_shadow_lights", "rt shadow lights"), ("sys_mem_mb", "sys MB")]
+DEV_COLS = [("draw_calls", "draw calls"), ("batches", "batches"), ("gfx_mem_mb", "gfx MB")]   # 0 in a release player: shown when counted
 
 
 def load(d):
-    return {p.stem: json.loads(p.read_text()) for p in sorted(Path(d).glob("*.json"))}
+    out = {p.stem: json.loads(p.read_text()) for p in sorted(Path(d).glob("*.json"))}
+    for r in out.values():
+        ms = r.get("frame_log", {}).get("ms")
+        if ms:   # Metal queues frames (fast ones, then one that waits for present): the MEAN is the real frame time, p50 is not
+            r["frame_ms_mean"] = round(sum(ms) / len(ms), 1)
+    for r in out.values():   # FrameTiming's GPU time is sparse on Metal: fall back to the profiler's GPU Frame Time (development player)
+        g = [v for v in r.get("frame_log", {}).get("gpu_ms", []) if v > 0]
+        if g and r.get("gpu_ms_median") is None:
+            g.sort(); q = lambda f: g[min(int(f * (len(g) - 1)), len(g) - 1)]
+            r.update(gpu_ms_median=q(0.5), gpu_ms_p10=q(0.1), gpu_ms_p95=q(0.95), gpu_ms_p99=q(0.99))
+    return out
 
 
 def fmt(k, v):
@@ -64,12 +77,13 @@ def main(args):
     if len(args) == 1 and any(Path(args[0]).glob("*-A1.json")):   # one -perfab run
         return ab([(args[0], "-A1"), (args[0], "-A2")], [(args[0], "-B1"), (args[0], "-B2")])
     runs = [load(d) for d in args]
-    head = ["pose"] + [c[1] for c in COLS] + (["img diff"] if len(runs) == 2 else [])
+    cols = COLS + [c for c in DEV_COLS if any(r.get(c[0]) for run in runs for r in run.values())]
+    head = ["pose"] + [c[1] for c in cols] + (["img diff"] if len(runs) == 2 else [])
     print("| " + " | ".join(head) + " |")
     print("|" + "---|" * len(head))
     for pose in runs[-1]:
         cells = [pose]
-        for k, _ in COLS:
+        for k, _ in cols:
             vals = [fmt(k, r.get(pose, {}).get(k)) for r in runs]
             cells.append(" -> ".join(vals))
         if len(runs) == 2:

@@ -1,11 +1,76 @@
-# Performance: how to measure, what was found (perf pass, Oct 18 2026)
+# Performance: how to measure, what was found (perf pass, Oct 18 2026; baseline Oct 20)
+
+## BASELINE (Oct 20, before the neighbourhood work): the local Mac test app
+
+**App:** `~/.cache/home-alone-perf/build/HomeAlone.app` (LOCAL ONLY: it carries gitignored store assets and the unlicensed exterior
+GLB; never distribute or commit it). Bundle id `com.homealone.local`, arm64 IL2CPP release, windowed 1920x1080, 3.1 GB. Built by
+`tools/house/perf_probe.sh build` from an APFS clone of the MAIN project as on disk (the exterior-shrubs and trim/French-windows
+TRIALs applied, the saved day/night bake, no new bake). `build dev` makes HomeAloneDev.app (development player, profiler markers).
+Feel notes and M screenshots from the app go to `~/Library/Application Support/com.homealone.local/feedback` (FeelNotes.cs).
+
+**How to read the numbers (new, Oct 20):** the player is GPU-bound at every pose, and Metal queues frames: a run alternates fast
+frames (3-20 ms) with frames that block in `Gfx.WaitForPresentOnGfxThread` (25-90 ms; 25-45% of frames, tagged on 100% of them).
+So the **frame MEAN is the real frame time** (1/fps); p50 understates it and the old tables' "CPU ms median" is not a frame time.
+FrameTimingManager's GPU time is sparse on this Metal player (a handful of samples per 300 frames) and the profiler's "GPU Frame
+Time", "Draw Calls Count" and "Batches Count" read 0 even in a development player (HDRP / SRP Batcher on Metal): set-pass calls and
+triangles are the render counters we get.
+
+Editor stopped, display awake, app frontmost (caffeinate; checked: every sample focused at 1920x1080); `rel-oct20` (release) and
+`dev-oct20` (development) agree within ~3%. Foyer mirror at 512 (`-perfmirror 512`). Run JSON: `spec/captures/perf/runs/rel-oct20`.
+
+| pose | frame mean ms (fps) | p50 | p95 | p99 | main / render thread ms | tris M | set-pass | shadow casters | rt lights (shadowed) | sys MB |
+|---|---|---|---|---|---|---|---|---|---|---|
+| street day | 32.1 (31) | 19.6 | 62.9 | 64.2 | 11.3 / 11.9 | 47.6 | 892 | 28318 | 17 (10) | 7170 |
+| street night | 21.7 (46) | 20.3 | 43.4 | 45.2 | 8.5 / 8.2 | 15.6 | 455 | 0 | 107 (60) | 8119 |
+| foyer day | 28.3 (35) | 18.5 | 56.7 | 58.5 | 8.7 / 8.9 | 31.6 | 691 | 26935 | 17 (10) | 7097 |
+| foyer night | 34.2 (29) | 25.3 | 92.3 | 99.2 | 6.5 / 6.1 | 5.5 | 307 | 0 | 107 (60) | 7997 |
+| living day | 10.8 (92) | 3.6 | 36.7 | 42.3 | 2.7 / 2.2 | 5.6 | 168 | 3108 | 17 (10) | 6873 |
+| living night | 15.8 (63) | 4.9 | 56.6 | 72.9 | 2.7 / 1.7 | 1.6 | 71 | 0 | 107 (60) | 7268 |
+| upstairs hall day | 16.2 (62) | 4.4 | 46.1 | 59.0 | 3.5 / 3.0 | 9.6 | 227 | 5270 | 17 (10) | 6882 |
+| upstairs hall night | 28.9 (35) | 17.4 | 111.0 | 139.2 | 2.7 / 1.6 | 3.1 | 100 | 0 | 107 (60) | 7489 |
+| attic day | 27.6 (36) | 17.0 | 55.7 | 58.0 | 11.6 / 11.9 | 39.0 | 956 | 28098 | 17 (10) | 7120 |
+| attic night | 25.7 (39) | 15.9 | 51.1 | 52.6 | 8.0 / 7.4 | 14.7 | 474 | 0 | 107 (60) | 7632 |
+| parents day | 13.2 (76) | 5.8 | 35.4 | 39.6 | 4.4 / 4.0 | 6.5 | 323 | 6309 | 17 (10) | 7066 |
+| parents night | 16.9 (59) | 5.6 | 46.2 | 46.9 | 4.7 / 3.0 | 1.9 | 171 | 0 | 107 (60) | 8089 |
+| yard day | 7.5 (133) | 2.7 | 25.8 | 35.4 | 2.0 / 1.5 | 1.8 | 93 | 966 | 17 (10) | 7080 |
+| yard night | 7.8 (128) | 2.7 | 27.7 | 36.2 | 2.3 / 1.3 | 0.5 | 44 | 0 | 107 (60) | 7668 |
+
+**Heavy-frame attribution** (`perf_probe.sh attrib dev-oct20`, perf_attrib.py): at every pose the heavy frames are the present
+waits (GPU behind), with NO other named cause: no GC, no ShadowRefresh map requests, no reflection-probe/atlas updates, no APV
+streaming, no light switching on those frames. So there are no hitches to fix; the cost is the steady GPU frame.
+
+**Cost centres (ranked):**
+1. **Day: sun shadow cascades + geometry.** The slow day poses are the ones with 27-28 k shadow casters and 31-48 M triangles
+   (street, foyer, attic: 28-32 ms); the light day poses have 1-6 k casters and 2-10 M tris (7-16 ms). Day triangles are 3-9x
+   night's at the same pose, i.e. mostly the sun's 4 cascades over 150 m (the Oct 18 open item: 80 m, interior props out of the
+   cascades). The neighbourhood adds exactly this kind of load (more casters in the cascades).
+2. **Night: 107 real-time lights, 60 shadowed** (was 60 / 52 on Oct 18), plus forward-lit transparents: foyer night 34 ms and
+   hall night 29 ms with only 3-6 M tris. Bake the generic `Light_` fills, fit ranges to rooms, fix the cached shadow atlas
+   overflow (above).
+3. **Realtime planar mirror:** the foyer mirror at 1024 costs +10 ms at night and ~+17 ms by day at the foyer pose (`mirror-ab`,
+   `-perfab -perfmirror 512,1024`: night 49.2 / 49.6 -> 60.7 / 58.0 ms; day 27.0 / 17.4 -> 37.4 / 41.6 ms, frame p50, Oct 20 first
+   build): keep 512 (`spec/captures/perf/foyer-mirror-1024-vs-512.jpg`, left 1024, right 512: softer up close).
+Memory: 6.9-8.1 GB system; player 3.1 GB, textures still dominate (item 4 below).
+
+**Reflection probe atlas (Oct 20):** HDRP 17.6 stores each probe texture once (not per camera); a cube of face F takes
+(max(F,32) x4)^2 texels (x2 from 512), a planar its resolution^2. Across a day/night switch the LRU keeps both scenarios' cubes:
+live read in the editor, 61 entries = 60 x 512^2 + 1024^2, the 4096^2 atlas 100% full ("No more space in Reflection Probe Atlas").
+Fix: atlas 8192x4096 (HDRP.asset `reflectionProbeTexCacheSize 536875008`; 85 -> ~170 MB VRAM, measured 85.3 MB for 4096^2) and the
+foyer mirror 512. Gate: `unity_practices.py` probeatlas (static: HDRP.asset + baked Probe_*.exr + SpecGreybox*.cs planars), fails
+above 85%: 4096 atlas with mirror 1024 = 105% FAIL, 512 = 100% FAIL; 8192x4096 = 50% pass. `reflectionCacheCompressed` is a no-op
+in 17.6 and 128 is already the smallest cube tier.
+**Ring buffer** ("Ran out of Graphics Ring Buffer space"): editor-only here; the release player has no such message and the
+development player's tour logged none. If a player ever shows it: launch with `-gfx-ring-buffer-size <bytes>` (present in this
+UnityPlayer.dylib).
+
 
 Target: the user's 14" M3 Pro MacBook Pro (36 GB), measured in a **standalone** macOS player, not editor Play.
 
 ## How to re-measure
 
 ```
-tools/house/perf_probe.sh build        # clone the scratch copy (last built + baked scene) -> IL2CPP player (~11 min first time, ~1 min after)
+tools/house/perf_probe.sh build        # clone the MAIN project -> IL2CPP player HomeAlone.app (~19 min; HA_REUSE=1 ~3 min; `build dev`)
+tools/house/perf_probe.sh attrib LABEL # heavy frames per pose and their named cause (dev player tour)
 tools/house/perf_probe.sh run LABEL    # 6 poses x day/night, 300 frames each, 1920x1080 -> ~/.cache/home-alone-perf/runs/LABEL + table
 tools/house/perf_probe.sh table A B    # before -> after per pose, with the mean pixel difference of the pose PNGs
 tools/house/perf_probe.sh clean        # delete the clone and player (several GB)
@@ -23,7 +88,7 @@ tools/house/perf_probe.sh clean        # delete the clone and player (several GB
     (tours A B A B).
 - **The display must be awake.** With it asleep or locked, FrameTimingManager returns no GPU times (`gpu_ms` null) and CPU ms drops to
   ~5. The run keeps the display awake with `caffeinate -d -u`, but that can't get past a locked screen.
-- Batches, draw calls and gfx memory read 0 in a release player (Unity counts them only in development builds).
+- Batches and draw calls read 0 even in a development player (HDRP on Metal); gfx memory is counted only in a development player.
 - Player-build traps this tool works around (in the clone only): this Unity install's Mac support has IL2CPP variations only, so the
   default Mono backend compiles against editor assemblies and fails (`PerfBuild` sets IL2CPP). The bought BankersLamp pack has an editor
   script outside an Editor folder (`RenderTextureCaptureEditor.cs`), which breaks any player build, so it is deleted from the clone.

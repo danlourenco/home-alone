@@ -16,7 +16,10 @@ public class FeelNotes : MonoBehaviour
             if (!fc.GetComponent<FeelNotes>()) fc.gameObject.AddComponent<FeelNotes>();
     }
 
-    static string Dir => Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/feedback"));
+    // the editor writes into the repo (feel_notes.py reads it); a standalone player has no repo beside it, so its notes and shots go to
+    // the app's data folder (macOS: ~/Library/Application Support/<bundle id>/feedback, i.e. com.homealone.local)
+    static string Dir => Application.isEditor ? Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/feedback"))
+                                              : Path.Combine(Application.persistentDataPath, "feedback");
     bool open; string note = "", rating = "", light = "", shot = ""; int saved; string flash = ""; float flashUntil;
     FpsController fc;
 
