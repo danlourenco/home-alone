@@ -44,7 +44,7 @@
    "data": ["film-frame:336"], "scale": ["none"], "upstream": ["film"]
   },
   {
-   "what": "Build gates (self-consistency only): Opening clear check 0 (fails the old build on the hall door + window), walk test no new BLOCKED line, z-fight 0, clash 0",
+   "what": "Build gates (self-consistency only): Opening clear check 0 (fails the old build on the hall door + window), walk test no new BLOCKED line (the service-stair line is HEAD's), z-fight 0, clash 1 = the pre-existing bud-vase stems vs flowers (HEAD's report lists the same pair twice)",
    "agrees": true, "type": "topological", "tests": [], "data": ["unity:walk-test"], "scale": ["none"], "upstream": ["unity:build"]
   }
  ],
