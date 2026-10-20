@@ -109,4 +109,87 @@ public static partial class SpecGreybox
         return $"Opening face check: {faces} door faces, {noHead} without a head casing, {paint} showing the other room's finish within the casing width\n"
                + string.Concat(bad.Take(30).Select(b => b + "\n"));
     }
+    // OPENING CLEAR (Oct 20, walk note 06:49 "what's with this wall blocking the doorway?": the hall bath's tile wainscot ran straight across
+    // its door; no collider (walk test ok), crossing no other mesh (clash 0), and the review render stood inside the room). For every
+    // door, arch and window in spec/openings.json: a grid of rays perpendicular to the wall through the passage, from 0.4 m before one
+    // face to 0.4 m past the other (windows: 5 cm, the reveal: a sofa may stand at a window) (doors/arches 0.1 m over the floor to 0.1 m under the head or springing, windows over the glass), tested
+    // against every enabled visible mesh (temporary mesh colliders, as OpeningFaceCheck). The opening's own leaf, frame, glass and window
+    // dressing (curtains, sheers, lace, blinds) are skipped by name. Standalone: -executeMethod SpecGreybox.OpeningClearCheckScene
+    // (Library/OpeningClearCheck.txt).
+    public static void OpeningClearCheckScene()
+    {
+        EditorSceneManager.OpenScene("Assets/Scenes/House_WallGrid.unity", OpenSceneMode.Single);
+        var r = OpeningClearCheck();
+        File.WriteAllText("Library/OpeningClearCheck.txt", r); Debug.Log(r);
+    }
+
+    // whole name tokens (split at _ / space / digits / camelCase), so "Panel", "Fireplace" or "PlacedProps" never count as a pane or lace
+    static readonly HashSet<string> OwnParts = new HashSet<string> { "door", "doors", "leaf", "window", "windows", "glass", "glazing", "sash",
+        "muntin", "muntins", "pane", "panes", "casing", "jamb", "curtain", "curtains", "sheer", "sheers", "lace", "drape", "drapes", "valance",
+        "blind", "blinds", "shade", "shades", "voile", "backdrop", "arch" };   // backdrop: a view card outside a window (Buzz's POV)
+    // Known, reasoned exceptions (as ClashAllowed): (opening id, renderer name, why). Listed in the report as ALLOWED; anything else fails.
+    static readonly (string id, string mesh, string why)[] OpeningClearAllowed = {
+        ("upstairs:door:closet_1|kevin_jeff_room:8.074", "KV_GloveLeather", "the boxing gloves hang on the closet door's knob (Marina 380/383): leaf-mounted"),
+        ("upstairs:arch:hall_corridor|hall_corridor_south:5.764", "Ficus_Tree_hall", "PRE-EXISTING, review: the hall ficus beside the south arch reaches into its passage (Oct 20 first run)"),
+        ("upstairs:arch:hall_corridor|hall_corridor_south:5.764", "Ficus_Pot_hall", "PRE-EXISTING, review: as the ficus"),
+        ("upstairs:arch:hall_corridor|hall_corridor_south:5.764", "Poin_hall_urn3", "PRE-EXISTING, review: a poinsettia urn beside the south arch"),
+        ("upstairs:arch:hall_corridor|hall_corridor_south:5.764", "Urn", "PRE-EXISTING, review: the urn beside the south arch"),
+        ("upstairs:arch:hall_corridor|hall_corridor_south:5.764", "Wood", "PRE-EXISTING, review: the urn's stand (HallDressing)"),
+        ("upstairs:arch:hall_corridor|hall_corridor_south:5.764", "Soil", "PRE-EXISTING, review: the urn's soil (HallDressing)"),
+        ("ground:arch:foyer|rear_passage:8.855", "Velvet", "PRE-EXISTING, review: the foyer's velvet seat within 0.4 m of the rear passage arch"),
+        ("ground:arch:foyer|rear_passage:8.855", "Wood", "PRE-EXISTING, review: the same seat's frame"),
+        ("upstairs:window:buzz_room:10.197", "Wall", "PRE-EXISTING, review: one row of rays meets wall inside this window's reveal (cut vs opening data)"),
+    };
+    static IEnumerable<string> Tokens(string name) =>
+        System.Text.RegularExpressions.Regex.Matches(name, "[A-Z]?[a-z]+|[A-Z]+(?![a-z])").Cast<System.Text.RegularExpressions.Match>().Select(m => m.Value.ToLowerInvariant());
+
+    static string OpeningClearCheck()
+    {
+        var geo = JObject.Parse(File.ReadAllText(Path.Combine(RepoRoot, "spec/geometry.json")));
+        var ops = JObject.Parse(File.ReadAllText(Path.Combine(RepoRoot, "spec/openings.json")));
+        float gy = (float)geo["ground"]["floor_y"];
+        var temp = new List<Collider>();
+        foreach (var mr in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
+            if (mr.enabled && mr.GetComponent<Collider>() == null && mr.GetComponent<MeshFilter>()?.sharedMesh is Mesh mesh)
+            { var mc = mr.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = mesh; temp.Add(mc); }
+        Physics.SyncTransforms();
+        string PathOf(Transform t) { var s = t.name; while (t.parent != null) { t = t.parent; s = t.name + "/" + s; } return s; }
+        bool Own(Transform t) { for (; t != null; t = t.parent) if (Tokens(t.name).Any(OwnParts.Contains)) return true; return false; }
+        var bad = new List<string>(); var allowed = new List<string>(); int n = 0, nBad = 0;
+        foreach (var o in ops["openings"].Where(o => new[] { "door", "arch", "window" }.Contains((string)o["kind"])))
+        {
+            n++; string ax = (string)o["axis"], kind = (string)o["kind"];
+            float c = (float)o["c"], lo = (float)o["lo"], hi = (float)o["hi"], head = (float)o["head"], fy = (string)o["storey"] == "ground" ? gy : 0f;
+            if (!(o["header"]?["box"] is JArray hb)) { n--; continue; }   // a model assembly with no header (the front door + sidelights): EntranceCheck walks it
+            float f0 = ax == "x" ? (float)hb[0] : (float)hb[2], f1 = ax == "x" ? (float)hb[1] : (float)hb[3];
+            float y0 = kind == "window" ? (float)o["sill"] + 0.05f : 0.10f;
+            float y1 = (kind == "arch" && o["spring"]?.Type == JTokenType.Float ? (float)o["spring"] : head) - (kind == "window" ? 0.05f : 0.10f);
+            float reach = kind == "window" ? 0.05f : 0.4f;   // doors/arches: the walked passage; windows: the reveal (furniture may stand at a window)
+            float a0 = f0 - reach, len = f1 - f0 + 2 * reach;
+            var hitBy = new Dictionary<string, int>();
+            for (float s = lo + 0.05f; s <= hi - 0.05f + 1e-4f; s += 0.1f)
+                for (float y = y0; y <= y1 + 1e-4f; y += 0.1f)
+                {
+                    var org = ax == "x" ? new Vector3(a0, fy + y, -s) : new Vector3(s, fy + y, -a0);
+                    var dir = ax == "x" ? Vector3.right : Vector3.back;   // spec +x / spec +z
+                    foreach (var h in Physics.RaycastAll(org, dir, len, ~0, QueryTriggerInteraction.Ignore))
+                    {
+                        var r = h.collider.GetComponent<MeshRenderer>();
+                        if (r == null || !r.enabled || Own(h.collider.transform)) continue;
+                        var k = PathOf(h.collider.transform); hitBy[k] = hitBy.GetValueOrDefault(k) + 1;
+                    }
+                }
+            foreach (var k in hitBy.Keys.ToList())
+            {
+                var al = OpeningClearAllowed.FirstOrDefault(a => a.id == (string)o["id"] && k.Split('/').Last() == a.mesh);
+                if (al.id != null) { allowed.Add($"ALLOWED {(string)o["id"]}: {k} ({hitBy[k]} rays): {al.why}"); hitBy.Remove(k); }
+            }
+            if (hitBy.Count == 0) continue;
+            nBad++;
+            bad.Add($"BLOCKS  {(string)o["id"]}: " + string.Join(", ", hitBy.OrderByDescending(kv => kv.Value).Take(4).Select(kv => $"{kv.Key} ({kv.Value} rays)")));
+        }
+        foreach (var col in temp) Object.DestroyImmediate(col);
+        Physics.SyncTransforms();
+        return $"Opening clear check: {n} openings, {nBad} with a visible mesh in the passage ({allowed.Count} allowed)\n" + string.Concat(bad.Take(40).Concat(allowed).Select(b => b + "\n"));
+    }
 }

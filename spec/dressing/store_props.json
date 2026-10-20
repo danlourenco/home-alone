@@ -1239,8 +1239,8 @@
    "floor": "upper",
    "prefab": "Assets/Free Wood Door Pack/Prefab/Wood/Door_3/Door_3_White.prefab",
    "x": [
-    3.215,
-    3.275
+    3.005,
+    3.065
    ],
    "z": [
     3.5369,
@@ -1248,14 +1248,16 @@
    ],
    "y0": 0.0,
    "height": 2.087,
-   "back": "-x",
+   "back": "+x",
    "hides": [
     "Casing"
    ],
    "collide": false,
-   "open": 85,
+   "open": 125,
    "hinge": "lo",
-   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White as the other interior doors (linen, girls_a/b, attic, Buzz, parents; the film's are white six-panel: DEVIATIONS 63h). The pack frame (outer = leaf x 1.124 wide, x 1.027 tall) centred on the opening, 0.5 cm proud of the face, 6 cm deep. Opening z 3.584-4.344 (0.76 m, stock 30 x 80 in) had no leaf. Frame on the bedroom face (x 3.21), replacing its casing (the bath-side casing stays). Hinge ASSUMED at the lo end (z 3.584; the pack leaf's own hinge edge as it turns here, yaw 270: hinged at hi its lever stood in the wall, clash gate); swings into the bath, resting toward z 2.82 (the bath runs to z 2.373 there); open 85 deg AUTHORED."
+   "source": "user walk note Oct 18 03:14 (foyer rear, shot 20261018-031353): 'these doors should all be replaced with real doors, the same doors used elsewhere inside' (overnight 12, not walked). Door_3 White as the other interior doors (linen, girls_a/b, attic, Buzz, parents; the film's are white six-panel: DEVIATIONS 63h). The pack frame (outer = leaf x 1.124 wide, x 1.027 tall) centred on the opening, 0.5 cm proud of the face, 6 cm deep. Opening z 3.584-4.344 (0.76 m, stock 30 x 80 in) had no leaf. Frame on the bedroom face (x 3.21), replacing its casing (the bath-side casing stays). Hinge ASSUMED at the lo end (z 3.584; the pack leaf's own hinge edge as it turns here, yaw 270: hinged at hi its lever stood in the wall, clash gate); swings into the bath, resting toward z 2.82 (the bath runs to z 2.373 there); open 85 deg AUTHORED. | Oct 20 (walk note 06:50, the exit between the toilet and the vanity; door-assembly): RE-HUNG on the bath face (x 3.07, frame x 3.005-3.065, back +x, mirrored so the knob stays at the latch edge, swinging away from the wall into the bath): an in-swinging leaf hangs on the face it swings toward, so it can open past 90 instead of stopping at the jamb. Hinge stays lo (z 3.584, the toilet side: Marina 222/225 and the set photo 166 show the leaf beside the toilet). Open 125 AUTHORED: rests 0.1 m off the moved toilet; its tip (2.41, 3.16) leaves 0.70 m to the vanity's corner (was 0.28 at 85 deg). The bedroom face gets the generated casing back.",
+   "mirror": true,
+   "swing": "out"
   },
   {
    "name": "kevin_closet_door",

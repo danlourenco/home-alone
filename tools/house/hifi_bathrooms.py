@@ -343,6 +343,9 @@ HP = POLY["hall_bath"]
 tile, black = P("BA_Subway"), P("BA_TileBlack")
 WN = HB["wainscot"]; TP = WN["proud"]; CP = WN["cap_proud"]
 obst = [p["box"] for o in OPEN if "hall_bath" in o["between"] for p in o["pieces"] if not p.get("by")]
+# + each opening's own void (walk note Oct 20 06:49: the tile ran straight across the door between its casing legs, and across the
+# window above its stool): along the wall lo..hi, sill (or the floor) to head, through the wall's thickness (its header box)
+obst += [o["header"]["box"][:4] + [o["sill"] or 0.0, o["head"]] for o in OPEN if "hall_bath" in o["between"] and o.get("header")]
 
 
 def free_runs(axis, c, lo, hi, y0, y1):

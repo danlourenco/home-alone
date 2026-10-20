@@ -1,0 +1,12 @@
+Opening clear check: 51 openings, 3 with a visible mesh in the passage (8 allowed)
+BLOCKS  upstairs:door:hall_bath|hall_corridor:10.274: Upstairs/Bathrooms_HiFi/BA_Subway (60 rays), Upstairs/Bathrooms_HiFi/BA_TileBlack (6 rays)
+BLOCKS  upstairs:arch:hall_corridor|hall_corridor_south:5.764: Upstairs/HallDressing_HiFi/Wood (4 rays), Upstairs/HallDressing_HiFi/Soil (3 rays)
+BLOCKS  upstairs:window:hall_bath:9.331: Upstairs/Bathrooms_HiFi/BA_Subway (21 rays)
+ALLOWED upstairs:door:closet_1|kevin_jeff_room:8.074: Upstairs/KevinRoom_HiFi/KV_GloveLeather (2 rays): the boxing gloves hang on the closet door's knob (Marina 380/383): leaf-mounted
+ALLOWED upstairs:arch:hall_corridor|hall_corridor_south:5.764: Upstairs/HallPlants_HiFi/Ficus_Pot_hall (6 rays): PRE-EXISTING, review: as the ficus
+ALLOWED upstairs:arch:hall_corridor|hall_corridor_south:5.764: Upstairs/HallPlants_HiFi/Ficus_Tree_hall (22 rays): PRE-EXISTING, review: the hall ficus beside the south arch reaches into its passage (Oct 20 first run)
+ALLOWED upstairs:arch:hall_corridor|hall_corridor_south:5.764: Upstairs/HallDressing_HiFi/Urn (5 rays): PRE-EXISTING, review: the urn beside the south arch
+ALLOWED upstairs:arch:hall_corridor|hall_corridor_south:5.764: Upstairs/HallPlants_HiFi/Poin_hall_urn3 (6 rays): PRE-EXISTING, review: a poinsettia urn beside the south arch
+ALLOWED upstairs:window:buzz_room:10.197: Upstairs/Walls/Wall (13 rays): PRE-EXISTING, review: one row of rays meets wall inside this window's reveal (cut vs opening data)
+ALLOWED ground:arch:foyer|rear_passage:8.855: Upstairs/FoyerProps_HiFi/Velvet (15 rays): PRE-EXISTING, review: the foyer's velvet seat within 0.4 m of the rear passage arch
+ALLOWED ground:arch:foyer|rear_passage:8.855: Upstairs/FoyerProps_HiFi/Wood (5 rays): PRE-EXISTING, review: the same seat's frame

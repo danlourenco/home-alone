@@ -18,6 +18,8 @@ Why this exists (Oct 13): Buzz's room was resized to the SfM size 4.35 m. The "p
 4. Furniture the user may nudge again: give its store_props entry `"movable": true` (StoreProps.cs leaves it non-static; the den's DenProps sofa/chair/ficus are non-static already). Static pieces are batched in Play and silently refuse to move live; movable ones can be moved in Play or edit mode and need no re-bake (they are lit by the probes). Generated pieces (den.json etc.) are written back by hand: read the transform, update the json, rebuild the model. A build always re-bakes: a fresh build scene has no lighting data, so "skip the bake" would leave the whole house flat.
 5. The user nudges it in the Scene view + Save Prop Placement; batch the pieces into the next build (z-fight/clash still 0 there).
 
+**Walls with openings (Oct 20):** anything built on a wall with an opening triggers the door-assembly skill, and every doorway into a changed room gets a render from the far side (the hall looking in) before handover; `Opening clear check` in the build report must read 0 (the hall bath tile ran across its door past every other gate).
+
 ## Steps, in order. Don't skip ahead.
 
 1. **Write the record first**, `changes/<date>-<slug>.json` (copy the Buzz record's shape), before touching geometry:

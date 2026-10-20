@@ -7,6 +7,8 @@ description: Build, upgrade or verify a house doorway as a cohesive carpentry as
 
 User Oct19: doors must be built consistently as one cohesive assembly. Walk failures: wallpaper exposed on exterior jambs, separate inside/outside leaves, flat interior panels/hardware, jerky swing. Consistency means a shared construction method and quality bar; preserve the different reference-specific doors.
 
+**Trigger (Oct 20, hall bath tile across its door):** anything built on a wall that has an opening (tile, wainscot, panelling, shelving, a fixture run) triggers this skill: cut it at the opening's void (lo..hi, sill or floor..head), not just at its casings, and before handover render every doorway into the changed room from the far side (the hall looking in). The build's `Opening clear check` must read 0.
+
 Read alongside [change-gate](../change-gate/SKILL.md), [artist-pipeline](../artist-pipeline/SKILL.md), and [zfight-check](../zfight-check/SKILL.md). These retain their measurement, surface and user-acceptance requirements. Never recompile scripts/reload Play during the user's walk; prepare the source correction for afterward.
 
 ## Establish the opening and its owners

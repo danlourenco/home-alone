@@ -5,7 +5,7 @@
 "spec/geometry.json": "fe9be6044fa7bebc6a4c76be20053f4abbcade8de1a1f8ff2c149bae7bcecd56",
 "spec/house_spec.json": "aa13c8ba63825b984b8fec9d3d9e0a94b75ce00158b842fe54949ec7900a05eb",
 "spec/house_spec.ground.json": "fb7d9210f7874a7fae4a078c88eaabca3fcc2183d407369cf4876c10afadb655",
-"spec/dressing/store_props.json": "e009efb869d8623bb2ecae62eaad77e293d632d57150bc353022429415a96620",
+"spec/dressing/store_props.json": "569f2c1801fad7d5c9fffc912225aedd8e5feb3d9f9a5568a2d4560806f829e3",
 "spec/dressing/french_doors.json": "a5da39a702d68886d0f0a1e4ea5c20e62ca81435868ce73d253eaa209c3b4663",
 "spec/dressing/buzz.json": "adbe2e533194393922314595597d1404a3c1496c4d02da480ba9cb955d53eb7a",
 "tools/house/hifi_door.py": "989a9a82e14c633ee6733b59d7264055ab8bfd6ec901248c02fa3a5ebb820a01",
@@ -203,13 +203,13 @@
 "part": "leg_lo",
 "face": [
 "z",
-3.07,
--1
+3.21,
+1
 ],
 "by": null,
 "box": [
-3.05,
-3.07,
+3.21,
+3.23,
 3.514,
 3.584,
 0.0,
@@ -220,13 +220,13 @@
 "part": "leg_hi",
 "face": [
 "z",
-3.07,
--1
+3.21,
+1
 ],
 "by": null,
 "box": [
-3.05,
-3.07,
+3.21,
+3.23,
 4.344,
 4.414,
 0.0,
@@ -237,13 +237,13 @@
 "part": "head",
 "face": [
 "z",
-3.07,
--1
+3.21,
+1
 ],
 "by": null,
 "box": [
-3.05,
-3.07,
+3.21,
+3.23,
 3.514,
 4.414,
 2.032,
@@ -254,13 +254,13 @@
 "part": "frame",
 "face": [
 "z",
-3.21,
-1
+3.07,
+-1
 ],
 "by": "store_props:parents_bath_door",
 "box": [
-3.215,
-3.275,
+3.005,
+3.065,
 3.5369,
 4.3911,
 0.0,
@@ -273,8 +273,8 @@
 "part": "leg_lo",
 "face": [
 "z",
-3.21,
-1
+3.07,
+-1
 ],
 "reason": "replaced by the store prop parents_bath_door's door frame (store_props.json)"
 },
@@ -282,8 +282,8 @@
 "part": "leg_hi",
 "face": [
 "z",
-3.21,
-1
+3.07,
+-1
 ],
 "reason": "replaced by the store prop parents_bath_door's door frame (store_props.json)"
 },
@@ -291,8 +291,8 @@
 "part": "head",
 "face": [
 "z",
-3.21,
-1
+3.07,
+-1
 ],
 "reason": "replaced by the store prop parents_bath_door's door frame (store_props.json)"
 }
@@ -306,22 +306,22 @@
 {
 "rule": "under-ceiling",
 "ok": true,
-"detail": "head + casing 2.102 under parents_bath's ceiling 2.500"
+"detail": "head 2.032 under parents_bath's ceiling 2.500"
 },
 {
 "rule": "head-cased",
 "ok": true,
-"detail": "parents_bath face: head by SpecGreybox"
+"detail": "parents_bath face: frame by store_props:parents_bath_door"
 },
 {
 "rule": "under-ceiling",
 "ok": true,
-"detail": "head 2.032 under parents_bedroom's ceiling 2.500"
+"detail": "head + casing 2.102 under parents_bedroom's ceiling 2.500"
 },
 {
 "rule": "head-cased",
 "ok": true,
-"detail": "parents_bedroom face: frame by store_props:parents_bath_door"
+"detail": "parents_bedroom face: head by SpecGreybox"
 },
 {
 "rule": "swing-room",

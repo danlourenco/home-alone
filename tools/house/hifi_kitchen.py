@@ -403,6 +403,7 @@ for t in K["talls"]:
 # doors, three bays: drawers over pairs of doors, a row of open cubbies, an open band with the red canisters, a glazed upper case
 # (3 x 4 panes per door) to near the ceiling. Faces -x from the wall face at x_face; a = z, d = out of the front plane.
 paint, glass = Part("Paint", "KT_Paint"), Part("Glass", "KT_Glass")
+paper = Part("HutchRecess", "KT_Wallpaper")   # SpecGreybox maps KT_Wallpaper to the kitchen's own world-triplanar paper
 dred, dgreen, ddark = Part("DishRed", "KT_DishRed"), Part("DishGreen", "KT_DishGreen"), Part("DishDark", "KT_DishDark")
 
 
@@ -429,6 +430,10 @@ def hutch(h):
         zc = z0 + k * bw; za, zb = (zc, zc + T) if k == 0 else (zc - T, zc) if k == nb else (zc - T / 2, zc + T / 2)
         paint.box(X - CD, XB, c0, c1 - T, za, zb)
     paint.box(X - 0.012, X - 0.002, c0, top, z0 + T, z1 - T)          # back panel (white, film 2104), 2 mm off the wall
+    if "surround" in h:   # the recess (walk note Oct 20 22:20; film 2104 shows no end panels): papered returns + head, the kitchen's paper
+        SR = h["surround"]; xf = X - LD - SR["proud"]; ceil = SR["ceiling"] - 0.002
+        paper.box(xf, X, 0.0, ceil, SR["z"][0], z0 - 0.012); paper.box(xf, X, 0.0, ceil, z1 + 0.012, SR["z"][1])
+        paper.box(xf, X, top, ceil, z0 - 0.012, z1 + 0.012)
     # upper case: bottom, top, ends, bay dividers, two shelves, then the glazed doors on its front plane
     u0 = h["band_top"]; g0, g1 = h["glazed"]
     paint.box(X - UD, XB, u0, g0 - 0.004, z0, z1); paint.box(X - UD, XB, g1 + 0.004, top, z0 - 0.01, z1 + 0.01)
@@ -554,10 +559,10 @@ M = {"KT_Wood": material("KT_Wood", (0.36, 0.11, 0.12), 0.45), "KT_Tile": materi
      "KT_Pine": material("KT_Pine", (0.72, 0.48, 0.25), 0.4), "KT_UVPine": material("KT_UVPine", (0.72, 0.48, 0.25), 0.4), "KT_Dispenser": material("KT_Dispenser", (0.12, 0.12, 0.13), 0.3),
      "KT_Paint": material("KT_Paint", (0.80, 0.79, 0.74), 0.5), "KT_Glass": material("KT_Glass", (0.6, 0.65, 0.65), 0.05),
      "KT_DishRed": material("KT_DishRed", (0.55, 0.04, 0.04), 0.3), "KT_DishGreen": material("KT_DishGreen", (0.06, 0.25, 0.12), 0.3),
-     "KT_DishDark": material("KT_DishDark", (0.05, 0.05, 0.05), 0.3)}
+     "KT_DishDark": material("KT_DishDark", (0.05, 0.05, 0.05), 0.3), "KT_Wallpaper": material("KT_Wallpaper", (0.85, 0.80, 0.70), 0.15)}
 coll = bpy.context.scene.collection
 root = bpy.data.objects.new("KitchenCabinets_HiFi", None); coll.objects.link(root)
-parts = (wood, tile, edge, grout, brass, black, steel, sink, cushion, housing, glow, pine, disp, pineuv, paint, glass, dred, dgreen, ddark)
+parts = (wood, tile, edge, grout, brass, black, steel, sink, cushion, housing, glow, pine, disp, pineuv, paint, glass, dred, dgreen, ddark, paper)
 for p in parts:
     if p.f:
         ob = p.build(coll, M); ob.parent = root

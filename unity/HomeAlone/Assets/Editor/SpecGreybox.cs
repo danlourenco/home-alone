@@ -397,6 +397,8 @@ public static partial class SpecGreybox
         report += CasingCheck(root, groot);
         Step("OpeningFaceCheck");
         report += OpeningFaceCheck();   // SpecGreybox.OpeningFaces.cs: every door face has a head casing and only its own room's finish
+        Step("OpeningClearCheck");
+        report += OpeningClearCheck();   // SpecGreybox.OpeningFaces.cs: no visible mesh stands in any door, arch or window passage (walk note Oct 20 06:49)
         Step("ArchFitCheck");
         report += ArchFitCheck();   // SpecGreybox.Arch.cs
         Step("PropsCheck");
@@ -1077,6 +1079,7 @@ public static partial class SpecGreybox
             ["KT_Dispenser"] = Solid("HiFi_ApplianceSmoke", new Color(0.10f, 0.10f, 0.11f), 0.9f),
             // Oct 19: the generated breakfast hutch (film 2104 = IMG_4305): painted white (the film's warm white, as the live preview), glass, dishes
             ["KT_Paint"] = Solid("HiFi_HutchPaint", new Color(0.80f, 0.79f, 0.74f), 0.45f),
+            ["KT_Wallpaper"] = KitchenPaper(),   // Oct 20: the hutch's recess returns + head (walk note 22:20), the kitchen's own paper (world-triplanar)
             ["KT_Glass"] = mGlass,
             ["KT_DishRed"] = Solid("HiFi_DishRed", new Color(0.55f, 0.04f, 0.04f), 0.75f),
             ["KT_DishGreen"] = Solid("HiFi_DishGreen", new Color(0.06f, 0.25f, 0.12f), 0.75f),
@@ -1778,6 +1781,10 @@ public static partial class SpecGreybox
         ("Grade_RearA", -9.642f, -5.33f, -1.0f, -0.365f, -3.39f), ("Grade_RearB", -9.642f, -5.33f, 1.305f, 20.6f, -3.39f),   // either side of the areaway
         ("Grade_RearA2", -9.642f, -9.06f, -6.3f, -1.0f, -3.39f),
         ("Grade_RearW", -21.85f, -9.642f, -6.3f, 3.10f, -3.40f),   // replaces the GLB's slab object257, which ran 0.7 m over the areaway's top steps (head height)
+        // the seam between Grade_RearW and the GLB's rear slab object251 (walk note Oct 19 22:22 "why the weird gap in the snow"): the slab's
+        // edge stops 5-15 cm short of z 3.10 (rays at x -10.5..-18 meet nothing there) and RearW's 0.30 m side face showed in the gap. A strip
+        // 1 cm over both (no coplanar faces) covering the gap and 30 cm of the slab
+        ("Grade_RearW_Seam", -21.85f, -9.642f, 3.05f, 3.45f, -3.39f),
         ("Grade_RearC", -5.33f, -1.65f, 4.22f, 20.6f, -3.39f), ("Grade_RearD", -1.65f, -0.13f, 7.78f, 20.6f, -3.39f),
         ("Grade_RearE", -0.13f, 1.44f, 11.57f, 20.6f, -3.39f), ("Grade_RearF", 1.44f, 2.21f, 16.21f, 20.6f, -3.39f),
         ("Grade_DenSide", 2.21f, 9.41f, 20.06f, 20.6f, -4.32f), ("Grade_DenFront", 9.41f, 10.40f, 16.37f, 20.6f, -4.32f),

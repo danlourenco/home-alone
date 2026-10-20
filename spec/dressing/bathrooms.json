@@ -163,8 +163,8 @@
   },
   "toilet": {
    "wall_x": 3.07,
-   "z": 2.98,
-   "source": "production photo 166 s + Marina 222 s: the toilet against the door wall beside the door"
+   "z": 2.78,
+   "source": "production photo 166 s + Marina 222 s: the toilet against the door wall beside the door. Oct 20 (walk note 06:50, 'barely room to walk between the toilet and cabinets'): moved 0.20 toward the wall stub (z 2.98 -> 2.78). Ruler: Marina 222 s, the tank (stock ~0.50 wide, 150 px) puts its side 40 px = 0.13 m off the stub, i.e. the centre 0.38-0.40 m from it (the 15 in code minimum); built 0.392 from the stub face 2.373 (+1.5 cm fixture gap)"
   },
   "wastebasket": {
    "x": 0.55,

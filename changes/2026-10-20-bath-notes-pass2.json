@@ -1,0 +1,67 @@
+{
+ "change": "Four walk-note fixes after bathrooms TRIAL 1 (user: 'good starting point, but things to work out'). (1) HALL BATH DOORWAY (06:49 'what's with this wall blocking the doorway?'): hifi_bathrooms.py cut the subway-tile wainscot only at the openings' casing pieces, so the tile, liner and cap ran straight across the door between its casing legs (x 8.511-8.526, z 10.274-10.949, 0.14-1.155 high) and across the window's reveal between its stool (0.81) and the cap; the cut list now includes every opening's void (lo..hi, sill or floor..head, through the wall's header box). New build gate 'Opening clear check' (SpecGreybox.OpeningFaces.cs): rays through every door/arch passage (0.4 m either side) and window reveal against every visible mesh; it fails the old build on exactly these two (BA_Subway 60 + 21 rays). (2) PARENTS' ENSUITE (06:50 'barely room to walk between the toilet and cabinets to exit'): the pinch was the open door leaf: hung on the BEDROOM face it stopped at 85 deg with its tip 0.28 m from the vanity's door-end corner. Re-hung on the bath face (the face it swings toward; frame x 3.005-3.065, mirrored, hinge still on the toilet side), opened to 125 deg (rests 0.1 m off the toilet), and the toilet moved 0.20 m toward its wall stub (z 2.98 -> 2.78; Marina 222's tank ruler: centre 0.38-0.40 m off the stub). Lane past the leaf tip 0.28 -> 0.70 m; toilet side to vanity front 0.62 -> 0.84 m. The vanity is unchanged (0.545 + 2 cm nosing: Marina 225's counter end reads >= 0.6 on the 2-gang switch plate; standard 21-22 in + nosing): it is not oversized. Kevin's knee space unchanged. (3) KITCHEN HUTCH (22:20 'supposed to be recessed into the wall like a built in a little bit'): film 2104 is shot from the hutch's left, where a freestanding case shows its end; the frame shows none (wallpaper meets the cases' left edges, which line up). Recess formed on the kitchen side: papered returns from the dining doors' casings to the cases and a papered head over the cases (up to the room top 2.438), 4 cm proud of the lower case (recess 0.49 m); no wall moved. (4) EXTERIOR SNOW (22:22 'why the weird gap in the snow'): the GLB rear slab object251 stops 5-15 cm short of Grade_RearW's edge (spec z 3.10; probe rays at x -10.5..-18 hit nothing there), so RearW's 0.30 m side face showed; a seam strip Grade_RearW_Seam (spec x -21.85..-9.642, z 3.05-3.45) 1 cm over both closes it. TRIAL.",
+ "target": "House_WallGrid",
+ "premise": "Each note's cause is a construction fault in our generators or placements (tile cut list, door hung on the wrong face, no recess surround, a slab seam), not a mis-measured room: the rooms and walls stay as measured",
+ "claim": {
+  "value": {
+   "hall_tile_cut": "every hall_bath opening's void",
+   "parents_door_open_deg": 125,
+   "parents_door_face": "bath (x 3.07)",
+   "parents_toilet_z": 2.78,
+   "parents_exit_lane_m": 0.70,
+   "hutch_recess_depth_m": 0.49,
+   "snow_seam": [3.05, 3.45]
+  },
+  "data": ["marina-frame:222", "film-frame:2104"],
+  "scale": ["toilet-tank-stock:marina-222", "tile-6in:film-2104"],
+  "upstream": ["marina-model", "film"],
+  "how": "Toilet: Marina 222 s (1280 px frame): tank 150 px (stock ~0.50 m) and its side 40 px off the wall stub -> 0.13 m gap, centre 0.38-0.40 m off the stub (built 0.392). Door: geometry (the leaf's swept position from StoreProps' pivot; build log 'leaf open ... now'). Hutch: tools/house/hutch_recess.py projects the hutch's end corners through film 2104's solved camera (film2104_measure.py, 2.04 px rms on the island's 6 in tiles): a freestanding 0.45 lower case shows a 37-38 px end face and the 0.32 upper case 27 px, at the cases' left end; the frame shows wallpaper meeting both cases' left edges directly, and those edges line up within ~5 px (spec/captures/picks/hutch-2104-ends.png). Snow: a read-only probe of the built scene (rays down at x -10.5/-12/-14/-18: object251 then nothing from z -3.25/-3.20/-3.15 to -3.10, then Grade_RearW, both tops -3.43)",
+  "applies_to": ["hall_bath", "parents_bath", "kitchen", "exterior"],
+  "measured_in": ["hall_bath", "parents_bath", "kitchen", "exterior"],
+  "risks": ["extraction"],
+  "pick": {"crop": "spec/captures/picks/hutch-2104-ends.png", "confirmed_by": "the same ends in the user's photo IMG_4305 (a different capture of film 2104-2146: wallpaper directly against the cubby row's and glazed case's left edges, a light switch on the strip) and Marina 924/927 (her model: no end panels seen from her left-side cameras)"}
+ },
+ "history": [
+  {"date": "2026-10-19", "what": "bathrooms TRIAL 1 (changes/2026-10-19-bathrooms.json): tile wainscot cut at casings only; parents' door as the Oct 18 pack door on the bedroom face, open 85; toilet z 2.98", "outcome": "walked: 'good starting point, but things to work out' (notes 06:49, 06:50)"},
+  {"date": "2026-10-19", "what": "hutch generated freestanding on the wall face (changes/2026-10-19-kitchen-cupboard-hutch.json)", "outcome": "walked: 'i like the detail but i think it's supposed to be recessed' (22:20)"},
+  {"date": "2026-10-18", "what": "yard grade boxes (changes/2026-10-18-yard-registration.json): Grade_RearW to spec z 3.10 replacing object257", "outcome": "walked: 'why the weird gap in the snow' (22:22)"}
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "Hutch, second source of a different kind: Marina's CG walk (Part 1 921-927 s) seen from the hutch's left: no end panel on either case, the cases' left edges in one line; her own model and scale. Topological",
+   "agrees": true, "type": "topological", "tests": ["extraction"],
+   "data": ["marina-frame:921", "marina-frame:924", "marina-frame:927"], "scale": ["none"], "upstream": ["marina-model"]
+  },
+  {
+   "what": "Toilet beside its wall stub, second source: the production photo (Marina Part 2 166 s) shows the toilet close to the side wall with the paper holder on it and the door leaf beside the tank; topological",
+   "agrees": true, "type": "topological", "tests": ["extraction"],
+   "data": ["production-photo:marina-p2-166"], "scale": ["none"], "upstream": ["production-photo"]
+  },
+  {
+   "what": "Hall bath doorway, an independent view of the room: film 336 from the hall doorway sees the sink, toilet, towels and the tall grass across clear floor, no tile wall in the opening (the tile is a wainscot on the room's walls)",
+   "agrees": true, "type": "topological", "tests": ["extraction"],
+   "data": ["film-frame:336"], "scale": ["none"], "upstream": ["film"]
+  },
+  {
+   "what": "Build gates (self-consistency only): Opening clear check 0 (fails the old build on the hall door + window), walk test no new BLOCKED line, z-fight 0, clash 0",
+   "agrees": true, "type": "topological", "tests": [], "data": ["unity:walk-test"], "scale": ["none"], "upstream": ["unity:build"]
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/bathnotes2/before/hall-doorway-note0649.jpg",
+   "spec/captures/views/bathnotes2/before/parents-note0650.jpg",
+   "spec/captures/views/bathnotes2/before/hutch-note2220.jpg",
+   "spec/captures/views/bathnotes2/before/snow-note2222.jpg"
+  ],
+  "after": [
+   "spec/captures/views/bathnotes2/after/hall-doorway-note0649.jpg",
+   "spec/captures/views/bathnotes2/after/parents-note0650.jpg",
+   "spec/captures/views/bathnotes2/after/hutch-note2220.jpg",
+   "spec/captures/views/bathnotes2/after/snow-note2222.jpg"
+  ]
+ },
+ "user_walk": "pending",
+ "outcome": null
+}

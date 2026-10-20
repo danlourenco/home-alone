@@ -1752,6 +1752,15 @@
    4
   ],
   "source": "film 2104 = the user's IMG_4305 (tools/house/film2104_measure.py; changes/2026-10-19-kitchen-cupboard-hutch.json, DEVIATIONS 109): three bays 0.60-0.63 (width 1.80-1.86 on the wall plane), cubby row 0.77-0.81 to the shelf 1.01-1.04, the upper case's bottom 1.17-1.19, glazed doors from 1.31; film 1100-1108: 3 x 4 panes per door; film 1146: the doors reach at least 2.30 (built 2.33, flat top under the 2.438 ceiling); drawers over doors below the cubbies and the depths from Marina 924 / standard (the film hides them). Centred on the wall between the dining doors' casings (4.50-6.46)",
-  "wares": "red canisters and dishes on the open shelf, dishes in the cubbies and behind the glass (film 2104/1100: red canisters left, a green-and-red tray centre, green glass; IMG_4305)"
+  "wares": "red canisters and dishes on the open shelf, dishes in the cubbies and behind the glass (film 2104/1100: red canisters left, a green-and-red tray centre, green glass; IMG_4305)",
+  "surround": {
+   "z": [
+    4.505,
+    6.453
+   ],
+   "proud": 0.04,
+   "ceiling": 2.438,
+   "source": "Oct 20 (walk note 22:20 'supposed to be recessed into the wall like a built in a little bit'): film 2104 (= IMG_4305) is shot from the hutch's LEFT (solved camera, film2104_measure.py: camera spec z -0.67 vs the hutch's end z 4.565), so a freestanding case shows its left end: the built 0.45 lower case projects a 37-38 px side face, the 0.32 upper 27 px (tools/house/hutch_recess.py). The frame shows none: wallpaper meets the cubby row's and the glazed case's left edges directly, and those edges line up (a proud lower case would sit 30 px right of the upper). Marina 921-927 (her CG, a second source) the same: no end panels from her left-side cameras. So the cases sit in a recess whose papered returns hide their ends. The dining side is not seen in any frame (film 10550/10658 only show its china cabinet beside a door), so the recess is formed on the kitchen side: papered returns from the door casings (z 4.505 / 6.453) to the cases, 4 cm proud of the lower case's nosing, and a papered head from the case top to the ceiling. No wall moves; the recess depth is the lower case's 0.49 m"
+  }
  }
 }
