@@ -16,8 +16,8 @@
   "sources": "d7d05b7373b9275f"
  },
  "tools/house/hifi_bathrooms.py": {
-  "models": "ac7222765e53a741",
-  "sources": "8d95fb3270e41d80"
+  "models": "899ee7cffddcdc7b",
+  "sources": "21d42bab0b02221d"
  },
  "tools/house/hifi_breakfast_table.py": {
   "models": "9f0d9d2837876295",
@@ -28,8 +28,8 @@
   "sources": "bd32bad6cc12175d"
  },
  "tools/house/hifi_buzz_props.py": {
-  "models": "2d758557410006f8",
-  "sources": "0d751db9ae7c2162"
+  "models": "97b6f60034339676",
+  "sources": "6cabd793dc70b9df"
  },
  "tools/house/hifi_den.py": {
   "models": "1cd32d8fd65662cb",

@@ -13,7 +13,7 @@ using UnityEngine.Rendering.HighDefinition;
 // (Scripts/ShadowRefresh.cs: the swing door, the paint cans and the dummy), or when it first comes into view (HDRP's render on
 // placement missed lamps placed out of view: ShadowRefresh.Warm). Per frame there is nothing left to draw or reshuffle.
 //   - resolution by importance (HDRP's tiers 256/512/1024): HeroLamps 1024; the other fixture lamps and the ground-floor rooms 512; the
-//     upstairs' generic room lamps (grey-box rooms) and the tree glow 256. ShadowAudit checks the sum against the atlas.
+//     upstairs' generic room lamps (grey-box rooms), the tree glow and the hall bath's sconces (a small room) 256. ShadowAudit checks the sum against the atlas.
 //   - no fade distance (HDRP's default): the 10 m stop-gap let a lamp 9-10 m away shine through the walls near the camera.
 //   - contact shadows (screen space, per frame) on the sun and the lamps clear of walls and shelves (ContactLamps). HDRP gives them to
 //     the first 24 lights on screen only (HDGpuLightsBuilder.GetContactShadowMask): 11 lights in the house have them, none can starve.
@@ -64,7 +64,7 @@ public static partial class SpecGreybox
                 continue;
             }
             if (l.shadows == LightShadows.None || l.lightmapBakeType == LightmapBakeType.Baked) continue;   // FilmFill: baked only
-            bool generic = l.name.StartsWith("Light_"), small = l.name.StartsWith("LivingTreeGlow"), hero = HeroLamps.Contains(l.name);
+            bool generic = l.name.StartsWith("Light_"), small = l.name.StartsWith("LivingTreeGlow") || l.name.StartsWith("BathLamp_hall_sconce"), hero = HeroLamps.Contains(l.name);
             int level = hero ? 2 : (generic && l.transform.position.y > UpstairsY) || small ? 0 : 1;
             hd.shadowUpdateMode = ShadowUpdateMode.OnDemand; hd.onDemandShadowRenderOnPlacement = true; hd.alwaysDrawDynamicShadows = false;
             hd.shadowFadeDistance = 10000f;

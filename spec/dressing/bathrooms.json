@@ -268,7 +268,9 @@
     10.75,
     11.15
    ],
-   "lumens": 300,
+   "lumens": 420,
+   "range": 4.0,
+   "lumens_source": "Oct 20 (user: \"too much light in the bathroom upstairs at night; illuminate the sconces and remove whatever implicit lighting is in there\"): the room generic fill (900 lm) removed, so the two shades carry the room: 2 x 420 lm, about two 40 W A19s in a 1990 two-arm bath sconce; range 4 m fits the 3.2 x 3.7 m room (was 300 lm, range 7)",
    "kelvin": 2700,
    "source": "film 336 (and 335): two frosted shades with ruffled (scalloped) rims side by side at the top of the frame over the medicine cabinet, cut off by the frame top; a two-arm brass bath sconce over the cabinet. Spacing 0.40 m ASSUMED (the shades' centres ~210 px apart at ~470 px/m on the cabinet plane, standing ~0.17 m proud); height ASSUMED (above the cabinet's cornice 1.93). Was one frosted globe (walk note 2026-10-20 06:58)"
   },

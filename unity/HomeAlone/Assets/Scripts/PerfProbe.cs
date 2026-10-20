@@ -30,6 +30,10 @@ public class PerfProbe : MonoBehaviour
         ("attic", new Vector3(6.556f, 3.93f, -16.95f), 351f, 0f),      // stair head facing the bed
         ("yard", new Vector3(-4f, -2.1f, -12f), 288f, -10f),           // rear yard looking at the treehouse (-12.1, -9.3)
         ("parents", new Vector3(6.745f, 1.16f, -2.895f), 276f, -14.6f), // parents' room, the bedside lamps (walk note 21:16 pose; PCSS check)
+        // Oct 20 (hall bath sconces, Buzz's lamps): -perfposes hallbath,hallbathdoor,buzz
+        ("hallbath", new Vector3(8.7f, 1.31f, -10.6f), 106f, -8f),       // hall bath, just inside its door, facing the sconce over the sink (film 336)
+        ("hallbathdoor", new Vector3(6.4f, 1.31f, -10.6f), 90f, 0f),     // the hall outside the bath door, looking in
+        ("buzz", new Vector3(7.9f, 1.31f, -11.95f), 145f, 8f),           // Buzz's room from his door, toward the windows and the bed
     };
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]

@@ -472,7 +472,7 @@ for ax in SC["arms"]:
                 [(0.007 * math.cos(2 * math.pi * k / 8), 0.007 * math.sin(2 * math.pi * k / 8)) for k in range(8)])
     brass.lathe(ax, wz - sd, sy + 0.115, [(0, 0.022), (0.02, 0.02)], 12)                         # the cup (top sy + 0.135)
     # tulip shade, opening down, its rim ruffled by 8 scallops; glass 4 mm thick (an outer and an inner skin)
-    shade = P("BA_Globe")
+    shade = P("BA_HallShade")   # its own part: the hall shades glow with their lamps (SpecGreybox.Bathrooms HiFi_ShadeHallBath)
     rings = [(sy + 0.12, 0.035), (sy + 0.09, 0.055), (sy + 0.04, 0.075), (sy - 0.01, 0.085)]
     def outline(r, ruffle, k=1.0):
         return [(ax + k * r * (1 + ruffle * math.cos(8 * t)) * math.cos(t), wz - sd + k * r * (1 + ruffle * math.cos(8 * t)) * math.sin(t))
@@ -532,7 +532,7 @@ rod(brass, Ph(WH["lo"] - 0.34, WH["head"] + 0.17, 0.08), Ph(WH["hi"] + 0.30, WH[
 COL = {"BA_Ivory": ((0.80, 0.77, 0.66), 0.45), "BA_Marble": ((0.03, 0.07, 0.05), 0.15), "BA_Brass": ((0.80, 0.60, 0.28), 0.35),
        "BA_Gilt": ((0.78, 0.58, 0.25), 0.35), "BA_Porcelain": ((0.93, 0.93, 0.90), 0.08), "BA_MirrorGlass": ((0.85, 0.87, 0.88), 0.02),
        "BA_BlackMarble": ((0.02, 0.03, 0.03), 0.15), "BA_ShowerGlass": ((0.85, 0.9, 0.9), 0.05), "BA_BlackFrame": ((0.02, 0.02, 0.02), 0.4),
-       "BA_Globe": ((1.0, 0.95, 0.85), 0.3), "BA_Mat": ((0.90, 0.88, 0.82), 0.9), "BA_PrintL": ((0.9, 0.88, 0.8), 0.9),
+       "BA_Globe": ((1.0, 0.95, 0.85), 0.3), "BA_HallShade": ((1.0, 0.95, 0.85), 0.3), "BA_Mat": ((0.90, 0.88, 0.82), 0.9), "BA_PrintL": ((0.9, 0.88, 0.8), 0.9),
        "BA_PrintM": ((0.9, 0.88, 0.8), 0.9), "BA_PrintR": ((0.9, 0.88, 0.8), 0.9), "BA_TowelSage": ((0.20, 0.42, 0.30), 0.95),
        "BA_TowelDark": ((0.02, 0.10, 0.05), 0.95), "BA_TowelWhite": ((0.90, 0.90, 0.87), 0.95), "BA_Lace": ((0.90, 0.88, 0.80), 0.9),
        "BA_Bin": ((0.03, 0.03, 0.03), 0.6), "BA_Pot": ((0.35, 0.33, 0.30), 0.5), "BA_Grass": ((0.18, 0.40, 0.14), 0.7), "BA_Shadow": ((0.04, 0.04, 0.04), 0.9), "BA_Subway": ((0.92, 0.92, 0.90), 0.1),
@@ -558,7 +558,7 @@ def export(group, name, out):
         ob = p.build(coll, mats); ob.parent = root
         if p.name in ("BA_Ivory", "BA_Marble", "BA_MarbleDark", "BA_Gilt", "BA_Subway", "BA_TileBlack", "BA_WhitePaint", "BA_Wicker", "BA_BlackMarble"):
             bv = ob.modifiers.new("bevel", "BEVEL"); bv.width = 0.002; bv.segments = 2; bv.limit_method = "ANGLE"; bv.angle_limit = math.radians(30)
-        if p in SMOOTH or p.name in SOFT or p.name in ("BA_Tub", "BA_HallTub", "BA_Basin", "BA_Basin2", "BA_Globe", "BA_Seat") or p.name.startswith("BA_Towel"):
+        if p in SMOOTH or p.name in SOFT or p.name in ("BA_Tub", "BA_HallTub", "BA_Basin", "BA_Basin2", "BA_Globe", "BA_HallShade", "BA_Seat") or p.name.startswith("BA_Towel"):
             for poly in ob.data.polygons:
                 poly.use_smooth = True
     out.parent.mkdir(parents=True, exist_ok=True)

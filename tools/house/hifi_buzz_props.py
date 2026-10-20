@@ -62,7 +62,10 @@ M = {"BZP_Black": material("BZP_Black", (0.012, 0.012, 0.012), 0.35), "BZP_Glass
      "BZP_Can": tex_material("BZP_Can", "buzz_props_can.png", 0.35), "BZP_Jordan": tex_material("BZP_Jordan", "buzz_props_jordan.png", 0.6),
      "BZP_Playboy": tex_material("BZP_Playboy", "buzz_props_playboy.png", 0.4), "BZP_Photo": tex_material("BZP_Photo", "buzz_props_girlfriend.png", 0.3),
      "BZP_Chips": tex_material("BZP_Chips", "buzz_props_chips.png", 0.55),
-     "BZP_Brass": material("BZP_Brass", (0.80, 0.60, 0.28), 0.4)}
+     "BZP_Brass": material("BZP_Brass", (0.80, 0.60, 0.28), 0.4),
+     # lit at night (SpecGreybox.BuzzProps: emissive HiFi_Shade*/HiFi_Bulb*, switched with N)
+     "BZP_Shade": material("BZP_Shade", (0.92, 0.89, 0.80), 0.9), "BZP_Bulb": material("BZP_Bulb", (1.0, 0.95, 0.85), 0.3),
+     "BZP_TankTube": material("BZP_TankTube", (0.90, 0.95, 1.0), 0.3)}
 M["BZP_Silver"].node_tree.nodes["Principled BSDF"].inputs["Metallic"].default_value = 0.8
 
 
@@ -184,6 +187,29 @@ box("BZP_TankRimFront", "BZP_Black", tx1 - RIM, tx1, gy1, ty1, tz0, tz1)
 box("BZP_TankRimEndA", "BZP_Black", tx0 + RIM, tx1 - RIM, gy1, ty1, tz0, tz0 + RIM)
 box("BZP_TankRimEndB", "BZP_Black", tx0 + RIM, tx1 - RIM, gy1, ty1, tz1 - RIM, tz1)
 
+
+# the tank's hood with its fluorescent tube (film 464/479: a black hood on the rim, a cool tube lit under it at night)
+box("BZP_TankHood", "BZP_Black", tx0, tx1, ty1, ty1 + 0.04, tz0, tz1)
+box("BZP_TankTube", "BZP_TankTube", (tx0 + tx1) / 2 - 0.012, (tx0 + tx1) / 2 + 0.012, ty1 - 0.018, ty1 - 0.002, tz0 + 0.03, tz1 - 0.03)
+
+# ---------------------------------------------------------------- the desk lamp (film 479/527/530: brass swing-arm lamp, cream empire
+# shade, at the desk's poster-corner end, lit at night; real sizes: 0.15 m base, 0.28 m shade). Its light: BuzzLamp_desk at DESK_LAMP_BULB
+# base at the desk's front corner, the arm back toward the wall: the girlfriend photo (BZP_DeskFrame, x 8.82-9.04, z 15.81-15.91, top
+# 1.061) stands behind it and the shade's rim clears its top (build 1 had the base on the frame: clash)
+DLX, DLZ, DTOP, ARM = 8.84, 15.64, 0.795, 0.08
+SZ = DLZ + ARM                                                   # the shade's axis
+p = Part("BZP_DeskLampBrass", "BZP_Brass")
+tube(p, DLX, DLZ, DTOP, DTOP + 0.02, 0.075, 0.06, 32); disc(p, DLX, DLZ, DTOP + 0.02, 0.06, 32, True); disc(p, DLX, DLZ, DTOP, 0.075, 32, False)
+tube(p, DLX, DLZ, DTOP + 0.02, 1.027, 0.008, 0.008, 12)          # stem
+tube(p, DLX, SZ, 1.013, 1.13, 0.007, 0.007, 12)                  # riser to the socket
+tube(p, DLX, SZ, 1.09, 1.13, 0.018, 0.018, 16); disc(p, DLX, SZ, 1.09, 0.018, 16, False)   # socket
+build(p, smooth=True)
+box("BZP_DeskLampArm", "BZP_Brass", DLX - 0.007, DLX + 0.007, 1.013, 1.027, DLZ, SZ)   # the swing arm, out from the stem
+p = Part("BZP_DeskLampBulb", "BZP_Bulb"); tube(p, DLX, SZ, 1.13, 1.20, 0.03, 0.03, 16); disc(p, DLX, SZ, 1.20, 0.03, 16, True); build(p, smooth=True)
+p = Part("BZP_DeskLampShade", "BZP_Shade")                      # empire: 0.28 m at the bottom, 0.16 at the top, 0.21 tall; 3 mm card
+tube(p, DLX, SZ, 1.07, 1.28, 0.14, 0.08, 48); tube(p, DLX, SZ, 1.07, 1.28, 0.137, 0.077, 48, inward=True)
+annulus(p, DLX, SZ, 1.07, 0.137, 0.14, 48, False); annulus(p, DLX, SZ, 1.28, 0.077, 0.08, 48, True)
+build(p, smooth=True)
 
 # ---------------------------------------------------------------- Poly Haven pieces
 def load(name, tag):

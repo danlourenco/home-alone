@@ -301,8 +301,8 @@ skip    kevin dining_room: no cell to stand in (its floor is a stair)
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin kitchen via back_stair/kitchen: the other side is all stair
 skip    kevin back_stair: no cell to stand in (its floor is a stair)
-Z-fight check: 3299137 triangles, 3197 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
-Clash check: 3621687 triangles, 0 parts passing through another (52 allowed joints) (every visible mesh checked)
+Z-fight check: 3299821 triangles, 3204 surfaces, 0 coplanar pairs seen from rooms (every visible mesh checked)
+Clash check: 3622371 triangles, 0 parts passing through another (52 allowed joints) (every visible mesh checked)
 Casing check: 0 casings placed apart from their opening
 Opening face check: 24 door faces, 0 without a head casing, 0 showing the other room's finish within the casing width; 48 reveals, 0 showing the wall finish
 Opening clear check: 51 openings, 0 with a visible mesh in the passage (10 allowed)
@@ -320,7 +320,7 @@ Facade sun check: 3060 points on the lower front, 1025 shaded, 0 interior caster
 outdoor Exterior/WinterNeighborhood/Bare winter tree elmB (971 rays)
 outdoor Exterior/HouseShell/Exterior_HiFi (691 rays)
 outdoor Exterior/Yard/ExteriorPolish (34 rays)
-Practices check: (a) 19 meshes drawn >= 8 times outside a LODGroup (Cube x4424, Cylinder x239, Sphere x122, SM_Book_04 x17, SM_Book_01 x16, SM_Book_02 x16); (b) 0 MeshColliders on foliage; (c) 0 renderers on material instances; (d) SRP Batcher: skipped (ShaderUtil.GetSRPBatcherCompatibilityCode did not answer for any of 4 shaders)
+Practices check: (a) 19 meshes drawn >= 8 times outside a LODGroup (Cube x4424, Cylinder x239, Sphere x122, SM_Book_04 x17, SM_Book_02 x16, SM_Book_01 x16); (b) 0 MeshColliders on foliage; (c) 0 renderers on material instances; (d) SRP Batcher: skipped (ShaderUtil.GetSRPBatcherCompatibilityCode did not answer for any of 4 shaders)
 Arch fit: 1 generated arches on their cuts, 0 joints off by more than 1 mm (worst 0.00 mm)
 Props check: 248 store models, 146 problems (landing_table: back -0.5 cm from the drawn wall (want 0-3); den_banker: material Glass_HDRP has no base colour map; basement_door: back 4.0 cm from the drawn wall (want 0-3); den_book_001: back 19.1 cm from the drawn wall (want 0-3); den_book_002: back 19.2 cm from the drawn wall (want 0-3); den_book_003: back 20.3 cm from the drawn wall (want 0-3); den_book_004: back 19.9 cm from the drawn wall (want 0-3); den_book_005: back 16.7 cm from the drawn wall (want 0-3); den_book_006: back 17.5 cm from the drawn wall (want 0-3); den_book_007: back 21.3 cm from the drawn wall (want 0-3))
 Props triangle budget: 4 models over 150k triangles (Assets/Purchased/PurchasedPlants.glb 411k, Assets/Purchased/HallPlants.glb 296k, Assets/ChristmasTreeAndGarland/ChristmasTreeAndDecor/Models/ChristmasTree.fbx 259k, Assets/Models/Foyer/HallDressing.glb 202k)
@@ -328,14 +328,14 @@ Trim check: 97 face runs (3 on the stair and landings, 0 panelled by a window mo
 Envelope check: 2142 points at room joints, 0 see the sky through < 0.3 m of shadow caster (0.26 where the last is the brick skin)
 Entrance check: closed blocks, open clears, locked refuses open; one leaf collider
 Back door check: closed blocks (0.3/1.0/1.8 m), open clears, the open leaf touches nothing, locked refuses open
-LampZones: 60 cached shadowed lamps in 11 zones; casters a full redraw of every lamp draws 595 M -> 196 M triangles (-67%; a zone per lamp would be 154 M); 3828 of 5575 casters seen by some zone (5.7 s). Most seen: Lantern_Light z3, Light_vestibule z3, Light_foyer z5, Hurricane_Light z9, Hurricane_Light z5
-SunCull: 970 of 2071 interior casters never sunlit (shell of 3092; 15 sun directions x 2 storey masks, 2.0 M rays, 18.0 s): 1.12 M triangles out of the sun's cascades by day
-ShadowBudget ok: 4020 sun shadow casters within 80 m of the street pose (limit 2147483647, docs/PERFORMANCE.md)
+LampZones: 60 cached shadowed lamps in 11 zones; casters a full redraw of every lamp draws 572 M -> 192 M triangles (-66%; a zone per lamp would be 151 M); 3843 of 5578 casters seen by some zone (6.0 s). Most seen: Lantern_Light z10, Light_vestibule z10, Light_foyer z9, Hurricane_Light z0, Hurricane_Light z9
+SunCull: 1089 of 2074 interior casters never sunlit (shell of 3092; 15 sun directions x 2 storey masks, 2.2 M rays, 18.9 s): 1.17 M triangles out of the sun's cascades by day
+ShadowBudget ok: 3904 sun shadow casters within 80 m of the street pose (limit 4100, docs/PERFORMANCE.md)
 MOTION SHADOWS (night, 10 s at 60 Hz; faces = cached shadow cube faces redrawn: point 6, spot 1)
-info front door opens (before: legacy): rest at 1.05 s (budget 2 s), queue empty at 1.07 s; faces max 174/frame (budget 12), mean 17.9/frame, total 10710; 27 lamps: AtticBulb_mid, BasementBulb_1_Light, BasementBulb_2_Light, BathLamp_hall_sconce0, BathLamp_hall_sconce1, DiningChandelier_Light, HallSconce_0, HallSconce_1, HallSconce_2, HallSconce_3, Hurricane_Light, KevinLamp_banker, KevinLamp_red, Lantern_Light ...
-info paint can knocked 1.4 m/s (before: legacy): rest at 6.13 s (budget 10 s), queue empty at 6.13 s; faces max 468/frame (budget 12), mean 188.8/frame, total 113256; 36 lamps: AtticBulb_mid, AtticBulb_stair_head, AtticLamp_bed, BasementBulb_1_Light, BasementBulb_2_Light, BathLamp_hall_sconce0, BathLamp_hall_sconce1, DenLamp_bookcase, DiningChandelier_Light, Dome_Light, HallSconce_0, HallSconce_1, HallSconce_2, HallSconce_3 ...
+info front door opens (before: legacy): rest at 1.05 s (budget 2 s), queue empty at 1.07 s; faces max 168/frame (budget 12), mean 17.2/frame, total 10326; 26 lamps: AtticBulb_mid, BasementBulb_1_Light, BasementBulb_2_Light, BathLamp_hall_sconce0, BathLamp_hall_sconce1, DiningChandelier_Light, HallSconce_0, HallSconce_1, HallSconce_2, HallSconce_3, Hurricane_Light, KevinLamp_banker, KevinLamp_red, Lantern_Light ...
+info paint can knocked 1.4 m/s (before: legacy): rest at 6.13 s (budget 10 s), queue empty at 6.13 s; faces max 444/frame (budget 12), mean 179.0/frame, total 107388; 34 lamps: AtticBulb_mid, AtticBulb_stair_head, AtticLamp_bed, BasementBulb_1_Light, BasementBulb_2_Light, BuzzLamp_desk, DenLamp_bookcase, DiningChandelier_Light, Dome_Light, HallSconce_0, HallSconce_1, HallSconce_2, HallSconce_3, Hurricane_Light ...
 ok   front door opens: rest at 1.05 s (budget 2 s), queue empty at 1.13 s; faces max 12/frame (budget 12), mean 1.4/frame, total 810; 9 lamps: DiningChandelier_Light, HallSconce_3, Hurricane_Light, Lantern_Light, Light_foyer, Light_rear_passage, Light_vestibule, LivingLamp_banker, Sconce_Light
-ok   paint can knocked 1.4 m/s: rest at 6.13 s (budget 10 s), queue empty at 6.25 s; faces max 12/frame (budget 12), mean 7.5/frame, total 4494; 17 lamps: BathLamp_hall_sconce0, BathLamp_hall_sconce1, Dome_Light, HallSconce_0, HallSconce_1, HallSconce_2, HallSconce_3, Hurricane_Light, KevinLamp_red, KitchenChandelier_Light, Lantern_Light, Light_foyer, Light_guest_room, Light_parents_bedroom ...
+ok   paint can knocked 1.4 m/s: rest at 6.13 s (budget 10 s), queue empty at 6.25 s; faces max 12/frame (budget 12), mean 7.5/frame, total 4500; 15 lamps: Dome_Light, HallSconce_0, HallSconce_1, HallSconce_2, HallSconce_3, Hurricane_Light, KevinLamp_red, KitchenChandelier_Light, Lantern_Light, Light_foyer, Light_guest_room, Light_parents_bedroom, Light_rear_passage, LivingLamp_chest ...
 MotionShadow ok
 Quality check: 4 pipeline models of 50 generated (the rest predate the artist pipeline), 0 problems
 

@@ -1575,7 +1575,10 @@ public static partial class SpecGreybox
     static void Lights(GameObject root, List<Space> spaces)
     {
         var lights = Child(root, "Lights");
-        foreach (var s in spaces.Where(s => s.kind != "opening"))
+        // no fill where the room's own fixtures carry it (user, Oct 20: "there's too much light in the bathroom upstairs at night; can you
+        // illuminate the sconces and remove whatever implicit lighting is in there"): the hall bath is lit by its double sconce (SpecGreybox.Bathrooms)
+        var fixtureLit = new HashSet<string> { "hall_bath" };
+        foreach (var s in spaces.Where(s => s.kind != "opening" && !fixtureLit.Contains(s.name)))
         {
             var (x, z) = (s.pts.Average(p => p.x), s.pts.Average(p => p.y));
             var l = new GameObject("Light_" + s.name).AddComponent<Light>(); l.transform.parent = lights.transform;
@@ -1583,7 +1586,10 @@ public static partial class SpecGreybox
             var hd = l.gameObject.AddComponent<HDAdditionalLightData>();   // first: adding it resets the light's intensity
             // rear_passage 900 -> 450 (Oct 18, user: "slightly dim the flush mount under the arch"): this fill sits on the passage's opal flush
             // mount (HiFiLights "Dome", 600 -> 400) and outshone it; the dome change alone measured no difference through the arch
-            l.intensity = s.name == "rear_passage" ? 450f : 900f; l.color = new Color(1f, 0.95f, 0.88f);
+            // buzz_room 900 -> 450 (Oct 20, user: "take a look at buzz's room in the movie stills, determine appropriate lighting"): film 479/530
+            // at night has the desk lamp and the tank tube lit (SpecGreybox.BuzzProps) AND an even fill (the far shelves wall as bright as the
+            // lamp wall: an unseen ceiling light or set fill, DEVIATIONS 122): this fill stays as that, halved so the desk lamp leads
+            l.intensity = s.name == "rear_passage" || s.name == "buzz_room" ? 450f : 900f; l.color = new Color(1f, 0.95f, 0.88f);
             // shadowed (user, Oct 16, night "daylight streaming from outside"): unshadowed lamps lit the snow outside and the next rooms through walls
             l.shadows = LightShadows.Soft; hd.normalBias = 0.1f; hd.SetShadowResolution(512);
         }
@@ -1636,7 +1642,7 @@ public static partial class SpecGreybox
         // the foyer's fixtures are lamps too: their lights join the night layer and their bulbs and shades go dark by day (user, Oct 16: "shut
         // off the sconces and foyer lighting during the day so i can get a read on it"; they were lit by day and in the day bake)
         Renderer[] glow = new Renderer[0];
-        foreach (var fxName in new[] { "Upstairs/FoyerFixtures", "Upstairs/KitchenFixtures", "Upstairs/DenFixtures", "Upstairs/DenBuiltins_HiFi", "Upstairs/LivingFixtures", "Upstairs/LivingBuiltins_HiFi", "Upstairs/DiningFixtures", "Upstairs/HallFixtures", "Upstairs/HallDressing_HiFi", "Upstairs/AtticFixtures", "Upstairs/Attic_HiFi", "Upstairs/KevinFixtures", "Upstairs/ParentsFixtures", "Upstairs/ParentsDressing_HiFi" })   // the kitchen's, the den's and the living room's lamps too
+        foreach (var fxName in new[] { "Upstairs/FoyerFixtures", "Upstairs/KitchenFixtures", "Upstairs/DenFixtures", "Upstairs/DenBuiltins_HiFi", "Upstairs/LivingFixtures", "Upstairs/LivingBuiltins_HiFi", "Upstairs/DiningFixtures", "Upstairs/HallFixtures", "Upstairs/HallDressing_HiFi", "Upstairs/AtticFixtures", "Upstairs/Attic_HiFi", "Upstairs/KevinFixtures", "Upstairs/ParentsFixtures", "Upstairs/ParentsDressing_HiFi", "Upstairs/BathFixtures", "Upstairs/Bathrooms_HiFi", "Upstairs/BuzzFixtures", "Upstairs/BuzzProps_HiFi" })   // the bathrooms' lamps were on by day (Oct 20: off by day, as every lamp)   // the kitchen's, the den's and the living room's lamps too
         {
             var fixtures = GameObject.Find(fxName);
             if (lamps == null || fixtures == null) continue;

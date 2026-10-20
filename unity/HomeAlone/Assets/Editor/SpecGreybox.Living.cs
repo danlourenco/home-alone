@@ -137,10 +137,10 @@ public static partial class SpecGreybox
     }
 
     public static float LivingLampScale = 1f;   // calibration knob against the film's night frames (film_light_match.py --living-night)
-    static void AddLamp(GameObject parent, string name, Vector3 specAt, float gy, float lumens, float kelvin)
+    static void AddLamp(GameObject parent, string name, Vector3 specAt, float gy, float lumens, float kelvin, float range = 7f)
     {
         var l = new GameObject(name).AddComponent<Light>(); l.transform.SetParent(parent.transform, false);
-        l.transform.position = new Vector3(specAt.x, gy + specAt.y, -specAt.z); l.type = LightType.Point; l.range = 7f;
+        l.transform.position = new Vector3(specAt.x, gy + specAt.y, -specAt.z); l.type = LightType.Point; l.range = range;
         l.gameObject.AddComponent<HDAdditionalLightData>();   // first: adding it resets the light's intensity
         l.lightUnit = LightUnit.Lumen; l.intensity = lumens; l.useColorTemperature = true; l.colorTemperature = kelvin;
         l.shadows = LightShadows.Soft;

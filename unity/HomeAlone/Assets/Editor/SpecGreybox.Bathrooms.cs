@@ -43,7 +43,10 @@ public static partial class SpecGreybox
             ["BA_Brass"] = brass, ["BA_Gilt"] = brass,
             ["BA_Porcelain"] = porcelain, ["BA_MirrorGlass"] = mirror, ["BA_ShowerGlass"] = glass,
             ["BA_BlackFrame"] = M("HiFi_BathBlackFrame", new Color(0.04f, 0.04f, 0.04f), 0.5f, 0.6f),
-            ["BA_Globe"] = Glow("HiFi_BathGlobe", new Color(1f, 0.97f, 0.9f), 40f),
+            // HiFi_Shade*: HouseNightMode darkens them by day (Daylight's glow list, with BathFixtures' lamps in the night layer)
+            ["BA_Globe"] = Glow("HiFi_ShadeBathGlobe", new Color(1f, 0.97f, 0.9f), 40f),
+            // the hall bath's frosted tulips (film 336) lit from inside at night: warm, about the house's opal shades (HiFi_Shade 300), not blown out
+            ["BA_HallShade"] = Glow("HiFi_ShadeHallBath", new Color(1f, 0.97f, 0.9f), 300f),
             ["BA_Mat"] = M("HiFi_BathPrintMat", new Color(0.92f, 0.90f, 0.84f), 0.1f),
             ["BA_PrintL"] = SpecTexMat("HiFi_BathPrintL", "spec/dressing/prints/print_left.png"),
             ["BA_PrintM"] = SpecTexMat("HiFi_BathPrintM", "spec/dressing/prints/print_right.png"),
@@ -68,7 +71,7 @@ public static partial class SpecGreybox
             foreach (var r in g.GetComponentsInChildren<MeshRenderer>())
             {
                 var n = r.sharedMaterial != null ? r.sharedMaterial.name : "";
-                r.shadowCastingMode = n == "HiFi_BathGlobe" || n == "HiFi_ShowerGlass" ? ShadowCastingMode.Off : ShadowCastingMode.On;
+                r.shadowCastingMode = n.StartsWith("HiFi_ShadeBathGlobe") || n.StartsWith("HiFi_ShadeHallBath") || n == "HiFi_ShowerGlass" ? ShadowCastingMode.Off : ShadowCastingMode.On;
                 r.gameObject.isStatic = true;
             }
         var propRemap = new Dictionary<string, Material>
@@ -142,7 +145,7 @@ public static partial class SpecGreybox
         var CL = PB["ceiling_lamp"]; AddLamp(fx, "BathLamp_parents_ceiling", new Vector3((float)CL["at"][0], (float)CL["at"][1] - 0.06f, (float)CL["at"][2]), 0f, (float)CL["lumens"], (float)CL["kelvin"]);
         var SC = HB["sconce"]; int si = 0;   // the double sconce (film 336): one lamp in each shade
         foreach (var ax in SC["arms"])
-            AddLamp(fx, $"BathLamp_hall_sconce{si++}", new Vector3((float)ax, (float)SC["y"] + 0.03f, 11.428f - (float)SC["out"]), 0f, (float)SC["lumens"], (float)SC["kelvin"]);
+            AddLamp(fx, $"BathLamp_hall_sconce{si++}", new Vector3((float)ax, (float)SC["y"] + 0.03f, 11.428f - (float)SC["out"]), 0f, (float)SC["lumens"], (float)SC["kelvin"], (float)SC["range"]);   // the room's only light (Lights() skips its fill)
 
         // the vanity mirror's planar reflection (as FoyerMirror): the glass is 3 cm off the vanity wall face, the room toward world +z
         var MI = PB["mirror"];

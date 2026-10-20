@@ -17,9 +17,30 @@ public static partial class SpecGreybox
     {
         // the modelled terrarium replaces the opaque buzz_tank box (its walk collider, a separate object, stays)
         foreach (var r in root.GetComponentsInChildren<MeshRenderer>().Where(r => r.name == "buzz_tank")) r.enabled = false;
-        var g = PlaceHiFi(root, 0f, "BuzzProps", new Dictionary<string, Material> { ["BZP_Glass"] = mGlass, ["BZP_Brass"] = BrassMat() });
+        // the film's night practicals (Oct 20, user: "take a look at buzz's room in the movie stills, determine appropriate lighting"): the desk
+        // lamp's cream shade and bulb and the tank's fluorescent tube glow at night (HiFi_Shade*/HiFi_Bulb*: HouseNightMode darkens them by day)
+        Material Glow(string n, Color c, Color e, float nits)
+        {
+            var m = Mat(n, c); m.SetFloat("_Smoothness", 0.3f); m.SetColor("_EmissiveColor", e * nits);
+            UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(m); return m;
+        }
+        var g = PlaceHiFi(root, 0f, "BuzzProps", new Dictionary<string, Material> { ["BZP_Glass"] = mGlass, ["BZP_Brass"] = BrassMat(),
+            ["BZP_Shade"] = Glow("HiFi_ShadeBuzzDesk", new Color(0.92f, 0.89f, 0.80f), new Color(1f, 0.82f, 0.58f), 400f),   // film 479: the shade reads near-white
+            ["BZP_Bulb"] = Glow("HiFi_BulbBuzzDesk", new Color(1f, 0.95f, 0.85f), new Color(1f, 0.72f, 0.42f), 2000f),
+            ["BZP_TankTube"] = Glow("HiFi_BulbBuzzTank", new Color(0.90f, 0.95f, 1f), new Color(0.85f, 0.93f, 1f), 800f) });   // film 479: cool blue-white
         if (g != null)
-            foreach (var r in g.GetComponentsInChildren<MeshRenderer>()) { r.shadowCastingMode = ShadowCastingMode.On; r.gameObject.isStatic = true; }
+            foreach (var r in g.GetComponentsInChildren<MeshRenderer>())
+            {
+                var n = r.sharedMaterial != null ? r.sharedMaterial.name : "";
+                r.shadowCastingMode = n.StartsWith("HiFi_ShadeBuzz") || n.StartsWith("HiFi_BulbBuzz") ? ShadowCastingMode.Off : ShadowCastingMode.On;   // lamps inside them
+                r.gameObject.isStatic = true;
+            }
+        var fx = Child(root, "BuzzFixtures");   // joins the night layer (Daylight)
+        // the desk lamp's bulb (hifi_buzz_props.py: shade axis x 8.84, z 15.72, bulb 1.13-1.20): a 60 W A19 (film 479: the room's brightest object)
+        AddLamp(fx, "BuzzLamp_desk", new Vector3(8.84f, 1.165f, 15.72f), 0f, 600f, 2700f, 6f);
+        // the tank tube (film 479: lights the tank and the shelf under it only): a small 5000 K fluorescent, unshadowed (inside the hood)
+        AddLamp(fx, "BuzzLamp_tank", new Vector3(7.633f, 1.20f, 14.967f), 0f, 200f, 5000f, 1.5f);
+        fx.transform.Find("BuzzLamp_tank").GetComponent<Light>().shadows = LightShadows.None;
         BuzzTarantula(root);
         BuzzBat(root);
     }
