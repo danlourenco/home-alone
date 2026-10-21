@@ -112,16 +112,16 @@
    "title": "Front brick: upstairs darker than downstairs",
    "status": "running",
    "date": "Oct 21",
-   "when": "Built: HomeAloneNB9.app (Oct 21). Nothing to walk for the brick yet: next is finding why the outdoor light upstairs is dark.",
+   "when": "Built: HomeAloneNB9.app (Oct 21). Next (prepared, waits for the Mac): ProbeDump reads the baked outdoor light in front of the upper and lower brick per bake, and a render with the eaves hidden tells real-time from baked.",
    "what": "NB9 built with probe layers: probes outside the house now stay on (Exterior), rooms Interior, Marina's strip both; outside walls read only outside probes. Result, measured (tools/house/brick_storeys.py, gate 5%): still FAIL. Overcast upstairs/downstairs 0.67 centre, 0.76 wing (NB8 0.71/0.78): the ground floor got brighter (it no longer borrows the rooms' light), the upstairs did not. Night flipped: 1.25/1.31 (NB8 0.63/1.30) because the ground-floor brick lost the warm indoor glow that leaked through it. Sunny 0.92/0.94. Rooms unchanged (foyer and living at night, compared with the lamp fit off). With probes off entirely the upstairs is still 0.81-0.85, so the remaining gap is in the outdoor light upstairs (the eaves, Marina's strip), not the rooms behind. Not shipping as a fix yet; the layers themselves are sound.",
    "look": [
     "Rows 1-3: the upstairs brick is still darker than downstairs by day (FAIL); at night the ground floor is now the darker one.",
     "Rows 4-5: foyer and living at night are unchanged.",
-    "Ignore the French windows here; they have their own entry."
+    "Ignore the French windows here; they have their own entry.", "Question for you (night sheet): at night the ground-floor brick lost the warm glow it had (centre 62 -> 29). That glow was the rooms' light leaking through the wall. In film 5545 / 10 the plain brick at night is dark red; the warmth on it is spill from the lit windows and the Christmas bulbs. Our reading: NB9's darker ground floor is the more faithful base, and the film's warmth should come from window and bulb spill, not the leak. Do you agree, or do you prefer NB8's look?"
    ],
    "images": [
     {
-     "src": "spec/captures/views/front-0645/brick-sheers-nb9-sheet.jpg", "caption": "NB8 before | NB9 after: your 06:45 spot overcast, sunny, night; foyer and living at night; the French windows"}, {"src": "spec/captures/views/front-0645/apv-tuning-sheet.jpg",
+     "src": "spec/captures/views/front-0645/night-glow-sheet.jpg", "caption": "Night front: film 5545 | film 10; NB8 (warm ground floor, the leak) | NB9 (outdoor probes only); close-ups"}, {"src": "spec/captures/views/front-0645/brick-sheers-nb9-sheet.jpg", "caption": "NB8 before | NB9 after: your 06:45 spot overcast, sunny, night; foyer and living at night; the French windows"}, {"src": "spec/captures/views/front-0645/apv-tuning-sheet.jpg",
      "caption": "Film 6399 | before | setting variants at your 06:45 spot, overcast; then foyer and living at night"
     }
    ]
