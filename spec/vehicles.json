@@ -1,0 +1,62 @@
+{
+ "_comment": "The film's vehicles (Oct 20 2026). Models: tools/house/purchased_vehicles.py -> unity/HomeAlone/Assets/Purchased/Vehicles/<kind>.glb (CC-BY Sketchfab downloads, gitignored, CREDITS.md). Prefabs: Editor/VehiclePrefabs.Build() -> Assets/Purchased/Vehicles/<kind>.prefab (root at the ground contact, nose +z, metres), which the neighbourhood's swap hook instances in place of the nb_life proxy of the same kind. Positions are NOT here: tools/house/nb_life.py layout() (life_layout.json items) owns them, each with its film evidence; checked against these models below.",
+ "kinds": {
+  "Car_CapricePolice": {
+   "film": "11574-11636 (night): two 1987-90 Chevrolet Caprice cruisers at the Murphys', navy with a light belt band, POLICE on the front fender band, the Winnetka shield on the front doors, a chrome bar of two MARS beacons + two round flashers + a siren speaker, all red",
+   "dims_m": {"length": 5.39, "wheelbase": 2.946, "width_body": 1.915, "height_roof": 1.44, "height_bar": 1.79},
+   "tris": {"LOD0": 35998, "LOD1": 10000, "LOD2": 2500, "source": 98154},
+   "lod_screen": [0.25, 0.07, 0.012],
+   "collider": {"center": [0, 0.72, 0], "size": [1.915, 1.44, 5.39]},
+   "police_lights": true,
+   "scene": "night",
+   "placement_check": "nb_life: (39.9, 12.2) heading (0.5, 0.866) and (60.3, 18.4) heading (0.96, -0.28), back-projected through the film 11581 camera with a 5.4 m proxy; these models are 5.39 m with the same ground origin: no change"
+  },
+  "Car_RamVan": {
+   "film": "3297/3299 and 5696 (night, at our kerb), 6830 (day, passenger side, the clearest), 3510-3520 (the face): a grey-blue Dodge Ram Van cargo body, no side glass, ladder rack with buckets and pipe, RAM fender badge, Oh-Kay Plumbing & Heating lettering on both sides",
+   "dims_m": {"length": 5.001, "wheelbase": 3.241, "width_body": 2.027, "height_roof": 1.95, "height_load": 2.37},
+   "tris": {"LOD0": 36426, "LOD1": 9999, "LOD2": 3065, "source": 751540},
+   "lod_screen": [0.25, 0.07, 0.012],
+   "collider": {"center": [0, 0.975, 0], "size": [2.027, 1.95, 5.0]},
+   "police_lights": false,
+   "scene": "always",
+   "placement_check": "nb_life: (31.75, 28.4) heading (0, -1): nose at z 25.9, 1.7 m past our lamp post (z 24.2) as in 3297/3299 where the van's nose stops just past the post; same 5.0 m length as the proxy: no change. Note: the film shows it at our house only at night (3297, 3489-3536, 5539-5559, 5692-5702, 9510-9551); by day it is elsewhere (6809-6835)"
+  },
+  "Car_Caprice": {
+   "film": "1884/1888 (day): a blue full-size sedan at our kerb; the same 1987 Caprice body, plain mid-blue paint (shade by eye, distant), no bar, unlit lamps",
+   "dims_m": {"length": 5.39, "wheelbase": 2.946, "width_body": 1.915, "height_roof": 1.44},
+   "tris": {"LOD0": 36046, "LOD1": 10000, "LOD2": 2500, "source": 98154},
+   "lod_screen": [0.25, 0.07, 0.012],
+   "collider": {"center": [0, 0.72, 0], "size": [1.915, 1.44, 5.39]},
+   "police_lights": false,
+   "scene": "always",
+   "placement_check": "nb_life: (31.65, 46.5) heading (0, 1), z a guess (G); same size as the proxy"
+  }
+ },
+ "materials": {
+  "_note": "HDRP Lit per VEH_* glTF material (VehiclePrefabs.Hdrp). The base colour map comes from the GLB. coat > 0 = HDRP Lit clear coat (the Unity 6 HDRP way for car paint at game cost; StackLit's dual-lobe coat is ~2x the shading cost). mask: R metallic, G AO, A smoothness (grime rougher), linear. emissive_nits: _EmissiveColor in nits (the house's lamp globes are 4000).",
+  "VEH_Police_Paint": {"smooth": 0.62, "metallic": 0.0, "coat": 1.0, "mask": "VEH_Police_Paint_Mask.png"},
+  "VEH_Sedan_Paint": {"smooth": 0.62, "metallic": 0.0, "coat": 1.0, "mask": "VEH_Sedan_Paint_Mask.png"},
+  "VEH_Van_Paint": {"smooth": 0.45, "metallic": 0.0, "coat": 0.5, "mask": "VEH_Van_Paint_Mask.png"},
+  "VEH_Chrome": {"color": [0.9, 0.9, 0.91], "smooth": 0.9, "metallic": 1.0},
+  "VEH_SatinMetal": {"color": [0.6, 0.61, 0.62], "smooth": 0.55, "metallic": 1.0},
+  "VEH_RackMetal": {"color": [0.62, 0.63, 0.62], "smooth": 0.45, "metallic": 1.0},
+  "VEH_Pipe": {"color": [0.55, 0.35, 0.22], "smooth": 0.5, "metallic": 1.0},
+  "VEH_BoxWhite": {"color": [0.75, 0.74, 0.70], "smooth": 0.2},
+  "VEH_TrimBlack": {"color": [0.03, 0.03, 0.03], "smooth": 0.35},
+  "VEH_Rubber": {"color": [0.025, 0.025, 0.025], "smooth": 0.15},
+  "VEH_Tyre": {"smooth": 0.15},
+  "VEH_Van_Wheel": {"color": [0.55, 0.53, 0.47], "smooth": 0.4},
+  "VEH_Glass": {"color": [0.02, 0.025, 0.03, 0.35], "smooth": 0.96, "transparent": true},
+  "VEH_LampClear": {"color": [0.8, 0.8, 0.8], "smooth": 0.9},
+  "VEH_LampAmber": {"color": [0.75, 0.30, 0.02], "smooth": 0.85},
+  "VEH_LampRed": {"color": [0.45, 0.03, 0.03], "smooth": 0.85},
+  "VEH_Police_Lamps": {"smooth": 0.8, "emissive_map": "base", "emissive_nits": 600},
+  "VEH_Sedan_Lamps": {"smooth": 0.8},
+  "VEH_BeaconRed": {"color": [0.6, 0.04, 0.02], "smooth": 0.9, "emissive_color": [1.0, 0.05, 0.02], "emissive_nits": 300},
+  "VEH_Plate": {"smooth": 0.4},
+  "VEH_Caprice_Under": {"smooth": 0.2},
+  "VEH_Caprice_Interior": {"smooth": 0.3},
+  "VEH_Caprice_Dash": {"smooth": 0.35},
+  "VEH_InteriorPlain": {"color": [0.05, 0.05, 0.055], "smooth": 0.2}
+ }
+}
