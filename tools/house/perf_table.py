@@ -51,8 +51,12 @@ def fps(ms):
 
 
 # 1:1 detail crops for full-screen sharpness sheets: frame fractions of a textured spot per pose (brick, wallpaper, foliage, wood)
-CROP = {"street-day": (0.42, 0.42), "foyer-day": (0.15, 0.25), "foyer-night": (0.8, 0.35), "hall-night": (0.42, 0.42),
-        "living-night": (0.72, 0.3), "kitchen-night": (0.35, 0.6)}   # facade brick+windows, wallpaper+frames, mirror+sconce, ...
+CROP = {"street-day": (0.42, 0.42), "foyer-day": (0.15, 0.25), "hall-night": (0.42, 0.42),
+        "living-night": (0.72, 0.3), "kitchen-night": (0.35, 0.6),   # facade brick+windows, wallpaper+frames, mirror+sconce, ...
+        # AA sheets (Oct 21, "still some stair stepping"): a LIST of points = several crops at 2x (nearest) to show the stair-steps
+        "piers-day": [(0.17, 0.27), (0.68, 0.18), (0.2, 0.47)],      # blue house roofline, bare branches, porch railing
+        "street-night": [(0.5, 0.4), (0.28, 0.2)],                     # our eaves and dormers, branches against the sky
+        "foyer-night": [(0.36, 0.6), (0.38, 0.38), (0.8, 0.35)]}    # balusters, handrail, mirror + sconce
 
 
 def sheet(d, poses=None, out=None, film=(), crop=None):
@@ -87,8 +91,19 @@ def sheet(d, poses=None, out=None, film=(), crop=None):
                 full = full.resize((big, int(full.height * big / full.width)), Image.BILINEAR)
             im = full.resize((W, int(full.height * W / full.width)), Image.LANCZOS)
             r = load(d).get(f"{p}-{x}{last}", {}); ms = r.get("frame_ms_mean")
-            if full.width > 2000:   # full screen: the downsized frame over a 1:1 pixel crop (the red box) to judge sharpness
-                cx, cy = crop.get(p, (0.5, 0.5)); ch = W * 9 // 16
+            pts = crop.get(p, (0.5, 0.5))
+            if full.width > 2000 and isinstance(pts, list):   # edge crops: each a W/2 x ch/2 patch shown 2x (nearest) under the frame
+                ch = W * 9 // 16; cw, chh = W // 2, ch // 2; k = W / full.width; parts = [im]
+                for cx, cy in pts:
+                    x0 = min(max(int(cx * full.width) - cw // 2, 0), full.width - cw); y0 = min(max(int(cy * full.height) - chh // 2, 0), full.height - chh)
+                    ImageDraw.Draw(im).rectangle([x0 * k, y0 * k, (x0 + cw) * k, (y0 + chh) * k], outline=(255, 40, 40), width=2)
+                    parts.append(full.crop((x0, y0, x0 + cw, y0 + chh)).resize((W, ch), Image.NEAREST))
+                tile = Image.new("RGB", (W, sum(q.height + 4 for q in parts)), (20, 20, 20)); y = 0
+                for q in parts:
+                    tile.paste(q, (0, y)); y += q.height + 4
+                im = tile
+            elif full.width > 2000:   # full screen: the downsized frame over a 1:1 pixel crop (the red box) to judge sharpness
+                cx, cy = pts; ch = W * 9 // 16
                 x0 = min(max(int(cx * full.width) - W // 2, 0), full.width - W); y0 = min(max(int(cy * full.height) - ch // 2, 0), full.height - ch)
                 k = W / full.width; ImageDraw.Draw(im).rectangle([x0 * k, y0 * k, (x0 + W) * k, (y0 + ch) * k], outline=(255, 40, 40), width=2)
                 tile = Image.new("RGB", (W, im.height + 4 + ch), (20, 20, 20)); tile.paste(im, (0, 0)); tile.paste(full.crop((x0, y0, x0 + W, y0 + ch)), (0, im.height + 4)); im = tile

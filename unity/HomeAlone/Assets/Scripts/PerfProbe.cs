@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.Profiling;
 using Unity.Profiling.LowLevel.Unsafe;   // ProfilerRecorderHandle: markers by name
 using UnityEngine;
+using HDCam = UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData;
 
 // Perf probe: frame time and render counters at the player's current view, over N frames, camera untouched.
 //   PerfProbe.Run("name", 300)  -> spec/captures/perf/name.json
@@ -193,6 +194,7 @@ public class PerfProbe : MonoBehaviour
             }
             d.Sort(); return extent[l] = d[(int)(0.9f * (d.Count - 1))];
         }
+        (HDCam.AntialiasingMode, HDCam.TAAQualityLevel, HDCam.TAASharpenMode, float, HDCam.SMAAQualityLevel)? aa0 = null;
         string baseScale = Arg("-perfbasescale") ?? "100";   // -perfbasescale auto: the base is the shipped AUTO scale (Phase A, Oct 20)
         var screen0 = new Vector2Int(Screen.width, Screen.height); var mode0 = Screen.fullScreenMode;
         void Apply(int v) => ApplyV(v > 0, v > 0 && variants.Count > 0 ? variants[v - 1] : null);
@@ -262,7 +264,18 @@ public class PerfProbe : MonoBehaviour
             injectNow = RenderScale.DynRes(S("inject") switch { "after" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.AfterPost, "dof" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.AfterDepthOfField,
                 "before" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.BeforePost, _ => (UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType?)null },
                 S("dynres") switch { "soft" => UnityEngine.Rendering.DynamicResolutionType.Software, "hard" => UnityEngine.Rendering.DynamicResolutionType.Hardware, _ => (UnityEngine.Rendering.DynamicResolutionType?)null },
-                S("upscaler") == "none" ? false : (bool?)null);
+                S("upscaler") == "none" ? false : (bool?)null, S("aa") == "stp" ? 100f : (float?)null);
+            // aa=none|fxaa|smaa|taa|stp (Oct 21, "still some stair stepping"): the main camera's anti-aliasing; taa = High quality, post
+            // sharpen 0.5; smaa = High; stp = STP at a forced 100% (pure temporal AA, no upscale). Base: the camera's own (None)
+            if (hd != null)
+            {
+                aa0 ??= (hd.antialiasing, hd.TAAQuality, hd.taaSharpenMode, hd.taaSharpenStrength, hd.SMAAQuality); var ab0 = aa0.Value; var aa = S("aa");
+                hd.antialiasing = aa switch { "none" => HDCam.AntialiasingMode.None, "fxaa" => HDCam.AntialiasingMode.FastApproximateAntialiasing, "smaa" => HDCam.AntialiasingMode.SubpixelMorphologicalAntiAliasing,
+                    "taa" => HDCam.AntialiasingMode.TemporalAntialiasing, _ => ab0.Item1 };
+                hd.TAAQuality = aa == "taa" ? HDCam.TAAQualityLevel.High : ab0.Item2; hd.taaSharpenMode = aa == "taa" ? HDCam.TAASharpenMode.PostSharpen : ab0.Item3;
+                hd.taaSharpenStrength = aa == "taa" ? 0.5f : ab0.Item4; hd.SMAAQuality = aa == "smaa" ? HDCam.SMAAQualityLevel.High : ab0.Item5;
+                RenderScale.Stp = aa == "stp";
+            }
             // screen=WxH: the backbuffer (full screen: the OS / Unity scale it to the panel, e.g. 2560x1440 = the Studio Display's "looks
             // like" size); the base is the size the tour started at. The JSON records what the player got (screen, backbuffer)
             // screen=WxHw (trailing w): windowed at that size on the same display (the NB4-style 1920x1080 window)

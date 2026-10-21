@@ -13,7 +13,7 @@ public class RenderScale : MonoBehaviour
     public static readonly float[] Steps = { 0f, 100f, 75f, 50f, 38f };   // 0 = auto; 5K full screen: native, 4K, 1440p, ~1080p
     public const float Default = 0f, AutoHeight = 1152f; const string Key = "RenderScale";
     public static float Mode { get; private set; } = Default;   // what the user picked (0 = auto)
-    public static bool Manual;
+    public static bool Manual, Stp;   // Stp (PerfProbe aa=stp): the camera opts into dynamic resolution, forced to 100% = STP as pure TAA
     static bool Full => Screen.fullScreenMode != FullScreenMode.Windowed;
     static Vector2Int Native { get { var d = Screen.mainWindowDisplayInfo; return d.height > 0 ? new Vector2Int(d.width, d.height) : new Vector2Int(Screen.currentResolution.width, Screen.currentResolution.height); } }
     public static float Percent => !Full ? 100f : Mode > 0f ? Mode : Mathf.Min(100f, AutoHeight / Mathf.Max(1, Native.y) * 100f);
@@ -39,8 +39,8 @@ public class RenderScale : MonoBehaviour
     static void Apply()
     {
         var cam = Camera.main;
-        if (cam && cam.allowDynamicResolution) cam.allowDynamicResolution = false;
-        if (cam && cam.TryGetComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData>(out var hd) && hd.allowDynamicResolution) hd.allowDynamicResolution = false;
+        if (cam && cam.allowDynamicResolution != Stp) cam.allowDynamicResolution = Stp;
+        if (cam && cam.TryGetComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData>(out var hd) && hd.allowDynamicResolution != Stp) hd.allowDynamicResolution = Stp;
         if (Manual || !Full) return;
         var n = Native; var t = new Vector2Int(Mathf.RoundToInt(n.x * Percent / 100f), Mathf.RoundToInt(n.y * Percent / 100f));
         if (Screen.width == t.x && Screen.height == t.y) return;
@@ -52,7 +52,7 @@ public class RenderScale : MonoBehaviour
     // dynamic resolution, and the upscaler (false = no STP: HDRP's CatmullRom filter). Through the private serialized struct: the public
     // setter calls OnValidate, which re-creates the pipeline in a player
     static GlobalDynamicResolutionSettings? dr0;
-    public static string DynRes(DynamicResolutionHandler.UpsamplerScheduleType? inject, DynamicResolutionType? type = null, bool? stp = null)
+    public static string DynRes(DynamicResolutionHandler.UpsamplerScheduleType? inject, DynamicResolutionType? type = null, bool? stp = null, float? forcePct = null)
     {
         if (!(GraphicsSettings.currentRenderPipeline is UnityEngine.Rendering.HighDefinition.HDRenderPipelineAsset a)) return "no HDRP asset";
         var f = typeof(UnityEngine.Rendering.HighDefinition.HDRenderPipelineAsset).GetField("m_RenderPipelineSettings", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
@@ -60,6 +60,7 @@ public class RenderScale : MonoBehaviour
         var s = (UnityEngine.Rendering.HighDefinition.RenderPipelineSettings)f.GetValue(a);
         dr0 ??= s.dynamicResolutionSettings; var d = dr0.Value;
         d.STPInjectionPoint = inject ?? d.STPInjectionPoint; d.dynResType = type ?? d.dynResType;
+        if (forcePct is float fp) { d.forceResolution = true; d.forcedPercentage = fp; }
         if (stp == false) { d.advancedUpscalerNames = new System.Collections.Generic.List<string>(); d.upsampleFilter = DynamicResUpscaleFilter.CatmullRom; }
         s.dynamicResolutionSettings = d; f.SetValue(a, s);
         var r = a.currentPlatformRenderPipelineSettings.dynamicResolutionSettings;

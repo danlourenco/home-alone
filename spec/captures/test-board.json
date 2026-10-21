@@ -9,6 +9,25 @@
  ],
  "tests": [
   {
+   "id": "antialias",
+   "title": "Smoothing the stair-steps: anti-aliasing at the full-screen default",
+   "status": "needs-you",
+   "date": "Oct 21",
+   "when": "After the brick build finishes. About 3 min to build, 13 min to run; leave the Mac alone.",
+   "what": "Since full screen went to 2048x1152 without dynamic resolution, the camera has no anti-aliasing at all (STP used to do it), so thin edges stair-step. This compares FXAA, SMAA (high), TAA (high, sharpened), STP as pure anti-aliasing at 100%, and a 2560x1440 backbuffer with TAA or SMAA, with FPS on every tile. The same run splits the night transparent cost (foyer and hall: all transparents off gained 10-19 ms though glass and sheers cost nothing) into its HDRP passes.",
+   "look": [
+    "Each tile has the frame and two or three edge patches magnified 2x: roof lines and branches at the piers, the eaves at night, the balusters, handrail and mirror in the foyer.",
+    "Look for smooth edges without blur or shimmer: TAA and STP smooth the most but can soften wallpaper and brick; FXAA is cheapest and softest on text-like detail; SMAA keeps texture sharp.",
+    "Keep an eye on FPS: the pick must keep 30 fps at the foyer and hall at night.",
+    "The off=... columns are cost readings for the transparent pass, not looks."
+   ],
+   "app": "HomeAlonePerfAA.app, full screen on the Studio Display (2048x1152 default; lamp ranges fitted to rooms)",
+   "commands": [
+    "cd ~/Dev/home-alone && HA_REUSE=1 HA_PERF_APP=$HOME/.cache/home-alone-perf/build/HomeAlonePerfAA.app tools/house/perf_probe.sh build",
+    "HA_PERF_APP=$HOME/.cache/home-alone-perf/build/HomeAlonePerfAA.app HA_DISPLAY=\"Studio Display\" HA_PERF_ARGS='-perfab -perfrounds 1 -perfbasescale auto -perfposes piers-day,street-night,foyer-night,hall-night -perfvariants aa=fxaa;aa=smaa;aa=taa;aa=stp;screen=2560x1440+aa=taa;screen=2560x1440+aa=smaa;off=TransparentPrepass;off=TransparentPostpass;off=LowResTransparent;off=Refraction;off=Distortion;off=TransparentsWriteMotionVector;off=TransparentSSR;off=LensFlareDataDriven' tools/house/perf_probe.sh run fs-aa"
+   ]
+  },
+  {
    "id": "night-speed-b",
    "title": "Night speed: what's expensive in the foyer, kitchen and hall",
    "status": "settled",
