@@ -188,7 +188,7 @@ public static partial class SpecGreybox
         //      triplanar, so the street's own UVs don't matter); by reflection: WetGround.cs is another job's script
         if (st != null)
         {
-            var wgT = System.AppDomain.CurrentDomain.GetAssemblies().Select(a => a.GetType("WetGround")).FirstOrDefault(t => t != null);
+            var wgT = UnityEditor.TypeCache.GetTypesDerivedFrom<MonoBehaviour>().FirstOrDefault(t => t.Name == "WetGround");
             var wg = wgT != null ? Object.FindAnyObjectByType(wgT, FindObjectsInactive.Include) : null;
             if (wg != null)
             {

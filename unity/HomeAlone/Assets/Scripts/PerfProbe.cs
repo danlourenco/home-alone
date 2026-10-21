@@ -44,6 +44,7 @@ public class PerfProbe : MonoBehaviour
         ("piers", new Vector3(29.0f, -2.58f, -9.716f), 125f, 2f),        // between our walk piers on the sidewalk, across and down Lincoln (film-left)
         ("murphys", new Vector3(28.68f, -2.63f, -21.96f), 67f, -1.5f),   // film 11581's solved camera (nb_film_camera.py; the player's FOV, not the film's 24.8 deg)
         ("upwindow", new Vector3(9.6f, 1.31f, -9.716f), 90f, 4f),        // upstairs over the front door, out the front window to the Murphys
+        ("van", new Vector3(37.5f, -2.7f, -33.5f), 322.5f, 2f),          // across Lincoln toward the bandits' van by our lamp post (film 3297's side; night)
     };
 
     // nbold (a -perfvariants key): the exterior before the neighbourhood: its root off, the WinterNeighborhood renderers it switched off
