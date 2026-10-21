@@ -1,0 +1,4 @@
+:root {
+    -unity-font: url("project://database/Assets/UI/Controls/Fonts/Inter-Regular.ttf");
+    color: #f3efe6;
+}

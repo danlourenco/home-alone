@@ -18,7 +18,10 @@ public class RenderScale : MonoBehaviour
     static Vector2Int Native { get { var d = Screen.mainWindowDisplayInfo; return d.height > 0 ? new Vector2Int(d.width, d.height) : new Vector2Int(Screen.currentResolution.width, Screen.currentResolution.height); } }
     public static float Percent => !Full ? 100f : Mode > 0f ? Mode : Mathf.Min(100f, AutoHeight / Mathf.Max(1, Native.y) * 100f);
     public static string Label => (Mode > 0f ? $"{Mode:0}%" : $"auto ({Percent:0}%)") + (Full ? "" : ", window: native");
-    static float shownUntil, askedAt = -10f; static Vector2Int asked;
+    // the P toast, drawn by ControlsHelp's UI Toolkit layer: shown until ToastUntil, its text read while it shows
+    public static float ToastUntil { get; private set; }
+    public static string ToastText => $"Render scale {Label}: {Screen.width}x{Screen.height} of {Native.x}x{Native.y}{(Full ? ", scaled to the display" : "")}   (P cycles auto/100/75/50/38)";
+    static float askedAt = -10f; static Vector2Int asked;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     static void Boot()
@@ -30,7 +33,7 @@ public class RenderScale : MonoBehaviour
     public static void Set(float pct, bool save)
     {
         Mode = pct <= 0f ? 0f : Mathf.Clamp(pct, 33f, 100f);
-        if (save) { PlayerPrefs.SetFloat(Key, Mode); PlayerPrefs.Save(); shownUntil = Time.unscaledTime + 3f; }
+        if (save) { PlayerPrefs.SetFloat(Key, Mode); PlayerPrefs.Save(); ToastUntil = Time.unscaledTime + 3f; }
         askedAt = -10f; Apply();
     }
 
@@ -75,12 +78,5 @@ public class RenderScale : MonoBehaviour
             Set(Steps[(i + 1) % Steps.Length], true);
         }
         Apply();
-    }
-
-    void OnGUI()
-    {
-        if (Time.unscaledTime > shownUntil) return;
-        var st = new GUIStyle(GUI.skin.label) { fontSize = 18 }; st.normal.textColor = Color.white;
-        GUI.Label(new Rect(14, 44, 1100, 30), $"Render scale {Label}: {Screen.width}x{Screen.height} of {Native.x}x{Native.y}{(Full ? ", scaled to the display" : "")}   (P cycles auto/100/75/50/38)", st);
     }
 }

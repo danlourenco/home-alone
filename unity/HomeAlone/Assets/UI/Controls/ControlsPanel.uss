@@ -1,0 +1,182 @@
+.hud {
+    --ink: #f3efe6;
+    --muted: #bdb5a5;
+    --gold: #e2bc6c;
+    --red: #b8282e;
+    --backdrop: rgba(10, 12, 16, 0.86);
+    --rule: rgba(255, 255, 255, 0.12);
+    --key-face: #ece6d8;
+    --key-edge: #9c917b;
+    --key-ink: #15171b;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 28px;
+    color: var(--ink);
+    font-size: 17px;
+}
+
+.hint {
+    align-self: flex-start;
+    padding: 6px 12px;
+    background-color: rgba(10, 12, 16, 0.7);
+    border-radius: 6px;
+    font-size: 18px;
+    transition-duration: 0.8s;
+}
+
+.panel {
+    position: absolute;
+    left: 28px;
+    top: 28px;
+    padding: 20px 26px 16px 26px;
+    background-color: var(--backdrop);
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: var(--rule);
+    border-top-width: 3px;
+    border-top-color: var(--red);
+}
+
+.panel-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--rule);
+}
+
+.panel-title {
+    font-size: 26px;
+    letter-spacing: 3px;
+    -unity-font: url("project://database/Assets/UI/Controls/Fonts/Inter-SemiBold.ttf");
+}
+
+.columns {
+    flex-direction: row;
+}
+
+.column {
+    width: 470px;
+}
+
+.column--left {
+    margin-right: 36px;
+}
+
+.section {
+    margin-bottom: 14px;
+}
+
+.section-title {
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    color: var(--gold);
+    -unity-font: url("project://database/Assets/UI/Controls/Fonts/Inter-SemiBold.ttf");
+}
+
+.row {
+    flex-direction: row;
+    align-items: center;
+    min-height: 32px;
+}
+
+.keys {
+    width: 150px;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 14px;
+}
+
+.key {
+    min-width: 30px;
+    height: 28px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-left: 4px;
+    background-color: var(--key-face);
+    color: var(--key-ink);
+    border-radius: 5px;
+    border-bottom-width: 3px;
+    border-bottom-color: var(--key-edge);
+    font-size: 16px;
+    -unity-text-align: middle-center;
+    -unity-font: url("project://database/Assets/UI/Controls/Fonts/Inter-SemiBold.ttf");
+}
+
+.key-sep {
+    margin-left: 4px;
+    color: var(--muted);
+}
+
+.desc {
+    flex-shrink: 1;
+    white-space: normal;
+}
+
+.desc--close {
+    margin-left: 10px;
+    color: var(--muted);
+}
+
+.now {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: 12px;
+    border-top-width: 1px;
+    border-top-color: var(--rule);
+}
+
+.now-title {
+    margin-right: 20px;
+    margin-bottom: 0;
+}
+
+.stat {
+    margin-right: 26px;
+    margin-bottom: 4px;
+}
+
+.stat-caption {
+    font-size: 16px;
+    color: var(--muted);
+}
+
+.stat-value {
+    font-size: 18px;
+    -unity-font: url("project://database/Assets/UI/Controls/Fonts/Inter-SemiBold.ttf");
+}
+
+.toast-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 56px;
+    align-items: center;
+}
+
+.toast {
+    padding: 10px 18px;
+    background-color: var(--backdrop);
+    border-radius: 8px;
+    border-left-width: 3px;
+    border-left-color: var(--gold);
+    font-size: 18px;
+    transition-duration: 0.6s;
+}
+
+.is-faded {
+    opacity: 0;
+}
+
+.is-hidden {
+    display: none;
+}

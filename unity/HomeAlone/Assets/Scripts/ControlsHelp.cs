@@ -1,48 +1,77 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 // F1 controls panel (user, Oct 20: "you've given me a lot of commands to test lighting and such. Could you give me a hud with controls
-// to reference"). Lists every key (keep it in step with FpsController's header) plus the live values the user tunes: night white
-// balance ([ ]) and render scale (P). A small "F1: controls" hint shows for the first seconds. Created at scene load; no scene edit.
+// to reference"). UI Toolkit (Oct 21; the project has no uGUI package): the key list is Assets/UI/Controls/Resources/ControlsPanel.uxml
+// (keep it in step with FpsController's header), styled by ../ControlsPanel.uss; the "Now" strip shows the live values the user tunes
+// (night white balance [ ], render scale P, resolution, day/night, weather). Also the "F1 · controls" hint (first 8 s) and RenderScale's
+// P toast. Created at scene load, no scene edit; skipped under -perfprobe so the perf tour's frames stay clean.
+// PanelSettings is made here, not a hand-written .asset (its YAML names a built-in script by fileID: fragile across versions); the
+// theme is ControlsTheme.tss, a real imported ThemeStyleSheet. Resources.Load puts both entry points, and the USS and Inter fonts they
+// reference, in a player build. Nothing is pickable: the panel never takes the mouse or keys from the FpsController.
 public class ControlsHelp : MonoBehaviour
 {
-    static readonly string[] Lines =
-    {
-        "MOVE   WASD + mouse  ·  Shift sprint  ·  Space jump  ·  C / Left Ctrl (hold) crouch",
-        "       G Kevin / adult  ·  R back to the start  ·  H walking bob  ·  Esc / Tab free the mouse",
-        "DO     E doors, den chair, Buzz's footlocker, zipline (attic dormer), treehouse ladder",
-        "       V den TV video  ·  M walk note + screenshot",
-        "LOOK   N day / night  ·  [ ] night interior white balance (cooler / warmer)",
-        "       O weather: sunny / morning / overcast  ·  F falling snow (overcast + night)",
-        "       P render scale auto / 100 / 75 / 50 / 38 %  ·  K hide everything off the lot",
-        "MUSIC  J pause  ·  - / = volume  ·  U next track",
-        "       F1 hide this panel",
-    };
-    bool show; float hintUntil; GUIStyle box, hint;
+    const float HintSeconds = 8f, Tick = 0.25f;   // live values refresh at most 4 times a second, and only rebuild text on a change
+    const string Faded = "is-faded", Hidden = "is-hidden", WbKey = "NightWhiteBalance";
+    static readonly string[] Weathers = { "sunny", "morning", "overcast" };
+    VisualElement panel, hint; Label toast, wbValue, scaleValue, resValue, timeValue, weatherValue;
+    HouseNightMode nightMode; HouseWeather weather;
+    bool open; float hintUntil, nextTick, toastStamp;
+    float lastWb = float.NaN, lastMode = float.NaN, lastPct = float.NaN;
+    int lastWbSaved = -1, lastW = -1, lastH = -1, lastFs = -1, lastNight = -1, lastWeather = -1;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     static void Create()
     {
         if (System.Array.IndexOf(System.Environment.GetCommandLineArgs(), "-perfprobe") >= 0) return;   // the perf tour's frames stay clean
-        var go = new GameObject("ControlsHelp"); DontDestroyOnLoad(go); go.AddComponent<ControlsHelp>().hintUntil = Time.unscaledTime + 8f;
+        var tree = Resources.Load<VisualTreeAsset>("ControlsPanel"); var theme = Resources.Load<ThemeStyleSheet>("ControlsTheme");
+        if (!tree || !theme) { Debug.LogWarning("ControlsHelp: Resources ControlsPanel.uxml or ControlsTheme.tss missing, no controls panel"); return; }
+        var ps = ScriptableObject.CreateInstance<PanelSettings>(); ps.name = "ControlsPanelSettings";
+        ps.themeStyleSheet = theme; ps.sortingOrder = 100f;
+        ps.scaleMode = PanelScaleMode.ScaleWithScreenSize; ps.referenceResolution = new Vector2Int(1920, 1080);
+        ps.screenMatchMode = PanelScreenMatchMode.MatchWidthOrHeight; ps.match = 1f;   // match height: same share of a 5K display and a small window
+        var go = new GameObject("ControlsHelp"); go.SetActive(false); DontDestroyOnLoad(go);   // inactive until both are set: one tree build
+        var doc = go.AddComponent<UIDocument>(); doc.panelSettings = ps; doc.visualTreeAsset = tree;
+        go.AddComponent<ControlsHelp>(); go.SetActive(true);
     }
 
-    void Update() { if (Input.GetKeyDown(KeyCode.F1)) show = !show; }
-
-    void OnGUI()
+    void Start()   // after UIDocument's OnEnable built the tree
     {
-        float s = Screen.height / 1080f;   // scale with the window: readable on the 5K Studio Display and in a small window
-        box ??= new GUIStyle(GUI.skin.box) { alignment = TextAnchor.UpperLeft, richText = true, wordWrap = false };
-        hint ??= new GUIStyle(GUI.skin.label);
-        box.fontSize = Mathf.RoundToInt(17 * s); hint.fontSize = Mathf.RoundToInt(16 * s); box.padding = new RectOffset((int)(14 * s), (int)(14 * s), (int)(10 * s), (int)(10 * s));
-        if (show)
-        {
-            string wb = PlayerPrefs.HasKey("NightWhiteBalance") ? PlayerPrefs.GetFloat("NightWhiteBalance").ToString("0") : HouseNightMode.WbDefault.ToString("0") + " (default)";
-            string sc = RenderScale.Label;
-            string text = "<b>CONTROLS</b>\n" + string.Join("\n", Lines) + $"\n\n<b>NOW</b>   night white balance {wb}  ·  render scale {sc}  ·  {Screen.width}x{Screen.height}";
-            var size = box.CalcSize(new GUIContent(text));
-            GUI.Box(new Rect(20 * s, 20 * s, size.x, size.y), text, box);
-        }
-        else if (Time.unscaledTime < hintUntil)
-            GUI.Label(new Rect(20 * s, 20 * s, 400 * s, 30 * s), "F1: controls", hint);
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        root.pickingMode = PickingMode.Ignore; root.Query<VisualElement>().ForEach(e => e.pickingMode = PickingMode.Ignore);
+        panel = root.Q("panel"); hint = root.Q("hint"); toast = root.Q<Label>("toast");
+        wbValue = root.Q<Label>("wbValue"); scaleValue = root.Q<Label>("scaleValue"); resValue = root.Q<Label>("resValue");
+        timeValue = root.Q<Label>("timeValue"); weatherValue = root.Q<Label>("weatherValue");
+        nightMode = FindAnyObjectByType<HouseNightMode>(FindObjectsInactive.Include); weather = FindAnyObjectByType<HouseWeather>(FindObjectsInactive.Include);
+        hintUntil = Time.unscaledTime + HintSeconds; toastStamp = RenderScale.ToastUntil;
     }
+
+    void Update()
+    {
+        bool now = false;
+        if (Input.GetKeyDown(KeyCode.F1)) { open = !open; panel.EnableInClassList(Hidden, !open); now = true; }
+        if (RenderScale.ToastUntil != toastStamp) { toastStamp = RenderScale.ToastUntil; now = true; }
+        float t = Time.unscaledTime;
+        if (!now && t < nextTick) return;
+        nextTick = t + Tick;
+        hint.EnableInClassList(Faded, open || t >= hintUntil);
+        bool toastOn = t < toastStamp; toast.EnableInClassList(Faded, !toastOn);
+        if (!open && !toastOn) return;
+        // compare the inputs first: strings are built only when one changed (no per-frame allocation)
+        bool scale = Changed(ref lastMode, RenderScale.Mode) | Changed(ref lastPct, RenderScale.Percent) | Changed(ref lastW, Screen.width)
+                   | Changed(ref lastH, Screen.height) | Changed(ref lastFs, (int)Screen.fullScreenMode);
+        if (scale)
+        {
+            scaleValue.text = RenderScale.Label; resValue.text = $"{Screen.width} x {Screen.height}";
+            if (toastOn) toast.text = RenderScale.ToastText;
+        }
+        else if (now && toastOn) toast.text = RenderScale.ToastText;
+        if (Changed(ref lastWb, HouseNightMode.WbTemperature) | Changed(ref lastWbSaved, PlayerPrefs.HasKey(WbKey) ? 1 : 0))
+            wbValue.text = $"{lastWb:+0;-0;0}" + (lastWbSaved == 1 ? "" : " (default)");
+        if (Changed(ref lastNight, !nightMode ? -1 : nightMode.night ? 1 : 0)) timeValue.text = lastNight < 0 ? "n/a" : lastNight == 1 ? "night" : "day";
+        if (Changed(ref lastWeather, weather ? (int)weather.state : -1)) weatherValue.text = lastWeather < 0 ? "n/a" : Weathers[lastWeather];
+    }
+
+    static bool Changed(ref float last, float v) { if (last == v) return false; last = v; return true; }
+    static bool Changed(ref int last, int v) { if (last == v) return false; last = v; return true; }
 }

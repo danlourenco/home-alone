@@ -1,0 +1,124 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+  <ui:Style src="../ControlsPanel.uss" />
+  <ui:VisualElement name="hud" class="hud">
+    <ui:Label name="hint" class="hint" text="F1 · controls" />
+    <ui:VisualElement name="panel" class="panel is-hidden">
+      <ui:VisualElement class="panel-header">
+        <ui:Label class="panel-title" text="CONTROLS" />
+        <ui:VisualElement class="row">
+          <ui:Label class="key" text="F1" />
+          <ui:Label class="desc desc--close" text="hide this panel" />
+        </ui:VisualElement>
+      </ui:VisualElement>
+      <ui:VisualElement class="columns">
+        <ui:VisualElement class="column column--left">
+          <ui:VisualElement class="section">
+            <ui:Label class="section-title" text="MOVE" />
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="W" /><ui:Label class="key" text="A" /><ui:Label class="key" text="S" /><ui:Label class="key" text="D" /></ui:VisualElement>
+              <ui:Label class="desc" text="walk, + mouse to look" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="Shift" /></ui:VisualElement>
+              <ui:Label class="desc" text="sprint" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="Space" /></ui:VisualElement>
+              <ui:Label class="desc" text="jump" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="C" /><ui:Label class="key-sep" text="/" /><ui:Label class="key" text="Left Ctrl" /></ui:VisualElement>
+              <ui:Label class="desc" text="crouch (hold)" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="G" /></ui:VisualElement>
+              <ui:Label class="desc" text="Kevin / adult" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="R" /></ui:VisualElement>
+              <ui:Label class="desc" text="back to the start" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="H" /></ui:VisualElement>
+              <ui:Label class="desc" text="walking bob" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="Esc" /><ui:Label class="key-sep" text="/" /><ui:Label class="key" text="Tab" /></ui:VisualElement>
+              <ui:Label class="desc" text="free the mouse" />
+            </ui:VisualElement>
+          </ui:VisualElement>
+          <ui:VisualElement class="section">
+            <ui:Label class="section-title" text="DO" />
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="E" /></ui:VisualElement>
+              <ui:Label class="desc" text="doors, den chair, Buzz's footlocker, zipline (attic dormer), treehouse ladder" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="V" /></ui:VisualElement>
+              <ui:Label class="desc" text="den TV video" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="M" /></ui:VisualElement>
+              <ui:Label class="desc" text="walk note + screenshot" />
+            </ui:VisualElement>
+          </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="column">
+          <ui:VisualElement class="section">
+            <ui:Label class="section-title" text="LOOK" />
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="N" /></ui:VisualElement>
+              <ui:Label class="desc" text="day / night" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="[" /><ui:Label class="key" text="]" /></ui:VisualElement>
+              <ui:Label class="desc" text="night interior white balance (cooler / warmer)" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="O" /></ui:VisualElement>
+              <ui:Label class="desc" text="weather: sunny / morning / overcast" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="F" /></ui:VisualElement>
+              <ui:Label class="desc" text="falling snow (overcast + night)" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="P" /></ui:VisualElement>
+              <ui:Label class="desc" text="render scale auto / 100 / 75 / 50 / 38 %" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="K" /></ui:VisualElement>
+              <ui:Label class="desc" text="hide everything off the lot" />
+            </ui:VisualElement>
+          </ui:VisualElement>
+          <ui:VisualElement class="section">
+            <ui:Label class="section-title" text="MUSIC" />
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="J" /></ui:VisualElement>
+              <ui:Label class="desc" text="pause" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="-" /><ui:Label class="key-sep" text="/" /><ui:Label class="key" text="=" /></ui:VisualElement>
+              <ui:Label class="desc" text="volume" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="U" /></ui:VisualElement>
+              <ui:Label class="desc" text="next track" />
+            </ui:VisualElement>
+          </ui:VisualElement>
+        </ui:VisualElement>
+      </ui:VisualElement>
+      <ui:VisualElement class="now">
+        <ui:Label class="section-title now-title" text="NOW" />
+        <ui:VisualElement class="stat"><ui:Label class="stat-caption" text="Night white balance" /><ui:Label name="wbValue" class="stat-value" /></ui:VisualElement>
+        <ui:VisualElement class="stat"><ui:Label class="stat-caption" text="Render scale" /><ui:Label name="scaleValue" class="stat-value" /></ui:VisualElement>
+        <ui:VisualElement class="stat"><ui:Label class="stat-caption" text="Resolution" /><ui:Label name="resValue" class="stat-value" /></ui:VisualElement>
+        <ui:VisualElement class="stat"><ui:Label class="stat-caption" text="Time" /><ui:Label name="timeValue" class="stat-value" /></ui:VisualElement>
+        <ui:VisualElement class="stat"><ui:Label class="stat-caption" text="Weather" /><ui:Label name="weatherValue" class="stat-value" /></ui:VisualElement>
+      </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement class="toast-bar">
+      <ui:Label name="toast" class="toast is-faded" />
+    </ui:VisualElement>
+  </ui:VisualElement>
+</ui:UXML>
