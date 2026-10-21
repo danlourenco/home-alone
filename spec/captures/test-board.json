@@ -18,6 +18,12 @@
    "commands": [
     "cd ~/Dev/home-alone && HA_REUSE=1 HA_PERF_APP=$HOME/.cache/home-alone-perf/build/HomeAlonePerfB.app tools/house/perf_probe.sh build",
     "HA_PERF_APP=$HOME/.cache/home-alone-perf/build/HomeAlonePerfB.app HA_DISPLAY=\"Studio Display\" HA_PERF_ARGS='-perfab -perfrounds 1 -perfbasescale auto -perfdn night -perfposes foyer-night,kitchen-night,hall-night -perfvariants off=Volumetrics;off=SSR;off=SSAO;off=ContactShadows;off=ShadowMaps;off=TransparentObjects;off=PlanarProbe;hide=Glass;hide=Voile;lowres=all;fit=1;range=0.7' tools/house/perf_probe.sh run fs-nightB"
+   ],
+   "app": "HomeAlonePerfB.app (full screen on the Studio Display at the new default: 2048x1152, scaled to the panel)",
+   "look": [
+    "Nothing to look at until the run is in: the sheet lands here with FPS on every tile.",
+    "Then: each column is one effect off or cheaper. The 'off' columns (fog, reflections, AO, contact shadows, lamp shadows, all glass and sheers, mirror) show what an effect costs, not a look to ship.",
+    "Pick from the last five columns (no glass, no sheers, low-res glass and sheers, lamp ranges fitted to rooms, ranges x0.7): those are candidates. Watch the sheers' softness and light spilling through doorways."
    ]
   },
   {
