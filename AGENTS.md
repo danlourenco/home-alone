@@ -34,6 +34,8 @@ Plain instruction files in `.claude/skills/<name>/SKILL.md`; Claude loads them a
 - `artist-pipeline`: generated models (doors, windows, arches, mouldings, cabinets, built-ins) to near-AAA quality.
 - `door-assembly`: before building, upgrading or verifying any doorway; one cohesive frame/leaf/finish/collision assembly, inside and outside carpentry checks.
 - `zfight-check`: before handing over any visible-surface change (z-fight, clash, stale models).
+- `house-split`: before changing anything seen or lit across the film-exterior / Marina-upstairs boundary (skin, strip rooms, front windows, upstairs lamps, bakes, probes, night window glow); its ledger of split bugs.
+- `xmas-lights`: before changing any exterior bulb, strand, glow, spill or night bloom/exposure.
 - `room-feel`: when a room feels too big or small, before moving a wall.
 - `overhead-floor`: calibrating Marina's overhead render into a floor plan.
 - `anatomy`, `anatomy-reveal`: explanatory SVG/object pages (artifacts), not house work.
