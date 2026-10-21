@@ -76,6 +76,7 @@ public static partial class SpecGreybox
         panel.transform.position = new Vector3((bx0 + bx1) / 2f, (by0 + by1) / 2f, -(bPanel0 + bPanel1) / 2f);
         panel.transform.localScale = new Vector3(bx1 - bx0 - 0.004f, by1 - by0 - 0.004f, bPanel1 - bPanel0);   // 2 mm inside the reveal: no coplanar faces
         panel.GetComponent<MeshRenderer>().sharedMaterial = mWall; panel.isStatic = true;
+        { var pr = panel.GetComponent<MeshRenderer>(); pr.renderingLayerMask = LayerOverhang; var hsp = Object.FindAnyObjectByType<HouseSplit>(); if (hsp) hsp.insideOnly = hsp.insideOnly.Append(pr).ToArray(); }   // stands 0.55 m past the film's front: upstairs only, out of the film bake (FacadeSkyCheck)
         var pov = GameObject.CreatePrimitive(PrimitiveType.Quad); pov.name = "WinterBackdrop_BuzzPOV";
         Object.DestroyImmediate(pov.GetComponent<Collider>()); pov.transform.SetParent(nightLayer.transform, false);
         {

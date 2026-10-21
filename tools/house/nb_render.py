@@ -16,9 +16,10 @@ import bpy
 from mathutils import Matrix, Vector
 
 ROOT = Path(__file__).resolve().parents[2]
-NB = ROOT / "unity/HomeAlone/Assets/Models/Neighborhood"
+import os
+NB = Path(os.environ["NB_DIR"]) if os.environ.get("NB_DIR") else ROOT / "unity/HomeAlone/Assets/Models/Neighborhood"   # NB_DIR / NB_MAN: staged models + manifest
 TEX = ROOT / "unity/HomeAlone/Assets/Textures/Neighborhood"
-MAN = json.loads((ROOT / "spec/neighborhood.json").read_text())
+MAN = json.loads((Path(os.environ["NB_MAN"]) if os.environ.get("NB_MAN") else ROOT / "spec/neighborhood.json").read_text())
 PAL = MAN["kit_palette"]; KT = json.loads((TEX / "kit_textures.json").read_text())
 LAY = json.loads((NB / "street_layout.json").read_text())
 LV = LAY["levels_rel_gy"]
@@ -230,6 +231,15 @@ def view(out, eye, tgt, night, fpx=1100, lod0=("lot_B0", "lot_A+1", "lot_A-1", "
     sc.render.filepath = out; bpy.ops.render.render(write_still=True)
 
 
+def filmcam(frame, out, night=False):
+    """Any solved film camera in data/film<frame>_camera.json (spec x, WORLD y, z): 1888 (nb_film1888_camera.py), 6399/4382
+    (exterior_film_fit.py). Our own house and garage are the Unity build, not in these GLBs: their place shows empty."""
+    c = json.loads((ROOT / f"art/home_alone/references/neighborhood/data/film{frame}_camera.json").read_text())
+    sc = scene(night, {"lot_B0", "lot_A+1", "lot_A-1", "lot_B-1", "lot_B+1"}, near=(c["camera_spec_world_y"][0], c["camera_spec_world_y"][2]))
+    x, y, z = c["camera_spec_world_y"]; camera((x, y + 2.996, z), c["forward_spec"], c["up_spec"], c["f_px"])
+    sc.cycles.samples = 64; sc.render.filepath = out; bpy.ops.render.render(write_still=True)
+
+
 def film1888(out):
     """Film 1888's solved camera (nb_film1888_camera.py, on our facade; day): Marley's house (lot_A+1) beyond our garage. Our own house
     and garage are the Unity build, not in these GLBs: their place shows empty."""
@@ -265,6 +275,7 @@ if __name__ == "__main__":
     if a[0] == "film11581": film11581(a[1], "--half" in a)
     elif a[0] == "aerial": aerial(a[1])
     elif a[0] == "film1888": film1888(a[1])
+    elif a[0] == "filmcam": filmcam(a[1], a[2], "--night" in a)
     elif a[0] == "piers": view(a[1], (29.0, LV["walk"] + 1.6, 9.716), (45.0, LV["walk"] + 2.6, 32.0), "--night" in a, 900)
     elif a[0] == "street": view(a[1], (37.0, LV["road"] + 1.6, -4.0), (37.0, LV["road"] + 2.0, 60.0), "--night" in a, 1000)
     elif a[0] == "house": house(a[1], a[2], "--night" in a, "--lod1" in a)

@@ -38,7 +38,7 @@ def layout():
     cars = [
         {"kind": "Car_CapricePolice", "x": 39.9, "z": 12.2, "heading": [0.5, 0.866], "scene": "night", "src": "F 11581: the near cruiser, wheel contacts back-projected (41.4, 11.8)-(43.1, 13.1) at the road; nose toward +z and the kerb"},
         {"kind": "Car_CapricePolice", "x": 60.3, "z": 18.4, "heading": [0.96, -0.28], "scene": "night", "src": "F 11581: the far cruiser on the Murphys' lawn at the porch's right end, rear to the camera (contacts (57.8, 16.6) (59.3, 19.4) (63.0, 17.3))"},
-        {"kind": "Car_RamVan", "x": 31.75, "z": 28.4, "heading": [0.0, -1.0], "scene": "always", "src": "F 3297/3299: the bandits' van stops at our lamp post (z 24.2); parked just past our U-drive's left mouth (z 21.4 +-1.8) so it blocks no drive"},
+        {"kind": "Car_RamVan", "x": 31.75, "z": 28.4, "heading": [0.0, -1.0], "scene": "night", "src": "F 3297/3299: the bandits' van stops at our lamp post (z 24.2); parked just past our U-drive's left mouth (z 21.4 +-1.8) so it blocks no drive"},
         {"kind": "Car_Caprice", "x": 31.65, "z": 46.5, "heading": [0.0, 1.0], "scene": "always", "src": "F 1884/1888: a blue full-size sedan parked at our kerb to the left of our house; z G"},
     ]
     props = [{"kind": "Mailbox", "x": 57.5, "z": 7.5, "y": "lot_B0", "src": "F 11576/11581 back-projected"},

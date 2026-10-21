@@ -31,7 +31,7 @@
  "lot_A-3": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 1204,
+  "lod1_tris": 1216,
   "glow_tris": 16,
   "bulbs": 129,
   "materials": [
@@ -45,7 +45,7 @@
  "lot_A-2": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 1468,
+  "lod1_tris": 1480,
   "glow_tris": 34,
   "bulbs": 0,
   "materials": [
@@ -58,8 +58,8 @@
  },
  "lot_A-1": {
   "tier": 2,
-  "lod0_tris": 39955,
-  "lod1_tris": 745,
+  "lod0_tris": 39961,
+  "lod1_tris": 751,
   "glow_tris": 8,
   "bulbs": 72,
   "materials": [
@@ -95,7 +95,7 @@
  "lot_A+2": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 1182,
+  "lod1_tris": 1194,
   "glow_tris": 16,
   "bulbs": 0,
   "materials": [
@@ -109,7 +109,7 @@
  "lot_A+3": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 954,
+  "lod1_tris": 972,
   "glow_tris": 20,
   "bulbs": 0,
   "materials": [
@@ -123,7 +123,7 @@
  "lot_A+5": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 1210,
+  "lod1_tris": 1222,
   "glow_tris": 34,
   "bulbs": 0,
   "materials": [
@@ -137,7 +137,7 @@
  "lot_A+6": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 1090,
+  "lod1_tris": 1102,
   "glow_tris": 24,
   "bulbs": 0,
   "materials": [
@@ -151,7 +151,7 @@
  "lot_B-3": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 1128,
+  "lod1_tris": 1146,
   "glow_tris": 16,
   "bulbs": 0,
   "materials": [
@@ -178,8 +178,8 @@
  },
  "lot_B-1": {
   "tier": 2,
-  "lod0_tris": 29194,
-  "lod1_tris": 972,
+  "lod0_tris": 29200,
+  "lod1_tris": 978,
   "glow_tris": 8,
   "bulbs": 57,
   "materials": [
@@ -216,7 +216,7 @@
  "lot_B+2": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 884,
+  "lod1_tris": 890,
   "glow_tris": 18,
   "bulbs": 0,
   "materials": [
@@ -230,7 +230,7 @@
  "lot_B+3": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 846,
+  "lod1_tris": 852,
   "glow_tris": 14,
   "bulbs": 0,
   "materials": [
@@ -244,7 +244,7 @@
  "lot_P35": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 1024,
+  "lod1_tris": 1036,
   "glow_tris": 14,
   "bulbs": 0,
   "materials": [
@@ -258,7 +258,7 @@
  "lot_P74": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 736,
+  "lod1_tris": 742,
   "glow_tris": 16,
   "bulbs": 0,
   "materials": [
@@ -272,7 +272,7 @@
  "lot_P89": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 1004,
+  "lod1_tris": 1010,
   "glow_tris": 20,
   "bulbs": 0,
   "materials": [
@@ -286,7 +286,7 @@
  "lot_P130": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 1206,
+  "lod1_tris": 1224,
   "glow_tris": 18,
   "bulbs": 0,
   "materials": [
@@ -300,7 +300,7 @@
  "lot_P155": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 1432,
+  "lod1_tris": 1444,
   "glow_tris": 34,
   "bulbs": 94,
   "materials": [
@@ -314,7 +314,7 @@
  "lot_P169": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 3232,
+  "lod1_tris": 3250,
   "glow_tris": 88,
   "bulbs": 0,
   "materials": [
@@ -328,7 +328,7 @@
  "lot_P170": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 874,
+  "lod1_tris": 886,
   "glow_tris": 18,
   "bulbs": 0,
   "materials": [

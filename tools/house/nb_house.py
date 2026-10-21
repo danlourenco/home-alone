@@ -166,6 +166,12 @@ class House:
                 if any(h[0] < um < h[1] and h[2] < vm < h[3] for h in holes): continue
                 self.g.quad(mat, f.P(a, c, d), f.P(b, c, d), f.P(b, e, d), f.P(a, e, d), f.n)
 
+    def wmat(self, blk):   # a block's own cladding (Tudor: stucco below, shingled gables): blk "cladding" + "wall" colour
+        return matname(blk["cladding"], blk.get("wall", self.k["palette"]["wall"])) if blk.get("cladding") else None
+
+    def gmat(self, blk):   # the gable triangle's: blk "gable" = [set, colour], else the block's wall
+        return matname(*blk["gable"]) if blk.get("gable") else self.wmat(blk)
+
     def gable_wall(self, blk, side, y0, apex, mat=None):
         f = Face(blk, side); a, b = f.span
         self.g.face(mat or self.M["wall"], [f.P(a, y0), f.P(b, y0), f.P((a + b) / 2, apex)], f.n)
@@ -384,23 +390,28 @@ class House:
                 self.g.face(R, [(X0, he, Z0), (X1, he, Z0), rb, ra], (0, 1, -1)); self.g.face(R, [(X0, he, Z1), (X1, he, Z1), rb, ra], (0, 1, 1))
                 eaves = [((X0, he, Z0), (X1, he, Z0), (0, 0, -1)), ((X1, he, Z1), (X0, he, Z1), (0, 0, 1))]
                 apex = plate + (z1 - z0) / 2 * math.tan(p)
-                for side in ("-x", "+x"): self.gable_wall(blk, side, plate - 0.001, apex + 0.0)
+                for side in ("-x", "+x"): self.gable_wall(blk, side, plate - 0.001, apex + 0.0, self.gmat(blk))
                 rakes = [((X0, he, Z0), ra, (X0, he, Z1)), ((X1, he, Z0), rb, (X1, he, Z1))]
             else:
                 ra, rb = (cx, rh, Z0), (cx, rh, Z1)
                 self.g.face(R, [(X0, he, Z0), (X0, he, Z1), rb, ra], (-1, 1, 0)); self.g.face(R, [(X1, he, Z0), (X1, he, Z1), rb, ra], (1, 1, 0))
                 eaves = [((X0, he, Z1), (X0, he, Z0), (-1, 0, 0)), ((X1, he, Z0), (X1, he, Z1), (1, 0, 0))]
                 apex = plate + (x1 - x0) / 2 * math.tan(p)
-                for side in ("-z", "+z"): self.gable_wall(blk, side, plate - 0.001, apex)
+                for side in ("-z", "+z"): self.gable_wall(blk, side, plate - 0.001, apex, self.gmat(blk))
                 rakes = [((X0, he, Z0), ra, (X1, he, Z0)), ((X0, he, Z1), rb, (X1, he, Z1))]
             if self.lod == 0:
                 self.g.bar(R, add(ra, (0, 0.02, 0)), add(rb, (0, 0.02, 0)), 0.16, 0.035, 0.008)
                 for a, top, b in rakes:   # rake boards (barge boards) under the roof edge
                     for q in (a, b):
                         self.g.bar(T, add(q, (0, -0.10, 0)), add(top, (0, -0.10, 0)), 0.04, 0.2, 0.006)
-            # the roof's underside over the gable overhang (soffit of the rake): close it
+            # the roof's underside over the gable overhang (the rake soffits): a sloped strip under each rake from its edge back to the gable
+            # wall's plane. (Step 2 closed it with one vertical trim triangle 0.2 m in front of the whole gable: every gable read as white trim.)
             for a, top, b in rakes:
-                self.g.face(T, [add(a, (0, -fh, 0)), add(top, (0, -fh, 0)), add(b, (0, -fh, 0))], (0, -1, 0))
+                for e0 in (a, b):
+                    if along_x: w0 = (x0 if e0[0] < cx else x1, 0, 0); P = lambda q: (w0[0], q[1], q[2])
+                    else: w0 = (0, 0, z0 if e0[2] < cz else z1); P = lambda q: (q[0], q[1], w0[2])
+                    q0, q1 = add(e0, (0, -fh, 0)), add(top, (0, -fh, 0))
+                    self.g.face(T, [q0, q1, P(q1), P(q0)], (0, -1, 0))
         # fascia, soffit, gutters along the eaves
         wall = {(0, 0, -1): z0, (1, 0, 0): x1, (0, 0, 1): z1, (-1, 0, 0): x0}
         for a, b, n in eaves:
@@ -599,7 +610,7 @@ class House:
                 ws = self.openings(bi, side)
                 if blk.get("hidden_faces") and side in blk["hidden_faces"]: continue
                 holes = [(w["at"] - w["w"] / 2, w["at"] + w["w"] / 2, w["sill"], w["sill"] + w["h"]) for w in ws]
-                self.wall(bi, blk, side, fh, plate, holes)
+                self.wall(bi, blk, side, fh, plate, holes, mat=self.wmat(blk))
                 f = Face(blk, side)
                 if lod0 and self.wood:   # water table, frieze
                     f.box(self.g, self.M["trim"], f.span[0] - 0.03, f.span[1] + 0.03, fh, fh + 0.16, 0.0, 0.03, 0.006)

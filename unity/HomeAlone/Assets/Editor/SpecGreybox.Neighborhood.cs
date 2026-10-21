@@ -184,6 +184,30 @@ public static partial class SpecGreybox
         if (st != null)
             foreach (var r in st.GetComponentsInChildren<MeshRenderer>(true))
             { r.gameObject.isStatic = true; var mc = r.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = r.GetComponent<MeshFilter>().sharedMesh; }
+        // ---- Lincoln's road, kerbs and sidewalks follow the weather with our own drive and walk (WetGround: Sunny / Overcast / Night sets,
+        //      triplanar, so the street's own UVs don't matter); by reflection: WetGround.cs is another job's script
+        if (st != null)
+        {
+            var wgT = System.AppDomain.CurrentDomain.GetAssemblies().Select(a => a.GetType("WetGround")).FirstOrDefault(t => t != null);
+            var wg = wgT != null ? Object.FindAnyObjectByType(wgT, FindObjectsInactive.Include) : null;
+            if (wg != null)
+            {
+                var asph = (Material[])wgT.GetField("asphalt").GetValue(wg); var conc = (Material[])wgT.GetField("concrete").GetValue(wg);
+                var regs = new List<Renderer>();
+                foreach (var r in st.GetComponentsInChildren<MeshRenderer>(true))
+                {
+                    var ms = r.sharedMaterials; bool hit = false;
+                    for (int i = 0; i < ms.Length; i++)
+                        if (ms[i] == null) continue;
+                        else if (ms[i].name.StartsWith("NB_asphalt")) { ms[i] = asph[0]; hit = true; }
+                        else if (ms[i].name.StartsWith("NB_concrete_walk")) { ms[i] = conc[0]; hit = true; }
+                    if (hit) { r.sharedMaterials = ms; regs.Add(r); }
+                }
+                var f = wgT.GetField("renderers"); f.SetValue(wg, ((Renderer[])f.GetValue(wg)).Concat(regs).ToArray());
+                Debug.Log($"Neighborhood: {regs.Count} street renderers follow WetGround");
+            }
+            else Debug.LogWarning("Neighborhood: no WetGround in the scene; the street stays wet");
+        }
         // ---- lamp posts: the film's acorn post replaces the sphere-globe posts
         var old = ext.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LampPosts");
         if (old != null) { Object.DestroyImmediate(old.gameObject); ShellLights.RemoveAll(l => l == null); ShellGlow.RemoveAll(r => r == null); }
@@ -249,6 +273,9 @@ public static partial class SpecGreybox
                 if (y == "walk") return (float)lv["walk"]; if (y != null && grade[y] != null) return (float)grade[y];
                 return x > 30.62f && x < 41.3f ? (float)lv["road"] : x >= 41.3f ? (float)lv["lawn_B"] : (float)lv["lawn_A"];
             }
+            // the film's vehicles (spec/vehicles.json, Editor/VehiclePrefabs.cs): prefabs rebuilt from the spec, each kind's scene (night/always) from it
+            var vp = Path.Combine(NbRoot, "spec/vehicles.json"); var vspec = File.Exists(vp) ? (JObject)JObject.Parse(File.ReadAllText(vp))["kinds"] : null;
+            if (vspec != null) VehiclePrefabs.Build();
             foreach (JObject it in ll["items"])
             {
                 string kind = (string)it["kind"]; var pr = Proto(kind); if (pr == null) { Debug.LogWarning($"Neighborhood: no prototype {kind}"); continue; }
@@ -271,11 +298,14 @@ public static partial class SpecGreybox
                 var bc = holder.AddComponent<BoxCollider>(); var bb = new Bounds(holder.transform.position, Vector3.zero);
                 foreach (var r in holder.GetComponentsInChildren<MeshRenderer>()) bb.Encapsulate(r.bounds);
                 bc.center = holder.transform.InverseTransformPoint(bb.center); bc.size = Quaternion.Inverse(holder.transform.rotation) * bb.size; bc.size = new Vector3(Mathf.Abs(bc.size.x), Mathf.Abs(bc.size.y), Mathf.Abs(bc.size.z));
-                if ((string)it["scene"] == "night")   // the film's arrest scene (11576-11636): the cars and their red beacon light belong to the night layer
+                string scene = (string)vspec?[kind]?["scene"] ?? (string)it["scene"];   // spec/vehicles.json wins (the van: night only, as the film)
+                if (scene == "night")   // the film's night scenes (police 11576-11636, the van 3297/5545/9511): the night layer carries the holder
                 {
                     var l = holder.AddComponent<Light>(); holder.AddComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalLightData>();
-                    l.type = LightType.Point; l.color = new Color(1f, 0.08f, 0.04f); l.intensity = 500f; l.lightUnit = UnityEngine.Rendering.LightUnit.Lumen; l.range = 14f;
-                    l.shadows = LightShadows.None; l.lightmapBakeType = LightmapBakeType.Realtime; ShellLights.Add(l);
+                    l.type = LightType.Point; l.shadows = LightShadows.None; l.lightmapBakeType = LightmapBakeType.Realtime; l.lightUnit = UnityEngine.Rendering.LightUnit.Lumen;
+                    if (bought == null && kind.Contains("Police")) { l.color = new Color(1f, 0.08f, 0.04f); l.intensity = 500f; l.range = 14f; }   // proxy beacon glow only
+                    else { l.intensity = 0f; l.enabled = false; }   // a bought car lights itself (PoliceLights); the light only carries the holder into the night layer
+                    ShellLights.Add(l); holder.name = $"{kind} (night)";
                 }
                 else foreach (var t in holder.GetComponentsInChildren<Transform>(true)) t.gameObject.isStatic = true;
                 life++;
