@@ -114,4 +114,90 @@ public static class ProbeDump
         File.WriteAllText(outPath, rows.ToString());
         Debug.Log(sb + $"ProbeDump: {rows.Count} readings -> {outPath}");
     }
+
+    // The stored probes themselves (Oct 21, brick-upstairs, read-only): every baked probe near the main front's upper and lower wall
+    // faces, with its position (x from the brick face), validity (the bake's backface fraction; > the set's threshold = invalid), its class
+    // (layer byte: bit 0 Exterior, bit 1 Interior), the neighbour validity masks per class, inside-the-skin (SpecGreybox.SkinTest) and
+    // inside a collider, and the DayFilm/NightFilm/Default L0 colour. Windowed like Run (the APV registers the set only after a render).
+    //   Unity -projectPath <scratch> -executeMethod ProbeDump.Probes -dumpOut <file.txt> -logFile <log>
+    public static void Probes()
+    {
+        bool exit = System.Environment.GetCommandLineArgs().Contains("-executeMethod");
+        var e = ProbeSteps();
+        void Tick() { EditorApplication.QueuePlayerLoopUpdate(); if (e.MoveNext()) return; EditorApplication.update -= Tick; if (exit) EditorApplication.Exit(0); }
+        EditorApplication.update += Tick;
+    }
+
+    static IEnumerator ProbeSteps()
+    {
+        EditorSceneManager.OpenScene("Assets/Scenes/House_WallGrid.unity");
+        string spec = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/"));
+        float brick = (float)JObject.Parse(File.ReadAllText(spec + "exterior_shell.json"))["front_main"];
+        var cam = new GameObject("ProbeDumpCam").AddComponent<Camera>(); cam.gameObject.AddComponent<HDAdditionalCameraData>();
+        cam.transform.SetPositionAndRotation(new Vector3(brick + 3f, 0f, -9.6f), Quaternion.LookRotation(Vector3.left));
+        var apv = ProbeReferenceVolume.instance;
+        for (int k = 0; k < 60 && apv.currentBakingSet == null; k++) { cam.Render(); yield return null; }
+        var inSkin = SpecGreybox.SkinTest(); var sb = new StringBuilder();
+        var set = apv.currentBakingSet;
+        sb.AppendLine($"set {(set ? set.name : "none")} scenarios {(set ? string.Join(",", set.lightingScenarios) : "")}");
+        const System.Reflection.BindingFlags F = System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance;
+        object Get(object o, string n) { var t = o.GetType(); var f = t.GetField(n, F); if (f != null) return f.GetValue(o); return t.GetProperty(n, F)?.GetValue(o); }
+        var L0 = new Dictionary<string, Dictionary<Vector3, Color>>();
+        foreach (var sc in new[] { "DayFilm", "NightFilm", "Default" })
+        {
+            if (set == null || !set.lightingScenarios.Contains(sc)) continue;
+            apv.lightingScenario = sc; for (int k = 0; k < 20; k++) { cam.Render(); yield return null; }
+            var m = L0[sc] = new Dictionary<Vector3, Color>();
+            foreach (var cell in ((System.Collections.IDictionary)Get(apv, "cells")).Values)
+            {
+                var data = Get(cell, "data"); if (data == null) continue;
+                var pos = (Unity.Collections.NativeArray<Vector3>)Get(data, "probePositions"); if (!pos.IsCreated) continue;
+                var scs = (System.Collections.IDictionary)Get(data, "scenarios"); if (scs == null || !scs.Contains(sc)) continue;
+                var rx = (Unity.Collections.NativeArray<ushort>)Get(scs[sc], "shL0L1RxData"); if (!rx.IsCreated) continue;
+                for (int i = 0; i < pos.Length && i * 4 + 2 < rx.Length; i++)
+                    m[pos[i]] = new Color(Mathf.HalfToFloat(rx[i * 4]), Mathf.HalfToFloat(rx[i * 4 + 1]), Mathf.HalfToFloat(rx[i * 4 + 2]));
+            }
+        }
+        int n = 0;
+        foreach (var cell in ((System.Collections.IDictionary)Get(apv, "cells")).Values)
+        {
+            var data = Get(cell, "data"); if (data == null) continue;
+            var pos = (Unity.Collections.NativeArray<Vector3>)Get(data, "probePositions"); if (!pos.IsCreated) { sb.AppendLine("cell without support data (positions)"); continue; }
+            var val = (Unity.Collections.NativeArray<float>)Get(data, "validity"); var lay = (Unity.Collections.NativeArray<byte>)Get(data, "layer");
+            var nm = (Unity.Collections.NativeArray<byte>)Get(data, "validityNeighMaskData");
+            int regions = nm.IsCreated && pos.Length > 0 ? nm.Length / pos.Length : 0;
+            for (int i = 0; i < pos.Length; i++)
+            {
+                var p = pos[i]; float d = p.x - brick;
+                if (d < -1.6f || d > 2.1f || p.z < -16.5f || p.z > -2.5f || p.y < -3.2f || p.y > 2.8f) continue;
+                string Col(string sc) => L0.TryGetValue(sc, out var m) && m.TryGetValue(p, out var c) ? $"{c.r:F3}/{c.g:F3}/{c.b:F3}" : "-";
+                string masks = regions > 0 ? string.Join(",", Enumerable.Range(0, regions).Select(r => System.Convert.ToString(nm[i * regions + r], 2).PadLeft(8, '0'))) : "-";
+                sb.AppendLine($"probe ({p.x:F2},{p.y:F2},{p.z:F2}) d {d:+0.00;-0.00} validity {(val.IsCreated && i < val.Length ? val[i] : -1):F2} class {(lay.IsCreated && i < lay.Length ? System.Convert.ToString(lay[i], 2).PadLeft(4, '0') : "-")} " +
+                              $"neigh {masks} inSkin {inSkin(p)} inCollider {Physics.CheckSphere(p, 0.005f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)} " +
+                              $"L0 DayFilm {Col("DayFilm")} NightFilm {Col("NightFilm")} Default {Col("Default")}");
+                n++;
+            }
+        }
+        Object.DestroyImmediate(cam.gameObject);
+        var outPath = Arg("-dumpOut") ?? Path.Combine(Application.dataPath, "../probe-data.txt");
+        File.WriteAllText(outPath, sb.ToString()); Debug.Log($"ProbeDump.Probes: {n} probes -> {outPath}");
+    }
+
+    // what stands round the strip probes in the film bakes: renderers whose bounds touch the box in front of the centre's upper wall
+    // (x brick..brick+1.5, upper storey, z -9..-7) and that BakeLighting.Contributes counts in the film's house
+    public static void StripContributors()
+    {
+        EditorSceneManager.OpenScene("Assets/Scenes/House_WallGrid.unity");
+        string spec = Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/"));
+        float brick = (float)JObject.Parse(File.ReadAllText(spec + "exterior_shell.json"))["front_main"];
+        var box = new Bounds(); box.SetMinMax(new Vector3(brick + 0.05f, -0.2f, -9f), new Vector3(brick + 1.5f, 2.8f, -7f));
+        var split = Object.FindAnyObjectByType<HouseSplit>(); var sb = new StringBuilder();
+        foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsInactive.Include).Where(r => r.bounds.Intersects(box)))
+        {
+            string path = r.name; for (var t = r.transform.parent; t; t = t.parent) path = t.name + "/" + path;
+            bool gi = GameObjectUtility.GetStaticEditorFlags(r.gameObject).HasFlag(StaticEditorFlags.ContributeGI);
+            sb.AppendLine($"{(BakeLighting.Contributes(r, split, true) && gi ? "FILM-GI " : "        ")}{path} mask {r.renderingLayerMask} shadows {r.shadowCastingMode} insideOnly {split && System.Array.IndexOf(split.insideOnly, r) >= 0} skinUpper {split && System.Array.IndexOf(split.skinUpper, r) >= 0} contributeGI {gi} bounds {r.bounds.min:F2}-{r.bounds.max:F2}");
+        }
+        File.WriteAllText(Arg("-dumpOut") ?? "Library/StripContributors.txt", sb.ToString());
+    }
 }
