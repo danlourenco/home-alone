@@ -23,6 +23,9 @@ public static class PerfBuild
         PlayerSettings.SetApplicationIdentifier(UnityEditor.Build.NamedBuildTarget.Standalone, "com.homealone.local");
         PlayerSettings.fullScreenMode = FullScreenMode.Windowed; PlayerSettings.resizableWindow = true;
         PlayerSettings.defaultScreenWidth = 1920; PlayerSettings.defaultScreenHeight = 1080;
+        // the app icon (user, Oct 20): one 1024 px PNG (rounded square on the macOS grid, transparent outside); Unity derives every size
+        var icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Branding/AppIcon.png");
+        if (icon) PlayerSettings.SetIcons(UnityEditor.Build.NamedBuildTarget.Unknown, new[] { icon }, IconKind.Any);
         PlayerSettings.enableFrameTimingStats = true;
         PlayerSettings.runInBackground = true;   // the tour runs unattended behind other windows (a paused player never loads)
         // this install's Mac player support has IL2CPP variations only: the default (Mono) compiles against the editor's assemblies and fails
