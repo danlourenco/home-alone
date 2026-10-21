@@ -8,7 +8,8 @@ using UnityEngine.Rendering;
 // nb_life proxy of that kind. Contract: root at the ground contact, facing Unity +z, metres. The GLBs (CC-BY, CREDITS.md; gitignored,
 // a clone without them makes nothing) come from tools/house/purchased_vehicles.py; spec/vehicles.json carries every number here:
 // the HDRP Lit settings per VEH_* material (clear-coat paint, chrome, transparent glass, emissive lamps), the LOD screen heights and
-// the box collider. Police: PoliceLights on the root (red sweep beacons + two unshadowed wash lights; night-only by the hook).
+// the box collider. Police: PoliceLights on the root (sweeping beacons, red + blue by default or all red as filmed, spec police_bar;
+// two unshadowed wash lights; night-only by the hook). The van is night-only too (spec scene).
 // Call VehiclePrefabs.Build() from the hook before instancing (cheap: rebuilt each build so spec edits land), or the menu item.
 public static class VehiclePrefabs
 {
@@ -56,7 +57,8 @@ public static class VehiclePrefabs
         // one box: the body (mirrors and roof load excluded), from the spec
         var bc = root.AddComponent<BoxCollider>(); var c = (JArray)k["collider"]["center"]; var s = (JArray)k["collider"]["size"];
         bc.center = new Vector3((float)c[0], (float)c[1], (float)c[2]); bc.size = new Vector3((float)s[0], (float)s[1], (float)s[2]);
-        if ((bool?)k["police_lights"] == true) root.AddComponent<PoliceLights>();
+        if ((bool?)k["police_lights"] == true)
+            root.AddComponent<PoliceLights>().bar = (string)k["police_bar"] == "all_red" ? PoliceLights.Bar.AllRed : PoliceLights.Bar.RedBlue;
         var b = new Bounds(); bool any = false;
         foreach (var r in Named("_LOD0")) { if (!any) { b = r.bounds; any = true; } else b.Encapsulate(r.bounds); }
         Debug.Log($"VehiclePrefabs: {kind} bounds {b.min:F2} .. {b.max:F2} (nose +z, ground y 0)");

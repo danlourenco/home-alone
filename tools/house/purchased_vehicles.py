@@ -2,7 +2,7 @@
 
   police  "1987 Chevrolet Caprice Classic (police package)" by Timmy turner Gamers: repainted to the Winnetka livery of film
           11574-11636 (navy, light belt stripe with POLICE on the front fender, the shield on the front door), the source's single
-          bar housing replaced by the film's chrome bar (two tall MARS beacons, two round flashers, a siren speaker; all RED),
+          bar housing replaced by the film's chrome bar (two tall MARS beacons, two round flashers, a siren speaker; red left + blue right by the user's choice, Oct 20: the film's is all red),
           head and tail lamps emissive (the cars are only present at night). Beacon_* nodes: Scripts/PoliceLights.cs.
   van     "Dodge Ram Van (Mk3) Passenger Van" by Nieve5677: the cargo-side glass blanked into body panels, the film's ladder rack and
           roof clutter added (6830), the Oh-Kay Plumbing & Heating livery (6830 passenger side, 3299/5696 driver side), RAM badge.
@@ -43,7 +43,7 @@ FRONT_Z = (0.3, 1.6)   # metres of height the front / rear regions span
 # film colours, linear-ish sRGB picked by eye from the frames (night grade lifts navy; van sampled in daylight 6830)
 POLICE_NAVY = (24, 30, 58)
 POLICE_STRIPE = (196, 200, 204)
-VAN_BLUE = (122, 144, 172)   # 6830 sampled by eye, a touch darker than the first pass (renders washed out)
+VAN_BLUE = (100, 122, 136)   # 6830 side panels (69,86,93) and (53,70,79) lifted by the snow beside it (168 -> albedo 0.8): a grey blue
 SEDAN_BLUE = (62, 88, 132)   # 1888: a mid-blue sedan at our kerb (shade by eye, distant)
 
 
@@ -193,11 +193,11 @@ class Kit:
         M = Matrix.Translation(Vector(c)) @ Matrix.Rotation(rot_z, 4, "Z") @ Matrix.Diagonal((*size, 1.0))
         self.bmesh.ops.create_cube(bm, size=1.0, matrix=M)
 
-    def cyl(self, m, c, r1, r2, h, seg=16, axis="Z", cap=True):
+    def cyl(self, m, c, r1, r2, h, seg=16, axis="Z", cap=True, rot_z=0.0):
         from mathutils import Matrix, Vector
         bm = self.get(m)
         R = {"Z": Matrix.Identity(4), "X": Matrix.Rotation(math.pi / 2, 4, "Y"), "Y": Matrix.Rotation(-math.pi / 2, 4, "X")}[axis]
-        M = Matrix.Translation(Vector(c)) @ R
+        M = Matrix.Translation(Vector(c)) @ Matrix.Rotation(rot_z, 4, "Z") @ R
         self.bmesh.ops.create_cone(bm, cap_ends=cap, cap_tris=False, segments=seg, radius1=r1, radius2=r2, depth=h, matrix=M)
 
     def sphere(self, m, c, r, seg=12):
@@ -300,6 +300,7 @@ def build_police(objs, frame, police=True):
     glass = mat("VEH_Glass", (0.02, 0.025, 0.03), 0.05, alpha=0.35)
     lamps = mat(f"VEH_{tag}_Lamps", (1, 1, 1), 0.2, img=by["Object_9"].data.materials[0].node_tree.nodes.get("Image Texture").image, emit=(1, 1, 1) if police else None, emit_img=police)
     beacon = mat("VEH_BeaconRed", (0.8, 0.05, 0.03), 0.15, emit=(1.0, 0.04, 0.02))
+    beacon_b = mat("VEH_BeaconBlue", (0.04, 0.12, 0.8), 0.15, emit=(0.05, 0.2, 1.0))   # user Oct 20: red + blue bar (film: all red)
     plate = mat("VEH_Plate", (1, 1, 1), 0.4, img=T("plate.png"))
     keep_tex = lambda o, n, rough=0.6: set_mat(o, mat(n, (1, 1, 1), rough, img=o.data.materials[0].node_tree.nodes.get("Image Texture").image))
     frame["bar_y"] = sum(bounds(by["Object_32"])[i][1] for i in (0, 1)) / 2   # the source bar's centre line
@@ -320,7 +321,7 @@ def build_police(objs, frame, police=True):
         return list(by.values()), [], (lambda o: 0.15 if o.name in ("Object_2", "Object_20", "Object_25", "Object_24") else 1.0), \
             ("VEH_Caprice_Interior", "VEH_InteriorPlain", "VEH_Caprice_Dash", "VEH_Caprice_Under")
     # the film's bar (11590-11630): a chrome rail on two feet across the roof, outer tall MARS beacons, inner round flashers, a
-    # centre siren speaker; all red. Placed on the old bar's footprint (roof centre, over the B-pillar).
+    # centre siren speaker; all red in the film, red (left) + blue (right) by the user's choice. Placed on the old bar's footprint (roof centre, over the B-pillar).
     roof = max(v.co.z for n in ("Object_26", "Object_27") for v in by[n].data.vertices if abs(v.co.x) < 0.4 and abs(v.co.y - frame["bar_y"]) < 0.4)
     yb, zb = frame["bar_y"], roof
     k = Kit("Bar")
@@ -336,8 +337,9 @@ def build_police(objs, frame, police=True):
     for nm, x, r, h, zc in (("Beacon_L", -0.62, 0.08, 0.17, 0.295), ("Beacon_R", 0.62, 0.08, 0.17, 0.295),
                             ("Flasher_L", -0.30, 0.07, 0.0, 0.215), ("Flasher_R", 0.30, 0.07, 0.0, 0.215)):
         kb = Kit(nm)
-        if h: kb.cyl(beacon, (x, yb, zb + zc), r, r * 0.92, h, 20); kb.sphere(beacon, (x, yb, zb + zc + h / 2), r * 0.9, 16)
-        else: kb.sphere(beacon, (x, yb, zb + zc), r, 16)
+        bm_ = beacon if nm.endswith("_L") else beacon_b   # _L = the car's left (driver, -X): red; _R: blue
+        if h: kb.cyl(bm_, (x, yb, zb + zc), r, r * 0.92, h, 20); kb.sphere(bm_, (x, yb, zb + zc + h / 2), r * 0.9, 16)
+        else: kb.sphere(bm_, (x, yb, zb + zc), r, 16)
         o = kb.objects(coll)[0]; o.name = nm; o.data.name = nm; beacons.append(o)
     body = [o for o in by.values()] + bar
     return body, beacons, (lambda o: 0.15 if o.name in ("Object_2", "Object_20", "Object_25", "Object_24") else 1.0), \
@@ -354,7 +356,7 @@ def build_van(objs, frame):
     satin = mat("VEH_SatinMetal", (0.55, 0.56, 0.57), 0.45, 1.0)
     trim = mat("VEH_TrimBlack", (0.03, 0.03, 0.03), 0.6)
     rubber = mat("VEH_Rubber", (0.025, 0.025, 0.025), 0.85)
-    wheel = mat("VEH_Van_Wheel", (0.55, 0.53, 0.47), 0.5)        # 6830: cream-grey steel wheels, small chrome caps
+    wheel = chrome                                                # 6830/3299: full chrome wheel covers (user review Oct 20)
     glass = mat("VEH_Glass", (0.02, 0.025, 0.03), 0.05, alpha=0.35)
     clear = mat("VEH_LampClear", (0.8, 0.8, 0.8), 0.1)
     amber = mat("VEH_LampAmber", (0.75, 0.30, 0.02), 0.15)
@@ -364,12 +366,13 @@ def build_van(objs, frame):
         bpy.data.objects.remove(by.pop(n))
     rolemap = {"carpaint": paint, "black": trim, "chrome": chrome, "clearglass": clear, "mattemetal": satin, "orangeglass": amber,
                "redglass": red, "material": chrome, "tire": rubber, "windowglass": glass, "mirror": chrome, "interior": interior}
+    rolemap["orangeglass"] = clear   # the 1994 amber wraparound marker -> the film's clear lens in a chrome corner (6830)
     for o in by.values(): set_mat(o, rolemap[o.data.materials[0].name])
     # wheels (6830): cream-grey painted steel with a small chrome centre cap; the source's rims are chrome discs in the trim parts
     ra, fa, wr = frame["rear_axle_y"], frame["front_axle_y"], frame["wheel_r"]
     def is_rim(c, n):
         d = min(math.hypot(c.y - ra, c.z - wr), math.hypot(c.y - fa, c.z - wr))
-        return abs(c.x) > 0.70 and 0.085 < d < wr * 0.60
+        return abs(c.x) > 0.70 and d < wr * 0.62
     nrim = sum(face_split(o, is_rim, wheel) for o in by.values() if o.data.materials[0] in (rubber, chrome, trim))
     print("van rim faces", nrim)
     # the cargo side glass (behind the B-pillar) and its rubber become body panels flush with the side: film 3297/6830/9527
@@ -414,12 +417,38 @@ def build_van(objs, frame):
     for sx in (-1, 1): k.box(rack, (sx * 0.80, yc, zr + 0.10), (0.03, ln, 0.03))   # upper rail of the basket sides
     for sx in (-1, 1):
         for yy in np.linspace(y_b + 0.05, y_a - 0.05, 9): k.box(rack, (sx * 0.80, yy, zr + 0.05), (0.02, 0.02, 0.10))
-    for i, (x, r) in enumerate(((-0.45, 0.022), (-0.38, 0.016), (0.40, 0.027), (0.47, 0.016))):
-        k.cyl(pipe if i % 2 == 0 else rack, (x, yc - 0.1, zr + 0.05), r, r, ln * 0.92, 10, axis="Y")
-    for x, y in ((-0.30, y_a - 0.9), (0.05, y_a - 0.95)):
-        k.cyl(trim, (x, y, zr + 0.18), 0.17, 0.14, 0.32, 16)   # 6830: two black buckets upside-down? upright, rims up
-    k.box(box, (0.45, y_a - 0.35, zr + 0.11), (0.42, 0.30, 0.18), 0.1)
-    k.box(box, (-0.40, y_b + 0.6, zr + 0.10), (0.36, 0.30, 0.16), -0.15)
+    # the load (6830, 3520, 9527): pipe lengths, an aluminium ladder, buckets (two black, one white, one upturned), cardboard
+    # boxes, a tarp humped over a pile, rope lashings. Positions are seeded by eye, not measured.
+    rng = np.random.default_rng(3)
+    card = mat("VEH_Cardboard", (0.45, 0.33, 0.20), 0.85)
+    tarp = mat("VEH_Tarp", (0.16, 0.20, 0.18), 0.8)
+    rope = mat("VEH_Rope", (0.62, 0.52, 0.30), 0.9)
+    alu = mat("VEH_Aluminium", (0.70, 0.71, 0.72), 0.5, 1.0)
+    white = mat("VEH_BucketWhite", (0.78, 0.78, 0.74), 0.5)
+    zt = zr + 0.02                                                  # top of the rack's deck bars
+    for i in range(9):                                              # pipe: copper and galvanised, lengths and yaws vary
+        r = [0.011, 0.016, 0.022, 0.027][i % 4]; L_ = ln * rng.uniform(0.55, 1.0); x = rng.uniform(-0.62, -0.05)
+        k.cyl(pipe if i % 3 else rack, (x, yc + rng.uniform(-0.3, 0.3), zt + r + 0.02 * (i // 3)), r, r, L_, 8, axis="Y", rot_z=rng.uniform(-0.04, 0.04))
+    lx, ll = 0.38, min(ln - 0.1, 3.2)                               # the ladder on the right of the rack
+    for sx in (-0.21, 0.21): k.box(alu, (lx + sx, yc - 0.05, zt + 0.06), (0.025, ll, 0.075))
+    for yy in np.arange(-ll / 2 + 0.15, ll / 2 - 0.1, 0.30): k.cyl(alu, (lx, yc - 0.05 + yy, zt + 0.06), 0.015, 0.015, 0.42, 8, axis="X")
+    k.cyl(trim, (-0.30, y_a - 0.85, zt + 0.19), 0.15, 0.13, 0.36, 16)          # buckets (5 gal: 0.36 m tall)
+    k.cyl(trim, (-0.02, y_a - 0.95, zt + 0.19), 0.15, 0.13, 0.36, 16)
+    k.cyl(white, (-0.55, y_b + 1.15, zt + 0.19), 0.13, 0.15, 0.36, 16)         # upturned
+    for x, y, sx_, sy_, h, rz in ((0.45, y_a - 0.30, 0.42, 0.30, 0.20, 0.10), (-0.40, y_b + 0.55, 0.36, 0.30, 0.18, -0.15),
+                                 (0.10, y_b + 0.45, 0.40, 0.34, 0.26, 0.05), (0.32, y_b + 1.35, 0.30, 0.26, 0.16, -0.30)):
+        k.box(card, (x, y, zt + h / 2 + (0.15 if abs(x - lx) < 0.3 else 0)), (sx_, sy_, h), rz)
+    # the tarp: a lumpy sheet over the middle of the pile
+    import bmesh as _bm
+    from mathutils import Matrix as _M
+    tb = k.get(tarp); ty, tw, tl = yc - 0.2, 0.9, 1.2
+    g = _bm.ops.create_grid(tb, x_segments=14, y_segments=18, size=0.5, matrix=_M.Translation((-0.25, ty, 0)) @ _M.Diagonal((tw, tl, 1, 1)))
+    for v in g["verts"]:
+        u, w_ = (v.co.x + 0.25) / (tw / 2), (v.co.y - ty) / (tl / 2)
+        hump = max(0.0, 1 - u * u) ** 0.5 * max(0.0, 1 - w_ * w_) ** 0.6
+        v.co.z = zt + 0.04 + 0.30 * hump + rng.normal(0, 0.012) + 0.03 * math.sin(7 * v.co.y + 3 * v.co.x)
+    for yy in (ty - 0.35, ty + 0.35, y_b + 0.5, y_a - 0.6):            # rope lashings across the load
+        k.box(rope, (0, yy, zt + 0.30), (1.62, 0.012, 0.012))
     rack_objs = k.objects(coll)
     body = list(by.values()) + rack_objs
     return body, [], (lambda o: 0.04 if o.data.materials[0] == interior else 1.0), ("VEH_InteriorPlain",)
@@ -508,7 +537,7 @@ def _paint(kind):
     rng = np.random.default_rng(7)
     base = {"police": POLICE_NAVY, "van": VAN_BLUE, "sedan": SEDAN_BLUE}[kind]
     img = Image.new("RGB", (TEX, TEX), base); d = ImageDraw.Draw(img)
-    mask = np.zeros((TEX, TEX, 4), np.uint8); mask[..., 1] = 255; mask[..., 3] = int(255 * (0.45 if kind == "van" else 0.62))
+    mask = np.zeros((TEX, TEX, 4), np.uint8); mask[..., 1] = 255; mask[..., 3] = int(255 * (0.35 if kind == "van" else 0.62))   # the van: a dull, weathered clear coat
     px = lambda reg, a, b: atlas_px(reg, a, b, L)
     def font(f, h_m, region="side_r"):
         hp = abs(px(region, 0, 1.0)[1] - px(region, 0, 1.0 + h_m)[1])
@@ -527,7 +556,7 @@ def _paint(kind):
         cx, ty = px(region, y_c, z_top)
         img.paste(lay, (int(cx - lay.width / 2), int(ty - 20)), lay)
     # grime: road salt up the lower body (both cars; the van much more: 6830), and a little mottling
-    for region in ("side_r", "side_l", "front", "rear"):
+    for region in (("side_r", "side_l", "front", "rear") if kind != "van" else ("front", "rear")):
         for z in np.arange(0.0, 0.9, 0.01):
             amt = max(0.0, 1 - z / (0.75 if kind == "van" else 0.45)) ** 1.6 * (0.55 if kind == "van" else 0.25)
             if region.startswith("side"): y0_, y1_ = px(region, 0, z)[1], px(region, 0, z + 0.01)[1]
@@ -587,7 +616,9 @@ def _paint(kind):
         text("front", "DODGE", "Arial Black.ttf", 0.05, 0.0, 1.12, (40, 44, 52), width_m=0.42)
         # weathering: dirt streaks under the livery's lower edge and rust at the wheel arches are left to the grime band
     noise = rng.normal(0, 3.0, (TEX, TEX, 1)).astype(np.float32)
-    a = np.clip(np.asarray(img, np.float32) + noise, 0, 255).astype(np.uint8)
+    a = np.asarray(img, np.float32)
+    if kind == "van": a = _van_grime(a, mask, fr, L, rng)
+    a = np.clip(a + noise, 0, 255).astype(np.uint8)
     Image.fromarray(a).save(WORK / f"{kind}_livery.png")
     Image.fromarray(mask, "RGBA").save(WORK / f"{kind}_livery_Mask.png")
 
@@ -620,15 +651,15 @@ def render(kind, mode=None):
         if not m.use_nodes or "Principled BSDF" not in m.node_tree.nodes: continue
         bs = m.node_tree.nodes["Principled BSDF"]
         if m.name == "VEH_Police_Lamps": bs.inputs["Emission Strength"].default_value = 6.0 if night else 0.0
-        if m.name == "VEH_BeaconRed": bs.inputs["Emission Strength"].default_value = 1.5 if night else 0.0
+        if m.name in ("VEH_BeaconRed", "VEH_BeaconBlue"): bs.inputs["Emission Strength"].default_value = 1.5 if night else 0.0
         if m.name.endswith("_Paint"):   # a clear coat as Unity's HDRP Lit coat mask will add
-            bs.inputs["Coat Weight"].default_value = 0.0 if mode == "flat" else 1.0; bs.inputs["Coat Roughness"].default_value = 0.05
+            bs.inputs["Coat Weight"].default_value = 0.0 if mode == "flat" else (0.2 if "Van" in m.name else 1.0); bs.inputs["Coat Roughness"].default_value = 0.05
             if mode == "flat": bs.inputs["Roughness"].default_value = 0.9
     if night:
         bar = [o for o in sc.objects if o.name.startswith("Beacon_")]
         for o in bar:
             c = sum((o.matrix_world @ Vector(v) for v in o.bound_box), Vector()) / 8
-            light("POINT", c + Vector((0, 0, 0.05)), 600, (1, 0.05, 0.03))
+            light("POINT", c + Vector((0, 0, 0.05)), 600 if o.name.endswith("_L") else 900, (1, 0.05, 0.03) if o.name.endswith("_L") else (0.05, 0.2, 1.0))
         light("AREA", (-7, 6, 6), 900, (1.0, 0.72, 0.45), 4)          # the Murphys' lit porch and C7 strings beyond the car, tungsten
         light("AREA", (8, 9, 7), 500, (1.0, 0.8, 0.6), 2)             # the street lamp behind the camera
         light("AREA", (6, -4, 6), 60, (0.5, 0.6, 1.0), 6)             # the night sky's fill
@@ -656,6 +687,41 @@ def check():
         assert -0.07 < b["min"][2] < 0.01 and abs(b["min"][0] + b["max"][0]) < 0.01, (k, "origin", b)
         assert f["front_axle_y"] > f["rear_axle_y"], (k, "nose must be +Y")
         print(f"check {KIND[k]}: LOD0 {st['LOD0']} LOD1 {st['LOD1']} LOD2 {st['LOD2']}, {b['max'][1] - b['min'][1]:.3f} m long, wb {f['wb']:.3f} OK")
+
+
+def _van_grime(a, mask, fr, L, rng):
+    """6830/3299/9527: the van is dirty: road spray up the sills and around the wheel arches, streaks running down from under the
+    rack, an all-over dull film. Applied on the side regions over the lettering (the dirt is on top of the paint)."""
+    import numpy as np
+    from PIL import Image
+    def lowfreq(n, scale):   # smooth noise 0..1
+        g = Image.fromarray((rng.random((n, n)) * 255).astype(np.uint8)).resize((TEX, SIDE_H), Image.BICUBIC)
+        return np.asarray(g, np.float32) / 255.0
+    dirt = np.array([92, 86, 74], np.float32)          # salt-and-mud spray, grey-brown
+    streak_col = np.array([58, 60, 58], np.float32)
+    cols = np.arange(TEX) / TEX * L
+    z = (1 - (np.arange(SIDE_H) + 0.5) / SIDE_H) * H_M
+    for r0, sgn in ((0, 1), (SIDE_H, -1)):             # side_r: y = col - L/2; side_l: y = L/2 - col
+        y = sgn * (cols - L / 2)
+        Y, Z = np.meshgrid(y, z)
+        n1, n2 = lowfreq(48, 1), lowfreq(160, 1)
+        spray = np.clip(1 - Z / 0.80, 0, 1) ** 1.3 * (0.55 + 0.45 * n2)                     # sills, rising to ~0.8 m
+        arch = np.zeros_like(Z)
+        for ay in (fr["rear_axle_y"], fr["front_axle_y"]):
+            d = np.hypot(Y - ay, Z - fr["wheel_r"])
+            arch = np.maximum(arch, np.clip(1 - np.abs(d - fr["wheel_r"] - 0.10) / 0.22, 0, 1) * (Z > 0.25))
+        arch *= 0.55 + 0.45 * n2
+        st = rng.random(TEX) < 0.10                                                           # streaks below the rack's clamps and rails
+        width = np.convolve(st.astype(np.float32), np.ones(5) / 5, "same")
+        streak = width[None, :] * np.clip((Z - 1.30) / 0.60, 0, 1) ** 0.7 * (0.5 + 0.5 * n1)
+        film = 0.10 + 0.08 * n1                                                               # an all-over dull grey film
+        g = np.clip(np.maximum(spray * 0.85, arch * 0.7) + film, 0, 0.9)[..., None]
+        sl = slice(r0, r0 + SIDE_H)
+        a[sl] = a[sl] * (1 - g) + dirt * g
+        s_ = np.clip(streak * 0.45, 0, 0.45)[..., None]
+        a[sl] = a[sl] * (1 - s_) + streak_col * s_
+        mask[sl, :, 3] = (mask[sl, :, 3] * (1 - 0.8 * g[..., 0])).astype(np.uint8)        # dirt is rough
+    return a
 
 
 def blender(*args):

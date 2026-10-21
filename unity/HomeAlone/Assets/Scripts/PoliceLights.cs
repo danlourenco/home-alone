@@ -2,10 +2,11 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
 
-// The Winnetka cruisers' roof bar (film 11574-11636, night): two tall MARS rotating beacons at the ends and two round flashers inside,
-// ALL RED in the film (no blue on either car). Period rotating reflectors, so each lamp SWEEPS: it is brightest when its beam points
+// The Winnetka cruisers' roof bar (film 11574-11636, night): two tall MARS rotating beacons at the ends and two round flashers inside.
+// The film's bars are ALL RED; the user chose a classic period two-colour bar (Oct 20, DEVIATIONS 126): the car's left (driver) lamps
+// red, the right blue, with matching wash lights. bar = AllRed restores the film. Period rotating reflectors, so each lamp SWEEPS: it is brightest when its beam points
 // at the camera and a dim glow otherwise (not an LED strobe). Two small UNSHADOWED point lights (left, right) pulse with the
-// beacons' rotation so the red washes the snow, the wet road and the Murphys' facade as in 11581.
+// beacons' rotation so the colour washes the snow, the wet road and the Murphys' facade as in 11581.
 // Lamps: the prefab's Beacon_L/R and Flasher_L/R renderers (tools/house/purchased_vehicles.py), driven through one
 // MaterialPropertyBlock (_EmissiveColor), so the shared material never changes. Cheap: no allocations per frame, 4 renderers,
 // 2 lights with no shadows. "Off when the car isn't present": the car (night only) is a child of the night layer; disabling the
@@ -13,9 +14,10 @@ using UnityEngine.Rendering.HighDefinition;
 [DisallowMultipleComponent]
 public class PoliceLights : MonoBehaviour
 {
-    [Tooltip("Lamp glass colour (film: red). Set washRight to blue for a red/blue bar.")]
-    public Color lampColor = new Color(1f, 0.05f, 0.02f);
-    public Color washLeft = new Color(1f, 0.08f, 0.03f), washRight = new Color(1f, 0.08f, 0.03f);
+    public enum Bar { RedBlue, AllRed }
+    [Tooltip("RedBlue: the user's choice (left red, right blue). AllRed: the film (11581).")]
+    public Bar bar = Bar.RedBlue;
+    public Color red = new Color(1f, 0.05f, 0.02f), blue = new Color(0.05f, 0.2f, 1f);
     [Tooltip("Peak and idle emission of a lamp facing the camera, nits")]
     public float beaconNits = 6000f, flasherNits = 4000f;
     [Range(0f, 1f)] public float idle = 0.06f;
@@ -26,7 +28,7 @@ public class PoliceLights : MonoBehaviour
     public float washLumens = 2500f, washRange = 14f;
     [Range(0f, 1f)] public float washFloor = 0.25f;
 
-    static readonly int EmissiveId = Shader.PropertyToID("_EmissiveColor");
+    static readonly int EmissiveId = Shader.PropertyToID("_EmissiveColor"), BaseId = Shader.PropertyToID("_BaseColor");
     static readonly string[] Names = { "Beacon_L", "Beacon_R", "Flasher_L", "Flasher_R" };
     static readonly float[] Phase = { 0f, 0.5f, 0.25f, 0.75f };   // the four units turn out of step (film: never all lit at once)
     readonly Renderer[] lamps = new Renderer[4];
@@ -47,11 +49,13 @@ public class PoliceLights : MonoBehaviour
             g.transform.SetParent(transform, false); g.transform.position = b + Vector3.up * 0.05f;
             var l = g.AddComponent<Light>(); g.AddComponent<HDAdditionalLightData>();
             l.type = LightType.Point; l.shadows = LightShadows.None; l.lightUnit = LightUnit.Lumen;
-            l.range = washRange; l.color = s == 0 ? washLeft : washRight; l.intensity = 0f;
+            l.range = washRange; l.color = Side(s); l.intensity = 0f;
             wash[s] = l;
         }
         t0 = Random.value * 10f;   // two cars never flash in step
     }
+
+    Color Side(int s) => s == 0 || bar == Bar.AllRed ? red : blue;   // lamp i: (i & 1) == 0 is the left side
 
     void OnEnable() { foreach (var l in wash) if (l) l.enabled = true; }
 
@@ -75,12 +79,15 @@ public class PoliceLights : MonoBehaviour
             var to = camPos - r.bounds.center; to.y = 0f;
             float facing = to.sqrMagnitude > 1e-4f ? Mathf.Max(0f, Vector3.Dot(beam, to.normalized)) : 1f;
             float k = idle + (1f - idle) * Mathf.Pow(facing, beamPower);
-            mpb.SetColor(EmissiveId, lampColor * ((i < 2 ? beaconNits : flasherNits) * k));
+            var c = Side(i & 1);
+            mpb.SetColor(BaseId, c * 0.6f);   // the glass tint follows the setting (the left/right materials are red/blue)
+            mpb.SetColor(EmissiveId, c * ((i < 2 ? beaconNits : flasherNits) * k));
             r.SetPropertyBlock(mpb);
             // the spill: a turning beam sweeps the surroundings, so a point light on that side rises and falls once per turn
             float spill = 0.5f + 0.5f * Mathf.Cos(a);
             if ((i & 1) == 0) washL += spill; else washR += spill;
         }
+        if (wash[0]) { wash[0].color = Side(0); wash[1].color = Side(1); }
         if (wash[0]) wash[0].intensity = washLumens * (washFloor + (1f - washFloor) * washL * 0.5f);
         if (wash[1]) wash[1].intensity = washLumens * (washFloor + (1f - washFloor) * washR * 0.5f);
     }
