@@ -9,6 +9,26 @@
  ],
  "tests": [
   {
+   "id": "night-front",
+   "title": "Front at night: warm brick or dark brick",
+   "status": "needs-you",
+   "date": "Oct 21",
+   "when": "Now: pick one, so the next build can start.",
+   "what": "In the last build the downstairs brick lost a warm glow. It was the rooms' light leaking through the wall, so it was a bug that happened to look nice. In the film the plain brick at night is dark red on both floors; the warmth comes from the Christmas lights outlining every window and eave, and from the bright windows.",
+   "look": [
+    "Top row, the film: dark brick, with the warm light from bulb strands around every window and the lit sheers.",
+    "Middle row: left, the old warm version (the leak); right, the new dark one.",
+    "Bottom row: the same, close up.",
+    "Bigger than either: our front has no light strands around the windows and eaves yet, and the pier lanterns glare. That's the real gap to the film."
+   ],
+   "images": [
+    {
+     "src": "spec/captures/views/front-0645/night-glow-sheet.jpg",
+     "caption": "Film 5545 and 10 | the old warm version | the new dark one | close-ups (true aspect)"
+    }
+   ]
+  },
+  {
    "id": "antialias",
    "title": "Smoothing the stair-steps: anti-aliasing at the full-screen default",
    "status": "needs-you",
@@ -164,12 +184,17 @@
    "date": "Oct 21",
    "app": "HomeAloneNB9.app",
    "when": "Now: walk NB9 to the front walk by day and at night.",
-   "what": "Your request: the ground-floor French windows should show the same sheers as the film. The living room's pair (left of the portico) read as blank cream panels: their sheers hung at the room wall, 0.3 m behind the glass. They now hang on each leaf just behind the glass (film 5650 from inside shows them gathered on the doors; 2508/6399 from outside), same cloth and folds as every other sheer. The dining pair already had them. The leaves don't open, and nothing stands in a walkway. Not changed: the den's bay window at the far left still shows clear glass and the room; in the film it has sheers too. Say if you want it to match.",
+   "what": "Your request: the ground-floor French windows should show the same sheers as the film. The living room's pair (left of the portico) read as blank cream panels: their sheers hung at the room wall, 0.3 m behind the glass. They now hang on each leaf just behind the glass (film 5650 from inside shows them gathered on the doors; 2508/6399 from outside), same cloth and folds as every other sheer. The dining pair already had them. The leaves don't open, and nothing stands in a walkway. Not changed: the den's bay window at the far left still shows clear glass and the room; in the film it has sheers too. Say if you want it to match. Oct 21 re-shoot (you were right, the old stills were stretched): new views at the film's own framing: film 6399's solved camera, and film 2508 (the den bay and the living pair) eyeballed; NB8 against NB9, day and night, true aspect. What they show: from 6399's distance the four French windows now read alike. Close up (2508) the living pair's sheers sit right behind the glass and read whiter and flatter than the film, where the sheer is grey and the white muntins stand out against it. The den's bay at the left is the odd one out: clear glass and the room behind, where the film has sheers like the rest.",
    "look": [
-    "From the street and the front walk: the four French windows read alike, white sheers with soft folds behind the muntins.",
-    "Inside the living room: the sheers now sit on the doors between the green drapes (film 5650)."
+    "Row 1 (6399 framing): the four French windows alike from the street.",
+    "Row 3 (2508 framing): film sheers grey with crisp white muntins; ours whiter and flatter. Say if they should be greyer and more see-through.",
+    "Left of row 3: the den's bay has no sheers; the film's does. Say if it should match."
    ],
    "images": [
+    {
+     "src": "spec/captures/views/front-0645/french-sheers-sheet.jpg",
+     "caption": "Film | NB8 | NB9 at the film framing: 6399 (solved camera) day and night, 2508 (eyeballed) day and night; true aspect"
+    },
     {
      "src": "spec/captures/views/front-0645/brick-sheers-nb9-sheet.jpg",
      "caption": "Last two rows: film 2508 | before | after (your 06:45 spot), and the front walk by day and night"
@@ -182,16 +207,36 @@
    "status": "running",
    "date": "Oct 21",
    "when": "Fix prepared, not built (bake order Night, Default, NightFilm, DayFilm: the film's upper wall is there when the bake decides which probes count). It goes in the next combined build with the anti-aliasing default and the controls panel, on the coordinator's go. Then: brick_storeys.py on your 06:45 spot (sunny, overcast, night), and the upstairs rooms (parents, Buzz, Kevin's, hall, hall bath, by day and night) must stay within 5% of before.",
-   "commands": ["uv run -q --with pillow python -I tools/house/brick_storeys.py ~/.cache/home-alone-perf/runs/AFTER", "uv run -q --with pillow python -I tools/house/brick_storeys.py --rooms ~/.cache/home-alone-perf/runs/BEFORE ~/.cache/home-alone-perf/runs/AFTER parents-day parents-night buzz-day buzz-night buzzfront-day buzzfront-night kevinroom-day kevinroom-night hall-day hall-night hallbath-day hallbath-night"],
+   "commands": [
+    "uv run -q --with pillow python -I tools/house/brick_storeys.py ~/.cache/home-alone-perf/runs/AFTER",
+    "uv run -q --with pillow python -I tools/house/brick_storeys.py --rooms ~/.cache/home-alone-perf/runs/BEFORE ~/.cache/home-alone-perf/runs/AFTER parents-day parents-night buzz-day buzz-night buzzfront-day buzzfront-night kevinroom-day kevinroom-night hall-day hall-night hallbath-day hallbath-night"
+   ],
    "what": "NB9 built with probe layers: probes outside the house now stay on (Exterior), rooms Interior, Marina's strip both; outside walls read only outside probes. Result, measured (tools/house/brick_storeys.py, gate 5%): still FAIL. Overcast upstairs/downstairs 0.67 centre, 0.76 wing (NB8 0.71/0.78): the ground floor got brighter (it no longer borrows the rooms' light), the upstairs did not. Night flipped: 1.25/1.31 (NB8 0.63/1.30) because the ground-floor brick lost the warm indoor glow that leaked through it. Sunny 0.92/0.94. Rooms unchanged (foyer and living at night, compared with the lamp fit off). With probes off entirely the upstairs is still 0.81-0.85, so the remaining gap is in the outdoor light upstairs (the eaves, Marina's strip), not the rooms behind. Not shipping as a fix yet; the layers themselves are sound. PREMISE TESTS (Oct 21): (1) Eaves hidden in the live image (roof, cornice, gutters gone): the overcast upstairs barely moves, 0.675 -> 0.691 centre, 0.764 -> 0.778 wing. Not the eaves. (2) ProbeDump read the baked light on a white card in front of each storey: a few tenths of a metre out, the upstairs gets as much outdoor light as downstairs or more (day 34-59 vs 25-28). But right at the upstairs wall face (0-0.15 m) the light drops to 8.5, a quarter of downstairs (23), in the centre; at night the same spot is bright and warm (lamp-lit rooms). Conclusion in plain words: the upstairs darkness is baked in, in the first row of probes at the wall. Those probes sit inside the film's upper wall, but the bake decides which probes count from its LAST pass, Marina's version of the house, which has no wall there. So probes buried in the wall are trusted, and they are dark by day and lamp-lit at night. Proposed fix (one bake): run the film's day bake last, so the wall is there when Unity decides which probes count (or switch those buried probes off with a thin box in the wall). Then re-check the upstairs rooms, which share those probes.",
    "look": [
     "Rows 1-3: the upstairs brick is still darker than downstairs by day (FAIL); at night the ground floor is now the darker one.",
     "Rows 4-5: foyer and living at night are unchanged.",
-    "Ignore the French windows here; they have their own entry.", "Question for you (night sheet): at night the ground-floor brick lost the warm glow it had (centre 62 -> 29). That glow was the rooms' light leaking through the wall. In film 5545 / 10 the plain brick at night is dark red; the warmth on it is spill from the lit windows and the Christmas bulbs. Our reading: NB9's darker ground floor is the more faithful base, and the film's warmth should come from window and bulb spill, not the leak. Do you agree, or do you prefer NB8's look?"
+    "Ignore the French windows here; they have their own entry.",
+    "Question for you (night sheet): at night the ground-floor brick lost the warm glow it had (centre 62 -> 29). That glow was the rooms' light leaking through the wall. In film 5545 / 10 the plain brick at night is dark red; the warmth on it is spill from the lit windows and the Christmas bulbs. Our reading: NB9's darker ground floor is the more faithful base, and the film's warmth should come from window and bulb spill, not the leak. Do you agree, or do you prefer NB8's look?"
    ],
    "images": [
     {
-     "src": "spec/captures/views/front-0645/probe-dump.png", "caption": "Baked light the outside walls read, by distance from the brick: the upstairs (red) collapses at the wall face by day"}, {"src": "spec/captures/views/front-0645/eaves-hidden.png", "caption": "Overcast and sunny, eaves on | eaves hidden: the upstairs stays dark overcast"}, {"src": "spec/captures/views/front-0645/night-glow-sheet.jpg", "caption": "Night front: film 5545 | film 10; NB8 (warm ground floor, the leak) | NB9 (outdoor probes only); close-ups"}, {"src": "spec/captures/views/front-0645/brick-sheers-nb9-sheet.jpg", "caption": "NB8 before | NB9 after: your 06:45 spot overcast, sunny, night; foyer and living at night; the French windows"}, {"src": "spec/captures/views/front-0645/apv-tuning-sheet.jpg",
+     "src": "spec/captures/views/front-0645/probe-dump.png",
+     "caption": "Baked light the outside walls read, by distance from the brick: the upstairs (red) collapses at the wall face by day"
+    },
+    {
+     "src": "spec/captures/views/front-0645/eaves-hidden.png",
+     "caption": "Overcast and sunny, eaves on | eaves hidden: the upstairs stays dark overcast"
+    },
+    {
+     "src": "spec/captures/views/front-0645/night-glow-sheet.jpg",
+     "caption": "Night front: film 5545 | film 10; NB8 (warm ground floor, the leak) | NB9 (outdoor probes only); close-ups"
+    },
+    {
+     "src": "spec/captures/views/front-0645/brick-sheers-nb9-sheet.jpg",
+     "caption": "NB8 before | NB9 after: your 06:45 spot overcast, sunny, night; foyer and living at night; the French windows"
+    },
+    {
+     "src": "spec/captures/views/front-0645/apv-tuning-sheet.jpg",
      "caption": "Film 6399 | before | setting variants at your 06:45 spot, overcast; then foyer and living at night"
     }
    ]
