@@ -19,7 +19,6 @@
 "obsolete|unity/HomeAlone/Assets/Editor/FrenchDoors.cs|Object.FindObjectsByType<T>(FindObjectsSortMode)",
 "obsolete|unity/HomeAlone/Assets/Editor/RearLanding.cs|Object.FindFirstObjectByType<T>()",
 "obsolete|unity/HomeAlone/Assets/Editor/RoomLighting.cs|Object.FindFirstObjectByType<T>()",
-"obsolete|unity/HomeAlone/Assets/Editor/SavePropPlacement.cs|Object.FindObjectsByType<T>(FindObjectsSortMode)",
 "obsolete|unity/HomeAlone/Assets/Editor/ShadowAudit.cs|FindObjectsSortMode",
 "obsolete|unity/HomeAlone/Assets/Editor/ShadowAudit.cs|HDAdditionalLightData.spotLightShape",
 "obsolete|unity/HomeAlone/Assets/Editor/ShadowAudit.cs|Object.FindFirstObjectByType<T>()",

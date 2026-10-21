@@ -47,7 +47,7 @@ public static class SavePropPlacement
         }
         var log = new System.Text.StringBuilder(); int n = 0;
         var sp = JObject.Parse(File.ReadAllText(Spec("store_props.json")));
-        foreach (var pp in Object.FindObjectsByType<PlacedProp>(FindObjectsSortMode.None))
+        foreach (var pp in Object.FindObjectsByType<PlacedProp>())
         {
             float turn = Turn(pp);
             var drawn = pp.spec == "trunk" ? pp.GetComponentsInChildren<Transform>().First(t => t.name == "TrunkBody") : pp.transform;
