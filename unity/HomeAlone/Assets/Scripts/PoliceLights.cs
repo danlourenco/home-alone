@@ -33,6 +33,8 @@ public class PoliceLights : MonoBehaviour
     public bool washVolumetric = false;
     [Tooltip("The wash on wet road and paint (film 11581 shows red streaks on the wet road)")]
     public bool washSpecular = true;
+    [Tooltip("The wash lights at all (VehicleProbe's police=nowash)")]
+    public bool washOn = true;
 
     static readonly int EmissiveId = Shader.PropertyToID("_EmissiveColor"), BaseId = Shader.PropertyToID("_BaseColor");
     static readonly string[] Names = { "Beacon_L", "Beacon_R", "Flasher_L", "Flasher_R" };
@@ -53,18 +55,31 @@ public class PoliceLights : MonoBehaviour
             var b = lamps[s] != null ? lamps[s].bounds.center : transform.position + Vector3.up * 1.7f;
             var g = new GameObject(s == 0 ? "PoliceWash_L" : "PoliceWash_R");
             g.transform.SetParent(transform, false); g.transform.position = b + Vector3.up * 0.05f;
-            var l = g.AddComponent<Light>(); var hd = g.AddComponent<HDAdditionalLightData>();
-            hd.affectsVolumetric = washVolumetric; hd.affectSpecular = washSpecular;
-            l.type = LightType.Point; l.shadows = LightShadows.None; l.lightUnit = LightUnit.Lumen;
-            l.range = washRange; l.color = Side(s); l.intensity = 0f;
+            var l = g.AddComponent<Light>(); g.AddComponent<HDAdditionalLightData>();
+            l.type = LightType.Point; l.shadows = LightShadows.None; l.lightUnit = LightUnit.Lumen; l.intensity = 0f;
             wash[s] = l;
         }
+        Retune();
         t0 = Random.value * 10f;   // two cars never flash in step
     }
 
+    // the wash lights' fixed settings (range, fog, specular, on): Awake, and again after a probe or a tweak changes the fields
+    public void Retune()
+    {
+        for (int s = 0; s < 2; s++)
+        {
+            var l = wash[s]; if (!l) continue;
+            var hd = l.GetComponent<HDAdditionalLightData>();
+            hd.affectsVolumetric = washVolumetric; hd.volumetricDimmer = washVolumetric ? 1f : 0f; hd.affectSpecular = washSpecular;
+            l.range = washRange; l.color = Side(s); l.enabled = washOn;   // the lights are children: an inactive car takes them with it
+        }
+    }
+
+    public Light WashLight(int s) => wash[s];
+
     Color Side(int s) => s == 0 || bar == Bar.AllRed ? red : blue;   // lamp i: (i & 1) == 0 is the left side
 
-    void OnEnable() { foreach (var l in wash) if (l) l.enabled = true; }
+    void OnEnable() { foreach (var l in wash) if (l) l.enabled = washOn; }
 
     void OnDisable()
     {

@@ -179,6 +179,7 @@ public class PerfProbe : MonoBehaviour
         {
             float F(string k) => float.Parse(spec[k], System.Globalization.CultureInfo.InvariantCulture);
             NbOld(variant && spec != null && spec.ContainsKey("nbold"));
+            VehicleProbe.Apply(variant ? spec : null);   // police=nowash|noglass|nolamps|nobloom|nofog|fix, bloomthr=T (VehicleProbe.cs)
             shadowSet.maxShadowDistance.overrideState = spec != null && spec.ContainsKey("sundist"); if (shadowSet.maxShadowDistance.overrideState) shadowSet.maxShadowDistance.value = F("sundist");
             shadowSet.cascadeShadowSplitCount.overrideState = spec != null && spec.ContainsKey("cascades"); if (shadowSet.cascadeShadowSplitCount.overrideState) shadowSet.cascadeShadowSplitCount.value = (int)F("cascades");
             var sp = spec != null && spec.ContainsKey("splits") ? spec["splits"].Split(',').Select(x => float.Parse(x, System.Globalization.CultureInfo.InvariantCulture)).ToArray() : new float[0];
@@ -294,6 +295,7 @@ public class PerfProbe : MonoBehaviour
                     string t = ab ? tag + "-" + step : tag;
                     yield return Sample(t, ab ? 150 : 300, dir);
                     if (step == "" || step.EndsWith(rounds.ToString())) { ScreenCapture.CaptureScreenshot(Path.Combine(dir, t + ".png")); yield return null; yield return null; }
+                    if (dn && (step == "" || step.EndsWith(rounds.ToString()))) VehicleProbe.Report(Path.Combine(dir, t + "-vehicles.txt"), Camera.main);   // what lit (or flooded) the frame
                 }
             }
             // MOTION (Oct 20, user: "if i open the door or hit a paint can, the fps becomes laughable again"): from the foyer pose, 10 s
