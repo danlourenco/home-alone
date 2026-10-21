@@ -12,7 +12,11 @@ using UnityEngine.Rendering.HighDefinition;
 // Baked bounce light for House_WallGrid (Oct 16): HDRP ray tracing is DirectX 12 only, so on the Mac the light that bounces off
 // floors and walls is traced once here and stored in an Adaptive Probe Volume (no lightmap UVs needed). Direct light and
 // shadows stay real time (lights become Mixed, Baked Indirect). Two scenarios: "Default" (day: sun on, room lamps off) and
-// "Night" (sun off, room lamps on); HouseNightMode (N) switches between them.
+// "Night" (sun off, room lamps on); HouseNightMode (N) switches between them. Each is baked twice, once per side of the house split
+// (DEVIATIONS 1/97; HouseSplit): "Default"/"Night" for the upstairs (Marina's rooms with their overhang strip, the skin's upper storey
+// out), "DayFilm"/"NightFilm" for the ground floor and outside (the film's house: the skin's upper storey in, every inside-only piece
+// out). Walk note Oct 20 20:58: in overcast the front facade under and inside the strip read dark, lit by the strip's baked indoor
+// light. Same probe positions in all four (Unity 6 "Probe Positions: Don't Recalculate", for scenarios with small geometry changes).
 //   Unity -projectPath ... -executeMethod BakeLighting.Bake       (no -batchmode, no -quit: it exits when done)
 // Windowed, because HDRP renders the static lighting sky only in a render loop: a batch bake (or one run straight from
 // -executeMethod) has no sky in it (Oct 16: the day bake came out identical with the sky on or off). Each scenario renders a camera
@@ -43,6 +47,40 @@ public static class BakeLighting
     }
 
     static bool failed;
+
+    // what a bake of one side of the split takes as GI geometry (Steps' rules, then the split's draw sets): the upstairs bake (film false)
+    // has the inside-only pieces and not the skin's upper storey, the film's house (film true) the other way round. FacadeSkyCheck uses it
+    public static bool Contributes(Renderer r, HouseSplit split, bool film)
+    {
+        if (!(r is MeshRenderer) || r.name.StartsWith("WinterBackdrop") || Clear(r)) return false;
+        if (split != null && System.Array.IndexOf(split.skinUpper, r) >= 0) return film;
+        if (split != null && System.Array.IndexOf(split.insideOnly, r) >= 0) return !film;
+        // Marina's strip as SpecGreybox.FilmFront tagged it: its shadows-only envelope and the upstairs baseboards too (not in insideOnly,
+        // which takes drawn pieces only; FacadeSkyCheck, first integration build: 12577 + 809 rays over the front)
+        if (film && (r.renderingLayerMask & SpecGreybox.LayerOverhang) != 0) return false;
+        return (r.renderingLayerMask & ~SpecGreybox.LayerOutside) != SpecGreybox.LayerFilmFront;
+    }
+    // glass passes light (see Steps)
+    static bool Clear(Renderer r) => r.sharedMaterials.Any(m => m != null && m.HasProperty("_SurfaceType") && m.GetFloat("_SurfaceType") > 0.5f);
+    static void Contribute(GameObject g, bool on)
+    {
+        var f = GameObjectUtility.GetStaticEditorFlags(g);
+        GameObjectUtility.SetStaticEditorFlags(g, on ? f | StaticEditorFlags.ContributeGI : f & ~StaticEditorFlags.ContributeGI);
+    }
+    // "Probe Positions: Don't Recalculate" (ProbeVolumeBakingSetEditor): the baking set's flag and the baker's static, both internal
+    static void Freeze(bool on)
+    {
+        const System.Reflection.BindingFlags F = System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Static;
+        var set = AssetDatabase.FindAssets("t:ProbeVolumeBakingSet", new[] { "Assets/Scenes/House_WallGrid" })
+            .Select(g => AssetDatabase.LoadAssetAtPath<ProbeVolumeBakingSet>(AssetDatabase.GUIDToAssetPath(g))).FirstOrDefault();
+        if (set != null) { typeof(ProbeVolumeBakingSet).GetField("freezePlacement", F).SetValue(set, on); EditorUtility.SetDirty(set); }
+        var apv = typeof(ProbeVolumeBakingSet).Assembly.GetType("UnityEngine.Rendering.AdaptiveProbeVolumes")
+                  ?? System.AppDomain.CurrentDomain.GetAssemblies().Select(a => a.GetType("UnityEngine.Rendering.AdaptiveProbeVolumes")).FirstOrDefault(t => t != null);
+        var fld = apv?.GetField("isFreezingPlacement", F);
+        if (fld == null) throw new System.MissingFieldException("AdaptiveProbeVolumes.isFreezingPlacement (HDRP/SRP core changed): the film scenarios need it");
+        fld.SetValue(null, on);
+        Debug.Log($"BakeLighting: probe positions {(on ? "kept (Don't Recalculate)" : "recalculated")}");
+    }
 
     // Invariant (Oct 17): every light authored Baked must come out of the bake recorded as baked in the SAVED scene. The scene keeps one
     // lighting data asset, written by the LAST bake: with Night baked last (day layer off) the 52 FilmFill lights were recorded as not baked
@@ -85,6 +123,7 @@ public static class BakeLighting
 
     static IEnumerator Steps()
     {
+        failed = false;
         var scene = EditorSceneManager.OpenScene(ScenePath);
         var outdoors = GameObject.Find("Exterior");
         var house = new Bounds();
@@ -97,7 +136,7 @@ public static class BakeLighting
             // enclose the house, replace the sky in the bake and stretch the probe volume to 150 m
             if (r.name.StartsWith("WinterBackdrop")) { GameObjectUtility.SetStaticEditorFlags(r.gameObject, 0); continue; }
             // glass passes light: as a GI contributor the lightmapper treats it as opaque and no sky or sun entered the house in the bake
-            bool clear = r.sharedMaterials.Any(m => m != null && m.HasProperty("_SurfaceType") && m.GetFloat("_SurfaceType") > 0.5f);
+            bool clear = Clear(r);
             // the film's flush front (SpecGreybox.FilmFront, shadows only) stands in for the upper storey's walls in the SUN's shadows while the
             // player is downstairs (StoreyShadows); it stays out of the bake. The upstairs overhang strip bakes with its own walls: until
             // Oct 17 it was the other way round, the strip baked open to the sky and its probes were invalidated, and every surface whose
@@ -220,8 +259,22 @@ public static class BakeLighting
         // Night first, Default LAST: the scene's one lighting data asset records the last bake's lights, and the scene opens (and plays) in
         // day, so the day's Baked FilmFill must be the ones recorded as baked (CheckBakedLights). The night lamps are Mixed (Baked Indirect):
         // their direct light and shadows are real time either way and their bounce is in the Night probe scenario, so they need no record.
-        foreach (var (scenario, night) in new[] { ("Night", true), ("Default", false) })
+        // the split's two draw sets: the film's house bakes with the skin's upper storey (skinUpper) and without the inside-only pieces;
+        // the upstairs the other way round (as before Oct 20). The first bake places the probes; the rest keep those positions
+        var split = Object.FindAnyObjectByType<HouseSplit>();
+        var gi0 = new Dictionary<GameObject, StaticEditorFlags>();
+        foreach (var r in (split ? split.skinUpper.Concat(split.insideOnly) : Enumerable.Empty<Renderer>()).Where(r => r)) gi0[r.gameObject] = GameObjectUtility.GetStaticEditorFlags(r.gameObject);
+        void World(bool film)
         {
+            if (!split) return;
+            foreach (var r in split.skinUpper.Where(r => r)) Contribute(r.gameObject, Contributes(r, split, film));
+            foreach (var r in split.insideOnly.Where(r => r)) Contribute(r.gameObject, !film && gi0[r.gameObject].HasFlag(StaticEditorFlags.ContributeGI));
+        }
+        bool firstBake = true;
+        foreach (var (scenario, night, film) in new[] { ("Night", true, false), ("NightFilm", true, true), ("DayFilm", false, true), ("Default", false, false) })
+        {
+            if (film && !split) continue;
+            World(film); Freeze(!firstBake); firstBake = false;
             mode.nightLayer.SetActive(night); mode.dayLayer.SetActive(!night);
             staticSky.profile = night ? nightSky : daySky;
             staticSky.staticLightingSkyUniqueID = (int)(night ? SkyType.Gradient : SkyType.PhysicallyBased);
@@ -236,6 +289,8 @@ public static class BakeLighting
             var t = System.Diagnostics.Stopwatch.StartNew();
             bool ok = Lightmapping.Bake();
             Debug.Log($"BakeLighting {scenario}: {(ok ? "done" : "FAILED")} in {t.Elapsed.TotalSeconds:F0} s");
+            if (!ok) failed = true;
+            if (film) continue;   // the film's house keeps the upstairs bake's room reflections (the last, Default, re-renders them)
             // the room probes again, now that this scenario's probe volume is baked and loaded: the images Lightmapping.Bake renders
             // see the walls without the baked FilmFill (Buzz's paper R/B 0.88 in its day probe: lit by the sky alone), and every dark
             // glossy surface showed that: Buzz's wood floor and mahogany chest read navy by day (overnight3b, Oct 18; live, a probe
@@ -257,11 +312,18 @@ public static class BakeLighting
             }
             mode.reflectionProbes = rps; if (night) mode.nightReflections = texs; else mode.dayReflections = texs;
         }
+        Freeze(false);   // the next bake places its probes afresh (its first scenario does anyway)
         Use("Default"); mode.nightLayer.SetActive(false); mode.dayLayer.SetActive(true);   // the scene opens in day
         mode.ApplyReflections(false); EditorUtility.SetDirty(mode);
         AssetDatabase.SaveAssets();
         EditorSceneManager.SaveScene(scene);
         EditorSceneManager.OpenScene(ScenePath);   // check what was saved, not what is in memory
-        failed = CheckBakedLights().Count > 0;
+        failed |= CheckBakedLights().Count > 0;
+        var set = AssetDatabase.FindAssets("t:ProbeVolumeBakingSet", new[] { "Assets/Scenes/House_WallGrid" })
+            .Select(g => AssetDatabase.LoadAssetAtPath<ProbeVolumeBakingSet>(AssetDatabase.GUIDToAssetPath(g))).FirstOrDefault();
+        var want = new[] { "Default", "Night", "DayFilm", "NightFilm" };
+        var missing = want.Where(w => set == null || !set.lightingScenarios.Contains(w)).ToList();
+        Debug.Log($"BakeLighting: scenarios {(set == null ? "none" : string.Join(", ", set.lightingScenarios))}");
+        if (missing.Count > 0) { Debug.LogError("BakeLighting FAIL: scenarios not baked: " + string.Join(", ", missing)); failed = true; }
     }
 }

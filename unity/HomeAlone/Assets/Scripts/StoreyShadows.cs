@@ -14,7 +14,9 @@ public class StoreyShadows : MonoBehaviour
     void Update()
     {
         var cam = Camera.main; if (cam == null || sun == null) return;
-        uint m = cam.transform.position.y > switchY ? upperMask : groundMask;
+        // the split's state (with its hysteresis and envelope) when there is one: outside above switchY (the zipline) is the film's house
+        bool up = HouseSplit.State >= 0 ? HouseSplit.State == 1 : cam.transform.position.y > switchY;
+        uint m = up ? upperMask : groundMask;
         if ((uint)sun.renderingLayerMask != m) sun.renderingLayerMask = (int)m;
     }
 }

@@ -78,9 +78,9 @@ public class HouseNightMode : MonoBehaviour
         night=enabled;nightLayer.SetActive(enabled);atNight=enabled;if(wbVol)wbVol.weight=enabled?1f:0f;ShadowRefresh.Forget();if(dayLayer)dayLayer.SetActive(!enabled);
         for(int i=0;i<interiorLights.Length;i++)if(interiorLights[i])interiorLights[i].enabled=enabled||daytimeEnabled[i];
         var baked=FindFirstObjectByType<FoyerBakedLighting>();if(baked)baked.Apply(enabled);
-        // baked bounce light: BakeLighting.Bake stores a "Night" scenario beside the day one ("Default")
-        var apv=UnityEngine.Rendering.ProbeReferenceVolume.instance;
-        if(apv.currentBakingSet!=null&&apv.currentBakingSet.lightingScenarios.Contains("Night"))apv.lightingScenario=enabled?"Night":"Default";
+        // baked bounce light: BakeLighting.Bake stores a "Night" scenario beside the day one ("Default"), each also without the upstairs
+        // overhang strip for the ground floor and outside ("NightFilm", "DayFilm"); HouseSplit picks the storey's
+        HouseSplit.ApplyScenario(enabled);
         ApplyReflections(enabled);
         for(int i=0;i<sunlessCasters.Length&&i<sunlessModes.Length;i++)if(sunlessCasters[i])sunlessCasters[i].shadowCastingMode=enabled?sunlessModes[i]:UnityEngine.Rendering.ShadowCastingMode.Off;
         var block=new MaterialPropertyBlock();

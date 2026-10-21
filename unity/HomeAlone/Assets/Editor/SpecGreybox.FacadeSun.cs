@@ -67,3 +67,83 @@ public static partial class SpecGreybox
                + string.Concat(ok.OrderByDescending(kv => kv.Value).Take(8).Select(kv => $"outdoor {kv.Key} ({kv.Value} rays)\n"));
     }
 }
+
+// FACADE SKY (walk note 2026-10-20 20:58, the street in overcast: the central front read dark and shadowed). DEVIATIONS 77 put Marina's
+// overhang strip (1.2-1.5 m past the film's front, both storeys of the main block) into the probe bake; outside it is hidden, but the
+// facade under it and inside it was lit by the strip's baked indoor light, which an overcast (sky-lit) day shows. BakeLighting now bakes
+// the film's house separately (DayFilm / NightFilm, used on the ground floor and outside). Points 3 cm in front of the skin's front faces
+// (main block, den and right wings; grade + 0.3 m to under the eaves, the portico's span left out), 96 cosine-weighted rays each over the
+// outward hemisphere, against each bake's GI geometry (BakeLighting.Contributes): the sky fraction seen, centre vs wings, for the
+// upstairs bake (what the outside used before Oct 20) and the film bake. A hit on an interior piece (anything outside the outdoor roots)
+// in the film bake fails: an upstairs piece (Marina's rooms, the attic, LayerOverhang) would darken the facade's baked light.
+public static partial class SpecGreybox
+{
+    static string FacadeSkyCheck()
+    {
+        var split = Object.FindObjectsByType<HouseSplit>(FindObjectsInactive.Include).FirstOrDefault();
+        if (split == null) return "Facade sky check: FAIL no HouseSplit\n";
+        var sh = JObject.Parse(File.ReadAllText(Path.Combine(RepoRoot, "spec/exterior_shell.json")));
+        float gf = (float)sh["ground_floor"], v = (float)sh["veneer"];
+        var sec = sh["sections"];
+        var faces = new List<(string name, float x, float z0, float z1, float top)>
+        {
+            ("main", (float)sh["front_main"], (float)sec["main"]["z"][0], (float)sec["main"]["z"][1], (float)sh["eave"] - 0.3f),
+            ("right wing", (float)sec["right"]["x"][1] + v, (float)sec["right"]["z"][0], (float)sec["right"]["z"][1], (float)sh["eave"] - 0.4f),
+            ("den wing", (float)sec["den"]["x"][1] + v, (float)sec["den"]["z"][0], (float)sec["den"]["z"][1], (float)sh["eave"] - 0.4f),
+        };
+        var box = new Bounds(new Vector3(17f, 4f, -9.5f), new Vector3(20f, 16f, 34f));
+        var temp = new List<Collider>(); var kind = new Dictionary<Collider, (bool up, bool film, bool inside, string path)>();
+        string PathOf(Transform t) { var s = t.name; while (t.parent != null) { t = t.parent; s = t.name + "/" + s; } return s; }
+        foreach (var mr in Object.FindObjectsByType<MeshRenderer>())
+        {
+            if (!mr.enabled || !mr.bounds.Intersects(box) || mr.GetComponent<MeshFilter>()?.sharedMesh is not Mesh mesh) continue;
+            bool up = BakeLighting.Contributes(mr, split, false), film = BakeLighting.Contributes(mr, split, true);
+            if (!up && !film) continue;
+            var p = PathOf(mr.transform);
+            var mc = mr.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = mesh; temp.Add(mc);
+            // an upstairs piece (Marina's rooms, the attic) or one tagged as the overhang: not the film's house
+            bool inside = !OutdoorRoots.Contains(p.Split('/')[0]) && (("/" + p + "/").Contains("/Upstairs/") || (mr.renderingLayerMask & LayerOverhang) != 0);
+            kind[mc] = (up, film, inside, string.Join("/", p.Split('/').Take(3)));
+        }
+        Physics.SyncTransforms();
+        var dirs = new List<Vector3>();
+        for (int k = 0; k < 96; k++)   // cosine-weighted hemisphere about +x (the front's outward normal)
+        {
+            float u = (k + 0.5f) / 96f, r = Mathf.Sqrt(u), ph = k * 2.39996323f;
+            dirs.Add(new Vector3(Mathf.Sqrt(1f - u), r * Mathf.Sin(ph), r * Mathf.Cos(ph)));
+        }
+        var res = new List<string>(); var bad = new Dictionary<string, int>(); int beforeInside = 0, totalRays = 0;
+        foreach (var f in faces)
+        {
+            double up = 0, film = 0; int n = 0;
+            for (float z = f.z0 + 0.2f; z < f.z1 - 0.2f; z += 0.4f)
+            {
+                if (f.name == "main" && z > 8.2f && z < 11.25f) continue;   // the portico (as FacadeSunCheck)
+                for (float y = gf + 0.3f; y <= f.top; y += 0.4f)
+                {
+                    n++; var o = new Vector3(f.x + 0.03f, y, -z);
+                    foreach (var d in dirs)
+                    {
+                        float nu = 99f, nf = 99f; Collider cu = null, cf = null;
+                        foreach (var h in Physics.RaycastAll(o, d, 30f, ~0, QueryTriggerInteraction.Ignore))
+                        {
+                            if (!kind.TryGetValue(h.collider, out var kd)) continue;
+                            if (kd.up && h.distance < nu) { nu = h.distance; cu = h.collider; }
+                            if (kd.film && h.distance < nf) { nf = h.distance; cf = h.collider; }
+                        }
+                        if (cu == null) up++; else if (kind[cu].inside) beforeInside++;
+                        if (cf == null) film++; else if (kind[cf].inside) bad[kind[cf].path] = bad.GetValueOrDefault(kind[cf].path) + 1;
+                    }
+                }
+            }
+            totalRays += n * dirs.Count;
+            res.Add($"{f.name} {n} pts: sky {up / (n * dirs.Count):F2} upstairs bake (before) -> {film / (n * dirs.Count):F2} film bake");
+        }
+        foreach (var c in temp) Object.DestroyImmediate(c);
+        Physics.SyncTransforms();
+        int total = totalRays;
+        return $"Facade sky check (front, cosine-weighted sky seen, per bake): {string.Join("; ", res)}; interior hits {beforeInside} before -> {bad.Values.Sum()} in the film bake\n"
+               // a residual of 0.1% of the rays (sub-centimetre envelope edges at the skin) is reported, not failed
+               + string.Concat(bad.OrderByDescending(kv => kv.Value).Take(12).Select(kv => $"{(kv.Value > total / 1000 ? "FAIL" : "residual")} facade sky: {kv.Key} in the film bake's sky over the front ({kv.Value} of {total} rays)\n"));
+    }
+}

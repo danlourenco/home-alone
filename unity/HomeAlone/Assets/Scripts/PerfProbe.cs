@@ -38,7 +38,30 @@ public class PerfProbe : MonoBehaviour
         // Oct 20 (night white balance, tools/house/night_wb.py): -perfposes hallbath,buzz,foyer,living,parents,kitchen,dining,street
         ("kitchen", new Vector3(-3.4f, -1.426f, -0.9f), 115.7f, 2.8f),    // the kitchen toward the sconces and the breakfast table (film 1051/1151's side)
         ("dining", new Vector3(7.5f, -1.5f, -8.7f), 357.2f, 12.4f),       // the dining room from the foyer doorway, the table and the French doors (film 251)
+        // Oct 20 (house split, walk note 20:56): -perfposes parentsdoor,street -perfvariants "split=rooms;weather=overcast;..."
+        ("parentsdoor", new Vector3(6.16f, 1.31f, -5.40f), 0f, -12f),    // in the parents' bedroom doorway (hall_end side, mid-wall), looking in
+        // Oct 20 (neighbourhood, SpecGreybox.Neighborhood.cs): -perfposes piers,murphys,upwindow,street (+ -perfvariants nbold for the old exterior)
+        ("piers", new Vector3(29.0f, -2.58f, -9.716f), 125f, 2f),        // between our walk piers on the sidewalk, across and down Lincoln (film-left)
+        ("murphys", new Vector3(28.68f, -2.63f, -21.96f), 67f, -1.5f),   // film 11581's solved camera (nb_film_camera.py; the player's FOV, not the film's 24.8 deg)
+        ("upwindow", new Vector3(9.6f, 1.31f, -9.716f), 90f, 4f),        // upstairs over the front door, out the front window to the Murphys
     };
+
+    // nbold (a -perfvariants key): the exterior before the neighbourhood: its root off, the WinterNeighborhood renderers it switched off
+    // (named "... [nb-off]") back on, the photo domes back at R 75 (scaled from R 320). Not exact: the old sphere-globe lamp posts are gone
+    // and the renderers the R 75 dome used to disable stay enabled (behind the dome: drawn, unseen), so "old" costs a little more than it did
+    static List<Renderer> nbOff; static GameObject nbRoot;
+    static void NbOld(bool old)
+    {
+        if (nbOff == null)
+        {
+            nbOff = Object.FindObjectsByType<Renderer>(FindObjectsInactive.Include).Where(r => r.name.EndsWith("[nb-off]")).ToList();
+            nbRoot = Object.FindObjectsByType<Transform>(FindObjectsInactive.Include).FirstOrDefault(t => t.name == "Neighborhood")?.gameObject;
+        }
+        if (nbRoot == null) return;
+        nbRoot.SetActive(!old); foreach (var r in nbOff) if (r) r.enabled = old;
+        foreach (var t in Object.FindObjectsByType<Transform>(FindObjectsInactive.Include).Where(t => t.name == "WinterBackdrop_Day" || t.name == "WinterBackdrop_Night"))
+            t.localScale = Vector3.one * (old ? 75f / 320f : 1f);
+    }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     static void AutoTour()
@@ -68,7 +91,7 @@ public class PerfProbe : MonoBehaviour
                 + $"\nmatched: {di.name}\nScreen {Screen.width}x{Screen.height} mode {Screen.fullScreenMode} currentResolution {Screen.currentResolution.width}x{Screen.currentResolution.height}"
                 + $"\nDisplay.main system {Display.main.systemWidth}x{Display.main.systemHeight} rendering {Display.main.renderingWidth}x{Display.main.renderingHeight} dpi {Screen.dpi:F0}\n");
         }
-        var fps = FindFirstObjectByType<FpsController>(); var night = FindFirstObjectByType<HouseNightMode>();
+        var fps = FindFirstObjectByType<FpsController>(); var night = FindFirstObjectByType<HouseNightMode>(); var weather = FindAnyObjectByType<HouseWeather>();
         if (fps) { fps.enabled = false; var cc = fps.GetComponent<CharacterController>(); if (cc) cc.enabled = false; }
         var cam = Camera.main.transform;
         // The VARIANT (what the run tests), from the command line:
@@ -154,6 +177,7 @@ public class PerfProbe : MonoBehaviour
         void ApplyV(bool variant, Dictionary<string, string> spec)
         {
             float F(string k) => float.Parse(spec[k], System.Globalization.CultureInfo.InvariantCulture);
+            NbOld(variant && spec != null && spec.ContainsKey("nbold"));
             shadowSet.maxShadowDistance.overrideState = spec != null && spec.ContainsKey("sundist"); if (shadowSet.maxShadowDistance.overrideState) shadowSet.maxShadowDistance.value = F("sundist");
             shadowSet.cascadeShadowSplitCount.overrideState = spec != null && spec.ContainsKey("cascades"); if (shadowSet.cascadeShadowSplitCount.overrideState) shadowSet.cascadeShadowSplitCount.value = (int)F("cascades");
             var sp = spec != null && spec.ContainsKey("splits") ? spec["splits"].Split(',').Select(x => float.Parse(x, System.Globalization.CultureInfo.InvariantCulture)).ToArray() : new float[0];
@@ -168,6 +192,12 @@ public class PerfProbe : MonoBehaviour
             int[] I(string k, int[] dflt) => spec == null ? dflt : L(k, null).Select(int.Parse).ToArray();
             // wb=T: the night interior white balance (HouseNightMode.SetWhiteBalance, not saved); when any variant sets it the base is 0
             if (variants.Any(v => v.ContainsKey("wb"))) HouseNightMode.SetWhiteBalance(S("wb") is string wbs ? float.Parse(wbs, System.Globalization.CultureInfo.InvariantCulture) : 0f, false);
+            // weather=sunny|morning|overcast (HouseWeather, O; the base is sunny when any variant sets it); split=rooms: HouseSplit's
+            // rooms-only test (before Oct 20); apv=upstairs: the upstairs bake everywhere (before Oct 20: the strip's light on the facade)
+            if (weather && variants.Any(v => v.ContainsKey("weather")))
+                weather.Apply(S("weather") switch { "overcast" => HouseWeather.State.Overcast, "morning" => HouseWeather.State.Morning, _ => HouseWeather.State.Sunny });
+            HouseSplit.LegacyRoomsOnly = S("split") == "rooms"; HouseSplit.ForceUpstairsBake = S("apv") == "upstairs";
+            HouseSplit.ApplyScenario(night && night.night);
             float rk = spec == null ? rangeK : S("range") is string rs ? float.Parse(rs, System.Globalization.CultureInfo.InvariantCulture) : 1f;
             var ns = L("noshadow", noShadow); var pf = L("lightsoff", prefixes); var pc = I("pcss", pcss); var q = I("shadowq", shq);
             var mr = spec == null ? mirrorRes : S("mirror") is string m ? new[] { mirrorRes.Length > 0 ? mirrorRes[0] : int.Parse(m), int.Parse(m) } : mirrorRes.Take(1).ToArray();
@@ -237,13 +267,20 @@ public class PerfProbe : MonoBehaviour
                 }
             }
         }
+        //   -perfextraposes "name:x,y,z,yaw,pitch;..."   camera poses added to the tour (walk-note poses; the eye, not the feet)
+        var poses = POSES.ToList();
+        foreach (var ep in (Arg("-perfextraposes") ?? "").Split(new[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries))
+        {
+            var kv = ep.Split(':'); var n = kv[1].Split(',').Select(x => float.Parse(x, System.Globalization.CultureInfo.InvariantCulture)).ToArray();
+            poses.Add((kv[0], new Vector3(n[0], n[1], n[2]), n[3], n[4]));
+        }
         foreach (var dn in new[] { false, true })
         {
             if (dnArg != null && (dnArg == "night") != dn) continue;
             Apply(0);   // night mode switches lamps: let it see the base state, then apply the variant to what it left
             if (night) night.SetNight(dn);
             if (!ab) Apply(1);
-            foreach (var (name, pos, yaw, pitch) in POSES)
+            foreach (var (name, pos, yaw, pitch) in poses)
             {
                 string tag = name + "-" + (dn ? "night" : "day");
                 if (only.Length > 0 && !only.Contains(name) && !only.Contains(tag)) continue;

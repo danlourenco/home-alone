@@ -401,6 +401,10 @@ public static partial class SpecGreybox
         report += OpeningClearCheck();   // SpecGreybox.OpeningFaces.cs: no visible mesh stands in any door, arch or window passage (walk note Oct 20 06:49)
         Step("FacadeSunCheck");
         report += FacadeSunCheck();   // SpecGreybox.FacadeSun.cs: no interior piece shades the sunlit ground-floor front (walk note Oct 20 14:16)
+        Step("SplitCheck");
+        report += SplitCheck();   // SpecGreybox.Split.cs: every upstairs doorway, wall, room and stair tread is upstairs for HouseSplit (walk note Oct 20 20:56)
+        Step("FacadeSkyCheck");
+        report += FacadeSkyCheck();   // SpecGreybox.FacadeSun.cs: no inside-only piece in the film bake's sky over the front (walk note Oct 20 20:58)
         Step("PracticesCheck");
         report += PracticesCheck();   // SpecGreybox.Practices.cs: repeats outside LODGroups, foliage MeshColliders, material instances, SRP Batcher (Oct 20)
         Step("ArchFitCheck");
@@ -1746,6 +1750,7 @@ public static partial class SpecGreybox
         Shell(ext, gy);   // SpecGreybox.Shell.cs: the house's exterior skin (after the cull above: its upper storey crosses Marina's rooms by design)
         ExteriorRealism(ext, gy);   // SpecGreybox.ExteriorRealism.cs: steps, railings, drifts, ground skirt, decals, wet road (changes/2026-10-18-exterior-realism.json)
         FrontDrive(ext, gy);        // SpecGreybox.FrontDrive.cs: the U-drive, the walk piers and wing walls, the garage fence (changes/2026-10-19-front-drive.json)
+        Neighborhood(ext, gy);      // SpecGreybox.Neighborhood.cs: Lincoln Ave, the Murphys and the kit neighbourhood (off unless HA_NEIGHBORHOOD=1)
     }
 
     // The GLB's garage and driveway (registered with the site): triangles of a GLB renderer whose registered centroid lies in the
@@ -1841,7 +1846,14 @@ public static partial class SpecGreybox
             ("MARV (street -> left side -> areaway -> basement door -> basement -> stair -> Kevin's door -> kitchen)", marv),
             ("FRONT WALK (street -> walk -> steps -> stoop at the front door; the door is shut by design)", W(34.0f, -4.30f, 9.716f, 20.0f, -4.30f, 9.716f, 14.5f, -4.30f, 9.716f, 10.65f, -3.09f, 9.716f)),
             ("BACK DOOR (yard -> step -> stoop -> through the open back door -> kitchen, and back out)", W(-8.5f, -3.39f, 2.5f, -7.3f, -3.39f, 2.5f, -5.75f, -3.127f, 2.5f, -4.75f, -2.996f, 2.5f, -3.9f, -2.996f, 2.3f)),
-        };
+        }.Concat(System.Environment.GetEnvironmentVariable("HA_NEIGHBORHOOD") != "1" ? new List<(string, List<Vector3>)>() : new List<(string, List<Vector3>)> {
+            // the neighbourhood (SpecGreybox.Neighborhood.cs; levels: tools/house/nb_street.py, rel gy -2.996 here): Tier 2 is walkable
+            ("LINCOLN (our sidewalk at the walk -> down the kerb -> across Lincoln -> up the Murphys' drive cut -> B sidewalk -> the Murphys' walk to their steps)",
+             W(29.6f, -4.18f, 9.716f, 35.5f, -4.30f, 6.0f, 40.5f, -4.30f, 3.65f, 43.5f, -4.18f, 3.65f, 45.4f, -4.18f, 3.65f, 45.4f, -4.18f, 12.2f, 57.4f, -4.166f, 12.2f)),
+            ("OUR SIDEWALK (the walk -> along Lincoln to the walk boundary's snow pile past our lot, then back past the U-drive and Marley's to the pile at his far line)", W(29.6f, -4.18f, 9.716f, 29.6f, -4.18f, -4.6f, 29.6f, -4.18f, 47.5f)),
+            ("B SIDEWALK (along the Murphys' side, pile to pile)", W(45.4f, -4.18f, -4.6f, 45.4f, -4.18f, 47.5f)),
+            ("MARLEY (our sidewalk -> his walk -> up his stone steps into the recessed entry)", W(29.6f, -4.18f, 41.65f, 14.6f, -4.30f, 41.65f, 12.4f, -3.43f, 41.65f, 11.2f, -3.43f, 41.65f)),
+        }).ToList();
     }
 
     const float SunShadowDistance = 80f;   // docs/PERFORMANCE.md BUDGET static-sun-distance; unity_practices.py shadowbudget reads it here

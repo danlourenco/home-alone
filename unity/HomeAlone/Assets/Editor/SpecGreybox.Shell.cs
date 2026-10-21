@@ -154,8 +154,16 @@ public static partial class SpecGreybox
         starts.Add(pts.Count);
         float ax0 = (float)A["x"][0], ax1 = (float)A["x"][1], az0 = (float)A["z"][0], az1 = (float)A["z"][1];
         pts.AddRange(new[] { new Vector2(ax0, -az0), new Vector2(ax1, -az0), new Vector2(ax1, -az1), new Vector2(ax0, -az1) });
+        int roomPolys = starts.Count;
+        // the rest of the storey (walk note Oct 20 20:56, the parents' doorway): the upstairs floor plate's rectangles, walls and thresholds
+        // included, so a doorway or a wall's thickness is upstairs too (SplitCheck)
+        foreach (var f in geo["upstairs"]["floor"].Concat(geo["upstairs"]["walls"]))   // the walls too: those round the stair well stand off the plate
+        {
+            float fx0 = (float)f["x"][0], fx1 = (float)f["x"][1], fz0 = (float)f["z"][0], fz1 = (float)f["z"][1];
+            starts.Add(pts.Count); pts.AddRange(new[] { new Vector2(fx0, -fz0), new Vector2(fx1, -fz0), new Vector2(fx1, -fz1), new Vector2(fx0, -fz1) });
+        }
         var split = new GameObject("HouseSplit").AddComponent<HouseSplit>(); split.transform.SetParent(holder.transform, false);
-        split.skinUpper = upper.ToArray(); split.insideOnly = inside.ToArray(); split.rooms = pts.ToArray(); split.roomStarts = starts.ToArray();
+        split.skinUpper = upper.ToArray(); split.insideOnly = inside.ToArray(); split.rooms = pts.ToArray(); split.roomStarts = starts.ToArray(); split.roomPolys = roomPolys;
         split.switchY = gy + 2.326f + 0.9f;   // StoreyShadows' switch: the eye 0.9 m over the main stair's landing
         Debug.Log($"Shell: {g.GetComponentsInChildren<MeshRenderer>().Length} skin parts ({upper.Count} upper), {ShellGlow.Count} shades; " +
                   $"{inside.Count} upstairs/attic renderers drawn only upstairs: {string.Join(", ", inside.Take(40).Select(r => r.name))}{(inside.Count > 40 ? " ..." : "")}");
