@@ -1,0 +1,22 @@
+Lamp split check: 12 lamps in Marina's upstairs outside the skin, 12 not dark from outside; 9 unshadowed lamps inside the house reaching an outside renderer
+FAIL lamp outside the skin: FilmFill_attic_stair at (6.55, 6.18, -15.03)
+FAIL lamp outside the skin: FilmFill_attic_room at (3.56, 6.03, -9.67)
+FAIL lamp outside the skin: AtticBulb_stair_head at (6.56, 4.70, -16.57)
+FAIL lamp outside the skin: KevinLamp_banker at (11.42, 1.02, -7.21)
+FAIL lamp outside the skin: BathLamp_hall_sconce1 at (11.15, 2.01, -11.26)
+FAIL lamp outside the skin: FilmFill_parents_bath at (1.38, 2.48, -1.62)
+FAIL lamp outside the skin: FilmFill_attic_room at (6.56, 6.03, -15.04)
+FAIL lamp outside the skin: BathLamp_hall_sconce0 at (10.75, 2.01, -11.26)
+FAIL lamp outside the skin: FilmFill_attic_room at (6.56, 6.03, -9.67)
+FAIL lamp outside the skin: FilmFill_attic_room at (6.56, 6.03, -7.33)
+FAIL lamp outside the skin: Light_parents_bath at (1.94, 2.20, -2.81)
+FAIL lamp outside the skin: BathLamp_parents_bar at (1.01, 1.88, -1.07)
+FAIL lamp through the wall: BasementWindowDay_Light at (-4.56, -4.03, -3.49) (range 4.0) reaches LampGlass
+FAIL lamp through the wall: BasementWindowDay_Light at (2.18, -4.03, -12.40) (range 4.0) reaches L_Brick
+FAIL lamp through the wall: LivingTreeGlow_1.5 at (3.02, -1.53, -15.12) (range 7.0) reaches XmasBulbs_Yard
+FAIL lamp through the wall: BasementWindowDay_Light at (9.53, -4.03, -13.40) (range 4.0) reaches P3_topiary_ball0_scan
+FAIL lamp through the wall: BasementFurnaceFire_Light at (3.00, -5.26, -11.80) (range 4.0) reaches L_Brick
+FAIL lamp through the wall: LivingTreeGlow_0.8 at (3.02, -2.23, -15.12) (range 7.0) reaches XmasBulbs_Yard
+FAIL lamp through the wall: BasementWindowDay_Light at (9.53, -4.03, -5.00) (range 4.0) reaches Bed_Lower
+FAIL lamp through the wall: BuzzLamp_tank at (7.63, 1.20, -14.97) (range 1.5) reaches L_Brick
+FAIL lamp through the wall: BasementWindowDay_Light at (5.80, -4.03, 0.32) (range 4.0) reaches object256

@@ -331,9 +331,14 @@ public static class BakeLighting
         var split = Object.FindAnyObjectByType<HouseSplit>();
         var gi0 = new Dictionary<GameObject, StaticEditorFlags>();
         foreach (var r in (split ? split.skinUpper.Concat(split.insideOnly) : Enumerable.Empty<Renderer>()).Where(r => r)) gi0[r.gameObject] = GameObjectUtility.GetStaticEditorFlags(r.gameObject);
+        // (not the Baked film fill: CheckBakedLights needs it recorded as baked by the last, DayFilm, bake)
+        var lit0 = split ? split.insideLights.Where(l => l && l.lightmapBakeType != LightmapBakeType.Baked).ToDictionary(l => l, l => l.enabled) : new Dictionary<Light, bool>();
         void World(bool film)
         {
             if (!split) return;
+            // Marina's lamps outside the skin (HouseSplit.insideLights) are not in the film's house: out of its bakes (Oct 21, the night glow:
+            // the hall bath's sconces in front of the film's upper wall lit its cornice and brick in NightFilm's probes)
+            foreach (var kv in lit0) kv.Key.enabled = !film && kv.Value;
             foreach (var r in split.skinUpper.Where(r => r)) Contribute(r.gameObject, Contributes(r, split, film));
             foreach (var r in split.insideOnly.Where(r => r)) Contribute(r.gameObject, !film && gi0[r.gameObject].HasFlag(StaticEditorFlags.ContributeGI));
         }

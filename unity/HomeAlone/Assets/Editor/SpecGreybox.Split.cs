@@ -4,6 +4,7 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 
 // SPLIT CHECK (walk note 2026-10-20 20:56, standing in the parents' bedroom doorway: "if i stop at just the right time... weird
 // artifacts": the exterior roof, gutter and icicles inside the room and its ceiling gone). HouseSplit tested the camera against the
@@ -99,6 +100,63 @@ public static partial class SpecGreybox
     // outside the film front and stayed drawn from outside. Every house renderer above the ground storey (not the exterior, not the skin,
     // not shadows-only) with a bounds point more than 5 cm outside the skin (SpecGreybox.Shell's InSkin) must be in HouseSplit.insideOnly
     // (hidden from outside). Before/after in one build: ShellOutsideBefore = what the old Upstairs-only scan missed.
+    // LAMP SPLIT (Oct 21, user at night from the street: "why is there a glow along the second floor to the left of the middle window? is
+    // there light leaking through from the inside?"; isolated: probe lighting off removes it, the live lamps off do not; the hall bath's
+    // sconces at x 10.75 / 11.15 stand in Marina's strip, in front of the film's upper wall, and their light was baked into the film's
+    // night probes). Every lamp above the ground storey standing outside the skin but inside the upstairs envelope is Marina's only:
+    // HouseSplit.insideLights (dark while the film's house is drawn, out of the film bakes). AssignInsideLights fills it; the check
+    // fails a build where such a lamp is not in it, or where an unshadowed lamp inside the house reaches an outside renderer it lights.
+    // Standalone on a saved scene (no build; the before): -executeMethod SpecGreybox.LampSplitCheckScene (Library/LampSplitCheck.txt).
+    static List<Light> StripLamps(HouseSplit hs, System.Func<Vector3, bool> inSkin)
+    {
+        float gy = hs.switchY - 2.326f - 0.9f; var ext = GameObject.Find("Exterior");
+        return Object.FindObjectsByType<Light>(FindObjectsInactive.Include)
+            .Where(l => l.type != LightType.Directional && !(ext != null && l.transform.IsChildOf(ext.transform)))
+            .Where(l => { var p = l.transform.position; return p.y > gy + 2.75f && !inSkin(p) && hs.Upstairs(p); }).ToList();
+    }
+    public static void AssignInsideLights()
+    {
+        var hs = Object.FindObjectsByType<HouseSplit>(FindObjectsInactive.Include).FirstOrDefault(); if (hs == null) return;
+        var inSkin = ShellInSkin ?? SkinTest(); var ext = GameObject.Find("Exterior");
+        hs.insideLights = StripLamps(hs, inSkin).ToArray();
+        // an unshadowed lamp inside the house lights only inside renderers (LayerApvInside, which every renderer off LayerOutside carries:
+        // BakeLighting.ApvLayers, run here too): it reached the outside brick and yard bulbs through the walls (Buzz's tank lamp, the
+        // living-room tree glow, the basement window lights)
+        BakeLighting.ApvLayers(); int relayered = 0;
+        foreach (var l in Object.FindObjectsByType<Light>(FindObjectsInactive.Include))
+            if (l.type != LightType.Directional && l.shadows == LightShadows.None && !(ext != null && l.transform.IsChildOf(ext.transform)) && inSkin(l.transform.position)
+                && l.TryGetComponent<HDAdditionalLightData>(out var hd)) { hd.lightlayersMask = (UnityEngine.Rendering.HighDefinition.RenderingLayerMask)LayerApvInside; relayered++; }
+        Debug.Log($"Lamp split: {hs.insideLights.Length} lamps in Marina's upstairs outside the skin ({string.Join(", ", hs.insideLights.Select(l => l.name))}); {relayered} unshadowed lamps inside the house light only inside renderers");
+    }
+    public static void LampSplitCheckScene()
+    {
+        EditorSceneManager.OpenScene("Assets/Scenes/House_WallGrid.unity", OpenSceneMode.Single);
+        var r = LampSplitCheck(); File.WriteAllText("Library/LampSplitCheck.txt", r); Debug.Log(r);
+    }
+    static string LampSplitCheck()
+    {
+        var hs = Object.FindObjectsByType<HouseSplit>(FindObjectsInactive.Include).FirstOrDefault();
+        if (hs == null) return "Lamp split check: FAIL no HouseSplit\n";
+        var inSkin = ShellInSkin ?? SkinTest(); var ext = GameObject.Find("Exterior");
+        var strip = StripLamps(hs, inSkin); var listed = new HashSet<Light>(hs.insideLights ?? new Light[0]);
+        var miss = strip.Where(l => !listed.Contains(l)).ToList();
+        // an unshadowed lamp inside the house lights through its walls: any outside renderer in its range on one of its light layers
+        var outs = Object.FindObjectsByType<MeshRenderer>(FindObjectsInactive.Include).Where(r => (r.renderingLayerMask & LayerOutside) != 0 && r.enabled).ToList();
+        var leak = new List<string>();
+        foreach (var l in Object.FindObjectsByType<Light>(FindObjectsInactive.Include))
+        {
+            if (l.type == LightType.Directional || l.shadows != LightShadows.None || listed.Contains(l) || (ext != null && l.transform.IsChildOf(ext.transform))) continue;
+            var p = l.transform.position; if (!inSkin(p)) continue;   // outside lamps (porch, shrubs, lanterns) are meant to light outside
+            uint ll = l.TryGetComponent<HDAdditionalLightData>(out var hd) ? (uint)hd.lightlayersMask : 1u;
+            var hit = outs.FirstOrDefault(r => (r.renderingLayerMask & ll) != 0 && (r.bounds.ClosestPoint(p) - p).sqrMagnitude < l.range * l.range);
+            if (hit != null) leak.Add($"{l.name} at {p:F2} (range {l.range:F1}) reaches {hit.name}");
+        }
+        var line = $"Lamp split check: {strip.Count} lamps in Marina's upstairs outside the skin, {miss.Count} not dark from outside; {leak.Count} unshadowed lamps inside the house reaching an outside renderer\n";
+        foreach (var l in miss) line += $"FAIL lamp outside the skin: {l.name} at {l.transform.position:F2}\n";
+        foreach (var s in leak.Take(20)) line += $"FAIL lamp through the wall: {s}\n";
+        return line;
+    }
+
     public static System.Func<Vector3, bool> ShellInSkin;
     public static readonly List<string> ShellOutsideBefore = new List<string>();
     static string SplitDrawnOutsideCheck(HouseSplit hs)

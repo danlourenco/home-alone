@@ -300,6 +300,10 @@ public class PerfProbe : MonoBehaviour
             ShadowRefresh.MaxPerFrame = variant && q.Length == 2 ? q[0] : shq0; ShadowRefresh.Interval = variant && q.Length == 2 ? q[1] : shq1;
             foreach (var kv in switchedOff) kv.Key.enabled = kv.Value; switchedOff.Clear();
             if (variant) foreach (var (l, _) in lamps) if (pf.Any(p => l.name.StartsWith(p))) { switchedOff[l] = l.enabled; l.enabled = false; }
+            // lightsbox=x0,x1,y0,y1,z0,z1: lamps standing in that world box off (Oct 21, the night glow under the upper cornice)
+            var lb = S("lightsbox") is string lbs ? lbs.Split(',').Select(v => float.Parse(v, System.Globalization.CultureInfo.InvariantCulture)).ToArray() : null;
+            if (variant && lb != null && lb.Length == 6)
+                foreach (var (l, _) in lamps) { var o = l.transform.position; if (o.x > lb[0] && o.x < lb[1] && o.y > lb[2] && o.y < lb[3] && o.z > lb[4] && o.z < lb[5] && !switchedOff.ContainsKey(l)) { switchedOff[l] = l.enabled; l.enabled = false; } }
             if (hd != null)
             {
                 foreach (var kv in offUsed) { hd.renderingPathCustomFrameSettings.SetEnabled(kv.Key, kv.Value.on); hd.renderingPathCustomFrameSettingsOverrideMask.mask[(uint)kv.Key] = kv.Value.masked; }
@@ -337,6 +341,18 @@ public class PerfProbe : MonoBehaviour
                     string t = ab ? tag + "-" + step : tag;
                     yield return Sample(t, ab ? 150 : 300, dir);
                     if (step == "" || step.EndsWith(rounds.ToString())) { ScreenCapture.CaptureScreenshot(Path.Combine(dir, t + ".png")); yield return null; yield return null; }
+                    // -perflights x,y,z,r: every lamp within r of that point (enabled, range, shadows, volumetric, light layers, path)
+                    if ((step == "" || step == "A1") && Arg("-perflights") is string plq)
+                    {
+                        var q4 = plq.Split(',').Select(v => float.Parse(v, System.Globalization.CultureInfo.InvariantCulture)).ToArray(); var c4 = new Vector3(q4[0], q4[1], q4[2]);
+                        var sbl = new System.Text.StringBuilder();
+                        foreach (var l in FindObjectsByType<Light>(FindObjectsInactive.Include).Where(l => l.type != LightType.Directional && (l.transform.position - c4).magnitude < q4[3]).OrderBy(l => (l.transform.position - c4).magnitude))
+                        {
+                            var lh = l.GetComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalLightData>(); var path = l.name; for (var t2 = l.transform.parent; t2; t2 = t2.parent) path = t2.name + "/" + path;
+                            sbl.AppendLine($"{path} at {l.transform.position:F2} active {l.gameObject.activeInHierarchy} enabled {l.enabled} {l.intensity:F0} {l.lightUnit} range {l.range:F2} shadows {l.shadows} volumetric {(lh ? lh.affectsVolumetric : false)} lightLayers {(lh ? lh.lightlayersMask.ToString() : "-")} mask {l.renderingLayerMask}");
+                        }
+                        File.WriteAllText(Path.Combine(dir, t + "-lights.txt"), sbl.ToString());
+                    }
                     if (dn && (step == "" || step.EndsWith(rounds.ToString()))) VehicleProbe.Report(Path.Combine(dir, t + "-vehicles.txt"), Camera.main);   // what lit (or flooded) the frame
                 }
             }

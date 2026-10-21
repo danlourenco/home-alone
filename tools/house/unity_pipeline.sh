@@ -90,6 +90,7 @@ build)
   grep -E "^(Split drawn-outside|FAIL split drawn outside)" "$REPO/spec/captures/walk-test-wallgrid.txt" || true
   # walk note 2026-10-21T06:45:32: an upstairs piece drawn outside the film's front from outside fails the build (SpecGreybox.Split.cs)
   if grep -q "^FAIL split drawn outside" "$REPO/spec/captures/walk-test-wallgrid.txt"; then echo "split drawn-outside gate FAILED" >&2; exit 1; fi
+  if grep -q "^FAIL lamp " "$REPO/spec/captures/walk-test-wallgrid.txt"; then grep -m5 "^FAIL lamp " "$REPO/spec/captures/walk-test-wallgrid.txt"; echo "lamp split gate FAILED (SpecGreybox.LampSplitCheck)" >&2; exit 1; fi
   [ "${q:-0}" = 0 ] || { echo "quality gate FAILED (model_quality.py)" >&2; exit 1; };;
 bake)
   # the windowed bake opens the scratch project: no HDRP wizard popping up each time (a user-local editor preference)

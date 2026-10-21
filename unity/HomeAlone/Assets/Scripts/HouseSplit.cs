@@ -20,6 +20,10 @@ public class HouseSplit : MonoBehaviour
 {
     public Renderer[] skinUpper = new Renderer[0];   // the skin's upper storey, main roofs, dormers, chimney, portico
     public Renderer[] insideOnly = new Renderer[0];  // upstairs/attic pieces reaching outside the skin
+    // lamps standing in Marina's upstairs outside the skin (Oct 21, user: "a glow along the second floor ... light leaking from the
+    // inside?": the hall bath's sconces stand 0.4-0.8 m in front of the film's upper wall). Dimmed to 0 while the film's house is drawn
+    // (dimmers, not enabled: HouseNightMode switches lamps on and off); out of the film bakes (BakeLighting); SpecGreybox.LampSplitCheck
+    public Light[] insideLights = new Light[0];
     public float switchY;
     public Vector2[] rooms = new Vector2[0];         // envelope polygons (world x, z), concatenated: rooms first, then floor plate and attic
     public int[] roomStarts = new int[0];
@@ -72,6 +76,9 @@ public class HouseSplit : MonoBehaviour
         state = s; State = s;
         foreach (var r in skinUpper) if (r) r.enabled = s != 1;
         foreach (var r in insideOnly) if (r) r.enabled = s != 0;
+        foreach (var l in insideLights)
+            if (l && l.TryGetComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalLightData>(out var hd))
+            { float d = s != 0 ? 1f : 0f; hd.lightDimmer = d; hd.volumetricDimmer = d; hd.shadowDimmer = d; }
     }
 
     public void ApplyFor(Vector3 p) => Set(Upstairs(p) ? 1 : 0);

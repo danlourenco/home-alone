@@ -402,6 +402,8 @@ public static partial class SpecGreybox
         Step("FacadeSunCheck");
         report += FacadeSunCheck();   // SpecGreybox.FacadeSun.cs: no interior piece shades the sunlit ground-floor front (walk note Oct 20 14:16)
         Step("SplitCheck");
+        AssignInsideLights();   // SpecGreybox.Split.cs: Marina's lamps outside the skin dark from outside (Oct 21, the night glow)
+        report += LampSplitCheck();
         report += SplitCheck();   // SpecGreybox.Split.cs: every upstairs doorway, wall, room and stair tread is upstairs for HouseSplit (walk note Oct 20 20:56)
         Step("FacadeSkyCheck");
         report += FacadeSkyCheck();   // SpecGreybox.FacadeSun.cs: no inside-only piece in the film bake's sky over the front (walk note Oct 20 20:58)

@@ -16,6 +16,27 @@ using Object = UnityEngine.Object;
 // Upstairs and attic pieces that reach outside the skin (Marina's overhang strip, the attic's knee walls and roof) are drawn only upstairs.
 public static partial class SpecGreybox
 {
+    // inside the skin: within a skin solid (the walls' plan rectangle, 5 cm grown, under its roof, 10 cm over it); world coordinates
+    public static System.Func<Vector3, bool> SkinTest(JObject S = null)
+    {
+        S ??= JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/exterior_shell.json"))));
+        var solids = S["roofs"].Where(q => (string)q["kind"] != "box" && q["walls"].Count() == 4).ToList();
+        return w =>
+        {
+            float x = w.x, z = -w.z, y = w.y;
+            foreach (var q in solids)
+            {
+                float w0 = (float)q["walls"][0] - 0.05f, w1 = (float)q["walls"][1] + 0.05f, w2 = (float)q["walls"][2] - 0.05f, w3 = (float)q["walls"][3] + 0.05f;
+                if (x < w0 || x > w1 || z < w2 || z > w3) continue;
+                float e = (float)q["eave"], t = (float)q["tan"], top;
+                if ((string)q["kind"] == "lean") top = e + t * (x - (float)q["x"][0]);
+                else top = e + t * Mathf.Min(Mathf.Min(x - (float)q["x"][0], (float)q["x"][1] - x), Mathf.Min(z - (float)q["z"][0], (float)q["z"][1] - z));
+                if (y < top + 0.10f) return true;
+            }
+            return false;
+        };
+    }
+
     static readonly List<Renderer> ShellGlow = new List<Renderer>();   // the upper sashes' drawn shades: lit at night (HouseNightMode)
     static readonly List<Light> ShellLights = new List<Light>();       // porch lantern, lamp posts: moved into the night layer (Daylight)
     static Material XmasBulb() => XmasBulb("HiFi_XmasBulb", new Color(1f, 0.78f, 0.50f), 2500f);
@@ -113,21 +134,7 @@ public static partial class SpecGreybox
         if (pl != null) ShellLights.Add(NightLight(holder, "PorchLantern", new Vector3((float)pl["x"], (float)pl["y"], -(float)pl["z"]), 60f, 4.5f));
         // the inside-only set: upstairs/attic renderers (under Upstairs, above the ground storey) with any of 125 bounds points outside every
         // skin solid (the walls' plan rectangle under its roof), more than 5 cm
-        var solids = S["roofs"].Where(q => (string)q["kind"] != "box" && q["walls"].Count() == 4).ToList();
-        bool InSkin(Vector3 w)
-        {
-            float x = w.x, z = -w.z, y = w.y;
-            foreach (var q in solids)
-            {
-                float w0 = (float)q["walls"][0] - 0.05f, w1 = (float)q["walls"][1] + 0.05f, w2 = (float)q["walls"][2] - 0.05f, w3 = (float)q["walls"][3] + 0.05f;
-                if (x < w0 || x > w1 || z < w2 || z > w3) continue;
-                float e = (float)q["eave"], t = (float)q["tan"], top;
-                if ((string)q["kind"] == "lean") top = e + t * (x - (float)q["x"][0]);
-                else top = e + t * Mathf.Min(Mathf.Min(x - (float)q["x"][0], (float)q["x"][1] - x), Mathf.Min(z - (float)q["z"][0], (float)q["z"][1] - z));
-                if (y < top + 0.10f) return true;
-            }
-            return false;
-        }
+        var InSkin = SkinTest(S);
         // Every house renderer, not just those under Upstairs (walk note 2026-10-21T06:45:32 from the piers: "i can see where the upstairs
         // rooms protrude": the upstairs rooms' baseboards are built under Ground/Trim and stood 0.8-1.3 m outside the film front, drawn
         // from outside as white ledges over the ground windows). ShellOutsideBefore keeps the old Upstairs-only scan's misses for
