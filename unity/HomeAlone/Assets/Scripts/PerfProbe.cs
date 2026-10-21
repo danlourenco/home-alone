@@ -65,6 +65,26 @@ public class PerfProbe : MonoBehaviour
             t.localScale = Vector3.one * (old ? 75f / 320f : 1f);
     }
 
+    // APV leak tuning (walk note 2026-10-21T06:45:32, the grey-violet centre brick: the APV leaks dark, cool light onto the facade):
+    // apvnb=F normal bias, apvvb=F view bias, apvleak=none|perf|quality, apvmin=F min valid dot product, apvnoise=F sampling noise,
+    // apvscale=1 scale the biases with the min probe distance. Applied to every global volume's ProbeVolumesOptions (the build's own
+    // values restored for the base)
+    static readonly Dictionary<UnityEngine.Rendering.ProbeVolumesOptions, (float nb, float vb, UnityEngine.Rendering.APVLeakReductionMode lr, float min, float noise, bool sc)> apv0 = new();
+    static void ApvOptions(System.Func<string, string> S)
+    {
+        float P(string v) => float.Parse(v, System.Globalization.CultureInfo.InvariantCulture);
+        foreach (var vol in Object.FindObjectsByType<UnityEngine.Rendering.Volume>(FindObjectsInactive.Include))
+        {
+            var prof = vol.sharedProfile; if (prof == null || !prof.TryGet<UnityEngine.Rendering.ProbeVolumesOptions>(out var o)) continue;
+            if (!apv0.ContainsKey(o)) apv0[o] = (o.normalBias.value, o.viewBias.value, o.leakReductionMode.value, o.minValidDotProductValue.value, o.samplingNoise.value, o.scaleBiasWithMinProbeDistance.value);
+            var b = apv0[o];
+            o.normalBias.Override(S("apvnb") is string a1 ? P(a1) : b.nb); o.viewBias.Override(S("apvvb") is string a2 ? P(a2) : b.vb);
+            o.leakReductionMode.Override(S("apvleak") switch { "none" => UnityEngine.Rendering.APVLeakReductionMode.None, "perf" => UnityEngine.Rendering.APVLeakReductionMode.Performance, "quality" => UnityEngine.Rendering.APVLeakReductionMode.Quality, _ => b.lr });
+            o.minValidDotProductValue.Override(S("apvmin") is string a3 ? P(a3) : b.min); o.samplingNoise.Override(S("apvnoise") is string a4 ? P(a4) : b.noise);
+            o.scaleBiasWithMinProbeDistance.Override(S("apvscale") is string a5 ? a5 == "1" : b.sc);
+        }
+    }
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     static void AutoTour()
     {
@@ -201,6 +221,7 @@ public class PerfProbe : MonoBehaviour
                 weather.Apply(S("weather") switch { "overcast" => HouseWeather.State.Overcast, "morning" => HouseWeather.State.Morning, _ => HouseWeather.State.Sunny });
             HouseSplit.LegacyRoomsOnly = S("split") == "rooms"; HouseSplit.ForceUpstairsBake = S("apv") == "upstairs";
             HouseSplit.ApplyScenario(night && night.night);
+            ApvOptions(S);
             float rk = spec == null ? rangeK : S("range") is string rs ? float.Parse(rs, System.Globalization.CultureInfo.InvariantCulture) : 1f;
             var ns = L("noshadow", noShadow); var pf = L("lightsoff", prefixes); var pc = I("pcss", pcss); var q = I("shadowq", shq);
             var mr = spec == null ? mirrorRes : S("mirror") is string m ? new[] { mirrorRes.Length > 0 ? mirrorRes[0] : int.Parse(m), int.Parse(m) } : mirrorRes.Take(1).ToArray();
