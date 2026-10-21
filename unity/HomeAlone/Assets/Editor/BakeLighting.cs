@@ -48,6 +48,12 @@ public static class BakeLighting
 
     static bool failed;
 
+    // APV probe classes (bits of the baking set's rendering layer masks, ApvLayers): 0 Exterior (renderers on LayerOutside), 1 Interior
+    // (LayerApvInside, set on every other renderer here)
+    const int ApvExterior = 1, ApvInterior = 2;
+    const float ExteriorMargin = 2.5f;
+    const uint NotLighting = SpecGreybox.LayerOutside | SpecGreybox.LayerApvInside;   // the class bits, beside a renderer's lighting layers
+
     // what a bake of one side of the split takes as GI geometry (Steps' rules, then the split's draw sets): the upstairs bake (film false)
     // has the inside-only pieces and not the skin's upper storey, the film's house (film true) the other way round. FacadeSkyCheck uses it
     public static bool Contributes(Renderer r, HouseSplit split, bool film)
@@ -58,7 +64,7 @@ public static class BakeLighting
         // Marina's strip as SpecGreybox.FilmFront tagged it: its shadows-only envelope and the upstairs baseboards too (not in insideOnly,
         // which takes drawn pieces only; FacadeSkyCheck, first integration build: 12577 + 809 rays over the front)
         if (film && (r.renderingLayerMask & SpecGreybox.LayerOverhang) != 0) return false;
-        return (r.renderingLayerMask & ~SpecGreybox.LayerOutside) != SpecGreybox.LayerFilmFront;
+        return (r.renderingLayerMask & ~NotLighting) != SpecGreybox.LayerFilmFront;
     }
     // glass passes light (see Steps)
     static bool Clear(Renderer r) => r.sharedMaterials.Any(m => m != null && m.HasProperty("_SurfaceType") && m.GetFloat("_SurfaceType") > 0.5f);
@@ -121,6 +127,44 @@ public static class BakeLighting
         if (CheckBakedLights().Count > 0 && Application.isBatchMode) EditorApplication.Exit(1);
     }
 
+    // APV rendering layers (Oct 21, brick-upstairs): the baking set bakes two probe classes, and a renderer reads only the probes of the
+    // classes its rendering layers name (Unity 6 Adaptive Probe Volumes > Rendering Layer Masks; ProbeVolume.hlsl LoadValidityMask). Outside
+    // renderers carry LayerOutside already (SpecGreybox.Backdrop, Neighborhood, VehiclePrefabs); every other renderer gets LayerApvInside,
+    // a bit no light or decal uses, so no lighting changes. A renderer on neither reads both (the shader's fallback): runtime-made pieces.
+    // Returns the failure lines (a renderer on both classes reads both and the split is lost for it)
+    public static List<string> ApvLayers()
+    {
+        var bad = new List<string>(); int ins = 0, outs = 0;
+        foreach (var r in Object.FindObjectsByType<Renderer>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            if ((r.renderingLayerMask & SpecGreybox.LayerOutside) == 0) { if ((r.renderingLayerMask & SpecGreybox.LayerApvInside) == 0) { r.renderingLayerMask |= SpecGreybox.LayerApvInside; EditorUtility.SetDirty(r); } ins++; }
+            else if ((r.renderingLayerMask & SpecGreybox.LayerApvInside) != 0) bad.Add("  on both probe classes: " + r.name);
+            else outs++;
+        }
+        var set = AssetDatabase.FindAssets("t:ProbeVolumeBakingSet", new[] { "Assets/Scenes/House_WallGrid" })
+            .Select(g => AssetDatabase.LoadAssetAtPath<ProbeVolumeBakingSet>(AssetDatabase.GUIDToAssetPath(g))).FirstOrDefault();
+        if (set == null) bad.Add("  no baking set to give the probe classes (bake once without them, then again)");
+        else
+        {
+            // ProbeVolumeBakingSet.useRenderingLayers / renderingLayerMasks (ProbeLayerMask[]) are internal: the baking set inspector's fields
+            const System.Reflection.BindingFlags F = System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance;
+            var t = typeof(ProbeVolumeBakingSet); var mt = t.GetNestedType("ProbeLayerMask", System.Reflection.BindingFlags.NonPublic);
+            var use = t.GetField("useRenderingLayers", F); var masks = t.GetField("renderingLayerMasks", F);
+            if (mt == null || use == null || masks == null) throw new System.MissingFieldException("ProbeVolumeBakingSet rendering layer fields (SRP core changed)");
+            var arr = System.Array.CreateInstance(mt, 2);
+            foreach (var (i, name, bits) in new[] { (0, "Exterior", SpecGreybox.LayerOutside), (1, "Interior", SpecGreybox.LayerApvInside) })
+            {
+                object m = System.Activator.CreateInstance(mt);
+                mt.GetField("name").SetValue(m, name); mt.GetField("mask").SetValue(m, (UnityEngine.RenderingLayerMask)bits);
+                arr.SetValue(m, i);
+            }
+            use.SetValue(set, true); masks.SetValue(set, arr); EditorUtility.SetDirty(set);
+        }
+        Debug.Log($"BakeLighting: APV probe classes: {outs} renderers read Exterior, {ins} Interior, {bad.Count} problems");
+        foreach (var b in bad) Debug.LogError("BakeLighting FAIL:" + b);
+        return bad;
+    }
+
     static IEnumerator Steps()
     {
         failed = false;
@@ -143,20 +187,22 @@ public static class BakeLighting
             // probe cell had no valid probe left (the strip's last column beside the outside air) showed the raw outdoor light: bright
             // dithered bands by day and dark ones by night along the front rooms' walls and ceilings (walk note 18:10, Buzz; Kevin's room).
             // Checked: the ground floor's front rooms read the same (spec/captures/buzz2/lighting/)
-            bool overhang = (r.renderingLayerMask & ~SpecGreybox.LayerOutside) == SpecGreybox.LayerFilmFront;   // the exterior skin's upper storey too (SpecGreybox.Shell; the backdrop adds LayerOutside)
+            bool overhang = (r.renderingLayerMask & ~NotLighting) == SpecGreybox.LayerFilmFront;   // the exterior skin's upper storey too (SpecGreybox.Shell; the backdrop adds LayerOutside)
             var flags = GameObjectUtility.GetStaticEditorFlags(r.gameObject);
             GameObjectUtility.SetStaticEditorFlags(r.gameObject, clear || overhang ? flags & ~StaticEditorFlags.ContributeGI : flags | StaticEditorFlags.ContributeGI);
             r.receiveGI = ReceiveGI.LightProbes;
             if (isOut || !r.enabled) continue;
             if (first) { house = r.bounds; first = false; } else house.Encapsulate(r.bounds);
         }
+        failed |= ApvLayers().Count > 0;
         foreach (var l in Object.FindObjectsByType<Light>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             if (!l.name.StartsWith("FilmFill") && l.name != "Moonlight") l.lightmapBakeType = LightmapBakeType.Mixed;   // the film's fill is baked only; the backdrop's moon lights the yard only (real time)
 
         // probes cover the house only (a global volume would stretch over the 200 m snow plane)
         var old = GameObject.Find("HouseProbeVolume"); if (old) Object.DestroyImmediate(old);
         var pv = new GameObject("HouseProbeVolume").AddComponent<ProbeVolume>();
-        pv.mode = ProbeVolume.Mode.Local; pv.transform.position = house.center; pv.size = house.size + Vector3.one;
+        // ExteriorMargin past the rooms on every side: outdoor probes for the front's brick, porch and beds (ApvLayers)
+        pv.mode = ProbeVolume.Mode.Local; pv.transform.position = house.center; pv.size = house.size + new Vector3(2 * ExteriorMargin, 1f, 2 * ExteriorMargin);
 
         // a baked reflection probe in every room, sized to it (spec/geometry.json): with none, glossy surfaces reflect the default sky
         // (a swing door in the dining room read as sky, Oct 16; blue floors before).
@@ -196,48 +242,66 @@ public static class BakeLighting
         var daySky = AssetDatabase.LoadAssetAtPath<VolumeProfile>("Assets/Settings/GreyboxVolume.asset");
         var nightSky = AssetDatabase.LoadAssetAtPath<VolumeProfile>("Assets/Settings/NightSky.asset");
 
-        // probes only inside the rooms: every probe outside a room's volume (above the ceilings, in the walls and floors, outdoors) is
-        // invalidated. At 1 m spacing a layer of probes sat above every 2.4 m ceiling in sunlit air and the top of each room blended
-        // toward it (user note 11:16: a bright band along the ceilings). The invalid region is the probe volume less the rooms
-        // (SpecGreybox.EnvelopeRooms), on the grid of the rooms' own corners, merged into boxes.
+        // probes inside the house only where a room is: every probe in the film's house outside a room's volume (above the ceilings, in
+        // the walls and floors) is invalidated. At 1 m spacing a layer of probes sat above every 2.4 m ceiling in sunlit air and the top of
+        // each room blended toward it (user note 11:16: a bright band along the ceilings). Grid of the rooms' own corners, merged into boxes.
+        // APV rendering layers (Oct 21, brick-upstairs: with the outdoor probes invalid the front's brick read the rooms behind it, the upper
+        // storey Marina's dark upstairs): the probes OUTSIDE the film's house now stay valid and are classed Exterior, the rooms' Interior,
+        // Marina's strip past the film's front both (outdoors in DayFilm/NightFilm, her rooms in Default/Night; probe classes are shared by
+        // all four scenarios, so they are set here, not left to the bake's ray count in whichever world baked last). Renderers read only
+        // their class (ApvLayers): outside renderers carry LayerOutside, inside ones LayerApvInside.
         foreach (var o in Object.FindObjectsByType<ProbeAdjustmentVolume>(FindObjectsSortMode.None)) Object.DestroyImmediate(o.gameObject);
         var vb = new Bounds(pv.transform.position, pv.size);
         var gx = rooms.SelectMany(r => r.pts.Select(v => v.x)).Append(vb.min.x).Append(vb.max.x).Distinct().OrderBy(v => v).ToList();
         var gz = rooms.SelectMany(r => r.pts.Select(v => v.y)).Append(vb.min.z).Append(vb.max.z).Distinct().OrderBy(v => v).ToList();
         var gyv = rooms.SelectMany(r => new[] { r.y0, r.y1 }).Append(vb.min.y).Append(vb.max.y).Distinct().OrderBy(v => v).ToList();
-        var adj = new GameObject("ProbeInvalidation"); int boxes = 0;
+        int nx = gx.Count - 1, nz = gz.Count - 1;
+        Vector2 Mid(int i, int k) => new Vector2((gx[i] + gx[i + 1]) / 2, (gz[k] + gz[k + 1]) / 2);
+        // the film's house in plan: the ground floor's rooms (the skin stands on their outer faces and goes straight up, DEVIATIONS 97),
+        // closed along rows and columns so the walls between rooms are in it
+        float gy0 = (float)geo["ground"]["floor_y"];
+        var ground = rooms.Where(r => Mathf.Abs(r.y0 - gy0) < 0.01f).ToList();
+        var gin = new bool[nx, nz]; for (int i = 0; i < nx; i++) for (int k = 0; k < nz; k++) gin[i, k] = ground.Any(r => SpecGreybox.Inside(r.pts, Mid(i, k)));
+        var filmHouse = new bool[nx, nz];
+        for (int i = 0; i < nx; i++) for (int k = 0; k < nz; k++)
+        {
+            bool l = false, rr = false, d = false, u = false;
+            for (int j = 0; j <= i; j++) l |= gin[j, k]; for (int j = i; j < nx; j++) rr |= gin[j, k];
+            for (int j = 0; j <= k; j++) d |= gin[i, j]; for (int j = k; j < nz; j++) u |= gin[i, j];
+            filmHouse[i, k] = l && rr && d && u;
+        }
+        var adj = new GameObject("ProbeInvalidation"); var counts = new int[4];
         for (int iy = 0; iy + 1 < gyv.Count; iy++)
         {
             float ym = (gyv[iy] + gyv[iy + 1]) / 2;
             var live = rooms.Where(r => r.y0 < ym && r.y1 > ym).ToList();
-            var runs = new Dictionary<(int, int), int>();   // (x0 index, x1 index) -> first z index of an open box with that run
-            void Emit(int a, int b, int k0, int k1)
+            // 0 invalidate (in the film's house, not in a room), 1 exterior, 2 interior, 3 both (Marina's strip)
+            int Cls(int i, int k) { bool room = live.Any(r => SpecGreybox.Inside(r.pts, Mid(i, k))); return room ? (filmHouse[i, k] ? ApvInterior : ApvInterior | ApvExterior) : filmHouse[i, k] ? 0 : ApvExterior; }
+            var runs = new Dictionary<(int, int, int), int>();   // (x0 index, x1 index, class) -> first z index of an open box with that run
+            void Emit(int a, int b, int c, int k0, int k1)
             {
                 var lo = new Vector3(gx[a], gyv[iy], gz[k0]); var hi = new Vector3(gx[b], gyv[iy + 1], gz[k1]);
-                var g = new GameObject("Invalidate"); g.transform.SetParent(adj.transform); g.transform.position = (lo + hi) / 2;
-                var v = g.AddComponent<ProbeAdjustmentVolume>(); v.shape = ProbeAdjustmentVolume.Shape.Box; v.mode = ProbeAdjustmentVolume.Mode.InvalidateProbes;
-                v.size = Vector3.Max(hi - lo - Vector3.one * 0.04f, Vector3.one * 0.01f);   // 2 cm shy of every face: a probe on a room's boundary stays
-                boxes++;
+                var g = new GameObject(c == 0 ? "Invalidate" : "ProbeClass" + c); g.transform.SetParent(adj.transform); g.transform.position = (lo + hi) / 2;
+                var v = g.AddComponent<ProbeAdjustmentVolume>(); v.shape = ProbeAdjustmentVolume.Shape.Box;
+                if (c == 0) v.mode = ProbeAdjustmentVolume.Mode.InvalidateProbes;
+                else { v.mode = ProbeAdjustmentVolume.Mode.OverrideRenderingLayerMask; v.renderingLayerMaskOperation = ProbeAdjustmentVolume.RenderingLayerMaskOperation.Override; v.renderingLayerMask = (byte)c; }
+                // 2 cm shy of every face (a probe on a room's boundary stays valid), the room classes 2 cm proud (that probe is the room's)
+                v.size = Vector3.Max(hi - lo + Vector3.one * ((c & ApvInterior) != 0 ? 0.04f : -0.04f), Vector3.one * 0.01f);
+                counts[c]++;
             }
-            for (int k = 0; k + 1 <= gz.Count; k++)
+            for (int k = 0; k <= nz; k++)
             {
-                var row = new List<(int, int)>();
-                if (k + 1 < gz.Count)
+                var row = new List<(int, int, int)>();
+                if (k < nz)
                 {
-                    float zm = (gz[k] + gz[k + 1]) / 2; int start = -1;
-                    for (int i = 0; i + 1 < gx.Count; i++)
-                    {
-                        bool open = !live.Any(r => SpecGreybox.Inside(r.pts, new Vector2((gx[i] + gx[i + 1]) / 2, zm)));
-                        if (open && start < 0) start = i;
-                        if (!open && start >= 0) { row.Add((start, i)); start = -1; }
-                    }
-                    if (start >= 0) row.Add((start, gx.Count - 1));
+                    var c = Enumerable.Range(0, nx).Select(i => Cls(i, k)).ToArray();
+                    for (int i = 0, start = 0; i < nx; i++) if (i + 1 == nx || c[i + 1] != c[start]) { row.Add((start, i + 1, c[start])); start = i + 1; }
                 }
-                foreach (var key in runs.Keys.Where(q => !row.Contains(q)).ToList()) { Emit(key.Item1, key.Item2, runs[key], k); runs.Remove(key); }
+                foreach (var key in runs.Keys.Where(q => !row.Contains(q)).ToList()) { Emit(key.Item1, key.Item2, key.Item3, runs[key], k); runs.Remove(key); }
                 foreach (var q in row) if (!runs.ContainsKey(q)) runs[q] = k;
             }
         }
-        Debug.Log($"BakeLighting: {boxes} probe invalidation boxes outside the rooms");
+        Debug.Log($"BakeLighting: {counts[0]} probe invalidation boxes in the house outside the rooms; probe classes: {counts[1]} exterior, {counts[2]} interior, {counts[3]} both (Marina's strip) boxes");
 
         var ls = new LightingSettings { bakedGI = true, realtimeGI = false, lightmapper = LightingSettings.Lightmapper.ProgressiveGPU,
             mixedBakeMode = MixedLightingMode.IndirectOnly, maxBounces = 4, directSampleCount = 32, indirectSampleCount = 256 };

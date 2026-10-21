@@ -96,7 +96,7 @@ bake)
   sed -i '' 's/m_WizardPopupAtStart: 1/m_WizardPopupAtStart: 0/' "$S/UserSettings/HDRPUserSettings.asset" 2>/dev/null || true
   rsync -a "$P/Assets/Editor/" "$S/Assets/Editor/"   # the bake runs the repo's BakeLighting, not the last build's copy (overnight3b: a bake-only fix never ran)
   bx=0; "$UNITY" -projectPath "$S" -executeMethod BakeLighting.Bake -logFile "$ROOT/bake.log" || bx=$?   # windowed; exits when done
-  grep -E "BakeLighting [DN]|Baked lights|Realtime lights|xception" "$ROOT/bake.log" || true   # display only; the checks below decide
+  grep -E "BakeLighting [DN]|Baked lights|Realtime lights|probe classes|xception" "$ROOT/bake.log" || true   # display only; the checks below decide
   # every authored-Baked light must be recorded as baked in the saved scene (BakeLighting.CheckBakedLights; the FilmFill bug, Oct 17)
   if grep -q "BakeLighting FAIL" "$ROOT/bake.log" || ! grep -q "^Baked lights:" "$ROOT/bake.log"; then grep -m5 "BakeLighting FAIL" "$ROOT/bake.log"; echo "bake FAILED the baked-lights check" >&2; exit 1; fi
   [ $bx = 0 ] || { echo "bake: Unity exited $bx" >&2; exit $bx; };;

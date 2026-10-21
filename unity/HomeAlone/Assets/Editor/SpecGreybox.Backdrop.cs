@@ -16,6 +16,7 @@ public static partial class SpecGreybox
     public static float DomeRadius = 75f, DomeDayNits = 9000f, DomeClearNits = 9000f, DomeNightNits = 600f, CardNightNits = 300f, MoonLux = 30f, DomeYawU = 0.55f;
     static readonly Vector3 DomeCentreXZ = new Vector3(3f, 0f, -8f);   // the house's middle (front x 10.3, back -5; z +4 .. -20)
     public const uint LayerOutside = 8;   // the exterior's own rendering layer (the moon lights only it)
+    public const uint LayerApvInside = 256;   // inside renderers' APV probe class (BakeLighting.ApvLayers); no light or decal uses bit 8
     const string BackdropDir = "Assets/Textures/Backdrop";
 
     public static void WindowBackdrop(GameObject dayLayer, GameObject nightLayer, float gy)

@@ -31,11 +31,12 @@
    "title": "Front brick: upstairs darker than downstairs",
    "status": "running",
    "date": "Oct 21",
-   "what": "Your catch: in every tile with the stored bounce light on, the upstairs brick is darker; with it off (row 3, left) the storeys match. Likely the split: the front wall's upper storey picks up light from Marina's bigger, dark upstairs behind it. View bias 0.8 (row 2, right) fixes the colour but not the upstairs, so it is not shipping. Next: probe layers, so outside walls read only outside light, plus a check that fails today and passes after.",
+   "when": "Prepared, not built. Next: one full build + bake (about 40 min, Mac busy) after your perf test, on the coordinator's go.",
+   "what": "Your catch, now measured: tools/house/brick_storeys.py compares the upstairs brick with the ground-floor brick at your 06:45 spot (gate: within 5%). NB8 fails every tile: overcast upstairs 0.71 of downstairs in the centre, 0.78 at the left wing; night 0.63 in the centre; sunny 0.95. Cause: every probe outside the rooms is switched off, so the front wall takes its stored light from the rooms behind it, and upstairs that is Marina's bigger, dark upstairs. Fix prepared (BakeLighting): probes outside the film's house stay on and are tagged Exterior, rooms Interior, Marina's strip both; outside walls read only Exterior probes, room surfaces only Interior ones (Unity 6 probe rendering layers), so rooms should not change. Caveat: with the stored light off entirely the upstairs is still 0.81-0.85 of downstairs on our tile (film 6399: 0.94-1.10), so something besides the probes may remain.",
    "look": [
-    "Compare the upstairs band of brick with the ground-floor band in each tile.",
-    "Row 3, left (stored light off): the storeys match. That is the target.",
-    "Rows 4-5: the foyer and living room must not change."
+    "Until the build: nothing new. The sheet below is the before.",
+    "After: upstairs and downstairs brick the same red as in film 6399, by day and at night.",
+    "Foyer and living room at night must look unchanged."
    ],
    "images": [
     {"src": "spec/captures/views/front-0645/apv-tuning-sheet.jpg", "caption": "Film 6399 | before | setting variants at your 06:45 spot, overcast; then foyer and living at night"}
