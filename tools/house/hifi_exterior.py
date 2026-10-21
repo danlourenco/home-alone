@@ -25,7 +25,7 @@ if "--render" not in sys.argv:   # the faces come from the generator (shapely, o
     subprocess.run(["uv", "run", "-q", "--with", "numpy", "--with", "shapely", "python", "-I", str(ROOT / "tools/house/exterior_shell.py")], check=True)
 parts = json.loads((ROOT / "sfm-work/exterior/shell.json").read_text())
 COL = {"EX_Brick": ((0.36, 0.12, 0.08), 0.9), "EX_Trim": ((0.90, 0.89, 0.85), 0.5), "EX_Shutter": ((0.03, 0.035, 0.035), 0.6),
-       "EX_Roof": ((0.11, 0.095, 0.09), 0.9), "EX_Glass": ((0.10, 0.12, 0.14), 0.05), "EX_Shade": ((0.86, 0.82, 0.70), 0.9), "EX_Sheer": ((0.70, 0.69, 0.66), 0.25),
+       "EX_Roof": ((0.11, 0.095, 0.09), 0.9), "EX_Glass": ((0.10, 0.12, 0.14), 0.05), "EX_GlassLit": ((0.10, 0.12, 0.14), 0.05), "EX_Shade": ((0.86, 0.82, 0.70), 0.9), "EX_Sheer": ((0.70, 0.69, 0.66), 0.25),
        "EX_Stone": ((0.78, 0.74, 0.66), 0.8), "EX_Gutter": ((0.88, 0.88, 0.86), 0.4), "EX_Pot": ((0.55, 0.28, 0.18), 0.8),
        "EX_DoorBlack": ((0.025, 0.03, 0.03), 0.35), "EX_Brass": ((0.75, 0.56, 0.25), 0.3), "EX_Wreath": ((0.08, 0.20, 0.08), 0.9),
        "EX_Bow": ((0.55, 0.04, 0.04), 0.6), "EX_PorchGlass": ((0.55, 0.62, 0.65), 0.05),

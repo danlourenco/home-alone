@@ -456,7 +456,9 @@ def lean(name, axis, hi_d, lo_d, a0, a1, over, y_hi, y_lo_eave, layer, ends=(Tru
 def sash_unit(face_axis, d, s, a0, a1, y0, y1, layer, recess=0.07, rows=(3, 3), cols=2, shade=True, sheer=False):
     """A double-hung unit set 'recess' behind the brick face d (outward s): white frame, two sashes with muntins, dark glass and a
     drawn shade behind (glows at night, SpecGreybox.Shell adds it to the night mode's glow list)."""
-    T = part("Sash", "EX_Trim", layer); Gl = part("Glass", "EX_Glass", layer); Sh = part("Shade", "EX_Shade", layer)
+    # the upper storey's glass is lit at night (Oct 21, user: "shouldn't the lights upstairs appear on from the outside at night?"): the
+    # skin's glass is opaque, so the drawn shade behind it never showed, and Marina's rooms are hidden from outside (house-split rule 4)
+    T = part("Sash", "EX_Trim", layer); Gl = part("GlassLit", "EX_GlassLit", layer) if layer == "U" else part("Glass", "EX_Glass", layer); Sh = part("Shade", "EX_Shade", layer)
     if sheer: Gl, shade = part("Sheer", "EX_Sheer", layer), False   # a sealed room behind: sheers behind glossy glass fill the panes (glow at night)
     df = d - s * recess
     fw = 0.055
@@ -602,7 +604,7 @@ def dormer(zc, xface, s, roof_h, layer, w=1.50, win=(0.62, 1.06), casement=False
         face(R, [(xo, ye + 0.05, ze), (xo, yp + 0.13, zc), (xb, yp + 0.13, zc), (xb, ye + 0.05, ze)], (0, 1, 0))
         face(R, [(xo, ye + 0.05 - 0.04, ze), (xo, yp + 0.09, zc), (xb, yp + 0.09, zc), (xb, ye + 0.05 - 0.04, ze)], (0, -1, 0))
     if casement:   # the zipline dormer: a pair of 3-lite casements open outward (film 10950)
-        Tr = part("Casement", "EX_Trim", layer); Gl = part("Glass", "EX_Glass", layer)
+        Tr = part("Casement", "EX_Trim", layer); Gl = part("GlassLit", "EX_GlassLit", layer) if layer == "U" else part("Glass", "EX_Glass", layer)
         lw = win[0] / 2
         for sg in (-1, 1):
             hz = zc + sg * win[0] / 2

@@ -434,9 +434,9 @@
    "mat": "EX_Trim",
    "faces": 1950
   },
-  "U_Glass": {
+  "U_GlassLit": {
    "layer": "U",
-   "mat": "EX_Glass",
+   "mat": "EX_GlassLit",
    "faces": 43
   },
   "U_Shade": {

@@ -36,6 +36,7 @@ of one house showing, lighting or being baked into the other. Read the ledger be
 | `Facade sun` / `Facade sky` gates | the skin's own lighting |
 | `ProbeDump.Probes` (batch editor) | what the baked probes actually hold in front of each storey |
 | `xmas_lights_check.py` | the window loops and bulbs against 5545 |
+| `tools/house/window_glow.py RUN/front6399-night-A1.png` | every film window lit and warm at night, against 5545 (rule 4) |
 
 ## Diagnose before fixing (the ledger, Oct 20-21)
 - **Doorway artifacts** (roof, gutter, icicles inside the parents' room): the switch used the camera's floor height only -> storey
@@ -46,7 +47,12 @@ of one house showing, lighting or being baked into the other. Read the ledger be
 - **Upstairs brick darker than downstairs** (three fixes missed: view bias, probe layers, bake order): the strip's shadows-only Envelope
   still counted in the film bakes and boxed in the probes in front of the upper wall. Found only by reading the probes (`ProbeDump`), not
   by shading tweaks -> rule 3 + the Contributes assert.
-- **Dark upstairs windows from the street**: hiding Marina's rooms left nothing lit behind the film's glass -> rule 4.
+- **Dark upstairs windows from the street**: hiding Marina's rooms left nothing lit behind the film's glass, AND the skin's glass is
+  opaque, so the "drawn shades" modelled behind it (exterior_shell.sash_unit) never showed at all -> rule 4: the upper sashes and dormers
+  get their own glass (EX_GlassLit, night-only warm emission, black to GI); check `tools/house/window_glow.py` (per window lum vs the
+  frame's brightest ground window, and R/B, against film 5545; NB10: 11 FAIL).
+- **Cool-white sunroom windows at night**: the sunroom's sheer emission was its neutral grey base colour (R/B 0.99) -> warm emission,
+  base kept for the day (window_glow.py ground).
 
 Pattern: when a split symptom survives two fixes, stop and measure the state directly (probe dump, renderer census, lamp list per
 pass) instead of a third tweak. Every new split bug adds a row here and a check that fails before its fix.

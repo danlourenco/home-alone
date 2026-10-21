@@ -37,6 +37,7 @@ public static partial class SpecGreybox
         };
     }
 
+    public const float WindowGlowNits = 45f;   // the film's lit upper windows at night (window_glow.py against film 5545)
     static readonly List<Renderer> ShellGlow = new List<Renderer>();   // the upper sashes' drawn shades: lit at night (HouseNightMode)
     static readonly List<Light> ShellLights = new List<Light>();       // porch lantern, lamp posts: moved into the night layer (Daylight)
     static Material XmasBulb() => XmasBulb("HiFi_XmasBulb", new Color(1f, 0.78f, 0.50f), 2500f);
@@ -92,6 +93,17 @@ public static partial class SpecGreybox
         // read flat against the white sashes), lit at night (film 10)
         var sheer = AtticGlow("HiFi_SheerExterior", new Color(0.70f, 0.69f, 0.66f), 55f, 0.75f);
         var glass = Mat("HiFi_ExtGlass", new Color(0.035f, 0.045f, 0.055f)); glass.SetFloat("_Smoothness", 0.93f);
+        // the lit room behind the film's upper glass (house-split rule 4; Oct 21, user: "shouldn't the lights upstairs appear on from
+        // the outside at night?"): the skin's glass is opaque (its drawn shades never showed) and Marina's rooms are hidden from outside,
+        // so every upper sash and dormer pane glows warm at night, emission only (ShellGlow: black by day, so the day look is the plain
+        // glass). Film 5545: upstairs panes ~0.9 x the ground floor's brightest, R/B ~1.15 (tools/house/window_glow.py). 45 nits: the
+        // sunroom's 55-nit sheers read 94/255 at front6399 night. Not in any bake (emissive is black to GI)
+        var glassLit = Mat("HiFi_ExtGlassLit", new Color(0.035f, 0.045f, 0.055f)); glassLit.SetFloat("_Smoothness", 0.93f);
+        glassLit.SetColor("_EmissiveColor", new Color(1f, 0.80f, 0.58f) * WindowGlowNits);
+        UnityEditor.Rendering.HighDefinition.HDShaderUtils.ResetMaterialKeywords(glassLit); glassLit.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
+        // the sunroom's sheers glowed neutral grey (R/B 0.99, cool white beside the warm rooms): warm emission, the base colour kept for the day
+        sheer.SetColor("_EmissiveColor", new Color(1f, 0.80f, 0.58f) * 55f); sheer.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
+        shade.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
         var g = PlaceHiFi(holder, 0f, "Exterior", new Dictionary<string, Material> {
             // realism pass (Oct 18; changes/2026-10-18-exterior-realism.json): PBR sets on the skin's own metric UVs (hifi_exterior.py) with
             // parallax height on the brick (recessed mortar) and the shingles (rows level on every hip)
@@ -104,7 +116,7 @@ public static partial class SpecGreybox
             ["EX_Wire"] = Mat("HiFi_ExtWire", new Color(0.012f, 0.025f, 0.012f)),
             ["EX_BulbWarm"] = XmasBulb("HiFi_XmasBulbWarm", new Color(1f, 0.66f, 0.38f), 2000f),   // 2400-3000 K spread (film 10's warm white)
             ["EX_BulbDim"] = XmasBulb("HiFi_XmasBulbDim", new Color(0.95f, 0.60f, 0.34f), 700f),
-            ["EX_Glass"] = glass, ["EX_Shade"] = shade, ["EX_Sheer"] = sheer,
+            ["EX_Glass"] = glass, ["EX_GlassLit"] = glassLit, ["EX_Shade"] = shade, ["EX_Sheer"] = sheer,
             ["EX_Stone"] = UVMat("HiFi_ExtStonePBR", "concrete_floor_01_x", new Color(1.0f, 0.95f, 0.85f), 1.0f, 0.35f, 0f, 0.6f),
             ["EX_Gutter"] = Mat("HiFi_ExtGutter", new Color(0.84f, 0.84f, 0.82f)),
             ["EX_Pot"] = Mat("HiFi_ExtPot", new Color(0.50f, 0.25f, 0.16f)),
@@ -126,7 +138,7 @@ public static partial class SpecGreybox
             bool tiny = r.sharedMaterial.name.StartsWith("HiFi_ExtWire") || r.sharedMaterial.name.StartsWith("HiFi_ExtIce");   // strands, icicles: no shadow maps (perf)
             r.shadowCastingMode = r.sharedMaterial == shade || r.sharedMaterial == sheer || r.sharedMaterial == mGlass || lit || tiny ? ShadowCastingMode.Off : ShadowCastingMode.TwoSided;
             if (u) upper.Add(r);
-            if (r.sharedMaterial == shade || r.sharedMaterial == sheer || lit) ShellGlow.Add(r);   // Christmas lights and the porch lantern: dark by day
+            if (r.sharedMaterial == shade || r.sharedMaterial == sheer || r.sharedMaterial == glassLit || lit) ShellGlow.Add(r);   // Christmas lights and the porch lantern: dark by day
         }
         FrontEntrance(holder, mGlass);
         DoorLamps(holder);
