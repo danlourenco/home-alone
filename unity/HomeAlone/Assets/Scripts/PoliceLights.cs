@@ -21,13 +21,13 @@ public class PoliceLights : MonoBehaviour
     // Defaults = spec/vehicles.json kinds.Car_CapricePolice.police_lights (VehiclePrefabs copies the spec in; the maths is there).
     // Build 8 (6000 nits, 2500 lm, 14 m, volumetric on) bloomed into magenta and cyan fog balls over the whole Murphys scene.
     [Tooltip("Peak emission of a lamp whose beam faces the camera, nits")]
-    public float beaconNits = 1500f, flasherNits = 1100f;
-    [Range(0f, 1f)] public float idle = 0.04f;
+    public float beaconNits = 120f, flasherNits = 90f;   // the Oct 21 sweep vs film 11581 (spec/vehicles.json police_lights.sweep_oct21)
+    [Range(0f, 1f)] public float idle = 0.03f;
     [Tooltip("Reflector turns per minute (a MARS 888 ~ 80-90 flashes/min)")]
     public float rpm = 84f;
     [Tooltip("Beam tightness: the higher, the shorter the flash as the beam passes the viewer")]
     public float beamPower = 6f;
-    public float washLumens = 300f, washRange = 7f;
+    public float washLumens = 120f, washRange = 6f;
     [Range(0f, 1f)] public float washFloor = 0.2f;
     [Tooltip("The wash lights in the volumetric fog: off (build 8's fog balls)")]
     public bool washVolumetric = false;
