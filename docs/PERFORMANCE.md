@@ -243,3 +243,36 @@ foyer night 36.0 -> 37.6 -> 31.8; living day 12.4 -> 8.8 -> 8.4; living night 17
 spec/captures/perf/resolution-100-75-67.jpg). Verdict: only the pixel-bound rooms (living) gain; the heavy poses get SLOWER (STP's fixed
 cost) because their cost does not scale with pixels: shadow-map rendering and geometry. Not shipped; the heavy poses need geometry/shadow
 work (lamp ranges per room, fewer shadowed lamps, cheaper transparents), not a lower resolution.
+
+## Full screen 5K + render scale (Oct 20, late; user: "even better in full screen on my Studio Display, but noticeably slower")
+**Shipped now:** HDRP.asset dynamic resolution ON (hardware, STP, mip bias, 33-100%); `Scripts/RenderScale.cs` drives it with a
+percentage scaler (`DynamicResolutionHandler.SetDynamicResScaler`, ReturnsPercentage) and opts the main camera in below 100% (at 100%
+the camera renders exactly as before: no STP pass). **P** cycles 100/75/50/38% while walking (on-screen value, saved in PlayerPrefs
+`RenderScale`). Fresh-install default: `RenderScale.Default` = **50** (change the constant and rebuild, `HA_REUSE=1 perf_probe.sh build`;
+a saved P choice wins over it). The old clone-only `-perfDynRes` build flag is gone.
+
+**Tour** (`runs/fs5k-scale`, `spec/captures/perf/runs/fs5k-scale`): `HA_DISPLAY="Studio Display" HA_PERF_ARGS='-perfab -perfrounds 1
+-perfposes street-day,foyer,hall-night,living-night,kitchen-night -perfvariants scale=75;scale=50;scale=38' perf_probe.sh run fs5k-scale`.
+`HA_DISPLAY` reads the display's native pixels from system_profiler; PerfProbe `-perfdisplay` moves the window there and goes
+FullScreenWindow. display.txt: Studio Display matched, **backbuffer 5120x2880** (Screen, currentResolution, Metal surface; not the
+2560x1440 "looks like" size). Every sample focused. Editor closed, Caffeine on. (A first run while the screen was locked had 11 of 24
+samples unfocused: discarded.) Internal sizes measured (ScalableBufferManager): 100% 5120x2880, 75% 3840x2160, 50% 2560x1440,
+38% 2048x1152 (the hardware scaler rounds 38 to 40%).
+
+| pose | 100% (native) | 75% | 50% | 38% |
+|---|---|---|---|---|
+| street day | 14.5 fps (69.0 ms) | 15.1 (66.2) | 19.6 (51.1) | 21.4 (46.8) |
+| foyer day | 11.9 (84.3) | 13.7 (72.9) | 19.0 (52.7) | 21.0 (47.6) |
+| foyer night | 6.4 (155.5) | 8.8 (113.2) | 14.1 (70.9) | 17.0 (58.8) |
+| hall night | 6.7 (148.8) | 10.2 (98.2) | 18.0 (55.6) | 23.7 (42.2) |
+| living night | 9.7 (103.1) | 14.9 (67.3) | 27.6 (36.2) | 36.8 (27.2) |
+| kitchen night | 8.8 (114.1) | 10.9 (91.6) | 16.7 (60.0) | 18.8 (53.3) |
+
+Sheet: `spec/captures/perf/fullscreen-5k-scale-100-75-50-38.jpg` (each tile: the frame, a red box, and that box at 1:1 pixels).
+Look: 75 and 50 are hard to tell from native at 1:1; STP also anti-aliases (native has no AA: the fascia and window edges stair-step);
+38 is a little softer on wallpaper. Image difference 0.7-3.5. Night white balance holds at every scale (frame R/B within 0.6%, e.g.
+kitchen 2.852 / 2.867 / 2.870 / 2.872). **Verdict: 50% default** (about 2x native fps at night, 1.4-1.6x by day, no visible loss).
+Unlike the 1080p A/B above, 5K full screen IS pixel-bound. Still far from 60 fps: 50% at 5K (2560x1440 internal) costs ~25 ms more
+than the 1920x1080 window's native frame (foyer night 71 vs 34 ms): STP's 5K output and everything after it (post, UI) runs at 5K.
+Next levers: STP injection point after post (`STPInjectionPoint` in HDRP.asset; post at the internal size), or full screen at the
+display's "looks like" 2560x1440 size.

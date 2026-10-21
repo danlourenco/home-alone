@@ -47,11 +47,26 @@ public class PerfProbe : MonoBehaviour
         var g = new GameObject("PerfProbeTour"); DontDestroyOnLoad(g); var p = g.AddComponent<PerfProbe>(); p.StartCoroutine(p.Tour(a[i + 1]));
     }
 
+    static string Arg0(string k) { var a = System.Environment.GetCommandLineArgs(); int i = System.Array.IndexOf(a, k); return i >= 0 && i + 1 < a.Length ? a[i + 1] : null; }
+
     IEnumerator Tour(string dir)
     {
         Directory.CreateDirectory(dir);
         QualitySettings.vSyncCount = 0; Application.targetFrameRate = -1;
         yield return new WaitForSeconds(3f);   // let the scene settle (APV streaming, shaders)
+        // -perfdisplay NAME (perf_probe.sh HA_DISPLAY): full screen on that display (DisplayInfo name, e.g. "Studio Display") at the size
+        // given by -screen-width/-height (the display's native pixels, detected by perf_probe.sh). display.txt records what the player got
+        if (Arg0("-perfdisplay") is string dispName)
+        {
+            var layout = new List<DisplayInfo>(); Screen.GetDisplayLayout(layout);
+            var di = layout.FirstOrDefault(x => x.name.Contains(dispName));
+            if (di.name != null) { yield return Screen.MoveMainWindowTo(in di, Vector2Int.zero); yield return new WaitForSeconds(1f); }
+            int sw = int.Parse(Arg0("-screen-width") ?? di.width.ToString()), sh = int.Parse(Arg0("-screen-height") ?? di.height.ToString());
+            Screen.SetResolution(sw, sh, FullScreenMode.FullScreenWindow); yield return new WaitForSeconds(3f);
+            File.WriteAllText(Path.Combine(dir, "display.txt"), $"requested {dispName} {sw}x{sh}\nlayout: " + string.Join("; ", layout.Select(x => $"{x.name} {x.width}x{x.height} @{x.refreshRate.value:F0}Hz"))
+                + $"\nmatched: {di.name}\nScreen {Screen.width}x{Screen.height} mode {Screen.fullScreenMode} currentResolution {Screen.currentResolution.width}x{Screen.currentResolution.height}"
+                + $"\nDisplay.main system {Display.main.systemWidth}x{Display.main.systemHeight} rendering {Display.main.renderingWidth}x{Display.main.renderingHeight} dpi {Screen.dpi:F0}\n");
+        }
         var fps = FindFirstObjectByType<FpsController>(); var night = FindFirstObjectByType<HouseNightMode>();
         if (fps) { fps.enabled = false; var cc = fps.GetComponent<CharacterController>(); if (cc) cc.enabled = false; }
         var cam = Camera.main.transform;
@@ -87,12 +102,13 @@ public class PerfProbe : MonoBehaviour
         bool legacyShadows = System.Array.IndexOf(args, "-perfshadowlegacy") >= 0;
         var shq = (Arg("-perfshadowq") ?? "").Split(',').Where(v => v.Length > 0).Select(int.Parse).ToArray();
         int shq0 = ShadowRefresh.MaxPerFrame, shq1 = ShadowRefresh.Interval;
-        var only = (Arg("-perfposes") ?? "").Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);   // -perfposes foyer,hall: just those
+        var only = (Arg("-perfposes") ?? "").Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);   // -perfposes foyer,hall,street-day: just those (a pose, or one of its day/night)
         var switchedOff = new Dictionary<Light, bool>();   // lamp -> its state before the variant (night mode switches lamps too)
         //   -perfvariants "sundist=80;sundist=60 splits=0.05,0.15,0.3;nocast=props"   several variants B, C, D ... (with -perfab: every pose
         //                         sampled A1 B1 C1 .. A2 B2 C2 ..). Keys: sundist=M (sun shadow max distance), splits=a,b,c (cascade
         //                         splits), cascades=N, nocast=props|interior|exterior (those renderers stop casting shadows: an
-        //                         attribution of the day shadow cost, not a look), wb=T (night interior white balance, base 0).
+        //                         attribution of the day shadow cost, not a look), wb=T (night interior white balance, base 0), scale=P (render
+        //                         scale %, STP; base 100 = native).
         //                         Without it the knobs above are the one variant B.
         //   -perfdn day|night     just day or night
         var variants = (Arg("-perfvariants") ?? "").Split(new[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries)
@@ -146,13 +162,9 @@ public class PerfProbe : MonoBehaviour
             }
             if (mirror && mr.Length > 0)
                 mirror.settingsRaw.resolutionScalable.@override = (UnityEngine.Rendering.HighDefinition.PlanarReflectionAtlasResolution)(variant && mr.Length > 1 ? mr[1] : mr[0]);
-            // res=P: render at P% and upscale (needs a player built with -perfDynRes: HDRP dynamic resolution on, STP); base 100%
-            if (spec != null || variants.Count > 0)
-            {
-                float pct = spec != null && S("res") is string rp ? float.Parse(rp, System.Globalization.CultureInfo.InvariantCulture) : 100f;
-                UnityEngine.Rendering.DynamicResolutionHandler.SetDynamicResScaler(() => pct, UnityEngine.Rendering.DynamicResScalePolicyType.ReturnsPercentage);
-                Camera.main.allowDynamicResolution = true; if (hd != null) hd.allowDynamicResolution = true;
-            }
+            // scale=P (alias res=P): render at P% and STP-upscale (RenderScale; HDRP dynamic resolution); base 100 = native, no STP.
+            // The tour never uses the player's saved scale (PlayerPrefs): 100 unless the variant says otherwise
+            RenderScale.Set(spec != null && (S("scale") ?? S("res")) is string rp ? float.Parse(rp, System.Globalization.CultureInfo.InvariantCulture) : 100f, false);
             // sunless=on: the never-sunlit pieces (SpecGreybox.SunCull) cast into the sun's cascades again by day
             if (night && !night.night)
                 for (int k = 0; k < night.sunlessCasters.Length && k < night.sunlessModes.Length; k++)
@@ -188,10 +200,10 @@ public class PerfProbe : MonoBehaviour
             if (!ab) Apply(1);
             foreach (var (name, pos, yaw, pitch) in POSES)
             {
-                if (only.Length > 0 && !only.Contains(name)) continue;
+                string tag = name + "-" + (dn ? "night" : "day");
+                if (only.Length > 0 && !only.Contains(name) && !only.Contains(tag)) continue;
                 if (fps) fps.transform.position += pos - cam.position;   // move the body so the eye lands on the pose (HouseSplit, audio follow)
                 cam.SetPositionAndRotation(pos, Quaternion.Euler(pitch, yaw, 0));
-                string tag = name + "-" + (dn ? "night" : "day");
                 foreach (var step in steps)
                 {
                     if (ab) Apply(step[0] - 'A');
@@ -318,7 +330,7 @@ public class PerfProbe : MonoBehaviour
         Last = "{" + $"\"name\":\"{name}\",\"frames\":{frames},\"rest_s\":{rest},\"cpu_ms_median\":{Pct(cpu, 0.5f):F1},\"cpu_ms_p95\":{Pct(cpu, 0.95f):F1},\"cpu_ms_p99\":{Pct(cpu, 0.99f):F1},"
              + $"\"gpu_ms_median\":{gpuS},\"gpu_ms_p10\":{gpu10},\"gpu_ms_p95\":{Q(gpu, 0.95f)},\"gpu_ms_p99\":{Q(gpu, 0.99f)},\"main_ms_median\":{Q(main, 0.5f)},\"render_ms_median\":{Q(rend, 0.5f)},\"rt_lights\":{rt},\"rt_shadow_lights\":{rtShadow}," + string.Join(",", vals.Select(kv => $"\"{kv.Key}\":{Med(kv.Value)}"))
              + ",\"frame_log\":" + flog
-             + $",\"screen\":\"{Screen.width}x{Screen.height}\",\"focused\":{Application.isFocused.ToString().ToLower()},\"cam\":\"{cam.position.x:F2},{cam.position.y:F2},{cam.position.z:F2} yaw {cam.eulerAngles.y:F0}\"" + "}";
+             + $",\"screen\":\"{Screen.width}x{Screen.height}\",\"render_scale\":{RenderScale.Percent:F0},\"internal\":\"{Mathf.RoundToInt(Screen.width * ScalableBufferManager.widthScaleFactor)}x{Mathf.RoundToInt(Screen.height * ScalableBufferManager.heightScaleFactor)}\",\"focused\":{Application.isFocused.ToString().ToLower()},\"cam\":\"{cam.position.x:F2},{cam.position.y:F2},{cam.position.z:F2} yaw {cam.eulerAngles.y:F0}\"" + "}";
         var dir = outDir ?? Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/captures/perf")); Directory.CreateDirectory(dir);
         File.WriteAllText(Path.Combine(dir, name + ".json"), Last + "\n");
         if (outDir == null) Destroy(gameObject);

@@ -6,12 +6,13 @@
 #                                            # lock files) and build ~/.cache/home-alone-perf/build/HomeAlone.app (the local Mac test app;
 #                                            # `dev`: HomeAloneDev.app, a development player: draw calls/batches + ring-buffer warnings)
 #                                            # HA_REUSE=1: rebuild in the existing clone (scripts changed only; ~3 min)
-#                                            # HA_BUILD_ARGS=-perfDynRes HA_PERF_APP=<other.app>: a variant player (PerfBuild.cs flags)
+#                                            # HA_PERF_APP=<other.app>: a variant player (PerfBuild.cs flags)
 #                                            # HA_OVERLAY=<dir>: drafts (dir/Scripts, dir/Editor ...) copied over the clone's Assets/
 #   tools/house/perf_probe.sh run LABEL      # run the player's tour (PerfProbe.cs -perfprobe): 6 poses x day/night, 300 frames each,
 #                                            # 1920x1080 windowed -> ~/.cache/home-alone-perf/runs/LABEL/*.json + *.png, and prints the table
 #                                            # HA_PERF_ARGS="-perfoff ShadowMaps,SSAO": HDRP frame settings off (attribution runs)
 #                                            # HA_PERF_ARGS="-perfab -perfoff SSAO": base/variant alternated per pose in one session
+#                                            # HA_DISPLAY="Studio Display": full screen on that display at its native pixels (display.txt)
 #   tools/house/perf_probe.sh ab NAME APP_A APP_B   # two builds (a project-setting change), tours A B A B -> base -> variant table
 #                                            # (HA_PERF_APP=<.app> picks the player for run)
 #   tools/house/perf_probe.sh table A [B]    # the table for run A, or A vs B (before/after) with the PNG difference per pose
@@ -43,7 +44,13 @@ build)
 run)
   L="${2:?label}"; O="$W/runs/$L"; rm -rf "$O"; mkdir -p "$O"; printf '%s\n' "${HA_PERF_ARGS:-}" > "$O/args.txt"   # the sheet names variants from it
   defaults write "$(defaults read "$APP/Contents/Info.plist" CFBundleIdentifier)" NSAppSleepDisabled -bool YES   # no App Nap throttling in the background
-  "$APP/Contents/MacOS/"* -perfprobe "$O" -screen-width 1920 -screen-height 1080 -screen-fullscreen 0 -logFile "$O/player.log" ${HA_PERF_ARGS:-} >/dev/null 2>&1 &
+  SCR=(-screen-width 1920 -screen-height 1080 -screen-fullscreen 0)
+  if [ -n "${HA_DISPLAY:-}" ]; then   # HA_DISPLAY="Studio Display": full screen there at its native pixels (system_profiler), not its "looks like" size
+    WH=$(system_profiler SPDisplaysDataType | awk -v d="$HA_DISPLAY:" '$0 ~ "^ +"d"$" {f=1} f && /Resolution:/ {print $2"x"$4; exit}')
+    [ -n "$WH" ] || { echo "display '$HA_DISPLAY' not found (system_profiler SPDisplaysDataType)" >&2; exit 1; }
+    SCR=(-screen-width "${WH%x*}" -screen-height "${WH#*x}" -screen-fullscreen 0 -perfdisplay "$HA_DISPLAY"); echo "full screen on $HA_DISPLAY at $WH"   # PerfProbe moves the window there, then goes full screen
+  fi
+  "$APP/Contents/MacOS/"* -perfprobe "$O" "${SCR[@]}" -logFile "$O/player.log" ${HA_PERF_ARGS:-} >/dev/null 2>&1 &
   pid=$!; caffeinate -d -u -w $pid &   # display awake for the whole tour: with the display asleep GPU timings come back empty (Oct 18)
   for _ in $(seq 1 900); do [ -f "$O/done.txt" ] && break; kill -0 $pid 2>/dev/null || break
     [ "$(stat -f %z "$O/player.log" 2>/dev/null || echo 0)" -lt 200000000 ] || { echo "player log over 200 MB (error loop): killed" >&2; kill $pid; tail -c 3000 "$O/player.log" > "$O/player-tail.log"; rm "$O/player.log"; break; }

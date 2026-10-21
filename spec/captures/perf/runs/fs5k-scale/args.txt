@@ -1,0 +1,1 @@
+-perfab -perfrounds 1 -perfposes street-day,foyer,hall-night,living-night,kitchen-night -perfvariants scale=75;scale=50;scale=38

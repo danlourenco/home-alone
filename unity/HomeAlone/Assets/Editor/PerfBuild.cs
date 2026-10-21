@@ -28,17 +28,7 @@ public static class PerfBuild
         // this install's Mac player support has IL2CPP variations only: the default (Mono) compiles against the editor's assemblies and fails
         PlayerSettings.SetScriptingBackend(UnityEditor.Build.NamedBuildTarget.Standalone, ScriptingImplementation.IL2CPP);
         UnityEditor.OSXStandalone.UserBuildSettings.architecture = UnityEditor.Build.OSArchitecture.ARM64;   // host M3 Pro
-        // -perfDynRes: HDRP dynamic resolution on with STP first (a clone-only project setting; PerfProbe -perfvariants res=75 sets the
-        // percentage at run time). For the resolution A/B only: the shipped app has it off
-        if (Array.IndexOf(a, "-perfDynRes") >= 0)
-        {
-            var hdrp = AssetDatabase.LoadAssetAtPath<UnityEngine.Rendering.HighDefinition.HDRenderPipelineAsset>("Assets/Settings/HDRP.asset");
-            var so = new SerializedObject(hdrp); const string d = "m_RenderPipelineSettings.dynamicResolutionSettings.";
-            so.FindProperty(d + "enabled").boolValue = true; so.FindProperty(d + "minPercentage").floatValue = 50f;
-            var up = so.FindProperty(d + "advancedUpscalersByPriority"); up.arraySize = 1; up.GetArrayElementAtIndex(0).intValue = 2;   // STP
-            so.ApplyModifiedPropertiesWithoutUndo(); EditorUtility.SetDirty(hdrp); AssetDatabase.SaveAssets();
-            Debug.Log("PerfBuild: dynamic resolution on (STP), 50-100%");
-        }
+        // HDRP dynamic resolution + STP is ON in the repo's HDRP.asset since Oct 20 (RenderScale.cs; the old clone-only -perfDynRes flag is gone)
         var r = BuildPipeline.BuildPlayer(new BuildPlayerOptions
         {
             scenes = new[] { scene },

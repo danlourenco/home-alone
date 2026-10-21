@@ -5,8 +5,10 @@
                                        > ~3 means the picture changed: look at both PNGs)
   perf_table.py --gate RUN_DIR [MD]  -> exit 1 if any pose's frame mean (or a motion step's time to rest) is over its budget in the
                                        "## BUDGET" table of docs/PERFORMANCE.md (first matching pose pattern wins)
-  perf_table.py --sheet RUN_DIR [POSE ...] [film:N,N,...] -> RUN_DIR/sheet.jpg: the visual comparison (pose rows x variant columns, FPS
-                                       on each tile); film:N,... adds a last row of film frames (0-homealone screencaps) for reference
+  perf_table.py --sheet RUN_DIR [POSE ...] [film:N,N,...] [crop:POSE=X,Y ...] -> RUN_DIR/sheet.jpg: the visual comparison (pose rows x
+                                       variant columns, FPS on each tile); film:N,... adds a last row of film frames (0-homealone screencaps)
+                                       for reference. Frames wider than 2000 px (full screen 5K) get a 1:1 pixel crop under the downsized
+                                       frame, centred at X,Y (fractions of the frame; CROP below, crop:POSE=X,Y overrides) to judge sharpness
   perf_table.py --selftest
 """
 import fnmatch
@@ -47,7 +49,12 @@ def fps(ms):
     return round(1000.0 / ms) if ms else 0
 
 
-def sheet(d, poses=None, out=None, film=()):
+# 1:1 detail crops for full-screen sharpness sheets: frame fractions of a textured spot per pose (brick, wallpaper, foliage, wood)
+CROP = {"street-day": (0.42, 0.42), "foyer-day": (0.15, 0.25), "foyer-night": (0.8, 0.35), "hall-night": (0.42, 0.42),
+        "living-night": (0.72, 0.3), "kitchen-night": (0.35, 0.6)}   # facade brick+windows, wallpaper+frames, mirror+sconce, ...
+
+
+def sheet(d, poses=None, out=None, film=(), crop=None):
     """A visual comparison sheet for one -perfab run (user, Oct 20: every shadow/lighting change gets one): one row per pose, one column
     per variant (A = base), each tile labelled with its variant and FPS. Variant names come from args.txt (perf_probe.sh run writes it)."""
     from PIL import Image, ImageDraw, ImageFont
@@ -56,6 +63,9 @@ def sheet(d, poses=None, out=None, film=()):
     m = re.search(r"-perfvariants\s+['\"]?([^'\"]+)", a)
     for i, v in enumerate(m.group(1).split(";") if m else []):
         names[chr(ord("B") + i)] = v.strip()
+    if "scale=" in a:
+        names["A"] = "scale=100 (native)"
+    crop = {**CROP, **(crop or {})}
     last = max((int(q.stem[-1]) for q in d.glob("*-A?.json")), default=1)
     letters = ["A"] + sorted({q.stem[-2] for q in d.glob(f"*-?{last}.png")} - {"A"})
     poses = poses or sorted({q.stem[:-3] for q in d.glob(f"*-A{last}.png")})
@@ -70,10 +80,15 @@ def sheet(d, poses=None, out=None, film=()):
             png, js = d / f"{p}-{x}{last}.png", d / f"{p}-{x}{last}.json"
             if not png.exists():
                 continue
-            im = Image.open(png).convert("RGB"); im = im.resize((W, int(im.height * W / im.width)))
+            full = Image.open(png).convert("RGB"); im = full.resize((W, int(full.height * W / full.width)), Image.LANCZOS)
             r = load(d).get(f"{p}-{x}{last}", {}); ms = r.get("frame_ms_mean")
+            if full.width > 2000:   # full screen: the downsized frame over a 1:1 pixel crop (the red box) to judge sharpness
+                cx, cy = crop.get(p, (0.5, 0.5)); ch = W * 9 // 16
+                x0 = min(max(int(cx * full.width) - W // 2, 0), full.width - W); y0 = min(max(int(cy * full.height) - ch // 2, 0), full.height - ch)
+                k = W / full.width; ImageDraw.Draw(im).rectangle([x0 * k, y0 * k, (x0 + W) * k, (y0 + ch) * k], outline=(255, 40, 40), width=2)
+                tile = Image.new("RGB", (W, im.height + 4 + ch), (20, 20, 20)); tile.paste(im, (0, 0)); tile.paste(full.crop((x0, y0, x0 + W, y0 + ch)), (0, im.height + 4)); im = tile
             dr = ImageDraw.Draw(im); dr.rectangle([0, 0, W, 32], fill=(0, 0, 0))
-            dr.text((8, 4), f"{p}  {names.get(x, x)}  {fps(ms) if ms else '?'} fps", fill=(255, 255, 255), font=font)
+            dr.text((8, 4), f"{p}  {names.get(x, x)}  {fps(ms) if ms else '?'} fps" + (f"  {r['screen']}" + (f" (render {r['internal']})" if r.get("internal") else "") if r.get("screen") and full.width > 2000 else ""), fill=(255, 255, 255), font=font)
             row.append(im)
         if row:
             rows.append(row)
@@ -188,7 +203,8 @@ def main(args):
         sys.exit(gate(args[1], args[2] if len(args) > 2 else Path(__file__).resolve().parents[2] / "docs/PERFORMANCE.md"))
     if args[0] == "--sheet":   # --sheet RUN_DIR [POSE ...]
         film = [n for a in args[2:] if a.startswith("film:") for n in a[5:].split(",") if n]
-        return sheet(args[1], [a for a in args[2:] if not a.startswith("film:")] or None, film=film)
+        crop = {a[5:].split("=")[0]: tuple(map(float, a.split("=")[1].split(","))) for a in args[2:] if a.startswith("crop:")}
+        return sheet(args[1], [a for a in args[2:] if not a.startswith(("film:", "crop:"))] or None, film=film, crop=crop)
     if args[0] == "--ab":   # --ab A1 B1 A2 B2 ...: alternate tours of two builds
         return ab([(d, "") for d in args[1::2]], [(d, "") for d in args[2::2]])
     if len(args) == 1 and any(Path(args[0]).glob("*-A1.json")):   # one -perfab run: A (base) vs each variant B, C, ... (-perfvariants)
