@@ -14,6 +14,19 @@ using UnityEngine;
 /// K lets go Harry's, B an adult test dummy (1.80 m) climbs flight 1 to the step under the rail, T reset (cans at rest, dummy gone). Impact speed, energy and height are logged to the console.
 public class PaintCanTrap : MonoBehaviour
 {
+    // OFF for now (user, Oct 20: "we can also disable the paint cans for the time being"; their pull key P also clashed with the render
+    // scale's P). Play hides the whole Upstairs/Traps rig; the editor's batch gates (TrapTest, MotionShadow) and the perf tour's motion
+    // step (-perfprobe) still run it. Turn back on: Enabled = true, or launch the app with -traps.
+    public static bool Enabled = false;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    static void Gate()
+    {
+        var a = System.Environment.GetCommandLineArgs();
+        if (Enabled || System.Array.IndexOf(a, "-traps") >= 0 || System.Array.IndexOf(a, "-perfprobe") >= 0) return;
+        var t = GameObject.Find("Upstairs/Traps"); if (t) t.SetActive(false);
+    }
+
     public Rigidbody can;                  // origin = the bail's apex, where the rope is tied
     public LineRenderer rope;
     public Vector3 knot, pivot, edge;      // knot on the handrail; where the rope leaves the rail; the gallery floor's lower edge
