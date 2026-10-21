@@ -33,7 +33,19 @@
      5.39
     ]
    },
-   "police_lights": true,
+   "police_lights": {
+    "beacon_nits": 1500,
+    "flasher_nits": 1100,
+    "idle": 0.04,
+    "rpm": 84,
+    "beam_power": 6,
+    "wash_lumens": 300,
+    "wash_range_m": 7,
+    "wash_floor": 0.2,
+    "wash_volumetric": false,
+    "wash_specular": true,
+    "maths": "Against film 11581 under our exterior night look (auto exposure, bloom 0.8 / threshold 0.3, volumetric fog on). (1) Lamp glass: the street lamp globe (NB_LampGlobe, 4000 nits, ~0.3 m) reads as a bright point with a small halo in build 8's van-night; the film's beacons are smaller points of the same class: a near-white core with a red rim. A red lamp (1, 0.05, 0.02) whitens only where its weak green and blue channels also clip, ~20x the level where its red clips, so the peak sits a little under the globe: 1500 nits (flashers 1100). Between sweeps the glass glows dull red: idle 0.04 (60 nits, about the bloom threshold, no halo). Build 8 had 6000/4000 nits, idle 0.06. (2) Wash: the film's snow wash is subtle, weaker than a street-lamp pool. Lamp: 2400 lm at 3.85 m = 191 cd, 12.9 lx at its foot. Wash: 300 lm at the bar (1.8 m) = 24 cd, 7.4 lx straight below, 2.2 lx at 2 m out, 0.2 lx at 6 m; with the sweep (floor 0.2) the mean is ~0.6 of that: a red/blue pool around the car about a third of a lamp pool, gone by the Murphys' porch (7 m range). Build 8 had 2500 lm, 14 m. (3) No volumetric contribution: build 8's magenta and cyan balls were the fog in-scattering (anisotropy 0.6 toward the camera) of two 2500 lm lights. Specular kept: 11581 shows red streaks on the wet road."
+   },
    "police_bar": "red_blue",
    "police_bar_note": "red_blue = the user's choice (Oct 20, DEVIATIONS 126): left (driver) lamps red, right blue, matching wash lights; all_red = the film (11581)",
    "scene": "night",
@@ -113,7 +125,7 @@
   }
  },
  "materials": {
-  "_note": "HDRP Lit per VEH_* glTF material (VehiclePrefabs.Hdrp). The base colour map comes from the GLB. coat > 0 = HDRP Lit clear coat (the Unity 6 HDRP way for car paint at game cost; StackLit's dual-lobe coat is ~2x the shading cost). mask: R metallic, G AO, A smoothness (grime rougher), linear. emissive_nits: _EmissiveColor in nits (the house's lamp globes are 4000).",
+  "_note": "HDRP Lit per VEH_* glTF material (VehiclePrefabs.Hdrp). The base colour map comes from the GLB. coat > 0 = HDRP Lit clear coat (the Unity 6 HDRP way for car paint at game cost; StackLit's dual-lobe coat is ~2x the shading cost). mask: R metallic, G AO, A smoothness (grime rougher), linear. emissive_nits: _EmissiveColor in nits (the house's lamp globes are 4000). Every vehicle renderer also gets SpecGreybox.LayerOutside so the moon lights it (build 8: black silhouettes).",
   "VEH_Police_Paint": {
    "smooth": 0.62,
    "metallic": 0.0,
@@ -242,7 +254,7 @@
     0.05,
     0.02
    ],
-   "emissive_nits": 300
+   "emissive_nits": 60
   },
   "VEH_Plate": {
    "smooth": 0.4
@@ -276,7 +288,7 @@
     0.2,
     1.0
    ],
-   "emissive_nits": 300
+   "emissive_nits": 60
   },
   "VEH_Cardboard": {
    "color": [

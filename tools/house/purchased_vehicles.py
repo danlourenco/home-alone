@@ -677,6 +677,75 @@ def render(kind, mode=None):
         sc.render.filepath = str(WORK / f"{kind}_{'night' if night else 'day'}_{i}.png"); bpy.ops.render.render(write_still=True)
 
 
+def lightcheck(kind):
+    """Physically relative night check in Eevee (683 lm/W, 683 nits per unit emission): the police bar (build 8's values vs
+    spec/vehicles.json) beside a street lamp (2400 lm at 3.85 m, its 4000-nit globe) under the 30-lux moon; the van lit from behind by
+    the lamp, with and without the moon on its camera side (build 8: the moon's rendering layer missed the cars). Compositor glare
+    stands in for HDRP bloom; no volumetric fog (build 8's balls were fog: the spec turns the wash out of it)."""
+    import bpy
+    from mathutils import Vector
+    spec = json.loads((ROOT / "spec/vehicles.json").read_text())
+    pl = spec["kinds"]["Car_CapricePolice"]["police_lights"]
+    bpy.ops.wm.open_mainfile(filepath=str(WORK / f"{KIND[kind]}.blend"))
+    sc = bpy.context.scene
+    for o in sc.objects:
+        if o.name.endswith(("_LOD1", "_LOD2")): o.hide_render = True
+    sc.render.engine = "BLENDER_EEVEE"; sc.render.resolution_x, sc.render.resolution_y = 960, 540
+    sc.view_settings.view_transform = "AgX"; sc.view_settings.exposure = 4.2   # moonlit snow (7.6 nits) at ~0.2: the night grade
+    w = bpy.data.worlds.new("w"); sc.world = w; w.use_nodes = True
+    w.node_tree.nodes["Background"].inputs[0].default_value = (0.0005, 0.0007, 0.0015, 1); w.node_tree.nodes["Background"].inputs[1].default_value = 1.0
+    me = bpy.data.meshes.new("snow"); me.from_pydata([(-40, -40, 0), (40, -40, 0), (40, 40, 0), (-40, 40, 0)], [], [(0, 1, 2, 3)])
+    g = bpy.data.objects.new("snow", me); sc.collection.objects.link(g)
+    gm = bpy.data.materials.new("snow"); gm.use_nodes = True; gb = gm.node_tree.nodes["Principled BSDF"]
+    gb.inputs["Base Color"].default_value = (0.8, 0.8, 0.82, 1); gb.inputs["Roughness"].default_value = 0.6; me.materials.append(gm)
+    LM = 1 / 683.0
+    def light(t, loc, watts, col, rad=0.05):
+        L = bpy.data.lights.new(t + str(len(bpy.data.lights)), t); L.energy = watts; L.color = col
+        if t == "POINT": L.shadow_soft_size = rad
+        o = bpy.data.objects.new(L.name, L); o.location = loc; sc.collection.objects.link(o); return o
+    def globe(loc, nits, r=0.15):
+        m = bpy.data.materials.new("globe"); m.use_nodes = True; b = m.node_tree.nodes["Principled BSDF"]
+        b.inputs["Emission Color"].default_value = (1, 0.8, 0.55, 1); b.inputs["Emission Strength"].default_value = nits * LM
+        bpy.ops.mesh.primitive_uv_sphere_add(radius=r, location=loc); bpy.context.object.data.materials.append(m)
+    moon = light("SUN", (0, 0, 10), 30 * LM, (0.62, 0.72, 1.0)); moon.rotation_euler = (0.95, 0, 2.1)
+    try:   # Blender 5 compositor: a node group on the scene; glare = HDRP bloom's stand-in
+        ng = bpy.data.node_groups.new("glare", "CompositorNodeTree"); sc.compositing_node_group = ng
+        ng.interface.new_socket("Image", in_out="OUTPUT", socket_type="NodeSocketColor")
+        rl = ng.nodes.new("CompositorNodeRLayers"); gl = ng.nodes.new("CompositorNodeGlare"); out = ng.nodes.new("NodeGroupOutput")
+        for nm, v in (("Type", "Bloom"), ("Threshold", 1.0), ("Strength", 0.5), ("Size", 0.6)):
+            if nm in gl.inputs:
+                try: gl.inputs[nm].default_value = v
+                except Exception: pass
+        ng.links.new(rl.outputs["Image"], gl.inputs["Image"]); ng.links.new(gl.outputs["Image"], out.inputs[0])
+    except Exception as e:
+        print("lightcheck: no glare", e)
+    cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam")); sc.collection.objects.link(cam); sc.camera = cam; cam.data.lens = 28
+    def shot(name, loc, at):
+        cam.location = loc; cam.rotation_euler = (Vector(at) - Vector(loc)).to_track_quat("-Z", "Y").to_euler()
+        sc.render.filepath = str(WORK / f"lightcheck_{name}.png"); bpy.ops.render.render(write_still=True)
+    if kind == "police":
+        lamp = light("POINT", (-4.5, 3.0, 3.85), 2400 * LM, (1, 0.8, 0.55)); globe((-4.5, 3.0, 3.85), 4000)
+        bar = {o.name: o for o in sc.objects if o.name.startswith(("Beacon_", "Flasher_"))}
+        mats = {n: o.data.materials[0] for n, o in bar.items()}
+        for n, o in bar.items(): o.data.materials[0] = mats[n].copy()
+        washes = []
+        for side in ("_L", "_R"):
+            c = sum((bar["Beacon" + side].matrix_world @ Vector(v) for v in bar["Beacon" + side].bound_box), Vector()) / 8
+            washes.append(light("POINT", c + Vector((0, 0, 0.05)), 0, (1, 0.08, 0.03) if side == "_L" else (0.05, 0.2, 1.0)))
+        for label, nits, fl, idle, lm in (("build8", 6000, 4000, 0.06, 2500), ("spec", pl["beacon_nits"], pl["flasher_nits"], pl["idle"], pl["wash_lumens"])):
+            for n, o in bar.items():   # one beacon caught at its peak (facing the camera), the rest between sweeps
+                peak = n == "Beacon_R"
+                k = 1.0 if peak else idle
+                o.data.materials[0].node_tree.nodes["Principled BSDF"].inputs["Emission Strength"].default_value = (nits if n.startswith("Beacon") else fl) * k * LM
+            for wl in washes: wl.data.energy = lm * 0.6 * LM
+            shot(f"police_{label}", (3.6, 4.6, 0.85), (0.2, 0.0, 0.9))
+    else:
+        lamp = light("POINT", (-3.2, -4.2, 3.85), 2400 * LM, (1, 0.8, 0.55)); globe((-3.2, -4.2, 3.85), 4000)   # our post behind the van
+        for label, on in (("nomoon", False), ("moon", True)):
+            moon.hide_render = not on
+            shot(f"van_{label}", (8.0, 3.0, 1.5), (0, 0, 1.1))
+
+
 def check():
     """The contract the swap hook relies on, from the build stats: budgets, period length, ground origin, nose +Y (Unity +z)."""
     for k in KIND:
@@ -731,7 +800,7 @@ def blender(*args):
 if __name__ == "__main__":
     if "bpy" in sys.modules:
         argv = sys.argv[sys.argv.index("--") + 1:]
-        {"debug": debug, "prep": prep, "build": build, "render": render}[argv[0]](*argv[1:])
+        {"debug": debug, "prep": prep, "build": build, "render": render, "lightcheck": lightcheck}[argv[0]](*argv[1:])
     else:
         if sys.argv[1:] == ["--check"]: check(); sys.exit(0)
         kinds = sys.argv[1:] or ["police", "van", "sedan"]   # police first: it paints the plate the sedan shares

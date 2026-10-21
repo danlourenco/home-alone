@@ -57,8 +57,19 @@ public static class VehiclePrefabs
         // one box: the body (mirrors and roof load excluded), from the spec
         var bc = root.AddComponent<BoxCollider>(); var c = (JArray)k["collider"]["center"]; var s = (JArray)k["collider"]["size"];
         bc.center = new Vector3((float)c[0], (float)c[1], (float)c[2]); bc.size = new Vector3((float)s[0], (float)s[1], (float)s[2]);
-        if ((bool?)k["police_lights"] == true)
-            root.AddComponent<PoliceLights>().bar = (string)k["police_bar"] == "all_red" ? PoliceLights.Bar.AllRed : PoliceLights.Bar.RedBlue;
+        if (k["police_lights"] is JObject pl)
+        {   // every intensity from the spec (its note holds the maths against film 11581)
+            var p = root.AddComponent<PoliceLights>();
+            p.bar = (string)k["police_bar"] == "all_red" ? PoliceLights.Bar.AllRed : PoliceLights.Bar.RedBlue;
+            p.beaconNits = (float?)pl["beacon_nits"] ?? p.beaconNits; p.flasherNits = (float?)pl["flasher_nits"] ?? p.flasherNits;
+            p.idle = (float?)pl["idle"] ?? p.idle; p.rpm = (float?)pl["rpm"] ?? p.rpm; p.beamPower = (float?)pl["beam_power"] ?? p.beamPower;
+            p.washLumens = (float?)pl["wash_lumens"] ?? p.washLumens; p.washRange = (float?)pl["wash_range_m"] ?? p.washRange;
+            p.washFloor = (float?)pl["wash_floor"] ?? p.washFloor;
+            p.washVolumetric = (bool?)pl["wash_volumetric"] ?? false; p.washSpecular = (bool?)pl["wash_specular"] ?? true;
+        }
+        // the moon (SpecGreybox.Backdrop) lights only renderers carrying LayerOutside; the night layer's cars were made after that
+        // tagging pass, so they had no moonlight: black silhouettes in build 8 (van-night vs film 3297)
+        foreach (var r in body.GetComponentsInChildren<Renderer>(true)) r.renderingLayerMask |= SpecGreybox.LayerOutside;
         var b = new Bounds(); bool any = false;
         foreach (var r in Named("_LOD0")) { if (!any) { b = r.bounds; any = true; } else b.Encapsulate(r.bounds); }
         Debug.Log($"VehiclePrefabs: {kind} bounds {b.min:F2} .. {b.max:F2} (nose +z, ground y 0)");

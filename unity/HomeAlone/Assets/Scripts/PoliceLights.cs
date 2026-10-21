@@ -18,15 +18,21 @@ public class PoliceLights : MonoBehaviour
     [Tooltip("RedBlue: the user's choice (left red, right blue). AllRed: the film (11581).")]
     public Bar bar = Bar.RedBlue;
     public Color red = new Color(1f, 0.05f, 0.02f), blue = new Color(0.05f, 0.2f, 1f);
-    [Tooltip("Peak and idle emission of a lamp facing the camera, nits")]
-    public float beaconNits = 6000f, flasherNits = 4000f;
-    [Range(0f, 1f)] public float idle = 0.06f;
+    // Defaults = spec/vehicles.json kinds.Car_CapricePolice.police_lights (VehiclePrefabs copies the spec in; the maths is there).
+    // Build 8 (6000 nits, 2500 lm, 14 m, volumetric on) bloomed into magenta and cyan fog balls over the whole Murphys scene.
+    [Tooltip("Peak emission of a lamp whose beam faces the camera, nits")]
+    public float beaconNits = 1500f, flasherNits = 1100f;
+    [Range(0f, 1f)] public float idle = 0.04f;
     [Tooltip("Reflector turns per minute (a MARS 888 ~ 80-90 flashes/min)")]
     public float rpm = 84f;
     [Tooltip("Beam tightness: the higher, the shorter the flash as the beam passes the viewer")]
     public float beamPower = 6f;
-    public float washLumens = 2500f, washRange = 14f;
-    [Range(0f, 1f)] public float washFloor = 0.25f;
+    public float washLumens = 300f, washRange = 7f;
+    [Range(0f, 1f)] public float washFloor = 0.2f;
+    [Tooltip("The wash lights in the volumetric fog: off (build 8's fog balls)")]
+    public bool washVolumetric = false;
+    [Tooltip("The wash on wet road and paint (film 11581 shows red streaks on the wet road)")]
+    public bool washSpecular = true;
 
     static readonly int EmissiveId = Shader.PropertyToID("_EmissiveColor"), BaseId = Shader.PropertyToID("_BaseColor");
     static readonly string[] Names = { "Beacon_L", "Beacon_R", "Flasher_L", "Flasher_R" };
@@ -47,7 +53,8 @@ public class PoliceLights : MonoBehaviour
             var b = lamps[s] != null ? lamps[s].bounds.center : transform.position + Vector3.up * 1.7f;
             var g = new GameObject(s == 0 ? "PoliceWash_L" : "PoliceWash_R");
             g.transform.SetParent(transform, false); g.transform.position = b + Vector3.up * 0.05f;
-            var l = g.AddComponent<Light>(); g.AddComponent<HDAdditionalLightData>();
+            var l = g.AddComponent<Light>(); var hd = g.AddComponent<HDAdditionalLightData>();
+            hd.affectsVolumetric = washVolumetric; hd.affectSpecular = washSpecular;
             l.type = LightType.Point; l.shadows = LightShadows.None; l.lightUnit = LightUnit.Lumen;
             l.range = washRange; l.color = Side(s); l.intensity = 0f;
             wash[s] = l;
