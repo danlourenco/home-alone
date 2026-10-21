@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition;
+using UnityEditor;
 using Object = UnityEngine.Object;
 
 // Front U-drive, walk-entrance piers and the garage fence (Oct 19 2026, TRIAL; changes/2026-10-19-front-drive.json, DEVIATIONS 103).
@@ -16,11 +18,15 @@ using Object = UnityEngine.Object;
 //  - surfaces (walk note Oct 19 08:08): the garage drive wet asphalt, sidewalks / kerbs / walk a wet PBR concrete
 public static partial class SpecGreybox
 {
-    static readonly Vector2[] DriveLine = {   // spec (x, z): kerb (left, joins the garage drive) -> round the lawn -> kerb (right)
-        new Vector2(30.58f, 21.40f), new Vector2(28.65f, 21.41f), new Vector2(24.41f, 21.48f), new Vector2(21.78f, 18.15f), new Vector2(20.23f, 13.53f),
-        new Vector2(20.46f, 9.82f), new Vector2(20.55f, 8.49f), new Vector2(22.66f, 3.86f), new Vector2(25.56f, 1.09f), new Vector2(27.28f, -0.51f),
-        new Vector2(28.73f, -1.18f), new Vector2(30.58f, -2.02f) };
+    // spec (x, z): kerb (left, joins the garage drive) -> round the lawn -> kerb (right). The mouths are OSM's (ways 1012087264/65);
+    // the front run is pulled in to pass 1.5 m off the bottom step, centre x 17.35 (film 1640: the airport vans at the foot of the
+    // steps; 2009/2013 photos: the drive at the steps' apron; OSM's run at x 20.5 left a 4.5 m walk strip: changes/2026-10-20-drive-to-steps.json)
+    static readonly Vector2[] DriveLine = {
+        new Vector2(30.58f, 21.40f), new Vector2(28.65f, 21.41f), new Vector2(24.41f, 21.48f), new Vector2(20.40f, 20.20f), new Vector2(18.10f, 17.20f),
+        new Vector2(17.35f, 13.50f), new Vector2(17.35f, 9.72f), new Vector2(17.45f, 6.40f), new Vector2(18.90f, 3.10f), new Vector2(21.70f, 1.45f),
+        new Vector2(24.90f, 0.55f), new Vector2(27.28f, -0.51f), new Vector2(28.73f, -1.18f), new Vector2(30.58f, -2.02f) };
     static readonly Vector2[] DriveSpur = { new Vector2(24.41f, 21.48f), new Vector2(23.2f, 21.50f), new Vector2(21.6f, 21.53f) };   // onto the garage drive
+    const float StepFootX = 14.05f, WalkBankX0 = 19.65f;   // the bottom riser (FrontBeds: stoopX + 6 treads); the walk banks past the drive
     const float DriveW = 3.6f, PierX0 = 28.30f, PierX1 = 28.80f, PierW = 0.50f, PierGap = 1.50f, WalkZ = 9.716f;
 
     // Catmull-Rom through the points, sampled every 'step' m (spec x,z)
@@ -109,8 +115,18 @@ public static partial class SpecGreybox
     {
         float d = gy + 2.996f;
         var holder = new GameObject("FrontDrive"); holder.transform.SetParent(ext.transform, true); holder.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
-        var wet = TexMat("HiFi_ExtWetRoad", "asphalt_02_x", new Color(0.45f, 0.45f, 0.47f), 4.0f, 0.86f);   // the street's (ExteriorRealism)
-        var conc = TexMat("HiFi_ExtWetConcrete", "concrete_floor_01_x", new Color(0.70f, 0.70f, 0.67f), 2.0f, 0.50f);   // damp sidewalk concrete (the worn set read as asphalt: albedo 86/255)
+        // the ground by weather (walk notes Oct 19 08:48/09:50/12:11; DEVIATIONS 124): one material per state (Sunny, Overcast, Night),
+        // swapped at run time by WetGround; built showing Sunny. Asphalt: the street, both drives, the front walk and its connection (one
+        // continuous surface; film 1640: the drive at the foot of the steps). Concrete: sidewalks and kerbs (jointed across z: they run
+        // along the street) and the apron at the foot of the steps (2013 photo). Warm grey tints from film 1640's drive/snow ratio, toned down.
+        string[] states = { "sunny", "overcast", "night" };
+        Material[] Set(string n, string id, Color tint, float tile) =>
+            states.Select(st => WetMat($"{n}_{char.ToUpper(st[0])}{st.Substring(1)}", $"{id}_{st}", tint, tile: tile, normalId: $"{id}_night")).ToArray();
+        var asph = Set("HiFi_ExtAsphalt", "asphalt_wet", new Color(0.95f, 0.92f, 0.87f), 4.0f);
+        var concS = Set("HiFi_ExtConcrete", "walk_wet_jz", new Color(1.0f, 0.95f, 0.89f), 3.0f);
+        var apronS = Set("HiFi_ExtApron", "walk_wet", new Color(1.0f, 0.93f, 0.88f), 3.0f);   // 2013: pale, a little pink
+        Material wet = asph[0], conc = concS[0];
+        var stepWet = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/Greybox/HiFi_ExtStepStone.mat");   // ExteriorRealism's
         var snow = TexMat("HiFi_ExtGroundSnow", "snow_02_x", new Color(0.95f, 0.97f, 1.0f), 2.2f, 0.40f);
         var brick = TexMat("HiFi_ExtPierBrick", "red_brick_03_x", new Color(0.80f, 0.60f, 0.53f), 1.15f, 0.12f);   // at 1.90 the piers read ~11 cm courses (render): 68 mm
         var stone = TexMat("HiFi_ExtCapStone", "concrete_floor_01_x", new Color(0.80f, 0.77f, 0.70f), 0.9f, 0.35f);   // film 11908: buff limestone caps
@@ -128,7 +144,13 @@ public static partial class SpecGreybox
             if (r.name == "Driveway street apron") { Object.DestroyImmediate(r.gameObject); aprons++; continue; }
             if (r.name == "object161_property") { r.sharedMaterials = r.sharedMaterials.Select(_ => wet).ToArray(); retex++; continue; }
             var ms = r.sharedMaterials; bool hit = false;
-            for (int i = 0; i < ms.Length; i++) if (ms[i] != null && (ms[i].name == "NeighborhoodConcrete" || ms[i].name == "Yard_Walk")) { ms[i] = conc; hit = true; }
+            for (int i = 0; i < ms.Length; i++)
+            {
+                if (ms[i] == null) continue;
+                if (ms[i].name == "Yard_Walk" || ms[i].name == "HiFi_ExtWetRoad" || ms[i].name == "NeighborhoodConcrete" && r.name == "Front walk connection") { ms[i] = wet; hit = true; }
+                else if (ms[i].name == "NeighborhoodConcrete") { ms[i] = conc; hit = true; }
+                else if (ms[i].name == "Yard_Steps" && stepWet != null) { ms[i] = stepWet; hit = true; }   // any red slab the rebuild left (porch)
+            }
             if (hit) { r.sharedMaterials = ms; retex++; }
         }
         // the garage drive's flat front stood 0.41 m over the front yard (-3.94 vs -4.35, x 15-22.3): eased down from x 14 to 2 cm over the
@@ -150,6 +172,11 @@ public static partial class SpecGreybox
         // ---- the drive
         float Ground(float x, float z) => Physics.Raycast(new Vector3(x, -2.2f + d, -z), Vector3.down, out var h, 4f) && h.point.y < -3.5f + d ? h.point.y : -4.35f + d;
         var main = Spline(DriveLine, 0.25f); var spur = Spline(DriveSpur, 0.25f);
+        foreach (var cc in ext.GetComponentsInChildren<CapsuleCollider>(true))   // a trunk standing in the drive (the run moved Oct 20)
+        {
+            var q = new Vector2(cc.transform.position.x, -cc.transform.position.z);
+            if (DistToLine(main, q) < DriveW / 2 + 0.5f || DistToLine(spur, q) < DriveW / 2 + 0.5f) Debug.LogWarning($"FrontDrive: BLOCKED tree {cc.name} at spec {q} in the drive");
+        }
         const float lift = 0.02f;   // >= 1 cm over the grade and walk (zfight-check rule 2)
         bool OnSidewalk(float x) => x > 28.87f && x < 30.37f;   // the public sidewalk runs through the mouths
         var av = new List<Vector3>(); var at = new List<int>(); var bv = new List<Vector3>(); var bt = new List<int>();
@@ -289,7 +316,55 @@ public static partial class SpecGreybox
         WorldMesh(holder, "GarageFence", fv, ft, wood);
         BoxCol(holder, "GarageFenceCollider", new Vector3(fx - 0.03f, fyg + fh / 2f, -(fz0 + fz1) / 2f), new Vector3(0.14f, fh + 0.1f, fz1 - fz0));
 
+        // ---- snowmelt at the shovelled edges (walk note Oct 19 12:11): a wet, darker band where the banks meet the walk and the
+        // sidewalks, on the property's frontage (world z -21..2): a down-projected decal on each long edge of each wide (> 0.5 m) slab
+        var melt = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/Greybox/HiFi_DecalMelt.mat");
+        if (melt == null) { melt = new Material(Shader.Find("HDRP/Decal")); AssetDatabase.CreateAsset(melt, "Assets/Materials/Greybox/HiFi_DecalMelt.mat"); }
+        const string meltTex = "Assets/Textures/Exterior/melt_edge.png";
+        if (AssetImporter.GetAtPath(meltTex) is TextureImporter mti && (!mti.alphaIsTransparency || mti.wrapMode != TextureWrapMode.Clamp)) { mti.alphaIsTransparency = true; mti.wrapMode = TextureWrapMode.Clamp; mti.SaveAndReimport(); }
+        melt.SetTexture("_BaseColorMap", AssetDatabase.LoadAssetAtPath<Texture2D>(meltTex)); melt.SetColor("_BaseColor", Color.white);
+        melt.SetFloat("_AffectAlbedo", 1f); melt.SetFloat("_AffectNormal", 0f); melt.SetFloat("_AffectSmoothness", 1f); melt.SetFloat("_AffectAO", 0f); melt.SetFloat("_AffectMetal", 0f);
+        melt.SetFloat("_Smoothness", 0.95f); melt.SetFloat("_MaskBlendSrc", 0f);   // smoothness blended by the albedo's alpha
+        HDMaterial.ValidateMaterial(melt); EditorUtility.SetDirty(melt);
+        int melts = 0;
+        foreach (var r in ext.GetComponentsInChildren<MeshRenderer>(true))
+        {
+            bool walk = r.name == "Walk_Front" || r.name == "Front walk connection";
+            if (!walk && r.sharedMaterial != conc) continue;
+            var b = r.bounds; if (b.center.z < -21f || b.center.z > 2f || b.center.x > 31f) continue;
+            bool alongX = b.size.x > b.size.z; float wid = alongX ? b.size.z : b.size.x;
+            float a0 = alongX ? b.min.x : b.min.z, a1 = alongX ? b.max.x : b.max.z;
+            if (walk) a0 = Mathf.Max(a0, WalkBankX0);   // the walk's banks start past the drive (ExteriorRealism's walk mounds)
+            if (wid < 0.5f || a1 - a0 < 1f) continue;   // kerbs, scraps
+            foreach (float side in new[] { -1f, 1f })
+            {   // local +x points out to the bank (the texture's wet side is u = 1)
+                var outward = alongX ? new Vector3(0, 0, side) : new Vector3(side, 0, 0);
+                var edge = b.center + outward * (wid / 2f - 0.12f); edge.y = b.max.y;
+                if (alongX) edge.x = (a0 + a1) / 2f; else edge.z = (a0 + a1) / 2f;
+                var g = new GameObject("Decal_Melt"); g.transform.SetParent(holder.transform, false);
+                g.transform.SetPositionAndRotation(edge, Quaternion.LookRotation(Vector3.down, Vector3.Cross(Vector3.down, outward)));
+                var p = g.AddComponent<DecalProjector>(); p.material = melt;   // practices: ok (DecalProjector.material is a plain property)
+                p.size = new Vector3(0.36f, a1 - a0, 0.40f); p.pivot = Vector3.zero; p.startAngleFade = 40f; p.endAngleFade = 70f; melts++;
+            }
+        }
+
+        // ---- the apron at the foot of the steps (2013 photo: a short pale concrete strip between the bottom step and the drive), 0.6 m
+        // deep, the steps' width, 12 mm over the walk's top (zfight-check rule 2); no collider (the walk's box carries the walking)
+        var walkBox = ext.GetComponentsInChildren<MeshRenderer>(true).FirstOrDefault(r => r.name == "Walk_Front");
+        if (walkBox != null)
+        {
+            float ay = walkBox.bounds.max.y + 0.012f, ax0 = StepFootX, ax1 = StepFootX + 0.60f, az0 = -(WalkZ + 0.95f), az1 = -(WalkZ - 0.95f);
+            WorldMesh(holder, "Apron_Front", new List<Vector3> { new Vector3(ax0, ay, az0), new Vector3(ax1, ay, az0), new Vector3(ax1, ay, az1), new Vector3(ax0, ay, az1) },
+                      new List<int> { 0, 2, 1, 0, 3, 2 }, apronS[0], false, true);
+        }
+
+        // ---- the weather switch: every renderer showing one of the state sets
+        var sets = new HashSet<Material>(asph.Concat(concS).Concat(apronS));
+        var wg = new GameObject("WetGround").AddComponent<WetGround>(); wg.transform.SetParent(holder.transform, false);
+        wg.asphalt = asph; wg.concrete = concS; wg.apron = apronS;
+        wg.renderers = ext.GetComponentsInChildren<MeshRenderer>(true).Where(r => r.sharedMaterials.Any(m => m != null && sets.Contains(m))).ToArray();
+
         Debug.Log($"FrontDrive: drive {at.Count / 3} tris on {main.Count + spur.Count} samples, banks {bt.Count / 3} tris, piers + wings + 2 lanterns + mailbox, fence; " +
-                  $"{aprons} neighbourhood aprons removed, {retex} surfaces retextured, garage drive front {(gd != null ? "eased" : "MISSING")}");
+                  $"{aprons} neighbourhood aprons removed, {retex} surfaces retextured (wet concrete), {melts} snowmelt edge decals, WetGround on {wg.renderers.Length} renderers, garage drive front {(gd != null ? "eased" : "MISSING")}");
     }
 }

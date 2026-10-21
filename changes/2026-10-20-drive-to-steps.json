@@ -1,0 +1,33 @@
+{
+  "change": "Front U-drive pulled in to the foot of the steps, and the ground's surfaces by weather (user Oct 20 via the coordinator: 'let's do it'; walk notes Oct 19 08:48 'why is this walkway not also wet? it's jarring', 09:50 'i want wet stone to look wet, whether it's asphault or not', 12:11 'the contrast between the stone and the wet asphalt is jarring'; TRIAL). SpecGreybox.FrontDrive.DriveLine: the front run's centre moves from x 20.46 (OSM) to 17.35 at the walk axis (near edge 15.55: 1.5 m off the bottom step at 14.05, 0.7 m off the lower bed wall at 14.85); the mouths, the garage spur, the piers and wing walls are unchanged. ExteriorRealism: the walk's shovelled banks between the steps and the old drive (x 15.1-18.1) go (now drive); the walk banks run from x 19.65 (0.5 m past the drive's far edge) to the piers. The walk and its connection become the drive's asphalt (one surface); a 0.6 m pale concrete apron at the foot of the steps (2013 photo). Materials by state (WetGround: Sunny/Morning, Overcast, Night) for asphalt, sidewalk concrete and apron; the steps wet red exposed-aggregate; snowmelt decals at the walk and sidewalk edges (DEVIATIONS 124)",
+  "target": "House_WallGrid",
+  "premise": "In 1990 the drive's front run passed at the foot of the front steps (cars parked at the steps), not 4.5 m out across a walk strip",
+  "claim": {
+    "value": {"drive_centre_x_at_walk": 17.35, "near_edge_x": 15.55, "gap_from_bottom_step_m": 1.5, "gap_from_lower_bed_wall_m": 0.7,
+              "drive_centreline_spec_xz": [[30.58, 21.40], [28.65, 21.41], [24.41, 21.48], [20.40, 20.20], [18.10, 17.20], [17.35, 13.50], [17.35, 9.72], [17.45, 6.40], [18.90, 3.10], [21.70, 1.45], [24.90, 0.55], [27.28, -0.51], [28.73, -1.18], [30.58, -2.02]],
+              "apron_m": [0.6, 1.9]},
+    "data": ["film-frame:1640"],
+    "scale": ["door-80in:spec"],
+    "upstream": ["marina"],
+    "applies_to": ["front-yard"],
+    "measured_in": ["front-yard"],
+    "risks": ["registration", "extraction"],
+    "how": "Topology from the frames (the drive at the foot of the steps); the distance is AUTHORED inside the evidence (DEVIATIONS 124): the 2009/2013 photos put the drive's edge within ~1 m of the bottom step (a grass strip, then a short pale apron), 1640 has Kevin standing on the drive ~1 m before the bottom step with the vans' wheels beyond; our lower bed wall stands 0.8 m proud of our bottom step (x 14.85 vs 14.05), so the edge is held 0.7 m off the wall: 1.5 m off the step. Our steps and beds (spec, door-80in scale) set the metres."
+  },
+  "history": [
+    {"date": "2026-10-19", "what": "changes/2026-10-19-front-drive.json: the U-drive on OSM's centreline (x 20.2-20.6 across the walk)", "outcome": "accepted except logged material/joint defects (component_verdicts.drive_and_piers); this moves its front run"}
+  ],
+  "premise_reviewed": "",
+  "checks": [
+    {"what": "Film 1640 (day, crop spec/captures/views/drive-to-steps/film1640_foot_of_steps.jpg): the airport vans stand on the drive directly before the steps and Kevin stands on the same grey surface about one step-width before the bottom riser; also 1570/1650 (same scene). The drive is at the foot of the steps", "agrees": true, "type": "topological", "tests": ["extraction"], "data": ["film-frame:1640", "film-frame:1650", "film-frame:1570"], "scale": ["none"], "upstream": []},
+    {"what": "Wikimedia Commons photos (https://commons.wikimedia.org/wiki/File:Home_Alone_House.jpg, 2009, CC BY-SA 2.0; https://commons.wikimedia.org/wiki/File:Home_Alone_house_-02-_(9807303134).jpg, 2013, CC BY-SA 2.0; not committed): the asphalt U-drive's front run passes the foot of the steps, separated by a narrow grass strip (2009) and a short pale concrete apron (2013); no walk to the sidewalk. Pre-2018 renovation, 19-23 years after the shoot (the steps unchanged)", "agrees": true, "type": "topological", "tests": ["extraction"], "data": ["commons-photo:2009-11-12", "commons-photo:2013-07-27"], "scale": ["none"], "upstream": []},
+    {"what": "The downloaded GLB's site (HOME ALONE FINAL.glb at its raw scale, changes/2026-10-19-front-drive.json): its front run lies 8.1 m before the facade -> centre x ~18.5 on ours (claim 17.35, OSM 20.46): nearer the claim than OSM, 1.1 m out", "agrees": true, "type": "metric", "tests": ["registration"], "data": ["glb:home-alone-final-site"], "scale": ["glb-raw-units"], "upstream": ["glb-model"]},
+    {"what": "OSM way 1012087264/65 (the previous record's layout): the front run at x 20.46, a 4.6 m walk strip between the steps and the drive", "agrees": false, "type": "metric", "tests": ["registration"], "data": ["osm:671-lincoln-ways-1012087264-65-66"], "scale": ["geodetic:osm"], "upstream": ["osm"], "disposition": "OSM's footway, steps and house front register to ~0.3 m, but the drive ways are a separate trace under the front oaks' canopy with nothing checking them, and the drive was removed in the 2018 renovation (photos 2026); two dated photos and the film see the front run directly at the steps, and the GLB's own model puts it 2 m nearer than OSM. The mouths (at the sidewalk, in the open) stay OSM's"}
+  ],
+  "renders": {
+    "before": ["spec/captures/views/drive-to-steps/plan_before.png"],
+    "after": ["spec/captures/views/drive-to-steps/plan_after.png"]
+  },
+  "user_walk": "pending",
+  "outcome": null
+}

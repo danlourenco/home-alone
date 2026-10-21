@@ -17,8 +17,8 @@
    "what": "breakfast passage + hutch between the dining doors"
   },
   "2026-10-19T08:48:45": {
-   "status": "open",
-   "what": "front walk not wet like the drive; texture job"
+   "status": "fixed",
+   "what": "TRIAL (not walked): wet ground by weather (WetGround: sunny pale/damp patches, overcast damper, night soaked) on the street, drives and walk (one asphalt), damp jointed sidewalks, wet red steps, apron; drive run pulled in to 1.5 m off the steps (changes/2026-10-20-drive-to-steps.json, DEVIATIONS 124); wet_check.py per state"
   },
   "2026-10-19T08:52:43": {
    "status": "info",
@@ -37,8 +37,8 @@
    "what": "street-end mess: neighbourhood plan (RESUME 2-3), after shrubs + ground"
   },
   "2026-10-19T09:50:14": {
-   "status": "open",
-   "what": "driveway vs walkway texture differ; texture job"
+   "status": "fixed",
+   "what": "TRIAL (not walked): wet ground by weather (WetGround: sunny pale/damp patches, overcast damper, night soaked) on the street, drives and walk (one asphalt), damp jointed sidewalks, wet red steps, apron; drive run pulled in to 1.5 m off the steps (changes/2026-10-20-drive-to-steps.json, DEVIATIONS 124); wet_check.py per state"
   },
   "2026-10-19T09:50:49": {
    "status": "fixed",
@@ -77,8 +77,8 @@
    "what": "dithered porch shadow"
   },
   "2026-10-19T12:11:16": {
-   "status": "open",
-   "what": "front walk stone dry vs wet asphalt; texture job"
+   "status": "fixed",
+   "what": "TRIAL (not walked): wet ground by weather (WetGround: sunny pale/damp patches, overcast damper, night soaked) on the street, drives and walk (one asphalt), damp jointed sidewalks, wet red steps, apron; drive run pulled in to 1.5 m off the steps (changes/2026-10-20-drive-to-steps.json, DEVIATIONS 124); wet_check.py per state"
   },
   "2026-10-19T12:12:25": {
    "status": "open",

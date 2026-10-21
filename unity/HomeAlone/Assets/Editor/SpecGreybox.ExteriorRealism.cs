@@ -59,6 +59,21 @@ public static partial class SpecGreybox
         HDMaterial.ValidateMaterial(m); EditorUtility.SetDirty(m); return m;
     }
 
+    // Wet poured concrete (walk notes Oct 19 08:48/09:50/12:11; tools/house/exterior_textures.py wet_slabs, gate tools/house/wet_check.py):
+    // world triplanar like the street's, 3.0 m per repeat for the walk sets (two 1.5 m slabs), the mask's wet smoothness (0.70-0.95) and AO; the texture
+    // offset puts a joint at world x = x0 / z = z0; normalId: the folder holding the normal map (a state set shares its night set's)
+    static Material WetMat(string n, string id, Color tint, float x0 = 0f, float z0 = 0f, float tile = 3.0f, string normalId = null)
+    {
+        var m = TexMat(n, id, tint, tile, 0.83f);
+        if (normalId != null) m.SetTexture("_NormalMap", PHMap(normalId, "normal.jpg", true, true));
+        m.SetTexture("_MaskMap", PHMap(id, "mask.png", true));
+        m.SetFloat("_MetallicRemapMin", 0f); m.SetFloat("_MetallicRemapMax", 0f);
+        m.SetFloat("_SmoothnessRemapMin", 0f); m.SetFloat("_SmoothnessRemapMax", 1f);
+        m.SetFloat("_AORemapMin", 0.35f); m.SetFloat("_AORemapMax", 1f);
+        m.SetTextureScale("_BaseColorMap", Vector2.one); m.SetTextureOffset("_BaseColorMap", new Vector2(-x0 / tile, -z0 / tile));
+        HDMaterial.ValidateMaterial(m); EditorUtility.SetDirty(m); return m;
+    }
+
     static Material IceMat()
     {
         var m = Mat("HiFi_ExtIce", new Color(0.78f, 0.86f, 0.93f)); m.SetFloat("_Smoothness", 0.92f); HDMaterial.ValidateMaterial(m); return m;
@@ -122,7 +137,7 @@ public static partial class SpecGreybox
         var holder = new GameObject("ExteriorRealism"); holder.transform.SetParent(ext.transform, true); holder.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         var snowM = TexMat("HiFi_ExtGroundSnow", "snow_02_x", new Color(0.95f, 0.97f, 1.0f), 2.2f, 0.40f);
         var brick = TexMat("HiFi_ExtBrick", "red_brick_03_x", new Color(0.80f, 0.60f, 0.53f), 1.90f, 0.12f);
-        var tread = TexMat("HiFi_ExtStepStone", "concrete_floor_01_x", new Color(0.83f, 0.42f, 0.34f), 0.9f, 0.55f);   // film 4382 red steps; damp/frosty sheen
+        var tread = WetMat("HiFi_ExtStepStone", "step_wet", new Color(0.83f, 0.42f, 0.34f), tile: 0.9f);   // film 4382/1640: red exposed-aggregate concrete, wet like the walk (9857)
         var iron = Mat("HiFi_ExtIron", new Color(0.012f, 0.012f, 0.012f)); iron.SetFloat("_Metallic", 0.6f); iron.SetFloat("_Smoothness", 0.45f);
         iron.SetFloat("_DoubleSidedEnable", 1f); HDMaterial.ValidateMaterial(iron);   // the bars' winding is not checked
         int nSnow = 0;
@@ -228,10 +243,10 @@ public static partial class SpecGreybox
         // shovelled banks along the walk to the street (film 10174, Pietro)
         foreach (float s in new[] { -1f, 1f })
         {
-            Mound(15.1f, 18.1f, -(zc + s * 0.80f), -(zc + s * 1.45f), true, 0.24f, bank, yF + 0.5f, 0.6f);   // open where the front drive crosses (x 18.6-22.3: SpecGreybox.FrontDrive)
+            // (none between the steps and the drive: the drive passes 1.5 m off the bottom step, x 15.55-19.15: SpecGreybox.FrontDrive)
             // on to the walk piers (x 28.30, SpecGreybox.FrontDrive; was 24.2, the old GLB street): they bury the side faces of the walk's
             // last 4.5 m, a slab 17 cm proud of the lawn ("Front walk connection", 1.9 m wide; walk note Oct 19 09:04: the ledge round the piers)
-            Mound(22.8f, 28.27f, -(zc + s * 0.80f), -(zc + s * 1.45f), true, 0.24f, bank, yF + 0.5f, 0.3f);
+            Mound(WalkBankX0, 28.27f, -(zc + s * 0.80f), -(zc + s * 1.45f), true, 0.24f, bank, yF + 0.5f, 0.3f);
         }
         // the sidewalk's lawn edge: the public sidewalk stands 15 cm proud of the front lawn (x 28.87); snow drifted against it, over the
         // piers' and wings' feet, open at the walk and the drive mouths as the kerb banks below (world z)
