@@ -240,6 +240,12 @@ public class PerfProbe : MonoBehaviour
             foreach (var kv in hidden) kv.Key.enabled = kv.Value; hidden.Clear();
             foreach (var kv in queue0) kv.Key.renderQueue = kv.Value; queue0.Clear();
             var hideT = L("hide", new string[0]); var lowT = L("lowres", new string[0]);
+            // hidename=N1,N2: renderers whose object name starts with a token are switched off (Oct 21, brick-upstairs discriminator:
+            // hidename=U_Roof,U_Cornice,U_Gutter,U_Icicles,U_Dormer takes the skin's eaves out of the real-time image; the bake keeps them)
+            var hn = L("hidename", new string[0]);
+            if (hn.Length > 0)
+                foreach (var r in FindObjectsByType<Renderer>(FindObjectsInactive.Include))
+                    if (hn.Any(t => r.name.StartsWith(t)) && !hidden.ContainsKey(r)) { hidden[r] = r.enabled; r.enabled = false; }
             if (hideT.Length + lowT.Length > 0)
                 foreach (var r in FindObjectsByType<Renderer>(FindObjectsInactive.Include))
                     foreach (var mt in r.sharedMaterials)
