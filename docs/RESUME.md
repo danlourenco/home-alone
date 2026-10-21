@@ -167,7 +167,7 @@ Tiers by player distance; detail follows sightlines (window views, the film's ex
 - Open: Tier 3 extension + Tier 4 treeline + the dome (manifest "tiers"), the Mac baseline into "budgets.baseline_ms", the user's decisions (hand-back).
 
 ## 5. Step 3 results (Oct 20-21; art/home_alone/references/neighborhood/README.md "Step 3"; DEVIATIONS 125)
-- **User direction (Oct 20):** walkable heroes = our lot, **Marley's (lot_A+1, the left neighbour from the street)** and **the Murphys'
+- **User direction (Oct 20):** walkable heroes = our lot, **Marley's (lot_A+1, the left neighbour from the street)** (SETTLED by the user Oct 20 and confirmed Oct 21 from the reunion 12490-12538 + film 1888: the pink turret house; no a/b/c, the right-side Tudor in nb-tudor-pending is discarded) and **the Murphys'
   (lot_B0)**; everything else is a realistic, unreachable backdrop behind a walk boundary. Vehicles: realistic models are being sourced by a
   separate agent; the proxies swap via `Assets/Purchased/Vehicles/<kind>.prefab`.
 - Built and gated in scratch (`HA_NEIGHBORHOOD=1`, ~/.cache/home-alone-2, build 7, UNBAKED): z-fight 0, clash 0, Opening clear 0, walk
