@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 // F1 controls panel (user, Oct 20: "you've given me a lot of commands to test lighting and such. Could you give me a hud with controls
 // to reference"). UI Toolkit (Oct 21; the project has no uGUI package): the key list is Assets/UI/Controls/Resources/ControlsPanel.uxml
 // (keep it in step with FpsController's header), styled by ../ControlsPanel.uss; the "Now" strip shows the live values the user tunes
-// (night white balance [ ], render scale P, resolution, day/night, weather). Also the "F1 · controls" hint (first 8 s) and RenderScale's
+// (night white balance [ ], render scale P, anti-aliasing Y, resolution, day/night, weather). Also the "F1 · controls" hint (first 8 s) and RenderScale's
 // P toast. Created at scene load, no scene edit; skipped under -perfprobe so the perf tour's frames stay clean.
 // PanelSettings is made here, not a hand-written .asset (its YAML names a built-in script by fileID: fragile across versions); the
 // theme is ControlsTheme.tss, a real imported ThemeStyleSheet. Resources.Load puts both entry points, and the USS and Inter fonts they
@@ -14,11 +14,11 @@ public class ControlsHelp : MonoBehaviour
     const float HintSeconds = 8f, Tick = 0.25f;   // live values refresh at most 4 times a second, and only rebuild text on a change
     const string Faded = "is-faded", Hidden = "is-hidden", WbKey = "NightWhiteBalance";
     static readonly string[] Weathers = { "sunny", "morning", "overcast" };
-    VisualElement panel, hint; Label toast, wbValue, scaleValue, resValue, timeValue, weatherValue;
+    VisualElement panel, hint; Label toast, wbValue, scaleValue, aaValue, resValue, timeValue, weatherValue;
     HouseNightMode nightMode; HouseWeather weather;
     bool open; float hintUntil, nextTick, toastStamp;
     float lastWb = float.NaN, lastMode = float.NaN, lastPct = float.NaN;
-    int lastWbSaved = -1, lastW = -1, lastH = -1, lastFs = -1, lastNight = -1, lastWeather = -1;
+    int lastAA = -1, lastWbSaved = -1, lastW = -1, lastH = -1, lastFs = -1, lastNight = -1, lastWeather = -1;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     static void Create()
@@ -40,7 +40,7 @@ public class ControlsHelp : MonoBehaviour
         var root = GetComponent<UIDocument>().rootVisualElement;
         root.pickingMode = PickingMode.Ignore; root.Query<VisualElement>().ForEach(e => e.pickingMode = PickingMode.Ignore);
         panel = root.Q("panel"); hint = root.Q("hint"); toast = root.Q<Label>("toast");
-        wbValue = root.Q<Label>("wbValue"); scaleValue = root.Q<Label>("scaleValue"); resValue = root.Q<Label>("resValue");
+        wbValue = root.Q<Label>("wbValue"); scaleValue = root.Q<Label>("scaleValue"); aaValue = root.Q<Label>("aaValue"); resValue = root.Q<Label>("resValue");
         timeValue = root.Q<Label>("timeValue"); weatherValue = root.Q<Label>("weatherValue");
         nightMode = FindAnyObjectByType<HouseNightMode>(FindObjectsInactive.Include); weather = FindAnyObjectByType<HouseWeather>(FindObjectsInactive.Include);
         hintUntil = Time.unscaledTime + HintSeconds; toastStamp = RenderScale.ToastUntil;
@@ -66,6 +66,7 @@ public class ControlsHelp : MonoBehaviour
             if (toastOn) toast.text = RenderScale.ToastText;
         }
         else if (now && toastOn) toast.text = RenderScale.ToastText;
+        if (Changed(ref lastAA, (int)RenderScale.AA)) aaValue.text = RenderScale.AALabel;
         if (Changed(ref lastWb, HouseNightMode.WbTemperature) | Changed(ref lastWbSaved, PlayerPrefs.HasKey(WbKey) ? 1 : 0))
             wbValue.text = $"{lastWb:+0;-0;0}" + (lastWbSaved == 1 ? "" : " (default)");
         if (Changed(ref lastNight, !nightMode ? -1 : nightMode.night ? 1 : 0)) timeValue.text = lastNight < 0 ? "n/a" : lastNight == 1 ? "night" : "day";

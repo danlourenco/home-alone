@@ -31,9 +31,9 @@
   {
    "id": "antialias",
    "title": "Smoothing the stair-steps: anti-aliasing at the full-screen default",
-   "status": "needs-you",
+   "status": "settled",
    "date": "Oct 21",
-   "when": "Now: pick one (read only, no Mac needed). I recommend STP; walk it to check for smearing before it ships.",
+   "when": "Settled: you picked STP. It is the default from the next build; Y cycles off / FXAA / SMAA / TAA / STP live (saved) so you can judge smearing in motion; F1 shows the current one.",
    "what": "The camera has had no anti-aliasing since full screen went to 2048x1152. All four options keep every room over 30 fps at the default size; 2560x1440 with TAA or SMAA drops the foyer to 27 and the street to 29, so the size stays. Recommendation: STP (temporal, at 100%, no upscale): twigs and railings become continuous lines like TAA but it stays crisper on brick, shingles and wallpaper, for about 4% of the frame. The transparent-pass cost seen before is gone with the room-fitted lamps (switching those passes off changes nothing now).",
    "look": [
     "Edges strip (top to bottom): branches against the sky, the blue house's roof and dormer, the newel and balusters, the mirror frame; left to right: none, FXAA, SMAA, TAA, STP, all 2x.",

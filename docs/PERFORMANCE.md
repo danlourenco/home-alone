@@ -372,3 +372,6 @@ STP forced to 100% does not bring back the dynamic-resolution stall (-4%). Edges
 texture but twigs stay broken; TAA and STP draw twigs whole, STP crisper. Recommended STP@100% (not shipped: the user picks).
 With fit=1 the transparent-pass split (prepass, postpass, low-res, refraction, distortion, motion vectors, SSR, lens flare) changes
 nothing (36 -> 36-37 fps foyer).
+**Shipped (Oct 21, user: "yes, stp default sounds good"):** STP at a forced 100% is the default anti-aliasing (`RenderScale.AA`); Y cycles
+off / FXAA / SMAA / TAA / STP live (PlayerPrefs `AntiAliasing`, toast, F1 "Now" cell). PerfProbe `aa=` sets it per variant without
+saving; the tour base is now STP (`aa=none` = the old no-AA look).

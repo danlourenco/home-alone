@@ -87,6 +87,10 @@
               <ui:Label class="desc" text="render scale auto / 100 / 75 / 50 / 38 %" />
             </ui:VisualElement>
             <ui:VisualElement class="row">
+              <ui:VisualElement class="keys"><ui:Label class="key" text="Y" /></ui:VisualElement>
+              <ui:Label class="desc" text="anti-aliasing off / FXAA / SMAA / TAA / STP" />
+            </ui:VisualElement>
+            <ui:VisualElement class="row">
               <ui:VisualElement class="keys"><ui:Label class="key" text="K" /></ui:VisualElement>
               <ui:Label class="desc" text="hide everything off the lot" />
             </ui:VisualElement>
@@ -112,6 +116,7 @@
         <ui:Label class="section-title now-title" text="NOW" />
         <ui:VisualElement class="stat"><ui:Label class="stat-caption" text="Night white balance" /><ui:Label name="wbValue" class="stat-value" /></ui:VisualElement>
         <ui:VisualElement class="stat"><ui:Label class="stat-caption" text="Render scale" /><ui:Label name="scaleValue" class="stat-value" /></ui:VisualElement>
+        <ui:VisualElement class="stat"><ui:Label class="stat-caption" text="Anti-aliasing" /><ui:Label name="aaValue" class="stat-value" /></ui:VisualElement>
         <ui:VisualElement class="stat"><ui:Label class="stat-caption" text="Resolution" /><ui:Label name="resValue" class="stat-value" /></ui:VisualElement>
         <ui:VisualElement class="stat"><ui:Label class="stat-caption" text="Time" /><ui:Label name="timeValue" class="stat-value" /></ui:VisualElement>
         <ui:VisualElement class="stat"><ui:Label class="stat-caption" text="Weather" /><ui:Label name="weatherValue" class="stat-value" /></ui:VisualElement>

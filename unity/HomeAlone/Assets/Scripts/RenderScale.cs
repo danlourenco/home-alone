@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using HDCam = UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData;
 
 // RENDER SCALE (Oct 21; docs/PERFORMANCE.md "Full screen 5K" and "fs5k-diag"): in FULL SCREEN the backbuffer itself is rendered at a
 // share of the display's native pixels and macOS scales it to the panel. No HDRP dynamic resolution: on this Metal player it stalls the
@@ -8,19 +9,28 @@ using UnityEngine.Rendering;
 // AUTO (0, the default; user Oct 20: "I see no difference between the high res render and the 2048x1152"): about AutoHeight pixels
 // high (5K -> 2048x1152); a display at or under AutoHeight stays native. P cycles auto/100/75/50/38 (% of native, saved in PlayerPrefs).
 // PerfProbe's scale=P sets it without saving; Manual (PerfProbe screen=WxH) leaves the backbuffer to the caller.
+// ANTI-ALIASING (Oct 21, fs-aa; user: "yes, stp default sounds good"): Y cycles none / FXAA / SMAA / TAA / STP (saved, PlayerPrefs
+// "AntiAliasing"); default STP = HDRP's STP at a forced 100% (temporal AA, no upscale; the camera opts into dynamic resolution, which at a
+// fixed 100% costs ~4% and does not stall). TAA = High, post sharpen 0.5; SMAA = High. PerfProbe aa=... sets it without saving.
 public class RenderScale : MonoBehaviour
 {
     public static readonly float[] Steps = { 0f, 100f, 75f, 50f, 38f };   // 0 = auto; 5K full screen: native, 4K, 1440p, ~1080p
     public const float Default = 0f, AutoHeight = 1152f; const string Key = "RenderScale";
     public static float Mode { get; private set; } = Default;   // what the user picked (0 = auto)
-    public static bool Manual, Stp;   // Stp (PerfProbe aa=stp): the camera opts into dynamic resolution, forced to 100% = STP as pure TAA
+    public static bool Manual;
+    public enum AAMode { None, FXAA, SMAA, TAA, STP }
+    public const AAMode DefaultAA = AAMode.STP; const string AAKey = "AntiAliasing";
+    public static AAMode AA { get; private set; } = DefaultAA;
+    static bool Stp => AA == AAMode.STP;
+    public static string AALabel => AA switch { AAMode.None => "off", AAMode.FXAA => "FXAA", AAMode.SMAA => "SMAA (high)", AAMode.TAA => "TAA (high)", _ => "STP (temporal, 100%)" };
+    static bool aaToast;
     static bool Full => Screen.fullScreenMode != FullScreenMode.Windowed;
     static Vector2Int Native { get { var d = Screen.mainWindowDisplayInfo; return d.height > 0 ? new Vector2Int(d.width, d.height) : new Vector2Int(Screen.currentResolution.width, Screen.currentResolution.height); } }
     public static float Percent => !Full ? 100f : Mode > 0f ? Mode : Mathf.Min(100f, AutoHeight / Mathf.Max(1, Native.y) * 100f);
     public static string Label => (Mode > 0f ? $"{Mode:0}%" : $"auto ({Percent:0}%)") + (Full ? "" : ", window: native");
     // the P toast, drawn by ControlsHelp's UI Toolkit layer: shown until ToastUntil, its text read while it shows
     public static float ToastUntil { get; private set; }
-    public static string ToastText => $"Render scale {Label}: {Screen.width}x{Screen.height} of {Native.x}x{Native.y}{(Full ? ", scaled to the display" : "")}   (P cycles auto/100/75/50/38)";
+    public static string ToastText => aaToast ? $"Anti-aliasing {AALabel}   (Y cycles off / FXAA / SMAA / TAA / STP)" : $"Render scale {Label}: {Screen.width}x{Screen.height} of {Native.x}x{Native.y}{(Full ? ", scaled to the display" : "")}   (P cycles auto/100/75/50/38)";
     static float askedAt = -10f; static Vector2Int asked;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -28,12 +38,20 @@ public class RenderScale : MonoBehaviour
     {
         var g = new GameObject("RenderScale"); DontDestroyOnLoad(g); g.AddComponent<RenderScale>();
         Set(PlayerPrefs.GetFloat(Key, Default), false);
+        SetAA((AAMode)Mathf.Clamp(PlayerPrefs.GetInt(AAKey, (int)DefaultAA), 0, 4), false);
+    }
+
+    public static void SetAA(AAMode m, bool save)
+    {
+        AA = m; DynRes(lastInject, lastType, lastStpOn);   // STP's forced 100% follows AA
+        if (save) { PlayerPrefs.SetInt(AAKey, (int)m); PlayerPrefs.Save(); aaToast = true; ToastUntil = Time.unscaledTime + 3f; }
+        Apply();
     }
 
     public static void Set(float pct, bool save)
     {
         Mode = pct <= 0f ? 0f : Mathf.Clamp(pct, 33f, 100f);
-        if (save) { PlayerPrefs.SetFloat(Key, Mode); PlayerPrefs.Save(); ToastUntil = Time.unscaledTime + 3f; }
+        if (save) { PlayerPrefs.SetFloat(Key, Mode); PlayerPrefs.Save(); aaToast = false; ToastUntil = Time.unscaledTime + 3f; }
         askedAt = -10f; Apply();
     }
 
@@ -43,7 +61,17 @@ public class RenderScale : MonoBehaviour
     {
         var cam = Camera.main;
         if (cam && cam.allowDynamicResolution != Stp) cam.allowDynamicResolution = Stp;
-        if (cam && cam.TryGetComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData>(out var hd) && hd.allowDynamicResolution != Stp) hd.allowDynamicResolution = Stp;
+        if (cam && cam.TryGetComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData>(out var hd))
+        {
+            if (hd.allowDynamicResolution != Stp) hd.allowDynamicResolution = Stp;
+            var want = AA switch { AAMode.FXAA => HDCam.AntialiasingMode.FastApproximateAntialiasing, AAMode.SMAA => HDCam.AntialiasingMode.SubpixelMorphologicalAntiAliasing,
+                AAMode.TAA => HDCam.AntialiasingMode.TemporalAntialiasing, _ => HDCam.AntialiasingMode.None };   // STP does its own AA
+            if (hd.antialiasing != want)
+            {
+                hd.antialiasing = want; hd.SMAAQuality = HDCam.SMAAQualityLevel.High;
+                hd.TAAQuality = HDCam.TAAQualityLevel.High; hd.taaSharpenMode = HDCam.TAASharpenMode.PostSharpen; hd.taaSharpenStrength = 0.5f;
+            }
+        }
         if (Manual || !Full) return;
         var n = Native; var t = new Vector2Int(Mathf.RoundToInt(n.x * Percent / 100f), Mathf.RoundToInt(n.y * Percent / 100f));
         if (Screen.width == t.x && Screen.height == t.y) return;
@@ -55,8 +83,10 @@ public class RenderScale : MonoBehaviour
     // dynamic resolution, and the upscaler (false = no STP: HDRP's CatmullRom filter). Through the private serialized struct: the public
     // setter calls OnValidate, which re-creates the pipeline in a player
     static GlobalDynamicResolutionSettings? dr0;
+    static DynamicResolutionHandler.UpsamplerScheduleType? lastInject; static DynamicResolutionType? lastType; static bool? lastStpOn;
     public static string DynRes(DynamicResolutionHandler.UpsamplerScheduleType? inject, DynamicResolutionType? type = null, bool? stp = null, float? forcePct = null)
     {
+        lastInject = inject; lastType = type; lastStpOn = stp; forcePct ??= Stp ? 100f : (float?)null;
         if (!(GraphicsSettings.currentRenderPipeline is UnityEngine.Rendering.HighDefinition.HDRenderPipelineAsset a)) return "no HDRP asset";
         var f = typeof(UnityEngine.Rendering.HighDefinition.HDRenderPipelineAsset).GetField("m_RenderPipelineSettings", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
         if (f == null) return "m_RenderPipelineSettings not found";
@@ -77,6 +107,7 @@ public class RenderScale : MonoBehaviour
             int i = System.Array.FindIndex(Steps, s => Mathf.Abs(s - Mode) < 0.5f);
             Set(Steps[(i + 1) % Steps.Length], true);
         }
+        if (Input.GetKeyDown(KeyCode.Y)) SetAA((AAMode)(((int)AA + 1) % 5), true);
         Apply();
     }
 }
