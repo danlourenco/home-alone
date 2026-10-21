@@ -1,0 +1,1 @@
+-perfab -perfrounds 1 -perfbasescale auto -perfposes street-day,street-night,van-night,foyer,hall-night,kitchen-night,attic-day,living-night -perfvariants inject=after;screen=2560x1440;scale=adaptive;screen=2560x1440+inject=after;screen=2560x1440+inject=after+scale=adaptive

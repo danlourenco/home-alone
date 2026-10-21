@@ -41,7 +41,8 @@ public class PerfProbe : MonoBehaviour
         // Oct 20 (house split, walk note 20:56): -perfposes parentsdoor,street -perfvariants "split=rooms;weather=overcast;..."
         ("parentsdoor", new Vector3(6.16f, 1.31f, -5.40f), 0f, -12f),    // in the parents' bedroom doorway (hall_end side, mid-wall), looking in
         // Oct 20 (neighbourhood, SpecGreybox.Neighborhood.cs): -perfposes piers,murphys,upwindow,street (+ -perfvariants nbold for the old exterior)
-        ("piers", new Vector3(29.0f, -2.58f, -9.716f), 125f, 2f),        // between our walk piers on the sidewalk, across and down Lincoln (film-left)
+        ("piers", new Vector3(29.0f, -2.58f, -9.716f), 125f, 2f),
+        ("walk0645", new Vector3(32.128f, -3.182f, -9.659f), 267.3f, -1.1f), // walk note 2026-10-21T06:45:32 (Kevin's eye at the piers, facing the house): mailbox, lanterns, brick, protruding upstairs        // between our walk piers on the sidewalk, across and down Lincoln (film-left)
         ("murphys", new Vector3(28.68f, -2.63f, -21.96f), 67f, -1.5f),   // film 11581's solved camera (nb_film_camera.py; the player's FOV, not the film's 24.8 deg)
         ("upwindow", new Vector3(9.6f, 1.31f, -9.716f), 90f, 4f),        // upstairs over the front door, out the front window to the Murphys
         ("van", new Vector3(37.5f, -2.7f, -33.5f), 322.5f, 2f),          // across Lincoln toward the bandits' van by our lamp post (film 3297's side; night)
@@ -173,7 +174,7 @@ public class PerfProbe : MonoBehaviour
             d.Sort(); return extent[l] = d[(int)(0.9f * (d.Count - 1))];
         }
         string baseScale = Arg("-perfbasescale") ?? "100";   // -perfbasescale auto: the base is the shipped AUTO scale (Phase A, Oct 20)
-        var screen0 = new Vector2Int(Screen.width, Screen.height);
+        var screen0 = new Vector2Int(Screen.width, Screen.height); var mode0 = Screen.fullScreenMode;
         void Apply(int v) => ApplyV(v > 0, v > 0 && variants.Count > 0 ? variants[v - 1] : null);
         void ApplyV(bool variant, Dictionary<string, string> spec)
         {
@@ -236,12 +237,17 @@ public class PerfProbe : MonoBehaviour
             float Pct(string v) => v == "auto" ? 0f : v == "adaptive" ? -1f : float.Parse(v, System.Globalization.CultureInfo.InvariantCulture);
             RenderScale.Set(Pct(spec != null && (S("scale") ?? S("res")) is string rp ? rp : baseScale), false);
             // inject=before|dof|after: STP's injection point (HDRP.asset: before = post at the output size); the base is the asset's
-            injectNow = RenderScale.Injection(S("inject") switch { "after" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.AfterPost, "dof" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.AfterDepthOfField,
-                "before" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.BeforePost, _ => (UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType?)null });
+            // dynres=soft|hard: software / hardware dynamic resolution; upscaler=none: no STP (CatmullRom). Base: the asset's
+            injectNow = RenderScale.DynRes(S("inject") switch { "after" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.AfterPost, "dof" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.AfterDepthOfField,
+                "before" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.BeforePost, _ => (UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType?)null },
+                S("dynres") switch { "soft" => UnityEngine.Rendering.DynamicResolutionType.Software, "hard" => UnityEngine.Rendering.DynamicResolutionType.Hardware, _ => (UnityEngine.Rendering.DynamicResolutionType?)null },
+                S("upscaler") == "none" ? false : (bool?)null);
             // screen=WxH: the backbuffer (full screen: the OS / Unity scale it to the panel, e.g. 2560x1440 = the Studio Display's "looks
             // like" size); the base is the size the tour started at. The JSON records what the player got (screen, backbuffer)
-            var wh = (S("screen") ?? $"{screen0.x}x{screen0.y}").Split('x').Select(int.Parse).ToArray();
-            if (Screen.width != wh[0] || Screen.height != wh[1]) Screen.SetResolution(wh[0], wh[1], Screen.fullScreenMode);
+            // screen=WxHw (trailing w): windowed at that size on the same display (the NB4-style 1920x1080 window)
+            var scr = S("screen") ?? $"{screen0.x}x{screen0.y}"; var mode = scr.EndsWith("w") ? FullScreenMode.Windowed : mode0;
+            var wh = scr.TrimEnd('w').Split('x').Select(int.Parse).ToArray();
+            if (Screen.width != wh[0] || Screen.height != wh[1] || Screen.fullScreenMode != mode) Screen.SetResolution(wh[0], wh[1], mode);
             // sunless=on: the never-sunlit pieces (SpecGreybox.SunCull) cast into the sun's cascades again by day
             if (night && !night.night)
                 for (int k = 0; k < night.sunlessCasters.Length && k < night.sunlessModes.Length; k++)
@@ -330,6 +336,18 @@ public class PerfProbe : MonoBehaviour
         }
         File.WriteAllText(Path.Combine(dir, "done.txt"), "ok\n");
         Application.Quit();
+    }
+
+    // what dynamic resolution actually did (Phase A anomaly, Oct 21): the camera's pixel and scaled sizes, HDRP's camera size, the
+    // handler's scale and last scaled size, the RTHandle pool's max size
+    static string DynResReadout()
+    {
+        var c = Camera.main; if (!c) return "\"dynres\":null";
+        var h = UnityEngine.Rendering.HighDefinition.HDCamera.GetOrCreate(c); var dh = UnityEngine.Rendering.DynamicResolutionHandler.instance;
+        string ls = dh != null ? $"{dh.GetLastScaledSize().x}x{dh.GetLastScaledSize().y}" : "-";
+        return $"\"dynres\":{{\"cam_pixel\":\"{c.pixelWidth}x{c.pixelHeight}\",\"cam_scaled\":\"{c.scaledPixelWidth}x{c.scaledPixelHeight}\",\"allow\":{c.allowDynamicResolution.ToString().ToLower()},"
+            + $"\"hd_actual\":\"{h.actualWidth}x{h.actualHeight}\",\"handler_scale\":{(dh != null ? dh.GetCurrentScale() : -1f):F3},\"handler_last\":\"{ls}\",\"rthandles_max\":\"{UnityEngine.Rendering.RTHandles.maxWidth}x{UnityEngine.Rendering.RTHandles.maxHeight}\","
+            + $"\"sbm\":\"{ScalableBufferManager.widthScaleFactor:F3}x{ScalableBufferManager.heightScaleFactor:F3}\"}}";
     }
 
     public static void Run(string name, int frames)
@@ -422,7 +440,7 @@ public class PerfProbe : MonoBehaviour
         Last = "{" + $"\"name\":\"{name}\",\"frames\":{frames},\"rest_s\":{rest},\"cpu_ms_median\":{Pct(cpu, 0.5f):F1},\"cpu_ms_p95\":{Pct(cpu, 0.95f):F1},\"cpu_ms_p99\":{Pct(cpu, 0.99f):F1},"
              + $"\"gpu_ms_median\":{gpuS},\"gpu_ms_p10\":{gpu10},\"gpu_ms_p95\":{Q(gpu, 0.95f)},\"gpu_ms_p99\":{Q(gpu, 0.99f)},\"main_ms_median\":{Q(main, 0.5f)},\"render_ms_median\":{Q(rend, 0.5f)},\"rt_lights\":{rt},\"rt_shadow_lights\":{rtShadow}," + string.Join(",", vals.Select(kv => $"\"{kv.Key}\":{Med(kv.Value)}"))
              + ",\"frame_log\":" + flog
-             + $",\"screen\":\"{Screen.width}x{Screen.height}\",\"render_scale\":{RenderScale.Percent:F0},\"internal\":\"{Mathf.RoundToInt(Screen.width * ScalableBufferManager.widthScaleFactor)}x{Mathf.RoundToInt(Screen.height * ScalableBufferManager.heightScaleFactor)}\",\"backbuffer\":\"{Display.main.renderingWidth}x{Display.main.renderingHeight}\",\"inject\":\"{injectNow}\",\"transparents\":{transpJ},\"scale_mode\":\"{RenderScale.Label}\",\"focused\":{Application.isFocused.ToString().ToLower()},\"cam\":\"{cam.position.x:F2},{cam.position.y:F2},{cam.position.z:F2} yaw {cam.eulerAngles.y:F0}\"" + "}";
+             + $",\"screen\":\"{Screen.width}x{Screen.height}\",\"render_scale\":{RenderScale.Percent:F0},\"internal\":\"{Mathf.RoundToInt(Screen.width * ScalableBufferManager.widthScaleFactor)}x{Mathf.RoundToInt(Screen.height * ScalableBufferManager.heightScaleFactor)}\",\"backbuffer\":\"{Display.main.renderingWidth}x{Display.main.renderingHeight}\",\"mode\":\"{Screen.fullScreenMode}\",\"window_display\":\"{Screen.mainWindowDisplayInfo.name}\",\"vsync\":{QualitySettings.vSyncCount},{DynResReadout()},\"inject\":\"{injectNow}\",\"transparents\":{transpJ},\"scale_mode\":\"{RenderScale.Label}\",\"focused\":{Application.isFocused.ToString().ToLower()},\"cam\":\"{cam.position.x:F2},{cam.position.y:F2},{cam.position.z:F2} yaw {cam.eulerAngles.y:F0}\"" + "}";
         var dir = outDir ?? Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/captures/perf")); Directory.CreateDirectory(dir);
         File.WriteAllText(Path.Combine(dir, name + ".json"), Last + "\n");
         if (outDir == null) Destroy(gameObject);

@@ -11,7 +11,7 @@ using UnityEngine.Rendering;
 // time on this GPU-bound Metal player; FrameTimingManager's GPU time is too sparse, docs/PERFORMANCE.md) over 33.3 ms steps the scale down
 // 5 points, under 25 ms steps it back up (hysteresis), never below about 720 px high. A step down that doesn't cut the mean by 3% (STP's
 // fixed cost: a 1080p window, PERFORMANCE.md "Resolution A/B") is undone and the scaler holds 30 s.
-// INJECTION (Injection): where STP upscales. HDRP.asset STPInjectionPoint = BeforePost (post runs at the output size, 5K full screen);
+// DYNRES (DynRes): where STP upscales, software/hardware, STP or not. HDRP.asset STPInjectionPoint = BeforePost (post runs at the output size, 5K full screen);
 // AfterPost runs post at the internal size. Set at runtime through the asset's serialized settings (the public setter re-creates HDRP).
 public class RenderScale : MonoBehaviour
 {
@@ -64,18 +64,22 @@ public class RenderScale : MonoBehaviour
         else if (mean < AdaptUpMs && p < H(AutoHeight) - 0.5f) adapt = p + AdaptStep;
     }
 
-    // STP's injection point (null = HDRP.asset's own). Through the private serialized struct: the public setter calls OnValidate,
-    // which re-creates the pipeline in a player
-    static DynamicResolutionHandler.UpsamplerScheduleType? injection0;
-    public static string Injection(DynamicResolutionHandler.UpsamplerScheduleType? t)
+    // Dynamic resolution settings at runtime (PerfProbe variants; null = HDRP.asset's own): STP's injection point, Software/Hardware
+    // dynamic resolution, and the upscaler (false = no STP: HDRP's CatmullRom filter). Through the private serialized struct: the public
+    // setter calls OnValidate, which re-creates the pipeline in a player
+    static GlobalDynamicResolutionSettings? dr0;
+    public static string DynRes(DynamicResolutionHandler.UpsamplerScheduleType? inject, DynamicResolutionType? type = null, bool? stp = null)
     {
         if (!(GraphicsSettings.currentRenderPipeline is UnityEngine.Rendering.HighDefinition.HDRenderPipelineAsset a)) return "no HDRP asset";
         var f = typeof(UnityEngine.Rendering.HighDefinition.HDRenderPipelineAsset).GetField("m_RenderPipelineSettings", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
         if (f == null) return "m_RenderPipelineSettings not found";
         var s = (UnityEngine.Rendering.HighDefinition.RenderPipelineSettings)f.GetValue(a);
-        injection0 ??= s.dynamicResolutionSettings.STPInjectionPoint;
-        s.dynamicResolutionSettings.STPInjectionPoint = t ?? injection0.Value; f.SetValue(a, s);
-        return a.currentPlatformRenderPipelineSettings.dynamicResolutionSettings.STPInjectionPoint.ToString();
+        dr0 ??= s.dynamicResolutionSettings; var d = dr0.Value;
+        d.STPInjectionPoint = inject ?? d.STPInjectionPoint; d.dynResType = type ?? d.dynResType;
+        if (stp == false) { d.advancedUpscalersByPriority = new System.Collections.Generic.List<AdvancedUpscalers>(); d.upsampleFilter = DynamicResUpscaleFilter.CatmullRom; }
+        s.dynamicResolutionSettings = d; f.SetValue(a, s);
+        var r = a.currentPlatformRenderPipelineSettings.dynamicResolutionSettings;
+        return $"{r.STPInjectionPoint} {r.dynResType} {(r.advancedUpscalersByPriority.Count > 0 ? string.Join("+", r.advancedUpscalersByPriority) : r.upsampleFilter.ToString())}";
     }
 
     void Update()

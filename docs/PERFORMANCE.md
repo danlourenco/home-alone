@@ -311,3 +311,35 @@ inventory Phase B needs.
   colliders: the rays out through doorways are the top 10%), never above its own range. Runtime stand-in for room bounds; the pick gets
   written into the lamp builders. `HA_PERF_ARGS='-perfab -perfdn night -perfposes foyer,hall,living,kitchen,parents -perfvariants fit=1;fit=2;range=0.7'`
   windowed, then the same with `HA_DISPLAY="Studio Display"`.
+
+**Phase A result (Oct 21, run by the user: HomeAlonePerfA.app, `runs/fs5k-phaseA`, sheet `spec/captures/perf/fullscreen-5k-phaseA.jpg`).**
+Full screen 5K, base auto 40% (2048x1152 internal). FPS (internal size):
+
+| pose | A base | B inject=after | C 2560x1440 | D adaptive | E 2560+after | F 2560+after+adaptive |
+|---|---|---|---|---|---|---|
+| street-day | 20 | 18 | 17 | 17 | 17 | 17 (1920x1080) |
+| street-night | 17 | 17 | 16 | 17 | 17 | 17 (1920x1080) |
+| van-night | 22 | 24 | 25 | 18 | 16 | 16 (1920x1080) |
+| foyer-day | 19 | 20 | 21 | 20 | 22 | 22 (1536x864) |
+| foyer-night | 17 | 19 | 20 | 17 | 20 | 27 (1280x720) |
+| hall-night | 24 | 27 | 27 | 24 | 27 | 27 |
+| kitchen-night | 18 | 19 | 20 | 18 | 20 | 20 |
+| attic-day | 16 | 16 | 16 | 16 | 16 | 15 |
+| living-night | 36 | 43 | 46 | 36 | 47 | 47 |
+
+No variant reaches the 30 fps floor except living night. **Anomaly:** the 1920x1080 window at 100% (no dynamic resolution) runs
+the same street poses at 34-43 fps (NB4) and the interiors far faster, at about the same pixel count. In every dynamic-resolution
+sample of a heavy pose the RENDER THREAD's busy time equals the frame (foyer night: render 56.7 ms of a 57.5 ms frame; street day
+50 of 51), while without dynamic resolution it is 6-15 ms (5K native foyer night: 5.5 ms; 1080p window street day: 11). The same
+happened in the 1080p window's res-ab (foyer night 75%: render 36.6 of 37.6 ms; 100%: 6.0) and fs5k-scale. Light poses (living
+night) don't show it (render 2 ms). Adaptive stepped down and undid the step at most heavy poses: the cost does not follow pixels.
+So the heavy-pose cost is a stall that comes with dynamic resolution (hardware DRS on Metal, STP, or render-target churn), not
+pixels, post or the 5K present. Hypothesis (4), the neighbourhood's day cascades: the 1080p window draws the same 42 M triangles /
+12.7 k casters at street day in 29 ms, so they are not the 5K anomaly (they do keep street day near the floor at any size).
+
+**Diagnostic tour (prepared):** new readouts in each JSON: `dynres` (camera pixel and scaled sizes, HDCamera actual size, handler
+scale and last scaled size, RTHandles max size, ScalableBufferManager factors), `mode`, `window_display`, `vsync`. New variant keys:
+`dynres=soft|hard`, `upscaler=none` (CatmullRom instead of STP), `screen=WxHw` (windowed). The sides: A base (full screen 5K,
+auto, hardware, STP before post); B the NB4 window (1920x1080 windowed, 100%); C full screen with a 2048x1152 backbuffer at 100%
+(the base's internal size, no dynamic resolution); D 1920x1080 window at 75% (dynamic resolution in a window); E software dynamic
+resolution; F no STP. Reading: B and C fast and A, D slow = dynamic resolution itself; E fast = hardware DRS on Metal; F fast = STP.

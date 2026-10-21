@@ -1,0 +1,5 @@
+requested Studio Display 5120x2880
+layout: Built-in Retina Display 3024x1898 @120Hz; Studio Display 5120x2880 @60Hz
+matched: Studio Display
+Screen 5120x2880 mode FullScreenWindow currentResolution 5120x2880
+Display.main system 3024x1964 rendering 5120x2880 dpi 217
