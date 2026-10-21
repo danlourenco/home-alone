@@ -202,8 +202,17 @@ def dress_french(w, seed):
     va, vb = lo - CASING - RET, hi + CASING + RET
     valance(damask, Pf, va, vb, VB0, VB1, 0.20)
     top = VB0 + 0.02
-    sheer_panel(voile, hem, Pf, lo - CASING - 0.04, mid - 0.005, 0.015, top, 0.060, seed)
-    sheer_panel(voile, hem, Pf, mid + 0.005, hi + CASING + 0.04, 0.015, top, 0.060, seed + 3.1)
+    # the sheers are door sheers on each leaf, just behind its glass (film 5650 inside: gathered on the leaves between the drapes; 2508 /
+    # 4382 / 6399 outside: white sheers in every pane, as the dining room's). Until Oct 21 they hung at the room face, 0.3 m behind the
+    # glass at the bottom of the deep painted reveal, and from the street the pair read as blank cream panels (user, NB8 walk). Same cloth
+    # as every sheer (sheer_panel's fold period and depth); rod pockets 2.5 cm over the glass at both ends, behind the rails; 3 cm off the
+    # leaves' room face (fold depth <= 1.7 cm: >= 1.3 cm clear), 1 cm inside the stiles (the knobs stand on the stiles)
+    L = Wall(w); JT, SS, G0, G1 = 0.02, 0.055, 0.44, 1.90
+    DB = BRICK - L.face if L.out > 0 else WT
+    lw = (L.hi - L.lo - 2 * JT) / 2; d0 = DB - 0.11
+    for k in range(2):
+        a0 = L.lo + JT + k * lw
+        sheer_panel(voile, hem, Pf, a0 + SS + 0.01, a0 + lw - SS - 0.01, G0 - 0.025, G1 + 0.025, -(d0 - 0.03), seed + 3.1 * k)
     for uo, s in ((va + 0.03, 1), (vb - 0.03, -1)):
         drape(damask, tie, Pf, uo, s, 0.012, top, 1.05, 0.34, 0.15, 0.27, 0.125, N=6, seed=seed + s)
 
