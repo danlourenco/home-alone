@@ -1,0 +1,12 @@
+xmas_lights_check /Users/dlo/.cache/home-alone-perf/runs/fr-NB9/front6399-night-A1.png (front6399) vs film 5545
+  bulbs found per window: ours [49, 39], film [22, 26]
+  metric          film     ours  pass band
+  pitch_m        0.212    0.117  [0.170, 0.265]  FAIL
+  glow_m         0.054    0.021  [0.035, 0.081]  FAIL
+  halo_m         0.114    0.011  [0.068, 0.182]  FAIL
+  warmth         0.106    0.019  [0.056, 0.156]  FAIL
+  bulb_brick     7.356   28.210  [4.414, 11.770]  FAIL
+  brick_rb       2.138    1.503  [1.604, 2.844]  FAIL
+  glow RGB ours [253.4, 249.9, 242.4] film [203.4, 167.6, 150.6]; halo RGB ours [181.5, 173.9, 171.3] film [157.0, 128.5, 114.5]; brick RGB ours [14.2, 7.2, 9.5] film [31.4, 22.2, 14.7]
+SCORE 0/6 FAIL
+xmas scene check House_WallGrid.unity: strand lights 35 (max 24), strand renderers 4 (max 150) FAIL
