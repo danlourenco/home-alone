@@ -364,3 +364,11 @@ hide=/lowres=/fit=/range= are the candidates the sheet trades look against FPS.
 glass, sheers: within 1 fps; all transparents off 33 / 48 / 31 although glass and sheers cost nothing: some other transparent-pass
 cost, open). **Shipped: fit=1** (user: "was great, keep it"): `Scripts/LampFit.cs` fits every real-time punctual lamp at scene load
 (room extent + 1 m, the same rays as the variant); `-nolampfit` is the before. PerfProbe tours now sample the fitted ranges as base.
+
+**fs-aa (Oct 21, user-run; `runs/fs-aa`, sheets `spec/captures/perf/fs-aa-{edges,picks,sheet}.jpg`).** The main camera had NO
+anti-aliasing at 2048x1152 (STP did it before). FPS none / FXAA / SMAA / TAA / STP@100%: piers day 83/83/76/80/76, street night
+36/36/35/35/35, foyer night 36/36/35/36/35, hall night 45/46/44/44/43; 2560x1440 + TAA or SMAA: foyer 27, street 29 (under the floor).
+STP forced to 100% does not bring back the dynamic-resolution stall (-4%). Edges at 2x: FXAA blurs shingles and wallpaper; SMAA keeps
+texture but twigs stay broken; TAA and STP draw twigs whole, STP crisper. Recommended STP@100% (not shipped: the user picks).
+With fit=1 the transparent-pass split (prepass, postpass, low-res, refraction, distortion, motion vectors, SSR, lens flare) changes
+nothing (36 -> 36-37 fps foyer).

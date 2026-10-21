@@ -1,0 +1,1 @@
+-perfab -perfrounds 1 -perfbasescale auto -perfposes piers-day,street-night,foyer-night,hall-night -perfvariants aa=fxaa;aa=smaa;aa=taa;aa=stp;screen=2560x1440+aa=taa;screen=2560x1440+aa=smaa;off=TransparentPrepass;off=TransparentPostpass;off=LowResTransparent;off=Refraction;off=Distortion;off=TransparentsWriteMotionVector;off=TransparentSSR;off=LensFlareDataDriven

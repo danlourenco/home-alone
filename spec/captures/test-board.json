@@ -13,18 +13,87 @@
    "title": "Smoothing the stair-steps: anti-aliasing at the full-screen default",
    "status": "needs-you",
    "date": "Oct 21",
-   "when": "After the brick build finishes. About 3 min to build, 13 min to run; leave the Mac alone.",
-   "what": "Since full screen went to 2048x1152 without dynamic resolution, the camera has no anti-aliasing at all (STP used to do it), so thin edges stair-step. This compares FXAA, SMAA (high), TAA (high, sharpened), STP as pure anti-aliasing at 100%, and a 2560x1440 backbuffer with TAA or SMAA, with FPS on every tile. The same run splits the night transparent cost (foyer and hall: all transparents off gained 10-19 ms though glass and sheers cost nothing) into its HDRP passes.",
+   "when": "Now: pick one (read only, no Mac needed). I recommend STP; walk it to check for smearing before it ships.",
+   "what": "The camera has had no anti-aliasing since full screen went to 2048x1152. All four options keep every room over 30 fps at the default size; 2560x1440 with TAA or SMAA drops the foyer to 27 and the street to 29, so the size stays. Recommendation: STP (temporal, at 100%, no upscale): twigs and railings become continuous lines like TAA but it stays crisper on brick, shingles and wallpaper, for about 4% of the frame. The transparent-pass cost seen before is gone with the room-fitted lamps (switching those passes off changes nothing now).",
    "look": [
-    "Each tile has the frame and two or three edge patches magnified 2x: roof lines and branches at the piers, the eaves at night, the balusters, handrail and mirror in the foyer.",
-    "Look for smooth edges without blur or shimmer: TAA and STP smooth the most but can soften wallpaper and brick; FXAA is cheapest and softest on text-like detail; SMAA keeps texture sharp.",
-    "Keep an eye on FPS: the pick must keep 30 fps at the foyer and hall at night.",
-    "The off=... columns are cost readings for the transparent pass, not looks."
+    "Edges strip (top to bottom): branches against the sky, the blue house's roof and dormer, the newel and balusters, the mirror frame; left to right: none, FXAA, SMAA, TAA, STP, all 2x.",
+    "Branches: none and FXAA leave dotted, broken twigs; SMAA cleans the edges but twigs stay broken; TAA and STP draw them whole.",
+    "Texture: FXAA blurs the shingles and wallpaper; TAA softens slightly; SMAA and STP keep them.",
+    "Still frames can't show smearing in motion (TAA/STP): walk past the banister and the trees before it ships."
    ],
    "app": "HomeAlonePerfAA.app, full screen on the Studio Display (2048x1152 default; lamp ranges fitted to rooms)",
    "commands": [
     "cd ~/Dev/home-alone && HA_REUSE=1 HA_PERF_APP=$HOME/.cache/home-alone-perf/build/HomeAlonePerfAA.app tools/house/perf_probe.sh build",
     "HA_PERF_APP=$HOME/.cache/home-alone-perf/build/HomeAlonePerfAA.app HA_DISPLAY=\"Studio Display\" HA_PERF_ARGS='-perfab -perfrounds 1 -perfbasescale auto -perfposes piers-day,street-night,foyer-night,hall-night -perfvariants aa=fxaa;aa=smaa;aa=taa;aa=stp;screen=2560x1440+aa=taa;screen=2560x1440+aa=smaa;off=TransparentPrepass;off=TransparentPostpass;off=LowResTransparent;off=Refraction;off=Distortion;off=TransparentsWriteMotionVector;off=TransparentSSR;off=LensFlareDataDriven' tools/house/perf_probe.sh run fs-aa"
+   ],
+   "table": {
+    "head": [
+     "View",
+     "No AA (now)",
+     "FXAA",
+     "SMAA",
+     "TAA",
+     "STP",
+     "2560x1440 + TAA",
+     "2560x1440 + SMAA"
+    ],
+    "rows": [
+     [
+      "Piers, day",
+      "83",
+      "83",
+      "76",
+      "80",
+      "76",
+      "56",
+      "54"
+     ],
+     [
+      "Street, night",
+      "36",
+      "36",
+      "35",
+      "35",
+      "35",
+      "29",
+      "29"
+     ],
+     [
+      "Foyer, night",
+      "36",
+      "36",
+      "35",
+      "36",
+      "35",
+      "27",
+      "27"
+     ],
+     [
+      "Hall, night",
+      "45",
+      "46",
+      "44",
+      "44",
+      "43",
+      "33",
+      "32"
+     ]
+    ],
+    "note": "FPS, full screen on the Studio Display, 2048x1152 unless stated, lamp ranges fitted to rooms (run fs-aa)."
+   },
+   "images": [
+    {
+     "src": "spec/captures/perf/fs-aa-edges.jpg",
+     "caption": "Edges at 2x: none | FXAA | SMAA | TAA | STP (branches, roof and dormer, balusters, mirror frame)"
+    },
+    {
+     "src": "spec/captures/perf/fs-aa-picks.jpg",
+     "caption": "Picks sheet: none | FXAA | SMAA | TAA | STP, each tile the frame plus 2x edge patches, FPS on every tile"
+    },
+    {
+     "src": "spec/captures/perf/fs-aa-sheet.jpg",
+     "caption": "All AA sides incl. 2560x1440 (wide: zoom in)"
+    }
    ]
   },
   {
