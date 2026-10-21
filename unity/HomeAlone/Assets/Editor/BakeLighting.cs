@@ -330,7 +330,9 @@ public static class BakeLighting
         // the upstairs the other way round (as before Oct 20). The first bake places the probes; the rest keep those positions
         var split = Object.FindAnyObjectByType<HouseSplit>();
         var gi0 = new Dictionary<GameObject, StaticEditorFlags>();
-        foreach (var r in (split ? split.skinUpper.Concat(split.insideOnly) : Enumerable.Empty<Renderer>()).Where(r => r)) gi0[r.gameObject] = GameObjectUtility.GetStaticEditorFlags(r.gameObject);
+        var splitSet = new HashSet<Renderer>(split ? split.skinUpper.Concat(split.insideOnly) : Enumerable.Empty<Renderer>());
+        var strip = split ? Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None).Where(r => !splitSet.Contains(r) && (r.renderingLayerMask & SpecGreybox.LayerOverhang) != 0).ToList() : new List<MeshRenderer>();
+        foreach (var r in splitSet.Concat(strip).Where(r => r)) gi0[r.gameObject] = GameObjectUtility.GetStaticEditorFlags(r.gameObject);
         // (not the Baked film fill: CheckBakedLights needs it recorded as baked by the last, DayFilm, bake)
         var lit0 = split ? split.insideLights.Where(l => l && l.lightmapBakeType != LightmapBakeType.Baked).ToDictionary(l => l, l => l.enabled) : new Dictionary<Light, bool>();
         void World(bool film)
@@ -341,6 +343,23 @@ public static class BakeLighting
             foreach (var kv in lit0) kv.Key.enabled = !film && kv.Value;
             foreach (var r in split.skinUpper.Where(r => r)) Contribute(r.gameObject, Contributes(r, split, film));
             foreach (var r in split.insideOnly.Where(r => r)) Contribute(r.gameObject, !film && gi0[r.gameObject].HasFlag(StaticEditorFlags.ContributeGI));
+            // every other piece on Marina's strip layer (her shadows-only Envelope round the strip, the upstairs baseboards): Contributes()
+            // drops them from the film's house, but until Oct 21 only the two split lists were switched, so the Envelope boxed in the strip's
+            // probes in DayFilm/NightFilm and the centre's upper front read them (ProbeDump.Probes: x 11 upstairs 630-820 vs 1900-2100 at
+            // the ground storey; ProbeDump.StripContributors: 12 Envelope boxes)
+            foreach (var r in strip) Contribute(r.gameObject, !film && gi0[r.gameObject].HasFlag(StaticEditorFlags.ContributeGI));
+        }
+        // the bake's own GI geometry is what Contributes() says, in every pass (a mismatch fails the bake)
+        int AssertWorld(bool film)
+        {
+            int bad = 0;
+            foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
+            {
+                if (r.GetComponentInParent<SwingDoor>() != null || r.name.StartsWith("WinterBackdrop")) continue;   // not static scenery (Steps)
+                bool want = Contributes(r, split, film), has = GameObjectUtility.GetStaticEditorFlags(r.gameObject).HasFlag(StaticEditorFlags.ContributeGI);
+                if (want != has && bad++ < 10) Debug.LogError($"BakeLighting FAIL: {(film ? "film" : "upstairs")} bake GI geometry: {r.name} contributes {has}, Contributes() says {want}");
+            }
+            return bad;
         }
         bool firstBake = true;
         foreach (var (scenario, night, film) in new[] { ("Night", true, false), ("Default", false, false), ("NightFilm", true, true), ("DayFilm", false, true) })
@@ -351,6 +370,7 @@ public static class BakeLighting
             // the windowed bake on that modal dialog until someone clicks
             if (firstBake) { Lightmapping.ClearLightingDataAsset(); Lightmapping.Clear(); }
             World(film); Freeze(!firstBake); firstBake = false;
+            if (split && AssertWorld(film) > 0) failed = true;
             mode.nightLayer.SetActive(night); mode.dayLayer.SetActive(!night);
             staticSky.profile = night ? nightSky : daySky;
             staticSky.staticLightingSkyUniqueID = (int)(night ? SkyType.Gradient : SkyType.PhysicallyBased);
