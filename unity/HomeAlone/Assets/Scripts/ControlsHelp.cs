@@ -13,7 +13,7 @@ public class ControlsHelp : MonoBehaviour
         "       V den TV video  ·  M walk note + screenshot",
         "LOOK   N day / night  ·  [ ] night interior white balance (cooler / warmer)",
         "       O weather: sunny / morning / overcast  ·  F falling snow (overcast + night)",
-        "       P render scale 100 / 75 / 50 / 38 %  ·  K hide everything off the lot",
+        "       P render scale auto / 100 / 75 / 50 / 38 %  ·  K hide everything off the lot",
         "MUSIC  J pause  ·  - / = volume  ·  U next track",
         "       F1 hide this panel",
     };
@@ -37,7 +37,7 @@ public class ControlsHelp : MonoBehaviour
         if (show)
         {
             string wb = PlayerPrefs.HasKey("NightWhiteBalance") ? PlayerPrefs.GetFloat("NightWhiteBalance").ToString("0") : HouseNightMode.WbDefault.ToString("0") + " (default)";
-            string sc = PlayerPrefs.HasKey("RenderScale") ? PlayerPrefs.GetFloat("RenderScale").ToString("0") + " %" : RenderScale.Default.ToString("0") + " % (default)";
+            string sc = RenderScale.Label;
             string text = "<b>CONTROLS</b>\n" + string.Join("\n", Lines) + $"\n\n<b>NOW</b>   night white balance {wb}  ·  render scale {sc}  ·  {Screen.width}x{Screen.height}";
             var size = box.CalcSize(new GUIContent(text));
             GUI.Box(new Rect(20 * s, 20 * s, size.x, size.y), text, box);
