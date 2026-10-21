@@ -135,7 +135,7 @@ public static class BakeLighting
     public static List<string> ApvLayers()
     {
         var bad = new List<string>(); int ins = 0, outs = 0;
-        foreach (var r in Object.FindObjectsByType<Renderer>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        foreach (var r in Object.FindObjectsByType<Renderer>(FindObjectsInactive.Include))
         {
             if ((r.renderingLayerMask & SpecGreybox.LayerOutside) == 0) { if ((r.renderingLayerMask & SpecGreybox.LayerApvInside) == 0) { r.renderingLayerMask |= SpecGreybox.LayerApvInside; EditorUtility.SetDirty(r); } ins++; }
             else if ((r.renderingLayerMask & SpecGreybox.LayerApvInside) != 0) bad.Add("  on both probe classes: " + r.name);
@@ -338,6 +338,10 @@ public static class BakeLighting
         foreach (var (scenario, night, film) in new[] { ("Night", true, false), ("NightFilm", true, true), ("DayFilm", false, true), ("Default", false, false) })
         {
             if (film && !split) continue;
+            // the first bake places the probes afresh: clear the old bake first (what the "Incompatible Layout" dialog's Yes does,
+            // ProbeVolumeLightingTab.ClearBakedData). A probe volume of another size (Oct 21: 2.5 m of outdoor margin) otherwise stops
+            // the windowed bake on that modal dialog until someone clicks
+            if (firstBake) { Lightmapping.ClearLightingDataAsset(); Lightmapping.Clear(); }
             World(film); Freeze(!firstBake); firstBake = false;
             mode.nightLayer.SetActive(night); mode.dayLayer.SetActive(!night);
             staticSky.profile = night ? nightSky : daySky;

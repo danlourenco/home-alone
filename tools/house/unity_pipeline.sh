@@ -95,6 +95,9 @@ bake)
   # the windowed bake opens the scratch project: no HDRP wizard popping up each time (a user-local editor preference)
   sed -i '' 's/m_WizardPopupAtStart: 1/m_WizardPopupAtStart: 0/' "$S/UserSettings/HDRPUserSettings.asset" 2>/dev/null || true
   rsync -a "$P/Assets/Editor/" "$S/Assets/Editor/"   # the bake runs the repo's BakeLighting, not the last build's copy (overnight3b: a bake-only fix never ran)
+  # known modal blockers of the windowed bake (each stops it until someone clicks): "Scene Backup Detected" (build: Temp/__Backupscenes
+  # removed), the HDRP wizard (above), "Incompatible Layout ... invalidate all previously bake data" (Oct 21: the probe volume's size
+  # changed; BakeLighting clears the old bake before its first scenario)
   bx=0; "$UNITY" -projectPath "$S" -executeMethod BakeLighting.Bake -logFile "$ROOT/bake.log" || bx=$?   # windowed; exits when done
   grep -E "BakeLighting [DN]|Baked lights|Realtime lights|probe classes|xception" "$ROOT/bake.log" || true   # display only; the checks below decide
   # every authored-Baked light must be recorded as baked in the saved scene (BakeLighting.CheckBakedLights; the FilmFill bug, Oct 17)

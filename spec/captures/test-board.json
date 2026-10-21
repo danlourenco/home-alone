@@ -89,20 +89,39 @@
    ]
   },
   {
+   "id": "french-sheers",
+   "title": "French windows: sheers like the film from the street",
+   "status": "needs-you",
+   "date": "Oct 21",
+   "app": "HomeAloneNB9.app",
+   "when": "Now: walk NB9 to the front walk by day and at night.",
+   "what": "Your request: the ground-floor French windows should show the same sheers as the film. The living room's pair (left of the portico) read as blank cream panels: their sheers hung at the room wall, 0.3 m behind the glass. They now hang on each leaf just behind the glass (film 5650 from inside shows them gathered on the doors; 2508/6399 from outside), same cloth and folds as every other sheer. The dining pair already had them. The leaves don't open, and nothing stands in a walkway. Not changed: the den's bay window at the far left still shows clear glass and the room; in the film it has sheers too. Say if you want it to match.",
+   "look": [
+    "From the street and the front walk: the four French windows read alike, white sheers with soft folds behind the muntins.",
+    "Inside the living room: the sheers now sit on the doors between the green drapes (film 5650)."
+   ],
+   "images": [
+    {
+     "src": "spec/captures/views/front-0645/brick-sheers-nb9-sheet.jpg",
+     "caption": "Last two rows: film 2508 | before | after (your 06:45 spot), and the front walk by day and night"
+    }
+   ]
+  },
+  {
    "id": "brick-upstairs",
    "title": "Front brick: upstairs darker than downstairs",
    "status": "running",
    "date": "Oct 21",
-   "when": "Prepared, not built. Next: one full build + bake (about 40 min, Mac busy) after your perf test, on the coordinator's go.",
-   "what": "Your catch, now measured: tools/house/brick_storeys.py compares the upstairs brick with the ground-floor brick at your 06:45 spot (gate: within 5%). NB8 fails every tile: overcast upstairs 0.71 of downstairs in the centre, 0.78 at the left wing; night 0.63 in the centre; sunny 0.95. Cause: every probe outside the rooms is switched off, so the front wall takes its stored light from the rooms behind it, and upstairs that is Marina's bigger, dark upstairs. Fix prepared (BakeLighting): probes outside the film's house stay on and are tagged Exterior, rooms Interior, Marina's strip both; outside walls read only Exterior probes, room surfaces only Interior ones (Unity 6 probe rendering layers), so rooms should not change. Caveat: with the stored light off entirely the upstairs is still 0.81-0.85 of downstairs on our tile (film 6399: 0.94-1.10), so something besides the probes may remain.",
+   "when": "Built: HomeAloneNB9.app (Oct 21). Nothing to walk for the brick yet: next is finding why the outdoor light upstairs is dark.",
+   "what": "NB9 built with probe layers: probes outside the house now stay on (Exterior), rooms Interior, Marina's strip both; outside walls read only outside probes. Result, measured (tools/house/brick_storeys.py, gate 5%): still FAIL. Overcast upstairs/downstairs 0.67 centre, 0.76 wing (NB8 0.71/0.78): the ground floor got brighter (it no longer borrows the rooms' light), the upstairs did not. Night flipped: 1.25/1.31 (NB8 0.63/1.30) because the ground-floor brick lost the warm indoor glow that leaked through it. Sunny 0.92/0.94. Rooms unchanged (foyer and living at night, compared with the lamp fit off). With probes off entirely the upstairs is still 0.81-0.85, so the remaining gap is in the outdoor light upstairs (the eaves, Marina's strip), not the rooms behind. Not shipping as a fix yet; the layers themselves are sound.",
    "look": [
-    "Until the build: nothing new. The sheet below is the before.",
-    "After: upstairs and downstairs brick the same red as in film 6399, by day and at night.",
-    "Foyer and living room at night must look unchanged."
+    "Rows 1-3: the upstairs brick is still darker than downstairs by day (FAIL); at night the ground floor is now the darker one.",
+    "Rows 4-5: foyer and living at night are unchanged.",
+    "Ignore the French windows here; they have their own entry."
    ],
    "images": [
     {
-     "src": "spec/captures/views/front-0645/apv-tuning-sheet.jpg",
+     "src": "spec/captures/views/front-0645/brick-sheers-nb9-sheet.jpg", "caption": "NB8 before | NB9 after: your 06:45 spot overcast, sunny, night; foyer and living at night; the French windows"}, {"src": "spec/captures/views/front-0645/apv-tuning-sheet.jpg",
      "caption": "Film 6399 | before | setting variants at your 06:45 spot, overcast; then foyer and living at night"
     }
    ]
