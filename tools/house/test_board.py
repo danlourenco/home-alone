@@ -54,8 +54,8 @@ def test_html(t, uri=img_uri):
         if tb.get("note"):
             out.append(f'<p class="note">{e(tb["note"])}</p>')
     for im in t.get("images", []) if s != "superseded" else []:   # the page must stay under 16 MB: superseded tests keep their text only
-        u = uri(im["src"], 1000) if s == "settled" and uri is img_uri else uri(im["src"])
-        out.append(f'<figure><img loading="lazy" alt="{e(im.get("caption", ""))}" src="{u}"><figcaption>{e(im.get("caption", ""))}</figcaption></figure>'
+        u = uri(im["src"], {"settled": 1000, "done": 1600}.get(s, 2600)) if uri is img_uri else uri(im["src"])   # open tests sharper: the lightbox zooms
+        out.append(f'<figure><img loading="lazy" tabindex="0" role="button" title="Click to zoom" alt="{e(im.get("caption", ""))}" src="{u}"><figcaption>{e(im.get("caption", ""))}</figcaption></figure>'
                    if u else f'<p class="note">Image missing: {e(im["src"])}</p>')
     out.append("</div></details>")
     return "\n".join(out)
@@ -122,13 +122,47 @@ th, td { text-align:left; padding:6px 12px 6px 0; border-bottom:1px solid var(--
 th { color:var(--muted); font-weight:600 }
 .note { color:var(--muted); font-size:.85rem }
 figure { margin:0; display:grid; gap:6px }
-figure img { width:100%; height:auto; border-radius:4px; border:1px solid var(--line) }
+figure img { width:100%; height:auto; border-radius:4px; border:1px solid var(--line); cursor:zoom-in }
+figure img:focus-visible { outline:2px solid var(--brick); outline-offset:2px }
+.lb { position:fixed; inset:0; z-index:50; background:rgba(8,10,12,.94); overflow:hidden; touch-action:none; cursor:grab }
+.lb img { position:absolute; left:0; top:0; transform-origin:0 0; max-width:none; user-select:none; -webkit-user-drag:none }
+.lb .bar { position:absolute; left:0; right:0; top:0; display:flex; gap:8px; align-items:center; justify-content:flex-end; color:#e6e9ee; font:600 .85rem var(--body);
+  padding:calc(10px + env(safe-area-inset-top, 0px)) max(14px, env(safe-area-inset-right, 0px)) 10px max(14px, env(safe-area-inset-left, 0px)); background:linear-gradient(rgba(0,0,0,.6), transparent) }
+.lb .bar span { margin-right:auto; opacity:.8; font-weight:400 }
+.lb button { font:600 .85rem var(--body); color:#e6e9ee; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); border-radius:4px; padding:6px 12px; cursor:pointer }
 figcaption { color:var(--muted); font-size:.85rem }
 @media (prefers-reduced-motion: reduce) { summary::before { transition:none } }
 </style>
 """
 
 JS = """<script>
+// lightbox: click/Enter an image; wheel or pinch zooms at the pointer, drag pans, double-click toggles 1:1, Esc closes
+(() => {
+  let lb, im, sc = 1, x = 0, y = 0, fit = 1; const pts = new Map(); let last = null, pinch0 = null;
+  const apply = () => { im.style.transform = `translate(${x}px,${y}px) scale(${sc})`; };
+  const zoomAt = (f, cx, cy) => { const n = Math.min(Math.max(sc * f, fit * 0.5), 8); x = cx - (cx - x) * n / sc; y = cy - (cy - y) * n / sc; sc = n; apply(); };
+  const reset = () => { const W = innerWidth, H = innerHeight; fit = Math.min(W / im.naturalWidth, H / im.naturalHeight); sc = fit; x = (W - im.naturalWidth * sc) / 2; y = (H - im.naturalHeight * sc) / 2; apply(); };
+  const close = () => { lb?.remove(); lb = null; document.body.style.overflow = ''; last?.focus(); };
+  const open = src => {
+    lb = document.createElement('div'); lb.className = 'lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-label', 'Zoomed image');
+    lb.innerHTML = '<div class="bar"><span>Scroll or pinch to zoom · drag to pan · double-click 1:1</span><button type="button" data-z="in">+</button><button type="button" data-z="out">−</button><button type="button" data-z="fit">Fit</button><button type="button" data-z="x">Close</button></div>';
+    im = new Image(); im.src = src; im.alt = ''; lb.prepend(im); document.body.append(lb); document.body.style.overflow = 'hidden';
+    im.decode().then(reset, reset); lb.querySelector('[data-z="x"]').focus();
+    lb.addEventListener('click', e => { const z = e.target.dataset?.z; if (!z) return; const W = innerWidth / 2, H = innerHeight / 2;
+      if (z === 'x') close(); else if (z === 'fit') reset(); else zoomAt(z === 'in' ? 1.5 : 1 / 1.5, W, H); });
+    lb.addEventListener('wheel', e => { e.preventDefault(); zoomAt(Math.exp(-e.deltaY * 0.0015), e.clientX, e.clientY); }, { passive: false });
+    lb.addEventListener('dblclick', e => { if (e.target.closest('.bar')) return; Math.abs(sc - 1) < 0.01 ? reset() : zoomAt(1 / sc, e.clientX, e.clientY); });
+    lb.addEventListener('pointerdown', e => { if (e.target.closest('.bar')) return; lb.setPointerCapture(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]); pinch0 = null; });
+    lb.addEventListener('pointermove', e => { if (!pts.has(e.pointerId)) return; const p = pts.get(e.pointerId);
+      if (pts.size === 1) { x += e.clientX - p[0]; y += e.clientY - p[1]; apply(); }
+      else { const [a, b] = [...pts.values()]; const d = Math.hypot(a[0] - b[0], a[1] - b[1]); if (pinch0) zoomAt(d / pinch0, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2); pinch0 = d; }
+      pts.set(e.pointerId, [e.clientX, e.clientY]); });
+    const up = e => { pts.delete(e.pointerId); pinch0 = null; }; lb.addEventListener('pointerup', up); lb.addEventListener('pointercancel', up);
+  };
+  document.addEventListener('click', e => { const t = e.target.closest('figure img'); if (t) { last = t; open(t.src); } });
+  document.addEventListener('keydown', e => { if (lb && e.key === 'Escape') close(); else if (!lb && e.key === 'Enter' && e.target.matches?.('figure img')) { last = e.target; open(e.target.src); } });
+  addEventListener('resize', () => lb && reset());
+})();
 document.addEventListener('click', ev => {
   const b = ev.target.closest('.copy'); if (!b) return;
   const done = () => { b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy', 1500); };
