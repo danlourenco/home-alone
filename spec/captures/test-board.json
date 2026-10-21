@@ -13,17 +13,60 @@
    "title": "Night speed: what's expensive in the foyer, kitchen and hall",
    "status": "needs-you",
    "date": "Oct 21",
-   "when": "Now: the Mac is free. About 3 min to build, 9 min to run; leave the Mac alone.",
-   "what": "The heavy night rooms still run 23-29 fps at the new full-screen default. This switches off one costly effect at a time (fog, reflections, ambient occlusion, contact and lamp shadows, glass, sheers, the foyer mirror) so you can trade look against speed.",
-   "commands": [
-    "cd ~/Dev/home-alone && HA_REUSE=1 HA_PERF_APP=$HOME/.cache/home-alone-perf/build/HomeAlonePerfB.app tools/house/perf_probe.sh build",
-    "HA_PERF_APP=$HOME/.cache/home-alone-perf/build/HomeAlonePerfB.app HA_DISPLAY=\"Studio Display\" HA_PERF_ARGS='-perfab -perfrounds 1 -perfbasescale auto -perfdn night -perfposes foyer-night,kitchen-night,hall-night -perfvariants off=Volumetrics;off=SSR;off=SSAO;off=ContactShadows;off=ShadowMaps;off=TransparentObjects;off=PlanarProbe;hide=Glass;hide=Voile;lowres=all;fit=1;range=0.7' tools/house/perf_probe.sh run fs-nightB"
-   ],
+   "when": "Now: pick one. Then walk HomeAlonePerfB.app (open ~/.cache/home-alone-perf/build/HomeAlonePerfB.app).",
+   "what": "At the new full-screen default (2048x1152, no dynamic resolution) the night rooms ran 23-29 fps. The biggest win that keeps the look is fitting each lamp's light range to its own room plus 1 m: foyer 23 -> 36, hall 29 -> 45, kitchen 26 -> 32, all over 30. Fog, reflections, ambient occlusion, glass and sheers cost almost nothing. The foyer mirror costs about 20% in the foyer and kitchen. Recommendation: ship 'lamp range fitted to room'.",
    "app": "HomeAlonePerfB.app (full screen on the Studio Display at the new default: 2048x1152, scaled to the panel)",
    "look": [
-    "Nothing to look at until the run is in: the sheet lands here with FPS on every tile.",
-    "Then: each column is one effect off or cheaper. The 'off' columns (fog, reflections, AO, contact shadows, lamp shadows, all glass and sheers, mirror) show what an effect costs, not a look to ship.",
-    "Pick from the last five columns (no glass, no sheers, low-res glass and sheers, lamp ranges fitted to rooms, ranges x0.7): those are candidates. Watch the sheers' softness and light spilling through doorways."
+    "Column 2 (fit to room) against column 1: the same rooms, lamps and pools of light?",
+    "Kitchen: does the dining room through the doorway lose any glow?",
+    "Column 4 shows the mirror switched off (it goes blank): not proposed, just its cost."
+   ],
+   "table": {
+    "head": [
+     "View",
+     "Now",
+     "Lamp range fit to room",
+     "Lamp range x0.7",
+     "Mirror off",
+     "Lamp shadows off"
+    ],
+    "rows": [
+     [
+      "Foyer, night",
+      "23",
+      "36",
+      "30",
+      "28",
+      "29"
+     ],
+     [
+      "Hall, night",
+      "29",
+      "45",
+      "38",
+      "29",
+      "38"
+     ],
+     [
+      "Kitchen, night",
+      "26",
+      "32",
+      "30",
+      "36",
+      "29"
+     ]
+    ],
+    "note": "FPS, full screen on the Studio Display. Glass, sheers, fog, reflections, AO: 0-9%, not worth the look."
+   },
+   "images": [
+    {
+     "src": "spec/captures/perf/fs-nightB-picks.jpg",
+     "caption": "Now | lamp range fit to room | range x0.7 | mirror off; each room full view then a close crop"
+    },
+    {
+     "src": "spec/captures/perf/fs-nightB-sheet.jpg",
+     "caption": "All 12 switches (wide: zoom in)"
+    }
    ]
   },
   {
@@ -39,7 +82,10 @@
     "Foyer and living room at night must look unchanged."
    ],
    "images": [
-    {"src": "spec/captures/views/front-0645/apv-tuning-sheet.jpg", "caption": "Film 6399 | before | setting variants at your 06:45 spot, overcast; then foyer and living at night"}
+    {
+     "src": "spec/captures/views/front-0645/apv-tuning-sheet.jpg",
+     "caption": "Film 6399 | before | setting variants at your 06:45 spot, overcast; then foyer and living at night"
+    }
    ]
   },
   {
@@ -55,8 +101,14 @@
     "Last row: the police lights are small red and blue points, like film 11581."
    ],
    "images": [
-    {"src": "spec/captures/views/front-0645/before-after-sheet.jpg", "caption": "Before (NB6) | after (NB7), your spot: overcast, sunny, night; the Murphys at night"},
-    {"src": "spec/captures/views/front-0645/reference-sheet.jpg", "caption": "Film | ours: 12033 same view, 11908 piers and mailbox, 5545 lanterns at night, 6399 brick"}
+    {
+     "src": "spec/captures/views/front-0645/before-after-sheet.jpg",
+     "caption": "Before (NB6) | after (NB7), your spot: overcast, sunny, night; the Murphys at night"
+    },
+    {
+     "src": "spec/captures/views/front-0645/reference-sheet.jpg",
+     "caption": "Film | ours: 12033 same view, 11908 piers and mailbox, 5545 lanterns at night, 6399 brick"
+    }
    ]
   },
   {
@@ -66,17 +118,59 @@
    "date": "Oct 21",
    "what": "Lowering the internal resolution (dynamic resolution) was itself the main cost: it stalled the graphics driver for most of each frame. The new default is full screen at a fixed 2048x1152, stretched to the display, with dynamic resolution off; P steps screen sizes. It runs in the next build.",
    "table": {
-    "head": ["View", "Before", "1080p window", "Full screen 2048x1152", "Soft dyn. res.", "No upscaler"],
+    "head": [
+     "View",
+     "Before",
+     "1080p window",
+     "Full screen 2048x1152",
+     "Soft dyn. res.",
+     "No upscaler"
+    ],
     "rows": [
-     ["Foyer, night", "17", "26", "23", "22", "17"],
-     ["Hall, night", "24", "33", "29", "29", "24"],
-     ["Kitchen, night", "17", "29", "26", "25", "18"],
-     ["Street, day", "20", "31", "30", "29", "19"]
+     [
+      "Foyer, night",
+      "17",
+      "26",
+      "23",
+      "22",
+      "17"
+     ],
+     [
+      "Hall, night",
+      "24",
+      "33",
+      "29",
+      "29",
+      "24"
+     ],
+     [
+      "Kitchen, night",
+      "17",
+      "29",
+      "26",
+      "25",
+      "18"
+     ],
+     [
+      "Street, day",
+      "20",
+      "31",
+      "30",
+      "29",
+      "19"
+     ]
     ],
     "note": "FPS. Full screen 2048x1152 is the new default."
    },
-   "look": ["The tiles should look the same across columns; only the FPS changes."],
-   "images": [{"src": "~/.cache/home-alone-board/img/fs5k-diag.jpg", "caption": "Poses down, variants across, FPS on each tile"}]
+   "look": [
+    "The tiles should look the same across columns; only the FPS changes."
+   ],
+   "images": [
+    {
+     "src": "~/.cache/home-alone-board/img/fs5k-diag.jpg",
+     "caption": "Poses down, variants across, FPS on each tile"
+    }
+   ]
   },
   {
    "id": "fs-phase-a",
@@ -84,7 +178,12 @@
    "status": "superseded",
    "date": "Oct 21",
    "what": "Five settings at 5K full screen; none reached 30 fps, which led to the diagnosis above.",
-   "images": [{"src": "spec/captures/perf/fullscreen-5k-phaseA.jpg", "caption": "Poses down, settings across"}]
+   "images": [
+    {
+     "src": "spec/captures/perf/fullscreen-5k-phaseA.jpg",
+     "caption": "Poses down, settings across"
+    }
+   ]
   },
   {
    "id": "police-sweep",
@@ -92,8 +191,15 @@
    "status": "done",
    "date": "Oct 21",
    "what": "The glow balls were the light bar's glass blown up by bloom when the night exposure brightens the scene. 120 nits (4th column) reads like film 11581 and is in NB7.",
-   "look": ["Murphys row, 4th column against the film tile at the bottom left."],
-   "images": [{"src": "spec/captures/perf/nb5-police-sweep-sheet.jpg", "caption": "As built | no car | glass 300, 120, 60, 30, 15 nits | bloom threshold; film 11581 and 3297 at the bottom"}]
+   "look": [
+    "Murphys row, 4th column against the film tile at the bottom left."
+   ],
+   "images": [
+    {
+     "src": "spec/captures/perf/nb5-police-sweep-sheet.jpg",
+     "caption": "As built | no car | glass 300, 120, 60, 30, 15 nits | bloom threshold; film 11581 and 3297 at the bottom"
+    }
+   ]
   },
   {
    "id": "nb-build9",
@@ -102,8 +208,16 @@
    "date": "Oct 21",
    "app": "HomeAloneNB4.app",
    "what": "The Murphys read at night (lit porch, visible strands); egg shrubs and box hedges replaced by the boxwood scans our beds use. Our house front unchanged (-0.4%).",
-   "look": ["Row 2: the Murphys beside film 11581.", "Piers by day: the hedges along the lot lines."],
-   "images": [{"src": "spec/captures/perf/nb4-sheet.jpg", "caption": "Film | build 8 | build 9 | old neighbourhood"}]
+   "look": [
+    "Row 2: the Murphys beside film 11581.",
+    "Piers by day: the hedges along the lot lines."
+   ],
+   "images": [
+    {
+     "src": "spec/captures/perf/nb4-sheet.jpg",
+     "caption": "Film | build 8 | build 9 | old neighbourhood"
+    }
+   ]
   },
   {
    "id": "marley",
@@ -111,7 +225,12 @@
    "status": "settled",
    "date": "Oct 21",
    "what": "Your call (Oct 20), confirmed by the stills: from the den window Kevin watches the reunion in front of the left neighbour, the pink turret house in film 1888. The build already has it, walkable, in its 1990 colours.",
-   "images": [{"src": "~/.cache/home-alone-board/img/marley-reunion-vs-1888.jpg", "caption": "Reunion (12511) | film 1888: the turret house left of ours"}]
+   "images": [
+    {
+     "src": "~/.cache/home-alone-board/img/marley-reunion-vs-1888.jpg",
+     "caption": "Reunion (12511) | film 1888: the turret house left of ours"
+    }
+   ]
   },
   {
    "id": "vehicles-1",
@@ -119,7 +238,12 @@
    "status": "superseded",
    "date": "Oct 20",
    "what": "The first fit of the real vehicles. The lights bloomed far too bright and the cars read dark; fixed in the sweep above.",
-   "images": [{"src": "spec/captures/perf/nb3-vehicles-sheet.jpg", "caption": "Film | new | old"}]
+   "images": [
+    {
+     "src": "spec/captures/perf/nb3-vehicles-sheet.jpg",
+     "caption": "Film | new | old"
+    }
+   ]
   },
   {
    "id": "house-split",
@@ -128,8 +252,16 @@
    "date": "Oct 20",
    "app": "HomeAloneNB4.app",
    "what": "The parents' doorway no longer shows roof, gutter and icicles inside; the front centre in overcast reads nearer the wings (still 0.87 of them).",
-   "look": ["Top: the doorway before and after, day and night.", "Below: the street in sunny, overcast and morning."],
-   "images": [{"src": "spec/captures/perf/house-split-sheet.jpg", "caption": "Doorway before | after; the street by weather"}]
+   "look": [
+    "Top: the doorway before and after, day and night.",
+    "Below: the street in sunny, overcast and morning."
+   ],
+   "images": [
+    {
+     "src": "spec/captures/perf/house-split-sheet.jpg",
+     "caption": "Doorway before | after; the street by weather"
+    }
+   ]
   },
   {
    "id": "wet-walk",
@@ -138,15 +270,27 @@
    "date": "Oct 20",
    "app": "HomeAloneNB4.app",
    "what": "The walk and drive are one weathered asphalt: pale by day, damp in overcast, wet at night. Open: the blotchy, camouflage-like pattern reads fake; a softer pattern is proposed (film 1640).",
-   "look": ["Right column, each weather: the walk at your feet."],
-   "images": [{"src": "spec/captures/perf/wet-walk-sheet.jpg", "caption": "Before | after at your walk-note spots and the piers"}]
+   "look": [
+    "Right column, each weather: the walk at your feet."
+   ],
+   "images": [
+    {
+     "src": "spec/captures/perf/wet-walk-sheet.jpg",
+     "caption": "Before | after at your walk-note spots and the piers"
+    }
+   ]
   },
   {
    "id": "nb-old-new",
    "title": "Neighbourhood: new street against the old one",
    "status": "superseded",
    "date": "Oct 20",
-   "images": [{"src": "spec/captures/perf/nb-old-new-sheet.jpg", "caption": "Piers, the Murphys and an upstairs window, day and night"}]
+   "images": [
+    {
+     "src": "spec/captures/perf/nb-old-new-sheet.jpg",
+     "caption": "Piers, the Murphys and an upstairs window, day and night"
+    }
+   ]
   }
  ]
 }
