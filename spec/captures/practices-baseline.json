@@ -1,8 +1,6 @@
 [
 "foliage|unity/HomeAlone/Assets/Materials/Greybox/HiFi_BathGrass.mat|clip=0 surface=0 doublesided=1",
 "foliage|unity/HomeAlone/Assets/Materials/Greybox/HiFi_DenLeaf.mat|clip=0 surface=0 doublesided=1",
-"foliage|unity/HomeAlone/Assets/Materials/Greybox/HiFi_ExtShrubLeaf.mat|clip=0 surface=0 doublesided=1",
-"foliage|unity/HomeAlone/Assets/Materials/Greybox/HiFi_ExtShrubLeafB.mat|clip=0 surface=0 doublesided=1",
 "foliage|unity/HomeAlone/Assets/Materials/IntactFoyer/BoundaryHedge.mat|clip=0 surface=0 doublesided=0",
 "foliage|unity/HomeAlone/Assets/Materials/IntactFoyer/LandingLeaves.mat|clip=0 surface=0 doublesided=0",
 "material|unity/HomeAlone/Assets/Editor/SpecGreybox.ExteriorRealism.cs|var p = g.AddComponent<DecalProjector>(); p.material = m; p.size = new Vector3(z",
@@ -21,7 +19,6 @@
 "obsolete|unity/HomeAlone/Assets/Editor/FrenchDoors.cs|Object.FindObjectsByType<T>(FindObjectsSortMode)",
 "obsolete|unity/HomeAlone/Assets/Editor/RearLanding.cs|Object.FindFirstObjectByType<T>()",
 "obsolete|unity/HomeAlone/Assets/Editor/RoomLighting.cs|Object.FindFirstObjectByType<T>()",
-"obsolete|unity/HomeAlone/Assets/Editor/SavePropPlacement.cs|FindObjectsSortMode",
 "obsolete|unity/HomeAlone/Assets/Editor/SavePropPlacement.cs|Object.FindObjectsByType<T>(FindObjectsSortMode)",
 "obsolete|unity/HomeAlone/Assets/Editor/ShadowAudit.cs|FindObjectsSortMode",
 "obsolete|unity/HomeAlone/Assets/Editor/ShadowAudit.cs|HDAdditionalLightData.spotLightShape",
@@ -67,7 +64,5 @@
 "obsolete|unity/HomeAlone/Assets/Scripts/PerfProbe.cs|Object.FindFirstObjectByType<T>()",
 "obsolete|unity/HomeAlone/Assets/Scripts/PropertyView.cs|FindObjectsSortMode",
 "obsolete|unity/HomeAlone/Assets/Scripts/PropertyView.cs|Object.FindObjectsByType<T>(FindObjectsSortMode)",
-"obsolete|unity/HomeAlone/Assets/Scripts/ShadowRefresh.cs|FindObjectsSortMode",
-"obsolete|unity/HomeAlone/Assets/Scripts/ShadowRefresh.cs|Object.FindObjectsByType<T>(FindObjectsInactive, FindObjectsSortMode)",
 "obsolete|unity/HomeAlone/Assets/Scripts/ZipLine.cs|Object.FindFirstObjectByType<T>()"
 ]
