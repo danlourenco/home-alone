@@ -71,6 +71,8 @@ build)
   python3 "$REPO/tools/house/trim_faces.py"   # the face model the trim is laid from (HOUSE-KERNEL step 1; the build refuses a stale one)
   [ "${HA_NO_PREFLIGHT:-}" = 1 ] || "$0" preflight
   rsync -a "$P/Assets/Editor/" "$S/Assets/Editor/"; rsync -a "$P/Assets/Scripts/" "$S/Assets/Scripts/"
+  [ -d "$P/Assets/Shaders" ] && rsync -a "$P/Assets/Shaders" "$S/Assets/" && { [ -f "$P/Assets/Shaders.meta" ] && cp "$P/Assets/Shaders.meta" "$S/Assets/" || true; }   # the repo's shaders (XmasGlowCard, Oct 21: the build threw "did not import" without them)
+  for d in UI Shaders; do [ -d "$P/Assets/$d" ] && rsync -a "$P/Assets/$d" "$S/Assets/" && { [ -f "$P/Assets/$d.meta" ] && cp "$P/Assets/$d.meta" "$S/Assets/" || true; }; done   # runtime UI (F1 panel, Resources) + shaders: Oct 21 the F1 panel shipped without its UXML
   rsync -a "$P/Assets/Models/" "$S/Assets/Models/"; cp "$P/Assets/Settings/HDRP.asset" "$S/Assets/Settings/"
   rsync -a --exclude Greybox --exclude Greybox.meta "$P/Assets/Textures/" "$S/Assets/Textures/"   # generated + Poly Haven maps (kitchen); Greybox/ is the build's own
   for pk in "Fadnn - Vintage Interior Furniture Pack" "Classic Wooden Furniture Pack" "Free Wood Door Pack" "VTC_AV-2062s" "ChristmasTreeAndGarland" "Tarantula" "BankersLamp" "ZNS3D"; do   # Asset Store packs (gitignored; may be absent)

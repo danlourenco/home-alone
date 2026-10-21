@@ -4,6 +4,18 @@
 
 *Draft for the show-and-tell post and talk. The house is the case study; the subject is the working method. Every claim traces to the repo: git history, `docs/`, `.claude/skills/`, `tools/` and the project's feedback memory. Each act opens with screenshots from that stage.*
 
+Marina Coates made a CG (computer-generated) tour of the McCallister house from *Home Alone* and posted it on YouTube in two parts: "Tour the Home Alone House, Part 1, Main Floor" and "Part 2". A virtual camera glides through every room of a detailed model of the house.
+
+I found it, and it helped inspire this project.
+
+Her tour became our measuring source for the inside: software rebuilt its rooms in 3D from the video itself (Act 3). The film is the authority for the outside and for anything else it shows; her tour fills in what the film never shows.
+
+Here's how the house came together, from her video to the film's own camera.
+
+[[HERO]]
+
+[[STRIP]]
+
 ---
 
 The goal sounds like a weekend toy: walk around the McCallister house from *Home Alone* (1990), in Unity, at true scale, with Kevin kid-sized so he can hide under the beds.
@@ -68,7 +80,7 @@ On Oct 12 the premise changed. Marina's tour is about 38 minutes of a camera gli
 
 The first run looked like a triumph, with tiny error numbers. A review the same day showed those numbers could stay tiny while the geometry moved a lot: the metric measured self-agreement, not correctness.
 
-So we built a fake house in Unity with known measurements, filmed it the way Marina filmed hers, and scored the tools against the truth. Two reconstruction methods were right in different places, and **when they disagreed, they were usually wrong**. That gave us a test for real footage, where no truth exists: measure each room by both methods and keep only what they agree on.
+So before trusting the software on Marina's video, we tested it on a house whose every measurement we already knew: our own earlier model. A script flew a virtual camera through it and made the footage look like hers, with zooms, title cards, captions, a dissolve and YouTube-style compression. Then we ran the same software on that clip and compared its answers with the true measurements. Two reconstruction methods were right in different places, and **when they disagreed, they were usually wrong**. That gave us a test for real footage, where no truth exists: measure each room by both methods and keep only what they agree on.
 
 Real footage then found a failure we wouldn't have guessed: the tool joined the two videos and put the upstairs hall *below* the foyer. The repeating damask wallpaper made two different walls look identical, and a "Living Room" title card matched a "Hall Bathroom" caption in the same font. The fix wasn't better matching but a sanity check, "upstairs must be above downstairs", run before any result is used.
 
@@ -106,7 +118,7 @@ Alongside the gate came the **deviations ledger**. Wherever the build departs fr
 
 ## Interlude: The film as ground truth
 
-[[IMG 26]]
+[[SLIDER]]
 
 [[IMG 27]]
 
@@ -219,6 +231,21 @@ At 5K, the obvious fix (render fewer pixels and scale up) made things *slower*. 
 
 ---
 
+## Act 10: The bill, and where it really went
+
+On Oct 21 I hit 98% of my usage limit mid-afternoon. When we looked at where the tokens went, it wasn't the house. It was agents watching builds. One build agent made over 300 tool calls in a day, and every time I sent it a message, it re-read roughly half a million tokens of its own history. The 40-minute Unity build itself was free; babysitting it was not.
+
+The fix follows the same rule as everything else in this project: anything a script can decide, a script should decide.
+
+- **One command for the whole build.** Build, bake, run the gates, render the comparison tours, run every check, make the sheets, update the board and put the new app in the Dock, ending in a 20-line PASS/FAIL summary. An agent (or I) reads twenty lines instead of narrating forty minutes.
+- **Checks that print one line.** `brick_storeys: FAIL upper/lower 0.68 (gate 0.95)`, with the detail in a file nobody reads unless it fails.
+- **The board fills itself.** Each test run writes its own entry from its results.
+- **Fresh, small agents.** One job, a tight brief, closed when done. Resuming a long-lived agent costs more than starting a new one.
+- **The right model for the job.** The expensive model diagnoses; a cheap one runs the script and reports.
+- **Live tuning instead of rebuilds.** Brightness and colour get adjusted in the running game and saved back, instead of a 40-minute build per tweak.
+
+The lesson is the one the user wrote into the rules on day one, now with a price on it: a one-time spend on tooling beats paying for the same inference over and over.
+
 ## Today
 
 [[IMG 24]]
@@ -252,7 +279,7 @@ The step that closes the loop is that **a failure becomes a check, not a promise
 |---|---|
 | Three houses passed their own tests and none was the house | Checks against outside evidence: film, Marina's tour, the real house |
 | Hand-picked measurements kept failing in new ways | "Attack the premise": after two failures, test the shared assumption |
-| A reconstruction looked perfect by its own error metric and was wrong | A fake house with known answers; two methods must agree |
+| A reconstruction looked perfect by its own error metric and was wrong | A test run on footage of a model we'd already measured; two methods must agree |
 | Identical wallpaper glued two floors together upside down | A physical sanity check before any result is used |
 | A room "verified" by evidence that came from the same data | The change gate: one agreeing check must share nothing with the claim; enforced at commit |
 | One measurement copied to rooms it was never taken in | Every measurement says where it applies; departures go in a ledger |
@@ -270,6 +297,8 @@ The step that closes the loop is that **a failure becomes a check, not a promise
 
 ## Principles, and the stories that taught them
 
+**Put a price on babysitting.** Agents watching deterministic work is the most expensive way to run it. Script the whole pipeline end to end, have it report in a few lines, and spend the model on the parts only judgement can do. (Act 10)
+
 **Decide who the authority is, and make every claim cite it.** "Film first, Marina fallback" ended a whole class of agent questions, and a frame number on every claim made each one checkable. No frame means "not seen".
 
 **Be ambitious about the target, humble about the evidence.** "Faithful" is an unreasonable goal, and it forced every principle below.
@@ -278,7 +307,7 @@ The step that closes the loop is that **a failure becomes a check, not a promise
 
 **Attack the premise.** After two failed fixes, stop. The Buzz room failures all shared one assumption, and the way forward was to replace it, not refine it.
 
-**Test against known truth first.** The fake house told us where each method fails before we relied on them, and gave us "do two methods agree?" as a test for the real footage.
+**Test against known truth first.** The test footage of our own measured model told us where each method fails before we relied on them, and gave us "do two methods agree?" as a test for the real footage.
 
 **No unproven claims.** Make claims machine-checkable and refuse them until they pass. Independence is about the kind of ruler. "Verified" is a word the gate says, not the agent.
 
@@ -311,7 +340,7 @@ All extracted files are in `~/.cache/home-alone-board/blog-img/` (not in the rep
 | IMG 5 | /Users/dlo/.cache/home-alone-board/blog-img/2026-10-12-references_reconciliation_01-floor-overlays.png | 1700x1050 | "Where the floor plans disagree": three plans that won't line up (September work, committed Oct 12) | Act 2 |
 | IMG 6 | /Users/dlo/.cache/home-alone-board/blog-img/2026-10-13-spec_feedback_shots_20261013-161244-IntactHouseReference.png | 2560x1440 | The first walk note, on the old model in Unity: "shape right, lighting too dark" (Oct 13) | Act 2 |
 | IMG 7 | /Users/dlo/.cache/home-alone-board/blog-img/2026-10-12-sfm_buzz-hall_topdown-annotated.png | 1062x889 | The first real reconstruction: Buzz's room and the upper hall rebuilt from the tour video, seen from above (Oct 12) | Act 3 |
-| IMG 8 | /Users/dlo/.cache/home-alone-board/blog-img/2026-10-12-sfm_synthetic_render_r00309.png | 1920x1080 | The fake house with known answers, used to test the tools (Oct 12) | Act 3 |
+| IMG 8 | /Users/dlo/.cache/home-alone-board/blog-img/2026-10-12-sfm_synthetic_render_r00309.png | 1920x1080 | A frame of the test footage: our earlier model, already measured, filmed like Marina's tour to check the software (Oct 12) | Act 3 |
 | IMG 9 | /Users/dlo/.cache/home-alone-board/blog-img/2026-10-12-sfm_link_m-check.jpg | 1920x1080 | Fooled by wallpaper: a title card matched to a caption, damask matched to damask (Oct 12) | Act 3 |
 | IMG 10 | /Users/dlo/.cache/home-alone-board/blog-img/2026-10-12-sfm_parents_plan-0.05.png | 926x543 | Points become a floor plan: the parents' suite, walls in red, camera path in blue (Oct 12) | Act 3 |
 | IMG 11 | /Users/dlo/.cache/home-alone-board/blog-img/2026-10-13-oblique.png | 1600x1600 | The first grey-box, generated from the spec file (Oct 13) | Act 4 |
@@ -329,7 +358,7 @@ All extracted files are in `~/.cache/home-alone-board/blog-img/` (not in the rep
 | IMG 23 | /Users/dlo/.cache/home-alone-board/blog-img/2026-10-21-perf_fs-nightB-sheet.jpg | 8424x2196 | The night speed sheet: same views, each variant side by side, speed on every tile (Oct 21) | Act 9 |
 | IMG 24 | /Users/dlo/.cache/home-alone-board/blog-img/2026-10-19-views_kitchen_fidelity_after_1074.jpg | 1280x720 | The kitchen after the fidelity pass (Oct 19) | Today |
 | IMG 25 | /Users/dlo/.cache/home-alone-board/blog-img/2026-10-21-views_front-0645_before-after-sheet.jpg | 1930x2310 | Today: the house from the walk in overcast, sun and night, the Murphys' and the police across the street (Oct 21) | Today |
-| IMG 26 | /Users/dlo/.cache/home-alone-board/blog-img/film-6399.jpg | 1920x1058 | FILM 6399: the front of the house, the exterior's main reference (film still, 1990) | Interlude |
+| IMG 26 | /Users/dlo/.cache/home-alone-board/blog-img/film-6399.jpg | 1920x1058 | FILM 6399: the front of the house, the exterior's main reference (film still, 1990) | Interlude (in the film slider) |
 | IMG 27 | /Users/dlo/.cache/home-alone-board/blog-img/film-11581.jpg | 1920x1058 | FILM 11581: the Murphys' porch at night with the police cars (film still) | Interlude |
 | IMG 28 | /Users/dlo/.cache/home-alone-board/blog-img/film-1888.jpg | 1920x1058 | FILM 1888: our house and Marley's turret house to its left (film still) | Interlude |
 | IMG 29 | /Users/dlo/.cache/home-alone-board/blog-img/film-12511.jpg | 1920x1058 | FILM 12511: the reunion seen through a window, used to settle which side Marley lives on (film still) | Interlude |

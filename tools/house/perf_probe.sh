@@ -38,6 +38,7 @@ build)
     [ -n "${HA_PERF_SRC:-}" ] && { rsync -a "$REPO/unity/HomeAlone/Assets/Scripts/" "$C/Assets/Scripts/"; rsync -a "$REPO/unity/HomeAlone/Assets/Editor/" "$C/Assets/Editor/"; }   # the repo's scripts over a scratch clone
   elif [ -n "${HA_REUSE:-}" ]; then   # scripts only: the repo's Scripts + Editor into the existing clone (the scene and bake stay as cloned)
     rsync -a "$SRC/Assets/Scripts/" "$C/Assets/Scripts/"; rsync -a "$SRC/Assets/Editor/" "$C/Assets/Editor/"; mkdir -p "$C/Assets/Branding"; rsync -a "$SRC/Assets/Branding/" "$C/Assets/Branding/"   # + the app icon
+    for d in UI Shaders; do [ -d "$SRC/Assets/$d" ] && rsync -a "$SRC/Assets/$d" "$C/Assets/" && { [ -f "$SRC/Assets/$d.meta" ] && cp "$SRC/Assets/$d.meta" "$C/Assets/" || true; }; done   # runtime UI + shaders (Oct 21: F1 panel missing its UXML)
   fi
   T=$SECONDS; "$UNITY" -batchmode -projectPath "$C" -executeMethod PerfBuild.Build -perfOut "$APP" $DEV ${HA_BUILD_ARGS:-} -quit -logFile "$W/build.log" || { grep -m5 -E "error|PerfBuild" "$W/build.log"; exit 1; }
   grep PerfBuild "$W/build.log"; echo "player built in $((SECONDS-T)) s";;

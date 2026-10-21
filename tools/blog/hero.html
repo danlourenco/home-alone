@@ -1,0 +1,317 @@
+<style>
+/* hero: a pinned stage (100svh) inside a tall scroll track; progress 0..1 drives five beats */
+:root { --hero-hi:#ffffff; --hero-lo:#dde3ea; --glow:#0b6f78 }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --hero-hi:#1d2632; --hero-lo:#0b0f14; --glow:#4fc2c9 } }
+:root[data-theme="dark"] { --hero-hi:#1d2632; --hero-lo:#0b0f14; --glow:#4fc2c9 }
+body { margin:0 }
+.hero { position:relative; height:520vh; margin:40px calc(-1 * max(16px, env(safe-area-inset-right, 0px))) 48px calc(-1 * max(16px, env(safe-area-inset-left, 0px))) }
+.hero-stage { position:sticky; top:0; height:100vh; height:100svh; overflow:hidden; background:radial-gradient(120% 90% at 50% 35%, var(--hero-hi), var(--hero-lo)) }
+.hero canvas { position:absolute; inset:0; width:100%; height:100%; display:block }
+.hero-film { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; pointer-events:none }
+.hero-cap { box-sizing:border-box; position:absolute; left:max(16px, env(safe-area-inset-left, 0px)); bottom:84px; max-width:min(30rem, calc(100% - 32px)); padding:12px 14px 10px;
+  background:color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border:1px solid var(--rule); border-radius:4px; transition:opacity .35s }
+.hero-cap .n { font:500 .7rem var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--red) }
+.hero-cap p { margin:4px 0 0; font:400 .95rem/1.45 var(--serif); color:var(--ink) }
+.hero-cap p.aside { font-size:.85rem; color:var(--muted); font-style:italic }
+.hero-ctl { position:absolute; left:max(16px, env(safe-area-inset-left, 0px)); right:max(16px, env(safe-area-inset-right, 0px)); bottom:24px; display:flex; gap:12px; align-items:center }
+.hero-ctl button { font:500 .75rem var(--mono); letter-spacing:.08em; text-transform:uppercase; color:var(--paper); background:var(--ink); border:0; border-radius:3px; padding:9px 14px; cursor:pointer; min-width:5.5rem }
+.hero-ctl input { flex:1; accent-color:var(--red); min-width:0 }
+.hero-ctl .beats { font:400 .7rem var(--mono); color:var(--muted); white-space:nowrap }
+.hero button:focus-visible, .hero input:focus-visible, .strip-track:focus-visible, .slider:focus-within, .slider-tabs button:focus-visible { outline:3px solid var(--teal); outline-offset:2px }
+.hero-title { position:absolute; top:max(28px, env(safe-area-inset-top, 0px)); left:0; right:0; text-align:center; font:500 .75rem var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); transition:opacity .4s; padding:0 16px }
+.hero-noscript { position:absolute; inset:auto 16px 50% 16px; text-align:center; color:var(--muted) }
+/* time strip */
+.strip { max-width:64rem; margin:0 auto 48px }
+article .strip { margin-inline:0 }
+@media (min-width: 60rem) { article .strip { margin-inline:-8rem } }
+.strip-track { display:grid; grid-auto-flow:column; grid-auto-columns:min(78%, 17rem); gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px; overscroll-behavior-x:contain }
+.strip-track figure { margin:0; scroll-snap-align:center; display:grid; gap:6px; opacity:.55; transition:opacity .25s }
+.strip-track figure.on { opacity:1 }
+.strip-track img { width:100%; aspect-ratio:4/3; object-fit:cover; border:1px solid var(--rule); border-radius:3px; background:var(--code) }
+.strip-track .when { font:500 .72rem var(--mono); letter-spacing:.08em; text-transform:uppercase; color:var(--red) }
+.strip-cap { font:400 .9rem/1.5 var(--serif); color:var(--ink); min-height:3em; margin:4px 0 0; max-width:42rem }
+.strip-hint { font:400 .7rem var(--mono); color:var(--muted); margin-bottom:8px }
+/* film vs ours slider */
+.slider-fig { margin:32px 0; display:grid; gap:8px }
+@media (min-width: 60rem) { .slider-fig { margin-inline:-8rem } }
+.slider { position:relative; aspect-ratio:1920/1058; border:1px solid var(--rule); border-radius:3px; overflow:hidden; background:var(--code); --x:50% }
+.slider img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; user-select:none; -webkit-user-drag:none }
+.slider .ours { clip-path:inset(0 calc(100% - var(--x)) 0 0) }
+.slider .bar { position:absolute; top:0; bottom:0; left:var(--x); width:2px; margin-left:-1px; background:#fff; box-shadow:0 0 0 1px rgba(0,0,0,.35); pointer-events:none }
+.slider .bar::after { content:"\2194"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:34px; height:34px; border-radius:50%; background:#fff; color:#15202e; display:grid; place-items:center; font:500 18px var(--mono) }
+.slider .tag { position:absolute; top:10px; font:500 .7rem var(--mono); letter-spacing:.1em; text-transform:uppercase; background:rgba(0,0,0,.55); color:#fff; padding:3px 7px; border-radius:2px; pointer-events:none }
+.slider input { position:absolute; inset:0; width:100%; height:100%; margin:0; opacity:0; cursor:ew-resize }
+.slider-tabs { display:flex; gap:8px; flex-wrap:wrap }
+.slider-tabs button { font:500 .72rem var(--mono); text-transform:uppercase; letter-spacing:.08em; background:transparent; color:var(--ink); border:1px solid var(--rule); border-radius:3px; padding:6px 10px; cursor:pointer }
+.slider-tabs button[aria-pressed="true"] { background:var(--ink); color:var(--paper); border-color:var(--ink) }
+@media (prefers-reduced-motion: reduce) { .hero-cap, .strip-track figure { transition:none } .strip-track { scroll-behavior:auto } }
+</style>
+<section class="hero" id="hero" aria-label="Interactive: the house comes together, from video points to the film's frame">
+  <div class="hero-stage">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <img class="hero-film" id="hero-ours" alt="Our house in the game engine, from film 6399's camera">
+    <img class="hero-film" id="hero-film" alt="Film frame 6399: the front of the McCallister house (1990)">
+    <div class="hero-title" id="hero-title">Scroll to build the house · or press play</div>
+    <noscript><p class="hero-noscript">The interactive hero needs JavaScript.</p></noscript>
+    <div class="hero-cap" id="hero-cap" aria-live="polite"><div class="n" id="hero-n"></div><p id="hero-text"></p><p class="aside" id="hero-aside"></p></div>
+    <div class="hero-ctl">
+      <button type="button" id="hero-play" aria-pressed="false">Play</button>
+      <input type="range" id="hero-scrub" min="0" max="1000" value="0" aria-label="Scrub through the build, from points to film frame">
+      <span class="beats" id="hero-beat">01 / 05</span>
+    </div>
+  </div>
+</section>
+<script type="application/json" id="hero-data">__HERO_DATA__</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+const D = JSON.parse(document.getElementById('hero-data').textContent);
+const Q = new URLSearchParams(location.search);
+const FIXED = Q.has('p') ? +Q.get('p') : null;            // ?p=0.5: a still at that progress (headless checks)
+const FILMMODE = Q.get('film') === '1';                   // ?film=1: time moves only through window.heroStep (recording)
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const MOBILE = Math.min(innerWidth, innerHeight) < 700;
+const hero = document.getElementById('hero'), canvas = document.getElementById('hero-canvas'), film = document.getElementById('hero-film');
+film.src = D.film; const ours = document.getElementById('hero-ours'); ours.src = D.ours;
+const dec = (s, T) => { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return new T(u.buffer); };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), sm = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: FIXED !== null || FILMMODE });
+renderer.setPixelRatio(Math.min(devicePixelRatio, MOBILE ? 1.5 : 2));
+renderer.shadowMap.enabled = !MOBILE; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+const scene = new THREE.Scene();
+const cam = new THREE.PerspectiveCamera(40, 1, 0.1, 400);
+// product-photo light: a big soft sky, a warm key high front-left, a cool fill from behind
+scene.add(new THREE.HemisphereLight(0xf4f7ff, 0x8a8f96, 1.6));
+const key = new THREE.DirectionalLight(0xfff3e2, 2.2); key.position.set(40, 45, 32); key.target.position.set(3, -3, 9.5);
+key.castShadow = !MOBILE; Object.assign(key.shadow.camera, { left: -26, right: 26, top: 26, bottom: -26, near: 1, far: 140 });
+key.shadow.mapSize.set(2048, 2048); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.03; scene.add(key, key.target);
+const fill = new THREE.DirectionalLight(0xdfe9ff, 0.6); fill.position.set(-30, 20, -10); scene.add(fill);
+
+// ---- (a) the SfM points (Marina's kitchen clip, registered into spec metres by hero_assets.py)
+const NP = MOBILE ? Math.floor(D.points.n / 2) : D.points.n;
+const P = dec(D.points.pos, Int16Array), C = dec(D.points.rgb, Uint8Array);
+const pos = new Float32Array(NP * 3), col = new Float32Array(NP * 3), rnd = new Float32Array(NP * 4);
+const ctr = new THREE.Vector3();
+for (let i = 0; i < NP; i++) { for (let k = 0; k < 3; k++) { pos[i * 3 + k] = P[i * 3 + k] / 1000; col[i * 3 + k] = C[i * 3 + k] / 255; } ctr.x += pos[i * 3]; ctr.y += pos[i * 3 + 1]; ctr.z += pos[i * 3 + 2]; }
+ctr.divideScalar(NP);
+let seed = 7; const rand = () => (seed = (seed * 16807) % 2147483647) / 2147483647;   // deterministic, so every take matches
+for (let i = 0; i < NP * 4; i++) rnd[i] = rand();
+const pg = new THREE.BufferGeometry();
+pg.setAttribute('position', new THREE.BufferAttribute(pos, 3)); pg.setAttribute('color', new THREE.BufferAttribute(col, 3)); pg.setAttribute('rnd', new THREE.BufferAttribute(rnd, 4));
+const pmat = new THREE.ShaderMaterial({
+  transparent: true, depthWrite: false,
+  uniforms: { uA: { value: 0 }, uT: { value: 0 }, uC: { value: ctr }, uSwirl: { value: REDUCED ? 0 : 1 }, uAlpha: { value: 1 }, uSize: { value: MOBILE ? 2.2 : 2.6 }, uPR: { value: renderer.getPixelRatio() } },
+  vertexShader: `attribute vec4 rnd; varying vec3 vC; varying float vA; uniform float uA, uT, uSwirl, uSize, uPR; uniform vec3 uC;
+    void main(){ float t = clamp((uA - rnd.x * 0.45) / 0.55, 0., 1.); t = t * t * (3. - 2. * t);
+      float ang = rnd.y * 6.2831 + uT * 0.25 + (1. - t) * 5.0; float r = 1.5 + rnd.z * 5.5;
+      vec3 sw = uC + vec3(cos(ang) * r, (rnd.w - 0.5) * 3.5 + sin(ang * 2. + uT) * 0.4, sin(ang) * r);
+      vec3 p = mix(mix(position, sw, uSwirl), position, t);
+      vec4 mv = modelViewMatrix * vec4(p, 1.); gl_Position = projectionMatrix * mv;
+      gl_PointSize = uSize * uPR * (14. / -mv.z) + 0.6; vC = color; vA = mix(uSwirl > 0.5 ? 0.55 : 0., 1., t); }`,
+  fragmentShader: `varying vec3 vC; varying float vA; uniform float uAlpha;
+    void main(){ vec2 d = gl_PointCoord - .5; float r = dot(d, d); if (r > .25) discard; gl_FragColor = vec4(vC, vA * uAlpha * smoothstep(.25, .12, r)); }`,
+  vertexColors: true });
+const points = new THREE.Points(pg, pmat); points.frustumCulled = false; scene.add(points);
+
+// ---- (b) the floor plan: every room of both floors, drawn edge by edge
+const lineV = []; const lineFloor = [];
+for (const r of D.plan) { const q = r.poly, y = r.y + 0.03; for (let i = 0; i < q.length; i++) { const a = q[i], b = q[(i + 1) % q.length]; lineV.push(a[0], y, a[1], b[0], y, b[1]); lineFloor.push(r.f); } }
+const nG = lineFloor.filter(f => f === 'g').length, nSeg = lineFloor.length;
+const lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.Float32BufferAttribute(lineV, 3));
+const lmat = new THREE.LineBasicMaterial({ color: new THREE.Color(css('--glow') || '#0b6f78'), transparent: true, toneMapped: false });
+const lines = new THREE.LineSegments(lg, lmat); scene.add(lines);
+const glow = new THREE.LineSegments(lg, new THREE.LineBasicMaterial({ color: new THREE.Color(css('--red') || '#b01e2b'), transparent: true, opacity: 0.5, toneMapped: false }));
+glow.position.y = 0.04; scene.add(glow);   // a second, offset line in the accent colour reads on light and dark paper
+// room floors (grey-box), one shape each
+const floors = new THREE.Group(); const floorMats = [];
+for (const r of D.plan) {
+  const s = new THREE.Shape(r.poly.map(([x, z]) => new THREE.Vector2(x, -z)));
+  const g = new THREE.ShapeGeometry(s); g.rotateX(-Math.PI / 2);   // shape (x, -z) -> plane y = 0, normal up
+  g.translate(0, r.y + 0.005, 0);
+  const m = new THREE.MeshStandardMaterial({ color: r.f === 'g' ? 0xb8ad9c : 0xc2b8a8, roughness: 0.9, transparent: true, opacity: 0, side: THREE.DoubleSide });
+  const mesh = new THREE.Mesh(g, m); mesh.receiveShadow = true; mesh.userData.f = r.f; floors.add(mesh); floorMats.push(m);
+}
+scene.add(floors);
+
+// ---- (c) walls: the generator's boxes, one instanced mesh per floor
+const box = new THREE.BoxGeometry(1, 1, 1);
+const grey = new THREE.Color('#c9cdd2');
+function wallMesh(f) {
+  const W = D.walls.filter(w => w.f === f);
+  const m = new THREE.InstancedMesh(box, new THREE.MeshStandardMaterial({ roughness: 0.85, transparent: true, opacity: 1 }), W.length);
+  m.castShadow = m.receiveShadow = true; m.userData.W = W; m.frustumCulled = false;
+  W.forEach((w, i) => { w.col = new THREE.Color(w.c); m.setColorAt(i, grey); });
+  scene.add(m); return m;
+}
+const wallsG = wallMesh('g'), wallsU = wallMesh('u');
+// the foyer's rear wall (the 1.6 m story): ground walls on the foyer's rear line x ~2.9, between the foyer's side walls
+const foyer = D.plan.find(r => r.name === 'foyer'), fx = Math.min(...foyer.poly.map(p => p[0])), fz = foyer.poly.map(p => p[1]);
+wallsG.userData.W.forEach(w => { const [x0, , z0, x1, , z1] = w.b; w.foyerRear = x1 - x0 < 0.3 && Math.abs(x1 - fx) < 0.05 && (z0 + z1) / 2 > Math.min(...fz) && (z0 + z1) / 2 < Math.max(...fz); });
+// the den armchair (the 18 m story): a stand-in box, not the real chair model
+const den = D.plan.find(r => r.name === 'den'), dcx = (Math.min(...den.poly.map(p => p[0])) + Math.max(...den.poly.map(p => p[0]))) / 2, dcz = (Math.min(...den.poly.map(p => p[1])) + Math.max(...den.poly.map(p => p[1]))) / 2;
+const OUT = [0, 18];   // 18 m, out past the den end into the yard
+const chair = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.95, 0.85), new THREE.MeshStandardMaterial({ color: 0xb01e2b, roughness: 0.6, transparent: true }));
+chair.castShadow = true; scene.add(chair);
+const chairLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(dcx, den.y + 0.5, dcz), new THREE.Vector3(dcx + OUT[0], den.y + 0.5, dcz + OUT[1])]),
+  new THREE.LineDashedMaterial({ color: 0xb01e2b, dashSize: 0.5, gapSize: 0.35, transparent: true, toneMapped: false }));
+chairLine.computeLineDistances(); scene.add(chairLine);
+
+// ---- (d) the film's house: the exterior skin (exterior_shell.py), plus snow ground and the front terrace
+const skin = new THREE.Group(); const skinMats = [];
+for (const part of D.skin) {
+  const q = dec(part.pos, Int16Array), f = new Float32Array(q.length); for (let i = 0; i < q.length; i++) f[i] = q[i] / 1000;
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(f, 3)); g.computeVertexNormals();
+  const glass = part.mat === 'EX_Glass';
+  const m = new THREE.MeshStandardMaterial({ color: part.c, roughness: glass ? 0.15 : part.mat === 'EX_Trim' ? 0.55 : 0.85, metalness: glass ? 0.3 : 0, side: THREE.DoubleSide, transparent: true, opacity: 0 });
+  const mesh = new THREE.Mesh(g, m); mesh.castShadow = mesh.receiveShadow = true; skin.add(mesh); skinMats.push(m);
+}
+const snowM = new THREE.MeshStandardMaterial({ color: 0xeef2f6, roughness: 0.95, transparent: true, opacity: 0 });
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(160, 160), snowM); ground.rotation.x = -Math.PI / 2; ground.position.set(5, -4.32, 10); ground.receiveShadow = true;
+const terraceM = [0, 1, 2, 3, 4, 5].map(i => i === 2 ? snowM : new THREE.MeshStandardMaterial({ color: 0xd9dee4, roughness: 0.95, transparent: true, opacity: 0 }));   // the raised front beds, as a snow bank
+const terrace = new THREE.Mesh(new THREE.BoxGeometry(18.3, 1.28, 24), terraceM); terrace.position.set(2.65, -3.68, 9.5); terrace.receiveShadow = true;
+skin.add(ground, terrace); scene.add(skin); skinMats.push(...terraceM.filter(m => m !== snowM));
+
+// ---- camera path: keyframes (position, target, vertical fov), the last one the solved film 6399 camera
+const FC = D.camera, FP = new THREE.Vector3(...FC.pos), FT = FP.clone().add(new THREE.Vector3(...FC.fwd).multiplyScalar(20)), FU = new THREE.Vector3(...FC.up);
+const K = [
+  { p: 0.00, pos: [-11, 3.5, -7], tgt: [ctr.x, ctr.y, ctr.z], fov: 42 },
+  { p: 0.16, pos: [-12, 9, -9], tgt: [ctr.x + 1, ctr.y, ctr.z + 1], fov: 42 },
+  { p: 0.34, pos: [-12, 27, 3], tgt: [3, -3, 9.5], fov: 40 },
+  { p: 0.50, pos: [33, 21, 0], tgt: [9, -2, 11], fov: 40 },
+  { p: 0.74, pos: [33, 9, 2], tgt: [5, -1.5, 9.5], fov: 40 },
+  { p: 0.90, pos: FC.pos, tgt: FT.toArray(), fov: FC.vfov, film: true } ];
+const V = a => new THREE.Vector3(...a);
+const curP = new THREE.CatmullRomCurve3(K.map(k => V(k.pos)), false, 'centripetal'), curT = new THREE.CatmullRomCurve3(K.map(k => V(k.tgt)), false, 'centripetal');
+function camAt(p) {
+  let i = 0; while (i < K.length - 2 && p > K[i + 1].p) i++;
+  const a = K[i], b = K[i + 1], s = sm(a.p, b.p, p), u = (i + s) / (K.length - 1);
+  const pos = curP.getPoint(clamp(u)), tgt = curT.getPoint(clamp(u));
+  const aspect = cam.aspect, filmW = p >= K[K.length - 1].p ? 1 : sm(K[K.length - 2].p, K[K.length - 1].p, p);
+  if (aspect < 1.5) pos.sub(tgt).multiplyScalar(1 + (1 - filmW) * (Math.pow(1.5 / aspect, 0.75) - 1)).add(tgt);   // phones: pull back, except at the film pose
+  let fov = a.fov + (b.fov - a.fov) * s;
+  if (filmW > 0) {   // match the film still drawn with object-fit: cover
+    const fa = FC.aspect, eff = aspect > fa ? 2 * Math.atan(Math.tan(FC.vfov * Math.PI / 360) * fa / aspect) * 180 / Math.PI : FC.vfov;
+    fov = fov + (eff - fov) * filmW;
+  }
+  cam.position.copy(pos); cam.up.set(0, 1, 0).lerp(FU, filmW).normalize(); cam.lookAt(tgt); cam.fov = fov; cam.updateProjectionMatrix();
+}
+
+// ---- beats
+const BEATS = [
+  { a: 0.00, b: 0.20, n: '01 · Points', t: 'Structure-from-motion watched Marina’s tour video, worked out where her camera was in every frame, and rebuilt the 3D shape of what it saw. These points are her kitchen.' },
+  { a: 0.20, b: 0.39, n: '02 · Plan', t: 'Measurements become a floor plan: one script reconciles them into a single spec file, every room on both floors, in metres.' },
+  { a: 0.39, b: 0.61, n: '03 · Grey-box', t: 'One generator builds the house from that file and nothing else: untextured walls you can walk through.' },
+  { a: 0.61, b: 0.79, n: '04 · The film’s house', t: 'The outside has to be the movie. From outside you see the film’s house; upstairs you’re in Marina’s bigger rooms, swapped in when you climb the stairs.' },
+  { a: 0.79, b: 1.01, n: '05 · Frame 6399', t: 'We stand where the film’s camera stood. From known points on our facade marked in a frame, a script works out where the 1990 camera was and what lens it had.' } ];
+const ASIDES = [
+  { a: 0.455, b: 0.50, t: 'The foyer was 1.6 m too long: its rear wall had been traced at the top of a two-storey wall.' },
+  { a: 0.50, b: 0.555, t: 'A small turn of the den’s armchair once threw it 18 m into the yard, while every report said success.' },
+  { a: 0.89, b: 0.95, t: 'Our house in the game engine, from the same spot.' },
+  { a: 0.95, b: 1.01, t: 'Film frame 6399 (1990).' } ];
+const elN = document.getElementById('hero-n'), elT = document.getElementById('hero-text'), elA = document.getElementById('hero-aside'), elB = document.getElementById('hero-beat'), title = document.getElementById('hero-title');
+let lastBeat = -1, lastAside = null;
+
+const m4 = new THREE.Matrix4(), qI = new THREE.Quaternion(), v3 = new THREE.Vector3(), s3 = new THREE.Vector3(), tmpC = new THREE.Color();
+function setWalls(mesh, rise, tint, slide) {
+  mesh.userData.W.forEach((w, i) => {
+    const [x0, y0, z0, x1, y1, z1] = w.b, h = Math.max(0.001, (y1 - y0) * rise);
+    const dx = w.foyerRear ? -1.57 * (1 - slide) : 0;
+    v3.set((x0 + x1) / 2 + dx, y0 + h / 2, (z0 + z1) / 2); s3.set(x1 - x0, h, z1 - z0);
+    mesh.setMatrixAt(i, m4.compose(v3, qI, s3));
+    tmpC.copy(grey).lerp(w.col, tint); if (w.foyerRear && slide > 0 && slide < 1) tmpC.set(0xb01e2b);
+    mesh.setColorAt(i, tmpC);
+  });
+  mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor.needsUpdate = true;
+}
+function setOpacity(m, o) { m.opacity = o; m.transparent = o < 0.999; m.depthWrite = o > 0.5; m.visible = o > 0.002; }
+
+function render(p, time) {
+  pmat.uniforms.uA.value = sm(0.02, 0.19, p); pmat.uniforms.uT.value = time;
+  pmat.uniforms.uAlpha.value = 1 - 0.75 * sm(0.42, 0.6, p) - 0.25 * sm(0.66, 0.74, p); points.visible = pmat.uniforms.uAlpha.value > 0.01;
+  // plan: ground floor then upstairs
+  const drawn = Math.round(nG * sm(0.19, 0.31, p)) + Math.round((nSeg - nG) * sm(0.29, 0.38, p));
+  lg.setDrawRange(0, drawn * 2); lmat.opacity = 1 - 0.7 * sm(0.62, 0.72, p); glow.material.opacity = 0.5 * (1 - sm(0.40, 0.5, p)) * (p < 0.39 ? 1 : 1);
+  lines.visible = glow.visible = drawn > 0 && lmat.opacity > 0.01;
+  // walls rise; the foyer's rear wall slides 1.6 m into place; the chair blinks out and back
+  const riseG = sm(0.39, 0.45, p), riseU = sm(0.555, 0.61, p), slide = sm(0.46, 0.49, p), tint = sm(0.61, 0.67, p);
+  setWalls(wallsG, riseG, tint, slide); setWalls(wallsU, riseU, tint, 1);
+  wallsG.visible = riseG > 0; setOpacity(wallsU.material, 1 - sm(0.69, 0.75, p)); wallsU.visible = riseU > 0 && wallsU.material.opacity > 0.002;
+  floorMats.forEach((m, i) => setOpacity(m, floors.children[i].userData.f === 'u' ? sm(0.555, 0.6, p) * (1 - sm(0.69, 0.75, p)) : sm(0.39, 0.45, p)));
+  const out = p > 0.505 && p < 0.545, blink = out && Math.floor((p - 0.505) / 0.008) % 2 === 0;
+  chair.visible = p > 0.44 && p < 0.6 && (!out || blink);
+  chair.position.set(dcx + (out ? OUT[0] : 0), den.y + 0.475, dcz + (out ? OUT[1] : 0));
+  setOpacity(chair.material, sm(0.44, 0.46, p) * (1 - sm(0.56, 0.6, p)));
+  chairLine.visible = out; chairLine.material.opacity = 0.9;
+  // the film's house
+  const sk = sm(0.64, 0.75, p); skinMats.forEach(m => setOpacity(m, sk)); setOpacity(snowM, sk); skin.visible = sk > 0.002;
+  camAt(p);
+  ours.style.opacity = sm(0.885, 0.925, p); film.style.opacity = sm(0.95, 0.99, p);   // model -> our render (same camera) -> the film
+  renderer.render(scene, cam);
+  // captions
+  const bi = BEATS.findIndex(b => p >= b.a && p < b.b);
+  if (bi !== lastBeat) { lastBeat = bi; const b = BEATS[Math.max(0, bi)]; elN.textContent = b.n; elT.textContent = b.t; elB.textContent = String(Math.max(0, bi) + 1).padStart(2, '0') + ' / 05'; }
+  const as = ASIDES.find(a => p >= a.a && p < a.b); if (as !== lastAside) { lastAside = as; elA.textContent = as ? as.t : ''; elA.hidden = !as; }
+  title.style.opacity = 1 - sm(0.0, 0.03, p);
+}
+
+// ---- progress: the page's scroll through the hero is the one source of truth; play scrolls the page
+const scrub = document.getElementById('hero-scrub'), play = document.getElementById('hero-play');
+const span = () => hero.offsetHeight - innerHeight, top0 = () => hero.getBoundingClientRect().top + scrollY;
+const scrollP = () => clamp((scrollY - top0()) / span());
+function resize() { const w = canvas.clientWidth, h = canvas.clientHeight; renderer.setSize(w, h, false); cam.aspect = w / h; }
+addEventListener('resize', resize); resize();
+let playing = false, playT0 = 0, playP0 = 0, raf = 0, t0 = performance.now();
+const PLAY_S = 24;
+function setPlaying(on) { playing = on; play.textContent = on ? 'Pause' : 'Play'; play.setAttribute('aria-pressed', on); if (on) { playP0 = scrollP() >= 0.999 ? 0 : scrollP(); playT0 = performance.now(); } }
+play.addEventListener('click', () => setPlaying(!playing));
+['wheel', 'touchstart', 'keydown'].forEach(e => addEventListener(e, ev => { if (playing && ev.target !== play) setPlaying(false); }, { passive: true }));
+scrub.addEventListener('input', () => { setPlaying(false); scrollTo({ top: top0() + span() * scrub.value / 1000, behavior: 'instant' }); });
+function frame(now) {
+  raf = requestAnimationFrame(frame);
+  if (playing) {
+    let p = playP0 + (now - playT0) / 1000 / PLAY_S;
+    if (REDUCED) {   // no glide: hold each beat's finished state for 3.5 s
+      const stops = BEATS.map(b => b.b - 0.01).concat([1]), i0 = stops.findIndex(s => s > playP0 + 1e-3);
+      p = stops[Math.min(stops.length - 1, i0 + Math.floor((now - playT0) / 3500))];
+    }
+    if (p >= 1) { p = 1; setPlaying(false); }
+    scrollTo({ top: top0() + span() * p, behavior: 'instant' });
+  }
+  const p = scrollP(); scrub.value = Math.round(p * 1000);
+  const r = hero.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;   // offscreen: skip the draw
+  render(p, REDUCED ? 0 : (now - t0) / 1000);
+}
+if (FIXED !== null) { render(FIXED, 0); scrub.value = FIXED * 1000; }
+else if (FILMMODE) { window.heroStep = (p, t = 0) => render(p, t); render(0, 0); }
+else raf = requestAnimationFrame(frame);
+window.heroSet = p => render(p, 0);
+window.heroNDC = (x, y, z) => new THREE.Vector3(x, y, z).project(cam).toArray();   // checks: where a point lands on screen
+</script>
+<script>
+// time strip: the card nearest the middle is "on" and its caption shows; film slider: a range input drives the divider
+addEventListener('DOMContentLoaded', () => {
+  const tr = document.querySelector('.strip-track'), cap = document.querySelector('.strip-cap');
+  if (tr) {
+    const figs = [...tr.querySelectorAll('figure')];
+    const upd = () => { const m = tr.scrollLeft + tr.clientWidth / 2; let best = figs[0], d = 1e9;
+      for (const f of figs) { const c = f.offsetLeft - tr.offsetLeft + f.offsetWidth / 2, e = Math.abs(c - m); if (e < d) { d = e; best = f; } }
+      figs.forEach(f => f.classList.toggle('on', f === best)); cap.textContent = best.dataset.when + ': ' + best.dataset.cap; };
+    tr.addEventListener('scroll', () => requestAnimationFrame(upd), { passive: true }); upd();
+    let drag = null;   // mouse drag to scroll (touch and trackpads scroll natively)
+    tr.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse') { drag = { x: e.clientX, s: tr.scrollLeft }; tr.style.scrollSnapType = 'none'; } });
+    addEventListener('pointermove', e => { if (drag) tr.scrollLeft = drag.s - (e.clientX - drag.x); });
+    addEventListener('pointerup', () => { if (drag) { drag = null; tr.style.scrollSnapType = ''; } });
+  }
+  for (const fig of document.querySelectorAll('.slider-fig')) {
+    const sl = fig.querySelector('.slider'), rng = sl.querySelector('input'), note = fig.querySelector('figcaption'), tabs = [...fig.querySelectorAll('.slider-tabs button')];
+    const set = () => { sl.style.setProperty('--x', rng.value / 10 + '%'); rng.setAttribute('aria-valuetext', `${Math.round(rng.value / 10)}% ours, ${100 - Math.round(rng.value / 10)}% film`); };
+    rng.addEventListener('input', set); set();
+    tabs.forEach(b => b.addEventListener('click', () => {
+      tabs.forEach(x => x.setAttribute('aria-pressed', x === b));
+      sl.querySelectorAll('img').forEach(im => im.hidden = im.dataset.k !== b.dataset.k); note.textContent = b.dataset.note; }));
+  }
+});
+</script>

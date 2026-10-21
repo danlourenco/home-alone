@@ -1,0 +1,3 @@
+# LABEL<TAB>perf args: the standard front check (brick storeys, window glow, xmas) + upstairs rooms
+front	-perfrounds 1 -perfposes walk0645,front6399 -perfvariants weather=overcast
+night	-perfrounds 1 -perfdn night -perfposes front6399,walk0645,street,foyer

@@ -1,5 +1,6 @@
-# build_post.py HEAD OUT: docs/blog/show-and-tell.md -> one self-contained HTML page (images embedded). Publish OUT to https://claude.ai/artifact/U88DkFDMdj4v2coLFrtVLL
-import re, io, base64, sys
+# build_post.py HEAD OUT: docs/blog/show-and-tell.md -> one self-contained HTML page (images embedded). The hero, time strip and
+# [[SLIDER]] come from ~/.cache/home-alone-board/hero/hero.json (tools/blog/hero_assets.py) and tools/blog/hero.html. Publish OUT to https://claude.ai/artifact/U88DkFDMdj4v2coLFrtVLL
+import re, io, base64, sys, json, html as H
 from pathlib import Path
 import markdown
 from PIL import Image
@@ -23,8 +24,28 @@ def fig(m):
     p, c = imgmap[m.group(1)]
     return f'<figure><img alt="{c}" src="{uri(p)}"><figcaption>{c}</figcaption></figure>'
 rest = re.sub(r'\[\[IMG (\d+)\]\]', fig, rest)
+D = json.loads((Path.home() / '.cache/home-alone-board/hero/hero.json').read_text())
+A = lambda v: H.escape(v, quote=True)
+def slider():
+    P = D['slider']
+    tabs = ''.join(f'<button type="button" aria-pressed="{str(i == 0).lower()}" data-k="{q["key"]}" data-note="{A(q["note"])}">{A(q["label"])}</button>' for i, q in enumerate(P))
+    imgs = ''.join(f'<img class="film" data-k="{q["key"]}" alt="{A(q["label"])}, the film"{" hidden" if i else ""} src="{q["film"]}">'
+                   f'<img class="ours" data-k="{q["key"]}" alt="{A(q["label"])}, our render"{" hidden" if i else ""} src="{q["ours"]}">' for i, q in enumerate(P))
+    return (f'<figure class="slider-fig"><div class="slider-tabs" role="group" aria-label="Pick a pair">{tabs}</div>'
+            f'<div class="slider">{imgs}<span class="tag" style="left:10px">Ours</span><span class="tag" style="right:10px">Film</span><span class="bar"></span>'
+            f'<input type="range" min="0" max="1000" value="500" aria-label="Divider: drag or use the arrow keys to compare our render with the film"></div>'
+            f'<figcaption>{A(P[0]["note"])}</figcaption></figure>')
+rest = rest.replace('[[SLIDER]]', slider())
+strip = ('<section class="strip" aria-label="Ten days in screenshots, oldest first"><div class="strip-hint">The house over time: drag or scroll sideways</div>'
+         '<div class="strip-track" tabindex="0" aria-label="Dated screenshots; use the arrow keys to scroll">'
+         + ''.join(f'<figure data-when="{A(q["when"])}" data-cap="{A(q["cap"])}"><img loading="lazy" alt="{A(q["cap"])}" src="{q["src"]}"><span class="when">{A(q["when"])}</span></figure>' for q in D['strip'])
+         + '</div><p class="strip-cap" aria-live="polite"></p></section>')
+hero = Path(sys.argv[1]).with_name('hero.html').read_text().replace('__HERO_DATA__', json.dumps({k: v for k, v in D.items() if k not in ('slider', 'strip')}).replace('</', '<\\/'))
 html = markdown.markdown(rest, extensions=['tables', 'fenced_code'])
 html = re.sub(r'<table>', '<div class="tw"><table>', html).replace('</table>', '</table></div>')
 css = Path(sys.argv[1]).read_text()
-out = css.replace('{{TITLE}}', title).replace('{{SUB}}', sub) + html + '</article></main>'
+# the intro sits above the hero; the hero is full-bleed, so it closes the first column and the article opens a new one
+intro, _, html = html.partition('<p>[[HERO]]</p>')
+html = html.replace('<p>[[STRIP]]</p>', strip)
+out = css.replace('{{TITLE}}', title).replace('{{SUB}}', sub) + intro + '</article></main>\n' + hero + '\n<main><article>' + html + '</article></main>'
 Path(sys.argv[2]).write_text(out); print(len(out)/1e6, 'MB')
