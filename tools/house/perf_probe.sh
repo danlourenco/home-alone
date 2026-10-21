@@ -59,7 +59,7 @@ run)
   [ -f "$O/done.txt" ] || { echo "tour did not finish: $O/player.log" >&2; exit 1; }
   uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" "$O"
   # every A/B gets its visual comparison (user, Oct 20): pose rows x variant columns, FPS on each tile, opened for the user
-  if ls "$O"/*-B1.png >/dev/null 2>&1; then uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" --sheet "$O" && open -a Preview "$O/sheet.jpg" 2>/dev/null || true; fi;;
+  if ls "$O"/*-B1.png >/dev/null 2>&1; then uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" --sheet "$O" && { [ -n "${HA_OPEN:-}" ] && open -a Preview "$O/sheet.jpg"; true; } 2>/dev/null || true; fi;;   # sheets go to the test board (tools/house/test_board.py); HA_OPEN=1 opens it
 ab)   # ab NAME APP_A APP_B: tours A, B, A, B (two builds, e.g. a project-setting change), then the base -> variant table
   N="${2:?name}"; for i in 1 2; do HA_PERF_APP="$3" "$0" run "$N-A$i" >/dev/null; HA_PERF_APP="$4" "$0" run "$N-B$i" >/dev/null; done
   uv run -q --with numpy --with pillow python -I "$REPO/tools/house/perf_table.py" --ab "$W/runs/$N-A1" "$W/runs/$N-B1" "$W/runs/$N-A2" "$W/runs/$N-B2";;
