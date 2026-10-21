@@ -19,15 +19,16 @@ MAX_W, MAX_BYTES = 1600, 15_000_000
 e = html.escape
 
 
-def img_uri(src):
+def img_uri(src, max_w=None):
     from PIL import Image
     p = Path(src).expanduser()
     p = p if p.is_absolute() else ROOT / p
     if not p.exists():
         return None
     im = Image.open(p).convert("RGB")
-    if im.width > MAX_W:
-        im = im.resize((MAX_W, round(im.height * MAX_W / im.width)), Image.LANCZOS)
+    mw = max_w or MAX_W
+    if im.width > mw:
+        im = im.resize((mw, round(im.height * mw / im.width)), Image.LANCZOS)
     b = io.BytesIO(); im.save(b, "JPEG", quality=80, optimize=True)
     return "data:image/jpeg;base64," + base64.b64encode(b.getvalue()).decode()
 
@@ -52,8 +53,8 @@ def test_html(t, uri=img_uri):
                    + "".join("<tr>" + "".join(f"<td>{e(c)}</td>" for c in r) + "</tr>" for r in tb["rows"]) + "</tbody></table></div>")
         if tb.get("note"):
             out.append(f'<p class="note">{e(tb["note"])}</p>')
-    for im in t.get("images", []):
-        u = uri(im["src"])
+    for im in t.get("images", []) if s != "superseded" else []:   # the page must stay under 16 MB: superseded tests keep their text only
+        u = uri(im["src"], 1000) if s == "settled" and uri is img_uri else uri(im["src"])
         out.append(f'<figure><img loading="lazy" alt="{e(im.get("caption", ""))}" src="{u}"><figcaption>{e(im.get("caption", ""))}</figcaption></figure>'
                    if u else f'<p class="note">Image missing: {e(im["src"])}</p>')
     out.append("</div></details>")
