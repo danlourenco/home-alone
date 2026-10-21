@@ -5,7 +5,6 @@ using System.Linq;
 using Unity.Profiling;
 using Unity.Profiling.LowLevel.Unsafe;   // ProfilerRecorderHandle: markers by name
 using UnityEngine;
-using HDCam = UnityEngine.Rendering.HighDefinition.HDAdditionalCameraData;
 
 // Perf probe: frame time and render counters at the player's current view, over N frames, camera untouched.
 //   PerfProbe.Run("name", 300)  -> spec/captures/perf/name.json
@@ -45,6 +44,8 @@ public class PerfProbe : MonoBehaviour
         ("piers", new Vector3(29.0f, -2.58f, -9.716f), 125f, 2f),
         ("walk0645", new Vector3(32.128f, -3.182f, -9.659f), 267.3f, -1.1f), // walk note 2026-10-21T06:45:32 (Kevin's eye at the piers, facing the house): mailbox, lanterns, brick, protruding upstairs        // between our walk piers on the sidewalk, across and down Lincoln (film-left)
         ("sheers", new Vector3(19f, -2.6f, -10.2f), 270f, -6f),
+        ("front6399", new Vector3(26.078f, -2.6f, -19.421f), 292.7f, -9.39f),   // film 6399's solved camera (exterior_film_fit.py; vfov 45.6: crop with sheet_tiles.film_crop)
+        ("front2508", new Vector3(14.6f, -2.75f, -15.3f), 270f, -9f),           // film 2508 eyeballed (the den bay and the living French pair; crop to vfov 40)
         ("kevinroom", new Vector3(8.0f, 1.31f, -5.8f), 80f, 5f),   // Oct 21 (brick-upstairs bake order): Kevin and Jeff's room toward Marina's strip front
         ("buzzfront", new Vector3(8.0f, 1.31f, -13.8f), 90f, 5f),  // Buzz's room toward its strip front   // Oct 21 (french-sheers): the front walk, both French pairs and their sheers
         ("murphys", new Vector3(28.68f, -2.63f, -21.96f), 67f, -1.5f),   // film 11581's solved camera (nb_film_camera.py; the player's FOV, not the film's 24.8 deg)
@@ -197,7 +198,6 @@ public class PerfProbe : MonoBehaviour
             }
             d.Sort(); return extent[l] = d[(int)(0.9f * (d.Count - 1))];
         }
-        (HDCam.AntialiasingMode, HDCam.TAAQualityLevel, HDCam.TAASharpenMode, float, HDCam.SMAAQualityLevel)? aa0 = null;
         string baseScale = Arg("-perfbasescale") ?? "100";   // -perfbasescale auto: the base is the shipped AUTO scale (Phase A, Oct 20)
         var screen0 = new Vector2Int(Screen.width, Screen.height); var mode0 = Screen.fullScreenMode;
         void Apply(int v) => ApplyV(v > 0, v > 0 && variants.Count > 0 ? variants[v - 1] : null);
@@ -273,18 +273,10 @@ public class PerfProbe : MonoBehaviour
             injectNow = RenderScale.DynRes(S("inject") switch { "after" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.AfterPost, "dof" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.AfterDepthOfField,
                 "before" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.BeforePost, _ => (UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType?)null },
                 S("dynres") switch { "soft" => UnityEngine.Rendering.DynamicResolutionType.Software, "hard" => UnityEngine.Rendering.DynamicResolutionType.Hardware, _ => (UnityEngine.Rendering.DynamicResolutionType?)null },
-                S("upscaler") == "none" ? false : (bool?)null, S("aa") == "stp" ? 100f : (float?)null);
-            // aa=none|fxaa|smaa|taa|stp (Oct 21, "still some stair stepping"): the main camera's anti-aliasing; taa = High quality, post
-            // sharpen 0.5; smaa = High; stp = STP at a forced 100% (pure temporal AA, no upscale). Base: the camera's own (None)
-            if (hd != null)
-            {
-                aa0 ??= (hd.antialiasing, hd.TAAQuality, hd.taaSharpenMode, hd.taaSharpenStrength, hd.SMAAQuality); var ab0 = aa0.Value; var aa = S("aa");
-                hd.antialiasing = aa switch { "none" => HDCam.AntialiasingMode.None, "fxaa" => HDCam.AntialiasingMode.FastApproximateAntialiasing, "smaa" => HDCam.AntialiasingMode.SubpixelMorphologicalAntiAliasing,
-                    "taa" => HDCam.AntialiasingMode.TemporalAntialiasing, _ => ab0.Item1 };
-                hd.TAAQuality = aa == "taa" ? HDCam.TAAQualityLevel.High : ab0.Item2; hd.taaSharpenMode = aa == "taa" ? HDCam.TAASharpenMode.PostSharpen : ab0.Item3;
-                hd.taaSharpenStrength = aa == "taa" ? 0.5f : ab0.Item4; hd.SMAAQuality = aa == "smaa" ? HDCam.SMAAQualityLevel.High : ab0.Item5;
-                RenderScale.Stp = aa == "stp";
-            }
+                S("upscaler") == "none" ? false : (bool?)null);
+            // aa=none|fxaa|smaa|taa|stp (Oct 21, fs-aa): the camera's anti-aliasing through RenderScale (not saved); base = the shipped STP
+            RenderScale.SetAA(S("aa") switch { "none" => RenderScale.AAMode.None, "fxaa" => RenderScale.AAMode.FXAA, "smaa" => RenderScale.AAMode.SMAA,
+                "taa" => RenderScale.AAMode.TAA, "stp" => RenderScale.AAMode.STP, _ => RenderScale.DefaultAA }, false);
             // screen=WxH: the backbuffer (full screen: the OS / Unity scale it to the panel, e.g. 2560x1440 = the Studio Display's "looks
             // like" size); the base is the size the tour started at. The JSON records what the player got (screen, backbuffer)
             // screen=WxHw (trailing w): windowed at that size on the same display (the NB4-style 1920x1080 window)
