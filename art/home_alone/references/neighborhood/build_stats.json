@@ -1,7 +1,7 @@
 {
  "lot_B0": {
   "tier": 2,
-  "lod0_tris": 32330,
+  "lod0_tris": 31930,
   "lod1_tris": 1664,
   "glow_tris": 44,
   "bulbs": 762,
@@ -12,12 +12,11 @@
    "NB_concrete_stone",
    "NB_paint_black",
    "NB_paint_darkblue",
-   "NB_paint_darkgreen",
    "NB_paint_porchgrey",
    "NB_paint_white",
    "NB_roof_asphalt_frostgrey"
   ],
-  "lod1_ratio": 0.051
+  "lod1_ratio": 0.052
  },
  "street": {
   "Street_Road": 1624,
@@ -348,7 +347,7 @@
   "Mailbox": 100,
   "YardStake": 88,
   "Wires": 2160,
-  "BoundaryDressing": 4120,
+  "BoundaryDressing": 336,
   "TreeLine_Cards": 638,
   "Horizon_Ground": 384
  }

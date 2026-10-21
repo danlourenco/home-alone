@@ -42,7 +42,7 @@ public static partial class SpecGreybox
             {
                 if (AssetImporter.GetAtPath("Assets/Textures/Neighborhood/room_cards.png") is TextureImporter ri && ri.wrapMode != TextureWrapMode.Clamp) { ri.wrapMode = TextureWrapMode.Clamp; ri.SaveAndReimport(); }
                 m.SetColor("_BaseColor", Color.white); m.SetTexture("_BaseColorMap", rc); m.SetTexture("_EmissiveColorMap", rc);
-                m.SetColor("_EmissiveColor", new Color(1f, 0.92f, 0.82f) * 90f); m.SetTextureScale("_BaseColorMap", Vector2.one);
+                m.SetColor("_EmissiveColor", new Color(1f, 0.92f, 0.82f) * 300f); m.SetTextureScale("_BaseColorMap", Vector2.one);
             }
         }
         else if (name.StartsWith("NB_car_"))   // step 3 street life: gloss car paint, chrome, tyres, lamps (nb_life.py); plain colours, no maps
@@ -122,6 +122,32 @@ public static partial class SpecGreybox
         if (leaks.Count > 0) Debug.LogError("Neighborhood boundary check FAIL: " + string.Join("; ", leaks));
     }
 
+    // the beds' boxwood scan (tools/house/scan_shrubs.py -> the gitignored Assets/Purchased/Sketchfab/ScanShrubs, CC-BY, CREDITS.md):
+    // its three lumpy variants (one mesh each: GPU instancing on the shared leaf + snow-card materials SpecGreybox.Shell makes), each plant
+    // sized w x d x h and turned, an LODGroup culling it under 0.5 % of the screen; without the download, nothing (logged)
+    static void ScanShrubRow(GameObject root, List<(Vector3 p, float sx, float sz, float h, string lot)> plants)
+    {
+        const string SS = "Assets/Purchased/Sketchfab/ScanShrubs/";
+        var sa = AssetDatabase.LoadAssetAtPath<GameObject>(SS + "ScanShrubs.glb");
+        if (sa == null || plants.Count == 0) { Debug.Log($"Neighborhood: scan shrubs {(sa == null ? "not present (download)" : "none")}"); return; }
+        var meshes = sa.GetComponentsInChildren<MeshFilter>(true).Select(f => f.sharedMesh).Distinct().ToList();
+        var leaf = LeafMat("HiFi_ExtShrubBoxwood", Color.white, SS, "bux_albedo.png", "bux_normal.png", "bux_mask.png");
+        var snow = LeafMat("HiFi_ExtShrubBoxwoodSnow", Color.white, SS, "bux_albedo_snow.png", "bux_normal.png", "bux_mask.png");
+        leaf.enableInstancing = true; snow.enableInstancing = true;
+        var holder = new GameObject("Scan shrubs (boxwood)"); holder.transform.SetParent(root.transform, false);
+        var rnd = new System.Random(11581); int k = 0;
+        foreach (var (p, sx, sz2, h, lot) in plants)
+        {
+            var m = meshes[k++ % meshes.Count]; var sz = m.bounds.size; float aspect = sz.y / Mathf.Max(0.01f, (sz.x + sz.z) / 2f);
+            var g = new GameObject($"Shrub {lot}"); g.transform.SetParent(holder.transform, false);
+            g.transform.SetPositionAndRotation(p + Vector3.down * 0.03f, Quaternion.Euler(0, ((float)rnd.NextDouble() - 0.5f) * 20f, 0));   // +-10 deg: the sizes stay on their axes (the bulbs ride the kit's ellipsoid)
+            g.transform.localScale = new Vector3(sx / Mathf.Max(0.01f, sz.x), h / Mathf.Max(0.01f, sz.y), sz2 / Mathf.Max(0.01f, sz.z));
+            g.AddComponent<MeshFilter>().sharedMesh = m; var r = g.AddComponent<MeshRenderer>(); r.sharedMaterials = new[] { leaf, snow };
+            var lg = g.AddComponent<LODGroup>(); lg.fadeMode = LODFadeMode.None; lg.SetLODs(new[] { new LOD(0.005f, new Renderer[] { r }) }); g.isStatic = true;
+        }
+        Debug.Log($"Neighborhood: {plants.Count} scan shrubs ({meshes.Count} variants, instanced)");
+    }
+
     static void Neighborhood(GameObject ext, float gy)
     {
         if (System.Environment.GetEnvironmentVariable("HA_NEIGHBORHOOD") != "1") { Debug.Log("Neighborhood: off (HA_NEIGHBORHOOD != 1)"); return; }
@@ -131,7 +157,7 @@ public static partial class SpecGreybox
         var kt = JObject.Parse(File.ReadAllText(Path.Combine(Application.dataPath, "Textures/Neighborhood/kit_textures.json")));
         var pal = (JObject)man["kit_palette"]; var lv = (JObject)lay["levels_rel_gy"]; var grade = (JObject)lv["lot_grade"];
         var root = new GameObject("Neighborhood"); root.transform.SetParent(ext.transform, true);
-        int houses = 0, glows = 0; long tris2 = 0, tris3 = 0; var allBulbs = Enumerable.Range(0, 5).Select(_ => new List<Vector3>()).ToArray();
+        int houses = 0, glows = 0; long tris2 = 0, tris3 = 0; var scanShrubs = new List<(Vector3 p, float sx, float sz, float h, string lot)>(); var allBulbs = Enumerable.Range(0, 5).Select(_ => new List<Vector3>()).ToArray();   // scanShrubs: world x / z sizes
 
         GameObject Inst(string asset, string n, Vector3 pos)
         {
@@ -160,6 +186,16 @@ public static partial class SpecGreybox
             foreach (var r in l0) tris2 += r.GetComponent<MeshFilter>().sharedMesh.triangles.Length / 3;
             foreach (var r in tier <= 2 ? new Renderer[0] : l1) tris3 += r.GetComponent<MeshFilter>().sharedMesh.triangles.Length / 3;
             foreach (var t in h.GetComponentsInChildren<Transform>(true)) t.gameObject.isStatic = !t.name.EndsWith("_NightGlow");
+            // the kit's night lights (the Murphys' porch lamp, porch ceiling, the strands' glow on the facade: film 11581), unshadowed, night layer
+            if (e["kit"]?["night_lights"] is JArray nls)
+                foreach (JObject nl in nls)
+                    ShellLights.Add(NightLight(h, $"NightLight_{id}", new Vector3((float)nl["x"], gy + g0 + (float)nl["y"], -(float)nl["z"]), (float)nl["lm"], (float)nl["range"]));
+            // shrubs from the beds' boxwood scan: the kit's lit foundation shrubs (scan_shrubs) and plain foundation shrubs
+            var kitObj = (e["kit"] ?? e["kit_auto"]) as JObject;
+            if (kitObj?["scan_shrubs"]?.Value<bool>() == true && kitObj["xmas"]?["shrubs"] is JArray ks)
+                foreach (JObject q in ks) scanShrubs.Add((new Vector3((float)q["x"], gy + g0, -(float)q["z"]), 2f * (float)q["rx"], 2f * (float)q["rz"], (float)q["h"], id));
+            if (kitObj?["foundation_shrubs"] is JArray fs)
+                foreach (JObject q in fs) scanShrubs.Add((new Vector3((float)q["x"], gy + g0, -(float)q["z"]), 2f * (float)q["rx"], 2f * (float)q["rz"], (float)q["h"], id));
             // the C7 strings (film 11581: red, green, amber, blue, white), night only
             var xp = Path.Combine(Application.dataPath, $"Models/Neighborhood/{id}_xmas.json");
             if (File.Exists(xp))
@@ -175,7 +211,7 @@ public static partial class SpecGreybox
             for (int c = 0; c < 5; c++)
             {
                 if (allBulbs[c].Count == 0) continue;
-                var go = Bulbs(root, $"XmasC7_{c}", allBulbs[c], 0.05f, XmasBulb($"NB_C7_{c}", cs[c], 2200f));
+                var go = Bulbs(root, $"XmasC7_{c}", allBulbs[c], 0.075f, XmasBulb($"NB_C7_{c}", cs[c], 7000f));   // C9-sized and bright: at 30-40 m the 5 cm / 2200-nit bulbs vanished (11581 reads them as bright strands)
                 foreach (var r in go.GetComponentsInChildren<MeshRenderer>()) { r.shadowCastingMode = ShadowCastingMode.Off; ShellGlow.Add(r); }
             }
         }
@@ -326,6 +362,23 @@ public static partial class SpecGreybox
                 bd.AddComponent<MeshCollider>().sharedMesh = bd.GetComponent<MeshFilter>().sharedMesh;
             }
             Object.DestroyImmediate(src);
+            // the boundary hedges: rows of the beds' boxwood scan along the heroes' side lot lines (soft blockers), a box collider per row
+            foreach (JArray hz in ll["hedges"])
+            {
+                var a = new Vector2((float)hz[0], (float)hz[1]); var b = new Vector2((float)hz[2], (float)hz[3]); string lot = (string)hz[4];
+                float y0 = gy + (grade[lot] != null ? (float)grade[lot] : (float)lv["lawn_A"]); float L = (b - a).magnitude; int n = Mathf.Max(1, Mathf.RoundToInt(L / 0.75f));
+                var hr = new System.Random(lot.GetHashCode());
+                for (int i = 0; i < n; i++)
+                {
+                    var q = Vector2.Lerp(a, b, (i + 0.5f) / n);
+                    scanShrubs.Add((new Vector3(q.x, y0, -q.y), 1.05f + 0.1f * (float)hr.NextDouble(), 0.95f, 1.25f + 0.15f * (float)hr.NextDouble(), lot + "_hedge"));
+                }
+                var hc = new GameObject($"Hedge collider {lot}"); hc.transform.SetParent(lifeRoot.transform, false);
+                var m2 = (a + b) / 2f; var d2 = b - a;
+                hc.transform.SetPositionAndRotation(new Vector3(m2.x, y0 + 0.7f, -m2.y), Quaternion.LookRotation(new Vector3(d2.x, 0, -d2.y).normalized, Vector3.up));
+                var hbc = hc.AddComponent<BoxCollider>(); hbc.size = new Vector3(1.0f, 1.4f, L); hc.isStatic = true;
+            }
+            ScanShrubRow(root, scanShrubs);
             WalkBoundary(ext, gy, ll);
         }
         var tl = Inst("TreeLine", "Tier 4 treeline", new Vector3(0f, gy, 0f));
@@ -350,6 +403,12 @@ public static partial class SpecGreybox
         }
         Debug.Log($"Neighborhood: {oldTrees} old street trees off (lidar trees replace them)");
         Debug.Log($"Neighborhood: step 3 street life {life} (cars, props, poles), treeline {(tl != null ? "on" : "missing")}");
+        // the moon lights only rendering layer LayerOutside (SpecGreybox.Backdrop); every neighbourhood renderer joins it, the night-layer cars
+        // included (they were moved out of the root above: tag them through ShellLights' holders too)
+        int moonlit = 0;
+        foreach (var r in root.GetComponentsInChildren<Renderer>(true).Concat(ShellLights.Where(l => l != null).SelectMany(l => l.GetComponentsInChildren<Renderer>(true))))
+        { r.renderingLayerMask |= LayerOutside; moonlit++; }
+        Debug.Log($"Neighborhood: {moonlit} renderers on the moon's layer (LayerOutside)");
         Debug.Log($"Neighborhood: {houses} houses (Tier 2 LOD0 {tris2} tris, Tier 3 {tris3} tris), {glows} night glows, {lamps} acorn lamps, {trees} trees, {NbMats.Count} shared materials, {off} WinterNeighborhood renderers off");
     }
 }

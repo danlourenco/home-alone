@@ -340,7 +340,7 @@ class House:
             ring = lambda j: [(x + rx * math.sin(math.pi * j / nv) * math.cos(2 * math.pi * i / nu) * (0.9 + 0.1 * self.rng.random()), h * (1 - math.cos(math.pi * j / nv)) / 2 * 1.0,
                                z + rz * math.sin(math.pi * j / nv) * math.sin(2 * math.pi * i / nu)) for i in range(nu)]
             rs = [ring(j) for j in range(nv + 1)]
-            for j in range(nv):
+            for j in range(nv if not self.k.get("scan_shrubs") else 0):   # scan_shrubs: Unity places the boxwood scan here (bulbs only)
                 for i in range(nu):
                     a, b, c, d = rs[j][i], rs[j][(i + 1) % nu], rs[j + 1][(i + 1) % nu], rs[j + 1][i]
                     self.g.face(M, [a, c, d] if j == 0 else [a, b, c] if j == nv - 1 else [a, b, c, d], sub(mul(add(a, c), 0.5), (x, h / 2, z)))

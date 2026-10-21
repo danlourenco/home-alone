@@ -3093,6 +3093,43 @@
       "_src": "the user's photo: a hip dormer on the right wing (G position)"
      }
     ],
+    "foundation_shrubs": [
+     {
+      "x": 11.4,
+      "z": 39.6,
+      "rx": 0.45,
+      "rz": 0.6,
+      "h": 0.9
+     },
+     {
+      "x": 11.4,
+      "z": 43.6,
+      "rx": 0.45,
+      "rz": 0.6,
+      "h": 0.9
+     },
+     {
+      "x": 11.4,
+      "z": 44.9,
+      "rx": 0.45,
+      "rz": 0.6,
+      "h": 0.9
+     },
+     {
+      "x": 11.4,
+      "z": 46.2,
+      "rx": 0.45,
+      "rz": 0.6,
+      "h": 0.9
+     },
+     {
+      "x": 11.4,
+      "z": 47.3,
+      "rx": 0.45,
+      "rz": 0.6,
+      "h": 0.9
+     }
+    ],
     "steps": [
      {
       "x": [
@@ -7935,6 +7972,33 @@
        5.0
       ],
       "_src": "C outbuilding (ridge 5.9), O drive at z 3.1-4.2 (2022). It is at the house's LEFT seen from Lincoln; the white garage at the right edge of 11581 is lot_B+1's"
+     }
+    ],
+    "scan_shrubs": true,
+    "night_lights": [
+     {
+      "x": 63.2,
+      "y": 3.0,
+      "z": 13.3,
+      "lm": 700,
+      "range": 9,
+      "_src": "the porch lamp (kit lamp at z 13.32), 11556 lit"
+     },
+     {
+      "x": 62.0,
+      "y": 3.7,
+      "z": 9.0,
+      "lm": 450,
+      "range": 8,
+      "_src": "the porch ceiling over the left bay (11581: the left porch reads lit)"
+     },
+     {
+      "x": 58.0,
+      "y": 6.0,
+      "z": 12.2,
+      "lm": 900,
+      "range": 15,
+      "_src": "the strands' combined glow on the facade (11581: the clapboard reads blue-grey under the lights), G"
      }
     ],
     "xmas": {

@@ -174,7 +174,7 @@ def boundary_dressing(L):
     """Snowy privet hedges on the heroes' side lot lines and plowed snow piles across the sidewalks at the walkable stretch's ends."""
     g = Geo(); rng = __import__("random").Random(5)
     lv = {"lot_B0": LAWN_B + 0.02, "lot_A+1": LAWN_A}
-    for x0, z0, x1, z1, lot in L["hedges"]:
+    for x0, z0, x1, z1, lot in ([] if os.environ.get("NB_BOX_HEDGES") != "1" else L["hedges"]):   # hedges: the boxwood scan in Unity (SpecGreybox.Neighborhood)
         y0 = lv[lot]; L_ = math.hypot(x1 - x0, z1 - z0); n = max(1, int(L_ / 1.2)); ax = norm((x1 - x0, 0, z1 - z0)); side = (-ax[2], 0, ax[0])
         for i in range(n):
             c = add((x0, 0, z0), mul(ax, (i + 0.5) * L_ / n)); h = 1.25 + 0.2 * rng.random(); w = 0.85 + 0.1 * rng.random()

@@ -86,6 +86,11 @@ def murphys():
         "chimneys": [{"x": 72.6, "z": 16.15, "w": 0.75, "d": 0.62, "top": 12.1, "from": 5.0, "_src": "F 11581: a dark stack behind the right roof slope (by eye); G size"}],
         "garages": [{"x": [83.9, 92.85], "z": [-1.9, 9.15], "plate": 2.7, "roof": "hip", "pitch": 28, "door_face": "-x", "door": [3.65, 5.0],
                      "_src": "C outbuilding (ridge 5.9), O drive at z 3.1-4.2 (2022). It is at the house's LEFT seen from Lincoln; the white garage at the right edge of 11581 is lot_B+1's"}],
+        "scan_shrubs": True,   # the foundation shrubs are the beds' boxwood scan in Unity (scan_shrubs.py); the GLB keeps only their bulbs
+        "night_lights": [   # film 11581: the porch lamp by the door, the porch ceiling's spill and the strands' glow on the facade (unshadowed, night only)
+            {"x": 63.2, "y": 3.0, "z": 13.3, "lm": 700, "range": 9, "_src": "the porch lamp (kit lamp at z 13.32), 11556 lit"},
+            {"x": 62.0, "y": 3.7, "z": 9.0, "lm": 450, "range": 8, "_src": "the porch ceiling over the left bay (11581: the left porch reads lit)"},
+            {"x": 58.0, "y": 6.0, "z": 12.2, "lm": 900, "range": 15, "_src": "the strands' combined glow on the facade (11581: the clapboard reads blue-grey under the lights), G"}],
         "xmas": {"_src": "F 11581/11576 (night): main eave front only (the +z side eave is dark), a line along the wall over the porch roof (frame 1100-1560, "
                          "y ~340), the middle and right upper windows outlined, the porch eave turning the right corner, dense swags on the rails, the "
                          "French doors and the front door outlined, lit foundation shrubs both sides of the steps and a big lit shrub at the left corner",
@@ -191,6 +196,7 @@ def a_plus1():
                          "_src": "C octagonal corners (r 2.4 to the face middles, the front face 15 cm proud of the main wall); L peak 12.5 m at x 10-11, z 37-38; F 1888 the tall red cone over a pale windowed band that rises above the wings' red roofs (plate 7.8: G from the frame's proportions)"}],
             "dormers": [{"face": "+x", "block": 1, "at": 34.9, "w": 1.9, "h": 1.6, "setback": 0.6, "depth": 2.2, "roof": "hip",
                          "windows": [{"off": 0, "w": 1.0, "h": 0.8, "sill": 0.6, "type": "dh11"}], "_src": "the user's photo: a hip dormer on the right wing (G position)"}],
+            "foundation_shrubs": [{"x": 11.4, "z": z, "rx": 0.45, "rz": 0.6, "h": 0.9} for z in (39.6, 43.6, 44.9, 46.2, 47.3)],   # clipped yews along the foundation (the user's photo); boxwood scan in Unity
             "steps": [{"x": [12.64, 14.04], "z": [40.6, 42.7], "top": 0.9, "n": 5, "climb": -1, "_src": "the user's photo: stone steps up to the entry"}],
             "chimneys": [{"x": 4.0, "z": 47.25, "w": 0.7, "d": 0.6, "top": 11.6, "from": 1.0, "_src": "F 1888: a chimney on the left (+z) wing; the user's photo: tall red brick"}]}
 
