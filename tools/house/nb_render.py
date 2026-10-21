@@ -40,8 +40,24 @@ def material(name, night):
         bsdf.inputs["Base Color"].default_value = (1, 0.8, 0.55, 1)
         bsdf.inputs["Emission Color"].default_value = (1.0, 0.72, 0.42, 1) if name == "NB_GlassLit" else (1.0, 0.88, 0.7, 1)
         bsdf.inputs["Emission Strength"].default_value = (2.2 if name == "NB_GlassLit" else 60.0) if night else 0.0
+        rc = TEX / "room_cards.png"
+        if name == "NB_GlassLit" and rc.exists():   # step 3: the room cards (nb_textures.room_cards) on the window's own UVs
+            im = nt.nodes.new("ShaderNodeTexImage"); im.image = bpy.data.images.load(str(rc), check_existing=True)
+            nt.links.new(im.outputs["Color"], bsdf.inputs["Emission Color"]); nt.links.new(im.outputs["Color"], bsdf.inputs["Base Color"])
+            bsdf.inputs["Emission Strength"].default_value = 3.0 if night else 0.0
         if name == "NB_LampGlobe" and not night: bsdf.inputs["Roughness"].default_value = 0.1; bsdf.inputs["Transmission Weight"].default_value = 0.6
         return m
+    if name.startswith("NB_car_"):   # step 3 street life: gloss paint / chrome / tyres (nb_life.py)
+        col = name[7:]; bsdf.inputs["Base Color"].default_value = (*srgb2lin(PAL.get(col, [0.5, 0.5, 0.5])), 1)
+        bsdf.inputs["Roughness"].default_value = 0.6 if col == "tyre" else 0.12 if col == "chrome" else 0.25
+        bsdf.inputs["Metallic"].default_value = 1.0 if col == "chrome" else 0.0; return m
+    if name == "NB_Beacon":
+        bsdf.inputs["Base Color"].default_value = (1, 0.05, 0.03, 1); bsdf.inputs["Emission Color"].default_value = (1, 0.05, 0.03, 1)
+        bsdf.inputs["Emission Strength"].default_value = 40.0 if night else 0.0; return m
+    if name == "NB_TreeCard":
+        im = nt.nodes.new("ShaderNodeTexImage"); im.image = bpy.data.images.load(str(TEX / "tree_cards.png"), check_existing=True)
+        nt.links.new(im.outputs["Color"], bsdf.inputs["Base Color"]); nt.links.new(im.outputs["Alpha"], bsdf.inputs["Alpha"])
+        bsdf.inputs["Roughness"].default_value = 0.9; return m
     st = next((s for s in sorted(KT, key=len, reverse=True) if k.startswith(s + "_") or k == s), None)
     if st is None:
         bsdf.inputs["Base Color"].default_value = (0.5, 0.5, 0.5, 1); return m
@@ -123,6 +139,7 @@ def scene(night, lots_lod0, lod1_only=False, near=None):
         for nm in ("LampPost_LOD0", "LampPost_Globe_LOD0"):
             ob = bpy.data.objects.new(nm, lsrc[nm].data); bpy.context.scene.collection.objects.link(ob); ob.location = B(L["x"], LV["walk"], L["z"])
         if night: point(B(L["x"], LV["walk"] + 3.85, L["z"]), (1.0, 0.8, 0.6), 220, 0.18)
+    life(night)
     assign(night)
     w = bpy.data.worlds.new("w"); sc.world = w; w.use_nodes = True; bg = w.node_tree.nodes["Background"]
     if night:
@@ -138,6 +155,28 @@ def scene(night, lots_lod0, lod1_only=False, near=None):
         sun = bpy.data.lights.new("sun", "SUN"); sun.energy = 2.0; sun.angle = math.radians(3); so = bpy.data.objects.new("sun", sun); sc.collection.objects.link(so)
         so.rotation_euler = (math.radians(70), 0, math.radians(150))
     return sc
+
+
+def life(night):
+    """Step 3: street life (StreetLife.glb at life_layout.json; the police cars only at night) and the Tier 4 treeline (TreeLine.glb)."""
+    lp = NB / "life_layout.json"
+    if not lp.exists(): return
+    L = json.loads(lp.read_text()); objs = load(NB / "StreetLife.glb"); src = {o.name: o for o in objs if o.type == "MESH"}
+    for o in objs: o.hide_render = True
+    lvl = lambda it: LV["walk"] if it.get("y") == "walk" else LV["lot_grade"].get(it.get("y", ""), LV["road"] if 30.62 < it["x"] < 41.3 else LV["lawn_B"] if it["x"] >= 41.3 else LV["lawn_A"])
+    def put(name, x, y, z, yaw):
+        if name not in src: return
+        ob = bpy.data.objects.new(name, src[name].data); bpy.context.scene.collection.objects.link(ob)
+        ob.matrix_world = Matrix.Translation(B(x, y, z)) @ Matrix.Rotation(yaw, 4, "Z")
+    for it in L["items"]:
+        if it.get("scene") == "night" and not night: continue
+        h = it.get("heading", [0, 1]); yaw = math.atan2(h[0], h[1])   # spec heading (x, z) from +z; Blender: spec z = +y, spec x = -x
+        for nm in (it["kind"], it["kind"] + "_Beacons"): put(nm, it["x"], lvl(it), it["z"], yaw)
+        if it.get("scene") == "night": point(B(it["x"], lvl(it) + 1.7, it["z"]), (1.0, 0.05, 0.03), 120, 0.2)
+    for q in L["poles"]: put("Pole", q["x"], LV["walk"], q["z"], 0.0)
+    put("Wires", 0, 0, 0, 0.0)
+    tl = NB / "TreeLine.glb"
+    if tl.exists(): load(tl)
 
 
 def point(loc, col, W, r=0.1):
@@ -176,10 +215,28 @@ def film11581(out, half):
     # the Murphys' porch light (the bright lamp inside the porch by the door, film 11581/11556) and room light behind the lit windows
     point(B(62.9, g + 3.1, 12.9), (1.0, 0.75, 0.45), 260, 0.15)
     for zz in (8.2, 11.6, 15.2): point(B(65.0, g + 5.5, zz), (1.0, 0.7, 0.42), 60, 0.4); point(B(65.0, g + 2.2, zz), (1.0, 0.7, 0.42), 70, 0.4)
-    # comparison aid only: the two police cars' red beacons (near car ~x 37.5 z 20; far car on the drive ~x 52 z 21)
-    for p in ((37.5, 1.7, 19.5), (52.0, 1.6, 21.0)): point(B(p[0], LV["road"] + p[1], p[2]), (1.0, 0.05, 0.03), 120, 0.2)
+    # (step 3: the police cars and their beacons are street life now: life())
     if half: sc.render.resolution_percentage = 50
     sc.render.filepath = out; bpy.ops.render.render(write_still=True)
+
+
+def view(out, eye, tgt, night, fpx=1100, lod0=("lot_B0", "lot_A+1", "lot_A-1", "lot_B-1", "lot_B+1")):
+    """A free camera (spec x, y over gy, z): eye -> target, e.g. the street from our walk piers."""
+    sc = scene(night, set(lod0), near=(eye[0], eye[2]))
+    f = [tgt[i] - eye[i] for i in range(3)]; L = math.sqrt(sum(v * v for v in f)); f = [v / L for v in f]
+    camera(eye, f, (0, 1, 0), fpx, 1920, 1080); sc.cycles.samples = 64
+    if night:
+        g = LV["lot_grade"]["lot_B0"]; point(B(62.9, g + 3.1, 12.9), (1.0, 0.75, 0.45), 260, 0.15)
+    sc.render.filepath = out; bpy.ops.render.render(write_still=True)
+
+
+def film1888(out):
+    """Film 1888's solved camera (nb_film1888_camera.py, on our facade; day): Marley's house (lot_A+1) beyond our garage. Our own house
+    and garage are the Unity build, not in these GLBs: their place shows empty."""
+    c = json.loads((ROOT / "art/home_alone/references/neighborhood/data/film1888_camera.json").read_text())
+    sc = scene(False, {"lot_A+1", "lot_A-1", "lot_B0"}, near=(c["camera_spec_world_y"][0], c["camera_spec_world_y"][2]))
+    x, y, z = c["camera_spec_world_y"]; camera((x, y + 2.996, z), c["forward_spec"], c["up_spec"], c["f_px"])
+    sc.cycles.samples = 64; sc.render.filepath = out; bpy.ops.render.render(write_still=True)
 
 
 def house(lot, out, night, lod1):
@@ -207,4 +264,7 @@ if __name__ == "__main__":
     a = sys.argv[sys.argv.index("--") + 1:]
     if a[0] == "film11581": film11581(a[1], "--half" in a)
     elif a[0] == "aerial": aerial(a[1])
+    elif a[0] == "film1888": film1888(a[1])
+    elif a[0] == "piers": view(a[1], (29.0, LV["walk"] + 1.6, 9.716), (45.0, LV["walk"] + 2.6, 32.0), "--night" in a, 900)
+    elif a[0] == "street": view(a[1], (37.0, LV["road"] + 1.6, -4.0), (37.0, LV["road"] + 2.0, 60.0), "--night" in a, 1000)
     elif a[0] == "house": house(a[1], a[2], "--night" in a, "--lod1" in a)

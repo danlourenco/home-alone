@@ -58,5 +58,11 @@
   "smooth": 0.22,
   "source": "procedural (tools/house/nb_textures.py; grain: Poly Haven white_planks_clean)",
   "licence": "CC0"
+ },
+ "snow_patchy": {
+  "tile_m": 6.0,
+  "smooth": 0.3,
+  "source": "Poly Haven snow_02 + brown_mud_leaves_01, noise mask (tools/house/nb_textures.py)",
+  "licence": "CC0"
  }
 }

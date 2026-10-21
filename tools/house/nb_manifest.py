@@ -52,6 +52,33 @@ for row, anchor in (("A", OURS), ("B", MUR)):
                     "confidence": ev.get("confidence", "low"), "status": "evidence"})
         if ev.get("note"): ent["note"] = ev["note"]
         manifest.append(ent)
+# step 3 (Oct 20): Tier 3 reaches every parcel fronting Lincoln within z -160..160, including past the fork (z -67), the bend west
+# (z -110) and north of Pine (z 112): parcels whose edge lies within 16 m of Lincoln's OSM centreline, not already in a row. Neutral ids
+# lot_P<parcel index>; side by which side of the street's direction they lie on (A = ours).
+def _segd(p, a, b):
+    dx, dz = b[0]-a[0], b[1]-a[1]; t = max(0, min(1, ((p[0]-a[0])*dx + (p[1]-a[1])*dz) / (dx*dx + dz*dz + 1e-9)))
+    return math.hypot(p[0]-a[0]-t*dx, p[1]-a[1]-t*dz), (a[0]+t*dx, a[1]+t*dz), (dx, dz)
+LIN = [r["pts"] for r in d["roads"] if r["name"] == "Lincoln Avenue"]
+have = {e["parcel_idx"] for e in manifest}
+for i, p in enumerate(d["parcels"]):
+    c = cen(p["poly"])
+    if i in have or not -160 < c[1] < 160: continue
+    best = min((_segd(q, a, b) for q in p["poly"] for r in LIN for a, b in zip(r, r[1:])), key=lambda t: t[0])
+    if best[0] > 16: continue
+    bl = [f for f in d["footprints"] if pip(cen(f["poly"]), p["poly"])]
+    if not bl: continue
+    main = max(bl, key=lambda f: f["area_m2"])
+    dd, q, (dx, dz) = best; sd = dx * (c[1] - q[1]) - dz * (c[0] - q[0])   # sign: which side of the centreline's direction
+    ent = {"id": f"lot_P{i}", "tier": 3, "parcel_idx": i, "side": "across_lincoln" if (sd < 0) == (c[0] > 36) else "mccallister_side", "film_role": None,
+           "parcel_poly_spec": r1(p["poly"]), "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+           "buildings": [{"footprint_spec": r1(f["poly"]), "area_m2": f["area_m2"], "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+                          "height_source": "Cook County 2022 footprint Height (max point - ground, lidar)", "ridge_m": f["ridge_m"],
+                          "ndsm_p95_m_tree_contaminated": f["lidar_p95_m"], "main": f is main} for f in sorted(bl, key=lambda f: -f["area_m2"])],
+           "trees_over_6m": [t for t in d["trees"] if pip((t["x"], t["z"]), p["poly"])],
+           "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only", "evidence_frames": [], "confidence": "low",
+           "status": "evidence", "note": "step 3 extension: fronts Lincoln past the Tier 2/3 rows (fork, bend or north of Pine)"}
+    ent["side"] = "across_lincoln" if c[0] > 36.3 and -110 < c[1] < 112 else ent["side"]
+    manifest.append(ent)
 # keep what later steps added (kits, budgets, street, tiers: tools/house/nb_kits.py) so a re-run only refreshes the evidence
 _old = json.loads((ROOT/"spec/neighborhood.json").read_text()) if (ROOT/"spec/neighborhood.json").exists() else {}
 _prev = {e["id"]: e for e in _old.get("parcels", [])}

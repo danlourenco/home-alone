@@ -1,10 +1,10 @@
 {
  "lot_B0": {
   "tier": 2,
-  "lod0_tris": 29612,
-  "lod1_tris": 1572,
-  "glow_tris": 40,
-  "bulbs": 326,
+  "lod0_tris": 32330,
+  "lod1_tris": 1664,
+  "glow_tris": 44,
+  "bulbs": 762,
   "materials": [
    "NB_Glass",
    "NB_brick_red",
@@ -12,27 +12,28 @@
    "NB_concrete_stone",
    "NB_paint_black",
    "NB_paint_darkblue",
+   "NB_paint_darkgreen",
    "NB_paint_porchgrey",
    "NB_paint_white",
    "NB_roof_asphalt_frostgrey"
   ],
-  "lod1_ratio": 0.053
+  "lod1_ratio": 0.051
  },
  "street": {
-  "Street_Road": 1816,
-  "Street_Concrete": 1988,
-  "Street_Parkway": 874,
-  "Street_Lawns": 288,
-  "Street_SnowBanks": 3378,
+  "Street_Road": 1624,
+  "Street_Concrete": 1796,
+  "Street_Parkway": 780,
+  "Street_Lawns": 304,
+  "Street_SnowBanks": 2994,
   "LampPost_LOD0": 1384,
   "LampPost_LOD1": 456
  },
  "lot_A-3": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 396,
-  "glow_tris": 0,
-  "bulbs": 0,
+  "lod1_tris": 1204,
+  "glow_tris": 16,
+  "bulbs": 129,
   "materials": [
    "NB_Glass",
    "NB_concrete_stone",
@@ -44,8 +45,8 @@
  "lot_A-2": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 394,
-  "glow_tris": 0,
+  "lod1_tris": 1468,
+  "glow_tris": 34,
   "bulbs": 0,
   "materials": [
    "NB_Glass",
@@ -60,7 +61,7 @@
   "lod0_tris": 39955,
   "lod1_tris": 745,
   "glow_tris": 8,
-  "bulbs": 0,
+  "bulbs": 72,
   "materials": [
    "NB_Glass",
    "NB_brick_red",
@@ -75,26 +76,27 @@
  },
  "lot_A+1": {
   "tier": 2,
-  "lod0_tris": 11000,
-  "lod1_tris": 596,
-  "glow_tris": 4,
+  "lod0_tris": 23213,
+  "lod1_tris": 1249,
+  "glow_tris": 10,
   "bulbs": 0,
   "materials": [
    "NB_Glass",
    "NB_brick_red",
    "NB_concrete_stone",
    "NB_paint_black",
-   "NB_paint_brown",
-   "NB_roof_clay_clayred",
-   "NB_stucco_cream"
+   "NB_paint_darkgreen",
+   "NB_paint_white",
+   "NB_roof_asphalt_clayred",
+   "NB_shingle_palepink"
   ],
   "lod1_ratio": 0.054
  },
  "lot_A+2": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 274,
-  "glow_tris": 0,
+  "lod1_tris": 1182,
+  "glow_tris": 16,
   "bulbs": 0,
   "materials": [
    "NB_Glass",
@@ -107,8 +109,8 @@
  "lot_A+3": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 274,
-  "glow_tris": 0,
+  "lod1_tris": 954,
+  "glow_tris": 20,
   "bulbs": 0,
   "materials": [
    "NB_Glass",
@@ -121,8 +123,8 @@
  "lot_A+5": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 336,
-  "glow_tris": 0,
+  "lod1_tris": 1210,
+  "glow_tris": 34,
   "bulbs": 0,
   "materials": [
    "NB_Glass",
@@ -135,8 +137,8 @@
  "lot_A+6": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 274,
-  "glow_tris": 0,
+  "lod1_tris": 1090,
+  "glow_tris": 24,
   "bulbs": 0,
   "materials": [
    "NB_Glass",
@@ -149,8 +151,8 @@
  "lot_B-3": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 514,
-  "glow_tris": 0,
+  "lod1_tris": 1128,
+  "glow_tris": 16,
   "bulbs": 0,
   "materials": [
    "NB_Glass",
@@ -163,9 +165,9 @@
  "lot_B-2": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 450,
-  "glow_tris": 0,
-  "bulbs": 0,
+  "lod1_tris": 1226,
+  "glow_tris": 16,
+  "bulbs": 98,
   "materials": [
    "NB_Glass",
    "NB_concrete_stone",
@@ -179,7 +181,7 @@
   "lod0_tris": 29194,
   "lod1_tris": 972,
   "glow_tris": 8,
-  "bulbs": 0,
+  "bulbs": 57,
   "materials": [
    "NB_Glass",
    "NB_brick_red",
@@ -198,7 +200,7 @@
   "lod0_tris": 34458,
   "lod1_tris": 1044,
   "glow_tris": 2,
-  "bulbs": 0,
+  "bulbs": 117,
   "materials": [
    "NB_Glass",
    "NB_brick_red",
@@ -214,8 +216,8 @@
  "lot_B+2": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 276,
-  "glow_tris": 0,
+  "lod1_tris": 884,
+  "glow_tris": 18,
   "bulbs": 0,
   "materials": [
    "NB_Glass",
@@ -228,8 +230,8 @@
  "lot_B+3": {
   "tier": 3,
   "lod0_tris": 0,
-  "lod1_tris": 276,
-  "glow_tris": 0,
+  "lod1_tris": 846,
+  "glow_tris": 14,
   "bulbs": 0,
   "materials": [
    "NB_Glass",
@@ -238,5 +240,116 @@
    "NB_roof_asphalt_slate",
    "NB_stucco_ivory"
   ]
+ },
+ "lot_P35": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 1024,
+  "glow_tris": 14,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_brick_red",
+   "NB_concrete_stone",
+   "NB_paint_white",
+   "NB_roof_asphalt_slate"
+  ]
+ },
+ "lot_P74": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 736,
+  "glow_tris": 16,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_concrete_stone",
+   "NB_paint_brown",
+   "NB_roof_asphalt_slate",
+   "NB_stucco_ivory"
+  ]
+ },
+ "lot_P89": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 1004,
+  "glow_tris": 20,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_brick_red",
+   "NB_concrete_stone",
+   "NB_paint_white",
+   "NB_roof_asphalt_slate"
+  ]
+ },
+ "lot_P130": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 1206,
+  "glow_tris": 18,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_concrete_stone",
+   "NB_paint_white",
+   "NB_roof_asphalt_charcoal",
+   "NB_shingle_brown"
+  ]
+ },
+ "lot_P155": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 1432,
+  "glow_tris": 34,
+  "bulbs": 94,
+  "materials": [
+   "NB_Glass",
+   "NB_brick_red",
+   "NB_concrete_stone",
+   "NB_paint_ivory",
+   "NB_roof_asphalt_charcoal"
+  ]
+ },
+ "lot_P169": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 3232,
+  "glow_tris": 88,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_brick_red",
+   "NB_concrete_stone",
+   "NB_paint_ivory",
+   "NB_roof_asphalt_charcoal"
+  ]
+ },
+ "lot_P170": {
+  "tier": 3,
+  "lod0_tris": 0,
+  "lod1_tris": 874,
+  "glow_tris": 18,
+  "bulbs": 0,
+  "materials": [
+   "NB_Glass",
+   "NB_clapboard_white",
+   "NB_concrete_stone",
+   "NB_paint_white",
+   "NB_roof_asphalt_charcoal"
+  ]
+ },
+ "life": {
+  "Car_Caprice": 334,
+  "Car_CapricePolice": 370,
+  "Car_RamVan": 388,
+  "Pole": 242,
+  "Hydrant": 310,
+  "Mailbox": 100,
+  "YardStake": 88,
+  "Wires": 2160,
+  "BoundaryDressing": 4120,
+  "TreeLine_Cards": 638,
+  "Horizon_Ground": 384
  }
 }

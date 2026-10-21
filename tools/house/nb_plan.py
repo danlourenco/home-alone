@@ -69,5 +69,5 @@ if man and (NBD/"street_layout.json").exists():
         ax.plot([C[2]], [C[0]], "mo", zorder=7); ax.text(C[2]-2, C[0]-4, "film 11581 camera", color="m", fontsize=8, zorder=7)
 ax.set_xlim(z0 and z0, z1) if False else None
 ax.set_xlim(z1, z0); ax.set_ylim(x0, x1); ax.set_aspect("equal")   # horizontal = spec z (reversed), vertical = spec x (front/street up)
-ax.set_xlabel("spec z (m)"); ax.set_ylabel("spec x (m), +x = toward Lincoln Ave"); ax.set_title("Neighbourhood plan, step 2 (Oct 20). Parcels: tier 2 orange, tier 3 blue, our lot yellow. Kit houses: dark orange = Tier 2 hero (walkable), blue = Tier 3 stand-in.\nStreet (nb_street), drives dark, walks light; trees green rings (lidar, re-registered); lamps = stars; magenta = film 11581 camera + view; brown = 2022 footprints", fontsize=9)
+ax.set_xlabel("spec z (m)"); ax.set_ylabel("spec x (m), +x = toward Lincoln Ave"); ax.set_title("Neighbourhood plan, step 3 (Oct 20). Parcels: tier 2 orange, tier 3 blue, our lot yellow. Kit houses: dark orange = Tier 2 hero (walkable), blue = Tier 3 stand-in.\nStreet (nb_street), drives dark, walks light; trees green rings (lidar, re-registered); lamps = stars; magenta = film 11581 camera + view; brown = 2022 footprints", fontsize=9)
 plt.tight_layout(); plt.savefig(out, dpi=100)

@@ -30,7 +30,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 MAN = json.loads((ROOT / "spec/neighborhood.json").read_text())
-OUT = ROOT / "unity/HomeAlone/Assets/Models/Neighborhood"
+import os
+OUT = Path(os.environ["NB_OUT"]) if os.environ.get("NB_OUT") else ROOT / "unity/HomeAlone/Assets/Models/Neighborhood"   # NB_OUT: staging (one builder)
 PAL = MAN.get("kit_palette", {})
 
 
@@ -50,13 +51,16 @@ class Geo:
     def __init__(self):
         self.m = {}
 
-    def face(self, mat, pts, toward):
+    def face(self, mat, pts, toward, uv=None):
         n = [0.0, 0.0, 0.0]
         for a, b in zip(pts, pts[1:] + pts[:1]):
             n[0] += (a[1] - b[1]) * (a[2] + b[2]); n[1] += (a[2] - b[2]) * (a[0] + b[0]); n[2] += (a[0] - b[0]) * (a[1] + b[1])
-        if dot(n, toward) < 0: pts = list(reversed(pts)); n = [-c for c in n]
+        if dot(n, toward) < 0:
+            pts = list(reversed(pts)); n = [-c for c in n]
+            if uv is not None: uv = list(reversed(uv))
         nn = norm(n)
-        if abs(nn[1]) > 0.97: uv = [(p[0], p[2]) for p in pts]
+        if uv is not None: pass   # explicit UVs (a lit window's room card), kept with their corners
+        elif abs(nn[1]) > 0.97: uv = [(p[0], p[2]) for p in pts]
         else:
             t = norm(cross(UP, nn)); s = norm(cross(nn, t))
             uv = [(dot(p, t), dot(p, s)) for p in pts]
@@ -119,6 +123,12 @@ class Face:
         g.obox(mat, c, self.t, UP, self.n, abs(u1 - u0) / 2, abs(y1 - y0) / 2, abs(d1 - d0) / 2, ch)
 
 
+class OFace(Face):
+    """An arbitrary vertical face (a turret side): centre point p0 on the face at y 0, unit tangent t, outward normal n, span (-hw, hw)."""
+    def __init__(self, p0, t, n, hw, side="-x"):
+        self.p0, self.t, self.n, self.span, self.side = p0, t, n, (-hw, hw), side
+
+
 def matname(kind, colour): return f"NB_{kind}_{colour}"
 
 
@@ -136,6 +146,7 @@ class House:
             "brick": matname("brick", P.get("brick", "red")), "porchfloor": matname("paint", P.get("porch_floor", "porchgrey")),
             "metal": matname("paint", P.get("gutter", P.get("trim", "white"))), "iron": matname("paint", "black"),
             "lattice": matname("paint", P.get("lattice", P.get("trim", "white"))), "cap": matname("concrete", "stone"),
+            "shrub": matname("paint", "darkgreen"),
         }
         self.wood = kit.get("cladding", "clapboard") in ("clapboard", "shingle")
         self.rng = random.Random(zlib.crc32(lot.encode()))
@@ -144,9 +155,9 @@ class House:
     def openings(self, bi, side):
         return [w for w in self.k.get("windows", []) if w.get("block", 0) == bi and w["face"] == side]
 
-    def wall(self, bi, blk, side, y0, y1, holes, mat=None, d=0.0):
+    def wall(self, bi, blk, side, y0, y1, holes, mat=None, d=0.0, f=None):
         """The face from y0 to y1 as cells around the openings [(u0, u1, v0, v1)]."""
-        f = Face(blk, side); mat = mat or self.M["wall"]
+        f = f or Face(blk, side); mat = mat or self.M["wall"]
         us = sorted({f.span[0], f.span[1], *[c for h in holes for c in h[:2]]}); vs = sorted({y0, y1, *[c for h in holes for c in h[2:] if y0 < c < y1]})
         us = [u for u in us if f.span[0] <= u <= f.span[1]]
         for a, b in zip(us, us[1:]):
@@ -161,13 +172,14 @@ class House:
 
     # ---- one window / door opening on a face (LOD0: full joinery; LOD1: a framed card)
     def window(self, blk, w, idx):
-        f = Face(blk, w["face"]); u, wd, h, s = w["at"], w["w"], w["h"], w["sill"]; typ = w.get("type", "dh66")
+        f = w.get("_face") or Face(blk, w["face"]); u, wd, h, s = w["at"], w["w"], w["h"], w["sill"]; typ = w.get("type", "dh66")
         u0, u1, v0, v1 = u - wd / 2, u + wd / 2, s, s + h; T = self.M["trim"]; S = self.M["sash"]
         lit = idx in self.k.get("lit", {}).get("windows", [])
+        room = w.get("room", zlib.crc32(f"{self.lot}{idx}".encode()) % 4); WU = (u0, u1, v0, v1)
         if self.lod == 1:
             f.box(self.g, T, u0 - 0.10, u1 + 0.10, v0 - 0.06, v1 + 0.12, 0.0, 0.02)
             self.g.quad(self.M["glass"], f.P(u0, v0, 0.025), f.P(u1, v0, 0.025), f.P(u1, v1, 0.025), f.P(u0, v1, 0.025), f.n)
-            if lit: self.glow.quad(self.M["glow"], f.P(u0, v0, 0.028), f.P(u1, v0, 0.028), f.P(u1, v1, 0.028), f.P(u0, v1, 0.028), f.n)
+            if lit: self.card(f, u0, u1, v0, v1, 0.028, WU, room)
             return
         R = w.get("reveal", 0.14 if self.k.get("cladding") in ("brick", "stucco") else 0.12)
         # reveal (jambs, head, stool) into the wall, painted
@@ -182,13 +194,15 @@ class House:
             f.box(self.g, T, u0 - cw - 0.03, u1 + cw + 0.03, v1 + 0.15, v1 + 0.18, 0.0, 0.05, 0.006)
         else:
             f.box(self.g, self.M["brick"], u0 - 0.05, u1 + 0.05, v1, v1 + 0.22, -0.002, 0.012, 0.003)
-        if typ != "door" and typ != "french":
+        if typ == "opening":   # an open porch mouth (recessed entry): reveal + columns only
+            pass
+        elif typ != "door" and typ != "french":
             f.box(self.g, T if self.wood else self.M["cap"], u0 - 0.13, u1 + 0.13, v0 - 0.05, v0 + 0.0, -0.04, 0.06, 0.006)
         D = -R + 0.03  # sash plane (glass a little behind the sash face)
         G = self.M["glass"]
         def pane(a, b, c, e, dd):
             self.g.quad(G, f.P(a, c, dd), f.P(b, c, dd), f.P(b, e, dd), f.P(a, e, dd), f.n)
-            if lit: self.glow.quad(self.M["glow"], f.P(a, c, dd + 0.003), f.P(b, c, dd + 0.003), f.P(b, e, dd + 0.003), f.P(a, e, dd + 0.003), f.n)
+            if lit: self.card(f, a, b, c, e, dd + 0.003, WU, room)
         def frame(a, b, c, e, dd, st=0.05, rl=0.05, bottom=None, mat=S):
             bottom = rl if bottom is None else bottom
             f.box(self.g, mat, a, a + st, c, e, dd - 0.02, dd + 0.02, 0.004); f.box(self.g, mat, b - st, b, c, e, dd - 0.02, dd + 0.02, 0.004)
@@ -248,6 +262,8 @@ class House:
                 pane(a, b, c, e, D - 0.01); muntins(a, b, c, e, 2, 5, D)
         elif typ == "picture_diamond":
             a, b, c, e = frame(u0, u1, v0, v1, D, st=0.06, rl=0.06); pane(a, b, c, e, D - 0.01); diamond(a, b, c, e, D, n=5)
+        elif typ == "opening":
+            pass
         elif typ == "door":
             Dm = self.M["door"]; a, b, c, e = frame(u0, u1, v0, v1, D, st=0.11, rl=0.11, bottom=0.22, mat=Dm)
             gl = c + (e - c) * 0.45; f.box(self.g, Dm, a, b, c, gl, D - 0.015, D + 0.005, 0.004)       # lower panel
@@ -270,6 +286,26 @@ class House:
                         self.g.obox(Sh, mul(add(g0, g1), 0.5), f.t, norm(add(UP, mul(f.n, 0.8))), norm(sub(f.n, mul(UP, 0.8))), (a[1] - a[0] - 0.1) / 2, 0.022, 0.004)
                     y += 0.045
         if w.get("xmas"): self.string([f.P(u0 - 0.12, v0, 0.03), f.P(u0 - 0.12, v1 + 0.16, 0.03), f.P(u1 + 0.12, v1 + 0.16, 0.03), f.P(u1 + 0.12, v0, 0.03)], 0.17, 0.0)
+        if w.get("hood") == "eyebrow":   # Shingle Style: a shingled eyebrow arch over the head, 0.3 m deep (Marley's house, upper windows)
+            rx, ry, n_ = wd / 2 + 0.22, 0.32, 8; yb = v1 + 0.16
+            pts = [f.P(u + rx * math.cos(math.pi * i / n_), yb + ry * math.sin(math.pi * i / n_), 0.16) for i in range(n_ + 1)]
+            for a, b in zip(pts, pts[1:]): self.g.bar(self.M["roof"], a, b, 0.07, 0.32, 0.01, up=f.n)
+        for c in range(w.get("columns", 0)):   # a recessed entry's round columns standing in the opening's front plane
+            cu = u0 + 0.18 + (wd - 0.36) * c / max(1, w["columns"] - 1); n_ = 10; r = 0.12
+            for i in range(n_):
+                a0, a1 = 2 * math.pi * i / n_, 2 * math.pi * (i + 1) / n_
+                P = lambda a, y: f.P(cu + r * math.cos(a), y, -0.2 + r * math.sin(a))
+                self.g.quad(self.M["iron"], P(a0, v0), P(a1, v0), P(a1, v1), P(a0, v1), sub(P((a0 + a1) / 2, v0), f.P(cu, v0, -0.2)))
+
+    def card(self, f, a, b, c, e, dd, U, k):
+        """A lit pane (a..b, c..e at depth dd) of the window U = (u0, u1, v0, v1) on face f, textured with quadrant k of the room-card
+        atlas (nb_textures.room_cards: 0 sheers + drapes, 1 lamp + open drapes, 2 shade half down, 3 tree behind blinds) spanning the whole
+        window, so the muntins and sashes cross one picture. Blender UVs (origin bottom-left; image row 0 = the atlas top)."""
+        u0, u1, v0, v1 = U; flip = f.side in ("+x", "-z"); col, row = k % 2, k // 2   # flip: s runs left to right as seen from outside
+        def st(u, v):
+            s_ = (u - u0) / (u1 - u0); s_ = 1 - s_ if flip else s_
+            return (col * 0.5 + 0.5 * min(1, max(0, s_)), 1 - (row + 1) * 0.5 + 0.5 * min(1, max(0, (v - v0) / (v1 - v0))))
+        self.glow.face(self.M["glow"], [f.P(a, c, dd), f.P(b, c, dd), f.P(b, e, dd), f.P(a, e, dd)], f.n, [st(a, c), st(b, c), st(b, e), st(a, e)])
 
     # ---- Christmas strings: C7 bulbs every `step` m, sagging between clips every 0.4 m
     def string(self, pts, step=0.2, sag=0.025):
@@ -280,6 +316,33 @@ class House:
                 p = add(p, (0, -sag * 4 * clip * (1 - clip), 0))
                 self.bulbs.append([round(p[0], 3), round(p[1], 3), round(p[2], 3), self.rng.randrange(5)])
 
+    def swag(self, a, b, loops=2, depth=0.22, step=0.15):
+        """A string draped in `loops` hanging loops from a to b (porch rails, film 11581: dense swags on the rails)."""
+        L = math.sqrt(dot(sub(b, a), sub(b, a))); n = max(2, int(L / step))
+        for i in range(n):
+            t = (i + 0.5) / n; p = add(a, mul(sub(b, a), t)); p = add(p, (0, -depth * abs(math.sin(math.pi * loops * t)), 0))
+            self.bulbs.append([round(p[0], 3), round(p[1], 3), round(p[2], 3), self.rng.randrange(5)])
+
+    def xmas_extra(self):
+        """kit['xmas']: free strings (pts polylines), swags, lit foundation shrubs {x, z, rx, rz, h, bulbs} (LOD0 only)."""
+        X = self.k.get("xmas", {})
+        for s_ in X.get("strings", []):
+            self.string([tuple(p) for p in s_["pts"]], s_.get("step", 0.2), s_.get("sag", 0.025))
+        for s_ in X.get("swags", []): self.swag(tuple(s_["a"]), tuple(s_["b"]), s_.get("loops", 2), s_.get("depth", 0.22))
+        for sh in X.get("shrubs", []):
+            x, z, rx, rz, h = sh["x"], sh["z"], sh["rx"], sh["rz"], sh["h"]; nu, nv = 10, 5; M = self.M["shrub"]
+            ring = lambda j: [(x + rx * math.sin(math.pi * j / nv) * math.cos(2 * math.pi * i / nu) * (0.9 + 0.1 * self.rng.random()), h * (1 - math.cos(math.pi * j / nv)) / 2 * 1.0,
+                               z + rz * math.sin(math.pi * j / nv) * math.sin(2 * math.pi * i / nu)) for i in range(nu)]
+            rs = [ring(j) for j in range(nv + 1)]
+            for j in range(nv):
+                for i in range(nu):
+                    a, b, c, d = rs[j][i], rs[j][(i + 1) % nu], rs[j + 1][(i + 1) % nu], rs[j + 1][i]
+                    self.g.face(M, [a, c, d] if j == 0 else [a, b, c] if j == nv - 1 else [a, b, c, d], sub(mul(add(a, c), 0.5), (x, h / 2, z)))
+            for _ in range(sh.get("bulbs", 40)):   # on the shell's upper 85 %
+                th = math.acos(1 - 2 * self.rng.uniform(0.0, 0.92)); ph = self.rng.uniform(0, 2 * math.pi)
+                p = (x + 1.03 * rx * math.sin(th) * math.cos(ph), h / 2 + 1.03 * h / 2 * math.cos(th), z + 1.03 * rz * math.sin(th) * math.sin(ph))
+                self.bulbs.append([round(p[0], 3), round(p[1], 3), round(p[2], 3), self.rng.randrange(5)])
+
     # ---- roofs (thickness, fascia, soffit, gutter, downspouts)
     def roof(self, blk, bi):
         x0, x1 = blk["x"]; z0, z1 = blk["z"]; o = blk.get("overhang", 0.5); typ = blk.get("roof", "hip"); p = math.radians(blk.get("pitch", 35))
@@ -287,7 +350,14 @@ class House:
         X0, X1, Z0, Z1 = x0 - o, x1 + o, z0 - o, z1 + o; R = self.M["roof"]; T = self.M["trim"]; W, D = X1 - X0, Z1 - Z0
         fh = 0.20 if self.lod == 0 else 0.0
         cx, cz = (X0 + X1) / 2, (Z0 + Z1) / 2
+        fl = blk.get("flare", 0.0) if typ == "hip" else 0.0
+        if fl:   # Shingle Style flared eave: a shallow kick (14 deg) over the outer `fl` m, the main pitch above it
+            hk = he + fl * math.tan(math.radians(14)); k0, k1, k2, k3 = (X0 + fl, hk, Z0 + fl), (X1 - fl, hk, Z0 + fl), (X1 - fl, hk, Z1 - fl), (X0 + fl, hk, Z1 - fl)
+            self.g.face(R, [(X0, he, Z0), (X1, he, Z0), k1, k0], (0, 1, -1)); self.g.face(R, [(X1, he, Z0), (X1, he, Z1), k2, k1], (1, 1, 0))
+            self.g.face(R, [(X1, he, Z1), (X0, he, Z1), k3, k2], (0, 1, 1)); self.g.face(R, [(X0, he, Z1), (X0, he, Z0), k0, k3], (-1, 1, 0))
         if typ == "hip":
+            he0, X0_, X1_, Z0_, Z1_ = he, X0, X1, Z0, Z1
+            if fl: he, X0, X1, Z0, Z1 = hk, X0 + fl, X1 - fl, Z0 + fl, Z1 - fl; W, D = X1 - X0, Z1 - Z0; cx, cz = (X0 + X1) / 2, (Z0 + Z1) / 2
             s = min(W, D) / 2; rh = he + s * math.tan(p); blk["_ridge"] = rh
             if W >= D: ra, rb = (X0 + s, rh, cz), (X1 - s, rh, cz)
             else: ra, rb = (cx, rh, Z0 + s), (cx, rh, Z1 - s)
@@ -302,6 +372,10 @@ class House:
             if self.lod == 0:   # hip and ridge caps
                 for a, b in ((c00, ra), (c01, ra), (c10, rb), (c11, rb), (ra, rb)):
                     if a != b: self.g.bar(R, add(a, (0, 0.02, 0)), add(b, (0, 0.02, 0)), 0.16, 0.035, 0.008)
+            if fl:   # fascia, soffit and gutters stay at the flared outer edge
+                he, X0, X1, Z0, Z1 = he0, X0_, X1_, Z0_, Z1_
+                c00, c10, c11, c01 = (X0, he, Z0), (X1, he, Z0), (X1, he, Z1), (X0, he, Z1)
+                eaves = [(c00, c10, (0, 0, -1)), (c10, c11, (1, 0, 0)), (c11, c01, (0, 0, 1)), (c01, c00, (-1, 0, 0))]
         else:   # gable: ridge along x (gable_x: gable ends face +-z?) -> gable_x = ridge parallel to x (gable walls on the x faces)
             along_x = typ == "gable_x"
             s = (D if along_x else W) / 2; rh = he + s * math.tan(p); blk["_ridge"] = rh
@@ -429,7 +503,10 @@ class House:
         for e0, e1, n in ((a, b, (-1, 0, 0)), (a, (x1, edge, Z0), (0, 0, -1)), (b, (x1, edge, Z1), (0, 0, 1))):
             self.g.quad(T, e0, e1, add(e1, (0, -fh, 0)), add(e0, (0, -fh, 0)), n)
             if lod0: self.g.bar(self.M["metal"], add(add(e0, mul(n, 0.07)), (0, -0.08, 0)), add(add(e1, mul(n, 0.07)), (0, -0.08, 0)), 0.12, 0.11, 0.01)
-        if pc.get("xmas_eave"): self.string([add(a, (-0.12, -0.2, 0)), add(b, (-0.12, -0.2, 0))])
+        if pc.get("xmas_eave"):
+            self.string([add(a, (-0.12, -0.2, 0)), add(b, (-0.12, -0.2, 0))])
+            if pc["xmas_eave"] == "wrap":   # film 11581: the string turns the porch roof's right (+z) corner and runs back along its side
+                self.string([add(b, (-0.12, -0.2, 0.12)), add((x1, edge, Z1), (0, -0.2, 0.12))])
         # railings between columns, skipping the steps' bay; side railings
         st = pc.get("steps"); rh_ = fl + pc.get("rail", 0.80)
         runs = []
@@ -450,7 +527,10 @@ class House:
                     self.g.box(T, xx - 0.022, xx + 0.022, fl + 0.115, rh_ - 0.05, zz - 0.022, zz + 0.022, 0.004)
             else:
                 self.g.bar(T, (ax, (fl + rh_) / 2, az), (bx, (fl + rh_) / 2, bz), 0.05, rh_ - fl, 0)
-            if pc.get("xmas_rail"): self.string([add(A0, (-0.04, 0.03, 0)), add(B0, (-0.04, 0.03, 0))], 0.15, 0.04)
+            if pc.get("xmas_rail"):
+                self.string([add(A0, (-0.04, 0.03, 0)), add(B0, (-0.04, 0.03, 0))], 0.15, 0.04)
+                if pc.get("xmas_rail") == "swag":   # film 11581: the rails carry dense draped loops below the top rail
+                    L_ = math.hypot(bx - ax, bz - az); self.swag(add(A0, (-0.06, -0.04, 0)), add(B0, (-0.06, -0.04, 0)), max(1, round(L_ / 0.9)), 0.30)
         if st:   # steps: n risers from grade to the floor, newels both sides, the film's black iron handrail down the middle
             n = st.get("risers", 5); rz0, rz1 = st["at"] - st["w"] / 2, st["at"] + st["w"] / 2; tr = 0.29
             for i in range(n):
@@ -473,6 +553,31 @@ class House:
             lx, lz = pc["lamp"]
             self.g.box(self.M["iron"], lx - 0.09, lx, edge - 1.1, edge - 0.75, lz - 0.08, lz + 0.08, 0.004)
             self.glow.box(self.M["glow"], lx - 0.085, lx - 0.005, edge - 1.06, edge - 0.79, lz - 0.07, lz + 0.07)
+
+    def turret(self, t):
+        """Shingle Style turret (Marley's house): an octagon of radius r (to the face middles) from the foundation to `plate`, its windows
+        [{k: face 0-7 (0 = +x, counter-clockwise seen from above toward +z), sill, h, w, type}], a flared octagonal cone to `peak`, a finial."""
+        cx, cz, r, plate, peak = t["x"], t["z"], t["r"], t["plate"], t["peak"]; fh = self.k.get("foundation_h", 0.6); lod0 = self.lod == 0
+        ro = r / math.cos(math.pi / 8); hw = r * math.tan(math.pi / 8)
+        for k in range(8):
+            a = k * math.pi / 4; n = (math.cos(a), 0.0, math.sin(a)); tg = (-math.sin(a), 0.0, math.cos(a))
+            f = OFace((cx + r * n[0], 0.0, cz + r * n[2]), tg, n, hw)
+            ws = [dict(w, face="t", at=0.0, _face=f) for w in t.get("windows", []) if w["k"] == k]
+            holes = [(-w["w"] / 2, w["w"] / 2, w["sill"], w["sill"] + w["h"]) for w in ws]
+            self.wall(-1, None, None, fh, plate, holes, f=f)
+            f.box(self.g, self.M["found"], -hw - 0.02, hw + 0.02, -0.3, fh, -0.02, 0.04)
+            if lod0: f.box(self.g, self.M["trim"], -hw, hw, plate - 0.25, plate, 0.0, 0.03, 0.004)
+            for w in ws: self.window(None, w, self.k["windows"].index(w["_src"]) if w.get("_src") in self.k.get("windows", []) else -1)
+        o, fl = t.get("overhang", 0.45), t.get("flare", 0.45); pr = lambda rr, y: [(cx + rr * math.cos((k + 0.5) * math.pi / 4), y, cz + rr * math.sin((k + 0.5) * math.pi / 4)) for k in range(8)]
+        he = plate - 0.05; outer = pr(ro + o, he); kink = pr(ro + o - fl, he + fl * math.tan(math.radians(16))); top = (cx, peak, cz); R_ = self.M["roof"]
+        for k in range(8):
+            a, b = outer[k], outer[(k + 1) % 8]; c, d = kink[(k + 1) % 8], kink[k]; mid = mul(add(a, b), 0.5); out = (mid[0] - cx, 0.4, mid[2] - cz)
+            self.g.face(R_, [a, b, c, d], out); self.g.face(R_, [d, c, top], (out[0], 0.6, out[2]))
+            self.g.face(self.M["trim"], [a, b, add(b, (0, -0.15, 0)), add(a, (0, -0.15, 0))], (out[0], 0, out[2]))
+            wa, wb = pr(ro, he - 0.15)[k], pr(ro, he - 0.15)[(k + 1) % 8]
+            self.g.face(self.M["trim"], [add(a, (0, -0.15, 0)), add(b, (0, -0.15, 0)), wb, wa], (0, -1, 0))
+        if lod0: self.g.bar(self.M["metal"], (cx, peak - 0.05, cz), (cx, peak + 0.7, cz), 0.05, 0.05, 0.005, up=(1, 0, 0))   # finial
+        self.col.append(("box", cx - r, cx + r, 0, plate, cz - r, cz + r))
 
     def chimney(self, c):
         x, z, w, d, top = c["x"], c["z"], c["w"], c["d"], c["top"]; B = self.M["brick"]; lod0 = self.lod == 0
@@ -505,10 +610,20 @@ class House:
                     self.g.box(self.M["trim"], min(x, x + sx * 0.03), max(x, x + sx * 0.03), fh, plate, min(z, z - sz * 0.11), max(z, z - sz * 0.11), 0.004)
                     self.g.box(self.M["trim"], min(x, x - sx * 0.11), max(x, x - sx * 0.11), fh, plate, min(z, z + sz * 0.03), max(z, z + sz * 0.03), 0.004)
             self.roof(blk, bi)
-            self.col.append(("box", x0, x1, 0, plate, z0, z1))
+            self.col.append(("box", x0, x1, 0, blk.get("collider_top", plate), z0, z1))   # collider_top: an open porch block is walkable on its floor
         for d in k.get("dormers", []): self.dormer(k["blocks"][d.get("block", 0)], d)
         if k.get("porch"): self.porch(k["porch"])
         for c in k.get("chimneys", []): self.chimney(c)
+        for t in k.get("turrets", []): self.turret(t)
+        for st in k.get("steps", []):   # free-standing stone steps: n risers up to `top`, climbing toward -x (side A) or +x (side B)
+            n_ = st["n"]; x0, x1 = st["x"]; sg = st.get("climb", -1)
+            for i in range(n_):
+                y = st["top"] * (i + 1) / n_; L = (x1 - x0) * (n_ - i) / n_
+                if sg < 0: self.g.box(self.M["cap"], x0, x0 + L, 0, y, st["z"][0], st["z"][1], 0.01 if lod0 else 0)
+            for i in range(n_):   # one collider per tread (a single box was a 0.9 m wall to the walker)
+                y = st["top"] * (i + 1) / n_; L = (x1 - x0) * (n_ - i) / n_
+                self.col.append(("box", x0, x0 + L, 0, y, st["z"][0], st["z"][1]))
+        if lod0: self.xmas_extra()
         for g in k.get("garages", []):   # outbuildings: a plain block with an overhead door on its street face
             blk = {"x": g["x"], "z": g["z"], "plate": g["plate"], "roof": g.get("roof", "hip"), "pitch": g.get("pitch", 30), "overhang": 0.3}
             self.g.box(self.M["found"], g["x"][0] - 0.03, g["x"][1] + 0.03, -0.2, 0.15, g["z"][0] - 0.03, g["z"][1] + 0.03)
@@ -586,7 +701,7 @@ def export_lot(e):
             if not h: continue
             for gg in (h.g, h.glow):
                 for mat in gg.m: gg.m[mat] = [([R(q) for q in pts], uv) for pts, uv in gg.m[mat]]
-            h.col = []
+            h.col = []; h.bulbs = [[round(c * b[0] - s_ * b[2], 3), b[1], round(s_ * b[0] + c * b[2], 3), b[3]] for b in h.bulbs]
     objs = []
     if h0: objs.append(to_blender(h0.g, f"{e['id']}_LOD0", coll))
     objs.append(to_blender(h1.g, f"{e['id']}_LOD1", coll))
@@ -599,14 +714,17 @@ def export_lot(e):
     root = bpy.data.objects.new(f"{e['id']}_Root", None); coll.objects.link(root)
     root["lot"] = e["id"]; root["tier"] = e["tier"]; root["confidence"] = e.get("confidence", "low")
     for o in objs: o.parent = root
-    for o in bpy.context.view_layer.objects: o.select_set(True)
+    bpy.context.view_layer.update()   # objects linked after the last operator are not in view_layer.objects until an update (Tier 3 GLBs lost all but LOD1)
+    for o in coll.objects: o.select_set(True)
     OUT.mkdir(parents=True, exist_ok=True)
     bpy.ops.export_scene.gltf(filepath=str(OUT / f"{e['id']}.glb"), export_format="GLB", export_yup=True, export_apply=True, use_selection=True,
                               export_extras=True, export_materials="EXPORT")
-    if h0 and h0.bulbs:
-        (OUT / f"{e['id']}_xmas.json").write_text(json.dumps({"lot": e["id"], "frame": "spec x, y over the lot grade, z; colour 0 red 1 green 2 amber 3 blue 4 white", "bulbs": h0.bulbs}))
+    hb = h0 or h1   # step 3: the backdrop (LOD1-only) houses carry eave strings too
+    if hb.bulbs:
+        (OUT / f"{e['id']}_xmas.json").write_text(json.dumps({"lot": e["id"], "frame": "spec x, y over the lot grade, z; colour 0 red 1 green 2 amber 3 blue 4 white", "bulbs": hb.bulbs}))
+    elif (OUT / f"{e['id']}_xmas.json").exists(): (OUT / f"{e['id']}_xmas.json").unlink()
     mats = sorted(set((h0 or h1).g.m) | set(h1.g.m))
-    st = {"tier": e["tier"], "lod0_tris": h0.g.tris() if h0 else 0, "lod1_tris": h1.g.tris(), "glow_tris": glow.tris(), "bulbs": len(h0.bulbs) if h0 else 0, "materials": mats}
+    st = {"tier": e["tier"], "lod0_tris": h0.g.tris() if h0 else 0, "lod1_tris": h1.g.tris(), "glow_tris": glow.tris(), "bulbs": len(hb.bulbs), "materials": mats}
     if h0: st["lod1_ratio"] = round(st["lod1_tris"] / max(1, st["lod0_tris"]), 3)
     return st
 

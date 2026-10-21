@@ -40,7 +40,7 @@ ROAD_Y, WALK_Y = -1.304, -1.184          # rel gy: the WinterNeighborhood street
 KERB_Y = WALK_Y + 0.02
 LAWN_A, LAWN_B = -1.334, -1.20           # our registered front yard; the B lots ~2 cm under their sidewalk (G)
 KA, KB = 30.62, 41.30                     # kerb faces at the lot (centre 36.3)
-Z0, Z1 = -150.0, 150.0
+Z0, Z1 = -118.0, 150.0   # step 3: the street stops at Lincoln's bend west (OSM z -110.7 -> (-14.1, -118.6)); past it the stand-ins stand where a straight street ran
 CL = [(31.6, -110.7), (36.2, -92.4), (35.4, -66.7), (36.3, 0.5), (36.6, 26.0), (36.8, 38.1), (37.7, 112.2), (37.7, 160.0)]
 
 
@@ -90,12 +90,12 @@ def layout():
     drives = [("B", 3.65, KB, 83.9, 3.0, "OSM service z 3.1-4.2 (2022) to the outbuilding"),
               ("B", 37.45, KB, 83.4, 3.0, "OSM service z 36.8-38.1 to the outbuilding"),
               ("B", -26.2, KB, 75.8, 3.0, "G: to lot_B-1's outbuilding (C)"),
-              ("A", 33.6, KA, -30.0, 3.0, "G: lot_A+1's garage behind (C outbuilding x -38..-30)")]
-    walks = [("B", 11.65, 46.15, 60.6 - 6 * 0.29, 1.5, "OSM footway z 11.5-11.8 to the porch steps (film 11556)"),
+              ("A", 31.95, KA, -30.0, 2.4, "G: Marley's (lot_A+1) drive to the garage behind (C outbuilding x -38..-30), between our parcel line (30.72) and his house (33.1)")]
+    walks = [("B", 12.2, 46.15, 60.6 - 6 * 0.29, 1.5, "OSM footway z 11.5-11.8, moved to the porch steps (step 3: z 12.2, the film-registered house)"),
              ("B", -16.1, 46.15, 60.6 - 3 * 0.29, 1.4, "G: to lot_B-1's porch steps"),
              ("B", 46.55, 46.15, 60.3 - 4 * 0.29, 1.4, "OSM footway z 44.9-45.4 (moved to the kit's steps)"),
              ("A", -27.6, 28.87, 0.5, 1.3, "G: lot_A-1's door (kit, main block beside the front wing)"),
-             ("A", 42.25, 28.87, 12.6, 1.3, "G: lot_A+1's vestibule door (kit)")]
+             ("A", 41.65, 28.87, 14.04, 1.5, "G: to the foot of Marley's stone steps (kit, the recessed entry at z 41.65)")]
     lamps = [{"x": 28.55, "z": 24.2, "src": "existing post (SpecGreybox.Shell z 24.2), moved from x 25.2 to the sidewalk's lawn edge (film 3297)"},
              {"x": 28.55, "z": -6.0, "src": "existing post (z -6.0, film 1471/9511 right of our lot), moved from x 25.2"}]
     for z in (-51.0, 69.0, 114.0, -96.0): lamps.append({"x": 28.55, "z": z, "src": "G: ~45 m spacing on our side"})
@@ -217,9 +217,10 @@ def build_glb(L):
         z = za
         while z < zb - 1e-6:
             z2 = min(zb, z + step); geo.quad(mat, (x0, y, z), (x1, y, z), (x1, y, z2), (x0, y, z2), UP); z = z2
-    for za, zb in ((Z0, -45), (-45, 65), (65, Z1)):
-        rect(lawn, S, 46.25 + (0 if -45 <= za else 0), 100.0, za, zb, LAWN_B)
-    rect(lawn, S, -60.0, 28.87, Z0, -4.06, LAWN_A); rect(lawn, S, -60.0, 28.87, 30.72, Z1, LAWN_A)
+    for za, zb in ((-150.0, -45), (-45, 65), (65, Z1)):
+        rect(lawn, "NB_snow_patchy", 46.25 + (0 if -45 <= za else 0), 100.0, za, zb, LAWN_B)
+    rect(lawn, "NB_snow_patchy", -60.0, 28.87, -150.0, -4.06, LAWN_A); rect(lawn, "NB_snow_patchy", -60.0, 28.87, 30.72, Z1, LAWN_A)
+    rect(lawn, "NB_snow_patchy", 28.87, 46.25, -150.0, Z0, LAWN_A)   # past the bend: lawn where the straight street ran
     # drives / walks surfaces on the lots
     for d in L["drives"]:
         y = (LAWN_B if d["side"] == "B" else LAWN_A) + 0.02; x0 = 46.15 if d["side"] == "B" else d["x1"]; x1 = d["x1"] if d["side"] == "B" else 28.87
@@ -244,7 +245,8 @@ def build_glb(L):
             to_blender(lawn, "Street_Lawns", coll, smooth=False), to_blender(banks, "Street_SnowBanks", coll)]
     root = bpy.data.objects.new("Street_Root", None); coll.objects.link(root)
     for o in objs: o.parent = root
-    for o in bpy.context.view_layer.objects: o.select_set(True)
+    bpy.context.view_layer.update()
+    for o in bpy.context.scene.collection.objects: o.select_set(True)
     OUT.mkdir(parents=True, exist_ok=True)
     bpy.ops.export_scene.gltf(filepath=str(OUT / "Street.glb"), export_format="GLB", export_yup=True, use_selection=True, export_materials="EXPORT")
     stats = {o.name: sum(len(p.vertices) - 2 for p in o.data.polygons) for o in objs}
@@ -255,7 +257,8 @@ def build_glb(L):
         stats[f"LampPost_LOD{lod}"] = g.tris() + gl.tris()
     root = bpy.data.objects.new("LampPost_Root", None); coll.objects.link(root)
     for o in lo: o.parent = root
-    for o in bpy.context.view_layer.objects: o.select_set(True)
+    bpy.context.view_layer.update()
+    for o in bpy.context.scene.collection.objects: o.select_set(True)
     bpy.ops.export_scene.gltf(filepath=str(OUT / "LampPost.glb"), export_format="GLB", export_yup=True, use_selection=True, export_materials="EXPORT")
     return stats
 

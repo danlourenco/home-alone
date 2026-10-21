@@ -37,6 +37,27 @@ public static partial class SpecGreybox
         {
             var c = name == "NB_GlassLit" ? new Color(1f, 0.72f, 0.42f) : new Color(1f, 0.88f, 0.70f);
             m.SetColor("_BaseColor", c); m.SetColor("_EmissiveColor", c * (name == "NB_GlassLit" ? 120f : 4000f)); m.SetFloat("_Smoothness", 0.6f);
+            var rc = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Textures/Neighborhood/room_cards.png");
+            if (name == "NB_GlassLit" && rc != null)   // step 3: lit rooms behind the windows (nb_textures.room_cards; the GLB's window UVs pick a quadrant)
+            {
+                if (AssetImporter.GetAtPath("Assets/Textures/Neighborhood/room_cards.png") is TextureImporter ri && ri.wrapMode != TextureWrapMode.Clamp) { ri.wrapMode = TextureWrapMode.Clamp; ri.SaveAndReimport(); }
+                m.SetColor("_BaseColor", Color.white); m.SetTexture("_BaseColorMap", rc); m.SetTexture("_EmissiveColorMap", rc);
+                m.SetColor("_EmissiveColor", new Color(1f, 0.92f, 0.82f) * 90f); m.SetTextureScale("_BaseColorMap", Vector2.one);
+            }
+        }
+        else if (name.StartsWith("NB_car_"))   // step 3 street life: gloss car paint, chrome, tyres, lamps (nb_life.py); plain colours, no maps
+        {
+            var col = name.Substring(7); var rgb = pal[col] as JArray; var c = rgb != null ? new Color((float)rgb[0], (float)rgb[1], (float)rgb[2]) : Color.grey;
+            m.SetColor("_BaseColor", c); m.SetFloat("_Smoothness", col == "tyre" ? 0.25f : col == "chrome" ? 0.9f : 0.78f); m.SetFloat("_Metallic", col == "chrome" ? 1f : 0f);
+        }
+        else if (name == "NB_Beacon")   // the police cars' red beacon domes (film 11581), night only (ShellGlow)
+        { var c = new Color(1f, 0.06f, 0.03f); m.SetColor("_BaseColor", c); m.SetColor("_EmissiveColor", c * 3000f); m.SetFloat("_Smoothness", 0.7f); }
+        else if (name == "NB_TreeCard")   // Tier 4 treeline: alpha-clipped bare-tree silhouettes (nb_textures.tree_cards), both sides
+        {
+            string tp = "Assets/Textures/Neighborhood/tree_cards.png";
+            if (AssetImporter.GetAtPath(tp) is TextureImporter ti && (!ti.alphaIsTransparency || ti.wrapMode != TextureWrapMode.Clamp)) { ti.alphaIsTransparency = true; ti.wrapMode = TextureWrapMode.Clamp; ti.mipmapEnabled = true; ti.SaveAndReimport(); }
+            m.SetTexture("_BaseColorMap", AssetDatabase.LoadAssetAtPath<Texture2D>(tp)); m.SetColor("_BaseColor", new Color(0.8f, 0.8f, 0.82f));
+            m.SetFloat("_AlphaCutoffEnable", 1f); m.SetFloat("_AlphaCutoff", 0.35f); m.SetFloat("_DoubleSidedEnable", 1f); m.SetFloat("_Smoothness", 0.1f);
         }
         else
         {
@@ -66,6 +87,41 @@ public static partial class SpecGreybox
         NbMats[name] = m; return m;
     }
 
+    // The walk boundary (user, Oct 20): invisible walls along life_layout.json "boundary" (our lot, the stretch of Lincoln in front of
+    // Marley's, ours and the Murphys', their front yards and porches), 8 m tall, 0.3 m thick; NOT under the Neighborhood root, so K's
+    // property view does not drop it. Then the boundary check: a capsule (r 0.3, 0.6-1.6 m over the ground) cast outward across the
+    // middle of every edge from 1.5 m inside must hit within 3 m (BLOCKED, as it should be), and every hero stays reachable (the LINCOLN,
+    // OUR SIDEWALK and B SIDEWALK walk-test routes).
+    static void WalkBoundary(GameObject ext, float gy, JObject ll)
+    {
+        var B = ((JArray)ll["boundary"]).Select(q => new Vector2((float)q[0], (float)q[1])).ToList(); if (B.Count < 3) return;
+        var root = new GameObject("Walk boundary (neighbourhood)"); root.transform.SetParent(ext.transform, true);
+        float area = 0; for (int i = 0; i < B.Count; i++) { var a = B[i]; var b = B[(i + 1) % B.Count]; area += a.x * b.y - b.x * a.y; }
+        for (int i = 0; i < B.Count; i++)
+        {
+            var a = B[i]; var b = B[(i + 1) % B.Count]; var m = (a + b) / 2f; var d = b - a;
+            var w = new GameObject($"Walk boundary {i}"); w.transform.SetParent(root.transform, false);
+            w.transform.SetPositionAndRotation(new Vector3(m.x, gy, -m.y), Quaternion.LookRotation(new Vector3(d.x, 0, -d.y).normalized, Vector3.up));
+            var bc = w.AddComponent<BoxCollider>(); bc.size = new Vector3(0.3f, 12f, d.magnitude + 0.3f); w.isStatic = true;
+        }
+        Physics.SyncTransforms(); int blocked = 0; var leaks = new List<string>();
+        for (int i = 0; i < B.Count; i++)
+        {
+            var a = B[i]; var b = B[(i + 1) % B.Count]; var d = (b - a).normalized; var nOut = area > 0 ? new Vector2(d.y, -d.x) : new Vector2(-d.y, d.x);   // spec frame
+            foreach (float t in new[] { 0.25f, 0.5f, 0.75f })
+            {
+                var p = Vector2.Lerp(a, b, t) - nOut * 1.5f; var start = new Vector3(p.x, gy + 20f, -p.y);
+                if (!Physics.Raycast(start, Vector3.down, out var g, 40f)) { leaks.Add($"edge {i} t {t}: no ground inside"); continue; }
+                if (g.collider.name.EndsWith("_Collider")) { blocked++; continue; }   // inside a hero house's walls: nobody stands there
+                var dir = new Vector3(nOut.x, 0, -nOut.y);
+                if (Physics.CapsuleCast(g.point + Vector3.up * 0.6f, g.point + Vector3.up * 1.6f, 0.3f, dir, out var hit, 3f)) blocked++;
+                else leaks.Add($"edge {i} at ({p.x:F1}, {p.y:F1})");
+            }
+        }
+        Debug.Log($"Neighborhood boundary check: {B.Count} edges, {blocked} of {3 * B.Count} outward legs BLOCKED{(leaks.Count > 0 ? "; OPEN: " + string.Join("; ", leaks) : " (all, as they must be)")}");
+        if (leaks.Count > 0) Debug.LogError("Neighborhood boundary check FAIL: " + string.Join("; ", leaks));
+    }
+
     static void Neighborhood(GameObject ext, float gy)
     {
         if (System.Environment.GetEnvironmentVariable("HA_NEIGHBORHOOD") != "1") { Debug.Log("Neighborhood: off (HA_NEIGHBORHOOD != 1)"); return; }
@@ -75,7 +131,7 @@ public static partial class SpecGreybox
         var kt = JObject.Parse(File.ReadAllText(Path.Combine(Application.dataPath, "Textures/Neighborhood/kit_textures.json")));
         var pal = (JObject)man["kit_palette"]; var lv = (JObject)lay["levels_rel_gy"]; var grade = (JObject)lv["lot_grade"];
         var root = new GameObject("Neighborhood"); root.transform.SetParent(ext.transform, true);
-        int houses = 0, glows = 0; long tris2 = 0, tris3 = 0;
+        int houses = 0, glows = 0; long tris2 = 0, tris3 = 0; var allBulbs = Enumerable.Range(0, 5).Select(_ => new List<Vector3>()).ToArray();
 
         GameObject Inst(string asset, string n, Vector3 pos)
         {
@@ -95,10 +151,11 @@ public static partial class SpecGreybox
             var h = Inst(id, "House " + id, new Vector3(0f, gy + g0, 0f)); if (h == null) continue; houses++;
             Renderer[] Part(string suffix) => h.GetComponentsInChildren<MeshRenderer>(true).Where(r => r.name.EndsWith(suffix)).ToArray();
             var l0 = Part("_LOD0"); var l1 = Part("_LOD1");
-            foreach (var r in Part("_Collider")) { var mc = r.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = r.GetComponent<MeshFilter>().sharedMesh; if (tier > 2) Object.DestroyImmediate(mc); Object.DestroyImmediate(r); }
+            foreach (var r in Part("_Collider")) { var mc = r.gameObject.AddComponent<MeshCollider>(); mc.sharedMesh = r.GetComponent<MeshFilter>().sharedMesh; if (tier > 2 || e["walkable"]?.Value<bool>() != true) Object.DestroyImmediate(mc); Object.DestroyImmediate(r); }   // step 3: only the heroes (Marley's, the Murphys') collide; the backdrop sits past the walk boundary
             foreach (var r in Part("_NightGlow")) { r.shadowCastingMode = ShadowCastingMode.Off; ShellGlow.Add(r); glows++; }
             var lg = h.AddComponent<LODGroup>(); lg.fadeMode = LODFadeMode.CrossFade; lg.animateCrossFading = true;
-            lg.SetLODs(tier <= 2 && l0.Length > 0 ? new[] { new LOD(0.10f, l0), new LOD(0.004f, l1) } : new[] { new LOD(0.004f, l1) });
+            bool hero = e["walkable"]?.Value<bool>() == true;   // backdrop kit houses (lot_A-1, B-1, B+1) drop to their stand-in sooner
+            lg.SetLODs(tier <= 2 && l0.Length > 0 ? new[] { new LOD(hero ? 0.10f : 0.25f, l0), new LOD(0.004f, l1) } : new[] { new LOD(0.004f, l1) });
             lg.RecalculateBounds();
             foreach (var r in l0) tris2 += r.GetComponent<MeshFilter>().sharedMesh.triangles.Length / 3;
             foreach (var r in tier <= 2 ? new Renderer[0] : l1) tris3 += r.GetComponent<MeshFilter>().sharedMesh.triangles.Length / 3;
@@ -109,13 +166,17 @@ public static partial class SpecGreybox
             {
                 var bl = (JArray)JObject.Parse(File.ReadAllText(xp))["bulbs"];
                 Color[] cs = { new Color(1f, 0.10f, 0.05f), new Color(0.15f, 0.9f, 0.2f), new Color(1f, 0.5f, 0.08f), new Color(0.2f, 0.35f, 1f), new Color(1f, 0.85f, 0.65f) };
-                for (int c = 0; c < 5; c++)
-                {
-                    var pts = bl.Where(b => (int)b[3] == c).Select(b => new Vector3((float)b[0], gy + g0 + (float)b[1], -(float)b[2])).ToList();
-                    if (pts.Count == 0) continue;
-                    var go = Bulbs(root, $"XmasC7_{id}_{c}", pts, 0.05f, XmasBulb($"NB_C7_{c}", cs[c], 2200f));
-                    foreach (var r in go.GetComponentsInChildren<MeshRenderer>()) ShellGlow.Add(r);
-                }
+                for (int c = 0; c < 5; c++)   // collected for every lot, one mesh per colour below (5 draws for the whole street)
+                    allBulbs[c].AddRange(bl.Where(b => (int)b[3] == c).Select(b => new Vector3((float)b[0], gy + g0 + (float)b[1], -(float)b[2])));
+            }
+        }
+        {
+            Color[] cs = { new Color(1f, 0.10f, 0.05f), new Color(0.15f, 0.9f, 0.2f), new Color(1f, 0.5f, 0.08f), new Color(0.2f, 0.35f, 1f), new Color(1f, 0.85f, 0.65f) };
+            for (int c = 0; c < 5; c++)
+            {
+                if (allBulbs[c].Count == 0) continue;
+                var go = Bulbs(root, $"XmasC7_{c}", allBulbs[c], 0.05f, XmasBulb($"NB_C7_{c}", cs[c], 2200f));
+                foreach (var r in go.GetComponentsInChildren<MeshRenderer>()) { r.shadowCastingMode = ShadowCastingMode.Off; ShellGlow.Add(r); }
             }
         }
         // ---- the street (walkable): mesh colliders on every surface
@@ -169,11 +230,96 @@ public static partial class SpecGreybox
         if (hood != null)
             foreach (var r in hood.GetComponentsInChildren<Renderer>(true))
             {
-                var b = r.bounds; bool streetish = new[] { "Lincoln", "sidewalk", "curb", "Sidewalk", "Neighbor", "snowy lots", "Mature bare", "Driveway" }.Any(s => r.name.Contains(s) || r.transform.parent.name.Contains(s));
+                var b = r.bounds; bool streetish = new[] { "Lincoln", "sidewalk", "curb", "Sidewalk", "Neighbor", "snowy lots", "Mature bare", "Driveway", "Utility pole", "Pole crossarm", "Overhead wire" }.Any(s => r.name.Contains(s) || r.transform.parent.name.Contains(s));
                 bool inside = b.center.x > -60f && b.center.x < 100f && Mathf.Abs(-b.center.z) < 150f;
                 if (streetish && inside || r.name.Contains("snowy lots"))
-                { r.enabled = false; foreach (var c in r.GetComponents<Collider>()) c.enabled = false; off++; }
+                { r.enabled = false; foreach (var c in r.GetComponents<Collider>()) c.enabled = false; r.name += " [nb-off]"; off++; }   // [nb-off]: PerfProbe's nbold variant turns them back on
             }
+        // ---- step 3: street life (nb_life.py: the film's police cars at night, the bandits' van, a parked sedan, poles + wires, hydrant,
+        //      the Murphys' mailbox and yard stakes) and the Tier 4 treeline + horizon ground
+        int life = 0; var lp = Path.Combine(Application.dataPath, "Models/Neighborhood/life_layout.json");
+        var src = File.Exists(lp) ? Inst("StreetLife", "StreetLife (prototypes)", Vector3.zero) : null;
+        if (src != null)
+        {
+            var ll = JObject.Parse(File.ReadAllText(lp)); var lifeRoot = new GameObject("Street life"); lifeRoot.transform.SetParent(root.transform, false);
+            GameObject Proto(string n) => src.GetComponentsInChildren<MeshRenderer>(true).FirstOrDefault(r => r.name == n)?.gameObject;
+            float Level(JObject it)
+            {
+                float x = (float)it["x"]; string y = (string)it["y"];
+                if (y == "walk") return (float)lv["walk"]; if (y != null && grade[y] != null) return (float)grade[y];
+                return x > 30.62f && x < 41.3f ? (float)lv["road"] : x >= 41.3f ? (float)lv["lawn_B"] : (float)lv["lawn_A"];
+            }
+            foreach (JObject it in ll["items"])
+            {
+                string kind = (string)it["kind"]; var pr = Proto(kind); if (pr == null) { Debug.LogWarning($"Neighborhood: no prototype {kind}"); continue; }
+                var hd = it["heading"] as JArray; var d = hd != null ? new Vector3((float)hd[0], 0f, -(float)hd[1]) : Vector3.back;
+                var holder = new GameObject($"{kind} ({(string)it["scene"] ?? "prop"})"); holder.transform.SetParent(lifeRoot.transform, false);
+                holder.transform.SetPositionAndRotation(new Vector3((float)it["x"], gy + Level(it), -(float)it["z"]), Quaternion.LookRotation(-d, Vector3.up));
+                // swap hook: a bought model at Assets/Purchased/Vehicles/<kind>.prefab (root at the ground contact, facing Unity +z, metres)
+                // replaces the generated proxy; the night scene's beacon light and the collider follow it (decisions list: purchases)
+                var bought = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Purchased/Vehicles/{kind}.prefab");
+                if (bought != null)
+                {
+                    var bm = (GameObject)PrefabUtility.InstantiatePrefab(bought); bm.transform.SetParent(holder.transform, false);
+                    bm.transform.localPosition = Vector3.zero; bm.transform.localRotation = Quaternion.Euler(0, 180f, 0);   // the proxies face local -z
+                }
+                foreach (var part in (bought != null ? new GameObject[0] : new[] { pr, Proto(kind + "_Beacons") }).Where(q => q != null))
+                {
+                    var c = Object.Instantiate(part, holder.transform, false); c.name = part.name; c.transform.localPosition = Vector3.zero; c.transform.localRotation = Quaternion.identity;
+                    if (part.name.EndsWith("_Beacons")) foreach (var r in c.GetComponentsInChildren<MeshRenderer>()) { r.shadowCastingMode = ShadowCastingMode.Off; ShellGlow.Add(r); }
+                }
+                var bc = holder.AddComponent<BoxCollider>(); var bb = new Bounds(holder.transform.position, Vector3.zero);
+                foreach (var r in holder.GetComponentsInChildren<MeshRenderer>()) bb.Encapsulate(r.bounds);
+                bc.center = holder.transform.InverseTransformPoint(bb.center); bc.size = Quaternion.Inverse(holder.transform.rotation) * bb.size; bc.size = new Vector3(Mathf.Abs(bc.size.x), Mathf.Abs(bc.size.y), Mathf.Abs(bc.size.z));
+                if ((string)it["scene"] == "night")   // the film's arrest scene (11576-11636): the cars and their red beacon light belong to the night layer
+                {
+                    var l = holder.AddComponent<Light>(); holder.AddComponent<UnityEngine.Rendering.HighDefinition.HDAdditionalLightData>();
+                    l.type = LightType.Point; l.color = new Color(1f, 0.08f, 0.04f); l.intensity = 500f; l.lightUnit = UnityEngine.Rendering.LightUnit.Lumen; l.range = 14f;
+                    l.shadows = LightShadows.None; l.lightmapBakeType = LightmapBakeType.Realtime; ShellLights.Add(l);
+                }
+                else foreach (var t in holder.GetComponentsInChildren<Transform>(true)) t.gameObject.isStatic = true;
+                life++;
+            }
+            var pole = Proto("Pole");
+            foreach (JObject q in ll["poles"])
+            {
+                var g = Object.Instantiate(pole, lifeRoot.transform, false); g.name = "Utility pole"; g.transform.position = new Vector3((float)q["x"], gy + (float)lv["walk"], -(float)q["z"]);
+                var cc = g.AddComponent<CapsuleCollider>(); cc.radius = 0.16f; cc.height = 10f; cc.center = new Vector3(0, 5f, 0); g.isStatic = true; life++;
+            }
+            var wires = Proto("Wires"); if (wires != null) { var w = Object.Instantiate(wires, lifeRoot.transform, false); w.name = "Overhead wires"; w.transform.position = new Vector3(0, gy, 0); w.GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off; w.isStatic = true; }
+            foreach (var r in lifeRoot.GetComponentsInChildren<MeshRenderer>(true).Where(r => r.name == "Hydrant" || r.name == "Mailbox" || r.name == "YardStake")) r.shadowCastingMode = ShadowCastingMode.On;
+            // the walk boundary's soft blockers: hedges and snow piles (one mesh), each piece colliding
+            var bdm = Proto("BoundaryDressing");
+            if (bdm != null)
+            {
+                var bd = Object.Instantiate(bdm, lifeRoot.transform, false); bd.name = "Boundary hedges and snow piles"; bd.transform.position = new Vector3(0, gy, 0); bd.isStatic = true;
+                bd.AddComponent<MeshCollider>().sharedMesh = bd.GetComponent<MeshFilter>().sharedMesh;
+            }
+            Object.DestroyImmediate(src);
+            WalkBoundary(ext, gy, ll);
+        }
+        var tl = Inst("TreeLine", "Tier 4 treeline", new Vector3(0f, gy, 0f));
+        if (tl != null)
+            foreach (var r in tl.GetComponentsInChildren<MeshRenderer>(true))
+            { r.gameObject.isStatic = true; if (r.name.StartsWith("TreeLine")) { r.shadowCastingMode = ShadowCastingMode.Off; r.receiveShadows = false; } }
+        // the old street's generated trees (SpecGreybox.Trees swapped each WinterNeighborhood stick for a "Bare winter tree") stood on the old
+        // layout: off the lot they double the lidar trees placed above; our parcel and frontage (Tier 1: x < 31, z -4.5..31.2) keep theirs
+        int oldTrees = 0;
+        if (hood != null)
+        {
+            var lot = ((JArray)((JObject)man["parcels"].First(q => (string)q["id"] == "lot_A0"))["parcel_poly_spec"]).Select(q => new Vector2((float)q[0], (float)q[1])).ToList();
+            foreach (var t in hood.GetComponentsInChildren<Transform>(true).Where(t => t.name.StartsWith("Bare winter tree")).ToList())
+            {
+                float x = t.position.x, z = -t.position.z;
+                bool ours = Inside(lot, new Vector2(Mathf.Min(x, 27.0f), z)) || (x < 31f && z > -4.5f && z < 31.2f);
+                if (ours || x < -60f || x > 100f || Mathf.Abs(z) > 150f) continue;
+                foreach (var r in t.GetComponentsInChildren<Renderer>(true)) { r.enabled = false; r.name += " [nb-off]"; }
+                foreach (var c in t.GetComponentsInChildren<Collider>(true)) c.enabled = false;
+                oldTrees++;
+            }
+        }
+        Debug.Log($"Neighborhood: {oldTrees} old street trees off (lidar trees replace them)");
+        Debug.Log($"Neighborhood: step 3 street life {life} (cars, props, poles), treeline {(tl != null ? "on" : "missing")}");
         Debug.Log($"Neighborhood: {houses} houses (Tier 2 LOD0 {tris2} tris, Tier 3 {tris3} tris), {glows} night glows, {lamps} acorn lamps, {trees} trees, {NbMats.Count} shared materials, {off} WinterNeighborhood renderers off");
     }
 }

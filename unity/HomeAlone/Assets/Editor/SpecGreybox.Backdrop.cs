@@ -39,6 +39,9 @@ public static partial class SpecGreybox
             m.SetFloat("_DoubleSidedEnable", 1f);
             HDMaterial.ValidateMaterial(m); EditorUtility.SetDirty(m); return m;
         }
+        // the neighbourhood (HA_NEIGHBORHOOD=1, SpecGreybox.Neighborhood.cs) reaches 150 m: the photo dome moves out behind it (R 320, its
+        // photo band now a far horizon) instead of standing at 75 m in front of the Murphys; Tier 4's treeline replaces it in step 3
+        bool nbOn = System.Environment.GetEnvironmentVariable("HA_NEIGHBORHOOD") == "1"; DomeRadius = nbOn ? 320f : 75f;
         var c = new Vector3(DomeCentreXZ.x, gy + 3f, DomeCentreXZ.z);   // between the two storeys' eyes: the photo's horizon at eye level
         var day = Dome(dayLayer.transform, "WinterBackdrop_Day", c, Glow("Backdrop_DomeDay", Tex("dome_day.jpg", 8192, false), DomeDayNits, false));
         Dome(nightLayer.transform, "WinterBackdrop_Night", c, Glow("Backdrop_DomeNight", Tex("dome_night.jpg", 4096, false), DomeNightNits, false));
@@ -108,7 +111,7 @@ public static partial class SpecGreybox
             {
                 r.renderingLayerMask |= LayerOutside;
                 var b = r.bounds; var d = new Vector2(b.center.x - c.x, b.center.z - c.z).magnitude - new Vector2(b.extents.x, b.extents.z).magnitude;
-                if (d > DomeRadius) { r.enabled = false; far++; }
+                if (d > DomeRadius && !(nbOn && r.GetComponentsInParent<Transform>(true).Any(t => t.name == "Neighborhood"))) { r.enabled = false; far++; }
             }
         }
         Debug.Log($"Backdrop: dome R {DomeRadius} at {c} (day {DomeDayNits} nits, night {DomeNightNits}), night card {CardNightNits}; " +

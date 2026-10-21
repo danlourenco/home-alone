@@ -400,135 +400,413 @@
     "blocks": [
      {
       "x": [
-       -94.41,
-       -73.52
+       -91.41,
+       -80.41
       ],
       "z": [
-       -4.63,
-       25.46
+       -2.63,
+       22.37
       ],
-      "plate": 5.37,
+      "plate": 6.0,
       "roof": "gable_z",
       "pitch": 32,
-      "overhang": 0.4
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 2 (nb_kits.rects)",
+      "xmas_eave": [
+       [
+        -1,
+        0,
+        0
+       ]
+      ]
+     },
+     {
+      "x": [
+       -80.41,
+       -74.41
+      ],
+      "z": [
+       10.37,
+       25.37
+      ],
+      "plate": 3.0,
+      "roof": "gable_z",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 2 (nb_kits.rects)"
      }
     ],
     "windows": [
      {
-      "face": "-z",
-      "at": -92.922,
+      "face": "-x",
+      "at": -1.063,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": -92.922,
+      "face": "-x",
+      "at": -1.063,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": -89.938,
+      "face": "-x",
+      "at": 2.062,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": -89.938,
+      "face": "-x",
+      "at": 2.062,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": -86.953,
+      "face": "-x",
+      "at": 5.187,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": -86.953,
+      "face": "-x",
+      "at": 5.187,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": -83.969,
+      "face": "-x",
+      "at": 8.312,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": -83.969,
+      "face": "-x",
+      "at": 8.312,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 11.437,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 11.437,
       "sill": 0.5,
       "h": 2.1,
       "w": 1.0,
-      "type": "door"
+      "type": "door",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": -80.984,
+      "face": "-x",
+      "at": 14.562,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": -80.984,
+      "face": "-x",
+      "at": 14.562,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": -77.999,
+      "face": "-x",
+      "at": 17.687,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": -77.999,
+      "face": "-x",
+      "at": 17.687,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": -75.015,
+      "face": "-x",
+      "at": 20.812,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": -75.015,
+      "face": "-x",
+      "at": 20.812,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -89.581,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -89.581,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -85.915,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -85.915,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -82.248,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -82.248,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -89.581,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -89.581,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -85.915,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -85.915,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -82.248,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -82.248,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 11.875,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 14.875,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 17.875,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 20.875,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 23.875,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -78.915,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -75.915,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -78.915,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -75.915,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
      }
     ],
-    "_src": "C footprint rectangle (min-area) + C ridge; style hashed from STYLES3 (G, low)"
-   }
+    "lit": {
+     "windows": [
+      6,
+      10,
+      19,
+      23,
+      26,
+      30,
+      31,
+      32
+     ]
+    },
+    "garages": [
+     {
+      "x": [
+       -85.94,
+       -74.91
+      ],
+      "z": [
+       44.15,
+       52.92
+      ],
+      "plate": 2.6,
+      "roof": "hip",
+      "pitch": 26,
+      "door_face": "-x",
+      "_src": "C outbuilding (bounding rectangle in the main frame)"
+     }
+    ],
+    "front_face": "-x",
+    "_src": "C footprint split into 2 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_A-2",
@@ -856,7 +1134,9 @@
     }
    ],
    "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
-   "evidence_frames": [],
+   "evidence_frames": [
+    3246
+   ],
    "confidence": "low",
    "status": "kit_auto",
    "kit_auto": {
@@ -875,119 +1155,501 @@
     "blocks": [
      {
       "x": [
-       51.86,
-       69.1
+       55.36,
+       67.86
       ],
       "z": [
-       -19.0,
-       7.69
+       -15.0,
+       7.5
       ],
       "plate": 6.0,
       "roof": "gable_z",
       "pitch": 32,
-      "overhang": 0.4
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 2 (nb_kits.rects)",
+      "xmas_eave": [
+       [
+        0,
+        0,
+        1
+       ]
+      ]
+     },
+     {
+      "x": [
+       53.86,
+       62.36
+      ],
+      "z": [
+       -19.0,
+       -15.0
+      ],
+      "plate": 3.0,
+      "roof": "gable_x",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 2 (nb_kits.rects)"
      }
     ],
     "windows": [
      {
       "face": "+z",
-      "at": 53.3,
+      "at": 56.926,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+z",
-      "at": 53.3,
+      "at": 56.926,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+z",
-      "at": 56.173,
+      "at": 60.051,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+z",
-      "at": 56.173,
+      "at": 60.051,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+z",
-      "at": 59.046,
+      "at": 63.176,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+z",
-      "at": 59.046,
-      "sill": 1.0,
-      "h": 1.6,
-      "w": 1.0,
-      "type": "dh66"
-     },
-     {
-      "face": "+z",
-      "at": 61.919,
-      "sill": 4.0,
-      "h": 1.4,
-      "w": 0.95,
-      "type": "dh66"
-     },
-     {
-      "face": "+z",
-      "at": 61.919,
+      "at": 63.176,
       "sill": 0.5,
       "h": 2.1,
       "w": 1.0,
-      "type": "door"
+      "type": "door",
+      "block": 0
      },
      {
       "face": "+z",
-      "at": 64.792,
+      "at": 66.301,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+z",
-      "at": 64.792,
+      "at": 66.301,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "+z",
-      "at": 67.665,
+      "face": "-x",
+      "at": -13.593,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "+z",
-      "at": 67.665,
+      "face": "-x",
+      "at": -13.593,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -10.78,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -10.78,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -7.968,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -7.968,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -5.155,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -5.155,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -2.343,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -2.343,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 0.47,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 0.47,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 3.282,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 3.282,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 6.095,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 6.095,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -13.593,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -13.593,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -10.78,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -10.78,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -7.968,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -7.968,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -5.155,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -5.155,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -2.343,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -2.343,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 0.47,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 0.47,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 3.282,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 3.282,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 6.095,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 6.095,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 55.28,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": 58.113,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": 60.947,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": -16.999,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+x",
+      "at": -16.999,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
      }
     ],
-    "_src": "C footprint rectangle (min-area) + C ridge; style hashed from STYLES3 (G, low)"
-   }
+    "lit": {
+     "windows": [
+      2,
+      3,
+      7,
+      8,
+      9,
+      14,
+      15,
+      17,
+      22,
+      26,
+      28,
+      29,
+      30,
+      35,
+      37,
+      40,
+      41
+     ]
+    },
+    "garages": [
+     {
+      "x": [
+       41.93,
+       50.32
+      ],
+      "z": [
+       -42.94,
+       -30.93
+      ],
+      "plate": 2.6,
+      "roof": "hip",
+      "pitch": 26,
+      "door_face": "+z",
+      "_src": "C outbuilding (bounding rectangle in the main frame)"
+     }
+    ],
+    "front_face": "+z",
+    "_src": "C footprint split into 2 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "evidence_step3": [
+    {
+     "frame": 3246,
+     "shows": "a dark green shingled house with a steep gable and a wreath on the door, beyond lot_A-1",
+     "use": "Tier 3 style: shingle; colour TODO (palette has no dark green shingle)"
+    }
+   ],
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_A-1",
@@ -1232,6 +1894,7 @@
    "evidence_frames": [
     1471,
     1475,
+    3246,
     3297,
     6399,
     9511
@@ -1266,7 +1929,14 @@
       "roof": "gable_z",
       "pitch": 33,
       "overhang": 0.35,
-      "_src": "C 437 m2 (L-shaped, rear wings to x -19.7); L ridge 10.4-10.8 along z at x -5 (z -36..-29)"
+      "_src": "C 437 m2 (L-shaped, rear wings to x -19.7); L ridge 10.4-10.8 along z at x -5 (z -36..-29)",
+      "xmas_eave": [
+       [
+        1,
+        0,
+        0
+       ]
+      ]
      },
      {
       "x": [
@@ -1504,8 +2174,22 @@
      }
     ]
    },
-   "kit_confidence": "low-medium",
-   "kit_basis": "white clapboard + green shutters F 6399; massing L/C simplified to two blocks"
+   "kit_confidence": "medium",
+   "kit_basis": "white + green shutters F 6399 (day edge), 1471 (night: gabled dormer, lit lower wing), 3246 (day, the sled run: white painted walls, green shutters, a small arched hood over the door, a low dark roof; the green shingled lot_A-2 beyond it); massing L/C simplified to two blocks",
+   "evidence_step3": [
+    {
+     "frame": 3246,
+     "shows": "day: white, green shutters, arched door hood, low dark roof; green shingled lot_A-2 beyond",
+     "use": "confidence low-medium -> medium"
+    },
+    {
+     "frame": 1471,
+     "shows": "night: a gabled dormer, a lit lower wing beside the lamp post",
+     "use": "dormer kept"
+    }
+   ],
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_A0",
@@ -1782,7 +2466,9 @@
     1891
    ],
    "confidence": "high",
-   "status": "evidence"
+   "status": "evidence",
+   "walkable": true,
+   "role": "hero"
   },
   {
    "id": "lot_A+1",
@@ -2069,8 +2755,10 @@
    ],
    "style_kit_guess": "dark/red-brown 2-storey house with garage side; in 1886/1891 a red-brick house with red roof tiles at left of ours",
    "evidence_frames": [
+    546,
     1471,
     1886,
+    1888,
     1891,
     6399
    ],
@@ -2078,234 +2766,377 @@
    "status": "kit",
    "note": "film-left neighbour (toward +z): behind our detached garage at 6399; only far edges seen",
    "kit": {
-    "style": "Mediterranean / Prairie stucco, hip roof",
-    "cladding": "stucco",
-    "roof_mat": "roof_clay",
-    "foundation_h": 0.45,
+    "style": "Shingle Style (Marley's house)",
+    "cladding": "shingle",
+    "roof_mat": "roof_asphalt",
+    "foundation_mat": "brick",
+    "foundation_h": 0.9,
     "palette": {
-     "wall": "cream",
-     "trim": "brown",
-     "sash": "brown",
+     "wall": "palepink",
+     "trim": "white",
+     "sash": "white",
      "roof": "clayred",
-     "door": "brown",
-     "found": "stone"
+     "door": "darkgreen",
+     "found": "red",
+     "brick": "red",
+     "gutter": "white",
+     "_src": "film 1888 (1990): pale rose walls, white cornice and sashes, red roofs (sampled; nb_kits PALETTE palepink)"
+    },
+    "palette_today": {
+     "wall": "brown",
+     "trim": "darkgreen",
+     "sash": "darkgreen",
+     "roof": "slate",
+     "gutter": "darkgreen",
+     "_src": "the user's modern photo (late winter): warm brown cedar shakes, dark green trim, grey shingle roofs"
     },
     "blocks": [
      {
       "x": [
-       -2.0,
+       -1.95,
        10.8
       ],
       "z": [
-       36.7,
-       47.7
+       36.75,
+       47.6
       ],
-      "plate": 6.0,
+      "plate": 5.9,
       "roof": "hip",
-      "pitch": 30,
+      "pitch": 37,
       "overhang": 0.55,
-      "_src": "C 260 m2 (rear wing to x -9.6, z 33.1); L hip ridge 9.8"
-     },
-     {
-      "x": [
-       10.8,
-       12.6
-      ],
-      "z": [
-       40.3,
-       44.2
-      ],
-      "plate": 3.0,
-      "roof": "hip",
-      "pitch": 25,
-      "overhang": 0.3,
-      "_src": "C front projection (vestibule)"
+      "flare": 0.7,
+      "_src": "C main rectangle; L hip plateau 9.8 (built 9.6); flared eaves (Shingle Style, user photo)"
      },
      {
       "x": [
        -9.6,
-       -2.0
+       -1.95
       ],
       "z": [
        33.1,
-       41.0
+       47.7
       ],
       "plate": 5.6,
       "roof": "hip",
+      "pitch": 37,
+      "overhang": 0.5,
+      "flare": 0.6,
+      "_src": "C rear wing; L tree-covered (G height)"
+     },
+     {
+      "x": [
+       10.8,
+       12.64
+      ],
+      "z": [
+       40.25,
+       43.04
+      ],
+      "plate": 3.1,
+      "roof": "hip",
       "pitch": 30,
-      "overhang": 0.45,
-      "_src": "C rear wing"
+      "overhang": 0.35,
+      "hidden_faces": [
+       "-x"
+      ],
+      "downspouts": false,
+      "collider_top": 0.9,
+      "_src": "C front projection = the recessed entry (user photo: a recessed porch with dark round columns, stone steps)"
      }
     ],
     "windows": [
      {
       "face": "+x",
-      "at": 38.6,
+      "at": 44.3,
       "sill": 4.0,
-      "h": 1.4,
-      "w": 0.9,
-      "type": "casement",
-      "leaves": 2,
-      "casing": true
+      "h": 1.3,
+      "w": 0.95,
+      "type": "dh91",
+      "hood": "eyebrow"
      },
      {
       "face": "+x",
-      "at": 41.0,
-      "sill": 4.0,
-      "h": 1.4,
-      "w": 0.9,
-      "type": "casement",
-      "leaves": 2,
-      "casing": true
-     },
-     {
-      "face": "+x",
-      "at": 43.6,
-      "sill": 4.0,
-      "h": 1.4,
-      "w": 0.9,
-      "type": "casement",
-      "leaves": 2,
-      "casing": true
-     },
-     {
-      "face": "+x",
-      "at": 46.0,
-      "sill": 4.0,
-      "h": 1.4,
-      "w": 0.9,
-      "type": "casement",
-      "leaves": 2,
-      "casing": true
-     },
-     {
-      "face": "+x",
-      "at": 38.6,
-      "sill": 1.0,
-      "h": 1.7,
-      "w": 1.2,
-      "type": "casement",
-      "leaves": 2,
-      "casing": true
-     },
-     {
-      "face": "+x",
-      "at": 46.0,
-      "sill": 1.0,
-      "h": 1.7,
-      "w": 1.2,
-      "type": "casement",
-      "leaves": 2,
-      "casing": true
-     },
-     {
-      "face": "+x",
-      "at": 42.25,
-      "sill": 0.45,
-      "h": 2.1,
+      "at": 44.3,
+      "sill": 1.35,
+      "h": 1.75,
       "w": 1.0,
-      "type": "door",
-      "block": 1
+      "type": "dh91"
      },
      {
-      "face": "-z",
-      "at": 1.0,
+      "face": "+x",
+      "at": 46.4,
       "sill": 4.0,
-      "h": 1.35,
-      "w": 0.9,
-      "type": "casement",
-      "leaves": 2,
-      "casing": true
-     },
-     {
-      "face": "-z",
-      "at": 1.0,
-      "sill": 1.0,
-      "h": 1.6,
+      "h": 1.3,
       "w": 0.95,
-      "type": "casement",
-      "leaves": 2,
-      "casing": true
+      "type": "dh91",
+      "hood": "eyebrow"
      },
      {
-      "face": "-z",
-      "at": 6.0,
+      "face": "+x",
+      "at": 46.4,
+      "sill": 1.35,
+      "h": 1.75,
+      "w": 1.0,
+      "type": "dh91"
+     },
+     {
+      "face": "+x",
+      "at": 41.65,
       "sill": 4.0,
-      "h": 1.35,
-      "w": 0.9,
+      "h": 1.2,
+      "w": 1.5,
       "type": "casement",
-      "leaves": 2,
-      "casing": true
+      "leaves": 3,
+      "casing": true,
+      "hood": "eyebrow"
      },
      {
-      "face": "-z",
-      "at": 6.0,
-      "sill": 1.0,
-      "h": 1.6,
-      "w": 0.95,
-      "type": "casement",
-      "leaves": 2,
-      "casing": true
+      "face": "+x",
+      "at": 41.65,
+      "sill": 0.9,
+      "h": 2.15,
+      "w": 1.0,
+      "type": "door"
+     },
+     {
+      "face": "+x",
+      "at": 41.65,
+      "sill": 0.9,
+      "h": 2.25,
+      "w": 2.1,
+      "type": "opening",
+      "block": 2,
+      "columns": 2,
+      "reveal": 1.84
      },
      {
       "face": "+z",
-      "at": 1.0,
+      "at": 1.5,
       "sill": 4.0,
-      "h": 1.35,
+      "h": 1.3,
       "w": 0.9,
-      "type": "casement",
-      "leaves": 2,
-      "casing": true
+      "type": "dh91"
      },
      {
       "face": "+z",
-      "at": 1.0,
-      "sill": 1.0,
+      "at": 1.5,
+      "sill": 1.35,
       "h": 1.6,
       "w": 0.95,
-      "type": "casement",
-      "leaves": 2,
-      "casing": true
+      "type": "dh91"
      },
      {
       "face": "+z",
-      "at": 6.0,
+      "at": 6.5,
       "sill": 4.0,
-      "h": 1.35,
+      "h": 1.3,
       "w": 0.9,
-      "type": "casement",
-      "leaves": 2,
-      "casing": true
+      "type": "dh91"
      },
      {
       "face": "+z",
-      "at": 6.0,
-      "sill": 1.0,
+      "at": 6.5,
+      "sill": 1.35,
       "h": 1.6,
       "w": 0.95,
-      "type": "casement",
-      "leaves": 2,
-      "casing": true
+      "type": "dh91"
+     },
+     {
+      "face": "-z",
+      "at": 1.5,
+      "sill": 4.0,
+      "h": 1.3,
+      "w": 0.9,
+      "type": "dh91"
+     },
+     {
+      "face": "-z",
+      "at": 1.5,
+      "sill": 1.35,
+      "h": 1.6,
+      "w": 0.95,
+      "type": "dh91"
+     },
+     {
+      "face": "-z",
+      "at": 6.5,
+      "sill": 4.0,
+      "h": 1.3,
+      "w": 0.9,
+      "type": "dh91"
+     },
+     {
+      "face": "-z",
+      "at": 6.5,
+      "sill": 1.35,
+      "h": 1.6,
+      "w": 0.95,
+      "type": "dh91"
      }
     ],
     "lit": {
      "windows": [
-      2
+      0,
+      4
      ]
     },
+    "turrets": [
+     {
+      "x": 8.55,
+      "z": 37.9,
+      "r": 2.4,
+      "plate": 7.8,
+      "peak": 12.5,
+      "overhang": 0.45,
+      "flare": 0.5,
+      "windows": [
+       {
+        "k": 0,
+        "sill": 4.0,
+        "h": 1.25,
+        "w": 0.85,
+        "type": "dh11"
+       },
+       {
+        "k": 0,
+        "sill": 1.35,
+        "h": 1.7,
+        "w": 0.85,
+        "type": "dh11"
+       },
+       {
+        "k": 1,
+        "sill": 4.0,
+        "h": 1.25,
+        "w": 0.8,
+        "type": "dh11"
+       },
+       {
+        "k": 7,
+        "sill": 4.0,
+        "h": 1.25,
+        "w": 0.8,
+        "type": "dh11"
+       },
+       {
+        "k": 1,
+        "sill": 1.35,
+        "h": 1.7,
+        "w": 0.8,
+        "type": "dh11"
+       },
+       {
+        "k": 7,
+        "sill": 1.35,
+        "h": 1.7,
+        "w": 0.8,
+        "type": "dh11"
+       },
+       {
+        "k": 0,
+        "sill": 6.55,
+        "h": 0.85,
+        "w": 0.75,
+        "type": "casement"
+       },
+       {
+        "k": 1,
+        "sill": 6.55,
+        "h": 0.85,
+        "w": 0.75,
+        "type": "casement"
+       },
+       {
+        "k": 7,
+        "sill": 6.55,
+        "h": 0.85,
+        "w": 0.75,
+        "type": "casement"
+       },
+       {
+        "k": 2,
+        "sill": 6.55,
+        "h": 0.85,
+        "w": 0.75,
+        "type": "casement"
+       },
+       {
+        "k": 6,
+        "sill": 6.55,
+        "h": 0.85,
+        "w": 0.75,
+        "type": "casement"
+       }
+      ],
+      "_src": "C octagonal corners (r 2.4 to the face middles, the front face 15 cm proud of the main wall); L peak 12.5 m at x 10-11, z 37-38; F 1888 the tall red cone over a pale windowed band that rises above the wings' red roofs (plate 7.8: G from the frame's proportions)"
+     }
+    ],
+    "dormers": [
+     {
+      "face": "+x",
+      "block": 1,
+      "at": 34.9,
+      "w": 1.9,
+      "h": 1.6,
+      "setback": 0.6,
+      "depth": 2.2,
+      "roof": "hip",
+      "windows": [
+       {
+        "off": 0,
+        "w": 1.0,
+        "h": 0.8,
+        "sill": 0.6,
+        "type": "dh11"
+       }
+      ],
+      "_src": "the user's photo: a hip dormer on the right wing (G position)"
+     }
+    ],
+    "steps": [
+     {
+      "x": [
+       12.64,
+       14.04
+      ],
+      "z": [
+       40.6,
+       42.7
+      ],
+      "top": 0.9,
+      "n": 5,
+      "climb": -1,
+      "_src": "the user's photo: stone steps up to the entry"
+     }
+    ],
     "chimneys": [
      {
       "x": 4.0,
-      "z": 47.300000000000004,
-      "w": 0.6,
-      "d": 0.8,
-      "top": 10.6,
-      "from": 1.0
+      "z": 47.25,
+      "w": 0.7,
+      "d": 0.6,
+      "top": 11.6,
+      "from": 1.0,
+      "_src": "F 1888: a chimney on the left (+z) wing; the user's photo: tall red brick"
      }
     ]
    },
-   "kit_confidence": "low",
-   "kit_basis": "cream stucco + red tile roof F 1886/1891 (edge views; may be lot_A+2's); hip from L"
+   "kit_confidence": "medium",
+   "kit_basis": "Old Man Marley's house (user, Oct 20: the left neighbour from the street = +z). Shingle Style: turret + cone F 1888 (1990: red roofs, pale turret walls) + L peak 12.5 m on the C footprint's octagon; wings, entry, dormer, chimney from the user's modern photo description (G positions)",
+   "evidence_step3": [
+    {
+     "frame": 1888,
+     "shows": "day, across Lincoln, left of our garage: an octagonal turret with a tall red conical roof, pale upper walls, red hip roofs, a chimney on the left",
+     "use": "Marley's house: Shingle Style kit (turret, flared hips); 1990 colours"
+    },
+    {
+     "frame": 546,
+     "shows": "Buzz's window POV at night: Marley shovelling by the trash can; a dark house behind with a lit window",
+     "use": "night: lit windows"
+    }
+   ],
+   "walkable": true,
+   "role": "hero"
   },
   {
    "id": "lot_A+2",
@@ -2495,86 +3326,405 @@
      {
       "x": [
        -8.89,
-       9.82
+       9.61
       ],
       "z": [
-       50.8,
-       64.04
+       51.3,
+       61.3
       ],
       "plate": 6.0,
       "roof": "gable_x",
       "pitch": 32,
-      "overhang": 0.4
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 2 (nb_kits.rects)",
+      "xmas_eave": [
+       [
+        1,
+        0,
+        0
+       ]
+      ]
+     },
+     {
+      "x": [
+       -4.39,
+       7.11
+      ],
+      "z": [
+       61.3,
+       63.8
+      ],
+      "plate": 3.0,
+      "roof": "gable_x",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 2 (nb_kits.rects)"
      }
     ],
     "windows": [
      {
       "face": "+x",
-      "at": 52.453,
+      "at": 52.964,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 52.453,
+      "at": 52.964,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 55.764,
+      "at": 56.298,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 55.764,
-      "sill": 1.0,
-      "h": 1.6,
-      "w": 1.0,
-      "type": "dh66"
-     },
-     {
-      "face": "+x",
-      "at": 59.075,
-      "sill": 4.0,
-      "h": 1.4,
-      "w": 0.95,
-      "type": "dh66"
-     },
-     {
-      "face": "+x",
-      "at": 59.075,
+      "at": 56.298,
       "sill": 0.5,
       "h": 2.1,
       "w": 1.0,
-      "type": "door"
+      "type": "door",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 62.385,
+      "at": 59.631,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 62.385,
+      "at": 59.631,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -7.345,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -7.345,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -4.262,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -4.262,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -1.179,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -1.179,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 1.905,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 1.905,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 4.988,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 4.988,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 8.071,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 8.071,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -7.345,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -7.345,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -4.262,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -4.262,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -1.179,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -1.179,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 1.905,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 1.905,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 4.988,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 4.988,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 8.071,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 8.071,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -2.95,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -0.075,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 2.8,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 5.675,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -2.95,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -0.075,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": 2.8,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": 5.675,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
      }
     ],
-    "_src": "C footprint rectangle (min-area) + C ridge; style hashed from STYLES3 (G, low)"
-   }
+    "lit": {
+     "windows": [
+      1,
+      13,
+      14,
+      16,
+      22,
+      25,
+      28,
+      32
+     ]
+    },
+    "garages": [],
+    "front_face": "+x",
+    "_src": "C footprint split into 2 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_A+3",
@@ -2762,87 +3912,336 @@
     "blocks": [
      {
       "x": [
-       -12.96,
-       7.83
+       -5.46,
+       3.04
       ],
       "z": [
        66.25,
-       79.15
+       79.25
       ],
       "plate": 6.0,
+      "roof": "gable_z",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 3 (nb_kits.rects)"
+     },
+     {
+      "x": [
+       3.04,
+       7.54
+      ],
+      "z": [
+       68.75,
+       76.75
+      ],
+      "plate": 3.0,
+      "roof": "gable_z",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 3 (nb_kits.rects)"
+     },
+     {
+      "x": [
+       -12.46,
+       -5.46
+      ],
+      "z": [
+       73.75,
+       78.25
+      ],
+      "plate": 3.0,
       "roof": "gable_x",
       "pitch": 32,
-      "overhang": 0.4
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 3 of 3 (nb_kits.rects)"
      }
     ],
     "windows": [
      {
       "face": "+x",
-      "at": 67.867,
+      "at": 67.88,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 67.867,
+      "at": 67.88,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 71.091,
+      "at": 71.13,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 71.091,
+      "at": 71.13,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 74.315,
+      "at": 74.38,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 74.315,
+      "at": 74.38,
       "sill": 0.5,
       "h": 2.1,
       "w": 1.0,
-      "type": "door"
+      "type": "door",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 77.54,
+      "at": 77.63,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 77.54,
+      "at": 77.63,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -4.042,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -4.042,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -1.209,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -1.209,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 1.625,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 1.625,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -4.042,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -4.042,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -1.209,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -1.209,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 1.625,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 1.625,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 70.755,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+x",
+      "at": 74.755,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 5.291,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": 5.291,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+x",
+      "at": 76.005,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": -10.709,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": -7.209,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": -10.709,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": -7.209,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
      }
     ],
-    "_src": "C footprint rectangle (min-area) + C ridge; style hashed from STYLES3 (G, low)"
-   }
+    "lit": {
+     "windows": [
+      0,
+      2,
+      5,
+      13,
+      15,
+      16,
+      17,
+      18,
+      23,
+      25
+     ]
+    },
+    "garages": [],
+    "front_face": "+x",
+    "_src": "C footprint split into 3 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_A+4",
@@ -2931,7 +4330,9 @@
    "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
    "evidence_frames": [],
    "confidence": "low",
-   "status": "evidence"
+   "status": "evidence",
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_A+5",
@@ -3122,103 +4523,424 @@
     "blocks": [
      {
       "x": [
-       -10.06,
-       10.44
+       -7.56,
+       9.94
+      ],
+      "z": [
+       85.17,
+       96.17
+      ],
+      "plate": 6.0,
+      "roof": "gable_x",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 2 (nb_kits.rects)",
+      "xmas_eave": [
+       [
+        1,
+        0,
+        0
+       ]
+      ]
+     },
+     {
+      "x": [
+       -9.56,
+       3.44
       ],
       "z": [
        81.67,
-       97.46
+       85.17
       ],
-      "plate": 5.87,
-      "roof": "hip",
+      "plate": 3.0,
+      "roof": "gable_x",
       "pitch": 32,
-      "overhang": 0.4
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 2 (nb_kits.rects)"
      }
     ],
     "windows": [
      {
       "face": "+x",
-      "at": 83.248,
+      "at": 87.003,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 83.248,
+      "at": 87.003,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 86.405,
+      "at": 90.669,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 86.405,
-      "sill": 1.0,
-      "h": 1.6,
-      "w": 1.0,
-      "type": "dh66"
-     },
-     {
-      "face": "+x",
-      "at": 89.562,
-      "sill": 4.0,
-      "h": 1.4,
-      "w": 0.95,
-      "type": "dh66"
-     },
-     {
-      "face": "+x",
-      "at": 89.562,
+      "at": 90.669,
       "sill": 0.5,
       "h": 2.1,
       "w": 1.0,
-      "type": "door"
+      "type": "door",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 92.719,
+      "at": 94.336,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 92.719,
+      "at": 94.336,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "+x",
-      "at": 95.877,
+      "face": "-z",
+      "at": -6.1,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "+x",
-      "at": 95.877,
+      "face": "-z",
+      "at": -6.1,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -3.183,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -3.183,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -0.266,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -0.266,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 2.65,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 2.65,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 5.567,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 5.567,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 8.484,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 8.484,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -6.1,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -6.1,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -3.183,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -3.183,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -0.266,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -0.266,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 2.65,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 2.65,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 5.567,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 5.567,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 8.484,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 8.484,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 83.419,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -7.933,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -4.683,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -1.433,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 1.817,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -7.933,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -4.683,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -1.433,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": 1.817,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
      }
     ],
-    "_src": "C footprint rectangle (min-area) + C ridge; style hashed from STYLES3 (G, low)"
-   }
+    "lit": {
+     "windows": [
+      2,
+      4,
+      6,
+      7,
+      12,
+      13,
+      14,
+      17,
+      19,
+      21,
+      28,
+      30,
+      32,
+      33,
+      34,
+      36,
+      38
+     ]
+    },
+    "garages": [],
+    "front_face": "+x",
+    "_src": "C footprint split into 2 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_A+6",
@@ -3397,87 +5119,367 @@
     "blocks": [
      {
       "x": [
-       -11.97,
-       10.83
+       -7.97,
+       10.03
       ],
       "z": [
-       100.37,
-       112.25
+       101.37,
+       112.37
       ],
       "plate": 6.0,
       "roof": "gable_x",
       "pitch": 32,
-      "overhang": 0.4
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 2 (nb_kits.rects)"
+     },
+     {
+      "x": [
+       -11.97,
+       -7.97
+      ],
+      "z": [
+       101.37,
+       107.37
+      ],
+      "plate": 3.0,
+      "roof": "gable_z",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 2 (nb_kits.rects)"
      }
     ],
     "windows": [
      {
       "face": "+x",
-      "at": 101.853,
+      "at": 103.2,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 101.853,
+      "at": 103.2,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 104.825,
+      "at": 106.867,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 104.825,
-      "sill": 1.0,
-      "h": 1.6,
-      "w": 1.0,
-      "type": "dh66"
-     },
-     {
-      "face": "+x",
-      "at": 107.797,
-      "sill": 4.0,
-      "h": 1.4,
-      "w": 0.95,
-      "type": "dh66"
-     },
-     {
-      "face": "+x",
-      "at": 107.797,
+      "at": 106.867,
       "sill": 0.5,
       "h": 2.1,
       "w": 1.0,
-      "type": "door"
+      "type": "door",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 110.769,
+      "at": 110.534,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "+x",
-      "at": 110.769,
+      "at": 110.534,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -6.467,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -6.467,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -3.467,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -3.467,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -0.467,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -0.467,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 2.533,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 2.533,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 5.533,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 5.533,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 8.533,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 8.533,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -6.467,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -6.467,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -3.467,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -3.467,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -0.467,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -0.467,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 2.533,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 2.533,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 5.533,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 5.533,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 8.533,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 8.533,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 102.867,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+x",
+      "at": 105.867,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -9.967,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -9.967,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
      }
     ],
-    "_src": "C footprint rectangle (min-area) + C ridge; style hashed from STYLES3 (G, low)"
-   }
+    "lit": {
+     "windows": [
+      0,
+      1,
+      9,
+      11,
+      14,
+      15,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26
+     ]
+    },
+    "garages": [],
+    "front_face": "+x",
+    "_src": "C footprint split into 2 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_B-3",
@@ -3713,150 +5715,385 @@
      {
       "x": [
        106.8,
-       129.2
+       124.8
       ],
       "z": [
-       78.74,
-       94.16
+       83.74,
+       93.74
       ],
       "plate": 6.0,
       "roof": "gable_x",
       "pitch": 32,
-      "overhang": 0.4
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 3 (nb_kits.rects)"
+     },
+     {
+      "x": [
+       117.3,
+       125.3
+      ],
+      "z": [
+       78.74,
+       83.74
+      ],
+      "plate": 3.0,
+      "roof": "gable_x",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 3 (nb_kits.rects)"
+     },
+     {
+      "x": [
+       124.8,
+       129.3
+      ],
+      "z": [
+       85.74,
+       92.24
+      ],
+      "plate": 3.0,
+      "roof": "gable_z",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 3 of 3 (nb_kits.rects)"
      }
     ],
     "windows": [
      {
       "face": "-z",
-      "at": 108.196,
+      "at": 108.295,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": 108.196,
+      "at": 108.295,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": 110.997,
+      "at": 111.295,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": 110.997,
+      "at": 111.295,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": 113.798,
+      "at": 114.295,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": 113.798,
+      "at": 114.295,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": 116.599,
+      "at": 117.295,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": 116.599,
-      "sill": 1.0,
-      "h": 1.6,
-      "w": 1.0,
-      "type": "dh66"
-     },
-     {
-      "face": "-z",
-      "at": 119.401,
-      "sill": 4.0,
-      "h": 1.4,
-      "w": 0.95,
-      "type": "dh66"
-     },
-     {
-      "face": "-z",
-      "at": 119.401,
+      "at": 117.295,
       "sill": 0.5,
       "h": 2.1,
       "w": 1.0,
-      "type": "door"
+      "type": "door",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": 122.202,
+      "at": 120.295,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": 122.202,
+      "at": 120.295,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": 125.003,
+      "at": 123.295,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": 125.003,
+      "at": 123.295,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": 127.804,
+      "face": "-x",
+      "at": 85.409,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-z",
-      "at": 127.804,
+      "face": "-x",
+      "at": 85.409,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 88.742,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 88.742,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 92.076,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 92.076,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 85.409,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 85.409,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 88.742,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 88.742,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 92.076,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 92.076,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 119.295,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 123.295,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 81.242,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+x",
+      "at": 81.242,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 127.045,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-x",
+      "at": 87.367,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-x",
+      "at": 90.617,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+x",
+      "at": 87.367,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+x",
+      "at": 90.617,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
      }
     ],
-    "_src": "C footprint rectangle (min-area) + C ridge; style hashed from STYLES3 (G, low)"
-   }
+    "lit": {
+     "windows": [
+      5,
+      7,
+      12,
+      18,
+      24,
+      27,
+      30,
+      31
+     ]
+    },
+    "garages": [
+     {
+      "x": [
+       129.95,
+       137.41
+      ],
+      "z": [
+       79.34,
+       86.67
+      ],
+      "plate": 2.6,
+      "roof": "hip",
+      "pitch": 26,
+      "door_face": "-z",
+      "_src": "C outbuilding (bounding rectangle in the main frame)"
+     }
+    ],
+    "front_face": "-z",
+    "_src": "C footprint split into 3 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_B-2",
@@ -4104,151 +6341,415 @@
     "blocks": [
      {
       "x": [
-       56.62,
-       81.93
+       58.12,
+       73.12
       ],
       "z": [
-       -64.47,
-       -41.74
+       -61.47,
+       -42.47
       ],
-      "plate": 4.5,
+      "plate": 6.0,
       "roof": "hip",
       "pitch": 32,
-      "overhang": 0.4
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 2 (nb_kits.rects)",
+      "xmas_eave": [
+       [
+        -1,
+        0,
+        0
+       ]
+      ]
+     },
+     {
+      "x": [
+       73.12,
+       81.12
+      ],
+      "z": [
+       -54.97,
+       -45.47
+      ],
+      "plate": 3.0,
+      "roof": "hip",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 2 (nb_kits.rects)"
      }
     ],
     "windows": [
      {
       "face": "-x",
-      "at": -63.046,
+      "at": -59.882,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": -63.046,
+      "at": -59.882,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": -60.205,
+      "at": -56.716,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": -60.205,
+      "at": -56.716,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": -57.365,
+      "at": -53.549,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": -57.365,
+      "at": -53.549,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": -54.525,
+      "at": -50.382,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": -54.525,
-      "sill": 1.0,
-      "h": 1.6,
-      "w": 1.0,
-      "type": "dh66"
-     },
-     {
-      "face": "-x",
-      "at": -51.684,
-      "sill": 4.0,
-      "h": 1.4,
-      "w": 0.95,
-      "type": "dh66"
-     },
-     {
-      "face": "-x",
-      "at": -51.684,
+      "at": -50.382,
       "sill": 0.5,
       "h": 2.1,
       "w": 1.0,
-      "type": "door"
+      "type": "door",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": -48.844,
+      "at": -47.216,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": -48.844,
+      "at": -47.216,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": -46.004,
+      "at": -44.049,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": -46.004,
+      "at": -44.049,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-x",
-      "at": -43.164,
+      "face": "-z",
+      "at": 59.621,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
-      "face": "-x",
-      "at": -43.164,
+      "face": "-z",
+      "at": 59.621,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 62.621,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 62.621,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 65.621,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 65.621,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 68.621,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 68.621,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 71.621,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 71.621,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 59.621,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 59.621,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 62.621,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 62.621,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 65.621,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 65.621,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 68.621,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 68.621,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 71.621,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 71.621,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -53.382,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": -50.216,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": -47.049,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 75.121,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 79.121,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": 75.121,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": 79.121,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
      }
     ],
-    "_src": "C footprint rectangle (min-area) + C ridge; style hashed from STYLES3 (G, low)"
-   }
+    "lit": {
+     "windows": [
+      2,
+      3,
+      6,
+      14,
+      18,
+      24,
+      29,
+      38
+     ]
+    },
+    "garages": [],
+    "front_face": "-x",
+    "_src": "C footprint split into 2 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_B-1",
@@ -4483,7 +6984,10 @@
     }
    ],
    "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
-   "evidence_frames": [],
+   "evidence_frames": [
+    3241,
+    11576
+   ],
    "confidence": "low",
    "status": "kit",
    "kit": {
@@ -4698,7 +7202,8 @@
       "w": 1.6,
       "risers": 3
      },
-     "_src": "C front strip x 60.6-62.8; G porch (11581 left edge: a low roof across the front)"
+     "_src": "C front strip x 60.6-62.8; G porch (11581 left edge: a low roof across the front)",
+     "xmas_eave": true
     },
     "chimneys": [
      {
@@ -4733,7 +7238,21 @@
     ]
    },
    "kit_confidence": "low-medium",
-   "kit_basis": "gable-front from L; white clapboard F (11581 left edge); windows G"
+   "kit_basis": "gable-front from L; white clapboard F (11581 left edge); windows G",
+   "evidence_step3": [
+    {
+     "frame": 11576,
+     "shows": "white clapboard 2.5 storeys, a 1-storey porch roof across the front, dark shutters",
+     "use": "kit kept (white gable-front + porch)"
+    },
+    {
+     "frame": 3241,
+     "shows": "day, blurred: a white house left of the Murphys",
+     "use": "colour"
+    }
+   ],
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_B0",
@@ -4936,13 +7455,15 @@
    ],
    "style_kit_guess": "American Foursquare/Craftsman: 2.5 storeys, painted wood clapboard (grey-blue), low hip roof with front dormer, full-width front porch with white square columns and railing, small-pane upper windows, Christmas lights on porch and eaves",
    "evidence_frames": [
+    3241,
+    11551,
+    11556,
+    11566,
+    11576,
     11581,
     11586,
     11626,
-    11631,
-    11556,
-    11566,
-    11551
+    11631
    ],
    "confidence": "medium",
    "status": "kit",
@@ -4973,95 +7494,120 @@
        78.2
       ],
       "z": [
-       5.1,
-       18.2
+       5.65,
+       18.75
       ],
       "plate": 7.44,
       "roof": "hip",
       "pitch": 31.8,
       "overhang": 0.55,
-      "_src": "C footprint (main block; porch x 60.6-63.6 in front of it, O front walk ends at the door x 63.7); F camera fit (corners + far kerb): eave edge 7.10 +-0.94, ridge 11.53 +-0.9 -> pitch 31.8 (ridge 11.5; C 11.1, L apex 10.9-11.1 agree within 1 sd). DISAGREES: L roof 6.0 at the wall line (kept the film; 0.5 m lidar pixels smear the eave edge with ground): kit_log",
+      "_src": "C footprint (main block x 63.6-78.2, z 5.1-18.2) moved +0.55 m in z to the film's bays and eave corners (DEVIATIONS); F camera fit: eave edge 7.10 +-0.94, ridge 11.53 +-0.9 -> pitch 31.8 (C 11.1, L apex 10.9-11.1 agree within 1 sd). DISAGREES: L roof 6.0 at the wall line (kept the film; 0.5 m lidar pixels smear the eave edge): kit_log",
       "xmas_eave": [
        [
         -1,
         0,
         0
-       ],
-       [
-        0,
-        0,
-        1
        ]
       ]
+     },
+     {
+      "x": [
+       64.6,
+       68.2
+      ],
+      "z": [
+       18.75,
+       19.55
+      ],
+      "plate": 3.5,
+      "roof": "hip",
+      "pitch": 25,
+      "overhang": 0.3,
+      "hidden_faces": [
+       "-z"
+      ],
+      "downspouts": false,
+      "_src": "F 11581 (grazing, one view, low): behind the porch's right end a lower plane with its own roof edge at ~3.6 m, x 64-68 on z 18.75 (frame 1665-1765, y 435-530); depth 0.8 G. Not in the 2022 county footprint (post-1990 change or a bay under 1 m)"
      }
     ],
     "windows": [
      {
       "face": "-x",
-      "at": 8.15,
+      "at": 8.7,
       "sill": 5.45,
       "h": 1.32,
       "w": 1.0,
       "type": "dh11",
-      "xmas": false
-     },
-     {
-      "face": "-x",
-      "at": 11.65,
-      "sill": 5.45,
-      "h": 1.32,
-      "w": 0.9,
-      "type": "dh_diamond",
-      "xmas": true
-     },
-     {
-      "face": "-x",
-      "at": 15.15,
-      "sill": 5.45,
-      "h": 1.32,
-      "w": 1.0,
-      "type": "dh11",
-      "xmas": true
-     },
-     {
-      "face": "-x",
-      "at": 8.05,
-      "sill": 1.15,
-      "h": 2.6,
-      "w": 1.2,
-      "type": "french"
-     },
-     {
-      "face": "-x",
-      "at": 10.9,
-      "sill": 2.85,
-      "h": 1.0,
-      "w": 1.2,
-      "type": "picture_diamond"
+      "xmas": false,
+      "room": 1
      },
      {
       "face": "-x",
       "at": 12.2,
+      "sill": 5.45,
+      "h": 1.32,
+      "w": 0.9,
+      "type": "dh_diamond",
+      "xmas": true,
+      "room": 0
+     },
+     {
+      "face": "-x",
+      "at": 15.7,
+      "sill": 5.45,
+      "h": 1.32,
+      "w": 1.0,
+      "type": "dh11",
+      "xmas": true,
+      "room": 2
+     },
+     {
+      "face": "-x",
+      "at": 8.6,
+      "sill": 1.15,
+      "h": 2.6,
+      "w": 1.2,
+      "type": "french",
+      "xmas": true,
+      "room": 1
+     },
+     {
+      "face": "-x",
+      "at": 11.45,
+      "sill": 2.85,
+      "h": 1.0,
+      "w": 1.2,
+      "type": "picture_diamond",
+      "room": 0
+     },
+     {
+      "face": "-x",
+      "at": 12.75,
       "sill": 1.15,
       "h": 2.4,
       "w": 0.9,
-      "type": "door"
+      "type": "door",
+      "xmas": true,
+      "room": 1
      },
      {
       "face": "-x",
-      "at": 13.5,
+      "at": 14.05,
       "sill": 2.3,
       "h": 1.5,
       "w": 1.3,
-      "type": "dh11"
+      "type": "dh11",
+      "room": 1
      },
      {
       "face": "-x",
-      "at": 15.25,
+      "at": 15.8,
       "sill": 1.15,
       "h": 2.6,
       "w": 1.25,
-      "type": "french"
+      "type": "french",
+      "xmas": true,
+      "room": 3
      },
      {
       "face": "+z",
@@ -5085,14 +7631,6 @@
       "sill": 5.45,
       "h": 1.32,
       "w": 0.95,
-      "type": "dh11"
-     },
-     {
-      "face": "+z",
-      "at": 66.6,
-      "sill": 1.95,
-      "h": 1.7,
-      "w": 1.0,
       "type": "dh11"
      },
      {
@@ -5161,7 +7699,7 @@
      },
      {
       "face": "+x",
-      "at": 9.05,
+      "at": 9.6,
       "sill": 5.45,
       "h": 1.32,
       "w": 0.95,
@@ -5169,7 +7707,7 @@
      },
      {
       "face": "+x",
-      "at": 9.05,
+      "at": 9.6,
       "sill": 1.95,
       "h": 1.7,
       "w": 1.0,
@@ -5177,7 +7715,7 @@
      },
      {
       "face": "+x",
-      "at": 14.25,
+      "at": 14.8,
       "sill": 5.45,
       "h": 1.32,
       "w": 0.95,
@@ -5185,11 +7723,31 @@
      },
      {
       "face": "+x",
-      "at": 14.25,
+      "at": 14.8,
       "sill": 1.95,
       "h": 1.7,
       "w": 1.0,
       "type": "dh11"
+     },
+     {
+      "face": "+z",
+      "at": 65.5,
+      "sill": 1.25,
+      "h": 1.6,
+      "w": 0.9,
+      "type": "dh11",
+      "block": 1,
+      "room": 1
+     },
+     {
+      "face": "+z",
+      "at": 67.3,
+      "sill": 1.25,
+      "h": 1.6,
+      "w": 0.9,
+      "type": "dh11",
+      "block": 1,
+      "room": 1
      }
     ],
     "lit": {
@@ -5201,15 +7759,16 @@
       5,
       6,
       7,
-      8
+      8,
+      23
      ]
     },
     "dormers": [
      {
       "face": "-x",
-      "at": 11.65,
+      "at": 12.2,
       "w": 3.6,
-      "h": 2.0,
+      "h": 2.35,
       "setback": 1.2,
       "depth": 3.0,
       "roof": "hip",
@@ -5217,23 +7776,23 @@
        {
         "off": -0.6,
         "w": 1.0,
-        "h": 0.64,
-        "sill": 1.21,
+        "h": 0.8,
+        "sill": 1.25,
         "type": "casement_diamond"
        },
        {
         "off": 0.6,
         "w": 1.0,
-        "h": 0.64,
-        "sill": 1.21,
+        "h": 0.8,
+        "sill": 1.25,
         "type": "casement_diamond"
        }
       ],
-      "_src": "F 11581: two diamond-lattice lights, face z 10.9-13.4 back-projected at setback 1.2"
+      "_src": "F 11581: two diamond-lattice lights; step 3: taller face (eave +0.35, lights 0.80 high) per the close-up sheet"
      },
      {
       "face": "+x",
-      "at": 11.65,
+      "at": 12.2,
       "w": 3.6,
       "h": 2.0,
       "setback": 1.2,
@@ -5316,39 +7875,40 @@
       63.6
      ],
      "z": [
-      6.2,
-      17.4
+      5.65,
+      17.9
      ],
      "floor": 1.15,
      "edge": 4.17,
      "pitch": 14,
      "overhang": 0.3,
      "columns": [
-      6.5,
-      10.0,
-      13.35,
-      16.8
+      5.95,
+      7.07,
+      10.55,
+      13.9,
+      17.33
      ],
      "rail": 0.8,
      "piers": "paint",
      "steps": {
-      "at": 11.65,
+      "at": 12.2,
       "w": 2.9,
       "risers": 6,
       "iron": true
      },
      "lamp": [
       63.55,
-      12.77
+      13.32
      ],
-     "xmas_eave": true,
-     "xmas_rail": true,
-     "_src": "C porch x 60.6-63.6, z 6.05-17.9; F 11581 four columns at z 7.07/10.55/13.9/17.33 (-0.55 to the house's axis), roof edge 3.56 (fit); 11556: five risers between square newels, a black iron handrail in the middle, white rail with square balusters"
+     "xmas_eave": "wrap",
+     "xmas_rail": "swag",
+     "_src": "C porch x 60.6-63.6, z 6.05-17.9; F 11581 columns at z 7.07/10.55/13.9/17.33, 11576 a second column at the left corner (5.95); the porch roof's left end + downspout at z ~5.6 (frame 785-815): the porch starts at the house's left corner, the roof overhangs past it; 11556: six risers between square newels, a black iron handrail in the middle"
     },
     "chimneys": [
      {
       "x": 72.6,
-      "z": 15.6,
+      "z": 16.15,
       "w": 0.75,
       "d": 0.62,
       "top": 12.1,
@@ -5376,10 +7936,92 @@
       ],
       "_src": "C outbuilding (ridge 5.9), O drive at z 3.1-4.2 (2022). It is at the house's LEFT seen from Lincoln; the white garage at the right edge of 11581 is lot_B+1's"
      }
-    ]
+    ],
+    "xmas": {
+     "_src": "F 11581/11576 (night): main eave front only (the +z side eave is dark), a line along the wall over the porch roof (frame 1100-1560, y ~340), the middle and right upper windows outlined, the porch eave turning the right corner, dense swags on the rails, the French doors and the front door outlined, lit foundation shrubs both sides of the steps and a big lit shrub at the left corner",
+     "strings": [
+      {
+       "pts": [
+        [
+         63.54,
+         5.38,
+         9.4
+        ],
+        [
+         63.54,
+         5.38,
+         16.0
+        ]
+       ],
+       "step": 0.2,
+       "sag": 0.03
+      }
+     ],
+     "shrubs": [
+      {
+       "x": 58.6,
+       "z": 5.2,
+       "rx": 0.65,
+       "rz": 0.75,
+       "h": 1.15,
+       "bulbs": 70
+      },
+      {
+       "x": 60.0,
+       "z": 7.5,
+       "rx": 0.5,
+       "rz": 0.9,
+       "h": 1.2,
+       "bulbs": 50
+      },
+      {
+       "x": 60.0,
+       "z": 9.6,
+       "rx": 0.5,
+       "rz": 0.8,
+       "h": 1.1,
+       "bulbs": 45
+      },
+      {
+       "x": 60.0,
+       "z": 14.8,
+       "rx": 0.5,
+       "rz": 0.9,
+       "h": 1.2,
+       "bulbs": 50
+      },
+      {
+       "x": 60.0,
+       "z": 16.9,
+       "rx": 0.5,
+       "rz": 0.8,
+       "h": 1.1,
+       "bulbs": 45
+      }
+     ]
+    }
    },
    "kit_confidence": "medium",
-   "kit_basis": "massing C+L, eave/porch heights + camera F 11581 (rms 11 px), facade bays F; sides/rear G"
+   "kit_basis": "massing C+L, eave/porch heights + camera F 11581 (rms 11 px), facade bays F (house +0.55 m z), porch columns F 11581+11576, lights F 11581; sides/rear G; day 3241 (blurred) confirms the grey-blue clapboard, hip dormer and full porch but shows a pediment over the steps that 11581 does not: not modelled (logged)",
+   "evidence_step3": [
+    {
+     "frame": 11581,
+     "shows": "front + right side, night",
+     "use": "camera solve; bays 0.55 m +z; porch columns; lights"
+    },
+    {
+     "frame": 11576,
+     "shows": "porch left end, two columns, the white post mailbox",
+     "use": "corner column 5.95; mailbox"
+    },
+    {
+     "frame": 3241,
+     "shows": "day, blurred (sled POV): grey-blue clapboard, hip dormer, full porch, a pediment over the steps",
+     "use": "colour/massing confirmed; the pediment conflicts with 11581 (straight lit porch eave): not modelled, logged"
+    }
+   ],
+   "walkable": true,
+   "role": "hero"
   },
   {
    "id": "lot_B+1",
@@ -5607,7 +8249,9 @@
     }
    ],
    "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
-   "evidence_frames": [],
+   "evidence_frames": [
+    11581
+   ],
    "confidence": "low",
    "status": "kit",
    "kit": {
@@ -5638,7 +8282,14 @@
       "roof": "hip",
       "pitch": 31,
       "overhang": 0.45,
-      "_src": "C 60.3-81.1 x 38.5-55.0; L hip apex 10.2 at x 69.5, eaves ~6"
+      "_src": "C 60.3-81.1 x 38.5-55.0; L hip apex 10.2 at x 69.5, eaves ~6",
+      "xmas_eave": [
+       [
+        -1,
+        0,
+        0
+       ]
+      ]
      },
      {
       "x": [
@@ -5840,7 +8491,8 @@
       "w": 1.8,
       "risers": 4
      },
-     "_src": "L porch roof 4.3 at x 60.3-63.5 (z 40-49 seen, trees beyond); G centred entry porch"
+     "_src": "L porch roof 4.3 at x 60.3-63.5 (z 40-49 seen, trees beyond); G centred entry porch",
+     "xmas_eave": true
     },
     "chimneys": [
      {
@@ -5875,7 +8527,16 @@
     ]
    },
    "kit_confidence": "low",
-   "kit_basis": "hip from L; colour/windows G (only its garage and an edge are in 11581)"
+   "kit_basis": "hip from L; colour/windows G (only its garage and an edge are in 11581)",
+   "evidence_step3": [
+    {
+     "frame": 11581,
+     "shows": "right edge: a white panelled garage door, a cream/white 2-storey under a dark roof",
+     "use": "kit kept"
+    }
+   ],
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_B+2",
@@ -6108,87 +8769,292 @@
     "blocks": [
      {
       "x": [
-       60.73,
-       77.95
+       61.23,
+       77.23
       ],
       "z": [
-       58.73,
-       71.6
+       61.23,
+       71.23
       ],
-      "plate": 5.88,
-      "roof": "hip",
+      "plate": 6.0,
+      "roof": "gable_x",
       "pitch": 32,
-      "overhang": 0.4
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 1 (nb_kits.rects)"
      }
     ],
     "windows": [
      {
       "face": "-x",
-      "at": 60.342,
+      "at": 62.899,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": 60.342,
+      "at": 62.899,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": 63.559,
+      "at": 66.233,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": 63.559,
-      "sill": 1.0,
-      "h": 1.6,
-      "w": 1.0,
-      "type": "dh66"
-     },
-     {
-      "face": "-x",
-      "at": 66.777,
-      "sill": 4.0,
-      "h": 1.4,
-      "w": 0.95,
-      "type": "dh66"
-     },
-     {
-      "face": "-x",
-      "at": 66.777,
+      "at": 66.233,
       "sill": 0.5,
       "h": 2.1,
       "w": 1.0,
-      "type": "door"
+      "type": "door",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": 69.994,
+      "at": 69.566,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-x",
-      "at": 69.994,
+      "at": 69.566,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 62.831,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 62.831,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 66.031,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 66.031,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 69.231,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 69.231,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 72.431,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 72.431,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 75.631,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 75.631,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 62.831,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 62.831,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 66.031,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 66.031,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 69.231,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 69.231,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 72.431,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 72.431,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 75.631,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 75.631,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
      }
     ],
-    "_src": "C footprint rectangle (min-area) + C ridge; style hashed from STYLES3 (G, low)"
-   }
+    "lit": {
+     "windows": [
+      2,
+      4,
+      6,
+      8,
+      14,
+      15,
+      16,
+      20,
+      21
+     ]
+    },
+    "garages": [
+     {
+      "x": [
+       82.97,
+       92.72
+      ],
+      "z": [
+       58.66,
+       66.86
+      ],
+      "plate": 2.6,
+      "roof": "hip",
+      "pitch": 26,
+      "door_face": "-x",
+      "_src": "C outbuilding (bounding rectangle in the main frame)"
+     }
+    ],
+    "front_face": "-x",
+    "_src": "C footprint split into 1 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_B+3",
@@ -6423,86 +9289,287 @@
      {
       "x": [
        -88.13,
-       -75.26
+       -75.13
+      ],
+      "z": [
+       62.84,
+       72.84
+      ],
+      "plate": 6.0,
+      "roof": "hip",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 2 (nb_kits.rects)"
+     },
+     {
+      "x": [
+       -87.13,
+       -81.13
       ],
       "z": [
        59.84,
-       72.83
+       62.84
       ],
-      "plate": 5.78,
-      "roof": "hip",
+      "plate": 3.0,
+      "roof": "gable_x",
       "pitch": 32,
-      "overhang": 0.4
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 2 (nb_kits.rects)"
      }
     ],
     "windows": [
      {
       "face": "-z",
-      "at": -86.525,
+      "at": -86.508,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": -86.525,
+      "at": -86.508,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": -83.307,
+      "at": -83.258,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": -83.307,
+      "at": -83.258,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": -80.09,
+      "at": -80.008,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": -80.09,
+      "at": -80.008,
       "sill": 0.5,
       "h": 2.1,
       "w": 1.0,
-      "type": "door"
+      "type": "door",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": -76.872,
+      "at": -76.758,
       "sill": 4.0,
       "h": 1.4,
       "w": 0.95,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
      },
      {
       "face": "-z",
-      "at": -76.872,
+      "at": -76.758,
       "sill": 1.0,
       "h": 1.6,
       "w": 1.0,
-      "type": "dh66"
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 64.506,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 64.506,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 67.839,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 67.839,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 71.172,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 71.172,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 64.506,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 64.506,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 67.839,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 67.839,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 71.172,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": 71.172,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -85.633,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -82.633,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 61.339,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+x",
+      "at": 61.339,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
      }
     ],
-    "_src": "C footprint rectangle (min-area) + C ridge; style hashed from STYLES3 (G, low)"
-   }
+    "lit": {
+     "windows": [
+      1,
+      2,
+      4,
+      7,
+      8,
+      11,
+      22
+     ]
+    },
+    "garages": [
+     {
+      "x": [
+       -79.96,
+       -72.32
+      ],
+      "z": [
+       80.33,
+       88.22
+      ],
+      "plate": 2.6,
+      "roof": "hip",
+      "pitch": 26,
+      "door_face": "-z",
+      "_src": "C outbuilding (bounding rectangle in the main frame)"
+     }
+    ],
+    "front_face": "-z",
+    "_src": "C footprint split into 2 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
   },
   {
    "id": "lot_B+4",
@@ -6609,7 +9676,5495 @@
    "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
    "evidence_frames": [],
    "confidence": "low",
-   "status": "evidence"
+   "status": "evidence",
+   "walkable": false,
+   "role": "backdrop"
+  },
+  {
+   "id": "lot_P35",
+   "tier": 3,
+   "parcel_idx": 35,
+   "side": "across_lincoln",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     30.2,
+     -151.35
+    ],
+    [
+     36.84,
+     -117.59
+    ],
+    [
+     39.58,
+     -116.72
+    ],
+    [
+     53.5,
+     -111.06
+    ],
+    [
+     55.18,
+     -110.21
+    ],
+    [
+     46.47,
+     -154.52
+    ],
+    [
+     45.26,
+     -160.67
+    ],
+    [
+     38.28,
+     -162.41
+    ],
+    [
+     27.5,
+     -165.1
+    ],
+    [
+     30.2,
+     -151.35
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       35.62,
+       -142.36
+      ],
+      [
+       36.5,
+       -132.58
+      ],
+      [
+       37.28,
+       -128.6
+      ],
+      [
+       37.62,
+       -126.99
+      ],
+      [
+       39.18,
+       -127.3
+      ],
+      [
+       42.51,
+       -127.96
+      ],
+      [
+       43.46,
+       -123.12
+      ],
+      [
+       43.5,
+       -122.88
+      ],
+      [
+       45.34,
+       -123.36
+      ],
+      [
+       47.65,
+       -123.95
+      ],
+      [
+       48.6,
+       -124.14
+      ],
+      [
+       51.23,
+       -124.67
+      ],
+      [
+       50.16,
+       -130.43
+      ],
+      [
+       48.22,
+       -130.32
+      ],
+      [
+       47.82,
+       -132.38
+      ],
+      [
+       48.57,
+       -132.53
+      ],
+      [
+       46.38,
+       -143.66
+      ],
+      [
+       46.3,
+       -144.08
+      ],
+      [
+       43.45,
+       -143.51
+      ],
+      [
+       43.59,
+       -142.78
+      ],
+      [
+       42.71,
+       -142.97
+      ],
+      [
+       41.5,
+       -144.32
+      ],
+      [
+       35.62,
+       -142.36
+      ]
+     ],
+     "area_m2": 217.7,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar)",
+     "ridge_m": 10.4,
+     "ndsm_p95_m_tree_contaminated": 10.4,
+     "main": true
+    },
+    {
+     "footprint_spec": [
+      [
+       28.94,
+       -153.97
+      ],
+      [
+       35.55,
+       -155.27
+      ],
+      [
+       33.57,
+       -161.75
+      ],
+      [
+       27.72,
+       -160.72
+      ],
+      [
+       28.94,
+       -153.97
+      ]
+     ],
+     "area_m2": 43.1,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar)",
+     "ridge_m": 4.7,
+     "ndsm_p95_m_tree_contaminated": 12.8,
+     "main": false
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": 42.8,
+     "z": -142.9,
+     "h_m": 10.7
+    },
+    {
+     "x": 48.8,
+     "z": -118.7,
+     "h_m": 12.2
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "kit_auto",
+   "note": "step 3 extension: fronts Lincoln past the Tier 2/3 rows (fork, bend or north of Pine)",
+   "kit_auto": {
+    "style": "Tier 3 stand-in (brick)",
+    "cladding": "brick",
+    "roof_mat": "roof_asphalt",
+    "foundation_h": 0.5,
+    "palette": {
+     "wall": "red",
+     "trim": "white",
+     "roof": "slate",
+     "shutter": "black",
+     "brick": "red",
+     "found": "stone"
+    },
+    "yaw_deg": 78.08,
+    "blocks": [
+     {
+      "x": [
+       -130.63,
+       -116.63
+      ],
+      "z": [
+       -74.03,
+       -64.03
+      ],
+      "plate": 6.0,
+      "roof": "gable_x",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 2 (nb_kits.rects)",
+      "xmas_eave": [
+       [
+        1,
+        0,
+        0
+       ]
+      ]
+     },
+     {
+      "x": [
+       -116.63,
+       -111.63
+      ],
+      "z": [
+       -76.03,
+       -68.03
+      ],
+      "plate": 3.0,
+      "roof": "gable_z",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 2 (nb_kits.rects)"
+     }
+    ],
+    "windows": [
+     {
+      "face": "+x",
+      "at": -72.361,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -72.361,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -69.027,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -69.027,
+      "sill": 0.5,
+      "h": 2.1,
+      "w": 1.0,
+      "type": "door",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -65.694,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -65.694,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -129.231,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -129.231,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -126.431,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -126.431,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -123.631,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -123.631,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -120.831,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -120.831,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -118.031,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -118.031,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -129.231,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -129.231,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -126.431,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -126.431,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -123.631,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -123.631,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -120.831,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -120.831,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -118.031,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -118.031,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -74.027,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+x",
+      "at": -70.027,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -114.131,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -114.131,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     }
+    ],
+    "lit": {
+     "windows": [
+      0,
+      3,
+      5,
+      9,
+      12,
+      13,
+      27
+     ]
+    },
+    "garages": [
+     {
+      "x": [
+       -151.52,
+       -144.57
+      ],
+      "z": [
+       -66.87,
+       -60.13
+      ],
+      "plate": 2.6,
+      "roof": "hip",
+      "pitch": 26,
+      "door_face": "+x",
+      "_src": "C outbuilding (bounding rectangle in the main frame)"
+     }
+    ],
+    "front_face": "+x",
+    "_src": "C footprint split into 2 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
+  },
+  {
+   "id": "lot_P74",
+   "tier": 3,
+   "parcel_idx": 74,
+   "side": "across_lincoln",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     -7.67,
+     -143.96
+    ],
+    [
+     30.2,
+     -151.35
+    ],
+    [
+     27.5,
+     -165.1
+    ],
+    [
+     -13.85,
+     -175.41
+    ],
+    [
+     -7.67,
+     -143.96
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       4.42,
+       -155.03
+      ],
+      [
+       5.54,
+       -149.15
+      ],
+      [
+       7.01,
+       -149.44
+      ],
+      [
+       7.23,
+       -148.3
+      ],
+      [
+       9.15,
+       -148.67
+      ],
+      [
+       12.82,
+       -149.3
+      ],
+      [
+       12.68,
+       -150.05
+      ],
+      [
+       12.52,
+       -150.86
+      ],
+      [
+       13.12,
+       -150.98
+      ],
+      [
+       12.78,
+       -152.77
+      ],
+      [
+       13.24,
+       -152.86
+      ],
+      [
+       14.08,
+       -153.32
+      ],
+      [
+       14.51,
+       -153.41
+      ],
+      [
+       14.15,
+       -155.31
+      ],
+      [
+       13.37,
+       -157.84
+      ],
+      [
+       16.02,
+       -158.36
+      ],
+      [
+       14.84,
+       -164.51
+      ],
+      [
+       12.45,
+       -164.04
+      ],
+      [
+       12.19,
+       -165.42
+      ],
+      [
+       11.93,
+       -166.77
+      ],
+      [
+       2.76,
+       -163.71
+      ],
+      [
+       3.11,
+       -161.86
+      ],
+      [
+       3.49,
+       -159.85
+      ],
+      [
+       4.09,
+       -156.75
+      ],
+      [
+       4.42,
+       -155.03
+      ]
+     ],
+     "area_m2": 165.5,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar)",
+     "ridge_m": 8.3,
+     "ndsm_p95_m_tree_contaminated": 8.1,
+     "main": true
+    },
+    {
+     "footprint_spec": [
+      [
+       23.4,
+       -149.06
+      ],
+      [
+       29.25,
+       -150.09
+      ],
+      [
+       27.33,
+       -158.35
+      ],
+      [
+       22.07,
+       -156.98
+      ],
+      [
+       23.4,
+       -149.06
+      ]
+     ],
+     "area_m2": 46.9,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar)",
+     "ridge_m": 5.3,
+     "ndsm_p95_m_tree_contaminated": 7.2,
+     "main": false
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": -6.1,
+     "z": -169.7,
+     "h_m": 15.0
+    },
+    {
+     "x": -7.6,
+     "z": -164.6,
+     "h_m": 16.3
+    },
+    {
+     "x": -4.6,
+     "z": -148.8,
+     "h_m": 18.4
+    },
+    {
+     "x": 26.0,
+     "z": -164.5,
+     "h_m": 14.7
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "kit_auto",
+   "note": "step 3 extension: fronts Lincoln past the Tier 2/3 rows (fork, bend or north of Pine)",
+   "kit_auto": {
+    "style": "Tier 3 stand-in (stucco)",
+    "cladding": "stucco",
+    "roof_mat": "roof_asphalt",
+    "foundation_h": 0.5,
+    "palette": {
+     "wall": "ivory",
+     "trim": "brown",
+     "roof": "slate",
+     "shutter": "darkgreen",
+     "found": "stone"
+    },
+    "yaw_deg": 79.14,
+    "blocks": [
+     {
+      "x": [
+       -160.53,
+       -148.03
+      ],
+      "z": [
+       -43.07,
+       -33.57
+      ],
+      "plate": 5.33,
+      "roof": "hip",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 2 (nb_kits.rects)"
+     },
+     {
+      "x": [
+       -148.03,
+       -144.03
+      ],
+      "z": [
+       -40.57,
+       -35.07
+      ],
+      "plate": 3.0,
+      "roof": "gable_z",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 2 (nb_kits.rects)"
+     }
+    ],
+    "windows": [
+     {
+      "face": "+z",
+      "at": -158.972,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -158.972,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -155.847,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -155.847,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -152.722,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -152.722,
+      "sill": 0.5,
+      "h": 2.1,
+      "w": 1.0,
+      "type": "door",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -149.597,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -149.597,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -41.489,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -41.489,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -38.322,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -38.322,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -35.155,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -35.155,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -41.489,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -41.489,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -38.322,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -38.322,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -35.155,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -35.155,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -146.035,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": -37.822,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+x",
+      "at": -37.822,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     }
+    ],
+    "lit": {
+     "windows": [
+      3,
+      8,
+      9,
+      10,
+      13,
+      15,
+      18,
+      19
+     ]
+    },
+    "garages": [
+     {
+      "x": [
+       -150.36,
+       -141.89
+      ],
+      "z": [
+       -57.01,
+       -51.07
+      ],
+      "plate": 2.6,
+      "roof": "hip",
+      "pitch": 26,
+      "door_face": "+z",
+      "_src": "C outbuilding (bounding rectangle in the main frame)"
+     }
+    ],
+    "front_face": "+z",
+    "_src": "C footprint split into 2 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
+  },
+  {
+   "id": "lot_P89",
+   "tier": 3,
+   "parcel_idx": 89,
+   "side": "mccallister_side",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     67.37,
+     -155.16
+    ],
+    [
+     78.8,
+     -97.02
+    ],
+    [
+     79.72,
+     -96.46
+    ],
+    [
+     83.12,
+     -94.13
+    ],
+    [
+     85.73,
+     -93.04
+    ],
+    [
+     88.56,
+     -93.13
+    ],
+    [
+     91.11,
+     -94.38
+    ],
+    [
+     92.91,
+     -96.58
+    ],
+    [
+     93.64,
+     -99.32
+    ],
+    [
+     93.52,
+     -100.92
+    ],
+    [
+     81.62,
+     -161.51
+    ],
+    [
+     59.52,
+     -157.12
+    ],
+    [
+     67.37,
+     -155.16
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       72.86,
+       -136.0
+      ],
+      [
+       74.12,
+       -132.85
+      ],
+      [
+       72.8,
+       -132.59
+      ],
+      [
+       76.65,
+       -112.87
+      ],
+      [
+       76.88,
+       -112.91
+      ],
+      [
+       80.81,
+       -113.69
+      ],
+      [
+       80.76,
+       -113.95
+      ],
+      [
+       80.94,
+       -114.67
+      ],
+      [
+       86.35,
+       -115.73
+      ],
+      [
+       82.57,
+       -135.03
+      ],
+      [
+       80.34,
+       -134.58
+      ],
+      [
+       79.9,
+       -134.03
+      ],
+      [
+       78.72,
+       -134.89
+      ],
+      [
+       78.29,
+       -137.08
+      ],
+      [
+       73.48,
+       -136.13
+      ],
+      [
+       72.86,
+       -136.0
+      ]
+     ],
+     "area_m2": 216.1,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar)",
+     "ridge_m": 10.5,
+     "ndsm_p95_m_tree_contaminated": 10.2,
+     "main": true
+    },
+    {
+     "footprint_spec": [
+      [
+       72.14,
+       -147.97
+      ],
+      [
+       78.64,
+       -149.25
+      ],
+      [
+       77.16,
+       -155.83
+      ],
+      [
+       70.41,
+       -154.49
+      ],
+      [
+       71.69,
+       -147.88
+      ],
+      [
+       72.14,
+       -147.97
+      ]
+     ],
+     "area_m2": 47.0,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar)",
+     "ridge_m": 5.5,
+     "ndsm_p95_m_tree_contaminated": 5.2,
+     "main": false
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": 68.4,
+     "z": -155.7,
+     "h_m": 18.2
+    },
+    {
+     "x": 88.5,
+     "z": -97.1,
+     "h_m": 12.1
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "kit_auto",
+   "note": "step 3 extension: fronts Lincoln past the Tier 2/3 rows (fork, bend or north of Pine)",
+   "kit_auto": {
+    "style": "Tier 3 stand-in (brick)",
+    "cladding": "brick",
+    "roof_mat": "roof_asphalt",
+    "foundation_h": 0.5,
+    "palette": {
+     "wall": "red",
+     "trim": "white",
+     "roof": "slate",
+     "shutter": "black",
+     "brick": "red",
+     "found": "stone"
+    },
+    "yaw_deg": -101.08,
+    "blocks": [
+     {
+      "x": [
+       97.03,
+       116.03
+      ],
+      "z": [
+       96.91,
+       106.91
+      ],
+      "plate": 6.0,
+      "roof": "gable_x",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 1 (nb_kits.rects)"
+     }
+    ],
+    "windows": [
+     {
+      "face": "-x",
+      "at": 98.582,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 98.582,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 101.915,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 101.915,
+      "sill": 0.5,
+      "h": 2.1,
+      "w": 1.0,
+      "type": "door",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 105.248,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 105.248,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 98.612,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 98.612,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 101.778,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 101.778,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 104.945,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 104.945,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 108.112,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 108.112,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 111.278,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 111.278,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 114.445,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 114.445,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 98.612,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 98.612,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 101.778,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 101.778,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 104.945,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 104.945,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 108.112,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 108.112,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 111.278,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 111.278,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 114.445,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 114.445,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     }
+    ],
+    "lit": {
+     "windows": [
+      1,
+      4,
+      7,
+      12,
+      15,
+      18,
+      20,
+      25,
+      26,
+      29
+     ]
+    },
+    "garages": [
+     {
+      "x": [
+       131.34,
+       138.09
+      ],
+      "z": [
+       98.78,
+       105.86
+      ],
+      "plate": 2.6,
+      "roof": "hip",
+      "pitch": 26,
+      "door_face": "-x",
+      "_src": "C outbuilding (bounding rectangle in the main frame)"
+     }
+    ],
+    "front_face": "-x",
+    "_src": "C footprint split into 1 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
+  },
+  {
+   "id": "lot_P130",
+   "tier": 3,
+   "parcel_idx": 130,
+   "side": "mccallister_side",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     3.83,
+     164.82
+    ],
+    [
+     15.78,
+     165.3
+    ],
+    [
+     19.26,
+     164.9
+    ],
+    [
+     22.63,
+     163.35
+    ],
+    [
+     25.33,
+     160.79
+    ],
+    [
+     27.07,
+     157.52
+    ],
+    [
+     27.66,
+     153.85
+    ],
+    [
+     27.58,
+     114.87
+    ],
+    [
+     8.19,
+     114.82
+    ],
+    [
+     3.83,
+     164.82
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       10.35,
+       142.77
+      ],
+      [
+       10.22,
+       148.88
+      ],
+      [
+       11.38,
+       148.9
+      ],
+      [
+       11.35,
+       150.41
+      ],
+      [
+       11.67,
+       151.15
+      ],
+      [
+       17.63,
+       151.28
+      ],
+      [
+       18.43,
+       149.44
+      ],
+      [
+       19.07,
+       149.03
+      ],
+      [
+       19.91,
+       149.05
+      ],
+      [
+       20.17,
+       136.31
+      ],
+      [
+       20.19,
+       135.28
+      ],
+      [
+       18.79,
+       135.26
+      ],
+      [
+       18.55,
+       135.25
+      ],
+      [
+       18.54,
+       135.77
+      ],
+      [
+       18.26,
+       135.77
+      ],
+      [
+       15.39,
+       135.41
+      ],
+      [
+       15.09,
+       135.4
+      ],
+      [
+       15.87,
+       131.58
+      ],
+      [
+       16.1,
+       130.43
+      ],
+      [
+       17.09,
+       125.58
+      ],
+      [
+       17.33,
+       124.2
+      ],
+      [
+       16.04,
+       123.97
+      ],
+      [
+       8.01,
+       123.73
+      ],
+      [
+       8.01,
+       124.16
+      ],
+      [
+       8.04,
+       129.26
+      ],
+      [
+       8.11,
+       142.73
+      ],
+      [
+       10.35,
+       142.77
+      ]
+     ],
+     "area_m2": 258.1,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar)",
+     "ridge_m": 8.7,
+     "ndsm_p95_m_tree_contaminated": 8.5,
+     "main": true
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": 13.5,
+     "z": 117.0,
+     "h_m": 18.5
+    },
+    {
+     "x": 25.1,
+     "z": 118.2,
+     "h_m": 15.0
+    },
+    {
+     "x": 21.1,
+     "z": 130.3,
+     "h_m": 11.8
+    },
+    {
+     "x": 9.5,
+     "z": 151.4,
+     "h_m": 13.4
+    },
+    {
+     "x": 25.2,
+     "z": 156.3,
+     "h_m": 15.1
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "kit_auto",
+   "note": "step 3 extension: fronts Lincoln past the Tier 2/3 rows (fork, bend or north of Pine)",
+   "kit_auto": {
+    "style": "Tier 3 stand-in (shingle)",
+    "cladding": "shingle",
+    "roof_mat": "roof_asphalt",
+    "foundation_h": 0.5,
+    "palette": {
+     "wall": "brown",
+     "trim": "white",
+     "roof": "charcoal",
+     "shutter": "black",
+     "found": "stone"
+    },
+    "yaw_deg": 89.7,
+    "blocks": [
+     {
+      "x": [
+       123.77,
+       142.77
+      ],
+      "z": [
+       -14.49,
+       -7.49
+      ],
+      "plate": 6.0,
+      "roof": "gable_x",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 3 (nb_kits.rects)"
+     },
+     {
+      "x": [
+       135.77,
+       149.27
+      ],
+      "z": [
+       -18.99,
+       -14.49
+      ],
+      "plate": 6.0,
+      "roof": "gable_x",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 3 (nb_kits.rects)"
+     },
+     {
+      "x": [
+       142.77,
+       150.77
+      ],
+      "z": [
+       -14.49,
+       -10.49
+      ],
+      "plate": 3.0,
+      "roof": "gable_x",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 3 of 3 (nb_kits.rects)"
+     }
+    ],
+    "windows": [
+     {
+      "face": "-z",
+      "at": 125.353,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 125.353,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 128.52,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 128.52,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 131.687,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 131.687,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 134.853,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 134.853,
+      "sill": 0.5,
+      "h": 2.1,
+      "w": 1.0,
+      "type": "door",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 138.02,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 138.02,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 141.187,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 141.187,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -12.737,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -12.737,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -9.237,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -9.237,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -12.737,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -12.737,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -9.237,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -9.237,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 137.457,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 137.457,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 140.832,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 140.832,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 144.207,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 144.207,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 147.582,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 147.582,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": -16.737,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": -16.737,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+x",
+      "at": -16.737,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+x",
+      "at": -16.737,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 144.77,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 148.77,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-x",
+      "at": -12.487,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+x",
+      "at": -12.487,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     }
+    ],
+    "lit": {
+     "windows": [
+      0,
+      1,
+      2,
+      3,
+      8,
+      12,
+      14,
+      16,
+      29
+     ]
+    },
+    "garages": [],
+    "front_face": "-z",
+    "_src": "C footprint split into 3 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
+  },
+  {
+   "id": "lot_P155",
+   "tier": 3,
+   "parcel_idx": 155,
+   "side": "mccallister_side",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     -71.33,
+     -127.93
+    ],
+    [
+     -69.35,
+     -127.55
+    ],
+    [
+     -57.77,
+     -126.49
+    ],
+    [
+     -46.13,
+     -126.65
+    ],
+    [
+     -46.1,
+     -126.65
+    ],
+    [
+     -40.63,
+     -127.01
+    ],
+    [
+     -35.83,
+     -127.33
+    ],
+    [
+     -24.94,
+     -127.74
+    ],
+    [
+     -32.52,
+     -166.31
+    ],
+    [
+     -62.99,
+     -160.31
+    ],
+    [
+     -77.15,
+     -157.52
+    ],
+    [
+     -71.33,
+     -127.93
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       -54.21,
+       -131.35
+      ],
+      [
+       -45.71,
+       -133.04
+      ],
+      [
+       -45.15,
+       -133.15
+      ],
+      [
+       -45.66,
+       -135.7
+      ],
+      [
+       -44.95,
+       -136.04
+      ],
+      [
+       -39.53,
+       -137.02
+      ],
+      [
+       -40.21,
+       -140.48
+      ],
+      [
+       -39.0,
+       -140.72
+      ],
+      [
+       -39.47,
+       -143.1
+      ],
+      [
+       -41.45,
+       -151.79
+      ],
+      [
+       -41.61,
+       -152.47
+      ],
+      [
+       -41.79,
+       -152.43
+      ],
+      [
+       -43.16,
+       -152.1
+      ],
+      [
+       -43.85,
+       -151.94
+      ],
+      [
+       -44.44,
+       -151.82
+      ],
+      [
+       -44.96,
+       -154.49
+      ],
+      [
+       -45.4,
+       -154.41
+      ],
+      [
+       -49.35,
+       -153.62
+      ],
+      [
+       -53.98,
+       -152.7
+      ],
+      [
+       -56.84,
+       -152.12
+      ],
+      [
+       -58.85,
+       -151.72
+      ],
+      [
+       -60.26,
+       -151.44
+      ],
+      [
+       -60.92,
+       -151.31
+      ],
+      [
+       -61.34,
+       -151.23
+      ],
+      [
+       -61.2,
+       -150.51
+      ],
+      [
+       -60.48,
+       -144.36
+      ],
+      [
+       -60.15,
+       -142.7
+      ],
+      [
+       -59.19,
+       -137.82
+      ],
+      [
+       -58.13,
+       -137.08
+      ],
+      [
+       -57.0,
+       -131.31
+      ],
+      [
+       -54.3,
+       -131.85
+      ],
+      [
+       -54.21,
+       -131.35
+      ]
+     ],
+     "area_m2": 381.5,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar)",
+     "ridge_m": 11.9,
+     "ndsm_p95_m_tree_contaminated": 11.3,
+     "main": true
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": -62.0,
+     "z": -156.5,
+     "h_m": 18.7
+    },
+    {
+     "x": -49.4,
+     "z": -161.7,
+     "h_m": 18.0
+    },
+    {
+     "x": -44.2,
+     "z": -159.1,
+     "h_m": 17.9
+    },
+    {
+     "x": -37.3,
+     "z": -162.9,
+     "h_m": 18.4
+    },
+    {
+     "x": -58.7,
+     "z": -131.5,
+     "h_m": 19.4
+    },
+    {
+     "x": -31.5,
+     "z": -155.2,
+     "h_m": 15.5
+    },
+    {
+     "x": -32.5,
+     "z": -134.7,
+     "h_m": 17.6
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "kit_auto",
+   "note": "step 3 extension: fronts Lincoln past the Tier 2/3 rows (fork, bend or north of Pine)",
+   "kit_auto": {
+    "style": "Tier 3 stand-in (brick)",
+    "cladding": "brick",
+    "roof_mat": "roof_asphalt",
+    "foundation_h": 0.5,
+    "palette": {
+     "wall": "red",
+     "trim": "ivory",
+     "roof": "charcoal",
+     "shutter": "darkgreen",
+     "brick": "red",
+     "found": "stone"
+    },
+    "yaw_deg": 168.74,
+    "blocks": [
+     {
+      "x": [
+       13.78,
+       30.28
+      ],
+      "z": [
+       142.4,
+       160.4
+      ],
+      "plate": 6.0,
+      "roof": "hip",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 3 (nb_kits.rects)",
+      "xmas_eave": [
+       [
+        -1,
+        0,
+        0
+       ]
+      ]
+     },
+     {
+      "x": [
+       10.78,
+       13.78
+      ],
+      "z": [
+       145.4,
+       156.9
+      ],
+      "plate": 3.0,
+      "roof": "gable_z",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 3 (nb_kits.rects)"
+     },
+     {
+      "x": [
+       18.28,
+       30.28
+      ],
+      "z": [
+       139.9,
+       142.4
+      ],
+      "plate": 3.0,
+      "roof": "gable_x",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 3 of 3 (nb_kits.rects)"
+     }
+    ],
+    "windows": [
+     {
+      "face": "-x",
+      "at": 143.902,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 143.902,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 146.902,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 146.902,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 149.902,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 149.902,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 152.902,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 152.902,
+      "sill": 0.5,
+      "h": 2.1,
+      "w": 1.0,
+      "type": "door",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 155.902,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 155.902,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 158.902,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 158.902,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 15.431,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 15.431,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 18.731,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 18.731,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 22.031,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 22.031,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 25.331,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 25.331,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 28.631,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 28.631,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 15.431,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 15.431,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 18.731,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 18.731,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 22.031,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 22.031,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 25.331,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 25.331,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 28.631,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 28.631,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 146.839,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 149.714,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 152.589,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 155.464,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 12.281,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": 12.281,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": 19.781,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 22.781,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 25.781,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 28.781,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 19.781,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 22.781,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 25.781,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 28.781,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     }
+    ],
+    "lit": {
+     "windows": [
+      2,
+      7,
+      11,
+      13,
+      18,
+      19,
+      22,
+      24,
+      26,
+      28,
+      30,
+      33,
+      35,
+      37,
+      42,
+      44,
+      45
+     ]
+    },
+    "garages": [],
+    "front_face": "-x",
+    "_src": "C footprint split into 3 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
+  },
+  {
+   "id": "lot_P169",
+   "tier": 3,
+   "parcel_idx": 169,
+   "side": "mccallister_side",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     110.28,
+     134.62
+    ],
+    [
+     99.37,
+     145.23
+    ],
+    [
+     88.46,
+     155.84
+    ],
+    [
+     61.18,
+     182.35
+    ],
+    [
+     66.15,
+     187.61
+    ],
+    [
+     82.06,
+     204.42
+    ],
+    [
+     131.17,
+     156.69
+    ],
+    [
+     141.6,
+     167.72
+    ],
+    [
+     152.04,
+     178.76
+    ],
+    [
+     189.38,
+     142.47
+    ],
+    [
+     182.29,
+     107.15
+    ],
+    [
+     190.07,
+     99.64
+    ],
+    [
+     182.49,
+     61.83
+    ],
+    [
+     179.31,
+     57.63
+    ],
+    [
+     165.22,
+     60.7
+    ],
+    [
+     151.44,
+     64.95
+    ],
+    [
+     138.06,
+     70.34
+    ],
+    [
+     125.17,
+     76.83
+    ],
+    [
+     112.88,
+     84.39
+    ],
+    [
+     101.27,
+     92.95
+    ],
+    [
+     100.0,
+     93.99
+    ],
+    [
+     90.52,
+     100.98
+    ],
+    [
+     82.85,
+     105.63
+    ],
+    [
+     110.28,
+     134.62
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       54.64,
+       141.31
+      ],
+      [
+       60.98,
+       148.01
+      ],
+      [
+       59.79,
+       149.14
+      ],
+      [
+       64.33,
+       153.94
+      ],
+      [
+       65.05,
+       153.26
+      ],
+      [
+       66.11,
+       154.38
+      ],
+      [
+       65.52,
+       154.94
+      ],
+      [
+       65.99,
+       155.44
+      ],
+      [
+       61.27,
+       159.91
+      ],
+      [
+       65.11,
+       163.89
+      ],
+      [
+       70.27,
+       169.23
+      ],
+      [
+       71.1,
+       170.11
+      ],
+      [
+       79.81,
+       162.15
+      ],
+      [
+       83.65,
+       158.64
+      ],
+      [
+       90.72,
+       152.17
+      ],
+      [
+       93.22,
+       154.31
+      ],
+      [
+       94.54,
+       155.43
+      ],
+      [
+       95.98,
+       156.66
+      ],
+      [
+       97.0,
+       157.53
+      ],
+      [
+       87.87,
+       166.16
+      ],
+      [
+       93.11,
+       171.71
+      ],
+      [
+       94.03,
+       172.62
+      ],
+      [
+       102.49,
+       180.99
+      ],
+      [
+       107.87,
+       175.94
+      ],
+      [
+       114.29,
+       169.86
+      ],
+      [
+       112.05,
+       167.49
+      ],
+      [
+       122.75,
+       157.38
+      ],
+      [
+       124.72,
+       159.47
+      ],
+      [
+       127.19,
+       157.13
+      ],
+      [
+       129.52,
+       159.59
+      ],
+      [
+       130.23,
+       159.02
+      ],
+      [
+       135.95,
+       154.4
+      ],
+      [
+       137.37,
+       153.05
+      ],
+      [
+       136.96,
+       152.61
+      ],
+      [
+       137.43,
+       152.17
+      ],
+      [
+       136.99,
+       151.7
+      ],
+      [
+       143.46,
+       145.65
+      ],
+      [
+       152.71,
+       137.01
+      ],
+      [
+       157.89,
+       132.17
+      ],
+      [
+       159.74,
+       130.41
+      ],
+      [
+       160.21,
+       130.91
+      ],
+      [
+       162.68,
+       128.58
+      ],
+      [
+       163.1,
+       129.01
+      ],
+      [
+       164.75,
+       127.45
+      ],
+      [
+       164.28,
+       126.95
+      ],
+      [
+       166.63,
+       124.73
+      ],
+      [
+       164.39,
+       122.36
+      ],
+      [
+       177.74,
+       109.73
+      ],
+      [
+       171.64,
+       103.28
+      ],
+      [
+       168.54,
+       106.21
+      ],
+      [
+       167.98,
+       105.62
+      ],
+      [
+       167.54,
+       106.03
+      ],
+      [
+       164.3,
+       102.6
+      ],
+      [
+       171.9,
+       95.42
+      ],
+      [
+       170.51,
+       93.95
+      ],
+      [
+       176.04,
+       88.33
+      ],
+      [
+       174.26,
+       86.45
+      ],
+      [
+       170.15,
+       82.13
+      ],
+      [
+       164.63,
+       76.31
+      ],
+      [
+       161.26,
+       72.76
+      ],
+      [
+       159.93,
+       71.36
+      ],
+      [
+       158.07,
+       69.4
+      ],
+      [
+       154.89,
+       72.42
+      ],
+      [
+       155.8,
+       73.39
+      ],
+      [
+       151.92,
+       77.05
+      ],
+      [
+       150.92,
+       75.99
+      ],
+      [
+       150.41,
+       76.46
+      ],
+      [
+       146.75,
+       79.76
+      ],
+      [
+       144.95,
+       81.46
+      ],
+      [
+       144.2,
+       81.17
+      ],
+      [
+       143.82,
+       81.02
+      ],
+      [
+       143.42,
+       80.86
+      ],
+      [
+       141.31,
+       82.94
+      ],
+      [
+       139.35,
+       84.87
+      ],
+      [
+       129.13,
+       94.54
+      ],
+      [
+       135.02,
+       100.77
+      ],
+      [
+       133.65,
+       102.07
+      ],
+      [
+       133.76,
+       102.2
+      ],
+      [
+       128.42,
+       107.26
+      ],
+      [
+       128.8,
+       107.66
+      ],
+      [
+       126.92,
+       109.44
+      ],
+      [
+       129.16,
+       111.81
+      ],
+      [
+       120.97,
+       119.55
+      ],
+      [
+       118.97,
+       117.43
+      ],
+      [
+       118.12,
+       118.23
+      ],
+      [
+       117.36,
+       117.42
+      ],
+      [
+       116.87,
+       117.85
+      ],
+      [
+       113.24,
+       121.02
+      ],
+      [
+       113.92,
+       121.74
+      ],
+      [
+       103.72,
+       131.38
+      ],
+      [
+       103.28,
+       130.91
+      ],
+      [
+       102.97,
+       131.21
+      ],
+      [
+       101.29,
+       129.43
+      ],
+      [
+       98.79,
+       131.8
+      ],
+      [
+       97.91,
+       132.63
+      ],
+      [
+       95.62,
+       134.79
+      ],
+      [
+       92.75,
+       137.51
+      ],
+      [
+       91.13,
+       135.79
+      ],
+      [
+       89.44,
+       137.39
+      ],
+      [
+       89.88,
+       137.86
+      ],
+      [
+       88.95,
+       138.75
+      ],
+      [
+       86.47,
+       136.13
+      ],
+      [
+       85.56,
+       136.99
+      ],
+      [
+       85.98,
+       137.42
+      ],
+      [
+       84.54,
+       138.78
+      ],
+      [
+       80.32,
+       134.33
+      ],
+      [
+       82.73,
+       132.05
+      ],
+      [
+       74.09,
+       122.92
+      ],
+      [
+       54.64,
+       141.31
+      ]
+     ],
+     "area_m2": 5097.5,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar)",
+     "ridge_m": 14.3,
+     "ndsm_p95_m_tree_contaminated": 11.8,
+     "main": true
+    },
+    {
+     "footprint_spec": [
+      [
+       157.48,
+       137.53
+      ],
+      [
+       157.49,
+       137.54
+      ],
+      [
+       157.35,
+       137.67
+      ],
+      [
+       157.7,
+       138.03
+      ],
+      [
+       157.64,
+       138.08
+      ],
+      [
+       157.28,
+       138.42
+      ],
+      [
+       156.15,
+       139.72
+      ],
+      [
+       156.55,
+       140.54
+      ],
+      [
+       156.13,
+       140.94
+      ],
+      [
+       157.37,
+       142.24
+      ],
+      [
+       154.27,
+       145.19
+      ],
+      [
+       154.58,
+       145.52
+      ],
+      [
+       154.33,
+       145.75
+      ],
+      [
+       154.41,
+       145.84
+      ],
+      [
+       154.37,
+       145.87
+      ],
+      [
+       157.71,
+       149.37
+      ],
+      [
+       161.46,
+       153.29
+      ],
+      [
+       171.04,
+       144.15
+      ],
+      [
+       171.05,
+       144.13
+      ],
+      [
+       167.31,
+       140.21
+      ],
+      [
+       166.58,
+       139.45
+      ],
+      [
+       164.39,
+       137.05
+      ],
+      [
+       163.95,
+       136.55
+      ],
+      [
+       163.1,
+       135.65
+      ],
+      [
+       162.94,
+       135.8
+      ],
+      [
+       161.72,
+       136.56
+      ],
+      [
+       160.44,
+       137.78
+      ],
+      [
+       159.69,
+       136.99
+      ],
+      [
+       159.67,
+       137.0
+      ],
+      [
+       159.58,
+       136.9
+      ],
+      [
+       158.87,
+       136.87
+      ],
+      [
+       158.54,
+       136.54
+      ],
+      [
+       158.47,
+       136.61
+      ],
+      [
+       158.46,
+       136.6
+      ],
+      [
+       157.48,
+       137.53
+      ]
+     ],
+     "area_m2": 161.8,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar)",
+     "ridge_m": 8.1,
+     "ndsm_p95_m_tree_contaminated": 8.0,
+     "main": false
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": 104.0,
+     "z": 95.4,
+     "h_m": 8.9
+    },
+    {
+     "x": 161.6,
+     "z": 64.7,
+     "h_m": 12.9
+    },
+    {
+     "x": 159.1,
+     "z": 67.9,
+     "h_m": 13.6
+    },
+    {
+     "x": 129.6,
+     "z": 104.1,
+     "h_m": 11.4
+    },
+    {
+     "x": 177.8,
+     "z": 84.9,
+     "h_m": 12.6
+    },
+    {
+     "x": 75.5,
+     "z": 180.9,
+     "h_m": 19.7
+    },
+    {
+     "x": 80.7,
+     "z": 186.4,
+     "h_m": 19.3
+    },
+    {
+     "x": 77.7,
+     "z": 192.9,
+     "h_m": 18.0
+    },
+    {
+     "x": 75.6,
+     "z": 195.8,
+     "h_m": 17.5
+    },
+    {
+     "x": 89.4,
+     "z": 187.5,
+     "h_m": 19.6
+    },
+    {
+     "x": 141.8,
+     "z": 150.5,
+     "h_m": 8.4
+    },
+    {
+     "x": 151.2,
+     "z": 143.5,
+     "h_m": 11.6
+    },
+    {
+     "x": 174.2,
+     "z": 133.1,
+     "h_m": 17.2
+    },
+    {
+     "x": 145.3,
+     "z": 160.2,
+     "h_m": 13.8
+    },
+    {
+     "x": 148.3,
+     "z": 168.6,
+     "h_m": 11.6
+    },
+    {
+     "x": 182.2,
+     "z": 138.6,
+     "h_m": 12.5
+    },
+    {
+     "x": 169.5,
+     "z": 153.3,
+     "h_m": 10.4
+    },
+    {
+     "x": 151.4,
+     "z": 174.1,
+     "h_m": 12.6
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "kit_auto",
+   "note": "step 3 extension: fronts Lincoln past the Tier 2/3 rows (fork, bend or north of Pine)",
+   "kit_auto": {
+    "style": "Tier 3 stand-in (brick)",
+    "cladding": "brick",
+    "roof_mat": "roof_asphalt",
+    "foundation_h": 0.5,
+    "palette": {
+     "wall": "red",
+     "trim": "ivory",
+     "roof": "charcoal",
+     "shutter": "darkgreen",
+     "brick": "red",
+     "found": "stone"
+    },
+    "yaw_deg": -38.76,
+    "blocks": [
+     {
+      "x": [
+       -22.83,
+       63.67
+      ],
+      "z": [
+       168.74,
+       197.24
+      ],
+      "plate": 3.6,
+      "roof": "gable_x",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 3 (nb_kits.rects)",
+      "xmas_eave": [
+       [
+        -1,
+        0,
+        0
+       ]
+      ]
+     },
+     {
+      "x": [
+       -45.33,
+       -22.83
+      ],
+      "z": [
+       144.24,
+       175.24
+      ],
+      "plate": 3.0,
+      "roof": "gable_z",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 3 (nb_kits.rects)"
+     },
+     {
+      "x": [
+       42.17,
+       80.17
+      ],
+      "z": [
+       155.24,
+       168.74
+      ],
+      "plate": 3.0,
+      "roof": "gable_x",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 3 of 3 (nb_kits.rects)"
+     }
+    ],
+    "windows": [
+     {
+      "face": "-x",
+      "at": 170.16,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 173.01,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 175.86,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 178.71,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 181.56,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 184.41,
+      "sill": 0.5,
+      "h": 2.1,
+      "w": 1.0,
+      "type": "door",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 187.26,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 190.11,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 192.96,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 195.81,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -21.389,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -18.506,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -15.623,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -12.739,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -9.856,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -6.973,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -4.089,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": -1.206,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 1.677,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 4.561,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 7.444,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 10.327,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 13.211,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 16.094,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 18.977,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 21.861,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 24.744,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 27.627,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 30.511,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 33.394,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 36.277,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 39.161,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 42.044,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 44.927,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 47.811,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 50.694,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 53.577,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 56.461,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 59.344,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-z",
+      "at": 62.227,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -21.389,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -18.506,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -15.623,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -12.739,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -9.856,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -6.973,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -4.089,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": -1.206,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 1.677,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 4.561,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 7.444,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 10.327,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 13.211,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 16.094,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 18.977,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 21.861,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 24.744,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 27.627,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 30.511,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 33.394,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 36.277,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 39.161,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 42.044,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 44.927,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 47.811,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 50.694,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 53.577,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 56.461,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 59.344,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 62.227,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": 145.644,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 148.463,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 151.281,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 154.099,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 156.917,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 159.735,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 162.554,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 165.372,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 168.19,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 171.008,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 173.826,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -43.925,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -41.112,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -38.3,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -35.487,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -32.675,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -29.862,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -27.05,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-z",
+      "at": -24.237,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -43.925,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -41.112,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -38.3,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -35.487,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -32.675,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -29.862,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -27.05,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+z",
+      "at": -24.237,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": 156.923,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-x",
+      "at": 160.298,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-x",
+      "at": 163.673,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-x",
+      "at": 167.048,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 43.631,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 46.554,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 49.477,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 52.4,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 55.323,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 58.246,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 61.169,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 64.092,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 67.015,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 69.938,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 72.861,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 75.784,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "-z",
+      "at": 78.708,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 43.631,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 46.554,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 49.477,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 52.4,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 55.323,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 58.246,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 61.169,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 64.092,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 67.015,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 69.938,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 72.861,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 75.784,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     },
+     {
+      "face": "+z",
+      "at": 78.708,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 2
+     }
+    ],
+    "lit": {
+     "windows": [
+      1,
+      3,
+      6,
+      9,
+      10,
+      11,
+      12,
+      13,
+      17,
+      19,
+      25,
+      28,
+      29,
+      30,
+      39,
+      43,
+      45,
+      46,
+      49,
+      51,
+      52,
+      53,
+      59,
+      70,
+      71,
+      73,
+      76,
+      77,
+      78,
+      83,
+      85,
+      87,
+      91,
+      94,
+      106,
+      107,
+      108,
+      109,
+      111,
+      112,
+      113,
+      114,
+      117,
+      121
+     ]
+    },
+    "garages": [
+     {
+      "x": [
+       29.06,
+       43.15
+      ],
+      "z": [
+       205.72,
+       220.61
+      ],
+      "plate": 2.6,
+      "roof": "hip",
+      "pitch": 26,
+      "door_face": "-x",
+      "_src": "C outbuilding (bounding rectangle in the main frame)"
+     }
+    ],
+    "front_face": "-x",
+    "_src": "C footprint split into 3 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
+  },
+  {
+   "id": "lot_P170",
+   "tier": 3,
+   "parcel_idx": 170,
+   "side": "across_lincoln",
+   "film_role": null,
+   "parcel_poly_spec": [
+    [
+     -4.29,
+     -126.75
+    ],
+    [
+     10.59,
+     -124.59
+    ],
+    [
+     25.25,
+     -121.24
+    ],
+    [
+     36.84,
+     -117.59
+    ],
+    [
+     30.2,
+     -151.35
+    ],
+    [
+     -7.67,
+     -143.96
+    ],
+    [
+     -4.29,
+     -126.75
+    ]
+   ],
+   "parcel_source": "Cook County Clerk cadastre (clerkCadastre layer 1), reprojected to spec by tools/house/nb_frame.py",
+   "buildings": [
+    {
+     "footprint_spec": [
+      [
+       24.4,
+       -134.75
+      ],
+      [
+       25.48,
+       -134.96
+      ],
+      [
+       24.14,
+       -142.01
+      ],
+      [
+       21.01,
+       -144.28
+      ],
+      [
+       20.07,
+       -144.1
+      ],
+      [
+       19.49,
+       -147.16
+      ],
+      [
+       17.92,
+       -146.85
+      ],
+      [
+       10.93,
+       -145.5
+      ],
+      [
+       10.19,
+       -145.12
+      ],
+      [
+       10.25,
+       -144.02
+      ],
+      [
+       10.93,
+       -140.43
+      ],
+      [
+       11.13,
+       -139.37
+      ],
+      [
+       11.3,
+       -138.48
+      ],
+      [
+       12.32,
+       -133.08
+      ],
+      [
+       12.46,
+       -132.35
+      ],
+      [
+       21.96,
+       -134.18
+      ],
+      [
+       24.4,
+       -134.75
+      ]
+     ],
+     "area_m2": 159.9,
+     "footprint_source": "Cook County building footprints 2022 (buildingFootprint_2022)",
+     "height_source": "Cook County 2022 footprint Height (max point - ground, lidar)",
+     "ridge_m": 10.1,
+     "ndsm_p95_m_tree_contaminated": 9.9,
+     "main": true
+    }
+   ],
+   "trees_over_6m": [
+    {
+     "x": -5.1,
+     "z": -142.7,
+     "h_m": 18.9
+    },
+    {
+     "x": 6.3,
+     "z": -125.4,
+     "h_m": 16.1
+    },
+    {
+     "x": 28.6,
+     "z": -130.5,
+     "h_m": 15.5
+    },
+    {
+     "x": 33.3,
+     "z": -121.8,
+     "h_m": 12.3
+    }
+   ],
+   "style_kit_guess": "unknown: 1900s-30s North Shore frame/brick house, from massing only",
+   "evidence_frames": [],
+   "confidence": "low",
+   "status": "kit_auto",
+   "note": "step 3 extension: fronts Lincoln past the Tier 2/3 rows (fork, bend or north of Pine)",
+   "kit_auto": {
+    "style": "Tier 3 stand-in (clapboard)",
+    "cladding": "clapboard",
+    "roof_mat": "roof_asphalt",
+    "foundation_h": 0.5,
+    "palette": {
+     "wall": "white",
+     "trim": "white",
+     "roof": "charcoal",
+     "shutter": "black",
+     "found": "stone"
+    },
+    "yaw_deg": -10.9,
+    "blocks": [
+     {
+      "x": [
+       37.27,
+       46.77
+      ],
+      "z": [
+       -140.82,
+       -127.82
+      ],
+      "plate": 6.0,
+      "roof": "gable_z",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 1 of 2 (nb_kits.rects)"
+     },
+     {
+      "x": [
+       46.77,
+       50.77
+      ],
+      "z": [
+       -134.82,
+       -127.82
+      ],
+      "plate": 3.0,
+      "roof": "gable_z",
+      "pitch": 32,
+      "overhang": 0.4,
+      "downspouts": false,
+      "_src": "C footprint rectangle 2 of 2 (nb_kits.rects)"
+     }
+    ],
+    "windows": [
+     {
+      "face": "+z",
+      "at": 38.853,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 38.853,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 42.02,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 42.02,
+      "sill": 0.5,
+      "h": 2.1,
+      "w": 1.0,
+      "type": "door",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 45.186,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 45.186,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -139.192,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -139.192,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -135.942,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -135.942,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -132.692,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -132.692,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -129.442,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "-x",
+      "at": -129.442,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -139.192,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -139.192,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -135.942,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -135.942,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -132.692,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -132.692,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -129.442,
+      "sill": 4.0,
+      "h": 1.4,
+      "w": 0.95,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+x",
+      "at": -129.442,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 0
+     },
+     {
+      "face": "+z",
+      "at": 48.77,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": -133.067,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "-x",
+      "at": -129.567,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+x",
+      "at": -133.067,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     },
+     {
+      "face": "+x",
+      "at": -129.567,
+      "sill": 1.0,
+      "h": 1.6,
+      "w": 1.0,
+      "type": "dh66",
+      "block": 1
+     }
+    ],
+    "lit": {
+     "windows": [
+      1,
+      3,
+      8,
+      12,
+      15,
+      22,
+      24,
+      25,
+      26
+     ]
+    },
+    "garages": [],
+    "front_face": "+z",
+    "_src": "C footprint split into 2 rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)"
+   },
+   "walkable": false,
+   "role": "backdrop"
   }
  ],
  "kit_palette": {
@@ -6712,6 +15267,51 @@
    0.52,
    0.53,
    0.56
+  ],
+  "policenavy": [
+   0.07,
+   0.1,
+   0.2
+  ],
+  "carblue": [
+   0.2,
+   0.32,
+   0.55
+  ],
+  "vanblue": [
+   0.55,
+   0.64,
+   0.74
+  ],
+  "chrome": [
+   0.78,
+   0.78,
+   0.78
+  ],
+  "palepink": [
+   0.9,
+   0.72,
+   0.74
+  ],
+  "tyre": [
+   0.03,
+   0.03,
+   0.03
+  ],
+  "taillight": [
+   0.55,
+   0.04,
+   0.03
+  ],
+  "headlamp": [
+   0.9,
+   0.9,
+   0.85
+  ],
+  "hydrantred": [
+   0.62,
+   0.07,
+   0.05
   ]
  },
  "kit_log": {
@@ -6745,7 +15345,7 @@
   ],
   "centreline": "nb_street.centre(z): 36.3 for z -45..65, OSM beyond",
   "extent_z": [
-   -150.0,
+   -118.0,
    150.0
   ],
   "drives": [
@@ -6775,21 +15375,21 @@
    },
    {
     "side": "A",
-    "z": 33.6,
+    "z": 31.95,
     "x0": 30.62,
     "x1": -30.0,
-    "w": 3.0,
-    "src": "G: lot_A+1's garage behind (C outbuilding x -38..-30)"
+    "w": 2.4,
+    "src": "G: Marley's (lot_A+1) drive to the garage behind (C outbuilding x -38..-30), between our parcel line (30.72) and his house (33.1)"
    }
   ],
   "walks": [
    {
     "side": "B",
-    "z": 11.65,
+    "z": 12.2,
     "x0": 46.15,
     "x1": 58.86,
     "w": 1.5,
-    "src": "OSM footway z 11.5-11.8 to the porch steps (film 11556)"
+    "src": "OSM footway z 11.5-11.8, moved to the porch steps (step 3: z 12.2, the film-registered house)"
    },
    {
     "side": "B",
@@ -6817,11 +15417,11 @@
    },
    {
     "side": "A",
-    "z": 42.25,
+    "z": 41.65,
     "x0": 28.87,
-    "x1": 12.6,
-    "w": 1.3,
-    "src": "G: lot_A+1's vestibule door (kit)"
+    "x1": 14.04,
+    "w": 1.5,
+    "src": "G: to the foot of Marley's stone steps (kit, the recessed entry at z 41.65)"
    }
   ],
   "lamps": [
@@ -6876,7 +15476,7 @@
     "src": "G: B side, none in 11581's frontage (z -15..35)"
    }
   ],
-  "n_trees": 58
+  "n_trees": 55
  },
  "tiers": {
   "2": "walkable hero: lot_A-1, lot_A+1, lot_B-1, lot_B0 (Murphys), lot_B+1 (nb_house LOD0 + LOD1, box colliders), Lincoln Ave + kerbs, sidewalks, parkways, drives, walks, snow banks (Street.glb, mesh colliders), acorn lamps, lidar trees",
@@ -6912,5 +15512,32 @@
   "materials": "23 shared NB_* (one per set x colour) + 2 glass + lamp globe",
   "texture_memory": "10 sets x (1024^2 albedo BC1 0.7 MB + normal BC5 1.3 MB + mask BC7 1.3 MB) = ~33 MB with mips; bark sets shared with the yard",
   "lights": "10 lamp posts (point, no shadows, night) + porch lamp glows as emissive; HDRP serves <= 24 lights per frame: lamps culled past 60 m"
- }
+ },
+ "street_evidence_step3": [
+  {
+   "frame": 3295,
+   "shows": "a red fire hydrant on our side by the parkway, patchy snow banks, the acorn lamp",
+   "use": "hydrant"
+  },
+  {
+   "frame": 1564,
+   "shows": "a cherry picker at the overhead line in front of our house (day)",
+   "use": "poles + wires on our side"
+  },
+  {
+   "frame": 1888,
+   "shows": "overhead wires over Lincoln at our frontage; a blue sedan + a van parked at our kerb film-left",
+   "use": "wires; the parked sedan"
+  },
+  {
+   "frame": 9540,
+   "shows": "the bandits' van's RAM badge (Dodge Ram Van, B-series)",
+   "use": "the van proxy"
+  },
+  {
+   "frame": 11581,
+   "shows": "two box-body police cruisers, navy with a white door stripe, red beacon bars; a wire across the top left",
+   "use": "the night scene cars"
+  }
+ ]
 }

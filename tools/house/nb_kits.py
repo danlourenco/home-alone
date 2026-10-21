@@ -23,6 +23,10 @@ PALETTE = {
     "darkgreen": [0.10, 0.20, 0.14], "shuttergreen": [0.16, 0.34, 0.20], "darkblue": [0.12, 0.17, 0.26], "ivory": [0.86, 0.84, 0.77],
     "darkred": [0.35, 0.10, 0.09], "lampgreen": [0.05, 0.085, 0.07], "frostgrey": [0.52, 0.53, 0.56],   # the Murphys' roof reads pale grey in 11581 (frost / moonlight): a light grey shingle, by eye
       # the street lamps (film 3297/9511: very dark green cast iron)
+    # step 3 street life (by eye from the film; car paint is gloss: NB_car_* in Unity/nb_render)
+    "policenavy": [0.07, 0.10, 0.20], "carblue": [0.20, 0.32, 0.55], "vanblue": [0.55, 0.64, 0.74], "chrome": [0.78, 0.78, 0.78],
+    "palepink": [0.90, 0.72, 0.74],   # Marley's house in 1990 (film 1888, day, sunlit turret wall: R/G 1.23, G/B 1.03 = 6 % redder and a little bluer than our white portico in the same frame): pale rose
+    "tyre": [0.03, 0.03, 0.03], "taillight": [0.55, 0.04, 0.03], "headlamp": [0.9, 0.9, 0.85], "hydrantred": [0.62, 0.07, 0.05],
 }
 
 
@@ -31,48 +35,63 @@ def W(face, at, sill, h, w, typ, **k):
 
 
 def murphys():
-    """lot_B0, the Murphys (film 11551-11636 night; no day frame of it in film_index). Foursquare, 2.5 storeys, hip roof + hip dormers."""
-    zc = 11.65   # C: main block z 5.1-18.2 (centre 11.65); the film's bays read 0.55 m to +z of it (camera/registration: kit_log)
-    fl1, fl2 = 1.15, 4.45   # F: 1st-floor heads 3.84-3.97 and 2nd-floor sills 5.36 (refit camera); 11556: a tall flight to the porch
+    """lot_B0, the Murphys (film 11551-11636 night; 3241 day, blurred). Foursquare, 2.5 storeys, hip roof + hip dormers.
+    Step 3 (Oct 20): the house moved 0.55 m to +z (the film's bays and both eave corners read there: residuals eave_fl -22 px, eave_fr
+    +22 px), the porch keeps the county's front and now starts at the house's left corner with the film's two left columns (11576), a
+    taller front dormer, a 1-storey side bay at the +z front (11581 grazing), room cards behind the lit windows, the film's light layout."""
+    zc = 12.2    # F: bays centred 0.55 m to +z of the county main block's centre (11.65); kit_log murphys_offset
+    fl1 = 1.15   # F: 11556, a tall flight to the porch
     win = []
-    # front (-x), 2nd floor: three bays, film back-projection z 7.93-9.48 / 11.49-12.98 / 14.93-16.45 (incl. casings), centred on zc
-    for at, typ, lit in ((zc - 3.5, "dh11", False), (zc, "dh_diamond", True), (zc + 3.5, "dh11", True)):
-        win.append(W("-x", at, 5.45, 1.32, 1.00 if typ == "dh11" else 0.90, typ, xmas=at >= zc - 0.1, _lit=lit))
-    # front, 1st floor under the porch (film 11581 + close-up 11556): French doors L, leaded window, front door, lamp-lit window, French doors R
-    win += [W("-x", zc - 3.6, fl1, 2.60, 1.20, "french", _lit=True), W("-x", zc - 0.75, 2.85, 1.00, 1.20, "picture_diamond", _lit=True),
-            W("-x", zc + 0.55, fl1, 2.40, 0.90, "door", _lit=True), W("-x", zc + 1.85, 2.30, 1.50, 1.30, "dh11", _lit=True),
-            W("-x", zc + 3.6, fl1, 2.60, 1.25, "french", _lit=True)]
-    # sides and rear: G (the +z side is in 11581 at a grazing angle: two upper windows, ground-floor bay not seen clearly)
+    # front (-x), 2nd floor: three bays; the left one unlit (blinds, 11581), the middle sheers (room 0), the right a half shade (room 2)
+    for at, typ, lit, room in ((zc - 3.5, "dh11", False, 1), (zc, "dh_diamond", True, 0), (zc + 3.5, "dh11", True, 2)):
+        win.append(W("-x", at, 5.45, 1.32, 1.00 if typ == "dh11" else 0.90, typ, xmas=at >= zc - 0.1, room=room, _lit=lit))
+    # front, 1st floor under the porch (11581 + 11556): French doors L, leaded window, front door, lamp-lit window, French doors R (a tree)
+    win += [W("-x", zc - 3.6, fl1, 2.60, 1.20, "french", xmas=True, room=1, _lit=True), W("-x", zc - 0.75, 2.85, 1.00, 1.20, "picture_diamond", room=0, _lit=True),
+            W("-x", zc + 0.55, fl1, 2.40, 0.90, "door", xmas=True, room=1, _lit=True), W("-x", zc + 1.85, 2.30, 1.50, 1.30, "dh11", room=1, _lit=True),
+            W("-x", zc + 3.6, fl1, 2.60, 1.25, "french", xmas=True, room=3, _lit=True)]
+    # sides and rear: G (the +z side is in 11581 at a grazing angle: two upper windows; the lower front of that side is the bay, block 1)
     for face in ("+z", "-z"):
         for at in (66.6, 70.2, 74.6): win.append(W(face, at, 5.45, 1.32, 0.95, "dh11", _lit=face == "+z" and at < 67))
-        for at in (66.6, 71.0, 75.2): win.append(W(face, at, 1.95, 1.70, 1.00, "dh11"))
+        for at in ((71.0, 75.2) if face == "+z" else (66.6, 71.0, 75.2)): win.append(W(face, at, 1.95, 1.70, 1.00, "dh11"))
     for at in (zc - 2.6, zc + 2.6):
         win.append(W("+x", at, 5.45, 1.32, 0.95, "dh11")); win.append(W("+x", at, 1.95, 1.70, 1.00, "dh11"))
+    for at in (65.5, 67.3): win.append(W("+z", at, 1.25, 1.60, 0.90, "dh11", block=1, _lit=at < 66, room=1))
     lit = [i for i, w in enumerate(win) if w.pop("_lit", False)]
-    dw = lambda: [{"off": -0.6, "w": 1.0, "h": 0.64, "sill": 1.21, "type": "casement_diamond"}, {"off": 0.6, "w": 1.0, "h": 0.64, "sill": 1.21, "type": "casement_diamond"}]
+    dw = lambda h=0.64, sill=1.21: [{"off": -0.6, "w": 1.0, "h": h, "sill": sill, "type": "casement_diamond"}, {"off": 0.6, "w": 1.0, "h": h, "sill": sill, "type": "casement_diamond"}]
+    shrub = lambda x, z, rx, rz, h, n: {"x": x, "z": z, "rx": rx, "rz": rz, "h": h, "bulbs": n}
     return {
         "style": "foursquare", "cladding": "clapboard", "roof_mat": "roof_asphalt", "foundation_mat": "concrete", "foundation_h": 0.75,
         "palette": {"wall": "greyblue", "trim": "white", "sash": "white", "roof": "frostgrey", "door": "darkblue", "porch_floor": "porchgrey",
                     "found": "stone", "shutter": "black", "brick": "red", "lattice": "white", "gutter": "white"},
-        "blocks": [{"x": [63.6, 78.2], "z": [5.1, 18.2], "plate": 7.44, "roof": "hip", "pitch": 31.8, "overhang": 0.55,
-                    "_src": "C footprint (main block; porch x 60.6-63.6 in front of it, O front walk ends at the door x 63.7); F camera fit (corners + far kerb): eave edge "
-                            "7.10 +-0.94, ridge 11.53 +-0.9 -> pitch 31.8 (ridge 11.5; C 11.1, L apex 10.9-11.1 agree within 1 sd). DISAGREES: L roof 6.0 at the wall line "
-                            "(kept the film; 0.5 m lidar pixels smear the eave edge with ground): kit_log",
-                    "xmas_eave": [[-1, 0, 0], [0, 0, 1]]}],
+        "blocks": [{"x": [63.6, 78.2], "z": [5.65, 18.75], "plate": 7.44, "roof": "hip", "pitch": 31.8, "overhang": 0.55,
+                    "_src": "C footprint (main block x 63.6-78.2, z 5.1-18.2) moved +0.55 m in z to the film's bays and eave corners (DEVIATIONS); F camera "
+                            "fit: eave edge 7.10 +-0.94, ridge 11.53 +-0.9 -> pitch 31.8 (C 11.1, L apex 10.9-11.1 agree within 1 sd). DISAGREES: L roof 6.0 at the "
+                            "wall line (kept the film; 0.5 m lidar pixels smear the eave edge): kit_log",
+                    "xmas_eave": [[-1, 0, 0]]},
+                   {"x": [64.6, 68.2], "z": [18.75, 19.55], "plate": 3.5, "roof": "hip", "pitch": 25, "overhang": 0.3, "hidden_faces": ["-z"], "downspouts": False,
+                    "_src": "F 11581 (grazing, one view, low): behind the porch's right end a lower plane with its own roof edge at ~3.6 m, x 64-68 on z 18.75 "
+                            "(frame 1665-1765, y 435-530); depth 0.8 G. Not in the 2022 county footprint (post-1990 change or a bay under 1 m)"}],
         "windows": win, "lit": {"windows": lit},
-        "dormers": [{"face": "-x", "at": zc, "w": 3.6, "h": 2.0, "setback": 1.2, "depth": 3.0, "roof": "hip", "windows": dw(),
-                     "_src": "F 11581: two diamond-lattice lights, face z 10.9-13.4 back-projected at setback 1.2"},
+        "dormers": [{"face": "-x", "at": zc, "w": 3.6, "h": 2.35, "setback": 1.2, "depth": 3.0, "roof": "hip", "windows": dw(0.80, 1.25),
+                     "_src": "F 11581: two diamond-lattice lights; step 3: taller face (eave +0.35, lights 0.80 high) per the close-up sheet"},
                     {"face": "+x", "at": zc, "w": 3.6, "h": 2.0, "setback": 1.2, "depth": 3.0, "roof": "hip", "windows": [dict(x, type="dh11") for x in dw()], "_src": "L rear plateau 9.9 at z 10-13"},
                     {"face": "+z", "at": 70.9, "w": 3.6, "h": 2.0, "setback": 1.2, "depth": 3.0, "roof": "hip", "windows": [dict(x, type="dh11") for x in dw()], "_src": "L side plateau 10.7 across z at x 70.8"},
                     {"face": "-z", "at": 70.9, "w": 3.6, "h": 2.0, "setback": 1.2, "depth": 3.0, "roof": "hip", "windows": [dict(x, type="dh11") for x in dw()], "_src": "L (as +z)"}],
-        "porch": {"x": [60.6, 63.6], "z": [6.2, 17.4], "floor": fl1, "edge": 4.17, "pitch": 14, "overhang": 0.30,
-                  "columns": [6.5, 10.0, 13.35, 16.8], "rail": 0.80, "piers": "paint",
-                  "steps": {"at": zc, "w": 2.9, "risers": 6, "iron": True}, "lamp": [63.55, zc + 1.12], "xmas_eave": True, "xmas_rail": True,
-                  "_src": "C porch x 60.6-63.6, z 6.05-17.9; F 11581 four columns at z 7.07/10.55/13.9/17.33 (-0.55 to the house's axis), roof edge 3.56 (fit); "
-                          "11556: five risers between square newels, a black iron handrail in the middle, white rail with square balusters"},
-        "chimneys": [{"x": 72.6, "z": 15.6, "w": 0.75, "d": 0.62, "top": 12.1, "from": 5.0, "_src": "F 11581: a dark stack behind the right roof slope (by eye); G size"}],
+        "porch": {"x": [60.6, 63.6], "z": [5.65, 17.9], "floor": fl1, "edge": 4.17, "pitch": 14, "overhang": 0.30,
+                  "columns": [5.95, 7.07, 10.55, 13.9, 17.33], "rail": 0.80, "piers": "paint",
+                  "steps": {"at": zc, "w": 2.9, "risers": 6, "iron": True}, "lamp": [63.55, zc + 1.12], "xmas_eave": "wrap", "xmas_rail": "swag",
+                  "_src": "C porch x 60.6-63.6, z 6.05-17.9; F 11581 columns at z 7.07/10.55/13.9/17.33, 11576 a second column at the left corner (5.95); the "
+                          "porch roof's left end + downspout at z ~5.6 (frame 785-815): the porch starts at the house's left corner, the roof overhangs past it; "
+                          "11556: six risers between square newels, a black iron handrail in the middle"},
+        "chimneys": [{"x": 72.6, "z": 16.15, "w": 0.75, "d": 0.62, "top": 12.1, "from": 5.0, "_src": "F 11581: a dark stack behind the right roof slope (by eye); G size"}],
         "garages": [{"x": [83.9, 92.85], "z": [-1.9, 9.15], "plate": 2.7, "roof": "hip", "pitch": 28, "door_face": "-x", "door": [3.65, 5.0],
                      "_src": "C outbuilding (ridge 5.9), O drive at z 3.1-4.2 (2022). It is at the house's LEFT seen from Lincoln; the white garage at the right edge of 11581 is lot_B+1's"}],
+        "xmas": {"_src": "F 11581/11576 (night): main eave front only (the +z side eave is dark), a line along the wall over the porch roof (frame 1100-1560, "
+                         "y ~340), the middle and right upper windows outlined, the porch eave turning the right corner, dense swags on the rails, the "
+                         "French doors and the front door outlined, lit foundation shrubs both sides of the steps and a big lit shrub at the left corner",
+                 "strings": [{"pts": [[63.54, 5.38, 9.4], [63.54, 5.38, 16.0]], "step": 0.2, "sag": 0.03}],
+                 "shrubs": [shrub(58.6, 5.2, 0.65, 0.75, 1.15, 70), shrub(60.0, 7.5, 0.5, 0.9, 1.2, 50), shrub(60.0, 9.6, 0.5, 0.8, 1.1, 45),
+                            shrub(60.0, 14.8, 0.5, 0.9, 1.2, 50), shrub(60.0, 16.9, 0.5, 0.8, 1.1, 45)]},
     }
 
 
@@ -137,22 +156,43 @@ def a_minus1():
 
 
 def a_plus1():
-    """lot_A+1 (film-left of our house beyond the garage: 1886/1891): cream stucco with a red clay-tile hip roof (a turret-like steep
-    corner roof is visible there, possibly lot_A+2's), 2 storeys; L hip ridge 9.8 at x 1.5-4.5, z 40-44."""
-    z0, z1 = 36.7, 47.7; win = []
-    for at in (38.6, 41.0, 43.6, 46.0): win.append(W("+x", at, 4.0, 1.4, 0.9, "casement", leaves=2, casing=True))
-    for at in (38.6, 46.0): win.append(W("+x", at, 1.0, 1.7, 1.2, "casement", leaves=2, casing=True))
-    win.append(W("+x", 42.25, 0.45, 2.1, 1.0, "door", block=1))
-    for face in ("-z", "+z"):
-        for at in (1.0, 6.0): win += [W(face, at, 4.0, 1.35, 0.9, "casement", leaves=2, casing=True), W(face, at, 1.0, 1.6, 0.95, "casement", leaves=2, casing=True)]
-    return {"style": "Mediterranean / Prairie stucco, hip roof", "cladding": "stucco", "roof_mat": "roof_clay", "foundation_h": 0.45,
-            "palette": {"wall": "cream", "trim": "brown", "sash": "brown", "roof": "clayred", "door": "brown", "found": "stone"},
-            "blocks": [{"x": [-2.0, 10.8], "z": [z0, z1], "plate": 6.0, "roof": "hip", "pitch": 30, "overhang": 0.55,
-                        "_src": "C 260 m2 (rear wing to x -9.6, z 33.1); L hip ridge 9.8"},
-                       {"x": [10.8, 12.6], "z": [40.3, 44.2], "plate": 3.0, "roof": "hip", "pitch": 25, "overhang": 0.3, "_src": "C front projection (vestibule)"},
-                       {"x": [-9.6, -2.0], "z": [33.1, 41.0], "plate": 5.6, "roof": "hip", "pitch": 30, "overhang": 0.45, "_src": "C rear wing"}],
-            "windows": win, "lit": {"windows": [2]},
-            "chimneys": [{"x": 4.0, "z": z1 - 0.4, "w": 0.6, "d": 0.8, "top": 10.6, "from": 1.0}]}
+    """lot_A+1 = Old Man Marley's house (user, Oct 20: the neighbour LEFT of ours seen from the street = +z = lot_A+1). Shingle Style:
+    2.5 storeys of shakes over a red brick/stone base, an octagonal turret with a tall conical roof at the front, hip wings with deep
+    flared eaves, eyebrow hoods over upper windows, a recessed entry with dark round columns up stone steps, a tall brick chimney on the
+    left (+z) wing, a hip dormer on the right wing, dark green trim.
+    Evidence: F 1888/1884/1891 (day, across Lincoln: the turret's conical roof and the wings' roofs RED in 1990, the turret's upper walls
+    PALE ROSE; a chimney on the left), L (ISGS 2022 nDSM: a 12.5 m peak at x 10-11, z 37-38 over the footprint's octagonal corners = the
+    turret; the main hip plateau 9.8 at x 3-5), C (2022 footprint: main x -2..10.8, z 36.75..47.6; the octagon's diagonals (10.79, 39.43)-
+    (11.21, 40.26) and (10.78, 36.83)-(9.34, 35.52); the front projection x 10.8..12.64, z 40.25..43.04 = the entry), the user's modern photo
+    description (today: brown shakes, grey roofs). 1990 colours from the film are used; today's are kept as palette_today (decision)."""
+    win = []
+    for at in (44.3, 46.4):   # left (+z) wing, street face
+        win += [W("+x", at, 4.0, 1.30, 0.95, "dh91", hood="eyebrow"), W("+x", at, 1.35, 1.75, 1.0, "dh91")]
+    win.append(W("+x", 41.65, 4.0, 1.20, 1.50, "casement", leaves=3, casing=True, hood="eyebrow"))   # over the entry
+    win.append(W("+x", 41.65, 0.90, 2.15, 1.00, "door"))                                            # the door at the back of the entry
+    win.append(W("+x", 41.65, 0.90, 2.25, 2.10, "opening", block=2, columns=2, reveal=1.84))      # the entry's mouth (block 2's street face)
+    for face in ("+z", "-z"):
+        for at in (1.5, 6.5): win += [W(face, at, 4.0, 1.3, 0.9, "dh91"), W(face, at, 1.35, 1.6, 0.95, "dh91")]
+    tw = [{"k": 0, "sill": 4.0, "h": 1.25, "w": 0.85, "type": "dh11"}, {"k": 0, "sill": 1.35, "h": 1.7, "w": 0.85, "type": "dh11"},
+          {"k": 1, "sill": 4.0, "h": 1.25, "w": 0.8, "type": "dh11"}, {"k": 7, "sill": 4.0, "h": 1.25, "w": 0.8, "type": "dh11"},
+          {"k": 1, "sill": 1.35, "h": 1.7, "w": 0.8, "type": "dh11"}, {"k": 7, "sill": 1.35, "h": 1.7, "w": 0.8, "type": "dh11"}]
+    tw += [{"k": k, "sill": 6.55, "h": 0.85, "w": 0.75, "type": "casement"} for k in (0, 1, 7, 2, 6)]   # the band above the wings' roofs (F 1888)
+    return {"style": "Shingle Style (Marley's house)", "cladding": "shingle", "roof_mat": "roof_asphalt", "foundation_mat": "brick", "foundation_h": 0.9,
+            "palette": {"wall": "palepink", "trim": "white", "sash": "white", "roof": "clayred", "door": "darkgreen", "found": "red", "brick": "red", "gutter": "white",
+                        "_src": "film 1888 (1990): pale rose walls, white cornice and sashes, red roofs (sampled; nb_kits PALETTE palepink)"},
+            "palette_today": {"wall": "brown", "trim": "darkgreen", "sash": "darkgreen", "roof": "slate", "gutter": "darkgreen", "_src": "the user's modern photo (late winter): warm brown cedar shakes, dark green trim, grey shingle roofs"},
+            "blocks": [{"x": [-1.95, 10.8], "z": [36.75, 47.6], "plate": 5.9, "roof": "hip", "pitch": 37, "overhang": 0.55, "flare": 0.7,
+                        "_src": "C main rectangle; L hip plateau 9.8 (built 9.6); flared eaves (Shingle Style, user photo)"},
+                       {"x": [-9.6, -1.95], "z": [33.1, 47.7], "plate": 5.6, "roof": "hip", "pitch": 37, "overhang": 0.5, "flare": 0.6, "_src": "C rear wing; L tree-covered (G height)"},
+                       {"x": [10.8, 12.64], "z": [40.25, 43.04], "plate": 3.1, "roof": "hip", "pitch": 30, "overhang": 0.35, "hidden_faces": ["-x"], "downspouts": False, "collider_top": 0.9,
+                        "_src": "C front projection = the recessed entry (user photo: a recessed porch with dark round columns, stone steps)"}],
+            "windows": win, "lit": {"windows": [0, 4]},
+            "turrets": [{"x": 8.55, "z": 37.9, "r": 2.4, "plate": 7.8, "peak": 12.5, "overhang": 0.45, "flare": 0.5, "windows": tw,
+                         "_src": "C octagonal corners (r 2.4 to the face middles, the front face 15 cm proud of the main wall); L peak 12.5 m at x 10-11, z 37-38; F 1888 the tall red cone over a pale windowed band that rises above the wings' red roofs (plate 7.8: G from the frame's proportions)"}],
+            "dormers": [{"face": "+x", "block": 1, "at": 34.9, "w": 1.9, "h": 1.6, "setback": 0.6, "depth": 2.2, "roof": "hip",
+                         "windows": [{"off": 0, "w": 1.0, "h": 0.8, "sill": 0.6, "type": "dh11"}], "_src": "the user's photo: a hip dormer on the right wing (G position)"}],
+            "steps": [{"x": [12.64, 14.04], "z": [40.6, 42.7], "top": 0.9, "n": 5, "climb": -1, "_src": "the user's photo: stone steps up to the entry"}],
+            "chimneys": [{"x": 4.0, "z": 47.25, "w": 0.7, "d": 0.6, "top": 11.6, "from": 1.0, "_src": "F 1888: a chimney on the left (+z) wing; the user's photo: tall red brick"}]}
 
 
 STYLES3 = [("brick", "roof_asphalt", {"wall": "red", "trim": "white", "roof": "slate", "shutter": "black", "brick": "red"}),
@@ -165,34 +205,108 @@ STYLES3 = [("brick", "roof_asphalt", {"wall": "red", "trim": "white", "roof": "s
            ("stucco", "roof_clay", {"wall": "cream", "trim": "brown", "roof": "clayred", "shutter": "brown"})]
 
 
+def _lincoln():
+    d = json.loads((ROOT / "art/home_alone/references/neighborhood/data/spec_frame.json").read_text())
+    return [r["pts"] for r in d["roads"] if r["name"] == "Lincoln Avenue"]
+
+
+LINCOLN = None
+
+
+def toward_lincoln(x, z):
+    """Unit (dx, dz) from (x, z) to the nearest point of Lincoln's OSM centreline (handles the bend at z -110 and the fork at -67)."""
+    global LINCOLN
+    LINCOLN = LINCOLN or _lincoln(); best = None
+    for r in LINCOLN:
+        for (ax, az), (bx, bz) in zip(r, r[1:]):
+            dx, dz = bx - ax, bz - az; t = max(0.0, min(1.0, ((x - ax) * dx + (z - az) * dz) / (dx * dx + dz * dz + 1e-9)))
+            px, pz = ax + t * dx, az + t * dz; dd = math.hypot(px - x, pz - z)
+            if best is None or dd < best[0]: best = (dd, (px - x) / max(dd, 1e-6), (pz - z) / max(dd, 1e-6))
+    return best[1], best[2]
+
+
+def rects(poly, cell=0.5, n=3, min_a=18.0):
+    """Split a footprint (already in its rectangle's frame: u, v) into up to n axis-aligned rectangles, greedily the largest one inside
+    the polygon each time (histogram method on a 0.5 m raster), until what is left is under 12 % of the area. The step-2 stand-ins were
+    one bounding box per footprint (the L-shaped lots read as barns in the aerial: RESUME section 2 step 3)."""
+    us = [p[0] for p in poly]; vs = [p[1] for p in poly]; u0, v0 = min(us), min(vs)
+    W, H = int((max(us) - u0) / cell) + 1, int((max(vs) - v0) / cell) + 1
+    def inside(x, y):
+        c = False
+        for (a, b), (e, g) in zip(poly, poly[1:] + poly[:1]):
+            if (b > y) != (g > y) and x < (e - a) * (y - b) / (g - b) + a: c = not c
+        return c
+    M = [[inside(u0 + (i + 0.5) * cell, v0 + (j + 0.5) * cell) for i in range(W)] for j in range(H)]
+    total = sum(map(sum, M)); out = []
+    while len(out) < n:
+        best = None; hgt = [0] * W
+        for j in range(H):
+            hgt = [hgt[i] + 1 if M[j][i] else 0 for i in range(W)]
+            st = []
+            for i in range(W + 1):
+                h = hgt[i] if i < W else 0; start = i
+                while st and st[-1][1] >= h:
+                    s0, sh = st.pop(); A = sh * (i - s0)
+                    if best is None or A > best[0]: best = (A, s0, i, j - sh + 1, j + 1)
+                    start = s0
+                st.append((start, h))
+        if not best or best[0] * cell * cell < min_a: break
+        A, i0, i1, j0, j1 = best
+        for j in range(j0, j1):
+            for i in range(i0, i1): M[j][i] = False
+        out.append((u0 + i0 * cell, u0 + i1 * cell, v0 + j0 * cell, v0 + j1 * cell))
+        if sum(map(sum, M)) < 0.12 * total: break
+    return out
+
+
 def auto_kit(e):
-    """Tier 3: the main county footprint's minimum-area rectangle, the county ridge, a hashed period style; LOD1 (stand-in) only."""
+    """Tier 3 stand-in (LOD1 only, not reachable): the main county footprint split into 1-3 rectangles in its minimum-area rectangle's
+    frame (main = the largest, 2 storeys if the county ridge > 8 m, wings at the main plate if big, else 1 storey: G), the other
+    footprints over 25 m2 as 1-storey outbuildings, windows on the face toward Lincoln (nearest point of OSM's centreline) and the two
+    sides, ~30 % lit at night (hashed), a hashed period style (STYLES3)."""
     import sys; sys.path.insert(0, str(ROOT / "tools/house")); from nb_house import obb
     b = next((b for b in e["buildings"] if b["main"]), None)
     if not b or b["area_m2"] < 60: return None
-    u0, u1, v0, v1, yaw = obb([tuple(p) for p in b["footprint_spec"]])
+    _, _, _, _, yaw = obb([tuple(p) for p in b["footprint_spec"]])
     c, s = math.cos(math.radians(yaw)), math.sin(math.radians(yaw))
-    # build axis-aligned in the rectangle's own frame (u -> x, v -> z), then nb_house turns it by yaw about the origin
-    ridge = min(12.5, max(6.0, b["ridge_m"])); two = ridge > 8.0
-    W_, D_ = u1 - u0, v1 - v0; o = 0.4
-    pitch = 32; plate = 6.0 if two else 3.0
-    rise = (min(W_, D_) / 2 + o) * math.tan(math.radians(pitch)); plate = max(3.0, min(plate, ridge - rise + o * math.tan(math.radians(pitch))))
+    loc = lambda P: [(x * c + z * s, -x * s + z * c) for x, z in P]     # spec -> the rectangle's frame (nb_house turns it back by yaw)
+    R = rects(loc(b["footprint_spec"]))
+    ridge = min(12.5, max(6.0, b["ridge_m"])); two = ridge > 8.0; o = 0.4; pitch = 32
     h = zlib.crc32(e["id"].encode()); clad, roof, pal = STYLES3[h % len(STYLES3)]
-    front = "-x" if e["side"] == "across_lincoln" else "+x"
-    # which local face looks toward Lincoln: the rectangle's +-u or +-v axis closest to the street direction
-    want = (-1, 0) if front == "-x" else (1, 0)
-    axes = {"-x": (-c, -s), "+x": (c, s), "-z": (s, -c), "+z": (-s, c)}
+    cx = sum(p[0] for p in b["footprint_spec"]) / len(b["footprint_spec"]); cz = sum(p[1] for p in b["footprint_spec"]) / len(b["footprint_spec"])
+    wx, wz = toward_lincoln(cx, cz); want = (wx * c + wz * s, -wx * s + wz * c)   # in the frame
+    axes = {"-x": (-1, 0), "+x": (1, 0), "-z": (0, -1), "+z": (0, 1)}
     ff = max(axes, key=lambda k: axes[k][0] * want[0] + axes[k][1] * want[1])
-    span = (v0, v1) if ff in ("-x", "+x") else (u0, u1); L = span[1] - span[0]; n = max(2, int(L / 2.8))
-    win = []
-    for i in range(n):
-        at = span[0] + L * (i + 0.5) / n
-        if two: win.append(W(ff, at, 4.0, 1.4, 0.95, "dh66"))
-        win.append(W(ff, at, 1.0, 1.6, 1.0, "dh66" if i != n // 2 else "door") if i != n // 2 else W(ff, at, 0.5, 2.1, 1.0, "door"))
+    side = {"-x": ("-z", "+z"), "+x": ("-z", "+z"), "-z": ("-x", "+x"), "+z": ("-x", "+x")}[ff]
+    blocks, win = [], []
+    A0 = (R[0][1] - R[0][0]) * (R[0][3] - R[0][2])
+    for bi, (u0, u1, v0, v1) in enumerate(R):
+        W_, D_ = u1 - u0, v1 - v0; big = bi == 0 or W_ * D_ > 0.35 * A0
+        plate = 6.0 if two and big else 3.0
+        rise = (min(W_, D_) / 2 + o) * math.tan(math.radians(pitch))
+        if bi == 0: plate = max(3.0, min(plate, ridge - rise + o * math.tan(math.radians(pitch))))
+        blocks.append({"x": [round(u0, 2), round(u1, 2)], "z": [round(v0, 2), round(v1, 2)], "plate": round(plate, 2),
+                       "roof": "hip" if max(W_, D_) / min(W_, D_) < 1.35 else ("gable_x" if W_ > D_ else "gable_z"), "pitch": pitch, "overhang": o,
+                       "downspouts": False, "_src": "C footprint rectangle %d of %d (nb_kits.rects)" % (bi + 1, len(R))})
+        for face in (ff,) + side:
+            span = (v0, v1) if face in ("-x", "+x") else (u0, u1); L = span[1] - span[0]; n = int(L / 2.8)
+            if n < 1: continue
+            for i in range(n):
+                at = span[0] + L * (i + 0.5) / n; door = face == ff and bi == 0 and i == n // 2
+                if plate > 4: win.append(W(face, at, 4.0, 1.4, 0.95, "dh66", block=bi))
+                win.append(W(face, at, 0.5, 2.1, 1.0, "door", block=bi) if door else W(face, at, 1.0, 1.6, 1.0, "dh66", block=bi))
+    gar = []
+    for ob in e["buildings"]:
+        if ob is b or ob["area_m2"] < 25: continue
+        P = loc(ob["footprint_spec"]); us = [p[0] for p in P]; vs = [p[1] for p in P]
+        gar.append({"x": [round(min(us), 2), round(max(us), 2)], "z": [round(min(vs), 2), round(max(vs), 2)], "plate": 2.6, "roof": "hip", "pitch": 26,
+                    "door_face": ff, "_src": "C outbuilding (bounding rectangle in the main frame)"})
+    lit = [i for i in range(len(win)) if zlib.crc32(f"{e['id']}{i}".encode()) % 10 < 3]
+    if h % 5 < 2:   # ~40 % of the backdrop houses string C7s along the eave toward Lincoln (film 11581/8221: most of the street is lit)
+        blocks[0]["xmas_eave"] = [[axes[ff][0], 0, axes[ff][1]]]
     return {"style": f"Tier 3 stand-in ({clad})", "cladding": clad, "roof_mat": roof, "foundation_h": 0.5, "palette": dict(pal, found="stone"),
-            "yaw_deg": round(yaw, 2), "blocks": [{"x": [round(u0, 2), round(u1, 2)], "z": [round(v0, 2), round(v1, 2)], "plate": round(plate, 2),
-                                                  "roof": "hip" if max(W_, D_) / min(W_, D_) < 1.35 else ("gable_x" if W_ > D_ else "gable_z"), "pitch": pitch, "overhang": o}],
-            "windows": win, "_src": "C footprint rectangle (min-area) + C ridge; style hashed from STYLES3 (G, low)"}
+            "yaw_deg": round(yaw, 2), "blocks": blocks, "windows": win, "lit": {"windows": lit}, "garages": gar, "front_face": ff,
+            "_src": "C footprint split into %d rectangles + C ridge; front toward Lincoln's OSM centreline; style hashed from STYLES3 (G, low)" % len(R)}
 
 
 TIERS = {
@@ -228,11 +342,29 @@ BUDGETS = {
 
 def main():
     man = json.loads(P.read_text()); man["kit_palette"] = PALETTE
-    kits = {"lot_B0": (murphys(), "medium", "massing C+L, eave/porch heights + camera F 11581 (rms 11 px), facade bays F; sides/rear G"),
+    kits = {"lot_B0": (murphys(), "medium", "massing C+L, eave/porch heights + camera F 11581 (rms 11 px), facade bays F (house +0.55 m z), porch columns F 11581+11576, lights F 11581; sides/rear G; day 3241 (blurred) confirms the grey-blue clapboard, hip dormer and full porch but shows a pediment over the steps that 11581 does not: not modelled (logged)"),
             "lot_B-1": (b_minus1(), "low-medium", "gable-front from L; white clapboard F (11581 left edge); windows G"),
             "lot_B+1": (b_plus1(), "low", "hip from L; colour/windows G (only its garage and an edge are in 11581)"),
-            "lot_A-1": (a_minus1(), "low-medium", "white clapboard + green shutters F 6399; massing L/C simplified to two blocks"),
-            "lot_A+1": (a_plus1(), "low", "cream stucco + red tile roof F 1886/1891 (edge views; may be lot_A+2's); hip from L")}
+            "lot_A-1": (a_minus1(), "medium", "white + green shutters F 6399 (day edge), 1471 (night: gabled dormer, lit lower wing), 3246 (day, the sled run: white painted walls, green shutters, a small arched hood over the door, a low dark roof; the green shingled lot_A-2 beyond it); massing L/C simplified to two blocks"),
+            "lot_A+1": (a_plus1(), "medium", "Old Man Marley's house (user, Oct 20: the left neighbour from the street = +z). Shingle Style: turret + cone F 1888 (1990: red roofs, pale turret walls) + L peak 12.5 m on the C footprint's octagon; wings, entry, dormer, chimney from the user's modern photo description (G positions)")}
+    STEP3 = {   # step 3 evidence pass (Oct 20): frames looked at per lot, what they show, the conclusion (art/home_alone/references/neighborhood/README.md)
+        "lot_B0": [{"frame": 11581, "shows": "front + right side, night", "use": "camera solve; bays 0.55 m +z; porch columns; lights"},
+                   {"frame": 11576, "shows": "porch left end, two columns, the white post mailbox", "use": "corner column 5.95; mailbox"},
+                   {"frame": 3241, "shows": "day, blurred (sled POV): grey-blue clapboard, hip dormer, full porch, a pediment over the steps", "use": "colour/massing confirmed; the pediment conflicts with 11581 (straight lit porch eave): not modelled, logged"}],
+        "lot_B-1": [{"frame": 11576, "shows": "white clapboard 2.5 storeys, a 1-storey porch roof across the front, dark shutters", "use": "kit kept (white gable-front + porch)"},
+                    {"frame": 3241, "shows": "day, blurred: a white house left of the Murphys", "use": "colour"}],
+        "lot_B+1": [{"frame": 11581, "shows": "right edge: a white panelled garage door, a cream/white 2-storey under a dark roof", "use": "kit kept"}],
+        "lot_A-1": [{"frame": 3246, "shows": "day: white, green shutters, arched door hood, low dark roof; green shingled lot_A-2 beyond", "use": "confidence low-medium -> medium"},
+                    {"frame": 1471, "shows": "night: a gabled dormer, a lit lower wing beside the lamp post", "use": "dormer kept"}],
+        "lot_A+1": [{"frame": 1888, "shows": "day, across Lincoln, left of our garage: an octagonal turret with a tall red conical roof, pale upper walls, red hip roofs, a chimney on the left", "use": "Marley's house: Shingle Style kit (turret, flared hips); 1990 colours"},
+                    {"frame": 546, "shows": "Buzz's window POV at night: Marley shovelling by the trash can; a dark house behind with a lit window", "use": "night: lit windows"}],
+        "lot_A-2": [{"frame": 3246, "shows": "a dark green shingled house with a steep gable and a wreath on the door, beyond lot_A-1", "use": "Tier 3 style: shingle; colour TODO (palette has no dark green shingle)"}],
+        "street": [{"frame": 3295, "shows": "a red fire hydrant on our side by the parkway, patchy snow banks, the acorn lamp", "use": "hydrant"},
+                   {"frame": 1564, "shows": "a cherry picker at the overhead line in front of our house (day)", "use": "poles + wires on our side"},
+                   {"frame": 1888, "shows": "overhead wires over Lincoln at our frontage; a blue sedan + a van parked at our kerb film-left", "use": "wires; the parked sedan"},
+                   {"frame": 9540, "shows": "the bandits' van's RAM badge (Dodge Ram Van, B-series)", "use": "the van proxy"},
+                   {"frame": 11581, "shows": "two box-body police cruisers, navy with a white door stripe, red beacon bars; a wire across the top left", "use": "the night scene cars"}],
+    }
     n3 = 0
     for e in man["parcels"]:
         if e["id"] in kits:
@@ -250,6 +382,19 @@ def main():
         "murphys_offset": "the film's facade bays read 0.55 m to +z of the footprint's centre (apex residual 30 px): kept on the footprint, bays centred (DEVIATIONS)",
         "garage_side": "the Murphys' 2022 outbuilding and drive are on the house's LEFT (-z) seen from Lincoln; step-1 notes said right",
     }
+    # user, Oct 20 (via the coordinator): only OUR lot, Marley's (lot_A+1) and the Murphys' (lot_B0) are walkable heroes; every other house is
+    # a distant backdrop (no colliders: SpecGreybox.Neighborhood, the walk boundary keeps the player off), with lit windows and some C7s
+    XM = {"lot_A-1": ([1, 0, 0], False), "lot_B+1": ([-1, 0, 0], True), "lot_B-1": (None, True)}
+    for e in man["parcels"]:
+        e["walkable"] = e["id"] in ("lot_A0", "lot_A+1", "lot_B0")
+        e["role"] = "hero" if e["walkable"] else "backdrop"
+        if e["id"] in XM and e.get("kit"):
+            n, porch = XM[e["id"]]
+            if n: e["kit"]["blocks"][0]["xmas_eave"] = [n]
+            if porch and e["kit"].get("porch"): e["kit"]["porch"]["xmas_eave"] = True
+    for e in man["parcels"]:
+        if e["id"] in STEP3: e["evidence_step3"] = STEP3[e["id"]]; e["evidence_frames"] = sorted(set(e.get("evidence_frames", [])) | {q["frame"] for q in STEP3[e["id"]]})
+    man["street_evidence_step3"] = STEP3["street"]
     man["tiers"] = TIERS; man["budgets"] = BUDGETS
     P.write_text(json.dumps(man, indent=1)); print("kits", len(kits), "tier-3 auto", n3)
 

@@ -21,7 +21,7 @@
  ],
  "centreline": "nb_street.centre(z): 36.3 for z -45..65, OSM beyond",
  "extent_z": [
-  -150.0,
+  -118.0,
   150.0
  ],
  "drives": [
@@ -51,21 +51,21 @@
   },
   {
    "side": "A",
-   "z": 33.6,
+   "z": 31.95,
    "x0": 30.62,
    "x1": -30.0,
-   "w": 3.0,
-   "src": "G: lot_A+1's garage behind (C outbuilding x -38..-30)"
+   "w": 2.4,
+   "src": "G: Marley's (lot_A+1) drive to the garage behind (C outbuilding x -38..-30), between our parcel line (30.72) and his house (33.1)"
   }
  ],
  "walks": [
   {
    "side": "B",
-   "z": 11.65,
+   "z": 12.2,
    "x0": 46.15,
    "x1": 58.86,
    "w": 1.5,
-   "src": "OSM footway z 11.5-11.8 to the porch steps (film 11556)"
+   "src": "OSM footway z 11.5-11.8, moved to the porch steps (step 3: z 12.2, the film-registered house)"
   },
   {
    "side": "B",
@@ -93,11 +93,11 @@
   },
   {
    "side": "A",
-   "z": 42.25,
+   "z": 41.65,
    "x0": 28.87,
-   "x1": 12.6,
-   "w": 1.3,
-   "src": "G: lot_A+1's vestibule door (kit)"
+   "x1": 14.04,
+   "w": 1.5,
+   "src": "G: to the foot of Marley's stone steps (kit, the recessed entry at z 41.65)"
   }
  ],
  "lamps": [
@@ -431,15 +431,11 @@
   },
   {
    "x": -21.2,
-   "z": 37.3,
+   "z": 34.7,
    "h_m": 16.1,
    "lidar_h_m": 17.5,
    "variant": "elmA",
-   "yaw": 227,
-   "moved_from": [
-    -21.2,
-    34.7
-   ]
+   "yaw": 227
   },
   {
    "x": 88.1,
@@ -456,18 +452,6 @@
    "lidar_h_m": 16.0,
    "variant": "ashA",
    "yaw": 111
-  },
-  {
-   "x": 23.2,
-   "z": -130.5,
-   "h_m": 14.3,
-   "lidar_h_m": 15.5,
-   "variant": "elmB",
-   "yaw": 152,
-   "moved_from": [
-    28.6,
-    -130.5
-   ]
   },
   {
    "x": 25.1,
@@ -566,18 +550,6 @@
    ]
   },
   {
-   "x": 38.45,
-   "z": -121.8,
-   "h_m": 11.3,
-   "lidar_h_m": 12.3,
-   "variant": "elmA",
-   "yaw": 284,
-   "moved_from": [
-    33.3,
-    -121.8
-   ]
-  },
-  {
    "x": 91.0,
    "z": 48.8,
    "h_m": 10.8,
@@ -604,14 +576,6 @@
     31.9,
     106.2
    ]
-  },
-  {
-   "x": 42.8,
-   "z": -142.9,
-   "h_m": 9.8,
-   "lidar_h_m": 10.7,
-   "variant": "elmA",
-   "yaw": 68
   },
   {
    "x": 27.08,

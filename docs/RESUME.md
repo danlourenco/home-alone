@@ -165,3 +165,17 @@ Tiers by player distance; detail follows sightlines (window views, the film's ex
   swaps the lamp posts (walk note 12:33), hides the WinterNeighborhood inside the extent. Then: z-fight/clash 0, the walk test (street and the
   new sidewalks), K, N; render 11581's camera live beside the film; the user walks across Lincoln.
 - Open: Tier 3 extension + Tier 4 treeline + the dome (manifest "tiers"), the Mac baseline into "budgets.baseline_ms", the user's decisions (hand-back).
+
+## 5. Step 3 results (Oct 20-21; art/home_alone/references/neighborhood/README.md "Step 3"; DEVIATIONS 125)
+- **User direction (Oct 20):** walkable heroes = our lot, **Marley's (lot_A+1, the left neighbour from the street)** and **the Murphys'
+  (lot_B0)**; everything else is a realistic, unreachable backdrop behind a walk boundary. Vehicles: realistic models are being sourced by a
+  separate agent; the proxies swap via `Assets/Purchased/Vehicles/<kind>.prefab`.
+- Built and gated in scratch (`HA_NEIGHBORHOOD=1`, ~/.cache/home-alone-2, build 7, UNBAKED): z-fight 0, clash 0, Opening clear 0, walk
+  boundary 33/33 legs blocked, walk routes LINCOLN / OUR SIDEWALK / B SIDEWALK / MARLEY 0 blocked. App from build 3 (before Marley and the
+  boundary): ~/.cache/home-alone-perf/build/HomeAloneNB.app. The one-line `Neighborhood(ext, gy)` call in SpecGreybox.cs, the 4 walk
+  routes and PerfProbe's piers/murphys/upwindow poses + `nbold` variant are patches in ~/.cache/home-alone-2/nb-patches (SpecGreybox.cs and
+  PerfProbe.cs were open in another agent's working copy): merge them before the combined build.
+- Next: one combined build + bake + HomeAloneNB3.app; the old-vs-new tour (`perf_probe.sh run` with `-perfposes piers,murphys,upwindow,street
+  -perfab -perfvariants nbold`); the user's walk; then the front-yard trees (PROPOSAL `yard_trees_proposal.png`: film 12030/11908/5545 put
+  two big trunks RIGHT of the portico; needs a solved 12030 camera, and it meets the wet-walk job's drive at x 17.35); WetGround for the
+  street once Scripts/WetGround.cs lands; kerb-cut end caps (a dark slit at the drive mouths in the renders).

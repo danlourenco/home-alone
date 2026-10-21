@@ -118,6 +118,7 @@ load)
   for d in Purchased Models; do   # Models too: a generated GLB placed as a store prop (KevinArmchair.glb) came up magenta in the walk (Oct 18)
     [ -d "$S/Assets/$d" ] && (cd "$S/Assets" && find "$d" -name '*_HDRP.mat*') | while read -r f; do cp "$S/Assets/$f" "$P/Assets/$f"; done
   done
+  [ -d "$S/Assets/Materials/Neighborhood" ] && rsync -a "$S/Assets/Materials/Neighborhood" "$S/Assets/Materials/Neighborhood.meta" "$P/Assets/Materials/"   # the neighbourhood's shared NB_* (HA_NEIGHBORHOOD=1 builds)
   rsync -a "$S/Assets/Materials/Greybox/" "$P/Assets/Materials/Greybox/"; rsync -a "$S/Assets/Textures/Greybox/" "$P/Assets/Textures/Greybox/" 2>/dev/null || true
   # the scene was built against the SCRATCH copy's asset GUIDs: a model or texture new to both projects gets its own GUID in each
   # (the open editor imports it separately), and the loaded scene then shows empty meshes / missing maps (kitchen cabinets, Oct 16).

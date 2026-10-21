@@ -21,7 +21,8 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools/house"))
 from exterior_textures import fetch  # noqa: E402  (Poly Haven download into sfm-work/polyhaven/<id>/)
 
-OUT = ROOT / "unity/HomeAlone/Assets/Textures/Neighborhood"
+import os
+OUT = Path(os.environ["NB_TEX"]) if os.environ.get("NB_TEX") else ROOT / "unity/HomeAlone/Assets/Textures/Neighborhood"   # NB_TEX: a staging dir (one builder: never write Assets mid-build)
 PX = 1024
 # set: (Poly Haven id or None, tile_m = the scan's real width (Poly Haven 'dimensions'), neutral linear albedo mean or None (keep colour), smoothness)
 SETS = {
@@ -106,7 +107,110 @@ def shingle():
     return np.repeat(lum[..., None], 3, -1), nrm, ao, 0.75 + 0 * h
 
 
+# ---------------------------------------------------------------- step 3 (Oct 20): cards and the patchy ground
+def _blur(a, r):
+    from PIL import ImageFilter
+    return np.asarray(Image.fromarray((np.clip(a, 0, 1) * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(r)), np.float32) / 255
+
+
+def room_cards():
+    """Lit-window interiors, a 2x2 atlas (512 px each, sRGB, used as albedo AND emissive map of NB_GlassLit): what the film's lit windows
+    show at night (11581/11556): warm lamp-lit rooms behind (0) ivory sheers + side drapes, (1) open drapes, a table lamp, a picture,
+    (2) a roller shade half down (the upper right window), (3) a Christmas tree behind half-open blinds. Values are radiance-like (the
+    material's emissive intensity sets the absolute level); a window shows one quadrant across all its panes (nb_house UVs)."""
+    from PIL import ImageDraw
+    N = 512; rng = np.random.default_rng(3); out = np.zeros((2 * N, 2 * N, 3), np.float32)
+    yy, xx = np.mgrid[0:N, 0:N] / N
+    for k in range(4):
+        wall = np.array([[1.0, 0.78, 0.52], [0.95, 0.70, 0.45], [1.0, 0.74, 0.50], [0.92, 0.66, 0.42]][k])
+        lx, ly = [(0.30, 0.45), (0.72, 0.55), (0.5, 0.40), (0.25, 0.5)][k]
+        lamp = np.exp(-((xx - lx) ** 2 + (yy - ly) ** 2) / 0.06)
+        img = wall[None, None] * (0.38 + 0.62 * lamp[..., None])
+        img[yy > 0.84] *= 0.35                                            # floor / furniture band
+        img[yy < 0.06] *= 1.15                                            # ceiling wash
+        im = Image.fromarray((np.clip(img, 0, 1) * 255).astype(np.uint8)); d = ImageDraw.Draw(im)
+        if k == 1:
+            d.rectangle([60, 330, 300, 440], fill=(70, 38, 24)); d.rectangle([330, 150, 430, 230], fill=(90, 60, 30)); d.rectangle([340, 160, 420, 220], fill=(150, 120, 80))
+            d.polygon([(340, 230), (400, 230), (420, 280), (320, 280)], fill=(255, 225, 160)); d.rectangle([365, 280, 375, 330], fill=(60, 40, 20))
+        if k == 3:   # tree with C7-ish dots
+            d.polygon([(256, 70), (120, 470), (392, 470)], fill=(25, 60, 30))
+            for _ in range(70):
+                x, y = rng.integers(140, 372), rng.integers(110, 460)
+                if abs(x - 256) < (y - 70) * 0.34: d.ellipse([x - 5, y - 5, x + 5, y + 5], fill=tuple(int(c) for c in rng.choice([[255, 40, 20], [40, 230, 60], [255, 150, 30], [60, 90, 255], [255, 240, 200]])))
+        a = np.asarray(im, np.float32) / 255
+        a[:, :8] = 0; a[:, -8:] = 0; a[:8] = 0
+        if k in (0, 1):   # side drapes (deep red / ivory), gathered: vertical folds, backlit a little at the edges
+            col = np.array([0.55, 0.12, 0.08]) if k == 1 else np.array([0.85, 0.80, 0.68])
+            fold = 0.75 + 0.25 * np.sin(xx * 90) ** 2
+            for x0, x1 in ((0.0, 0.17), (0.83, 1.0)):
+                m = (xx >= x0) & (xx <= x1); a[m] = (col[None] * fold[m][:, None]) * (0.55 if k == 0 else 0.35)
+        if k == 0:        # sheer: a bright, soft veil over the middle (the lamp glows through it)
+            veil = 0.55 + 0.1 * np.sin(xx * 140) ** 2
+            m = (xx > 0.17) & (xx < 0.83); a[m] = a[m] * (1 - veil[m][:, None] * 0.6) + np.array([1.0, 0.86, 0.66]) * veil[m][:, None] * 0.6 * (0.5 + 0.5 * lamp[m][:, None])
+        if k == 2:        # roller shade, 42 % down: lit from behind (warm, flat), a pull ring
+            m = yy < 0.42; a[m] = np.array([0.95, 0.78, 0.52]) * (0.55 + 0.25 * lamp[m][:, None]); a[(yy > 0.40) & (yy < 0.43)] *= 0.5
+        if k == 3:        # blinds over the top half
+            m = (yy < 0.5) & ((yy * 40) % 1 < 0.45); a[m] *= 0.45
+        out[(k // 2) * N:(k // 2 + 1) * N, (k % 2) * N:(k % 2 + 1) * N] = a
+    OUT.mkdir(parents=True, exist_ok=True)
+    Image.fromarray((np.clip(out, 0, 1) * 255).astype(np.uint8)).save(OUT / "room_cards.png")
+
+
+def tree_cards():
+    """Tier 4 treeline: 4 bare winter tree silhouettes side by side (RGBA 2048 x 1024; each 512 wide), a crown of recursive branches
+    over a trunk, alpha = branch coverage (blurred twigs give the film's grey haze of a bare crown at 160-220 m). Dark bark grey,
+    a little snow on the upper sides of limbs. Card aspect 1:2 (w:h)."""
+    from PIL import ImageDraw
+    W, H = 512, 1024; atlas = Image.new("RGBA", (4 * W, H), (0, 0, 0, 0)); rng = np.random.default_rng(17)
+    for k in range(4):
+        im = Image.new("L", (W, H), 0); d = ImageDraw.Draw(im)
+        def br(x, y, ang, L, w, depth):
+            x2, y2 = x + L * np.cos(ang), y - L * np.sin(ang)
+            d.line([(x, y), (x2, y2)], fill=255, width=max(1, int(w)))
+            if depth == 0 or w < 0.8: return
+            for _ in range(2 if depth > 5 else rng.integers(2, 4)):
+                br(x2, y2, ang + rng.normal(0, 0.42), L * rng.uniform(0.68, 0.8), w * 0.66, depth - 1)
+        trunk_h = [0.26, 0.22, 0.32, 0.24][k] * H
+        d.line([(W / 2, H), (W / 2, H - trunk_h)], fill=255, width=[22, 18, 16, 20][k])
+        for a0 in ([0.95, 1.35, 1.8, 2.2] if k != 2 else [1.2, 1.6, 1.95]):
+            br(W / 2, H - trunk_h, a0 + rng.normal(0, 0.1), [150, 165, 140, 155][k], [15, 13, 12, 14][k], 9)
+        a = np.asarray(im, np.float32) / 255
+        a = np.maximum(a, np.minimum(_blur(a, 7) * 1.5, 0.55))           # the twig haze, see-through
+        a = np.clip(a, 0, 1)
+        snow = np.clip(np.roll(a, -2, 0) - a, 0, 1) * 0.0 + np.clip(a - np.roll(a, 3, 0), 0, 1)
+        rgb = np.dstack([0.16 + 0.5 * snow, 0.15 + 0.5 * snow, 0.15 + 0.52 * snow])
+        tile = Image.fromarray((np.dstack([np.clip(rgb, 0, 1), a]) * 255).astype(np.uint8), "RGBA")
+        atlas.paste(tile, (k * W, 0))
+    OUT.mkdir(parents=True, exist_ok=True); atlas.save(OUT / "tree_cards.png")
+
+
+def snow_patchy():
+    """The film's patchy front-yard snow (11581/11626: grass and wet leaf litter through thin snow, snow kept in the shade and on the
+    parkway banks): Poly Haven snow_02 over brown_mud_leaves_01 by a 2-scale noise mask, 6 m tile. Used for lawns (not walks)."""
+    a = fetch("snow_02", "1k"); b = fetch("brown_mud_leaves_01", "1k"); P2 = 2048
+    def I(d, n, cs="RGB"): return np.asarray(Image.open(d / f"{n}.jpg").convert(cs).resize((P2 // 3 + 1, P2 // 3 + 1), Image.LANCZOS), np.float32) / 255
+    def T(x): return np.tile(x, (3, 3) + ((1,) if x.ndim == 3 else ()))[:P2, :P2]
+    rng = np.random.default_rng(23); g = rng.random((24, 24)); g = np.tile(g, (2, 2))
+    big = np.asarray(Image.fromarray((g * 255).astype(np.uint8)).resize((2 * P2, 2 * P2), Image.BICUBIC), np.float32)[:P2, :P2] / 255
+    sm = rng.random((128, 128)); sm = np.asarray(Image.fromarray((np.tile(sm, (2, 2)) * 255).astype(np.uint8)).resize((2 * P2, 2 * P2), Image.BICUBIC), np.float32)[:P2, :P2] / 255
+    m = _blur(np.clip((0.6 * big + 0.4 * sm - 0.30) * 5, 0, 1), 3)          # 1 = snow (about 80 %)
+    m = m[..., None]
+    alb = T(I(a, "albedo")) ** 2.2 * m + (lambda c: c.mean(-1, keepdims=True) * 0.6 + c * 0.4)(T(I(b, "albedo")) ** 2.2) * np.array([0.9, 0.75, 0.6]) * (1 - m)
+    nrm = (T(I(a, "normal")) * m + T(I(b, "normal")) * (1 - m)) * 2 - 1
+    ao = T(I(a, "ao", "L")) * m[..., 0] + T(I(b, "ao", "L")) * (1 - m[..., 0]); rough = T(I(a, "rough", "L")) * m[..., 0] + 0.45 * (1 - m[..., 0])
+
+    save(OUT / "snow_patchy", alb, nrm, ao, rough)
+
+
+def step3():
+    room_cards(); tree_cards(); snow_patchy()
+    kp = OUT / "kit_textures.json"; meta = json.loads(kp.read_text()) if kp.exists() else json.loads((ROOT / "unity/HomeAlone/Assets/Textures/Neighborhood/kit_textures.json").read_text())
+    meta["snow_patchy"] = {"tile_m": 6.0, "smooth": 0.3, "source": "Poly Haven snow_02 + brown_mud_leaves_01, noise mask (tools/house/nb_textures.py)", "licence": "CC0"}
+    kp.write_text(json.dumps(meta, indent=1)); print("step3: room_cards.png, tree_cards.png, snow_patchy")
+
+
 def main():
+    if "--step3" in sys.argv: return step3()
     meta = {}
     for name, (aid, tile, neutral, smooth) in SETS.items():
         d = fetch(aid, "1k")
