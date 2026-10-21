@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """walk_notes.py: every M walk note must get a disposition, so none slips (Oct 20: the 19:04 French-window note was never queued).
-Notes come from spec/feedback/feel-notes.jsonl; dispositions live in docs/walk-notes-ledger.json keyed by the note's time.
+Notes come from spec/feedback/feel-notes.jsonl and the built app's feedback folder; dispositions live in docs/walk-notes-ledger.json keyed by the note's time.
 
   python3 tools/house/walk_notes.py                       # list notes since the ledger start with no disposition (exit 1 if any)
   python3 tools/house/walk_notes.py set TIME STATUS TEXT  # TIME = "2026-10-19T19:04" (prefix ok); STATUS = fixed|open|queued|wontfix|info
@@ -13,12 +13,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 NOTES = ROOT / "spec/feedback/feel-notes.jsonl"
+APP_NOTES = Path.home() / "Library/Application Support/HomeAloneLocal/HomeAlone/feedback/feel-notes.jsonl"   # notes made in a built app (Oct 21: one was missed)
 LEDGER = ROOT / "docs/walk-notes-ledger.json"
 STATUSES = {"fixed", "open", "queued", "wontfix", "info"}
 
 
 def notes():
-    return [json.loads(l) for l in NOTES.read_text().splitlines() if l.strip()]
+    return [json.loads(l) for f in (NOTES, APP_NOTES) if f.exists() for l in f.read_text().splitlines() if l.strip()]
 
 
 def ledger():

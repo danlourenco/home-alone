@@ -179,6 +179,10 @@
   "2026-10-20T14:16:50": {
    "status": "fixed",
    "what": "facade sun: hidden envelope skin + untagged overhang; Facade sun check; user accepted the exterior Oct 20"
+  },
+  "2026-10-21T06:45:32": {
+   "status": "queued",
+   "what": "mailbox/lantern materials, upstairs baseboards drawn outside (gate added), brick centre cause test pending: NB agent prep"
   }
  },
  "since": "2026-10-19"
