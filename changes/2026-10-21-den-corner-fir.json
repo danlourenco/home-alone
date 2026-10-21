@@ -1,0 +1,83 @@
+{
+ "gate": 8,
+ "change": "Decoration (props lane): the den-corner Poly Haven fir (spec/dressing/exterior_plants.json, kind fir) moved from (11.4, 21.2) to (12.2, 19.95), off the side drive into the den section's bed; ExteriorPlants.glb rebuilt (tools/house/build_models.py)",
+ "target": "House_WallGrid",
+ "premise": "The fir is bed planting at the den end of the front beds; at z 21.2 it stood past the den section's end (z 20.057) on the side drive (walk note 2026-10-19T12:33:25 'tree should not be growing in driveway', with its shot)",
+ "claim": {
+  "value": {
+   "fir_x": 12.2,
+   "fir_z": 19.95,
+   "inside_den_bed_z_max": 20.157
+  },
+  "data": [
+   "spec:exterior_shell.den"
+  ],
+  "scale": [
+   "spec:geometry"
+  ],
+  "upstream": [
+   "spec:geometry"
+  ],
+  "how": "The den section's front runs z 16.21-20.057 (spec/exterior_shell.json sections.den; its bed to its brick end 20.157, SpecGreybox.Shell beds); the fir's 1.3 m crown centred at z 19.95, x 12.2 sits in the bed's corner, 1.5 m from the small boxwood at (13.75, 19.8) and 2.1 m from the round shrub at (10.25, 19.25); SpecGreybox.Shell drops each plant onto the bed by a ray",
+  "applies_to": [
+   "front_beds"
+  ],
+  "measured_in": [
+   "front_beds"
+  ],
+  "alternatives": [
+   "the fir at (11.4, 21.2) on the side drive (before)",
+   "the fir in the den bed's corner (12.2, 19.95) (built)",
+   "no fir at the den corner"
+  ],
+  "layout": {
+   "decides": [
+    {
+     "part": "which side of the den bed's end wall (z 20.157) the fir stands",
+     "observed_in": [
+      "walk-shot:20261019-123311",
+      "render:spec/captures/views/den-corner-fir/before.png"
+     ],
+     "extrapolated": false
+    }
+   ]
+  }
+ },
+ "history": [
+  {
+   "date": "2026-10-18",
+   "what": "fir placed at (11.4, 21.2) in the exterior polish (decoration)",
+   "outcome": "failed",
+   "ref": "walk note 2026-10-19T12:33:25"
+  }
+ ],
+ "premise_reviewed": "",
+ "checks": [
+  {
+   "what": "The user's walk shot (spec/feedback/shots/20261019-123311-House_WallGrid.png, pose spec (14.6, 22.0) looking -x): the fir stands on the wet asphalt of the side drive, outside the brick bed wall that ends at the den corner",
+   "data": [
+    "walk-shot:20261019-123311"
+   ],
+   "scale": [
+    "none"
+   ],
+   "upstream": [],
+   "type": "topological",
+   "agrees": true,
+   "pick": {
+    "crop": "spec/feedback/shots/20261019-123311-House_WallGrid.png",
+    "confirmed_by": "the user's own walk note on that shot ('tree should not be growing in driveway')"
+   }
+  }
+ ],
+ "renders": {
+  "before": [
+   "spec/captures/views/den-corner-fir/before.png",
+   "spec/feedback/shots/20261019-123311-House_WallGrid.png"
+  ],
+  "after": [
+   "spec/captures/views/den-corner-fir/after.png"
+  ]
+ },
+ "user_walk": "pending"
+}
