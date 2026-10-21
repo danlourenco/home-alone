@@ -2,19 +2,20 @@
 
 ## BUDGET (the gates read this table: `perf_probe.sh gate LABEL`, `unity_practices.py` shadowbudget, the build's ShadowBudget line)
 
-Target (Oct 20): 16.7 ms frame MEAN (60 fps) at every tour pose, with 3 ms held back for the neighbourhood, so the house today gets
-13.7 ms. Motion steps (PerfProbe `door-*`, `can-*`: 10 s after the front door opens / a paint can is knocked) get the same mean and a
-time to rest. `static-*` rows are scene/settings limits checked without a tour; lower them when a change is accepted (never raise
-one to pass). First matching row wins.
+**Floor (Oct 20, user): 30 fps = 33.3 ms frame MEAN at every tour pose, day and night, windowed 1920x1080 AND full screen on the 5K
+Studio Display: the gate FAILS over it.** Target: 60 fps = 16.7 ms, with 3 ms held back for the neighbourhood, so the house today gets
+13.7 ms: reported as OVER TARGET, not failed. Motion steps (PerfProbe `door-*`, `can-*`: 10 s after the front door opens / a paint can is
+knocked) get the same floor and target and a time to rest (failed). `static-*` rows are scene/settings limits checked without a tour
+(`unity_practices.py` reads their floor column); lower them when a change is accepted (never raise one to pass). First matching row wins.
 
-| pose | mean ms | rest s |
-|---|---|---|
-| static-shadowed-lights | 60 | - |
-| static-sun-distance | 80 | - |
-| static-street-casters | 4100 | - |
-| door-* | 13.7 | 2 |
-| can-* | 13.7 | 10 |
-| * | 13.7 | - |
+| pose | floor ms (gate: 30 fps) | target ms (60 fps) | rest s |
+|---|---|---|---|
+| static-shadowed-lights | 60 | - | - |
+| static-sun-distance | 80 | - | - |
+| static-street-casters | 4100 | - | - |
+| door-* | 33.3 | 13.7 | 2 |
+| can-* | 33.3 | 13.7 | 10 |
+| * | 33.3 | 13.7 | - |
 
 ## PERF PASS 1 (Oct 20, evening): what changed, measured in-session A/B in the standalone app
 
@@ -276,3 +277,37 @@ Unlike the 1080p A/B above, 5K full screen IS pixel-bound. Still far from 60 fps
 than the 1920x1080 window's native frame (foyer night 71 vs 34 ms): STP's 5K output and everything after it (post, UI) runs at 5K.
 Next levers: STP injection point after post (`STPInjectionPoint` in HDRP.asset; post at the internal size), or full screen at the
 display's "looks like" 2560x1440 size.
+
+## 30 fps floor (Oct 20, night; user: "30 fps is the floor, 60 the target, windowed and full screen 5K")
+The BUDGET table above now gates on the floor (33.3 ms mean; `perf_table.py --gate` FAILS over it) and reports the 60 fps target
+column as OVER TARGET. Against the Oct 20 windowed baseline (`rel-oct20`): 1 FAIL (foyer night 34.2 ms), 9 more over target. Full
+screen 5K at auto (`fs5k-scale`, 38-40%): every pose but living night misses the floor (38%: street day 46.8 ms, foyer night 58.8, hall night 42.2, kitchen night 53.3).
+
+**Phase A, the 5K tax (prepared; tour pending the user's go).** Three levers, each a PerfProbe variant (in-session, no rebuild between):
+- `inject=after` (also `dof`, `before`): STP's injection point (`RenderScale.Injection`; HDRP.asset `STPInjectionPoint` 0 = BeforePost,
+  so bloom, tonemapping and the rest of post run at 5K). AfterPost runs post at the internal size; STP then upscales the tonemapped
+  image. Switched at runtime through the asset's serialized settings (the public setter calls OnValidate, which re-creates HDRP).
+- `screen=2560x1440`: the backbuffer at the display's "looks like" size, full screen (the OS scales it to the panel). JSON `screen` and
+  `backbuffer` (Display.main.rendering size) record what the player got; the sheet scales such a frame to the panel's pixels before
+  the 1:1 crop, so tiles compare the same panel area. AUTO there is 80% = 2048x1152 internal, the same as 40% of 5K.
+- `scale=adaptive` (`RenderScale` mode -1, P cycles auto/adaptive/100/75/50/38): auto's size is the ceiling; per 0.5 s window, a frame
+  mean over 33.3 ms steps down 5 points, under 25 ms steps up; never below ~720 px high; a step down that doesn't cut the mean by 3%
+  is undone and held 30 s (STP's fixed cost in a 1080p window). JSON `frame_log.scale` is the per-frame percent.
+- `-perfbasescale auto`: the base is today's shipped AUTO (default base stays 100 = native).
+Tour (one session, full screen on the Studio Display; keys of one variant joined by `+`):
+```
+HA_DISPLAY="Studio Display" HA_PERF_ARGS='-perfab -perfrounds 1 -perfbasescale auto -perfposes street-day,foyer,hall-night,living-night,kitchen-night -perfvariants inject=after;screen=2560x1440;scale=adaptive;screen=2560x1440+inject=after;screen=2560x1440+inject=after+scale=adaptive' tools/house/perf_probe.sh run fs5k-phaseA
+```
+Each sample's JSON also lists the transparent materials in the camera's frustum (`transparents`: material -> renderers), the
+inventory Phase B needs.
+
+**Phase B, the night content (prepared; each its own A/B with a sheet, no visible change shipped without the user's pick):**
+- transparents: `hide=T1,T2` (renderers with a material whose name contains a token switched off: the upper bound of what they cost)
+  and `lowres=T1,T2|all` (HDRP's low-resolution transparent pass: quarter pixels, checkerboard depth, depth-aware upsample, so every
+  lamp is evaluated for a quarter of the sheer/glass pixels; no shader variant change, only the material's render queue). Tokens
+  from the Phase A `transparents` inventory (HiFi_Sheer also matches HiFi_SheerShade, the lamp shades). Windowed, night:
+  `HA_PERF_ARGS='-perfab -perfdn night -perfposes foyer,hall -perfvariants hide=Sheer,Voile;hide=Glass;lowres=Sheer,Voile;lowres=all'`.
+- lamp ranges per room: `fit=M`, each lamp's range = its room's extent + M m (the 90th percentile of 128 ray hits against the
+  colliders: the rays out through doorways are the top 10%), never above its own range. Runtime stand-in for room bounds; the pick gets
+  written into the lamp builders. `HA_PERF_ARGS='-perfab -perfdn night -perfposes foyer,hall,living,kitchen,parents -perfvariants fit=1;fit=2;range=0.7'`
+  windowed, then the same with `HA_DISPLAY="Studio Display"`.

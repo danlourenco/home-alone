@@ -18,6 +18,7 @@ using UnityEngine;
 public class PerfProbe : MonoBehaviour
 {
     public static string Last = "";
+    static string injectNow = "asset";
     static readonly HashSet<string> MARKERS = new HashSet<string> { "RenderShadowMaps", "BlitPunctualMixedCachedShadowMaps", "BlitDirectionalMixedCachedShadowMaps",
         "UpdateReflectionProbeAtlas", "ConvolveReflectionProbe", "ConvolvePlanarReflectionProbe", "ConvertReflectionProbe", "APVCellStreamingUpdate",
         "APVDiskStreamingUpdate", "APVScenarioBlendingUpdate", "APVIndexDefragUpdate", "GC.Collect", "Gfx.WaitForPresentOnGfxThread", "Shader.CreateGPUProgram" };
@@ -108,11 +109,14 @@ public class PerfProbe : MonoBehaviour
         //                         sampled A1 B1 C1 .. A2 B2 C2 ..). Keys: sundist=M (sun shadow max distance), splits=a,b,c (cascade
         //                         splits), cascades=N, nocast=props|interior|exterior (those renderers stop casting shadows: an
         //                         attribution of the day shadow cost, not a look), wb=T (night interior white balance, base 0), scale=P (render
-        //                         scale %, STP; base 100 = native).
+        //                         scale %, auto or adaptive; STP; base -perfbasescale, default 100 = native), inject=before|dof|after (STP's
+        //                         injection point), screen=WxH (backbuffer size, e.g. 2560x1440 full screen on the 5K display).
+        //                         Phase B: hide=T1,T2 (renderers with those materials off), lowres=T1,T2|all (low-res transparent pass),
+        //                         fit=M (lamp range = room extent + M m). Keys of one variant: space or '+' separated.
         //                         Without it the knobs above are the one variant B.
         //   -perfdn day|night     just day or night
         var variants = (Arg("-perfvariants") ?? "").Split(new[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries)
-            .Select(v => v.Split(new[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries).Select(kv => kv.Split('=')).ToDictionary(kv => kv[0], kv => kv.Length > 1 ? kv[1] : "")).ToList();
+            .Select(v => v.Split(new[] { ' ', '+' }, System.StringSplitOptions.RemoveEmptyEntries).Select(kv => kv.Split('=')).ToDictionary(kv => kv[0], kv => kv.Length > 1 ? kv[1] : "")).ToList();   // '+' joins keys too (perf_probe.sh word-splits HA_PERF_ARGS)
         int nVar = Mathf.Max(variants.Count, 1);
         int rounds = int.Parse(Arg("-perfrounds") ?? "2");   // -perfrounds 1: each variant sampled once per pose (shorter A/B tours)
         var steps = ab ? Enumerable.Range(0, rounds).SelectMany(r => Enumerable.Range(0, nVar + 1).Select(v => (char)('A' + v) + (r + 1).ToString())).ToArray() : new[] { "" };
@@ -132,6 +136,20 @@ public class PerfProbe : MonoBehaviour
         var casterGroup = casters.Select(c => Group(c.r)).ToList();
         var offUsed = new Dictionary<UnityEngine.Rendering.HighDefinition.FrameSettingsField, (bool on, bool masked)>(); bool customRendering0 = hd != null && hd.customRenderingSettings;
         var link0 = lampHd.ToDictionary(x => x.hd, x => x.hd.linkShadowLayers); var mask0 = lampHd.ToDictionary(x => x.l, x => x.l.renderingLayerMask); bool zonesWereOff = false;
+        var hidden = new Dictionary<Renderer, bool>(); var queue0 = new Dictionary<Material, int>(); var extent = new Dictionary<Light, float>();
+        float RoomExtent(Light l)
+        {
+            if (extent.TryGetValue(l, out var e)) return e;
+            var d = new List<float>(); var o = l.transform.position;
+            for (int k = 0; k < 128; k++)   // Fibonacci sphere
+            {
+                float y = 1f - 2f * (k + 0.5f) / 128f, rr = Mathf.Sqrt(1f - y * y), ph = k * 2.39996323f;
+                d.Add(Physics.Raycast(o, new Vector3(Mathf.Cos(ph) * rr, y, Mathf.Sin(ph) * rr), out var h, l.range, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore) ? h.distance : l.range);
+            }
+            d.Sort(); return extent[l] = d[(int)(0.9f * (d.Count - 1))];
+        }
+        string baseScale = Arg("-perfbasescale") ?? "100";   // -perfbasescale auto: the base is the shipped AUTO scale (Phase A, Oct 20)
+        var screen0 = new Vector2Int(Screen.width, Screen.height);
         void Apply(int v) => ApplyV(v > 0, v > 0 && variants.Count > 0 ? variants[v - 1] : null);
         void ApplyV(bool variant, Dictionary<string, string> spec)
         {
@@ -155,6 +173,25 @@ public class PerfProbe : MonoBehaviour
             var mr = spec == null ? mirrorRes : S("mirror") is string m ? new[] { mirrorRes.Length > 0 ? mirrorRes[0] : int.Parse(m), int.Parse(m) } : mirrorRes.Take(1).ToArray();
             var offV = spec == null ? off : L("off", null).Select(f => (UnityEngine.Rendering.HighDefinition.FrameSettingsField)System.Enum.Parse(typeof(UnityEngine.Rendering.HighDefinition.FrameSettingsField), f)).ToList();
             foreach (var (l, range) in lamps) l.range = variant ? range * rk : range;
+            // fit=M (Phase B, lamp ranges per room): each lamp's range = its room's extent + M metres (the doorway margin), never above
+            // its own range. Room extent = the 90th percentile of 128 rays' hit distances against the colliders (walls, floors, ceilings;
+            // the rays that escape through doorways are the top 10%). A runtime stand-in for room bounds: measure first, then write the pick
+            if (S("fit") is string fs) { float fm = float.Parse(fs, System.Globalization.CultureInfo.InvariantCulture); foreach (var (l, range) in lamps) l.range = Mathf.Min(l.range, RoomExtent(l) + fm); }
+            // hide=T1,T2: renderers with a material whose name contains a token are switched off (what those transparents cost, an upper
+            // bound, not a look); lowres=T1,T2|all: transparent materials whose name contains a token draw in HDRP's low-resolution
+            // transparent pass (quarter pixels, depth-aware upsample: each lamp is evaluated for a quarter of the pixels). Restored in the base
+            foreach (var kv in hidden) kv.Key.enabled = kv.Value; hidden.Clear();
+            foreach (var kv in queue0) kv.Key.renderQueue = kv.Value; queue0.Clear();
+            var hideT = L("hide", new string[0]); var lowT = L("lowres", new string[0]);
+            if (hideT.Length + lowT.Length > 0)
+                foreach (var r in FindObjectsByType<Renderer>(FindObjectsInactive.Include))
+                    foreach (var mt in r.sharedMaterials)
+                    {
+                        if (!mt) continue;
+                        if (hideT.Any(t => mt.name.Contains(t)) && !hidden.ContainsKey(r)) { hidden[r] = r.enabled; r.enabled = false; }
+                        if (mt.renderQueue > 2500 && (lowT.Contains("all") || lowT.Any(t => mt.name.Contains(t))) && !queue0.ContainsKey(mt))
+                        { queue0[mt] = mt.renderQueue; UnityEngine.Rendering.HighDefinition.HDMaterial.SetRenderingPass(mt, UnityEngine.Rendering.HighDefinition.HDMaterial.RenderingPass.LowResolution); }
+                    }
             foreach (var (l, lhd, sh, b, f) in lampHd)
             {
                 if (pc.Length == 2 || pcss.Length == 2) { lhd.blockerSampleCount = variant && pc.Length == 2 ? pc[0] : b; lhd.filterSampleCount = variant && pc.Length == 2 ? pc[1] : f; }
@@ -162,9 +199,17 @@ public class PerfProbe : MonoBehaviour
             }
             if (mirror && mr.Length > 0)
                 mirror.settingsRaw.resolutionScalable.@override = (UnityEngine.Rendering.HighDefinition.PlanarReflectionAtlasResolution)(variant && mr.Length > 1 ? mr[1] : mr[0]);
-            // scale=P (alias res=P): render at P% and STP-upscale (RenderScale; HDRP dynamic resolution); base 100 = native, no STP.
-            // The tour never uses the player's saved scale (PlayerPrefs): 100 unless the variant says otherwise
-            RenderScale.Set(spec != null && (S("scale") ?? S("res")) is string rp ? float.Parse(rp, System.Globalization.CultureInfo.InvariantCulture) : 100f, false);
+            // scale=P (alias res=P): render at P% and STP-upscale (RenderScale; HDRP dynamic resolution); P = auto | adaptive | a percent.
+            // The tour never uses the player's saved scale (PlayerPrefs): the base is -perfbasescale (default 100 = native, no STP)
+            float Pct(string v) => v == "auto" ? 0f : v == "adaptive" ? -1f : float.Parse(v, System.Globalization.CultureInfo.InvariantCulture);
+            RenderScale.Set(Pct(spec != null && (S("scale") ?? S("res")) is string rp ? rp : baseScale), false);
+            // inject=before|dof|after: STP's injection point (HDRP.asset: before = post at the output size); the base is the asset's
+            injectNow = RenderScale.Injection(S("inject") switch { "after" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.AfterPost, "dof" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.AfterDepthOfField,
+                "before" => UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType.BeforePost, _ => (UnityEngine.Rendering.DynamicResolutionHandler.UpsamplerScheduleType?)null });
+            // screen=WxH: the backbuffer (full screen: the OS / Unity scale it to the panel, e.g. 2560x1440 = the Studio Display's "looks
+            // like" size); the base is the size the tour started at. The JSON records what the player got (screen, backbuffer)
+            var wh = (S("screen") ?? $"{screen0.x}x{screen0.y}").Split('x').Select(int.Parse).ToArray();
+            if (Screen.width != wh[0] || Screen.height != wh[1]) Screen.SetResolution(wh[0], wh[1], Screen.fullScreenMode);
             // sunless=on: the never-sunlit pieces (SpecGreybox.SunCull) cast into the sun's cascades again by day
             if (night && !night.night)
                 for (int k = 0; k < night.sunlessCasters.Length && k < night.sunlessModes.Length; k++)
@@ -207,7 +252,7 @@ public class PerfProbe : MonoBehaviour
                 foreach (var step in steps)
                 {
                     if (ab) Apply(step[0] - 'A');
-                    for (int w = 0; w < 120; w++) yield return null;   // warm-up: streaming, cached shadows, exposure
+                    for (int w = 0; w < 120; w++) yield return null;   // warm-up: streaming, cached shadows, exposure (and a screen= resize)
                     string t = ab ? tag + "-" + step : tag;
                     yield return Sample(t, ab ? 150 : 300, dir);
                     if (step == "" || step.EndsWith(rounds.ToString())) { ScreenCapture.CaptureScreenshot(Path.Combine(dir, t + ".png")); yield return null; yield return null; }
@@ -284,12 +329,19 @@ public class PerfProbe : MonoBehaviour
         UnityEngine.Rendering.RenderPipelineManager.beginCameraRendering += onCam;
         int gc0 = System.GC.CollectionCount(0), sh0 = ShadowRefresh.Requests;
         var cpu = new List<float>(); var gpu = new List<double>(); var main = new List<double>(); var rend = new List<double>(); var ft = new FrameTiming[1];
+        var scaleLog = new List<float>();
         var movLog = new List<int>(); var lampLog = new List<string>(); ShadowRefresh.Drawn.Clear();
+        // the transparent materials the camera's frustum holds (Phase B: which glass / sheers a view draws), material -> renderers
+        var planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+        var transp = FindObjectsByType<Renderer>().Where(r => r.enabled && GeometryUtility.TestPlanesAABB(planes, r.bounds))
+            .SelectMany(r => r.sharedMaterials.Where(m => m && m.renderQueue > 2500).Select(m => m.name + (m.renderQueue >= 3300 ? " (lowres)" : ""))).GroupBy(n => n)
+            .OrderByDescending(g => g.Count()).Select(g => $"\"{g.Key.Replace("\"", "'")}\":{g.Count()}");
+        string transpJ = "{" + string.Join(",", transp) + "}";
         start?.Invoke(); float t0 = Time.unscaledTime;
         for (int i = 0; seconds > 0f ? Time.unscaledTime - t0 < seconds : i < frames; i++)
         {
             yield return null;
-            movLog.Add(moving != null && moving() ? 1 : 0);
+            movLog.Add(moving != null && moving() ? 1 : 0); scaleLog.Add(Mathf.Round(RenderScale.Percent));
             lampLog.Add("\"" + string.Join(" ", ShadowRefresh.Drawn) + "\""); ShadowRefresh.Drawn.Clear();
             cpu.Add(Time.unscaledDeltaTime * 1000f);
             int gc = System.GC.CollectionCount(0), sh = ShadowRefresh.Requests;
@@ -310,7 +362,7 @@ public class PerfProbe : MonoBehaviour
         string Arr<T>(IEnumerable<T> l) => "[" + string.Join(",", l.Select(x => System.Convert.ToString(x, System.Globalization.CultureInfo.InvariantCulture))) + "]";
         string flog = "{\"ms\":" + Arr(cpu.Select(x => System.Math.Round(x, 1))) + ",\"gpu_ms\":" + Arr(vals["gpu_frame_ns"].Select(x => System.Math.Round(x / 1e6, 1)))
             + ",\"gc\":" + Arr(gcLog) + ",\"shadow_requests\":" + Arr(shLog) + ",\"reflection_renders\":" + Arr(reflLog) + ",\"lights_on\":" + Arr(lightLog)
-            + ",\"moving\":" + Arr(movLog) + ",\"shadow_lamps\":[" + string.Join(",", lampLog) + "]"
+            + ",\"moving\":" + Arr(movLog) + ",\"scale\":" + Arr(scaleLog) + ",\"shadow_lamps\":[" + string.Join(",", lampLog) + "]"
             + ",\"markers_us\":{" + string.Join(",", mlog.Select(kv => $"\"{kv.Key}\":" + Arr(kv.Value.Select(v => v / 1000)))) + "}}";
         foreach (var k in new[] { "sys_mem_mb", "gfx_mem_mb" }) vals[k] = vals[k].Select(v => v >> 20).ToList();
         int rt = 0, rtShadow = 0;   // lights drawn in real time (not fully baked), and those casting shadows
@@ -330,7 +382,7 @@ public class PerfProbe : MonoBehaviour
         Last = "{" + $"\"name\":\"{name}\",\"frames\":{frames},\"rest_s\":{rest},\"cpu_ms_median\":{Pct(cpu, 0.5f):F1},\"cpu_ms_p95\":{Pct(cpu, 0.95f):F1},\"cpu_ms_p99\":{Pct(cpu, 0.99f):F1},"
              + $"\"gpu_ms_median\":{gpuS},\"gpu_ms_p10\":{gpu10},\"gpu_ms_p95\":{Q(gpu, 0.95f)},\"gpu_ms_p99\":{Q(gpu, 0.99f)},\"main_ms_median\":{Q(main, 0.5f)},\"render_ms_median\":{Q(rend, 0.5f)},\"rt_lights\":{rt},\"rt_shadow_lights\":{rtShadow}," + string.Join(",", vals.Select(kv => $"\"{kv.Key}\":{Med(kv.Value)}"))
              + ",\"frame_log\":" + flog
-             + $",\"screen\":\"{Screen.width}x{Screen.height}\",\"render_scale\":{RenderScale.Percent:F0},\"internal\":\"{Mathf.RoundToInt(Screen.width * ScalableBufferManager.widthScaleFactor)}x{Mathf.RoundToInt(Screen.height * ScalableBufferManager.heightScaleFactor)}\",\"focused\":{Application.isFocused.ToString().ToLower()},\"cam\":\"{cam.position.x:F2},{cam.position.y:F2},{cam.position.z:F2} yaw {cam.eulerAngles.y:F0}\"" + "}";
+             + $",\"screen\":\"{Screen.width}x{Screen.height}\",\"render_scale\":{RenderScale.Percent:F0},\"internal\":\"{Mathf.RoundToInt(Screen.width * ScalableBufferManager.widthScaleFactor)}x{Mathf.RoundToInt(Screen.height * ScalableBufferManager.heightScaleFactor)}\",\"backbuffer\":\"{Display.main.renderingWidth}x{Display.main.renderingHeight}\",\"inject\":\"{injectNow}\",\"transparents\":{transpJ},\"scale_mode\":\"{RenderScale.Label}\",\"focused\":{Application.isFocused.ToString().ToLower()},\"cam\":\"{cam.position.x:F2},{cam.position.y:F2},{cam.position.z:F2} yaw {cam.eulerAngles.y:F0}\"" + "}";
         var dir = outDir ?? Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/captures/perf")); Directory.CreateDirectory(dir);
         File.WriteAllText(Path.Combine(dir, name + ".json"), Last + "\n");
         if (outDir == null) Destroy(gameObject);

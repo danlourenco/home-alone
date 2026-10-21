@@ -3,8 +3,9 @@
   perf_table.py RUN_DIR             -> one row per pose
   perf_table.py BEFORE_DIR AFTER_DIR -> before -> after per metric, plus the mean RGB difference of the pose PNGs (0-255;
                                        > ~3 means the picture changed: look at both PNGs)
-  perf_table.py --gate RUN_DIR [MD]  -> exit 1 if any pose's frame mean (or a motion step's time to rest) is over its budget in the
-                                       "## BUDGET" table of docs/PERFORMANCE.md (first matching pose pattern wins)
+  perf_table.py --gate RUN_DIR [MD]  -> exit 1 if any pose's frame mean is over its FLOOR (or a motion step's time to rest over its
+                                       budget) in the "## BUDGET" table of docs/PERFORMANCE.md (first matching pose pattern wins); a
+                                       mean over the TARGET column is reported ("over target"), not failed
   perf_table.py --sheet RUN_DIR [POSE ...] [film:N,N,...] [crop:POSE=X,Y ...] -> RUN_DIR/sheet.jpg: the visual comparison (pose rows x
                                        variant columns, FPS on each tile); film:N,... adds a last row of film frames (0-homealone screencaps)
                                        for reference. Frames wider than 2000 px (full screen 5K) get a 1:1 pixel crop under the downsized
@@ -63,8 +64,8 @@ def sheet(d, poses=None, out=None, film=(), crop=None):
     m = re.search(r"-perfvariants\s+['\"]?([^'\"]+)", a)
     for i, v in enumerate(m.group(1).split(";") if m else []):
         names[chr(ord("B") + i)] = v.strip()
-    if "scale=" in a:
-        names["A"] = "scale=100 (native)"
+    if "scale=" in a or "-perfbasescale" in a:
+        bs = re.search(r"-perfbasescale\s+(\S+)", a); names["A"] = f"scale={bs[1]}" if bs else "scale=100 (native)"
     crop = {**CROP, **(crop or {})}
     last = max((int(q.stem[-1]) for q in d.glob("*-A?.json")), default=1)
     letters = ["A"] + sorted({q.stem[-2] for q in d.glob(f"*-?{last}.png")} - {"A"})
@@ -80,7 +81,11 @@ def sheet(d, poses=None, out=None, film=(), crop=None):
             png, js = d / f"{p}-{x}{last}.png", d / f"{p}-{x}{last}.json"
             if not png.exists():
                 continue
-            full = Image.open(png).convert("RGB"); im = full.resize((W, int(full.height * W / full.width)), Image.LANCZOS)
+            full = Image.open(png).convert("RGB")
+            big = max(Image.open(q).width for q in d.glob(f"{p}-?{last}.png"))
+            if full.width < big:   # a smaller backbuffer (screen=WxH) is scaled to the panel by the OS: compare the same panel pixels
+                full = full.resize((big, int(full.height * big / full.width)), Image.BILINEAR)
+            im = full.resize((W, int(full.height * W / full.width)), Image.LANCZOS)
             r = load(d).get(f"{p}-{x}{last}", {}); ms = r.get("frame_ms_mean")
             if full.width > 2000:   # full screen: the downsized frame over a 1:1 pixel crop (the red box) to judge sharpness
                 cx, cy = crop.get(p, (0.5, 0.5)); ch = W * 9 // 16
@@ -151,20 +156,20 @@ def ab(base, variant, pngs=None):
 
 
 def budgets(md):
-    """rows of the '## BUDGET' table: (pose glob, mean ms, rest s or None)"""
+    """rows of the '## BUDGET' table | pose | floor ms | target ms | rest s |: (pose glob, floor ms, target ms or None, rest s or None)"""
     text = Path(md).read_text(); sec = text[text.index("## BUDGET"):]
     rows = []
     for line in sec.splitlines()[1:]:
         if line.startswith("## "):
             break
-        m = re.match(r"\|\s*`?([\w*?\-]+)`?\s*\|\s*([\d.]+)\s*\|\s*([\d.]+|-)\s*\|", line)
+        m = re.match(r"\|\s*`?([\w*?\-]+)`?\s*\|\s*([\d.]+)\s*\|\s*([\d.]+|-)\s*\|\s*([\d.]+|-)\s*\|", line)
         if m:
-            rows.append((m[1], float(m[2]), None if m[3] == "-" else float(m[3])))
+            rows.append((m[1], float(m[2]), *(None if v == "-" else float(v) for v in (m[3], m[4]))))
     return rows
 
 
 def gate(run, md):
-    rows, bad = budgets(md), 0
+    rows, bad, miss = budgets(md), 0, 0
     poses = {k: v for k, v in load(run).items() if not re.search(r"-[A-Z]\d$", k)}   # -perfab samples are not the shipped state
     if not poses:
         print(f"FAIL perf gate: no poses in {run}"); return 1
@@ -173,10 +178,12 @@ def gate(run, md):
         if b is None:
             print(f"FAIL {pose}: no budget row"); bad += 1; continue
         mean, rest = r.get("frame_ms_mean"), r.get("rest_s")
-        over = mean is None or mean > b[1] or (b[2] is not None and (rest is None or rest < 0 or rest > b[2]))
-        bad += over
-        print(f"{'FAIL' if over else 'ok  '} {pose}: mean {mean} ms (budget {b[1]})" + (f", rest {rest} s (budget {b[2]})" if b[2] is not None else ""))
-    print(f"perf gate: {'FAILED' if bad else 'ok'} ({bad} over budget, {len(poses)} poses)")
+        over = mean is None or mean > b[1] or (b[3] is not None and (rest is None or rest < 0 or rest > b[3]))
+        late = not over and b[2] is not None and mean > b[2]
+        bad += over; miss += late
+        print(f"{'FAIL' if over else 'ok  '} {pose}: mean {mean} ms (floor {b[1]}" + (f", target {b[2]}{': OVER TARGET' if late else ''}" if b[2] else "") + ")"
+              + (f", rest {rest} s (budget {b[3]})" if b[3] is not None else ""))
+    print(f"perf gate: {'FAILED' if bad else 'ok'} ({bad} failing (floor or rest), {miss} more over the target, {len(poses)} poses)")
     return 1 if bad else 0
 
 
@@ -184,7 +191,7 @@ def selftest():
     import tempfile
     with tempfile.TemporaryDirectory() as t:
         t = Path(t)
-        (t / "PERF.md").write_text("## BUDGET\n| pose | mean ms | rest s |\n|---|---|---|\n| door-* | 13.7 | 2 |\n| * | 13.7 | - |\n## next\n")
+        (t / "PERF.md").write_text("## BUDGET\n| pose | floor ms | target ms | rest s |\n|---|---|---|---|\n| door-* | 13.7 | - | 2 |\n| * | 13.7 | 5 | - |\n## next\n")
         (t / "foyer-day.json").write_text(json.dumps({"frame_log": {"ms": [10, 12]}}))
         (t / "foyer-day-B1.json").write_text(json.dumps({"frame_log": {"ms": [99]}}))   # an A/B sample: ignored
         (t / "door-day.json").write_text(json.dumps({"frame_log": {"ms": [10]}, "rest_s": 1.0}))
