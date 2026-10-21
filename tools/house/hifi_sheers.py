@@ -200,6 +200,15 @@ for name, seed in (("front_french_sunroom_side", 0.0), ("front_french_foyer_side
     for uo, s in ((va + 0.03, 1), (vb - 0.03, -1)):
         drape(ivory, tie, P, uo, s, 0.012, top, 0.92, Wt, 0.16, 0.24, 0.125, seed=seed + s)
 
+# ---- den windows (film 4382 / 2508 / 6399 / 5545 from the street: white sheers across the bay like every front window; Marina: "her
+# sheers hide" the den's stools too, den.json). Oct 21 (house-split rule 4, film first): across the glass between the casings' inner
+# edges, from 1 cm over the stool to the head (behind the valance), 3 cm into the room: clear of the casings (2 cm proud), the stool,
+# and the drapes' backs (6 cm) by >= 1.5 cm with the fold depth held to 0.8 cm (tools/house/hifi_den.py owns the drapes and valance)
+DEN = json.loads((ROOT / "spec/dressing/den.json").read_text())["windows"]
+for name, seed in (("front_wide", 0.9), ("side_twin", 2.4)):
+    w = WIN[name]; P = frame(w); lo, hi = w["span_spec"]
+    sheer_panel(voile, hem, P, lo + 0.005, hi - 0.005, w["sill_m"] + DEN["stool"]["t"] + 0.01, w["head_m"], 0.030, seed, A0=0.008)
+
 # ---- kitchen windows (film 6902 / 10448: the sink-wall and end-wall windows): a red shirred valance with ballooned swags, red
 # panels tied back each side, a white sheer across the glass to the stool. Marina (Part 1 889, 1101, 1104 s) dresses all four
 # kitchen windows alike (red valance cabinet-to-cabinet, side panels tied back), so the film's dressing goes on all four; her panels
