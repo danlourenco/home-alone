@@ -8,6 +8,7 @@ apv-tuning-sheet.jpg; with the APV off the two match. Gate: in every column the 
     uv run -q --with pillow python -I tools/house/brick_storeys.py RUN_DIR [SUNNY OVERCAST NIGHT]
 RUN_DIR is a tour of -perfposes walk0645 (1920x1080). The three tiles default to walk0645-day-A1 (base, sunny),
 walk0645-day-B1 (weather=overcast as the first variant) and walk0645-night-A1. Exit 1 on any FAIL.
+    ... brick_storeys.py --rooms BEFORE_RUN AFTER_RUN parents-day buzz-night ...   the rooms a front fix must not change (5%)
 """
 import sys
 from pathlib import Path
@@ -46,7 +47,27 @@ def check(path, label):
     return fails
 
 
+def rooms(before, after, poses):
+    """--rooms BEFORE AFTER POSE...: mean brightness of each pose tile (POSE.png or POSE-A1.png), after vs before; FAIL past 5%.
+    The upstairs rooms share probes with the front wall, so a front fix must leave them alone."""
+    def tile(run, pose):
+        for n in (f"{pose}.png", f"{pose}-A1.png"):
+            if (run / n).exists():
+                px = list(Image.open(run / n).convert("L").get_flattened_data()); return sum(px) / len(px)
+        return None
+    fails = 0
+    for pose in poses:
+        b, a = tile(before, pose), tile(after, pose)
+        if b is None or a is None: print(f"skip {pose}: missing in {'before' if b is None else 'after'}"); continue
+        ok = abs(a / b - 1) <= TOL; fails += not ok
+        print(f"{'ok  ' if ok else 'FAIL'} room {pose:16s} mean {b:.1f} -> {a:.1f} ({(a / b - 1) * 100:+.1f}%)")
+    print(f"brick_storeys rooms: {fails} FAIL")
+    return 1 if fails else 0
+
+
 def main(argv):
+    if argv[1:2] == ["--rooms"]:
+        return rooms(Path(argv[2]), Path(argv[3]), argv[4:])
     run = Path(argv[1])
     names = argv[2:5] or ["walk0645-day-A1", "walk0645-day-B1", "walk0645-night-A1"]
     fails = sum(check(run / f"{n}.png", lab) for n, lab in zip(names, ["sunny", "overcast", "night"]) if (run / f"{n}.png").exists())

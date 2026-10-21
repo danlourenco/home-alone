@@ -320,8 +320,11 @@ public static class BakeLighting
             typeof(ProbeVolumeBakingSet).GetField("lightingScenario", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(set, scenario);
             EditorUtility.SetDirty(set);
         }
-        // Night first, Default LAST: the scene's one lighting data asset records the last bake's lights, and the scene opens (and plays) in
-        // day, so the day's Baked FilmFill must be the ones recorded as baked (CheckBakedLights). The night lamps are Mixed (Baked Indirect):
+        // Night first, a DAY bake LAST: the scene's one lighting data asset records the last bake's lights, and the scene opens (and plays) in
+        // day, so the day's Baked FilmFill must be the ones recorded as baked (CheckBakedLights). DayFilm is the last (Oct 21, brick-upstairs):
+        // probe validity is shared by all four scenarios and the last bake writes it, so the film's upper wall must be there when it is
+        // decided. With Default last, probes buried in the skin's upper storey (absent from Marina's bake) counted as valid and the upper
+        // front read them: dark by day, lamp-lit at night (ProbeDump: 8.5 at the wall face vs 34-59 0.4-0.8 m out, downstairs 23). The night lamps are Mixed (Baked Indirect):
         // their direct light and shadows are real time either way and their bounce is in the Night probe scenario, so they need no record.
         // the split's two draw sets: the film's house bakes with the skin's upper storey (skinUpper) and without the inside-only pieces;
         // the upstairs the other way round (as before Oct 20). The first bake places the probes; the rest keep those positions
@@ -335,7 +338,7 @@ public static class BakeLighting
             foreach (var r in split.insideOnly.Where(r => r)) Contribute(r.gameObject, !film && gi0[r.gameObject].HasFlag(StaticEditorFlags.ContributeGI));
         }
         bool firstBake = true;
-        foreach (var (scenario, night, film) in new[] { ("Night", true, false), ("NightFilm", true, true), ("DayFilm", false, true), ("Default", false, false) })
+        foreach (var (scenario, night, film) in new[] { ("Night", true, false), ("Default", false, false), ("NightFilm", true, true), ("DayFilm", false, true) })
         {
             if (film && !split) continue;
             // the first bake places the probes afresh: clear the old bake first (what the "Incompatible Layout" dialog's Yes does,
@@ -358,7 +361,7 @@ public static class BakeLighting
             bool ok = Lightmapping.Bake();
             Debug.Log($"BakeLighting {scenario}: {(ok ? "done" : "FAILED")} in {t.Elapsed.TotalSeconds:F0} s");
             if (!ok) failed = true;
-            if (film) continue;   // the film's house keeps the upstairs bake's room reflections (the last, Default, re-renders them)
+            if (film) continue;   // the film's house keeps the upstairs bake's room reflections (Default and Night re-render and copy them; ApplyReflections puts them back at the end)
             // the room probes again, now that this scenario's probe volume is baked and loaded: the images Lightmapping.Bake renders
             // see the walls without the baked FilmFill (Buzz's paper R/B 0.88 in its day probe: lit by the sky alone), and every dark
             // glossy surface showed that: Buzz's wood floor and mahogany chest read navy by day (overnight3b, Oct 18; live, a probe
@@ -380,6 +383,7 @@ public static class BakeLighting
             }
             mode.reflectionProbes = rps; if (night) mode.nightReflections = texs; else mode.dayReflections = texs;
         }
+        World(false);    // the switching parts back as the scene keeps them (the upstairs world, as before): gi0 is read from them next bake
         Freeze(false);   // the next bake places its probes afresh (its first scenario does anyway)
         Use("Default"); mode.nightLayer.SetActive(false); mode.dayLayer.SetActive(true);   // the scene opens in day
         mode.ApplyReflections(false); EditorUtility.SetDirty(mode);

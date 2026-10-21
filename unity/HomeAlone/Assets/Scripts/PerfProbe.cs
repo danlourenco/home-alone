@@ -44,7 +44,9 @@ public class PerfProbe : MonoBehaviour
         // Oct 20 (neighbourhood, SpecGreybox.Neighborhood.cs): -perfposes piers,murphys,upwindow,street (+ -perfvariants nbold for the old exterior)
         ("piers", new Vector3(29.0f, -2.58f, -9.716f), 125f, 2f),
         ("walk0645", new Vector3(32.128f, -3.182f, -9.659f), 267.3f, -1.1f), // walk note 2026-10-21T06:45:32 (Kevin's eye at the piers, facing the house): mailbox, lanterns, brick, protruding upstairs        // between our walk piers on the sidewalk, across and down Lincoln (film-left)
-        ("sheers", new Vector3(19f, -2.6f, -10.2f), 270f, -6f),   // Oct 21 (french-sheers): the front walk, both French pairs and their sheers
+        ("sheers", new Vector3(19f, -2.6f, -10.2f), 270f, -6f),
+        ("kevinroom", new Vector3(8.0f, 1.31f, -5.8f), 80f, 5f),   // Oct 21 (brick-upstairs bake order): Kevin and Jeff's room toward Marina's strip front
+        ("buzzfront", new Vector3(8.0f, 1.31f, -13.8f), 90f, 5f),  // Buzz's room toward its strip front   // Oct 21 (french-sheers): the front walk, both French pairs and their sheers
         ("murphys", new Vector3(28.68f, -2.63f, -21.96f), 67f, -1.5f),   // film 11581's solved camera (nb_film_camera.py; the player's FOV, not the film's 24.8 deg)
         ("upwindow", new Vector3(9.6f, 1.31f, -9.716f), 90f, 4f),        // upstairs over the front door, out the front window to the Murphys
         ("van", new Vector3(37.5f, -2.7f, -33.5f), 322.5f, 2f),          // across Lincoln toward the bandits' van by our lamp post (film 3297's side; night)
