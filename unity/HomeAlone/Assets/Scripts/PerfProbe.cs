@@ -139,7 +139,7 @@ public class PerfProbe : MonoBehaviour
         //                         fit=M (lamp range = room extent + M m). Keys of one variant: space or '+' separated.
         //                         Without it the knobs above are the one variant B.
         //   -perfdn day|night     just day or night
-        var variants = (Arg("-perfvariants") ?? "").Split(new[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries)
+        var variants = (Arg("-perfvariants") ?? "").Trim('"', '\'').Split(new[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries)
             .Select(v => v.Split(new[] { ' ', '+' }, System.StringSplitOptions.RemoveEmptyEntries).Select(kv => kv.Split('=')).ToDictionary(kv => kv[0], kv => kv.Length > 1 ? kv[1] : "")).ToList();   // '+' joins keys too (perf_probe.sh word-splits HA_PERF_ARGS)
         int nVar = Mathf.Max(variants.Count, 1);
         int rounds = int.Parse(Arg("-perfrounds") ?? "2");   // -perfrounds 1: each variant sampled once per pose (shorter A/B tours)
