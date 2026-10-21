@@ -455,6 +455,7 @@ public static partial class SpecGreybox
                     last = q; Add(q + new Vector3(0.006f, -0.008f * R(), 0f), 1f);
                 }
             }
+        XmasYard.Clear(); for (int i = 0; i < pts.Count; i++) XmasYard.Add((pts[i], sz[i], tint[i]));   // the C7 bake-off set's shrub points (SpecGreybox.Xmas.cs)
         var mats = new[] { XmasBulb(), XmasBulb("HiFi_XmasBulbWarm", new Color(1f, 0.66f, 0.38f), 2000f), XmasBulb("HiFi_XmasBulbDim", new Color(0.95f, 0.60f, 0.34f), 700f) };
         for (int t = 0; t < 3; t++)
         {

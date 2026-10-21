@@ -20,14 +20,15 @@ Design and sources: [docs/XMAS-LIGHTS.md](../../../docs/XMAS-LIGHTS.md). Checker
 
 ## Rules
 1. A bulb is never a GameObject and never owns a Light. Bulbs are chunked static meshes (one per strand group of about
-   4 m, with a LODGroup), colour and intensity in vertex colour, ONE shared material (SRP Batcher). Instancing does not
+   4 m, with a LODGroup), 3 shared materials (bright, dim, socket: SRP Batcher). Instancing does not
    pay for a 60-triangle mesh (Unity manual: avoid instancing meshes under 256 vertices); if you try it, measure it as a
    variant.
 2. The strands' real-time lights are the pool only: at most 24 (`xmas_lights_check.py --scene`), unshadowed, exterior
    rendering layer, range at most 2.5 m, placed by the pool script. Today's 35 `ShrubGlow` lights are retired by the pool.
-3. Glow cards are view-facing quads billboarded in the vertex shader. Unlit additive, colour scaled by HDRP's Exposure node,
-   so the card is in screen units and the same at any EV. Analytic falloff (no texture), soft depth fade, and a low-resolution
-   transparent pass. They fade out closer than about 4 m, so a shrub at Kevin's knee can't fill the screen with overdraw.
+3. Glow cards are view-facing quads billboarded in the vertex shader (`Shaders/XmasGlowCard.shader`). Unlit additive, written in
+   exposed units (HDRP's colour buffer is pre-exposed), so the card looks the same at any EV. Analytic falloff (no texture), soft depth fade, and a low-resolution
+   transparent pass (queue 3400; `xlowres=0` if the player's frame setting is off). Each card is pulled toward the camera by its radius
+   instead of depth-fading. They fade out closer than about 4 m, so a shrub at Kevin's knee can't fill the screen with overdraw.
    Inflate the mesh bounds by the card radius, or the chunk is culled while its cards are still on screen.
 4. Bulb emission stays physical (Lit, Exposure Weight 1, about 1,600 nits: a C7 is 10 lm at 2700 K). The core clips. Don't raise
    the nits to get a halo: a 1-pixel source can't make one.
@@ -37,6 +38,12 @@ Design and sources: [docs/XMAS-LIGHTS.md](../../../docs/XMAS-LIGHTS.md). Checker
    threshold 0.3, auto exposure 5.6-12 EV, ACES). Changing them changes every night look, so it needs its own A/B.
 7. Every change gets a `-perfab` sheet (AGENTS.md). Use the `xmas=` variants in docs/XMAS-LIGHTS.md at street, foyer, walk0645
    and front6399, night. Budget: at most 5 % FPS at the heavy night poses.
+
+## Where it lives
+`tools/house/xmas_strands.py` -> `spec/dressing/xmas.json` -> `Editor/SpecGreybox.Xmas.cs` (BuildXmasLights) -> `Scripts/XmasLights.cs`
+(the live switch: `XmasLights.Set`; PerfProbe `xmas=`, `xdecal=`, `xpool=`, `xinst=`, `xlowres=`). Change the pitch in xmas_strands.py,
+the nits and lumens in SpecGreybox.Xmas.cs's constants, and the card look in the shader's properties (live: edit
+`Assets/Materials/Greybox/XmasGlowCard.mat`).
 
 ## Done means
 - `xmas_lights_check.py <front6399-night PNG>` scores 6/6 (today: 0/6, `spec/captures/perf/xmas/nb9-front6399.txt`).

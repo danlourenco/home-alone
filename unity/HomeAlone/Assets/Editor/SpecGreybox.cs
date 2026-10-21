@@ -1753,6 +1753,7 @@ public static partial class SpecGreybox
         ExteriorRealism(ext, gy);   // SpecGreybox.ExteriorRealism.cs: steps, railings, drifts, ground skirt, decals, wet road (changes/2026-10-18-exterior-realism.json)
         FrontDrive(ext, gy);        // SpecGreybox.FrontDrive.cs: the U-drive, the walk piers and wing walls, the garage fence (changes/2026-10-19-front-drive.json)
         Neighborhood(ext, gy);      // SpecGreybox.Neighborhood.cs: Lincoln Ave, the Murphys and the kit neighbourhood (off unless HA_NEIGHBORHOOD=1)
+        BuildXmasLights(ext, gy);   // SpecGreybox.Xmas.cs: the Christmas lights bake-off set beside today's (base: today's; PerfProbe xmas=A|B|C)
     }
 
     // The GLB's garage and driveway (registered with the site): triangles of a GLB renderer whose registered centroid lies in the

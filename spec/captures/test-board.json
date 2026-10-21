@@ -9,6 +9,75 @@
  ],
  "tests": [
   {
+   "id": "xmas-lights",
+   "title": "Christmas lights: the film's warm C7s, halos and spill",
+   "status": "running",
+   "date": "Oct 21",
+   "when": "Bake-off build after the current build (and its tours). Code is ready (prep only, not built). Nothing to walk yet.",
+   "what": "Film 5545 against today's front6399 night (NB9), measured by tools/house/xmas_lights_check.py on two upper windows of known size: SCORE 0/6. Our bulbs are 1.8 cm, 5.5 cm apart: under a pixel at the street, so they alias away (about half vanish), have no halo, and clip to white. Plan (docs/XMAS-LIGHTS.md): C7s at the film's 0.21 m with its warm-white colour; glow cards for the film's 5 cm glow and 11 cm halo; 24 pooled exterior lights and emissive decals warm the brick (they replace 35 shrub lights). One build carries today's look and three candidates, switched live.",
+   "table": {
+    "head": [
+     "Metric",
+     "Film 5545",
+     "Ours (NB9)",
+     "Pass band"
+    ],
+    "rows": [
+     [
+      "Bulb spacing",
+      "0.21 m",
+      "0.12 m visible (0.055 m built)",
+      "0.17-0.27"
+     ],
+     [
+      "Glow size",
+      "5.4 cm",
+      "2.1 cm",
+      "3.5-8.1"
+     ],
+     [
+      "Halo radius",
+      "11 cm",
+      "1.1 cm",
+      "6.8-18"
+     ],
+     [
+      "Halo warmth",
+      "0.106",
+      "0.019",
+      "0.056-0.156"
+     ],
+     [
+      "Glow / brick",
+      "7.4",
+      "28",
+      "4.4-11.8"
+     ],
+     [
+      "Brick warmth R/B",
+      "2.1",
+      "1.5",
+      "1.6-2.8"
+     ]
+    ],
+    "note": "SCORE 0/6 FAIL (spec/captures/perf/xmas/nb9-front6399.txt). Scene check: 35 strand lights, limit 24: FAIL."
+   },
+   "images": [
+    {
+     "src": "spec/captures/perf/xmas/nb9-front6399-vs-5545.jpg",
+     "caption": "Left: film 5545. Right: ours today at front6399, night. Same two upper windows (green corners: the measured loops; blue: the brick patches)."
+    }
+   ],
+   "look": [
+    "Left: big warm points with soft halos, about 24 round each upper window, and warm brick under them.",
+    "Right: thin white single-pixel dots, many missing, dark violet brick."
+   ],
+   "commands": [
+    "HA_PERF_ARGS='-perfab -perfdn night -perfrounds 1 -perfposes street,foyer,walk0645,front6399 -perfvariants xmas=A;xmas=B;xmas=C;xmas=C+xdecal=0;xmas=C+xpool=0;xmas=B+xinst=1;xmas=B+xlowres=0' tools/house/perf_probe.sh run xmas-bakeoff",
+    "uv run -q --with numpy --with pillow python -I tools/house/xmas_lights_check.py ~/.cache/home-alone-perf/runs/xmas-bakeoff/front6399-night-B1.png --sheet spec/captures/perf/xmas/bakeoff-B1.jpg"
+   ]
+  },
+  {
    "id": "night-front",
    "title": "Front at night: warm brick or dark brick",
    "status": "needs-you",

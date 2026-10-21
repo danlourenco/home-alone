@@ -1,4 +1,4 @@
-# Exterior Christmas lights: design, costs, acceptance, bake-off (Oct 21, prep only: nothing built)
+# Exterior Christmas lights: design, costs, acceptance, bake-off (Oct 21: code ready, not built)
 
 Rules for agents: [.claude/skills/xmas-lights/SKILL.md](../.claude/skills/xmas-lights/SKILL.md). Checker:
 `tools/house/xmas_lights_check.py` (`--selftest`, `--film`, `--scene`, `RUN.png [--sheet OUT.jpg]`).
@@ -175,23 +175,50 @@ The build generates every layer. The variants switch them live, so there is no r
 | `xmas=C` | B + pool of 24 + emissive decals (ShrubGlow off) | the recommended full set |
 | `xmas=C+xdecal=0`, `xmas=C+xpool=0` | attribution | which spill does the work |
 | `xmas=B+xinst=1` | bulbs drawn instanced | the AGENTS.md instancing rule, measured |
+| `xmas=B+xlowres=0` | cards at full resolution | the low-res pass's saving and look |
 
 ```
-HA_PERF_ARGS='-perfab -perfdn night -perfrounds 1 -perfposes street,foyer,walk0645,front6399 -perfvariants xmas=A;xmas=B;xmas=C;xmas=C+xdecal=0;xmas=C+xpool=0;xmas=B+xinst=1' tools/house/perf_probe.sh run xmas-bakeoff
-for v in A1 B1 C1 D1 E1 F1 G1; do uv run -q --with numpy --with pillow python -I tools/house/xmas_lights_check.py ~/.cache/home-alone-perf/runs/xmas-bakeoff/front6399-night-$v.png --sheet spec/captures/perf/xmas/bakeoff-$v.jpg; done
+HA_PERF_ARGS='-perfab -perfdn night -perfrounds 1 -perfposes street,foyer,walk0645,front6399 -perfvariants xmas=A;xmas=B;xmas=C;xmas=C+xdecal=0;xmas=C+xpool=0;xmas=B+xinst=1;xmas=B+xlowres=0' tools/house/perf_probe.sh run xmas-bakeoff
+for v in A1 B1 C1 D1 E1 F1 G1 H1; do uv run -q --with numpy --with pillow python -I tools/house/xmas_lights_check.py ~/.cache/home-alone-perf/runs/xmas-bakeoff/front6399-night-$v.png --sheet spec/captures/perf/xmas/bakeoff-$v.jpg; done
 ```
 
 The sheet is pose rows x variant columns, FPS on each tile (perf_probe.sh), plus the checker's score per variant at front6399. The user
 picks.
 
-**Code to write (when the build is free; the decoration lane, plus generators):**
-- `tools/house/hifi_xmas_bulb.py` (Blender: C7 + socket, LOD0/1, artist-pipeline gate);
-- `tools/house/xmas_strands.py` (pitch 0.21 m loops from UPW_LIST/OPEN/dormers/eaves, the shrub and tree points from today's
-  generators, clusters for the pool -> `spec/dressing/xmas.json`);
-- `Editor/SpecGreybox.Xmas.cs` (chunks, LODGroups, the card meshes, decals, the old set kept under `xmas=old`);
-- `Shaders/XmasBulb.shadergraph`, `XmasGlowCard.shadergraph`;
-- `Scripts/XmasLightPool.cs`;
-- PerfProbe keys `xmas`, `xdecal`, `xpool`, `xinst`.
+**Code (written Oct 21, prep only; compiles with csc_check, unity_practices clean; NOT built or run):**
+- `tools/house/xmas_strands.py` (`--selftest`) -> `spec/dressing/xmas.json`: the same 15 window loops as today (9 upper, 6 ground; 2
+  dormers included), recorded from `exterior_shell.xmas_lights`, re-strung at 0.21 m: **424 C7s** instead of about 1,212 minis.
+- `Editor/SpecGreybox.Xmas.cs` `BuildXmasLights` (called after `Neighborhood` in `SpecGreybox.Exterior`). It builds:
+  - C7 chunks on a 4 m grid per storey: LODGroup LOD0 about 70 triangles per bulb, LOD1 12;
+  - the materials HiFi_XmasC7 (1,600 nits), HiFi_XmasC7Dim (900 nits) and HiFi_XmasC7Socket;
+  - wire per loop, card meshes, 24 pool lights and 15 spill decals;
+  - the old set's renderers and the ShrubGlow lights, collected for the switch;
+  - upper chunks appended to HouseSplit.skinUpper. It asserts every bulb is on the lot.
+- The shrubs keep today's points (`ExteriorPlants` -> `XmasYard`), drawn as C7s with cards.
+- `Scripts/XmasLights.cs`: the live switch (forceRenderingOff, so it never fights HouseSplit's `.enabled`), the pool pump (nearest
+  24 clusters, re-picked every 0.25 s, 0.5 s fades), the instanced path, and a JSON readout.
+- `Shaders/XmasGlowCard.shader`.
+- PerfProbe keys: `xmas=old|A|B|C`, `xdecal=0`, `xpool=0`, `xinst=1`, `xlowres=0` (cards in the full-resolution transparent pass, in
+  case the low-res frame setting is off on the player: then a queue-3400 material is not drawn at all). JSON `"xmas"` holds the
+  visible bulb and card renderers and the lit pool lights.
+- **The default is unchanged (`old`).** The build changes nothing you see until a variant is picked.
+
+**Departures from the plan above, and why:**
+- The bulb is lathed in C#, not modelled in Blender. A 3 cm bulb at 60 triangles gains nothing from baked maps (the artist-pipeline
+  skill is for joinery-sized pieces).
+- The card is a hand-written HLSL HDRP shader (SRPDefaultUnlit pass), not a Shader Graph. A `.shadergraph` can't be authored or checked
+  without opening Unity; this file is diffable. HDRP's colour buffer is pre-exposed, so the card writes exposed units directly: the job
+  the Exposure node would have done.
+- There is no soft depth fade. Each card is pulled toward the camera by its radius, so it never cuts into the wall it hangs on.
+- The bulbs use 3 shared materials, not 1 with vertex colour: HDRP Lit can't read vertex colour into emission without a graph.
+- The Murphys' C7s are unchanged (house first). The cards can take them next, with 11581's colours.
+
+**Risks the build will show** (shader compile errors aren't caught by csc_check):
+- Does the card shader compile and draw on Metal (check the build log and a front6399 xmas=B tile)?
+- Does forceRenderingOff hide static-batched GLB bulbs?
+- Do the queue-3400 cards draw, or is `xlowres=0` needed?
+- The scene check will read 59 strand lights in this build (35 old + 24 pool). That is expected while both sets exist; when C ships,
+  delete ShrubGlow and the old set, and the check passes at 24.
 
 ## 6. Unity plugin skills (checked, `unity/0.1.6-beta/skills`)
 - **Apply:** `unity-cli` (live preview of card k and colour in the open editor; the project already drives it), and

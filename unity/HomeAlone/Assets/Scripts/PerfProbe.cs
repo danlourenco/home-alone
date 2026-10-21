@@ -227,6 +227,9 @@ public class PerfProbe : MonoBehaviour
             HouseSplit.LegacyRoomsOnly = S("split") == "rooms"; HouseSplit.ForceUpstairsBake = S("apv") == "upstairs";
             HouseSplit.ApplyScenario(night && night.night);
             ApvOptions(S);
+            // xmas=old|A|B|C (docs/XMAS-LIGHTS.md bake-off; base: old = today's), xdecal=0 / xpool=0 (C without its decals / pool), xinst=1
+            // (the bulbs drawn instanced): XmasLights.cs. The JSON's "xmas" readout counts the visible bulb and card renderers and the lit pool
+            XmasLights.Set(S("xmas") ?? "old", S("xdecal") != "0", S("xpool") != "0", S("xinst") == "1", S("xlowres") != "0");
             float rk = spec == null ? rangeK : S("range") is string rs ? float.Parse(rs, System.Globalization.CultureInfo.InvariantCulture) : 1f;
             var ns = L("noshadow", noShadow); var pf = L("lightsoff", prefixes); var pc = I("pcss", pcss); var q = I("shadowq", shq);
             var mr = spec == null ? mirrorRes : S("mirror") is string m ? new[] { mirrorRes.Length > 0 ? mirrorRes[0] : int.Parse(m), int.Parse(m) } : mirrorRes.Take(1).ToArray();
@@ -492,7 +495,7 @@ public class PerfProbe : MonoBehaviour
         Last = "{" + $"\"name\":\"{name}\",\"frames\":{frames},\"rest_s\":{rest},\"cpu_ms_median\":{Pct(cpu, 0.5f):F1},\"cpu_ms_p95\":{Pct(cpu, 0.95f):F1},\"cpu_ms_p99\":{Pct(cpu, 0.99f):F1},"
              + $"\"gpu_ms_median\":{gpuS},\"gpu_ms_p10\":{gpu10},\"gpu_ms_p95\":{Q(gpu, 0.95f)},\"gpu_ms_p99\":{Q(gpu, 0.99f)},\"main_ms_median\":{Q(main, 0.5f)},\"render_ms_median\":{Q(rend, 0.5f)},\"rt_lights\":{rt},\"rt_shadow_lights\":{rtShadow}," + string.Join(",", vals.Select(kv => $"\"{kv.Key}\":{Med(kv.Value)}"))
              + ",\"frame_log\":" + flog
-             + $",\"screen\":\"{Screen.width}x{Screen.height}\",\"render_scale\":{RenderScale.Percent:F0},\"internal\":\"{Mathf.RoundToInt(Screen.width * ScalableBufferManager.widthScaleFactor)}x{Mathf.RoundToInt(Screen.height * ScalableBufferManager.heightScaleFactor)}\",\"backbuffer\":\"{Display.main.renderingWidth}x{Display.main.renderingHeight}\",\"mode\":\"{Screen.fullScreenMode}\",\"window_display\":\"{Screen.mainWindowDisplayInfo.name}\",\"vsync\":{QualitySettings.vSyncCount},{DynResReadout()},\"inject\":\"{injectNow}\",\"transparents\":{transpJ},\"scale_mode\":\"{RenderScale.Label}\",\"focused\":{Application.isFocused.ToString().ToLower()},\"cam\":\"{cam.position.x:F2},{cam.position.y:F2},{cam.position.z:F2} yaw {cam.eulerAngles.y:F0}\"" + "}";
+             + $",\"screen\":\"{Screen.width}x{Screen.height}\",\"render_scale\":{RenderScale.Percent:F0},\"internal\":\"{Mathf.RoundToInt(Screen.width * ScalableBufferManager.widthScaleFactor)}x{Mathf.RoundToInt(Screen.height * ScalableBufferManager.heightScaleFactor)}\",\"backbuffer\":\"{Display.main.renderingWidth}x{Display.main.renderingHeight}\",\"mode\":\"{Screen.fullScreenMode}\",\"window_display\":\"{Screen.mainWindowDisplayInfo.name}\",\"vsync\":{QualitySettings.vSyncCount},{DynResReadout()},\"inject\":\"{injectNow}\",\"transparents\":{transpJ},\"xmas\":{XmasLights.Readout()},\"scale_mode\":\"{RenderScale.Label}\",\"focused\":{Application.isFocused.ToString().ToLower()},\"cam\":\"{cam.position.x:F2},{cam.position.y:F2},{cam.position.z:F2} yaw {cam.eulerAngles.y:F0}\"" + "}";
         var dir = outDir ?? Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/captures/perf")); Directory.CreateDirectory(dir);
         File.WriteAllText(Path.Combine(dir, name + ".json"), Last + "\n");
         if (outDir == null) Destroy(gameObject);
