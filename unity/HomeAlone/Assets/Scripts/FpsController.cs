@@ -8,7 +8,7 @@ using UnityEngine;
 /// at the attic dormer rides the zipline, at the treehouse ladder climbs (ZipLine). N day/night, O cycles the day's weather sunny (film 4382, the default) / morning (film 1890) / overcast (film 6399) (HouseWeather;
 /// it also drives the falling snow: off in sunny/morning, where F is ignored; on when overcast and at night),
 /// M marks a walk note (FeelNotes). K hides everything off the McCallister lot (PropertyView). [ ] night white balance (HouseNightMode),
-/// P cycles the render scale 100/75/50/38% (RenderScale: STP upscaling, for big full-screen windows). Music (BackgroundMusic): J pause, - / = volume, U track.
+/// P cycles the render scale 100/75/50/38% (RenderScale: STP upscaling, for big full-screen windows). F1 shows all controls (ControlsHelp). Music (BackgroundMusic): J pause, - / = volume, U track.
 /// Footsteps by floor surface: Surface is read from the material/collider name under the feet (SurfaceFor); clips are Kenney Impact Sounds (CC0).
 [RequireComponent(typeof(CharacterController))]
 public class FpsController : MonoBehaviour
