@@ -232,9 +232,9 @@ public class PerfProbe : MonoBehaviour
             }
             if (mirror && mr.Length > 0)
                 mirror.settingsRaw.resolutionScalable.@override = (UnityEngine.Rendering.HighDefinition.PlanarReflectionAtlasResolution)(variant && mr.Length > 1 ? mr[1] : mr[0]);
-            // scale=P (alias res=P): render at P% and STP-upscale (RenderScale; HDRP dynamic resolution); P = auto | adaptive | a percent.
+            // scale=P (alias res=P): full screen backbuffer at P% of the display (RenderScale, Oct 21; no dynamic resolution); P = auto | a percent.
             // The tour never uses the player's saved scale (PlayerPrefs): the base is -perfbasescale (default 100 = native, no STP)
-            float Pct(string v) => v == "auto" ? 0f : v == "adaptive" ? -1f : float.Parse(v, System.Globalization.CultureInfo.InvariantCulture);
+            float Pct(string v) => v == "auto" ? 0f : float.Parse(v, System.Globalization.CultureInfo.InvariantCulture);
             RenderScale.Set(Pct(spec != null && (S("scale") ?? S("res")) is string rp ? rp : baseScale), false);
             // inject=before|dof|after: STP's injection point (HDRP.asset: before = post at the output size); the base is the asset's
             // dynres=soft|hard: software / hardware dynamic resolution; upscaler=none: no STP (CatmullRom). Base: the asset's
@@ -247,7 +247,8 @@ public class PerfProbe : MonoBehaviour
             // screen=WxHw (trailing w): windowed at that size on the same display (the NB4-style 1920x1080 window)
             var scr = S("screen") ?? $"{screen0.x}x{screen0.y}"; var mode = scr.EndsWith("w") ? FullScreenMode.Windowed : mode0;
             var wh = scr.TrimEnd('w').Split('x').Select(int.Parse).ToArray();
-            if (Screen.width != wh[0] || Screen.height != wh[1] || Screen.fullScreenMode != mode) Screen.SetResolution(wh[0], wh[1], mode);
+            RenderScale.Manual = S("screen") != null;   // otherwise RenderScale sets the backbuffer (the shipped behaviour)
+            if (RenderScale.Manual && (Screen.width != wh[0] || Screen.height != wh[1] || Screen.fullScreenMode != mode)) Screen.SetResolution(wh[0], wh[1], mode);
             // sunless=on: the never-sunlit pieces (SpecGreybox.SunCull) cast into the sun's cascades again by day
             if (night && !night.night)
                 for (int k = 0; k < night.sunlessCasters.Length && k < night.sunlessModes.Length; k++)

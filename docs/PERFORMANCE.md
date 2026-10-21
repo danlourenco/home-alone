@@ -343,3 +343,18 @@ scale and last scaled size, RTHandles max size, ScalableBufferManager factors), 
 auto, hardware, STP before post); B the NB4 window (1920x1080 windowed, 100%); C full screen with a 2048x1152 backbuffer at 100%
 (the base's internal size, no dynamic resolution); D 1920x1080 window at 75% (dynamic resolution in a window); E software dynamic
 resolution; F no STP. Reading: B and C fast and A, D slow = dynamic resolution itself; E fast = hardware DRS on Metal; F fast = STP.
+
+**fs5k-diag (Oct 21, user-run; `runs/fs5k-diag`).** FPS, A base (5K full screen, 40% hardware dynamic resolution + STP) -> B 1920x1080
+window 100% / C full screen 2048x1152 backbuffer 100% / D 1080 window 75% / E software dynamic resolution / F no STP:
+foyer night 17 -> 26 / 23 / 26 / 22 / 17; hall night 24 -> 33 / 29 / 33 / 29 / 24; kitchen night 17 -> 29 / 26 / 27 / 25 / 18; street
+day 20 -> 31 / 30 / 26 / 29 / 19. STP is not the cost (F = A); dynamic resolution is (35-70%; software only partly helps). C's readout:
+camera 2048x1152, no dynamic resolution, render thread 7.8 ms (A: the whole frame).
+**Shipped (C):** `RenderScale.cs` no longer uses dynamic resolution. Full screen sets the BACKBUFFER to about AutoHeight (1152 px;
+5K -> 2048x1152) and macOS scales it to the panel; P steps the backbuffer (auto/100/75/50/38% of the display); windows always render
+natively. The adaptive scaler and the STP injection choice are gone with it (`RenderScale.DynRes` stays for PerfProbe diagnostics).
+Still under the floor at about 1080p: the heavy night interiors (foyer 23-26, kitchen 26-29 fps), GPU-bound: Phase B.
+
+**Phase B attribution (prepared):** night, full screen at the shipped C, each frame setting / content group off or cheaper:
+`off=Volumetrics;off=SSR;off=SSAO;off=ContactShadows;off=ShadowMaps;off=TransparentObjects;off=PlanarProbe;hide=Glass;hide=Voile;lowres=all;fit=1;range=0.7`
+at foyer-night, kitchen-night, hall-night (`perf_probe.sh run fs-nightB`). The off= rows are upper bounds (attribution, not looks);
+hide=/lowres=/fit=/range= are the candidates the sheet trades look against FPS.
