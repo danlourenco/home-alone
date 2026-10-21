@@ -91,6 +91,42 @@ public static partial class SpecGreybox
         foreach (var g in fails.GroupBy(s => s.what).Take(20)) r += $"FAIL split: {g.Key}: {g.Count()} samples not upstairs, e.g. world ({g.First().p.x:F2}, {g.First().p.y:F2}, {g.First().p.z:F2})\n";
         foreach (var g in negFails.GroupBy(s => s.what).Take(10)) r += $"FAIL split: {g.Key}: {g.Count()} samples upstairs, e.g. world ({g.First().p.x:F2}, {g.First().p.y:F2}, {g.First().p.z:F2})\n";
         if (hystFail > 0) r += $"FAIL split: hysteresis at the stair head: {hystFail} samples\n";
-        return r;
+        return r + SplitDrawnOutsideCheck(hs);
+    }
+
+    // DRAWN-OUTSIDE CHECK (walk note 2026-10-21T06:45:32, from the piers: "i can see where the upstairs rooms protrude. i thought you fixed
+    // this?"): the camera test above passed while the upstairs rooms' baseboards (built under Ground/Trim, not Upstairs) stood 0.8-1.3 m
+    // outside the film front and stayed drawn from outside. Every house renderer above the ground storey (not the exterior, not the skin,
+    // not shadows-only) with a bounds point more than 5 cm outside the skin (SpecGreybox.Shell's InSkin) must be in HouseSplit.insideOnly
+    // (hidden from outside). Before/after in one build: ShellOutsideBefore = what the old Upstairs-only scan missed.
+    public static System.Func<Vector3, bool> ShellInSkin;
+    public static readonly List<string> ShellOutsideBefore = new List<string>();
+    static string SplitDrawnOutsideCheck(HouseSplit hs)
+    {
+        if (ShellInSkin == null) return "Split drawn-outside check: FAIL no skin test (Shell did not run)\n";
+        var ext = GameObject.Find("Exterior"); float gy = hs.switchY - 2.326f - 0.9f;
+        var inside = new HashSet<Renderer>(hs.insideOnly); var upper = new HashSet<Renderer>(hs.skinUpper);
+        var bad = new List<string>(); int tested = 0;
+        foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsInactive.Include))
+        {
+            if (r.shadowCastingMode == UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly || inside.Contains(r) || upper.Contains(r)) continue;
+            if (ext != null && r.transform.IsChildOf(ext.transform)) continue;
+            if (r.GetComponentsInParent<HouseSplit>(true).Length > 0 || r.transform.root.name.StartsWith("ExteriorShell")) continue;
+            var b = r.bounds; if (b.min.y < gy + 2.75f) continue;
+            if (b.center.x < -2f || b.center.x > 13f || -b.center.z < -2.5f || -b.center.z > 21.5f) continue;
+            string path = r.transform.parent != null ? r.transform.parent.name + "/" + r.name : r.name;
+            if (path.Contains("Treehouse") || path.Contains("ZipLine") || r.name.StartsWith("WinterBackdrop") || r.name.StartsWith("BuzzSetWindow")) continue;
+            tested++;
+            for (int i = 0; i < 125; i++)
+            {
+                var q = new Vector3(Mathf.Lerp(b.min.x + 0.02f, b.max.x - 0.02f, (i % 5) / 4f), Mathf.Lerp(b.min.y + 0.02f, b.max.y - 0.02f, (i / 5 % 5) / 4f),
+                                    Mathf.Lerp(b.min.z + 0.02f, b.max.z - 0.02f, (i / 25) / 4f));
+                if (!ShellInSkin(q)) { bad.Add(path); break; }
+            }
+        }
+        var line = $"Split drawn-outside check: {tested} house renderers above the ground storey tested, {bad.Count} outside the skin and drawn from outside " +
+                   $"(the old Upstairs-only scan missed {ShellOutsideBefore.Count}: {string.Join(", ", ShellOutsideBefore.Take(12))}{(ShellOutsideBefore.Count > 12 ? " ..." : "")})\n";
+        foreach (var g in bad.GroupBy(n => n).Take(20)) line += $"FAIL split drawn outside: {g.Key} x{g.Count()}\n";
+        return line;
     }
 }

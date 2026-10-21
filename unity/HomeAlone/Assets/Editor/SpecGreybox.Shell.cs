@@ -128,10 +128,15 @@ public static partial class SpecGreybox
             }
             return false;
         }
+        // Every house renderer, not just those under Upstairs (walk note 2026-10-21T06:45:32 from the piers: "i can see where the upstairs
+        // rooms protrude": the upstairs rooms' baseboards are built under Ground/Trim and stood 0.8-1.3 m outside the film front, drawn
+        // from outside as white ledges over the ground windows). ShellOutsideBefore keeps the old Upstairs-only scan's misses for
+        // SplitCheck's "drawn outside" line (before/after in one build).
         var up = GameObject.Find("Upstairs"); var inside = new List<Renderer>();
-        foreach (var r in up.GetComponentsInChildren<MeshRenderer>(true))
+        ShellInSkin = InSkin; ShellOutsideBefore.Clear();
+        foreach (var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsInactive.Include))
         {
-            if (r.shadowCastingMode == ShadowCastingMode.ShadowsOnly || r.transform.IsChildOf(ext.transform)) continue;
+            if (r.shadowCastingMode == ShadowCastingMode.ShadowsOnly || r.transform.IsChildOf(ext.transform) || r.transform.IsChildOf(holder.transform)) continue;
             var b = r.bounds; if (b.min.y < gy + 2.75f) continue;
             if (b.center.x < -2f || b.center.x > 13f || -b.center.z < -2.5f || -b.center.z > 21.5f) continue;   // the treehouse and the yard are not the house
             string path = r.transform.parent != null ? r.transform.parent.name + "/" + r.name : r.name;
@@ -143,7 +148,7 @@ public static partial class SpecGreybox
                                     Mathf.Lerp(b.min.z + 0.02f, b.max.z - 0.02f, (i / 25) / 4f));
                 outside = !InSkin(q);
             }
-            if (outside) inside.Add(r);
+            if (outside) { inside.Add(r); if (up == null || !r.transform.IsChildOf(up.transform)) ShellOutsideBefore.Add(path); }
         }
         // upstairs room outlines (world) for the camera test, and the attic's
         var geo = JObject.Parse(File.ReadAllText(Path.GetFullPath(Path.Combine(Application.dataPath, "../../../spec/geometry.json"))));

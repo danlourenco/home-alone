@@ -131,8 +131,13 @@ public static partial class SpecGreybox
         var brick = TexMat("HiFi_ExtPierBrick", "red_brick_03_x", new Color(0.80f, 0.60f, 0.53f), 1.15f, 0.12f);   // at 1.90 the piers read ~11 cm courses (render): 68 mm
         var stone = TexMat("HiFi_ExtCapStone", "concrete_floor_01_x", new Color(0.80f, 0.77f, 0.70f), 0.9f, 0.35f);   // film 11908: buff limestone caps
         var iron = Mat("HiFi_ExtLanternMetal", new Color(0.015f, 0.015f, 0.014f)); iron.SetFloat("_Metallic", 0.7f); iron.SetFloat("_Smoothness", 0.5f);
-        var brass = Mat("HiFi_ExtMailboxBrass", new Color(0.86f, 0.69f, 0.38f)); brass.SetFloat("_Metallic", 1f); brass.SetFloat("_Smoothness", 0.55f);
-        var glass = AtticGlow("HiFi_ExtPierLanternGlass", new Color(1f, 0.86f, 0.64f), 1800f, 0.9f);
+        // walk note 2026-10-21T06:45:32 ("the front mailbox feels way too bright, and cheep. same with the pier lights"): film 11908/12030 (overcast,
+        // snow) read the mailbox a dull, aged brass (sRGB ~107-115 / 86-92 / 50-72 beside the snow) and the lantern glass a pale frosted grey
+        // (~113 / 113 / 110), unlit by day. Was: polished brass 0.86/0.69/0.38, metallic 1, smoothness 0.55 (it mirrored the bright overcast
+        // sky: 228/199/109 in the shot) and glass with a pale-yellow BASE colour (1, 0.86, 0.64), so by day it read as a flat yellow pane
+        var brass = Mat("HiFi_ExtMailboxBrass", new Color(0.42f, 0.31f, 0.15f)); brass.SetFloat("_Metallic", 0.85f); brass.SetFloat("_Smoothness", 0.32f);
+        var glass = AtticGlow("HiFi_ExtPierLanternGlass", new Color(0.58f, 0.58f, 0.56f), 0f, 0.55f);   // frosted, grey by day
+        glass.SetColor("_EmissiveColor", new Color(1f, 0.86f, 0.64f) * 650f);   // night only (ShellGlow): film 5545 a warm white globe, not a glare (was 1800)
         var wood = TexMat("HiFi_ExtFenceWood", "weathered_planks_h", new Color(0.55f, 0.36f, 0.27f), 1.2f, 0.12f);   // film 2513: brown stain
 
         // ---- surfaces (walk note Oct 19 08:08): drives match the street, the concrete is damp PBR; the neighbourhood's driveway aprons
@@ -262,8 +267,8 @@ public static partial class SpecGreybox
                 Hex(lv, lt, new[] { a + new Vector3(-0.012f, 0, -0.012f), a + new Vector3(0.012f, 0, -0.012f), a + new Vector3(0.012f, 0, 0.012f), a + new Vector3(-0.012f, 0, 0.012f),
                                     b + new Vector3(-0.012f, 0, -0.012f), b + new Vector3(0.012f, 0, -0.012f), b + new Vector3(0.012f, 0, 0.012f), b + new Vector3(-0.012f, 0, 0.012f) });
             }
-            HexBox(lv, lt, c, 0.155f, 0.155f, y + 0.83f, y + 0.86f);                     // roof rim
-            HexBox(lv, lt, c, 0.150f, 0.150f, y + 0.86f, y + 0.96f, 0.03f, 0.03f);        // roof
+            HexBox(lv, lt, c, 0.140f, 0.140f, y + 0.83f, y + 0.85f);                     // roof rim (film 11908: a slim dark cap over the glass, not a wide roof)
+            HexBox(lv, lt, c, 0.130f, 0.130f, y + 0.85f, y + 0.94f, 0.03f, 0.03f);        // roof
             Prism(lv, lt, c, 0.018f, y + 0.96f, y + 1.01f, 8);                           // finial
             lanterns.Add(c + Vector3.up * (y + 0.68f));
             // the wing wall: an S from just under the cap to a low level end (film 11908), brick under a stone cap, snow on the cap
@@ -296,6 +301,10 @@ public static partial class SpecGreybox
                 var mc = new Vector3(PierX1 + 0.055f, 0, -zc);
                 HexBox(mv, mt, mc, 0.055f, 0.19f, yg + 0.42f, yg + 0.70f);
                 HexBox(mv, mt, mc + new Vector3(0.008f, 0, 0), 0.068f, 0.20f, yg + 0.70f, yg + 0.725f);
+                // the front plate's raised border and the letter slot (film 11908/12066: a framed plate, not a plain box)
+                HexBox(mv, mt, mc + new Vector3(0.057f, 0, 0), 0.006f, 0.185f, yg + 0.43f, yg + 0.445f); HexBox(mv, mt, mc + new Vector3(0.057f, 0, 0), 0.006f, 0.185f, yg + 0.675f, yg + 0.69f);
+                HexBox(mv, mt, mc + new Vector3(0.057f, 0, 0.175f), 0.006f, 0.01f, yg + 0.445f, yg + 0.675f); HexBox(mv, mt, mc + new Vector3(0.057f, 0, -0.175f), 0.006f, 0.01f, yg + 0.445f, yg + 0.675f);
+                HexBox(lv, lt, mc + new Vector3(0.058f, 0, 0), 0.004f, 0.12f, yg + 0.615f, yg + 0.63f);   // slot (dark)
                 Cushion(sv, st, mc + Vector3.up * (yg + 0.725f), 0.055f, 0.18f, 0.05f, 6);
             }
         }
