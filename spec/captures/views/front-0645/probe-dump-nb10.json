@@ -1,0 +1,5762 @@
+[
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 40.5,
+    "g": 30.75,
+    "b": 20.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 40.5,
+    "g": 30.75,
+    "b": 20.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 41.5,
+    "g": 31.75,
+    "b": 21.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 44.0,
+    "g": 34.0,
+    "b": 22.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 47.5,
+    "g": 37.0,
+    "b": 25.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 58.0,
+    "g": 45.0,
+    "b": 30.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 17.25,
+    "g": 12.375,
+    "b": 7.375
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 17.25,
+    "g": 12.375,
+    "b": 7.375
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 40.5,
+    "g": 30.75,
+    "b": 19.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 67.0,
+    "g": 53.5,
+    "b": 33.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 54.5,
+    "b": 35.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 55.5,
+    "g": 42.5,
+    "b": 28.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 35.0,
+    "g": 26.5,
+    "b": 17.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 35.0,
+    "g": 26.5,
+    "b": 17.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 36.0,
+    "g": 27.5,
+    "b": 18.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 37.5,
+    "g": 29.0,
+    "b": 18.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 41.5,
+    "g": 31.25,
+    "b": 21.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 52.5,
+    "g": 40.5,
+    "b": 27.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 19.0,
+    "g": 13.75,
+    "b": 8.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 19.0,
+    "g": 13.75,
+    "b": 8.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 49.5,
+    "g": 38.5,
+    "b": 24.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 66.0,
+    "g": 58.0,
+    "b": 43.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 58.0,
+    "b": 38.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 59.0,
+    "g": 44.0,
+    "b": 29.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 33.0,
+    "g": 21.75,
+    "b": 13.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 32.5,
+    "g": 21.75,
+    "b": 13.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 34.0,
+    "g": 23.75,
+    "b": 14.75
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 36.0,
+    "g": 26.5,
+    "b": 17.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 39.0,
+    "g": 29.25,
+    "b": 19.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 48.5,
+    "g": 38.0,
+    "b": 25.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 11.375,
+    "g": 7.9375,
+    "b": 4.625
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 11.375,
+    "g": 7.9375,
+    "b": 4.625
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 42.0,
+    "g": 31.75,
+    "b": 19.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 67.0,
+    "g": 58.5,
+    "b": 38.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 57.5,
+    "b": 37.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 60.5,
+    "g": 45.5,
+    "b": 30.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 34.0,
+    "g": 21.25,
+    "b": 13.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 33.5,
+    "g": 21.25,
+    "b": 13.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 34.5,
+    "g": 22.25,
+    "b": 14.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 34.5,
+    "g": 23.5,
+    "b": 15.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 33.0,
+    "g": 23.75,
+    "b": 16.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 39.0,
+    "g": 30.25,
+    "b": 20.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 8.125,
+    "g": 6.0625,
+    "b": 3.875
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 8.125,
+    "g": 6.0625,
+    "b": 3.875
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 39.0,
+    "g": 30.25,
+    "b": 18.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 67.0,
+    "g": 57.5,
+    "b": 36.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 57.0,
+    "b": 36.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 58.5,
+    "g": 43.5,
+    "b": 28.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 26.5,
+    "g": 19.0,
+    "b": 11.75
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 28.25,
+    "g": 20.75,
+    "b": 13.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 31.5,
+    "g": 23.25,
+    "b": 15.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 35.5,
+    "g": 27.5,
+    "b": 17.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 39.5,
+    "g": 30.5,
+    "b": 20.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 41.5,
+    "g": 31.75,
+    "b": 21.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 43.0,
+    "g": 32.0,
+    "b": 19.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 43.0,
+    "g": 32.0,
+    "b": 19.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 58.5,
+    "g": 44.0,
+    "b": 27.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 67.0,
+    "g": 52.5,
+    "b": 32.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 55.5,
+    "g": 42.0,
+    "b": 26.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 53.0,
+    "g": 40.5,
+    "b": 26.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 47.5,
+    "g": 35.0,
+    "b": 20.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 36.0,
+    "g": 28.0,
+    "b": 18.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 39.5,
+    "g": 30.25,
+    "b": 20.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 45.0,
+    "g": 34.5,
+    "b": 23.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 48.5,
+    "g": 38.0,
+    "b": 25.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 51.5,
+    "g": 40.0,
+    "b": 26.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 38.0,
+    "g": 28.75,
+    "b": 17.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 38.0,
+    "g": 28.75,
+    "b": 17.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 53.5,
+    "g": 40.5,
+    "b": 25.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 65.0,
+    "g": 49.5,
+    "b": 32.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 55.5,
+    "g": 41.5,
+    "b": 28.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 55.0,
+    "g": 42.0,
+    "b": 26.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 1.578125,
+    "g": 0.7578125,
+    "b": 0.484375
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 1.546875,
+    "g": 0.71875,
+    "b": 0.484375
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 41.5,
+    "g": 31.75,
+    "b": 21.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 44.0,
+    "g": 34.0,
+    "b": 22.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 47.5,
+    "g": 37.0,
+    "b": 25.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 58.0,
+    "g": 45.0,
+    "b": 30.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 18.75,
+    "g": 13.875,
+    "b": 8.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 18.75,
+    "g": 13.875,
+    "b": 8.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 18.75,
+    "g": 13.875,
+    "b": 8.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 18.75,
+    "g": 13.875,
+    "b": 8.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 54.5,
+    "b": 35.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 55.5,
+    "g": 42.5,
+    "b": 28.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 2.28125,
+    "g": 1.140625,
+    "b": 0.671875
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 2.25,
+    "g": 1.078125,
+    "b": 0.65625
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 36.0,
+    "g": 27.5,
+    "b": 18.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 37.5,
+    "g": 29.0,
+    "b": 18.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 41.5,
+    "g": 31.25,
+    "b": 21.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 52.5,
+    "g": 40.5,
+    "b": 27.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 19.0,
+    "g": 13.75,
+    "b": 8.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 19.0,
+    "g": 13.75,
+    "b": 8.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 19.0,
+    "g": 13.75,
+    "b": 8.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 19.0,
+    "g": 13.75,
+    "b": 8.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 57.5,
+    "b": 37.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 59.0,
+    "g": 44.0,
+    "b": 29.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 1.296875,
+    "g": 0.703125,
+    "b": 0.4609375
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 1.15625,
+    "g": 0.6328125,
+    "b": 0.421875
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 34.0,
+    "g": 23.75,
+    "b": 14.75
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 36.0,
+    "g": 26.5,
+    "b": 17.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 39.0,
+    "g": 29.25,
+    "b": 19.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 48.5,
+    "g": 38.0,
+    "b": 25.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 11.375,
+    "g": 7.9375,
+    "b": 4.625
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 11.375,
+    "g": 7.9375,
+    "b": 4.625
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 11.375,
+    "g": 7.9375,
+    "b": 4.625
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 11.375,
+    "g": 7.9375,
+    "b": 4.625
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 57.5,
+    "b": 37.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 60.5,
+    "g": 45.5,
+    "b": 30.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 1.5625,
+    "g": 0.8828125,
+    "b": 0.546875
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 1.375,
+    "g": 0.7734375,
+    "b": 0.484375
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 34.5,
+    "g": 22.25,
+    "b": 14.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 34.5,
+    "g": 23.5,
+    "b": 15.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 33.0,
+    "g": 23.75,
+    "b": 16.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 39.0,
+    "g": 30.25,
+    "b": 20.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 8.125,
+    "g": 6.0625,
+    "b": 3.875
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 8.125,
+    "g": 6.0625,
+    "b": 3.875
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 8.125,
+    "g": 6.0625,
+    "b": 3.875
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 8.125,
+    "g": 6.0625,
+    "b": 3.875
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 57.0,
+    "b": 36.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 58.5,
+    "g": 43.5,
+    "b": 28.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 12.5,
+    "g": 8.75,
+    "b": 5.375
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 27.25,
+    "g": 20.25,
+    "b": 13.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 31.5,
+    "g": 23.25,
+    "b": 15.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 35.5,
+    "g": 27.5,
+    "b": 17.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 39.5,
+    "g": 30.5,
+    "b": 20.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 41.5,
+    "g": 31.75,
+    "b": 21.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 43.0,
+    "g": 32.0,
+    "b": 19.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 43.0,
+    "g": 32.0,
+    "b": 19.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 43.0,
+    "g": 32.0,
+    "b": 19.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 43.0,
+    "g": 32.0,
+    "b": 19.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 55.5,
+    "g": 42.0,
+    "b": 26.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 53.0,
+    "g": 40.5,
+    "b": 26.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 22.0,
+    "g": 15.875,
+    "b": 9.25
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 35.5,
+    "g": 27.0,
+    "b": 17.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 39.5,
+    "g": 30.25,
+    "b": 20.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 45.0,
+    "g": 34.5,
+    "b": 23.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 48.5,
+    "g": 38.0,
+    "b": 25.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 51.5,
+    "g": 40.0,
+    "b": 26.5
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 38.0,
+    "g": 28.75,
+    "b": 17.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 38.0,
+    "g": 28.75,
+    "b": 17.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 38.0,
+    "g": 28.75,
+    "b": 17.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 38.0,
+    "g": 28.75,
+    "b": 17.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 55.5,
+    "g": 41.5,
+    "b": 28.0
+  },
+  {
+    "scenario": "DayFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 55.0,
+    "g": 42.0,
+    "b": 26.5
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.0600585938,
+    "g": 0.04296875,
+    "b": 0.0302734375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.0202636719,
+    "g": 0.0109863281,
+    "b": 0.004638672
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.017578125,
+    "g": 0.009521484,
+    "b": 0.00384521484
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0128173828,
+    "g": 0.006652832,
+    "b": 0.002746582
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.0104980469,
+    "g": 0.00531005859,
+    "b": 0.00219726563
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.0241699219,
+    "g": 0.0119628906,
+    "b": 0.004638672
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.0703125,
+    "g": 0.05029297,
+    "b": 0.03515625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.0703125,
+    "g": 0.05029297,
+    "b": 0.03515625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.07128906,
+    "g": 0.05078125,
+    "b": 0.03515625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.07324219,
+    "g": 0.0517578125,
+    "b": 0.0341796875
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.07519531,
+    "g": 0.052734375,
+    "b": 0.0361328125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.00793457,
+    "g": 0.003753662,
+    "b": 0.001739502
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.099609375,
+    "g": 0.060546875,
+    "b": 0.0341796875
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.05908203,
+    "g": 0.0280761719,
+    "b": 0.009033203
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.04638672,
+    "g": 0.0229492188,
+    "b": 0.00756835938
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0258789063,
+    "g": 0.0134277344,
+    "b": 0.004760742
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.0222167969,
+    "g": 0.0125732422,
+    "b": 0.00524902344
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.125,
+    "g": 0.064453125,
+    "b": 0.0239257813
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.08105469,
+    "g": 0.056640625,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.08105469,
+    "g": 0.056640625,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.08105469,
+    "g": 0.0571289063,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.08105469,
+    "g": 0.0571289063,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.080078125,
+    "g": 0.0571289063,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.005493164,
+    "g": 0.00317382813,
+    "b": 0.00158691406
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.125,
+    "g": 0.0859375,
+    "b": 0.064453125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.0375976563,
+    "g": 0.0202636719,
+    "b": 0.008300781
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.03515625,
+    "g": 0.0187988281,
+    "b": 0.007446289
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0302734375,
+    "g": 0.0153808594,
+    "b": 0.00610351563
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.0266113281,
+    "g": 0.0112304688,
+    "b": 0.004272461
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.0207519531,
+    "g": 0.0101318359,
+    "b": 0.00360107422
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.265625,
+    "g": 0.224609375,
+    "b": 0.1484375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.265625,
+    "g": 0.224609375,
+    "b": 0.1484375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.265625,
+    "g": 0.224609375,
+    "b": 0.1484375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.2734375,
+    "g": 0.2265625,
+    "b": 0.1484375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.2734375,
+    "g": 0.2265625,
+    "b": 0.1484375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.0224609375,
+    "g": 0.0113525391,
+    "b": 0.00439453125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.224609375,
+    "g": 0.140625,
+    "b": 0.09375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.08984375,
+    "g": 0.041015625,
+    "b": 0.0119628906
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.09375,
+    "g": 0.037109375,
+    "b": 0.009277344
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.09277344,
+    "g": 0.0288085938,
+    "b": 0.00451660156
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.07910156,
+    "g": 0.0205078125,
+    "b": 0.00161743164
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.02709961,
+    "g": 0.009643555,
+    "b": 0.00225830078
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.359375,
+    "g": 0.30078125,
+    "b": 0.203125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.359375,
+    "g": 0.30078125,
+    "b": 0.203125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.3515625,
+    "g": 0.30078125,
+    "b": 0.203125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.34765625,
+    "g": 0.30078125,
+    "b": 0.203125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.359375,
+    "g": 0.30078125,
+    "b": 0.203125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.0498046875,
+    "g": 0.025390625,
+    "b": 0.0087890625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.220703125,
+    "g": 0.109375,
+    "b": 0.04296875
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.08203125,
+    "g": 0.037109375,
+    "b": 0.0109863281
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.06738281,
+    "g": 0.03173828,
+    "b": 0.0102539063
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0400390625,
+    "g": 0.01953125,
+    "b": 0.00720214844
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.01550293,
+    "g": 0.008911133,
+    "b": 0.00402832031
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.0703125,
+    "g": 0.0375976563,
+    "b": 0.0148925781
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.06933594,
+    "g": 0.0556640625,
+    "b": 0.0380859375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.06933594,
+    "g": 0.0556640625,
+    "b": 0.0380859375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.07421875,
+    "g": 0.0576171875,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.08105469,
+    "g": 0.0610351563,
+    "b": 0.041015625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.0229492188,
+    "g": 0.0120849609,
+    "b": 0.00451660156
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.0140380859,
+    "g": 0.00793457,
+    "b": 0.00305175781
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.0859375,
+    "g": 0.0532226563,
+    "b": 0.03125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.0537109375,
+    "g": 0.0261230469,
+    "b": 0.0102539063
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.0439453125,
+    "g": 0.0229492188,
+    "b": 0.009277344
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.02709961,
+    "g": 0.0151367188,
+    "b": 0.006225586
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.037109375,
+    "g": 0.0227050781,
+    "b": 0.0100097656
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.193359375,
+    "g": 0.107421875,
+    "b": 0.0419921875
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.09375,
+    "g": 0.068359375,
+    "b": 0.0439453125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.09375,
+    "g": 0.068359375,
+    "b": 0.0439453125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.09277344,
+    "g": 0.06738281,
+    "b": 0.0439453125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.0859375,
+    "g": 0.064453125,
+    "b": 0.0439453125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.0112304688,
+    "g": 0.006164551,
+    "b": 0.00256347656
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.04345703,
+    "g": 0.0229492188,
+    "b": 0.0087890625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.203125,
+    "g": 0.0625,
+    "b": 0.0278320313
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.158203125,
+    "g": 0.03100586,
+    "b": 0.00329589844
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.017578125,
+    "g": 0.009521484,
+    "b": 0.00384521484
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0128173828,
+    "g": 0.006652832,
+    "b": 0.002746582
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.0104980469,
+    "g": 0.00531005859,
+    "b": 0.00219726563
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.0241699219,
+    "g": 0.0119628906,
+    "b": 0.004638672
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.0703125,
+    "g": 0.05078125,
+    "b": 0.03515625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.0703125,
+    "g": 0.05078125,
+    "b": 0.03515625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.0703125,
+    "g": 0.05078125,
+    "b": 0.03515625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.0703125,
+    "g": 0.05078125,
+    "b": 0.03515625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.07519531,
+    "g": 0.052734375,
+    "b": 0.0361328125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.00793457,
+    "g": 0.003753662,
+    "b": 0.001739502
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.1640625,
+    "g": 0.0517578125,
+    "b": 0.02734375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.123046875,
+    "g": 0.0190429688,
+    "b": 0.00149536133
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.04638672,
+    "g": 0.0229492188,
+    "b": 0.00756835938
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0258789063,
+    "g": 0.0134277344,
+    "b": 0.004760742
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.0222167969,
+    "g": 0.0125732422,
+    "b": 0.00524902344
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.125,
+    "g": 0.064453125,
+    "b": 0.0239257813
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.08105469,
+    "g": 0.056640625,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.08105469,
+    "g": 0.056640625,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.08105469,
+    "g": 0.056640625,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.08105469,
+    "g": 0.056640625,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.07910156,
+    "g": 0.056640625,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.00537109375,
+    "g": 0.00305175781,
+    "b": 0.00155639648
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 1.015625,
+    "g": 0.41796875,
+    "b": 0.1953125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.921875,
+    "g": 0.35546875,
+    "b": 0.14453125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.03515625,
+    "g": 0.0187988281,
+    "b": 0.007446289
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0302734375,
+    "g": 0.0153808594,
+    "b": 0.00610351563
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.0266113281,
+    "g": 0.0112304688,
+    "b": 0.004272461
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.0207519531,
+    "g": 0.0101318359,
+    "b": 0.00360107422
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.265625,
+    "g": 0.224609375,
+    "b": 0.1484375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.265625,
+    "g": 0.224609375,
+    "b": 0.1484375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.265625,
+    "g": 0.224609375,
+    "b": 0.1484375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.265625,
+    "g": 0.224609375,
+    "b": 0.1484375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.2734375,
+    "g": 0.2265625,
+    "b": 0.1484375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.0224609375,
+    "g": 0.0113525391,
+    "b": 0.00439453125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 2.65625,
+    "g": 0.828125,
+    "b": 0.296875
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 2.4375,
+    "g": 0.7265625,
+    "b": 0.23046875
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.09375,
+    "g": 0.037109375,
+    "b": 0.009277344
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.09277344,
+    "g": 0.0288085938,
+    "b": 0.00451660156
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.07910156,
+    "g": 0.0205078125,
+    "b": 0.00161743164
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.02709961,
+    "g": 0.009643555,
+    "b": 0.00225830078
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.359375,
+    "g": 0.30078125,
+    "b": 0.203125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.359375,
+    "g": 0.30078125,
+    "b": 0.203125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.359375,
+    "g": 0.30078125,
+    "b": 0.203125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.359375,
+    "g": 0.30078125,
+    "b": 0.203125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.359375,
+    "g": 0.30078125,
+    "b": 0.203125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.0498046875,
+    "g": 0.025390625,
+    "b": 0.0087890625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.12890625,
+    "g": 0.06933594,
+    "b": 0.03125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.080078125,
+    "g": 0.0361328125,
+    "b": 0.0107421875
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.06738281,
+    "g": 0.03173828,
+    "b": 0.0102539063
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0400390625,
+    "g": 0.01953125,
+    "b": 0.00720214844
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.01550293,
+    "g": 0.008911133,
+    "b": 0.00402832031
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.0703125,
+    "g": 0.0375976563,
+    "b": 0.0148925781
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.06933594,
+    "g": 0.0556640625,
+    "b": 0.0380859375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.06933594,
+    "g": 0.0556640625,
+    "b": 0.0380859375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.06933594,
+    "g": 0.0556640625,
+    "b": 0.0380859375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.06933594,
+    "g": 0.0556640625,
+    "b": 0.0380859375
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.0229492188,
+    "g": 0.0120849609,
+    "b": 0.00451660156
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.0140380859,
+    "g": 0.00793457,
+    "b": 0.00305175781
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.060546875,
+    "g": 0.0415039063,
+    "b": 0.0278320313
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.05126953,
+    "g": 0.025390625,
+    "b": 0.009765625
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.0439453125,
+    "g": 0.0229492188,
+    "b": 0.009277344
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.02709961,
+    "g": 0.0151367188,
+    "b": 0.006225586
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.037109375,
+    "g": 0.0227050781,
+    "b": 0.0100097656
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.193359375,
+    "g": 0.107421875,
+    "b": 0.0419921875
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.09375,
+    "g": 0.068359375,
+    "b": 0.0439453125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.09375,
+    "g": 0.068359375,
+    "b": 0.0439453125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.09375,
+    "g": 0.068359375,
+    "b": 0.0439453125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.09375,
+    "g": 0.068359375,
+    "b": 0.0439453125
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.0112304688,
+    "g": 0.006164551,
+    "b": 0.00256347656
+  },
+  {
+    "scenario": "NightFilm",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.04345703,
+    "g": 0.0229492188,
+    "b": 0.0087890625
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 38.5,
+    "g": 29.75,
+    "b": 19.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 38.5,
+    "g": 29.75,
+    "b": 19.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 40.5,
+    "g": 30.75,
+    "b": 20.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 43.5,
+    "g": 33.5,
+    "b": 22.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 48.0,
+    "g": 37.5,
+    "b": 25.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 58.0,
+    "g": 44.5,
+    "b": 30.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 11.25,
+    "g": 8.25,
+    "b": 4.375
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 11.25,
+    "g": 8.25,
+    "b": 4.375
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 34.0,
+    "g": 26.5,
+    "b": 15.75
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 63.5,
+    "g": 49.0,
+    "b": 31.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 54.5,
+    "b": 35.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 56.0,
+    "g": 42.5,
+    "b": 29.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 32.5,
+    "g": 23.5,
+    "b": 15.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 32.5,
+    "g": 23.25,
+    "b": 15.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 33.5,
+    "g": 25.0,
+    "b": 16.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 36.0,
+    "g": 27.75,
+    "b": 18.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 41.5,
+    "g": 31.75,
+    "b": 21.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 52.5,
+    "g": 40.5,
+    "b": 27.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 12.75,
+    "g": 8.25,
+    "b": 4.25
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 12.75,
+    "g": 8.25,
+    "b": 4.25
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 43.0,
+    "g": 31.75,
+    "b": 18.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 67.0,
+    "g": 58.5,
+    "b": 38.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 58.0,
+    "b": 38.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 59.0,
+    "g": 44.5,
+    "b": 28.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 33.5,
+    "g": 22.5,
+    "b": 14.25
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 33.5,
+    "g": 22.25,
+    "b": 14.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 34.5,
+    "g": 23.5,
+    "b": 15.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 36.0,
+    "g": 26.0,
+    "b": 16.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 40.5,
+    "g": 30.25,
+    "b": 19.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 51.5,
+    "g": 40.5,
+    "b": 27.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 4.5,
+    "g": 3.34375,
+    "b": 1.875
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 4.5,
+    "g": 3.34375,
+    "b": 1.875
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 33.0,
+    "g": 24.5,
+    "b": 15.25
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 67.0,
+    "g": 52.0,
+    "b": 32.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 57.5,
+    "b": 37.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 61.0,
+    "g": 45.5,
+    "b": 30.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 34.5,
+    "g": 21.75,
+    "b": 14.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 34.5,
+    "g": 21.5,
+    "b": 13.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 34.5,
+    "g": 22.25,
+    "b": 14.25
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 34.5,
+    "g": 23.75,
+    "b": 15.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 36.0,
+    "g": 26.75,
+    "b": 17.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 42.5,
+    "g": 33.0,
+    "b": 21.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 5.1875,
+    "g": 4.0,
+    "b": 2.125
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 5.1875,
+    "g": 4.0,
+    "b": 2.125
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 24.5,
+    "g": 18.75,
+    "b": 11.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 56.0,
+    "g": 42.0,
+    "b": 26.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 57.0,
+    "b": 36.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 58.5,
+    "g": 43.5,
+    "b": 28.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 26.25,
+    "g": 18.5,
+    "b": 11.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 27.25,
+    "g": 20.0,
+    "b": 13.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 30.5,
+    "g": 22.25,
+    "b": 14.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 35.5,
+    "g": 27.0,
+    "b": 17.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 39.5,
+    "g": 30.25,
+    "b": 20.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 42.0,
+    "g": 32.5,
+    "b": 21.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 45.0,
+    "g": 33.0,
+    "b": 18.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 45.0,
+    "g": 33.0,
+    "b": 18.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 60.5,
+    "g": 45.5,
+    "b": 26.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 67.0,
+    "g": 53.5,
+    "b": 33.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 55.5,
+    "g": 41.5,
+    "b": 28.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 53.0,
+    "g": 40.5,
+    "b": 26.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 46.0,
+    "g": 33.5,
+    "b": 19.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 34.5,
+    "g": 26.0,
+    "b": 17.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 38.0,
+    "g": 29.0,
+    "b": 19.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 44.0,
+    "g": 33.5,
+    "b": 22.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 49.0,
+    "g": 38.0,
+    "b": 25.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 52.5,
+    "g": 40.5,
+    "b": 26.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 55.5,
+    "g": 40.5,
+    "b": 22.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 55.5,
+    "g": 40.5,
+    "b": 22.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 66.0,
+    "g": 50.0,
+    "b": 28.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 67.0,
+    "g": 54.5,
+    "b": 33.0
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 55.0,
+    "g": 42.0,
+    "b": 26.5
+  },
+  {
+    "scenario": "Default",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 55.0,
+    "g": 41.5,
+    "b": 27.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 1.46875,
+    "g": 0.6875,
+    "b": 0.46875
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 1.421875,
+    "g": 0.65625,
+    "b": 0.4453125
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 40.5,
+    "g": 30.75,
+    "b": 20.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 43.5,
+    "g": 33.5,
+    "b": 22.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 48.0,
+    "g": 37.5,
+    "b": 25.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 58.0,
+    "g": 44.5,
+    "b": 30.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 13.875,
+    "g": 10.25,
+    "b": 5.625
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 13.875,
+    "g": 10.25,
+    "b": 5.625
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 13.875,
+    "g": 10.25,
+    "b": 5.625
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 13.875,
+    "g": 10.25,
+    "b": 5.625
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 54.5,
+    "b": 35.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 56.0,
+    "g": 42.5,
+    "b": 29.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 2.28125,
+    "g": 1.109375,
+    "b": 0.671875
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 2.28125,
+    "g": 1.078125,
+    "b": 0.65625
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 33.5,
+    "g": 25.0,
+    "b": 16.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 36.0,
+    "g": 27.75,
+    "b": 18.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 41.5,
+    "g": 31.75,
+    "b": 21.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 52.5,
+    "g": 40.5,
+    "b": 27.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 12.75,
+    "g": 8.25,
+    "b": 4.25
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 12.75,
+    "g": 8.25,
+    "b": 4.25
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 12.75,
+    "g": 8.25,
+    "b": 4.25
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 12.75,
+    "g": 8.25,
+    "b": 4.25
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 57.5,
+    "b": 37.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 59.0,
+    "g": 44.0,
+    "b": 28.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 1.984375,
+    "g": 1.046875,
+    "b": 0.609375
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 1.875,
+    "g": 0.9921875,
+    "b": 0.5625
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 34.5,
+    "g": 23.5,
+    "b": 15.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 36.0,
+    "g": 26.0,
+    "b": 16.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 40.5,
+    "g": 30.25,
+    "b": 19.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 51.5,
+    "g": 40.5,
+    "b": 27.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 4.5,
+    "g": 3.34375,
+    "b": 1.875
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 4.5,
+    "g": 3.34375,
+    "b": 1.875
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 4.5,
+    "g": 3.34375,
+    "b": 1.875
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 4.5,
+    "g": 3.34375,
+    "b": 1.875
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 57.5,
+    "b": 37.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 61.0,
+    "g": 45.5,
+    "b": 30.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 1.59375,
+    "g": 0.890625,
+    "b": 0.546875
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 1.421875,
+    "g": 0.78125,
+    "b": 0.4765625
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 34.5,
+    "g": 22.25,
+    "b": 14.25
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 34.5,
+    "g": 23.75,
+    "b": 15.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 36.0,
+    "g": 26.75,
+    "b": 17.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 42.5,
+    "g": 33.0,
+    "b": 21.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 5.1875,
+    "g": 4.0,
+    "b": 2.125
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 5.1875,
+    "g": 4.0,
+    "b": 2.125
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 5.1875,
+    "g": 4.0,
+    "b": 2.125
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 5.1875,
+    "g": 4.0,
+    "b": 2.125
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 67.0,
+    "g": 57.0,
+    "b": 36.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 58.5,
+    "g": 43.5,
+    "b": 28.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 12.5,
+    "g": 8.625,
+    "b": 5.25
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 26.5,
+    "g": 19.25,
+    "b": 12.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 30.5,
+    "g": 22.25,
+    "b": 14.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 35.5,
+    "g": 27.0,
+    "b": 17.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 39.5,
+    "g": 30.25,
+    "b": 20.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 42.0,
+    "g": 32.5,
+    "b": 21.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 45.0,
+    "g": 33.0,
+    "b": 18.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 45.0,
+    "g": 33.0,
+    "b": 18.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 45.0,
+    "g": 33.0,
+    "b": 18.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 45.0,
+    "g": 33.0,
+    "b": 18.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 55.5,
+    "g": 41.5,
+    "b": 28.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 53.0,
+    "g": 40.5,
+    "b": 26.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 18.75,
+    "g": 13.75,
+    "b": 7.875
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 33.5,
+    "g": 25.0,
+    "b": 16.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 38.0,
+    "g": 29.0,
+    "b": 19.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 44.0,
+    "g": 33.5,
+    "b": 22.0
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 49.0,
+    "g": 38.0,
+    "b": 25.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 52.5,
+    "g": 40.5,
+    "b": 26.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 55.5,
+    "g": 40.5,
+    "b": 22.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 55.5,
+    "g": 40.5,
+    "b": 22.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 55.5,
+    "g": 40.5,
+    "b": 22.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 55.5,
+    "g": 40.5,
+    "b": 22.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 55.0,
+    "g": 42.0,
+    "b": 26.5
+  },
+  {
+    "scenario": "Default",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 55.0,
+    "g": 41.5,
+    "b": 27.0
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.07714844,
+    "g": 0.05078125,
+    "b": 0.0322265625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.037109375,
+    "g": 0.0185546875,
+    "b": 0.006958008
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.0302734375,
+    "g": 0.0163574219,
+    "b": 0.00634765625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.017578125,
+    "g": 0.0108642578,
+    "b": 0.00439453125
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.007385254,
+    "g": 0.004760742,
+    "b": 0.00201416016
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.0178222656,
+    "g": 0.009521484,
+    "b": 0.003540039
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.35546875,
+    "g": 0.14453125,
+    "b": 0.0400390625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.35546875,
+    "g": 0.14453125,
+    "b": 0.0400390625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.28515625,
+    "g": 0.120117188,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.1640625,
+    "g": 0.08300781,
+    "b": 0.0380859375
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.072265625,
+    "g": 0.05078125,
+    "b": 0.0341796875
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.00524902344,
+    "g": 0.00286865234,
+    "b": 0.00146484375
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.07128906,
+    "g": 0.04736328,
+    "b": 0.03125
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.03100586,
+    "g": 0.0152587891,
+    "b": 0.00524902344
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.02758789,
+    "g": 0.0134277344,
+    "b": 0.0048828125
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0187988281,
+    "g": 0.009277344,
+    "b": 0.00329589844
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.0278320313,
+    "g": 0.0147705078,
+    "b": 0.00573730469
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.15234375,
+    "g": 0.076171875,
+    "b": 0.0278320313
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 1.765625,
+    "g": 0.546875,
+    "b": 0.0556640625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 1.765625,
+    "g": 0.546875,
+    "b": 0.0556640625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 1.453125,
+    "g": 0.46875,
+    "b": 0.056640625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.8203125,
+    "g": 0.27734375,
+    "b": 0.048828125
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.080078125,
+    "g": 0.0571289063,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.00482177734,
+    "g": 0.00286865234,
+    "b": 0.00149536133
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.11328125,
+    "g": 0.07324219,
+    "b": 0.0615234375
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.025390625,
+    "g": 0.00726318359,
+    "b": 0.0029296875
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.04248047,
+    "g": 0.0183105469,
+    "b": 0.007080078
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.072265625,
+    "g": 0.0361328125,
+    "b": 0.0144042969
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.08691406,
+    "g": 0.0454101563,
+    "b": 0.017578125
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.03466797,
+    "g": 0.0183105469,
+    "b": 0.0078125
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.546875,
+    "g": 0.328125,
+    "b": 0.15234375
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.546875,
+    "g": 0.328125,
+    "b": 0.15234375
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.515625,
+    "g": 0.3125,
+    "b": 0.15234375
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.4140625,
+    "g": 0.27734375,
+    "b": 0.15234375
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.2734375,
+    "g": 0.2265625,
+    "b": 0.1484375
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.0108642578,
+    "g": 0.00567626953,
+    "b": 0.00244140625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.177734375,
+    "g": 0.122070313,
+    "b": 0.09765625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.046875,
+    "g": 0.0258789063,
+    "b": 0.0134277344
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.0415039063,
+    "g": 0.0217285156,
+    "b": 0.0109863281
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0327148438,
+    "g": 0.0145263672,
+    "b": 0.00646972656
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.0227050781,
+    "g": 0.0078125,
+    "b": 0.002746582
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.0131835938,
+    "g": 0.00592041,
+    "b": 0.00244140625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 1.46875,
+    "g": 0.734375,
+    "b": 0.19921875
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 1.46875,
+    "g": 0.734375,
+    "b": 0.19921875
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 1.1875,
+    "g": 0.65625,
+    "b": 0.2109375
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.7734375,
+    "g": 0.48046875,
+    "b": 0.21484375
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.37109375,
+    "g": 0.3046875,
+    "b": 0.203125
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.07324219,
+    "g": 0.0341796875,
+    "b": 0.0100097656
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.1875,
+    "g": 0.09765625,
+    "b": 0.0400390625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.078125,
+    "g": 0.0375976563,
+    "b": 0.0153808594
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.064453125,
+    "g": 0.03125,
+    "b": 0.0134277344
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0405273438,
+    "g": 0.0187988281,
+    "b": 0.008300781
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.0244140625,
+    "g": 0.0131835938,
+    "b": 0.00524902344
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.099609375,
+    "g": 0.0517578125,
+    "b": 0.0185546875
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.228515625,
+    "g": 0.16015625,
+    "b": 0.109375
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.228515625,
+    "g": 0.16015625,
+    "b": 0.109375
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.20703125,
+    "g": 0.142578125,
+    "b": 0.091796875
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.150390625,
+    "g": 0.104492188,
+    "b": 0.064453125
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.0147705078,
+    "g": 0.007751465,
+    "b": 0.00329589844
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.0113525391,
+    "g": 0.00732421875,
+    "b": 0.00390625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.09765625,
+    "g": 0.0537109375,
+    "b": 0.0288085938
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.0283203125,
+    "g": 0.0134277344,
+    "b": 0.00439453125
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.0246582031,
+    "g": 0.01184082,
+    "b": 0.00415039063
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0180664063,
+    "g": 0.009155273,
+    "b": 0.003479004
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.046875,
+    "g": 0.025390625,
+    "b": 0.0104980469
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.31640625,
+    "g": 0.15625,
+    "b": 0.05078125
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.31640625,
+    "g": 0.23828125,
+    "b": 0.1640625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.31640625,
+    "g": 0.23828125,
+    "b": 0.1640625
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.26953125,
+    "g": 0.19921875,
+    "b": 0.1328125
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.16796875,
+    "g": 0.125,
+    "b": 0.083984375
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.00762939453,
+    "g": 0.005065918,
+    "b": 0.00262451172
+  },
+  {
+    "scenario": "Night",
+    "class": "exterior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.0128173828,
+    "g": 0.008422852,
+    "b": 0.00390625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.2421875,
+    "g": 0.0571289063,
+    "b": 0.0263671875
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.201171875,
+    "g": 0.0251464844,
+    "b": 0.00177001953
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.0302734375,
+    "g": 0.0163574219,
+    "b": 0.00634765625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.017578125,
+    "g": 0.0108642578,
+    "b": 0.00439453125
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.007385254,
+    "g": 0.004760742,
+    "b": 0.00201416016
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.0178222656,
+    "g": 0.009521484,
+    "b": 0.003540039
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.34375,
+    "g": 0.140625,
+    "b": 0.0400390625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.34375,
+    "g": 0.140625,
+    "b": 0.0400390625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.34375,
+    "g": 0.140625,
+    "b": 0.0400390625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.34375,
+    "g": 0.140625,
+    "b": 0.0400390625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.072265625,
+    "g": 0.05078125,
+    "b": 0.0341796875
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -4.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.00524902344,
+    "g": 0.00286865234,
+    "b": 0.00146484375
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.31640625,
+    "g": 0.06933594,
+    "b": 0.025390625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.26953125,
+    "g": 0.0366210938,
+    "b": 0.0008087158
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.02758789,
+    "g": 0.0134277344,
+    "b": 0.0048828125
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0187988281,
+    "g": 0.009277344,
+    "b": 0.00329589844
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.0278320313,
+    "g": 0.0147705078,
+    "b": 0.00573730469
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.15234375,
+    "g": 0.076171875,
+    "b": 0.0278320313
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 1.765625,
+    "g": 0.546875,
+    "b": 0.0556640625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 1.765625,
+    "g": 0.546875,
+    "b": 0.0556640625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 1.765625,
+    "g": 0.546875,
+    "b": 0.0556640625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 1.765625,
+    "g": 0.546875,
+    "b": 0.0556640625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.07910156,
+    "g": 0.056640625,
+    "b": 0.0390625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -6.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.004760742,
+    "g": 0.00283813477,
+    "b": 0.00146484375
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 1.1875,
+    "g": 0.515625,
+    "b": 0.2578125
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 1.09375,
+    "g": 0.453125,
+    "b": 0.2109375
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.04248047,
+    "g": 0.0183105469,
+    "b": 0.007080078
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.072265625,
+    "g": 0.0361328125,
+    "b": 0.0144042969
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.08691406,
+    "g": 0.0454101563,
+    "b": 0.017578125
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.03466797,
+    "g": 0.0183105469,
+    "b": 0.0078125
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.546875,
+    "g": 0.328125,
+    "b": 0.15234375
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.546875,
+    "g": 0.328125,
+    "b": 0.15234375
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.5546875,
+    "g": 0.328125,
+    "b": 0.15234375
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.5546875,
+    "g": 0.328125,
+    "b": 0.15234375
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.2734375,
+    "g": 0.2265625,
+    "b": 0.1484375
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -8.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.0108642578,
+    "g": 0.00567626953,
+    "b": 0.00244140625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 3.1875,
+    "g": 0.9453125,
+    "b": 0.3515625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 3.03125,
+    "g": 0.8515625,
+    "b": 0.28125
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.0415039063,
+    "g": 0.0217285156,
+    "b": 0.0109863281
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0327148438,
+    "g": 0.0145263672,
+    "b": 0.00646972656
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.0227050781,
+    "g": 0.0078125,
+    "b": 0.002746582
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.0131835938,
+    "g": 0.00592041,
+    "b": 0.00244140625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 1.46875,
+    "g": 0.734375,
+    "b": 0.19921875
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 1.46875,
+    "g": 0.734375,
+    "b": 0.19921875
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 1.46875,
+    "g": 0.734375,
+    "b": 0.19921875
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 1.46875,
+    "g": 0.7421875,
+    "b": 0.19921875
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.37109375,
+    "g": 0.3046875,
+    "b": 0.203125
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -11.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.07324219,
+    "g": 0.0341796875,
+    "b": 0.0100097656
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.116210938,
+    "g": 0.0625,
+    "b": 0.0302734375
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.076171875,
+    "g": 0.0361328125,
+    "b": 0.0148925781
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.064453125,
+    "g": 0.03125,
+    "b": 0.0134277344
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0405273438,
+    "g": 0.0187988281,
+    "b": 0.008300781
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.0244140625,
+    "g": 0.0131835938,
+    "b": 0.00524902344
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.099609375,
+    "g": 0.0517578125,
+    "b": 0.0185546875
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.228515625,
+    "g": 0.16015625,
+    "b": 0.109375
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.228515625,
+    "g": 0.16015625,
+    "b": 0.109375
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.228515625,
+    "g": 0.16015625,
+    "b": 0.109375
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.228515625,
+    "g": 0.16015625,
+    "b": 0.109375
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.0147705078,
+    "g": 0.007751465,
+    "b": 0.00329589844
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -13.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.0113525391,
+    "g": 0.00732421875,
+    "b": 0.00390625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": -0.6,
+    "r": 0.06542969,
+    "g": 0.0415039063,
+    "b": 0.0263671875
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.15,
+    "r": 0.02734375,
+    "g": 0.0128173828,
+    "b": 0.00439453125
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.4,
+    "r": 0.0246582031,
+    "g": 0.01184082,
+    "b": 0.00415039063
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 0.8,
+    "r": 0.0180664063,
+    "g": 0.009155273,
+    "b": 0.003479004
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 1.3,
+    "r": 0.046875,
+    "g": 0.025390625,
+    "b": 0.0104980469
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "lower",
+    "d": 2.0,
+    "r": 0.31640625,
+    "g": 0.15625,
+    "b": 0.05078125
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": -0.6,
+    "r": 0.31640625,
+    "g": 0.23828125,
+    "b": 0.1640625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.15,
+    "r": 0.31640625,
+    "g": 0.23828125,
+    "b": 0.1640625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.4,
+    "r": 0.31640625,
+    "g": 0.23828125,
+    "b": 0.1640625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 0.8,
+    "r": 0.31640625,
+    "g": 0.23828125,
+    "b": 0.1640625
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 1.3,
+    "r": 0.00762939453,
+    "g": 0.005065918,
+    "b": 0.00262451172
+  },
+  {
+    "scenario": "Night",
+    "class": "interior",
+    "z": -15.0,
+    "storey": "upper",
+    "d": 2.0,
+    "r": 0.0128173828,
+    "g": 0.008422852,
+    "b": 0.00390625
+  }
+]

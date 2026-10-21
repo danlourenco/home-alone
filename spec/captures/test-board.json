@@ -202,16 +202,35 @@
    ]
   },
   {
+   "id": "night-glow",
+   "title": "Night: glow under the upstairs cornice",
+   "status": "needs-you",
+   "date": "Oct 21",
+   "app": "HomeAloneNB10.app (the Dock app)",
+   "when": "Now: open the Dock app at night and look at the front from the street.",
+   "what": "Your question: a warm glow along the second floor, left of the middle window. Not a leak through the wall: the hall bath's two sconces in Marina's bigger upstairs stand 0.4-0.8 m in front of the film's upper wall, outside the house as seen from the street, and their light was baked into the film's night lighting (probe lighting off removed it; switching the live lamps off did not). Fixed: lamps standing outside the film's walls (12: the hall bath, Kevin's banker lamp, the parents' bath, the attic) are dark while you are outside or downstairs and are left out of the film's bakes; unshadowed lamps inside the house now light only inside surfaces (9 were reaching the outside brick and yard bulbs through the walls). A new build check fails if either comes back. Measured at your 06:45 spot: the patch went from 78/54/40 to 16/17/29, like the brick around it.",
+   "look": [
+    "From the street at night: no warm band under the cornice left of the middle window.",
+    "Upstairs at night: the hall bath, Kevin's room and the parents' bath still lit as before."
+   ],
+   "images": [
+    {
+     "src": "spec/captures/views/front-0645/nb10-sheet.jpg",
+     "caption": "Rows 1-2: NB9 | NB10 at night, film 5545 for reference"
+    }
+   ]
+  },
+  {
    "id": "brick-upstairs",
    "title": "Front brick: upstairs darker than downstairs",
    "status": "running",
    "date": "Oct 21",
-   "when": "Fix prepared, not built (bake order Night, Default, NightFilm, DayFilm: the film's upper wall is there when the bake decides which probes count). It goes in the next combined build with the anti-aliasing default and the controls panel, on the coordinator's go. Then: brick_storeys.py on your 06:45 spot (sunny, overcast, night), and the upstairs rooms (parents, Buzz, Kevin's, hall, hall bath, by day and night) must stay within 5% of before.",
+   "when": "NB10 built (Oct 21). Still failing; next step is a deeper probe look, nothing to walk for the brick.",
    "commands": [
     "uv run -q --with pillow python -I tools/house/brick_storeys.py ~/.cache/home-alone-perf/runs/AFTER",
     "uv run -q --with pillow python -I tools/house/brick_storeys.py --rooms ~/.cache/home-alone-perf/runs/BEFORE ~/.cache/home-alone-perf/runs/AFTER parents-day parents-night buzz-day buzz-night buzzfront-day buzzfront-night kevinroom-day kevinroom-night hall-day hall-night hallbath-day hallbath-night"
    ],
-   "what": "NB9 built with probe layers: probes outside the house now stay on (Exterior), rooms Interior, Marina's strip both; outside walls read only outside probes. Result, measured (tools/house/brick_storeys.py, gate 5%): still FAIL. Overcast upstairs/downstairs 0.67 centre, 0.76 wing (NB8 0.71/0.78): the ground floor got brighter (it no longer borrows the rooms' light), the upstairs did not. Night flipped: 1.25/1.31 (NB8 0.63/1.30) because the ground-floor brick lost the warm indoor glow that leaked through it. Sunny 0.92/0.94. Rooms unchanged (foyer and living at night, compared with the lamp fit off). With probes off entirely the upstairs is still 0.81-0.85, so the remaining gap is in the outdoor light upstairs (the eaves, Marina's strip), not the rooms behind. Not shipping as a fix yet; the layers themselves are sound. PREMISE TESTS (Oct 21): (1) Eaves hidden in the live image (roof, cornice, gutters gone): the overcast upstairs barely moves, 0.675 -> 0.691 centre, 0.764 -> 0.778 wing. Not the eaves. (2) ProbeDump read the baked light on a white card in front of each storey: a few tenths of a metre out, the upstairs gets as much outdoor light as downstairs or more (day 34-59 vs 25-28). But right at the upstairs wall face (0-0.15 m) the light drops to 8.5, a quarter of downstairs (23), in the centre; at night the same spot is bright and warm (lamp-lit rooms). Conclusion in plain words: the upstairs darkness is baked in, in the first row of probes at the wall. Those probes sit inside the film's upper wall, but the bake decides which probes count from its LAST pass, Marina's version of the house, which has no wall there. So probes buried in the wall are trusted, and they are dark by day and lamp-lit at night. Proposed fix (one bake): run the film's day bake last, so the wall is there when Unity decides which probes count (or switch those buried probes off with a thin box in the wall). Then re-check the upstairs rooms, which share those probes.",
+   "what": "NB9 built with probe layers: probes outside the house now stay on (Exterior), rooms Interior, Marina's strip both; outside walls read only outside probes. Result, measured (tools/house/brick_storeys.py, gate 5%): still FAIL. Overcast upstairs/downstairs 0.67 centre, 0.76 wing (NB8 0.71/0.78): the ground floor got brighter (it no longer borrows the rooms' light), the upstairs did not. Night flipped: 1.25/1.31 (NB8 0.63/1.30) because the ground-floor brick lost the warm indoor glow that leaked through it. Sunny 0.92/0.94. Rooms unchanged (foyer and living at night, compared with the lamp fit off). With probes off entirely the upstairs is still 0.81-0.85, so the remaining gap is in the outdoor light upstairs (the eaves, Marina's strip), not the rooms behind. Not shipping as a fix yet; the layers themselves are sound. PREMISE TESTS (Oct 21): (1) Eaves hidden in the live image (roof, cornice, gutters gone): the overcast upstairs barely moves, 0.675 -> 0.691 centre, 0.764 -> 0.778 wing. Not the eaves. (2) ProbeDump read the baked light on a white card in front of each storey: a few tenths of a metre out, the upstairs gets as much outdoor light as downstairs or more (day 34-59 vs 25-28). But right at the upstairs wall face (0-0.15 m) the light drops to 8.5, a quarter of downstairs (23), in the centre; at night the same spot is bright and warm (lamp-lit rooms). Conclusion in plain words: the upstairs darkness is baked in, in the first row of probes at the wall. Those probes sit inside the film's upper wall, but the bake decides which probes count from its LAST pass, Marina's version of the house, which has no wall there. So probes buried in the wall are trusted, and they are dark by day and lamp-lit at night. Proposed fix (one bake): run the film's day bake last, so the wall is there when Unity decides which probes count (or switch those buried probes off with a thin box in the wall). Then re-check the upstairs rooms, which share those probes. NB10 RESULT: the bake order change (film's day bake last) did NOT fix it: overcast 0.68 centre / 0.76 wing, and ProbeDump reads the same dark 8.4 at the upper wall face. So the 'last bake decides which probes count' explanation was wrong, or that record is not rewritten on the later bakes. What stands: the darkness is in the baked probes right at the upper wall face in the centre (not the eaves, not the rooms behind: probes off or 0.4 m out, the upstairs is as bright as downstairs). Rooms unchanged (upstairs within 4%, foyer and living within 2%). Next: read the probes' own validity and class at the wall face (the APV debug data), instead of guessing from the shading.",
    "look": [
     "Rows 1-3: the upstairs brick is still darker than downstairs by day (FAIL); at night the ground floor is now the darker one.",
     "Rows 4-5: foyer and living at night are unchanged.",
@@ -219,6 +238,10 @@
     "Question for you (night sheet): at night the ground-floor brick lost the warm glow it had (centre 62 -> 29). That glow was the rooms' light leaking through the wall. In film 5545 / 10 the plain brick at night is dark red; the warmth on it is spill from the lit windows and the Christmas bulbs. Our reading: NB9's darker ground floor is the more faithful base, and the film's warmth should come from window and bulb spill, not the leak. Do you agree, or do you prefer NB8's look?"
    ],
    "images": [
+    {
+     "src": "spec/captures/views/front-0645/nb10-sheet.jpg",
+     "caption": "NB9 | NB10: the night glow gone; the upstairs brick unchanged by day (FAIL); rooms unchanged"
+    },
     {
      "src": "spec/captures/views/front-0645/probe-dump.png",
      "caption": "Baked light the outside walls read, by distance from the brick: the upstairs (red) collapses at the wall face by day"
@@ -239,7 +262,8 @@
      "src": "spec/captures/views/front-0645/apv-tuning-sheet.jpg",
      "caption": "Film 6399 | before | setting variants at your 06:45 spot, overcast; then foyer and living at night"
     }
-   ]
+   ],
+   "app": "HomeAloneNB10.app (the Dock app)"
   },
   {
    "id": "note-0645",
