@@ -14,7 +14,7 @@ using UnityEngine.Rendering.HighDefinition;
 // (DayFilm, NightFilm, Default, Night) it reads the APV irradiance on a +x-facing white card at points in front of (and just behind)
 // the main front's brick, at the ground storey's and the upper storey's brick heights, in several columns along the front. Each card
 // is read twice: on LayerOutside (the Exterior probe class the skin reads) and on LayerApvInside (the rooms' class). Every light is off,
-// fog/SSAO/SSR/contact shadows off, exposure fixed (EV100 0), no tonemapping: the value is the probes' diffuse light alone, comparable
+// fog/SSAO/SSR/contact shadows off, exposure fixed (EV100 6), no tonemapping: the value is the probes' diffuse light alone, comparable
 // across points and scenarios (relative numbers; same exposure everywhere). The film's flush front: upper/lower should be ~1.
 //   Unity -projectPath <scratch> -executeMethod ProbeDump.Run -dumpOut <file.json> -logFile <log>   (windowed, like BakeLighting.Bake:
 //   the APV streams and the camera renders only in a render loop; exits when done). Prints a table and writes the JSON.
@@ -57,7 +57,7 @@ public static class ProbeDump
 
         var vol = new GameObject("ProbeDumpVolume").AddComponent<Volume>(); vol.isGlobal = true; vol.priority = 1e7f;
         var prof = ScriptableObject.CreateInstance<VolumeProfile>(); vol.sharedProfile = prof;
-        var ex = prof.Add<Exposure>(true); ex.mode.Override(ExposureMode.Fixed); ex.fixedExposure.Override(0f);
+        var ex = prof.Add<Exposure>(true); ex.mode.Override(ExposureMode.Fixed); ex.fixedExposure.Override(6f);   // EV100 6: day light at EV 0 clipped at ~66 (Oct 21 first run)
         prof.Add<Tonemapping>(true).mode.Override(TonemappingMode.None);
         prof.Add<Fog>(true).enabled.Override(false);
 
@@ -75,6 +75,10 @@ public static class ProbeDump
         var tex = new Texture2D(32, 32, TextureFormat.RGBAHalf, false);
 
         var apv = ProbeReferenceVolume.instance; var rows = new JArray(); var sb = new StringBuilder();
+        // the scene's baking set is registered with the APV only once HDRP has rendered (just after OpenScene it reads null)
+        cam.transform.SetPositionAndRotation(new Vector3(brick + 3f, gy + 1.6f, -9.6f), Quaternion.LookRotation(Vector3.left));
+        for (int k = 0; k < 60 && apv.currentBakingSet == null; k++) { cam.Render(); yield return null; }
+        if (apv.currentBakingSet == null) Debug.LogError("ProbeDump: no baking set after 60 frames (APV not initialised)");
         foreach (var sc in Scenarios)
         {
             if (apv.currentBakingSet == null || !apv.currentBakingSet.lightingScenarios.Contains(sc)) { sb.AppendLine($"{sc}: not baked"); continue; }
