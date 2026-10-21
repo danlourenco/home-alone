@@ -11,9 +11,9 @@
   {
    "id": "night-speed-b",
    "title": "Night speed: what's expensive in the foyer, kitchen and hall",
-   "status": "needs-you",
+   "status": "settled",
    "date": "Oct 21",
-   "when": "Now: pick one. Then walk HomeAlonePerfB.app (open ~/.cache/home-alone-perf/build/HomeAlonePerfB.app).",
+   "when": "Settled: you kept the lamp range fitted to each room + 1 m (fit=1). It ships in every build from now on (LampFit.cs, applied at load).",
    "what": "At the new full-screen default (2048x1152, no dynamic resolution) the night rooms ran 23-29 fps. The biggest win that keeps the look is fitting each lamp's light range to its own room plus 1 m: foyer 23 -> 36, hall 29 -> 45, kitchen 26 -> 32, all over 30. Fog, reflections, ambient occlusion, glass and sheers cost almost nothing. The foyer mirror costs about 20% in the foyer and kitchen. Recommendation: ship 'lamp range fitted to room'.",
    "app": "HomeAlonePerfB.app (full screen on the Studio Display at the new default: 2048x1152, scaled to the panel)",
    "look": [

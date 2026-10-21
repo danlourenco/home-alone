@@ -1,0 +1,1 @@
+-perfab -perfrounds 1 -perfbasescale auto -perfdn night -perfposes foyer-night,kitchen-night,hall-night -perfvariants off=Volumetrics;off=SSR;off=SSAO;off=ContactShadows;off=ShadowMaps;off=TransparentObjects;off=PlanarProbe;hide=Glass;hide=Voile;lowres=all;fit=1;range=0.7

@@ -358,3 +358,9 @@ Still under the floor at about 1080p: the heavy night interiors (foyer 23-26, ki
 `off=Volumetrics;off=SSR;off=SSAO;off=ContactShadows;off=ShadowMaps;off=TransparentObjects;off=PlanarProbe;hide=Glass;hide=Voile;lowres=all;fit=1;range=0.7`
 at foyer-night, kitchen-night, hall-night (`perf_probe.sh run fs-nightB`). The off= rows are upper bounds (attribution, not looks);
 hide=/lowres=/fit=/range= are the candidates the sheet trades look against FPS.
+
+**fs-nightB (Oct 21, user-run; `runs/fs-nightB`, `spec/captures/perf/fs-nightB-sheet.jpg`).** Night, full screen 2048x1152. FPS base
+-> fit=1: foyer 23 -> 36, hall 29 -> 45, kitchen 26 -> 32 (range x0.7: 30 / 38 / 30; lamp shadows off 29 / 38 / 29; fog, SSR, SSAO,
+glass, sheers: within 1 fps; all transparents off 33 / 48 / 31 although glass and sheers cost nothing: some other transparent-pass
+cost, open). **Shipped: fit=1** (user: "was great, keep it"): `Scripts/LampFit.cs` fits every real-time punctual lamp at scene load
+(room extent + 1 m, the same rays as the variant); `-nolampfit` is the before. PerfProbe tours now sample the fitted ranges as base.
